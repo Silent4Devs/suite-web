@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 @section('content')
+    <h5 class="col-12 titulo_general_funcion">Sedes</h5>
     <div class="mt-5 card">
 
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+        {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Sedes</strong></h3>
-        </div>
-        @can('configuracion_sede_create')
+        </div> --}}
+        @can('sedes_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', ['model' => 'Sede', 'route' => 'admin.sedes.parseCsvImport'])
@@ -123,7 +124,7 @@
 
             ];
 
-            @can('configuracion_sede_create')
+            @can('sedes_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar sede',
@@ -145,7 +146,7 @@
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
             @endcan
-            @can('configuracion_sede_delete')
+            @can('sedes_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -194,7 +195,7 @@
                         data: 'foto_sedes',
                         name: 'foto_sedes',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"80px"}" src="{{ asset('storage/sedes/imagenes/') }}/${data !=""?data:"organizacion.png"}"></div>`;
+                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"80px"}" src="{{ asset('storage/sedes/imagenes/') }}/${data !=""?data:"sedes.png"}"></div>`;
                         }
                     },
                     {

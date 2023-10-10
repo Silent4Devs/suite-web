@@ -1,12 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-
     <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}">
-
+    <h5 class="col-12 titulo_general_funcion">Registrar: Procesos</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white align-items-centera"><strong> Registrar: </strong>Procesos </h3>
-        </div>
 
         <div class="card-body">
             <form method="POST" action="{{ route('admin.procesos.store') }}" class="row">
@@ -39,15 +35,17 @@
                     @endif
                 </div>
                 <div class="form-group col-md-4 col-sm-4">
-                    <label for="id_macroproceso"><i class="fas fa-cogs iconos-crear"></i>Macroproceso </label>
+                    <label class="required" for="id_macroproceso"><i class="fas fa-cogs iconos-crear"></i>Macroproceso
+                    </label>
                     <select class="form-control select2 {{ $errors->has('id_macroproceso') ? 'is-invalid' : '' }}"
                         name="id_macroproceso" id="id_macroproceso" required>
                         <option value="">
                             Escoja un macroproceso
                         </option>
                         @foreach ($macroprocesos as $macroproceso)
-                            <option value="{{ $macroproceso->id }}">
-                               {{ $macroproceso->codigo }} / {{ $macroproceso->nombre }}
+                            <option value="{{ $macroproceso->id }}"
+                                {{ old('id_macroproceso') == $macroproceso->id ? 'selected' : '' }}>
+                                {{ $macroproceso->codigo }} / {{ $macroproceso->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -59,10 +57,10 @@
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group col-sm-12">
-                    <label class="required" for="descripcion"><i class="fas fa-sticky-note iconos-crear"></i>
+                    <label for="descripcion"><i class="fas fa-sticky-note iconos-crear"></i>
                         Descripción</label>
-                    <textarea rows="3" class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion"
-                        id="descripcion" value="{{ old('descripcion', '') }}" required></textarea>
+                    <textarea rows="3" class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
+                        name="descripcion" id="descripcion">{{ old('descripcion', '') }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -70,7 +68,7 @@
                     @endif
                 </div>
                 <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -78,5 +76,4 @@
             </form>
         </div>
     </div>
-
 @endsection

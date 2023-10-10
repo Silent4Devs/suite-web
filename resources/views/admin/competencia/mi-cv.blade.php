@@ -3,6 +3,9 @@
     .breadcrumb {
         margin-bottom: 10px !important;
     }
+    .datos_der_cv{
+        color: #fff;
+    }
 
 </style>
 @section('content')

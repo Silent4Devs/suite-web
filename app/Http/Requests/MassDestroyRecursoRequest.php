@@ -10,7 +10,7 @@ class MassDestroyRecursoRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('recurso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('capacitaciones_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -18,7 +18,7 @@ class MassDestroyRecursoRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids'   => 'required|array',
+            'ids' => 'required|array',
             'ids.*' => 'exists:recursos,id',
         ];
     }

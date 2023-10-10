@@ -9,7 +9,7 @@
 <style type="text/css">
     .caja{
         width: 100%;
-        height:600px;
+        height:740px;
         padding: 0;
         position: relative;
     }
@@ -26,7 +26,7 @@
     #calendar{
         width: 100%;
         overflow: hidden;
-        overflow-y: scroll;
+        /*overflow-y: auto;*/
         border: none !important;
     }
     #calendarList span{
@@ -81,7 +81,7 @@
         position: relative !important;
    }
    .dropdown-menu.show{
-        width: 250px !important;
+        width: 250px ;
    }
 
 
@@ -98,6 +98,7 @@
 
 
 <div class="card card-body" style="margin-top:50px;">
+    @can('mi_perfil_mi_calendario_acceder')
     <div class="caja" style="margin-top:-60px;">
         <div id="lnb">
 
@@ -186,6 +187,7 @@
             <div id="calendar"></div>
         </div>
     </div>
+    @endcan
 </div>
 
 
@@ -237,12 +239,12 @@
                 end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
                 isReadOnly : true,
                 body: `
-                        <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
-                        <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
-                        <font style="font-weight: bold;">Fin:</font> ${@json($it_recursos->fecha_fin)} horas<br>
-                        <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
-                        <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
-                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($it_recursos->modalidad)=='presencial' ? @json($it_recursos->ubicacion) : '<a href="'+@json($it_recursos->ubicacion)+'">'+@json($it_recursos->ubicacion)+'</a> '} <br>
+                        <font style="font-weight: bold;">Categoria:</font> ${@json($evento->tipo)}<br>
+                        <font style="font-weight: bold;">Inicio:</font> ${@json($evento->fecha_curso)} horas<br>
+                        <font style="font-weight: bold;">Fin:</font> ${@json($evento->fecha_fin)} horas<br>
+                        <font style="font-weight: bold;">Duración:</font> ${@json($evento->duracion)} horas<br>
+                        <font style="font-weight: bold;">Instructor:</font> ${@json($evento->instructor)}<br>
+                        <font style="font-weight: bold;">${@json($evento->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($evento->modalidad)=='presencial' ? @json($evento->ubicacion) : '<a href="'+@json($evento->ubicacion)+'">'+@json($evento->ubicacion)+'</a> '} <br>
                     `,
                 },
             @endforeach
@@ -259,9 +261,9 @@
                     isReadOnly : true,
                     body: `
                         <font style="font-weight: bold;">Cumpleaños:</font> ${@json(\Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m'))}<br>
-                        <font style="font-weight: bold;">Area:</font> ${@json($cumple->area->area)}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($cumple->area ?$cumple->area->area:null)}<br>
                         <font style="font-weight: bold;">Puesto:</font> ${@json($cumple->puesto)}<br>
-                        
+
                     `,
                 },
             @endforeach
@@ -279,9 +281,9 @@
                     isReadOnly : true,
                     body: `
                         <font style="font-weight: bold;">Aniversario:</font> ${@json(\Carbon\Carbon::parse($aniversario->antiguedad)->format('d-m'))}<br>
-                        <font style="font-weight: bold;">Area:</font> ${@json($aniversario->area->area)}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($aniversario->area?$aniversario->area->area:null)}<br>
                         <font style="font-weight: bold;">Puesto:</font> ${@json($aniversario->puesto)}<br>
-                        
+
                     `,
                 },
             @endforeach
@@ -299,22 +301,22 @@
                 },
             @endforeach
 
-            @foreach($auditoria_internas as $it_auditoria_internas)
-                {
-                    id: 'auditoria{{$it_auditoria_internas->id}}',
-                    calendarId: '3',
-                    title: '<i class="fas fa-clipboard-list i_calendar_cuadro"></i> Alcance: {{$it_auditoria_internas->alcance}}',
-                    category: 'time',
-                    dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
-                    end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
-                    isReadOnly : true,
-                    body: `
-                       <font style="font-weight: bold;">Inicio:</font> ${@json($it_auditoria_internas->fecha_inicio->format("d-m-Y"))}<br>
-                       <font style="font-weight: bold;">Fin:</font> ${@json($it_auditoria_internas->fecha_fin->format("d-m-Y"))}<br>
-                    `,
-                },
-            @endforeach
+            {{-- @foreach($auditoria_internas as $it_auditoria_internas) --}}
+                //{
+                //    id: 'auditoria{{-- $it_auditoria_internas->id --}}',
+                //    calendarId: '3',
+                //    title: '<i class="fas fa-clipboard-list i_calendar_cuadro"></i> Alcance: {{-- $it_auditoria_internas->alcance --}}',
+                //    category: 'time',
+                //    dueDateClass: '',
+                //    start: '{{--  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() --}}',
+                //    end: '{{--  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() --}}',
+                //    isReadOnly : true,
+                //    body: `
+                //       <font style="font-weight: bold;">Inicio:</font> ${  {{-- @json($it_auditoria_internas->fecha_inicio->format("d-m-Y")) --}}  }<br>
+                //       <font style="font-weight: bold;">Fin:</font> ${  {{--@json($it_auditoria_internas->fecha_fin->format("d-m-Y"))--}}  }<br>
+                //    `,
+                //},
+            {{-- @endforeach --}}
 
             @foreach($actividades as $task)
                  {

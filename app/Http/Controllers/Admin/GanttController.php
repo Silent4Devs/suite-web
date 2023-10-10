@@ -14,10 +14,11 @@ class GanttController extends Controller
     public function index()
     {
         $planbase = PlanBaseActividade::get();
-        $responsable = User::get();
-        $responsablenom = User::select('name')->where('id', '=', '3');
+        $responsable = User::getAll();
+        $responsablenom = User::getAll()->where('id', '=', '3');
+
         //dd($planbase, $responsable, $responsablenom);
-        return view('admin.gantt.index', compact('planbase', 'responsable', ))
+        return view('admin.gantt.index', compact('planbase', 'responsable'))
             ->with('planbases', $planbase);
     }
 
@@ -32,7 +33,6 @@ class GanttController extends Controller
 
                     return response()->json(['success' => true]);
                     break;
-
             }
         }
     }

@@ -64,19 +64,17 @@
         .display-almacenando p {
             font-size: 30px;
         }
-
     </style>
     {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
-
+    <h5 class="col-12 titulo_general_funcion">Asignar Objetivos Estratégicos</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Asignar </strong> Objetivos Estratégicos </h3>
-        </div>
         <div class="card-body">
             <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
                 enctype="multipart/form-data" class="mt-3 row">
                 @csrf
-                @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',['editar'=>false])
+                @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
+                    'editar' => false,
+                ])
                 <div class="col-12">
                     <div class="d-flex justify-content-end w-100">
                         <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
@@ -101,7 +99,9 @@
                 <div class="modal-body">
                     <form id="formObjetivoEdit" method="post" enctype="multipart/form-data" class="mt-3 row">
                         @method('PATCH')
-                        @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',['editar'=>true])
+                        @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
+                            'editar' => true,
+                        ])
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -164,7 +164,9 @@
 
 
             let dtButtons = [];
-
+            let empleado = @json($empleado);
+            let auth = @json(Auth::user()->empleado);
+            let supervisor = @json($empleado->supervisor);
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -175,43 +177,149 @@
                     data: 'objetivo.tipo.nombre',
                 }, {
                     data: 'objetivo.nombre'
-                }, {
+                },{
+                    data: 'id',
+                    render: function(data, type, row, meta) {
+                        return row.evaluacion_id;
+                    }
+                },
+                {
                     data: 'objetivo.KPI',
                 }, {
                     data: 'objetivo',
                     render: function(data, type, row, meta) {
-                        return data.meta + ' ' + data.metrica.definicion;
+                        return data.meta + ' ' + row.objetivo?.metrica?.definicion;
+                    }
+                }, {
+                    data: 'objetivo.esta_aprobado',
+                    render: function(data, type, row, meta) {
+                        if (data == 1) {
+                            return '<span class="badge badge-success">Aprobado</span>';
+                        } else if (data == 2) {
+                            let html = `
+                            <span class="badge badge-danger">No Aprobado
+                                <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
+                            </span>`;
+                            return html;
+                        } else {
+                            return '<span class="badge badge-warning">Pendiente</span>';
+                        }
                     }
                 }, {
                     data: 'objetivo.descripcion_meta',
                 }, {
                     data: 'id',
                     render: function(data, type, row, meta) {
+
                         let urlBtnEditar =
                             `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}/editByEmpleado`;
                         let urlBtnActualizar =
                             `/admin/recursos-humanos/evaluacion-360/objetivos/${row.objetivo_id}/empleado`;
                         let urlBtnEliminar =
-                            `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}`;
+                            `/admin/recursos-humanos/evaluacion-360/objetivos/${row.id}`;
                         let urlShow =
                             `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/lista`;
                         let botones = `
-                            <div class="btn-group">
-                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button> 
-                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                                </div>
                                 `;
-                        // <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                        if (row.objetivo.esta_aprobado == 0) {
+                            if (auth.id == supervisor.id) {
+                                botones +=
+                                    `<div class="col-12">
+                                        <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},true);" class="btn btn-small text-success"><i class="fa-solid fa-thumbs-up"></i></button>
+                                        <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},false);" class="btn btn-small text-danger"><i class="fa-solid fa-thumbs-down"></i></button>
+                                        </div>
+                                    </div>
+                                    `;
+                            }
+                        } else {
+                            botones += `</div>`;
+                        }
+
                         return botones;
                     }
                 }],
                 order: [
                     [1, 'asc']
                 ],
+                pageLength: 10,
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             window.tblObjetivos = $('.tblObjetivos').DataTable(dtOverrideGlobals);
+
+            window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
+                let textoAprobacion = estaAprobado ? 'Aprobar' : 'Rechazar';
+                let textoAprobado = estaAprobado ? 'Aprobado' : 'Rechazado';
+                let urlAprobacion = @json(route('admin.ev360-objetivos-empleado.aprobarRechazarObjetivo', ['empleado' => ':idEmpleado', 'objetivo' => ':idObjetivo']));
+                urlAprobacion = urlAprobacion.replace(':idEmpleado', empleado);
+                urlAprobacion = urlAprobacion.replace(':idObjetivo', objetivo);
+                console.log(urlAprobacion);
+                Swal.fire({
+                    title: `¿Está seguro de ${textoAprobacion.toLowerCase()} este objetivo estratégico?`,
+                    html: '<i class="fas fa-question-circle mr-2"></i> Razón de aceptación o rechazo',
+                    input: 'textarea',
+                    inputValidator: (value) => {
+                        if (!estaAprobado) {
+                            if (value.trim().length < 3) {
+                                return 'El campo debe tener al menos 3 caracteres'
+                            }
+                        }
+
+                    },
+                    inputAttributes: {
+                        'maxlength': 100,
+                        'autocapitalize': 'off',
+                        'autocorrect': 'off',
+                        'required': estaAprobado,
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: textoAprobacion,
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (comentarios_aprobacion) => {
+                        return fetch(urlAprobacion, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    esta_aprobado: estaAprobado,
+                                    objetivo,
+                                    empleado,
+                                    comentarios_aprobacion
+                                })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(textoAprobado, `Objetivo ${textoAprobado} con éxito`, 'success').then(
+                            () => {
+                                tblObjetivos.ajax.reload();
+                            });
+                    }
+                })
+
+            }
         });
         document.addEventListener('DOMContentLoaded', function() {
             $.ajaxSetup({
@@ -219,6 +327,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             document.getElementById('BtnAgregarObjetivo').addEventListener('click', function(e) {
                 e.preventDefault();
                 limpiarErrores();
@@ -237,7 +346,8 @@
                             tblObjetivos.ajax.reload();
                             toastr.success('Objetivo asignado');
                             document.getElementById('formObjetivoCreate').reset();
-
+                            $("#tipo_id").val('').trigger('change');
+                            $("#metrica_id").val('').trigger('change');
                             document.getElementById('foto').value = "";
                             document.getElementById('texto-imagen').innerHTML =
                                 'Subir imágen <small class="text-danger" style="font-size: 10px">(Opcional)</small>';
@@ -265,15 +375,16 @@
                             'Recuperando información de la conducta, espere unos instantes...');
                     },
                     success: function(response) {
+                        console.log(response);
                         document.querySelector('#formObjetivoEdit input[name="nombre"]').value =
                             response.nombre;
                         document.querySelector('#formObjetivoEdit input[name="KPI"]').value =
                             response.KPI;
                         document.querySelector('#formObjetivoEdit input[name="meta"]').value =
                             response.meta;
-                        document.querySelector(
-                                '#formObjetivoEdit input[name="descripcion_meta"]').value = response
-                            .descripcion_meta;
+                        document.querySelector('#formObjetivoEdit [name="descripcion_meta"]')
+                            .value =
+                            response.descripcion_meta;
                         document.querySelector('#formObjetivoEdit .imagen-preview').src =
                             response.imagen_ruta;
 
@@ -311,7 +422,7 @@
                 let kpi = document.querySelector('#formObjetivoEdit input[name="KPI"]').value;
                 let meta = document.querySelector('#formObjetivoEdit input[name="meta"]').value;
                 let descripcion = document.querySelector(
-                    '#formObjetivoEdit input[name="descripcion_meta"]').value;
+                    '#formObjetivoEdit [name="descripcion_meta"]').value;
                 let tipo_id = $('#formObjetivoEdit #tipo_id').val();
                 let metrica_id = $('#formObjetivoEdit #metrica_id').val();
                 let formDataEdit = new FormData();
@@ -366,7 +477,7 @@
 
             window.Eliminar = function(urlEliminar) {
                 Swal.fire({
-                    title: '¿Se ha compleatado este objetivo?',
+                    title: '¿Deseas eliminar este objetivo?',
                     text: "No podrás revertir esto",
                     icon: 'question',
                     showCancelButton: true,
@@ -380,15 +491,15 @@
                             headers: {
                                 "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
                             },
-                            type: "DELETE",
+                            type: "POST",
                             url: urlEliminar,
                             beforeSend: function() {
                                 toastr.info(
-                                    'Eliminando la conducta, espere unos instantes...');
+                                    'Eliminando el objetivo, espere unos instantes...');
                             },
                             success: function(response) {
-                                toastr.success('Conducta eliminada');
-                                table.ajax.reload();
+                                toastr.success('Objetivo eliminado');
+                                tblObjetivos.ajax.reload();
                             },
                             error: function(request, status, error) {
                                 toastr.error(
@@ -399,6 +510,85 @@
                     }
                 })
             }
+
+            document.getElementById('copiarObjetivos').addEventListener('click', (e) => {
+                e.preventDefault();
+                let empleados = @json($empleados);
+                let modalContent = document.getElementById('contenidoModal');
+                let contenidoHTMLGenerado = `
+                <form id="formCopiaObjetivos" class="form-group">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="hidden" value="0" name="empleado_destinatario">
+                            <label><i class="mr-2 fas fa-user"></i>Selecciona un empleado para importar sus objetivos</label>
+                            <select class="empleados-select" name="empleado_destino">
+                                <option value="">-- Selecciona un empleado --</option>
+                                ${empleados.map(empleado => {
+                                            return `<option data-avatar="${empleado.avatar_ruta}" value="${empleado.id}">${empleado.name}</option>`;
+                                        }).join(',')}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                `;
+                modalContent.innerHTML = contenidoHTMLGenerado;
+                $('#modalCopiarObjetivos').modal('show');
+
+                $('.empleados-select').select2({
+                    theme: 'bootstrap4',
+                    templateResult: stateSelection,
+                    templateSelection: stateSelection,
+
+                });
+
+                function stateSelection(opt) {
+                    if (!opt.id) {
+                        return opt.text;
+                    }
+
+                    var optimage = $(opt.element).attr('data-avatar');
+                    var $opt = $(
+                        '<span><img src="' +
+                        optimage +
+                        '" class="img-fluid rounded-circle" width="30" height="30"/>' +
+                        opt.text + '</span>'
+                    );
+                    return $opt;
+                };
+            })
+
+            document.getElementById('btnGuardarCopiaObjs').addEventListener('click', () => {
+                let formulario = document.getElementById('formCopiaObjetivos');
+                let empleado_destinatario = $('.empleados-select').select2('data')[0].id;
+                if (empleado_destinatario != '') {
+                    console.log('copiando');
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('admin.ev360-objetivos-empleado.storeCopiaObjetivos') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            empleado_destinatario,
+                            empleado_destino: {{ $empleado->id }},
+                        },
+                        dataType: "JSON",
+                        beforeSend: function() {
+                            toastr.info('Copiando objetivos');
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                toastr.success('Objetivos copiados correctamente');
+                                tblObjetivos.ajax.reload();
+                                $('#modalCopiarObjetivos').modal('hide');
+                            }
+                        },
+                        error: function(request, status, error) {
+                            toastr.error(error);
+                            $('#modalCopiarObjetivos').modal('hide');
+                        }
+                    });
+                }
+
+            })
         })
 
         function limpiarErrores() {

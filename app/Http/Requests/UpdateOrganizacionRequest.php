@@ -9,20 +9,20 @@ class UpdateOrganizacionRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('organizacion_edit');
+        return Gate::allows('mi_organizacion_editar');
     }
 
     public function rules()
     {
         return [
-            'empresa'    => [
+            'empresa' => [
                 'string',
                 'required',
             ],
-            'direccion'  => [
+            'direccion' => [
                 'required',
             ],
-            'telefono'   => [
+            'telefono' => [
                 'nullable',
                 'string',
                 'min:10',
@@ -32,11 +32,11 @@ class UpdateOrganizacionRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'giro'       => [
+            'giro' => [
                 'string',
                 'nullable',
             ],
-            'servicios'  => [
+            'servicios' => [
                 'string',
                 'nullable',
             ],

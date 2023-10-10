@@ -3,15 +3,21 @@
 namespace App\Http\Livewire;
 
 use App\Models\PlanImplementacion;
+use App\Models\User;
 use Livewire\Component;
 
 class PlanImplementacionCreate extends Component
 {
     public $parent;
+
     public $norma;
+
     public $modulo_origen;
+
     public $objetivo;
+
     public $referencia;
+
     public $matriz_id = '';
 
     protected $rules = [
@@ -51,7 +57,7 @@ class PlanImplementacionCreate extends Component
         PlanImplementacion::create([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
             'tasks' => [],
             'canAdd' => true,
-            'canWrite' =>  true,
+            'canWrite' => true,
             'canWriteOnParent' => true,
             'changesReasonWhy' => false,
             'selectedRow' => 0,
@@ -60,7 +66,7 @@ class PlanImplementacionCreate extends Component
             'norma' => $this->norma,
             'modulo_origen' => $this->modulo_origen,
             'objetivo' => $this->objetivo,
-            'elaboro_id' => auth()->user()->empleado->id,
+            'elaboro_id' => User::getCurrentUser()->empleado->id,
         ]);
         $this->emit('planStore');
         $this->emit('render-select');

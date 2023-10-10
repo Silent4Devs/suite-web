@@ -11,6 +11,7 @@ use App\Models\Area;
 use App\Models\ConcientizacionSgi;
 use App\Models\DocumentoConcientizacionSgis;
 use App\Models\Team;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,11 +21,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ConcientizacionSgiController extends Controller
 {
-    use MediaUploadingTrait;
+    use ObtenerOrganizacion, MediaUploadingTrait;
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('concientizacion_sgi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('concientizacion_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = ConcientizacionSgi::with(['arearesponsable', 'team', 'documentos_concientizacion'])->select(sprintf('%s.*', (new ConcientizacionSgi)->table))->orderByDesc('id');
@@ -34,9 +35,9 @@ class ConcientizacionSgiController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'concientizacion_sgi_show';
-                $editGate = 'concientizacion_sgi_edit';
-                $deleteGate = 'concientizacion_sgi_delete';
+                $viewGate = 'concientizacion_sgsi_ver';
+                $editGate = 'concientizacion_sgsi_editar';
+                $deleteGate = 'concientizacion_sgsi_eliminar';
                 $crudRoutePart = 'concientizacion-sgis';
 
                 return view('partials.datatablesActions', compact(
@@ -78,15 +79,18 @@ class ConcientizacionSgiController extends Controller
             return $table->make(true);
         }
 
-        $areas = Area::get();
+        $areas = Area::getAll();
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.concientizacionSgis.index', compact('areas', 'teams'));
+        return view('admin.concientizacionSgis.index', compact('areas', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('concientizacion_sgi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('concientizacion_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
         $documentos = DocumentoConcientizacionSgis::get();
@@ -96,6 +100,8 @@ class ConcientizacionSgiController extends Controller
 
     public function store(StoreConcientizacionSgiRequest $request)
     {
+        abort_if(Gate::denies('concientizacion_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $concientizacionSgi = ConcientizacionSgi::create($request->all());
 
         if ($request->hasFile('files')) {
@@ -119,7 +125,7 @@ class ConcientizacionSgiController extends Controller
 
     public function edit(ConcientizacionSgi $concientizacionSgi)
     {
-        abort_if(Gate::denies('concientizacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('concientizacion_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
         $documentos = DocumentoConcientizacionSgis::get();
@@ -130,6 +136,8 @@ class ConcientizacionSgiController extends Controller
 
     public function update(UpdateConcientizacionSgiRequest $request, ConcientizacionSgi $concientizacionSgi)
     {
+        abort_if(Gate::denies('concientizacion_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $concientizacionSgi->update($request->all());
 
         $files = $request->file('files');
@@ -161,7 +169,7 @@ class ConcientizacionSgiController extends Controller
 
     public function show(ConcientizacionSgi $concientizacionSgi)
     {
-        abort_if(Gate::denies('concientizacion_sgi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('concientizacion_sgsi_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $concientizacionSgi->load('arearesponsable', 'team');
 
@@ -170,7 +178,7 @@ class ConcientizacionSgiController extends Controller
 
     public function destroy(ConcientizacionSgi $concientizacionSgi)
     {
-        abort_if(Gate::denies('concientizacion_sgi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('concientizacion_sgsi_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $concientizacionSgi->delete();
 
@@ -186,7 +194,7 @@ class ConcientizacionSgiController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('concientizacion_sgi_create') && Gate::denies('concientizacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('concientizacion_sgsi_agregar') && Gate::denies('concientizacion_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new ConcientizacionSgi();
         $model->id = $request->input('crud_id', 0);

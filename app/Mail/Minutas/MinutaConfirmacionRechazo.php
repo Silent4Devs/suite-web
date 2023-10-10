@@ -18,6 +18,7 @@ class MinutaConfirmacionRechazo extends Mailable
      * @return void
      */
     public $minuta;
+
     public $revision;
 
     public function __construct(Minutasaltadireccion $minuta, RevisionMinuta $revision)

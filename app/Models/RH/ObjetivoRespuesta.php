@@ -4,17 +4,24 @@ namespace App\Models\RH;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ObjetivoRespuesta extends Model
+class ObjetivoRespuesta extends Model implements Auditable
 {
     use HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'ev360_objetivos_calificaciones';
+
     protected $guarded = ['id'];
+
+    const INACEPTABLE = 0;
+
+    const MINIMO_ACEPTABLE = 1;
+
+    const ACEPTABLE = 2;
+
+    const SOBRESALIENTE = 3;
 
     public function objetivo()
     {

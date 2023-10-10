@@ -15,7 +15,7 @@ class UpdatePlanBaseActividadeRequest extends FormRequest
     public function rules()
     {
         return [
-            'actividad'    => [
+            'actividad' => [
                 'string',
                 'required',
             ],
@@ -23,15 +23,15 @@ class UpdatePlanBaseActividadeRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'fecha_fin'    => [
+            'fecha_fin' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'compromiso'   => [
+            'compromiso' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'real'         => [
+            'real' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],

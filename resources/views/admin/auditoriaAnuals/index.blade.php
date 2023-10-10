@@ -1,38 +1,87 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
-        .table tr td:nth-child(3) {
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+        .table tr th:nth-child(6) {
             min-width: 80px !important;
             text-align: center !important;
         }
 
-        .table tr td:nth-child(4) {
-            min-width: 100px !important;
+        .table tr td:nth-child(6) {
             text-align: center !important;
         }
 
+        .modal-content {
+
+            height: 560px;
+            border: none;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.auditoria-anuals.index') }}
 
-    @can('auditoria_anual_create')
 
-    @endcan
+    <h5 class="col-12 titulo_general_funcion">Programa Anual de Auditoría</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Programa Anual de Auditoría</strong></h3>
-        </div>
-
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-AuditoriaAnual">
+            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body" id="modalContent" style="height:90%">
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-bordered w-100 datatable-AuditoriaAnual" id="programaAnual">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
-                            {{ trans('cruds.auditoriaAnual.fields.id') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.auditoriaAnual.fields.tipo') }}
+                        <th style="min-width: 150px;">
+                            Nombre
                         </th>
                         <th>
                             Fecha&nbsp;inicio
@@ -40,49 +89,20 @@
                         <th>
                             Fecha&nbsp;fin
                         </th>
-                        <th>
-                            Auditor(a)&nbsp;líder
+                        <th style="min-width: 400px;">
+                            Objetivo
                         </th>
-                        <th style="min-width: 500px;">
-                            {{ trans('cruds.auditoriaAnual.fields.observaciones') }}
+                        <th style="min-width: 400px;">
+                            Alcance
+                        </th>
+                        <th style="min-width: 30px;">
+                            Programa
                         </th>
                         <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\AuditoriaAnual::TIPO_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+
                 </thead>
             </table>
         </div>
@@ -113,27 +133,43 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Programa Anual de Auditoría ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
                     extend: 'print',
                     title: `Programa Anual de Auditoría ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">PROGRAMA ANUAL DE AUDITORÍA</strong>
+                                </div>
+                                <div class="col-3 p-2">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -160,45 +196,57 @@
 
             ];
 
-            @can('auditoria_anual_create')
+            @can('programa_anual_auditoria_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar programa anual de auditoría',
-                url: "{{ route('admin.auditoria-anuals.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar programa anual de auditoría',
+                    url: "{{ route('admin.auditoria-anuals.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('auditoria_anual_delete')
+            @can('programa_anual_auditoria_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.auditoria-anuals.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.auditoria-anuals.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -211,12 +259,8 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.auditoria-anuals.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'tipo',
-                        name: 'tipo'
+                        data: 'nombre',
+                        name: 'nombre'
                     },
                     {
                         data: 'fechainicio',
@@ -227,18 +271,25 @@
                         name: 'fechafin'
                     },
                     {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
-
-
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.auditorlider?.avatar}" title="${row.auditorlider?.name}"></img>`;
-
-                            return `${row.auditorlider ? html: ''}`;
-                        }
+                        data: 'objetivo',
+                        name: 'objetivo'
                     },
                     {
-                        data: 'observaciones',
-                        name: 'observaciones'
+                        data: 'alcance',
+                        name: 'alcance'
+                    },
+                    {
+                        data: 'enlace',
+                        name: 'enlace',
+                        render: function(data, type, row, meta) {
+                            let id = row.id;
+                            console.log(id);
+                            return `
+                            <div class="text-center w-100"></div>
+                                <a href="auditoria-anuals/${row.id}/programa" target="_blank"><i class="fas fa-file-alt fa-2x text-info"></i></a>
+                            </div
+                            `;
+                        }
                     },
                     {
                         data: 'actions',
@@ -263,6 +314,51 @@
             //         .search(value, strict)
             //         .draw()
             // });
+            document.getElementById('programaAnual').addEventListener('click', (e) => {
+                if (e.target.closest('button')?.getAttribute('data-auditoria-id')) {
+                    let auditoriaId = e.target.closest('button').getAttribute('data-auditoria-id');
+                    let url = "{{ route('admin.auditoria-anuals.programaDocumentos') }}";
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: url,
+                        data: {
+                            auditoriaId
+                        },
+                        dataType: "Json",
+                        success: function(response) {
+                            let html = "";
+                            if (response.paths.length == 0) {
+                                html = `
+                                <span>Sin registro</span>
+                                `
+                            } else {
+                                response.paths.forEach(element => {
+                                    let {
+                                        path,
+                                        extension
+                                    } = element;
+                                    if (extension == 'pdf') {
+                                        html += `
+                                <iframe width="100%" height="100%"  src="${path}"></iframe>
+                                `
+                                    } else {
+                                        html += `
+                                <img src="${path}"></img>
+                                `
+                                    }
+                                });
+                            }
+
+
+                            document.getElementById('modalContent').innerHTML = html;
+
+                        }
+                    });
+                }
+            })
         });
     </script>
 @endsection

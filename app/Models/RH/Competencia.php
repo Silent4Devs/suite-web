@@ -5,22 +5,36 @@ namespace App\Models\RH;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Competencia extends Model
+class Competencia extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use HasFactory, SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'ev360_competencias';
+
     protected $guarded = ['id'];
-    protected $appends = ['tipo_competencia', 'imagen_ruta'];
+
+    protected $appends = ['tipo_competencia', 'imagen_ruta', 'existe_imagen_en_servidor'];
 
     const TODA_LA_EMPRESA = 0;
+
     const POR_PUESTO = 1;
+
     const POR_AREA = 2;
+
     const POR_PERFIL = 3;
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Competencias_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function getTipoCompetenciaAttribute()
     {
@@ -29,11 +43,20 @@ class Competencia extends Model
 
     public function getImagenRutaAttribute()
     {
-        if ($this->imagen) {
-            return asset('storage/competencias/img/' . $this->imagen);
-        }
+        if ($this->getExisteImagenEnServidorAttribute()) {
+            if ($this->imagen) {
+                return asset('storage/competencias/img/' . $this->imagen);
+            }
 
-        return asset('img/star.png');
+            return asset('img/star.png');
+        } else {
+            return asset('img/page-not-found.png');
+        }
+    }
+
+    public function getExisteImagenEnServidorAttribute()
+    {
+        return Storage::exists('public/competencias/img/' . $this->imagen);
     }
 
     public function competencia_puesto()

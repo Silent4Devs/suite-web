@@ -1,22 +1,24 @@
 @extends('layouts.admin')
 @section('content')
     {{-- @can('planes_accion_access') --}}
+
+    <h5 class="col-12 titulo_general_funcion">Planes de acción </h5>
+
+
     <div class="mt-3 card">
-        <div class="" style="display:flex; justify-content:center">
-                <h3 class="text-center text-white mt-4" style="background: #345183;color: white !important;padding: 5px;border-radius: 8px; width:90%;"><strong>Planes de acción </strong></h3>
-        </div>
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100" id="tblPlanesAccion">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        {{-- <th>
                             ID
-                        </th>
-                        <th>
+                        </th> --}}
+                        <th style="min-width:150px;">
                             Nombre
                         </th>
-                        <th>
+                        <th style="min-width:100px;">
                             Norma
                         </th>
                         <th>
@@ -25,7 +27,7 @@
                         {{-- <th>
                             Tipo
                         </th> --}}
-                        <th>
+                        <th style="min-width:200px;">
                             Objetivo
                         </th>
                         <th>
@@ -126,15 +128,32 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Restaurar a estado anterior',
                 }
-            ];
 
+            ];
+            let btnAgregar = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                titleAttr: 'Agregar nuevo',
+                url: "{{ route('admin.planes-de-accion.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                }
+            };
+            @can('planes_de_accion_agregar')
+            dtButtons.push(btnAgregar);
+            @endcan
             let url = "{{ route('admin.planes-de-accion.index') }}"
             let tblPlanesAccion = $('#tblPlanesAccion').DataTable({
                 buttons: dtButtons,
                 ajax: url,
-                columns: [{
-                    data: 'id',
-                }, {
+                columns: [
+                //     {
+                //     data: 'id',
+                // },
+                {
                     data: 'parent',
                 }, {
                     data: 'norma',
@@ -253,6 +272,19 @@
                     render: function(data, type, row, meta) {
                         let urlVerPlanAccion = "";
                         let urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
+
+                        // console.log(row.norma);
+                        if (row.norma == 'ISO 27001') {
+                            let norma = row.norma;
+                            console.log(norma);
+                            urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
+                        }
+                        // if (row.norma == 'ISO 9001''ISO 27001') {
+                        //     urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
+                        // }
+
+
+
                         let urlEliminarPlanAccion = `/admin/planes-de-accion/${data}`;
                         if (data == 1) {
                             urlVerPlanAccion = "{{ route('admin.planTrabajoBase.index') }}";
@@ -261,20 +293,29 @@
                         }
                         let botones = `
                             <div class="btn-group">
+                                @can('planes_de_accion_editar')
                                 <a class="btn" href="${urlEditarPlanAccion}" title="Editar Plan de Acción"><i class="fas fa-edit"></i></a>
+                                @endcan
+                                @can('planes_de_accion_visualizar_diagrama')
                                 <a class="btn" href="${urlVerPlanAccion}" title="Visualizar Plan de Acción"><i class="fas fa-stream"></i></a>
-                        `;
+                                @endcan
+                            `;
+
                         if (data > 1) {
                             botones += `
+                            @can('planes_de_accion_eliminar')
                              <button class="btn" onclick="eliminar('${urlEliminarPlanAccion}','${row.parent}')" title="Eliminar Plan de Acción"><i class="fas fa-trash-alt text-danger"></i></button>
                              </div>
+                             @endcan
                              `;
                         } else {
                             botones += `
                              </div>
                              `;
                         }
+
                         return botones;
+
                     }
                 }]
             });

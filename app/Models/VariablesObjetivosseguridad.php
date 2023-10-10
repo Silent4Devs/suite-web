@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class VariablesObjetivosseguridad.
@@ -15,21 +15,19 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Objetivosseguridad|null $objetivosseguridad
  */
-class VariablesObjetivosseguridad extends Model
+class VariablesObjetivosseguridad extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'variables_objetivosseguridad';
 
     protected $dates = ['deleted_at'];
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $casts = [

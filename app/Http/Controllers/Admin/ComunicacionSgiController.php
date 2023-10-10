@@ -10,6 +10,7 @@ use App\Models\ComunicacionSgi;
 use App\Models\DocumentoComunicacionSgis;
 use App\Models\Empleado;
 use App\Models\ImagenesComunicacionSgis;
+use App\Models\RH\GruposEvaluado;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class ComunicacionSgiController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('comunicacion_sgi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('comunicados_generales_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = ComunicacionSgi::with(['team', 'documentos_comunicacion', 'imagenes_comunicacion'])->select(sprintf('%s.*', (new ComunicacionSgi)->table))->orderByDesc('id');
@@ -35,9 +36,9 @@ class ComunicacionSgiController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'comunicacion_sgi_show';
-                $editGate = 'comunicacion_sgi_edit';
-                $deleteGate = 'comunicacion_sgi_delete';
+                $viewGate = 'comunicados_generales_ver';
+                $editGate = 'comunicados_generales_editar';
+                $deleteGate = 'comunicados_generales_eliminar';
                 $crudRoutePart = 'comunicacion-sgis';
 
                 return view('partials.datatablesActions', compact(
@@ -71,8 +72,8 @@ class ComunicacionSgiController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('comunicacion_sgi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        abort_if(Gate::denies('comunicados_generales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleados = Empleado::getAll();
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
 
@@ -81,13 +82,23 @@ class ComunicacionSgiController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('comunicados_generales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
+            'titulo' => 'required',
             'descripcion' => 'required',
-            'imagen' => 'required|mimetypes:image/jpeg,image/bmp,image/png',
             'publicar_en' => 'required',
-            'link' => 'required',
-            'fecha_programable' => 'required',
+            'link' => 'nullable|url',
+            'fecha_programable' => 'required|date',
+            'fecha_programable_fin' => 'nullable|date',
         ]);
+        if ($request->by_area) {
+            $opts = $request->by_area;
+        } else {
+            $opts = $request->by_manual;
+        }
+
+        $publicoObjetivo = $this->obtenerPublicoObjetivo($request->evaluados_objetivo, $opts);
 
         $comunicacionSgi = ComunicacionSgi::create($request->all());
 
@@ -98,21 +109,27 @@ class ComunicacionSgiController extends Controller
             $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
             $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
             $image = $new_name_image;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('imagen'));
-            $img_intervention->resize(720, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($route);
+            if ($extension == 'mp4' || $extension == 'mov' || $extension == 'webm' || $extension == 'wmv' || $extension == 'avi') {
+                $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
+                $tipo_archivo = 'video';
+            } else {
+                //Usamos image_intervention para disminuir el peso de la imagen
+                $img_intervention = Image::make($request->file('imagen'));
+                $img_intervention->resize(720, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($route);
+                $tipo_archivo = 'imagen';
+            }
         }
 
         /*  $comunicacionSgi->update([
         'imagen'=>$image
         ]);
 */
-
         ImagenesComunicacionSgis::create([
             'imagen' => $image,
             'comunicacion_id' => $comunicacionSgi->id,
+            'tipo' => $tipo_archivo,
         ]);
 
         $files = $request->file('files');
@@ -126,7 +143,7 @@ class ComunicacionSgiController extends Controller
                 }
             }
         }
-        $comunicacionSgi->empleados()->sync($request->empleados);
+        $comunicacionSgi->empleados()->sync($publicoObjetivo);
 
         if ($request->input('archivo', false)) {
             $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
@@ -139,11 +156,31 @@ class ComunicacionSgiController extends Controller
         return redirect()->route('admin.comunicacion-sgis.index')->with('success', 'Guardado con éxito');
     }
 
+    public function obtenerPublicoObjetivo($evaluados_objetivo, $opts)
+    {
+        if ($evaluados_objetivo != null) {
+            if ($evaluados_objetivo == 'all') {
+                $evaluados = Empleado::getaltaAll()->pluck('id')->toArray();
+            } elseif ($evaluados_objetivo == 'area') {
+                $evaluados_area = intval($opts);
+                $evaluados = Empleado::getaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
+            } elseif ($evaluados_objetivo == 'manual') {
+                $evaluados = $opts;
+            } else {
+                $evaluados = GruposEvaluado::find(intval($evaluados_objetivo))->empleados->pluck('id')->toArray();
+            }
+
+            return $evaluados;
+        }
+
+        return [];
+    }
+
     public function edit(ComunicacionSgi $comunicacionSgi)
     {
-        abort_if(Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getaltaAll();
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
 
@@ -152,13 +189,21 @@ class ComunicacionSgiController extends Controller
 
     public function update(UpdateComunicacionSgiRequest $request, ComunicacionSgi $comunicacionSgi)
     {
+        abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
+            'titulo' => 'required',
             'descripcion' => 'required',
             'publicar_en' => 'required',
-            'link' => 'required',
-            'fecha_programable' => 'required',
+            'link' => 'nullable|url',
+            'fecha_programable' => 'required|date',
+            'fecha_programable_fin' => 'nullable|date',
         ]);
-
+        if ($request->by_area) {
+            $opts = $request->by_area;
+        } else {
+            $opts = $request->by_manual;
+        }
+        $publicoObjetivo = $this->obtenerPublicoObjetivo($request->evaluados_objetivo, $opts);
         $comunicacionSgi->update($request->all());
         // $image = $comunicacionSgi->imagen;
         if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
@@ -167,21 +212,29 @@ class ComunicacionSgiController extends Controller
             $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
             $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
             $image = $new_name_image;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('imagen'));
-            $img_intervention->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($route);
+            if ($extension == 'mp4' || $extension == 'mov' || $extension == 'webm' || $extension == 'wmv' || $extension == 'avi') {
+                $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
+                $tipo_archivo = 'video';
+            } else {
+                //Usamos image_intervention para disminuir el peso de la imagen
+                $img_intervention = Image::make($request->file('imagen'));
+                $img_intervention->resize(256, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($route);
+                $tipo_archivo = 'imagen';
+            }
             $imagen_sgsi = $comunicacionSgi->imagenes_comunicacion->first();
             if ($imagen_sgsi) {
                 $imagen_sgsi->update([
                     'imagen' => $image,
                     'comunicacion_id' => $comunicacionSgi->id,
+                    'tipo' => $tipo_archivo,
                 ]);
             } else {
                 ImagenesComunicacionSgis::create([
                     'imagen' => $image,
                     'comunicacion_id' => $comunicacionSgi->id,
+                    'tipo' => $tipo_archivo,
                 ]);
             }
         }
@@ -202,7 +255,7 @@ class ComunicacionSgiController extends Controller
                 }
             }
         }
-        $comunicacionSgi->empleados()->sync($request->empleados);
+        $comunicacionSgi->empleados()->sync($publicoObjetivo);
 
         if ($request->input('archivo', false)) {
             if (!$comunicacionSgi->archivo || $request->input('archivo') !== $comunicacionSgi->archivo->file_name) {
@@ -221,7 +274,7 @@ class ComunicacionSgiController extends Controller
 
     public function show(ComunicacionSgi $comunicacionSgi)
     {
-        abort_if(Gate::denies('comunicacion_sgi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('comunicados_generales_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $comunicacionSgi->load('team', 'documentos_comunicacion', 'imagenes_comunicacion');
 
@@ -230,7 +283,7 @@ class ComunicacionSgiController extends Controller
 
     public function destroy(ComunicacionSgi $comunicacionSgi)
     {
-        abort_if(Gate::denies('comunicacion_sgi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('comunicados_generales_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $comunicacionSgi->delete();
 
@@ -246,7 +299,7 @@ class ComunicacionSgiController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('comunicacion_sgi_create') && Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('comunicados_generales_agregar') && Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new ComunicacionSgi();
         $model->id = $request->input('crud_id', 0);

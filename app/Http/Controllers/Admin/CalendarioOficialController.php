@@ -5,11 +5,14 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\CalendarioOficial;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class CalendarioOficialController extends Controller
 {
     public function index(Request $request)
     {
+        abort_if(Gate::denies('dias_festivos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = CalendarioOficial::orderByDesc('id')->get();
             $table = datatables()::of($query);
@@ -18,9 +21,9 @@ class CalendarioOficialController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'user_show';
-                $editGate = 'user_edit';
-                $deleteGate = 'user_delete';
+                $viewGate = 'dias_festivos_ver';
+                $editGate = 'dias_festivos_editar';
+                $deleteGate = 'dias_festivos_eliminar';
                 $crudRoutePart = 'calendario-oficial';
 
                 return view('partials.datatablesActions', compact(
@@ -58,6 +61,7 @@ class CalendarioOficialController extends Controller
 
     public function create(Request $request)
     {
+        abort_if(Gate::denies('dias_festivos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $calendario = new CalendarioOficial();
 
         return view('admin.calendario-oficial.create', compact('calendario'));
@@ -65,20 +69,23 @@ class CalendarioOficialController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('dias_festivos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $fecha = CalendarioOficial::create($request->all());
 
-        return redirect(route('admin.calendario-oficial.index'))->with(['success'=>'Registro guardado con exito']);
+        return redirect(route('admin.calendario-oficial.index'))->with(['success' => 'Registro guardado con exito']);
     }
 
-    public function show(CalendarioOficial $calendario)
+    public function show($calendario)
     {
-        // abort_if(Gate::denies('enlaces_ejecutar_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('dias_festivos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $fecha = CalendarioOficial::find($calendario);
 
-        return view('admin.calendario-oficial.show', compact('calendario-oficial'));
+        return view('admin.calendario-oficial.show', compact('fecha'));
     }
 
     public function edit($calendario)
     {
+        abort_if(Gate::denies('dias_festivos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $calendario = CalendarioOficial::find($calendario);
 
         return view('admin.calendario-oficial.edit', compact('calendario'));
@@ -86,17 +93,19 @@ class CalendarioOficialController extends Controller
 
     public function update(Request $request, $calendario)
     {
+        abort_if(Gate::denies('dias_festivos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $calendario = CalendarioOficial::find($calendario);
         $fecha = $calendario->update($request->all());
 
-        return redirect(route('admin.calendario-oficial.index'))->with(['success'=>'Registro Actualizado']);
+        return redirect(route('admin.calendario-oficial.index'))->with(['success' => 'Registro Actualizado']);
     }
 
     public function destroy($calendario)
     {
+        abort_if(Gate::denies('dias_festivos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $calendario = CalendarioOficial::find($calendario);
         $calendario->delete();
 
-        return redirect(route('admin.calendario-oficial.index'))->with(['success'=>'Registro Eliminado']);
+        return redirect(route('admin.calendario-oficial.index'))->with(['success' => 'Registro Eliminado']);
     }
 }

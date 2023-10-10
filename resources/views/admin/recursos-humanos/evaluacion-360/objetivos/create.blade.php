@@ -4,9 +4,7 @@
     {{ Breadcrumbs::render('EV360-Objetivos-Create') }}
 
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Objetivo </h3>
-        </div>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Objetivo</h5>
         <div class="card-body">
             <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
                 class="mt-3 row">

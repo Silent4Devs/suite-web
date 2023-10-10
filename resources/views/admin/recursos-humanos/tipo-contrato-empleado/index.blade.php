@@ -1,12 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-    @can('control_documento_create')
-        <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Tipos de contrato para empleados</strong></h3>
-            </div>
-        @endcan
+        {{ Breadcrumbs::render('EV360-Tipo-Contrato-Empleados') }}
+        <h5 class="col-12 titulo_general_funcion">Tipos de contrato para empleados</h5>
+
+    <div class="mt-5 card">
         <div class="card-body datatable-fix">
+
             @include('partials.flashMessages')
             <table id="tblTiposContratoEmpleados" class="table table-bordered w-100 datatable-ControlDocumento">
                 <thead class="thead-dark">
@@ -69,7 +68,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -117,7 +116,9 @@
                 }
             };
 
-            dtButtons.push(btnAgregar);
+            @can('tipos_de_contrato_para_empleados_agregar')
+                dtButtons.push(btnAgregar);
+            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -154,19 +155,18 @@
                             const urlShowDelete =
                                 `/admin/recursos-humanos/tipos-contratos-empleados/${data}`;
                             const html = `
-                            <a class="btn btn-sm " title="Editar"
-                                    href="${urlEdit}">
+                            @can('tipos_de_contrato_para_empleados_editar')
+                                <a class="btn btn-sm " title="Editar" href="${urlEdit}">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a class="btn btn-sm " title="Visualizar"
-                                    href="${urlShowDelete}">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <button title="Eliminar"
-                                    onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.name}');return false;"
+                            @endcan
+
+                            @can('tipos_de_contrato_para_empleados_eliminar')
+                                <button title="Eliminar" onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.name}');return false;"
                                     class="btn btn-sm text-danger">
                                     <i class="fas fa-trash-alt"></i>
-                                </button>`;
+                                </button>
+                            @endcan`;
                             return html;
                         }
                     }

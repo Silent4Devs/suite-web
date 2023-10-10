@@ -14,7 +14,6 @@
     .error-border {
         border: 1px solid red !important;
     }
-
 </style>
 <div class="row">
     <div class="col-sm-12 col-lg-2">
@@ -62,8 +61,7 @@
                         Proceso</option>
                 @endif
                 @if ($documentoActual->tipo != 'proceso' || $documentoActual->tipo == null)
-                    <option value="politica"
-                        {{ old('tipo', $documentoActual->tipo) == 'politica' ? 'selected' : '' }}>
+                    <option value="politica" {{ old('tipo', $documentoActual->tipo) == 'politica' ? 'selected' : '' }}>
                         Política</option>
                     <option value="procedimiento"
                         {{ old('tipo', $documentoActual->tipo) == 'procedimiento' ? 'selected' : '' }}>
@@ -80,6 +78,8 @@
                         Reglamento</option>
                     <option value="externo" {{ old('tipo', $documentoActual->tipo) == 'externo' ? 'selected' : '' }}>
                         Documento Externo</option>
+                    <option value="formato" {{ old('tipo', $documentoActual->tipo) == 'formato' ? 'selected' : '' }}>
+                        Formato</option>
                 @endif
             </select>
             @if ($errors->has('tipo'))
@@ -163,19 +163,32 @@
             <span class="text-danger proceso_error error-ajax"></span>
         </div>
     </div>
-    <div class="col-sm-12 col-lg-2">
+    <div class="col-sm-12 col-lg-2" x-data="{ estaBloqueado: true }" x-init="estaBloqueado = true">
         <div class="form-group">
-            <label for="version">Versión:</label>
-            <p class="m-0"
-                style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669">
-                {{ $documentoActual->version == null ? '1' : intval($documentoActual->version) }}</p>
+            <template x-if="estaBloqueado">
+                <div>
+                    <label for="version">Versión:</label>
+                    <input readonly class="m-0 form-control" type="number" name="version" min="1" {{-- style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669" --}}
+                        value="{{ $newversdoc }}" />
+                </div>
+            </template>
+            <template x-if="!estaBloqueado">
+                <div>
+                    <label for="version">Versión:</label>
+                    <input class="m-0 form-control" type="number" name="version" min="1" {{-- style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669" --}}
+                        value="{{ $newversdoc }}" />
+                </div>
+            </template>
+            <input type="checkbox" id="estaBloqueado" style="display:none">
+            <label for="estaBloqueado" x-on:click="estaBloqueado=!estaBloqueado"><i class="fas"
+                    x-bind:class="!estaBloqueado ? 'fa-lock' : 'fa-unlock'"></i></label>
         </div>
     </div>
     <div class="col-sm-12 col-lg-3">
         <div class="form-group">
             <label for="fecha">Fecha:</label>
-            <input type="date" class="form-control {{ $errors->has('fecha') ? 'error-border' : '' }}" id="fecha"
-                aria-describedby="fecha" name="fecha"
+            <input type="date" class="form-control {{ $errors->has('fecha') ? 'error-border' : '' }}"
+                id="fecha" aria-describedby="fecha" name="fecha"
                 value="{{ old('fecha', \Carbon\Carbon::parse($documentoActual->fecha)->format('Y-m-d')) }}">
             @if ($errors->has('fecha'))
                 <span class="text-danger">
@@ -190,7 +203,8 @@
             style="cursor: pointer"><span>{{ $documentoActual->archivo != null ? 'Reemplazar' : 'Archivo' }}</span></label>
         <div class="mb-3 custom-file">
             <input type="file" class="custom-file-input" id="archivo"
-                {{ $documentoActual->archivo == null ? 'required' : '' }} name="archivo" accept="application/pdf">
+                {{ $documentoActual->archivo == null ? 'required' : '' }} name="archivo"
+                accept="application/pdf, application/.doc,.docx">
             <label class="custom-file-label"
                 for="archivo">{{ $documentoActual->archivo == null ? 'Selecciona un archivo' : $documentoActual->archivo }}</label>
             @if ($errors->has('archivo'))
@@ -200,6 +214,29 @@
             @endif
             <span class="text-danger archivo_error error-ajax"></span>
         </div>
+        @if ($documentoActual->archivo != null)
+            <!-- Button trigger modal -->
+            <a data-toggle="modal" data-target="#documentoCargado" style="color: #0f37e8">
+                Documento: {{ $documentoActual->archivo }} (Cargado Actualmente)
+            </a>
+            <div class="modal fade" id="documentoCargado" tabindex="-1" aria-labelledby="documentoCargadoLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="documentoCargadoLabel">{{ $documentoActual->archivo }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe style="width:100%;height: 100%;" src="{{ $documentoActual->archivo_actual }}"
+                                frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 </div>
 <div class="row">

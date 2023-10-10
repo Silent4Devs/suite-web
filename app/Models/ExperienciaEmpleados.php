@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ExperienciaEmpleados extends Model
+class ExperienciaEmpleados extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'experiencia_empleados';
 
     protected $dates = [
@@ -27,6 +25,7 @@ class ExperienciaEmpleados extends Model
         'empresa' => 'string',
         'puesto' => 'string',
         'descripcion' => 'string',
+        'trabactualmente' => 'boolean',
     ];
 
     protected $fillable = [
@@ -36,41 +35,20 @@ class ExperienciaEmpleados extends Model
         'inicio_mes',
         'fin_mes',
         'descripcion',
+        'trabactualmente',
 
     ];
 
-    protected $appends = ['inicio_mes_ymd', 'fin_mes_ymd'];
-
-    public function getInicioMesYmdAttribute()
+    //Redis methods
+    public static function getAll()
     {
-        if ($this->inicio_mes) {
-            return Carbon::parse($this->inicio_mes)->format('Y-m-d');
-        } else {
-            return null;
-        }
-    }
-
-    public function getFinMesYmdAttribute()
-    {
-        if ($this->inicio_mes) {
-            return Carbon::parse($this->fin_mes)->format('Y-m-d');
-        } else {
-            return null;
-        }
+        return Cache::remember('experienciaempleados_all', 3600 * 24, function () {
+            return self::get();
+        });
     }
 
     public function empleado_experiencia()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
-    }
-
-    public function getInicioMesAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
-
-    public function getFinMesAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 }

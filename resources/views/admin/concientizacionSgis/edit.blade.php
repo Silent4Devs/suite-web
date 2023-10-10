@@ -2,12 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.concientizacion-sgis.create') }}
-
+    <h5 class="col-12 titulo_general_funcion">Editar: Concientización SGSI</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Concientización SGSI </h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" class="row"
                 action="{{ route('admin.concientizacion-sgis.update', [$concientizacionSgi->id]) }}"
@@ -17,8 +13,8 @@
                 <div class="form-group col-12">
                     <label class="required" for="objetivocomunicado"><i
                             class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.objetivocomunicado') }}</label>
-                    <input class="form-control {{ $errors->has('objetivocomunicado') ? 'is-invalid' : '' }}" type="text"
-                        name="objetivocomunicado" id="objetivocomunicado"
+                    <input class="form-control {{ $errors->has('objetivocomunicado') ? 'is-invalid' : '' }}"
+                        type="text" name="objetivocomunicado" id="objetivocomunicado"
                         value="{{ old('objetivocomunicado', $concientizacionSgi->objetivocomunicado) }}" required>
                     @if ($errors->has('objetivocomunicado'))
                         <div class="invalid-feedback">
@@ -29,9 +25,9 @@
                         class="help-block">{{ trans('cruds.concientizacionSgi.fields.objetivocomunicado_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label><i
+                    <label class="required"><i
                             class="fas fa-user iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.personalobjetivo') }}</label>
-                    <select class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}"
                         name="personalobjetivo" id="personalobjetivo">
                         <option value disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
@@ -50,9 +46,9 @@
                         class="help-block">{{ trans('cruds.concientizacionSgi.fields.personalobjetivo_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="arearesponsable_id"><i
+                    <label class="required" for="arearesponsable_id"><i
                             class="fas fa-chart-area iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.arearesponsable') }}</label>
-                    <select class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}"
+                    <select required class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}"
                         name="arearesponsable_id" id="arearesponsable_id">
                         @foreach ($arearesponsables as $id => $arearesponsable)
                             <option value="{{ $id }}"
@@ -65,13 +61,12 @@
                             {{ $errors->first('arearesponsable') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.concientizacionSgi.fields.arearesponsable_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.arearesponsable_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label><i
+                    <label class="required"><i
                             class="fas fa-pager iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.medio_envio') }}</label>
-                    <select class="form-control {{ $errors->has('medio_envio') ? 'is-invalid' : '' }}" name="medio_envio"
+                    <select required class="form-control {{ $errors->has('medio_envio') ? 'is-invalid' : '' }}" name="medio_envio"
                         id="medio_envio">
                         <option value disabled {{ old('medio_envio', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
@@ -89,10 +84,10 @@
                     <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.medio_envio_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="fecha_publicacion"><i
+                    <label class="required" for="fecha_publicacion"><i
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion') }}</label>
-                    <input class="form-control date {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
-                        type="text" name="fecha_publicacion" id="fecha_publicacion"
+                    <input required class="form-control date {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
+                        type="text" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
                         value="{{ old('fecha_publicacion', $concientizacionSgi->fecha_publicacion) }}">
                     @if ($errors->has('fecha_publicacion'))
                         <div class="invalid-feedback">
@@ -125,7 +120,7 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route("admin.concientizacion-sgis.index") }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -136,23 +131,31 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 @if (count($concientizacionSgi->documentos_concientizacion))
-
                                     <!-- carousel -->
                                     <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
                                         <ol class='carousel-indicators'>
                                             @foreach ($concientizacionSgi->documentos_concientizacion as $idx => $concientSgsi_id)
                                                 <li data-target=#carouselExampleIndicators
                                                     data-slide-to={{ $idx }}></li>
-
                                             @endforeach
 
                                         </ol>
                                         <div class='carousel-inner'>
                                             @foreach ($concientizacionSgi->documentos_concientizacion as $idx => $concientSgsi_id)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                        src="{{ asset('storage/documentos_concientSgsi') }}/{{ $concientSgsi_id->documento }}"></iframe>
-                                                </div>
+                                                @if (pathinfo($concientSgsi_id->documento, PATHINFO_EXTENSION) == 'pdf')
+                                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                            src="{{ asset('storage/documentos_concientSgsi') }}/{{ $concientSgsi_id->documento }}"></iframe>
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <a
+                                                            href="{{ asset('storage/documentos_concientSgsi') }}/{{ $concientSgsi_id->documento }}">
+                                                            <i class="fas fa-file-download mr-2"
+                                                                style="font-size:18px"></i>{{ $concientSgsi_id->documento }}</a>
+                                                    </div>
+                                                @endif
                                             @endforeach
 
 

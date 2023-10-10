@@ -17,17 +17,16 @@
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Evaluaciones') }}
     </div>
+    <h5 class="col-12 titulo_general_funcion">Evaluaciones 360°</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Evaluaciones 360°</strong></h3>
-        </div>
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+            <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                 <div class="row w-100">
                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                         <div class="w-100">
-                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                         </div>
                     </div>
                     <div class="col-11">
@@ -286,7 +285,7 @@
                             let urlShow = `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}`;
                             let urlEdit =
                                 `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/edit`;
-                            let urlDelete =
+                            let urlBtnEliminar =
                                 `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}`;
                             let urlEvaluacion =
                                 `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
@@ -297,9 +296,16 @@
                             // <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                             let html = `
                                 <div class="btn-group" style="background: white;">
+                                @can('seguimiento_evaluaciones_evaluacion')
                                     <a href="${urlEvaluacion}" class="btn btn-sm" title="Evaluación"><i class="fas fa-cogs"></i></a>
+                                @endcan
+                                @can('seguimiento_evaluaciones_grafica')
                                     <a href="${urlResumen}" class="btn btn-sm" title="Gráfica"><i class="fas fa-chart-bar"></i></a>
-                                    <button onclick="Delete('${urlEdit}',${row})" class="btn btn-sm text-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                                @endcan
+                                @can('seguimiento_evaluaciones_eliminar')
+                                    <button class="btn btn-sm text-danger" title="Eliminar" data-action="Eliminar" data-url="${urlBtnEliminar}"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                @endcan
                                 </div>
                             `;
 
@@ -322,6 +328,95 @@
             };
             window.table = $('.tblEvaluaciones').DataTable(dtOverrideGlobals);
         });
+
+        document.querySelector('.datatable-fix').addEventListener('click', function(e) {
+            let target = e.target;
+            if (e.target.tagName == 'I') {
+                target = e.target.closest('button');
+            }
+            if (target.getAttribute('data-action') == 'Eliminar') {
+                const url = target.getAttribute('data-url');
+                Swal.fire({
+                    title: '¿Desea eliminar esta Evaluación?',
+                    html: '',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: url,
+                            data: {
+                                _token: "{{ csrf_token() }}"
+                            },
+                            beforeSend: function() {
+                                let timerInterval
+                                Swal.fire({
+                                    title: 'Eliminando!',
+                                    html: 'Estamos eliminando el registro, espere un momento.',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        timerInterval = setInterval(
+                                            () => {
+                                                const content = Swal
+                                                    .getHtmlContainer()
+                                                if (content) {
+                                                    const b =
+                                                        content
+                                                        .querySelector(
+                                                            'b')
+                                                    if (b) {
+                                                        b.textContent =
+                                                            Swal
+                                                            .getTimerLeft()
+                                                    }
+                                                }
+                                            }, 100)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                    }
+                                })
+
+                            },
+                            success: function(response) {
+                                if (response.deleted) {
+                                    Swal.fire(
+                                        '¡Evaluación Eliminada!',
+                                        '',
+                                        'success'
+                                    )
+                                    table.ajax.reload();
+                                } else {
+                                    Swal.fire(
+                                        '¡No se eliminó el registro!',
+                                        'Ocurrió un error',
+                                        'error'
+                                    )
+                                }
+
+                            },
+                            error: function(err) {
+                                Swal.fire(
+                                    'Ocurrió un error',
+                                    `${err.message}`,
+                                    'error'
+                                )
+                            }
+                        });
+
+                    }
+                });
+            }
+        })
+
+
         $(document).ready(function() {
             document.getElementById('btnGuardarEvaluacion').addEventListener('click', function(e) {
                 e.preventDefault();

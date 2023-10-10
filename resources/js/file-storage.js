@@ -10,14 +10,14 @@ const store = new Vuex.Store();
 Vue.use(FileManager, { store });
 
 // Vue.component('file-managers',require("./components/FileManagers.vue").default);
-
+const origin = window.location.origin;
 const app = new Vue({
     el: "#app",
     store,
     data() {
         return {
             settings: {
-                baseUrl: 'http://tabantaj.test/file-manager',
+                baseUrl: `${origin}/file-manager`,
                 lang: 'es',
             }
         }

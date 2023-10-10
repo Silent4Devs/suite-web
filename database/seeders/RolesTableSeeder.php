@@ -9,15 +9,19 @@ class RolesTableSeeder extends Seeder
 {
     public function run()
     {
+        Role::truncate();
         $roles = [
             [
                 'title' => 'Admin',
             ],
+            // [
+            //     'title' => 'Consultor',
+            // ],
+            // [
+            //     'title' => 'Consulta',
+            // ],
             [
-                'title' => 'Consultor',
-            ],
-            [
-                'title' => 'Consulta',
+                'title' => 'Colaborador',
             ],
         ];
 

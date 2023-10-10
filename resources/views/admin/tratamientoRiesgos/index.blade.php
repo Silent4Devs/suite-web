@@ -2,110 +2,88 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.tratamiento-riesgos.index') }}
+    <style>
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
 
-    @can('tratamiento_riesgo_create')
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+</style>
+
+    <h5 class="col-12 titulo_general_funcion">Tratamiento de los Riesgos</h5>
 
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Tratamiento de los Riesgos</strong></h3>
-            </div>
-    @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-TratamientoRiesgo">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.id') }}
+                        <th style="min-width: 100px;">
+                            Identificador
                         </th>
-                        <th>
-                            Niveles&nbsp;de&nbsp;riesgo
+                        <th style="min-width: 600px;">
+                            Descripción del riesgo
                         </th>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.control') }}
+                        <th style="min-width: 100px;">
+                            Tipo de riesgo
                         </th>
-                        <th style="min-width: 500px;">
-                            {{ trans('cruds.tratamientoRiesgo.fields.acciones') }}
+                        <th style="min-width: 80px;">
+                            Riesgo total
                         </th>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.responsable') }}
+                        <th style="min-width: 100px;">
+                            Riesgo Residual
                         </th>
-                        <th>
-                            Fecha&nbsp;compromiso
+                        <th style="min-width: 800px;">
+                            Acciones de tratamiento
                         </th>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.prioridad') }}
+                        <th style="min-width: 150px;">
+                            Proceso
                         </th>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.estatus') }}
+                        <th style="min-width: 80px;">
+                           Dueño
                         </th>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.probabilidad') }}
+                        <th style="min-width: 130px;">
+                            Fecha compromiso
                         </th>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.impacto') }}
+                        <th style="min-width: 120px;">
+                            Inversión requerida
                         </th>
-                        <th>
-                            Niveles&nbsp;de&nbsp;riesgo&nbsp;residual
-                        </th>
-                        <th>
+                        <th style="min-width: 20px;">
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($controles as $key => $item)
-                                    <option value="{{ $item->control }}">{{ $item->control }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\TratamientoRiesgo::PRIORIDAD_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+                   
                 </thead>
             </table>
         </div>
@@ -125,7 +103,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -135,23 +114,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Tratamiento de los Riesgos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -160,6 +124,38 @@
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">TRATAMIENTO DE LOS RIESGOS</strong>
+                                </div>
+                                <div class="col-3 p-2">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -186,48 +182,8 @@
 
             ];
 
-            @can('tratamiento_riesgo_delete')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar tratamiento de los riesgos',
-                url: "{{ route('admin.tratamiento-riesgos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
-            @can('tratamiento_riesgo_delete')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.tratamiento-riesgos.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-
-                return
-                }
-
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
+          
+           
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -237,58 +193,146 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.tratamiento-riesgos.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'identificador',
                     },
                     {
-                        data: 'nivelriesgo',
-                        name: 'nivelriesgo'
+                        data: 'descripcionriesgo',
                     },
                     {
-                        data: 'control_control',
-                        name: 'control.control'
+                        data: 'tipo_riesgo',
+                        name: 'tipo_riesgo',
+                        render: function(data, type, row, meta) {
+                            const riesgo = row.tipo_riesgo;
+                            if (riesgo == 1) {
+                                return `<div style="text-align:left">Positivo</div>`;
+                            }
+                            if (riesgo == 0) {
+                                return `<div style="text-align:left">Negativo</div>`;
+                            } else {
+                                return `<div style="text-align:left">Negativo</div>`;
+                            }
+                        }
+                    },
+                    {
+                        data: 'riesgototal',
+                    },
+                    {
+                        data: 'riesgo_total_residual',
                     },
                     {
                         data: 'acciones',
-                        name: 'acciones'
                     },
                     {
-                        data: 'id_reviso',
-                        name: 'id_reviso'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if(row.proceso){
+                                return row.proceso;
+                            }
+                            return "n/a"
+                        }
+                    },
+                    {
+                        data: 'responsable',
+                        render: function(data, type, row, meta) {
+                            let responsableJson = JSON.parse(row.responsable ? row.responsable : '{}')
+                            if (type === "empleadoText") {
+                                return responsableJson.name;
+                            }
+                            let responsable = "";
+                            if (responsableJson) {
+                                responsable += `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${responsableJson.avatar}" title="${responsableJson.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
+                            }
+                            return responsable;
+                        }
                     },
                     {
                         data: 'fechacompromiso',
-                        name: 'fechacompromiso'
                     },
                     {
-                        data: 'prioridad',
-                        name: 'prioridad'
-                    },
-                    {
-                        data: 'estatus',
-                        name: 'estatus'
-                    },
-                    {
-                        data: 'probabilidad',
-                        name: 'probabilidad'
-                    },
-                    {
-                        data: 'impacto',
-                        name: 'impacto'
-                    },
-                    {
-                        data: 'nivelriesgoresidual',
-                        name: 'nivelriesgoresidual'
+                        data: 'inversion_requerida',
+                        render: function(data, type, row, meta) {
+                            const inversion = row.inversion_requerida;
+                            if (inversion == 1) {
+                                return `<div style="text-align:left">Sí</div>`;
+                            }
+                            if (inversion == 0) {
+                                return `<div style="text-align:left">No</div>`;
+                            }
+                            if(inversion == null){
+                                return `<div style="text-align:left">Sin resultado</div>`;
+                            }
+                        }
                     },
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
                     }
                 ],
+                createdRow: (row, data, dataIndex, cells) => {
+                        let color = "green";
+                        let texto = "white";
+                        if (data.riesgototal <= 185) {
+                            color = "#FF417B";
+                            texto = "white";
+                        }
+                        if (data.riesgototal <= 135) {
+                            color = "#FFAC6A";
+                            texto = "white";
+                        }
+                        if (data.riesgototal <= 90) {
+                            color = "#FFCB63";
+                            texto = "white";
+                        }
+                        if (data.riesgototal <= 45) {
+                            color = "#6DC866";
+                            texto = "white";
+                        }
+                        if (data.riesgototal == null) {
+                            color = "white";
+                            texto = "white";
+                        }
+                        
+                        let fondo = "green";
+                        let letras = "white";
+                        if (data.riesgo_total_residual <= 185) {
+                            fondo = "#FF417B";
+                            letras = "white";
+                        }
+                        if (data.riesgo_total_residual >= 135) {
+                            fondo = "#FFAC6A";
+                            letras = "white";
+                        }
+                        if (data.riesgo_total_residual <= 90) {
+                            fondo = "#FFCB63";
+                            letras = "white";
+                        }
+                        if (data.riesgo_total_residual  <= 45) {
+                            fondo = "#6DC866";
+                            letras = "white";
+                        }
+                        if (data.riesgo_total_residual == null) {
+                            fondo = "#fff";
+                            letras = "white";
+                        }
+                        if(data.riesgototal !=null){
+                            $(cells[3]).css('background-color', color)
+                            $(cells[3]).css('color', texto)
+
+                        }
+                        if(data.riesgo_total_residual !=null){
+                            $(cells[4]).css('background-color', fondo)
+                            $(cells[4]).css('color', letras)
+                        }
+
+                    },
+
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
                 ],
+                
             };
             let table = $('.datatable-TratamientoRiesgo').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {

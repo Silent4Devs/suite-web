@@ -8,15 +8,13 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PlanaccionCorrectiva extends Model
+class PlanaccionCorrectiva extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'planaccion_correctivas';
 
     public static $searchable = [
@@ -32,8 +30,8 @@ class PlanaccionCorrectiva extends Model
 
     const ESTATUS_SELECT = [
         'por_iniciar' => 'Por iniciar',
-        'en_proceso'  => 'En proceso',
-        'terminado'   => 'Terminado',
+        'en_proceso' => 'En proceso',
+        'terminado' => 'Terminado',
     ];
 
     protected $fillable = [

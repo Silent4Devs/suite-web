@@ -2,12 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.evidencias-sgsis.create') }}
-
+    <h5 class="col-12 titulo_general_funcion">Editar: Evidencias de Asignación de Recursos al SGSI</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"> <strong>Editar:</strong> Evidencias de Asignación de Recursos al SGSI
-            </h3>
-        </div>
 
         <div class="card-body">
             <form method="POST" class="row"
@@ -34,7 +30,7 @@
                             class="fas fa-file-alt iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}</label>
                     <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" type="text"
                         name="objetivodocumento"
-                        id="objetivodocumento">{{ old('objetivodocumento', $evidenciasSgsi->objetivodocumento) }}</textarea>
+                        id="objetivodocumento" required>{{ old('objetivodocumento', $evidenciasSgsi->objetivodocumento) }}</textarea>
                     @if ($errors->has('objetivodocumento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivodocumento') }}
@@ -47,8 +43,8 @@
 
 
                 <div class="form-group col-md-4">
-                    <label for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
-                    <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}"
+                    <label class="required" for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
+                    <select required class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}"
                         name="responsable_evidencia_id" id="responsable_evidencia_id">
                         <option value="">Seleccione una opción</option>
                         @foreach ($empleados as $id => $empleado)
@@ -113,7 +109,7 @@
                     <label class="required" for="arearesponsable"><i
                             class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="mb-3 input-group">
-                        <select class="custom-select areas" id="inputGroupSelect01" name="arearesponsable">
+                        <select class="custom-select areas" id="inputGroupSelect01" name="area_id" required>
                             <option selected disabled value="null">-- Seleccion un área --</option>
                             @forelse ($areas as $area)
                                 <option value="{{ $area->id }}"
@@ -124,9 +120,9 @@
                             @endforelse
                         </select>
                     </div>
-                    @if ($errors->has('arearesponsable'))
+                    @if ($errors->has('area'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('arearesponsable') }}
+                            {{ $errors->first('area') }}
                         </div>
                     @endif
                 </div>
@@ -135,10 +131,10 @@
 
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del
+                    <label class="required" for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del
                         documento</label>
-                    <input class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date"
-                        name="fechadocumento" id="fechadocumento"
+                    <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date"
+                        name="fechadocumento" id="fechadocumento" min="1945-01-01"
                         value="{{ old('fechadocumento', \Carbon\Carbon::parse($evidenciasSgsi->fechadocumento))->format('Y-m-d') }}">
                     @if ($errors->has('fechadocumento'))
                         <div class="invalid-feedback">
@@ -174,7 +170,7 @@
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
             </div> --}}
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route("admin.evidencias-sgsis.index") }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -198,10 +194,16 @@
                                         </ol>
                                         <div class='carousel-inner'>
                                             @foreach ($evidenciasSgsi->evidencia_sgsi as $idx => $evidencia)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                        src="{{ asset('storage/evidencias_sgsi') }}/{{ $evidencia->evidencia }}"></iframe>
-                                                </div>
+                                                @if (pathinfo($evidencia->evidencia, PATHINFO_EXTENSION) == 'pdf')
+                                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <embed style="width:100%;height:300px;" seamless class='img-size'
+                                                            src="{{ asset('storage/evidencias_sgsi') }}/{{ $evidencia->evidencia }}"></embed>
+                                                    </div>
+                                                @else
+                                                    <div class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <a href="{{ asset('storage/evidencias_sgsi') }}/{{ $evidencia->evidencia }}"><i class="fas fa-file-download mr-2" style="font-size:18px"></i>{{ $evidencia->evidencia }}</a>
+                                                    </div>
+                                                @endif
                                             @endforeach
 
 
@@ -309,16 +311,23 @@
             let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
             let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('puesto_reviso').innerHTML = puesto_init;
-            document.getElementById('area_reviso').innerHTML = area_init;
+            document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
             responsable.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_reviso').innerHTML = puesto;
-                document.getElementById('area_reviso').innerHTML = area;
+                document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
+                document.getElementById('area_reviso').innerHTML = recortarTexto(area);
             })
         });
+
+        function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
     </script>
 
 @endsection

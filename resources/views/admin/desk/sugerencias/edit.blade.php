@@ -6,7 +6,11 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-    <style>
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+
         ol.breadcrumb {
             margin-bottom: 0px;
         }
@@ -39,11 +43,11 @@
                             @csrf
 
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
-                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                 <div class="row w-100">
                                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                         <div class="w-100">
-                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                         </div>
                                     </div>
                                     <div class="col-11">
@@ -71,8 +75,8 @@
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
                                     corto de
-                                    la sugerencia</label>
-                                <input name="titulo" value="{{ $sugerencias->titulo }}" class="form-control">
+                                    la sugerencia <sup>*</sup></label>
+                                <input name="titulo" value="{{ $sugerencias->titulo }}" class="form-control" required>
                             </div>
 
                             <div class="mt-2 form-group col-lg-4 col-sm-12 col-md-4">
@@ -122,7 +126,7 @@
 
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-user iconos-crear"></i> Nombre</label>
-                                <div class="form-control">{{ $sugerencias->sugirio->name }}</div>
+                                <div class="form-control">{{ Str::limit($sugerencias->sugirio->name, 30, '...') }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-4">
@@ -185,9 +189,9 @@
 
                             <div class="mt-2 form-group col-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa
-                                    detalladamente su sugerencia</label>
+                                    detalladamente su sugerencia<sup>*</sup></label>
                                 <textarea name="descripcion"
-                                    class="form-control">{{ $sugerencias->descripcion }}</textarea>
+                                    class="form-control" required>{{ $sugerencias->descripcion }}</textarea>
                             </div>
 
                             <div class="mt-2 text-right form-group col-12">
@@ -202,11 +206,11 @@
                         <div class="row">
 
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
-                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                 <div class="row w-100">
                                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                         <div class="w-100">
-                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                         </div>
                                     </div>
                                     <div class="col-11">
@@ -292,43 +296,88 @@
 
 
                                     <div id="digrama" class="caja_oculta_dinamica">
-                                        <div class="mt-5 col-12" style="overflow: auto;">
-                                            <div style="width: 100%; min-width:540px; position: relative;">
+                                        <div class="mt-5 col-md-12" style="overflow: auto;">
+                                            <div style="width: 100%; min-width:980px; margin-left:80px;">
                                                 <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
-                                                    style="width:100%">
-
-                                                <textarea name="control_a"
-                                                    class="politicas_txtarea">{{ $analisis->control_a }}</textarea>
-                                                <textarea name="control_b"
-                                                    class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea>
-
-                                                <textarea name="proceso_a"
-                                                    class="procesos_txtarea">{{ $analisis->proceso_a }}</textarea>
-                                                <textarea name="proceso_b"
-                                                    class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea>
-
-                                                <textarea name="personas_a"
-                                                    class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
-                                                <textarea name="personas_b"
-                                                    class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea>
-
+                                                    style="width:190%; margin-top:20px;">
+                                                    <div
+                                                    style="top:0px;left:150px; position: absolute;height:35px; width:150px;  background-color:#63e4e4; border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Control</strong>
+                                                </div>
+                                                <div
+                                                    style="top:0px; left:680px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Proceso</strong>
+                                                </div>
+                                                <div
+                                                    style="top:0px; left:1200px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-users"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Personas</strong>
+                                                </div>
+                                                <div
+                                                    style="buttom:0px; left:410px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Tecnología</strong>
+                                                </div>
+                                                <div
+                                                    style="buttom:0px; left:920px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Métodos</strong>
+                                                </div>
+                                                <div
+                                                    style="buttom:0px;left:1450px; position: absolute;height:35px; width:150px; background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-chalkboard"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Recursos</strong>
+                                                </div>
+                                                <div class="col-6"
+                                                    style="top:55px; left:290px; position: absolute; height:30px !important;">
+                                                    <textarea name="control_a"
+                                                        class="politicas_txtarea" id="analisisControl">{{ $analisis->control_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="control_b"
+                                                    class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea> --}}
+                                                <div class="col-6"
+                                                style="top:55px; left:810px; position: absolute; height:30px !important;">
+                                                    <textarea name="proceso_a"
+                                                        class="procesos_txtarea" id="analisisProceso">{{ $analisis->proceso_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="proceso_b"
+                                                    class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea> --}}
+                                                    <div class="col-6" style="top:55px; left:1315px; position: absolute; height:30px !important;">
+                                                    <textarea name="personas_a"
+                                                        class="personas_txtarea" id="analisisPersona">{{ $analisis->personas_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="personas_b"
+                                                    class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; right:480px; position: absolute;">
                                                 <textarea name="tecnologia_a"
-                                                    class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
-                                                <textarea name="tecnologia_b"
-                                                    class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea>
-
+                                                    class="tecnologia_txtarea txt_obj_secundarios_b" id="analisisTecnologia">{{ $analisis->tecnologia_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="tecnologia_b"
+                                                    class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; left:540px; position: absolute;">
                                                 <textarea name="metodos_a"
-                                                    class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis->metodos_a }}</textarea>
-                                                <textarea name="metodos_b"
-                                                    class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea>
-
+                                                    class="metodos_txtarea txt_obj_secundarios_b" id="analisisMetodos">{{ $analisis->metodos_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="metodos_b"
+                                                    class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; left:1060px; position: absolute;" >
                                                 <textarea name="ambiente_a"
-                                                    class="ambiente_txtarea txt_obj_secundarios_b">{{ $analisis->ambiente_a }}</textarea>
-                                                <textarea name="ambiente_b"
-                                                    class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea>
-
+                                                    class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis->ambiente_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="ambiente_b"
+                                                class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; left:1600px; position: absolute;">
                                                 <textarea name="problema_diagrama"
-                                                    class="problemas_txtarea">{{ $analisis->problema_diagrama }}</textarea>
+                                                    class="problemas_txtarea" id="analisisProblema">{{ $analisis->problema_diagrama }}</textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -348,13 +397,13 @@
                             </div>
                         </div>
                         <div class="" style=" position: relative; ">
-                            <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
+                            <h5 style=" position: ;"><b>Acciones para la Atención de la Sugerencia</b></h5>
                             <button style="position:absolute; right: 2px; top:2px;"
                                 class="btn btn-success btn_modal_form">Agregar actividad</button>
                             @if (count($sugerencias->planes))
                                 <a style="position:absolute; right: 170px; top:2px;"
                                     href="{{ route('admin.planes-de-accion.show', $sugerencias->planes->first()->id) }}"
-                                    class="btn btn-success btn_modal_form"><i class="mr-2 fas fa-stream"></i> Plan De
+                                    class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
                                     Acción</a>
                             @endif
                         </div>
@@ -629,6 +678,109 @@
         $(".caja_oculta_dinamica").removeClass("d-block");
         var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
         $(document.getElementById(metodo_v)).addClass("d-block");
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('analisisControl', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisProceso', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisPersona', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisTecnologia', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisMetodos', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisAmbiente', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisProblema', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
     });
 </script>
 @endsection

@@ -3,20 +3,38 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
-use DateTimeInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PartesInteresada extends Model
+/**
+ * Class PartesInteresada.
+ *
+ * @property int $id
+ * @property character varying $parteinteresada
+ * @property string $requisitos
+ * @property timestamp without time zone|null $created_at
+ * @property timestamp without time zone|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $team_id
+ * @property int|null $norma_id
+ * @property Team|null $team
+ * @property Norma|null $norma
+ * @property Collection|Clausula[] $clausulas
+ */
+class PartesInteresada extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
-    public $table = 'partes_interesadas';
+    protected $table = 'partes_interesadas';
+
+    protected $casts = [
+        'parteinteresada' => 'string',
+        'norma_id' => 'int',
+    ];
 
     public static $searchable = [
         'parteinteresada',
@@ -62,25 +80,34 @@ class PartesInteresada extends Model
     protected $fillable = [
         'parteinteresada',
         'requisitos',
-        'clausula',
-        'created_at',
-        'updated_at',
-        'deleted_at',
         'team_id',
+        'norma_id',
     ];
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 
     public function team()
     {
-        return $this->belongsTo(Team::class, 'team_id');
+        return $this->belongsTo(Team::class);
+    }
+
+    public function norma()
+    {
+        return $this->belongsTo(Norma::class);
     }
 
     public function clausulas()
     {
-        return $this->belongsToMany(Clausula::class, 'partes_interesadas_clausula', 'partesint_id', 'clausula_id');
+        return $this->belongsToMany(Clausula::class, 'partes_interesadas_clausula', 'partesint_id')
+            ->withPivot('id')
+            ->withTimestamps();
+    }
+
+    public function expectativasNecesidades()
+    {
+        return $this->hasMany(ParteInteresadaExpectativaNecesidad::class, 'id_interesada', 'id');
+    }
+
+    public function expectativasNecesidadesWithNormas()
+    {
+        return $this->hasMany(ParteInteresadaExpectativaNecesidad::class, 'id_interesada', 'id')->with('normas');
     }
 }

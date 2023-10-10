@@ -1,51 +1,60 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('admin.amenazas.index') }}
 
-{{ Breadcrumbs::render('admin.amenazas.index') }}
+    <style>
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
 
-<style>
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
 
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #00abb2;
-        color: #00abb2;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#00abb2 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
 
-</style>
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+        .agregar {
+            margin-right: 15px;
+        }
+    </style>
+
+    <h5 class="col-12 titulo_general_funcion">Amenazas</h5>
 
     <div class="mt-5 card">
-
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Amenazas</strong></h3>
-        </div>
-        <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-            <div class="col-lg-12">
-                @include('csvImport.modal', ['model' => 'Amenaza', 'route' => 'admin.amenazas.parseCsvImport'])
-            </div>
+        @can('amenazas_agregar')
+            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+                <div class="col-lg-12">
+                    @include('csvImport.modal', [
+                        'model' => 'Amenaza',
+                        'route' => 'admin.amenazas.parseCsvImport',
+                    ])
+                </div>
+            @endcan
         </div>
 
         @include('flash::message')
@@ -54,7 +63,6 @@
             @include('admin.amenazas.table')
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -81,28 +89,46 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
+
                 {
                     extend: 'print',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    // set custom header when print
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+                        let empleado = @json(auth()->user()->empleado->name);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                                <div class="row">
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <p>${empresa_actual}</p>
+                                        <strong style="color:#345183">Amenazas</strong>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        Fecha: ${jsDate}
+                                    </div>
+                                </div>
+                            `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -131,7 +157,7 @@
 
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar Amenaza' ,
+                titleAttr: 'Agregar Amenaza',
                 url: "{{ route('admin.amenazas.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config) {
@@ -144,9 +170,13 @@
             let btnExport = {
                 text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
+                className: "btn btn_cargar",
+                url: "{{ route('descarga-amenaza') }}",
                 action: function(e, dt, node, config) {
-                    $('#').modal('show');
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
             let btnImport = {
@@ -158,50 +188,52 @@
                 }
             };
 
+            @can('amenazas_agregar')
+                dtButtons.push(btnAgregar);
+            @endcan
 
-            dtButtons.push(btnAgregar);
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
 
+            @can('amenazas_eliminar')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.amenazas.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-            let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.amenazas.massDestroy') }}",
-                className: 'btn-danger',
-                action: function(e, dt, node, config) {
-                    var ids = $.map(dt.rows({
-                        selected: true
-                    }).data(), function(entry) {
-                        return entry.id
-                    });
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                    if (ids.length === 0) {
-                        alert('{{ trans('global.datatables.zero_selected') }}')
+                            return
+                        }
 
-                        return
-                    }
-
-                    if (confirm('{{ trans('global.areYouSure') }}')) {
-                        $.ajax({
-                                headers: {
-                                    'x-csrf-token': _token
-                                },
-                                method: 'POST',
-                                url: config.url,
-                                data: {
-                                    ids: ids,
-                                    _method: 'DELETE'
-                                }
-                            })
-                            .done(function() {
-                                location.reload()
-                            })
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
                     }
                 }
-            }
-            //dtButtons.push(deleteButton)
-
+                //dtButtons.push(deleteButton)
+            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -215,7 +247,11 @@
                     },
                     {
                         data: 'nombre',
-                        name: 'nombre'
+                        name: 'nombre',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
+
                     },
                     {
                         data: 'categoria',
@@ -236,6 +272,17 @@
                 ],
             };
             let table = $('.datatable-amenaza').DataTable(dtOverrideGlobals);
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
+                let titulo_tabla = `
+                    <h5>
+                        <strong>
+                            Amenazas
+                        </strong>
+                    </h5>
+                `;
+                imprimirTabla('datatable-amenaza', titulo_tabla);
+            });
+
         });
     </script>
 @endsection

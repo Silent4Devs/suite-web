@@ -5,10 +5,11 @@ namespace App\Mail;
 use App\Models\Documento;
 use App\Models\RevisionDocumento;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class DocumentoAprobadoMail extends Mailable
+class DocumentoAprobadoMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -18,6 +19,7 @@ class DocumentoAprobadoMail extends Mailable
      * @return void
      */
     public $documento;
+
     public $revision;
 
     public function __construct(Documento $documento, RevisionDocumento $revision)

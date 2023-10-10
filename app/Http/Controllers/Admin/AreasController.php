@@ -6,8 +6,8 @@ use App\Exports\AreasExport;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyAreaRequest;
-use App\Http\Requests\StoreAreaRequest;
 use App\Models\Area;
+use App\Models\Empleado;
 use App\Models\Grupo;
 use App\Models\Organizacion;
 use App\Models\Team;
@@ -27,7 +27,7 @@ class AreasController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Area::orderByDesc('id')->get();
@@ -37,9 +37,9 @@ class AreasController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'configuracion_area_show';
-                $editGate = 'configuracion_area_edit';
-                $deleteGate = 'configuracion_area_delete';
+                $viewGate = 'crear_area_ver';
+                $editGate = 'crear_area_editar';
+                $deleteGate = 'crear_area_eliminar';
                 $crudRoutePart = 'areas';
 
                 return view('partials.datatablesActions', compact(
@@ -83,27 +83,37 @@ class AreasController extends Controller
         $grupoarea = Grupo::get();
         $numero_areas = Area::count();
 
-        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', ));
+        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', 'grupoarea'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_area_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
+        $empleados = Empleado::getaltaAll();
+        $area = new Area();
 
-        return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas'));
+        return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados', 'area'));
     }
 
-    public function store(StoreAreaRequest $request)
+    public function store(Request $request)
     {
+        abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+
         $validateReporta = 'nullable|exists:areas,id';
         if ($direccion_exists) {
             $validateReporta = 'required|exists:areas,id';
         }
+        $request->validate([
+            'area' => 'required|string',
+            'id_reporta' => $validateReporta,
+        ], [
+            'id_reporta.required' => 'El área a la que reporta es requerido',
+        ]);
 
         $area = Area::create($request->all());
 
@@ -125,30 +135,24 @@ class AreasController extends Controller
             'foto_area' => $image,
         ]);
 
-        $request->validate([
-            'area' => 'required|string',
-            'id_grupo' => 'required|exists:grupos,id',
-            'id_reporta' => $validateReporta,
-            'descripcion' => 'required|string',
-
-        ]);
-
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Area $area)
     {
-        abort_if(Gate::denies('configuracion_area_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
+        $reportas = Empleado::getaltaAll();
 
-        return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area'));
+        return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area', 'reportas'));
     }
 
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $primer_nodo = Area::select('id', 'id_reporta')->whereNull('id_reporta')->first();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $validateReporta = 'nullable|exists:areas,id';
@@ -162,9 +166,15 @@ class AreasController extends Controller
             }
         }
 
+        $request->validate([
+            'area' => 'required|string',
+            'id_reporta' => $validateReporta,
+        ], [
+            'id_reporta.required' => 'El área a la que reporta es requerido',
+        ]);
+
         $image = $area->foto_area;
         if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
-
             //Si existe la imagen entonces se elimina al editarla
 
             $isExists = Storage::disk('public')->exists('/app/public/areas/' . $area->foto_area);
@@ -185,18 +195,12 @@ class AreasController extends Controller
             })->save($route);
         }
 
-        $request->validate([
-            'area' => 'required|string',
-            'id_grupo' => 'required|exists:grupos,id',
-            'id_reporta' => $validateReporta,
-            'descripcion' => 'required|string',
-        ]);
-
         $area->update([
             'area' => $request->area,
-            'id_grupo' =>  $request->id_grupo,
-            'id_reporta' =>  $request->id_reporta,
-            'descripcion' =>  $request->descripcion,
+            'id_grupo' => $request->id_grupo,
+            'id_reporta' => $request->id_reporta,
+            'descripcion' => $request->descripcion,
+            'empleados_id' => $request->empleados_id,
             'foto_area' => $image,
 
         ]);
@@ -206,7 +210,7 @@ class AreasController extends Controller
 
     public function show(Area $area)
     {
-        abort_if(Gate::denies('configuracion_area_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $area->load('team', 'grupo');
 
@@ -215,7 +219,7 @@ class AreasController extends Controller
 
     public function destroy(Area $area)
     {
-        abort_if(Gate::denies('configuracion_area_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $area->delete();
 
@@ -239,28 +243,28 @@ class AreasController extends Controller
 
     public function renderJerarquia(Request $request)
     {
-        abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $numero_grupos = Grupo::count();
 
         $areasTree = Area::exists(); //Eager loading
         // dd($areasTree);
 
         $rutaImagenes = asset('storage/empleados/imagenes/');
-        $grupos = Grupo::with('areas')->get();
-        $organizacionDB = Organizacion::first();
-        $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
+        $grupos = Grupo::with('areas')->orderBy('id')->get();
+        $organizacionDB = Organizacion::getFirst();
+        $organizacion = !is_null($organizacionDB) ? Organizacion::getFirst()->empresa : 'la organización';
         $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos', 'numero_grupos', 'areas_sin_grupo', 'organizacion'));
     }
 
     public function obtenerJerarquia(Request $request)
     {
-        abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
 
         return json_encode($areasTree);
         // dd($areasTree);

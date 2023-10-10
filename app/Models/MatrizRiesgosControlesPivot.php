@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class MatrizRiesgosControlesPivot.
@@ -14,16 +14,13 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property int $controles_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property DeclaracionAplicabilidad $declaracion_aplicabilidad
  * @property MatrizRiesgo $matriz_riesgo
  */
-class MatrizRiesgosControlesPivot extends Model
+class MatrizRiesgosControlesPivot extends Model implements Auditable
 {
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'matriz_riesgos_controles_pivot';
 
     protected $casts = [

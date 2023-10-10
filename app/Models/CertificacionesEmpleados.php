@@ -7,16 +7,14 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Jenssegers\Date\Date;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CertificacionesEmpleados extends Model
+class CertificacionesEmpleados extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
     use DateTranslator;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'certificaciones_empleados';
 
     protected $dates = [
@@ -66,7 +64,7 @@ class CertificacionesEmpleados extends Model
 
     public function empleado_certificaciones()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 
     public function getVigenciaAttribute($value)

@@ -10,25 +10,47 @@ use Livewire\Component;
 class ConsultaDeEvaluciones extends Component
 {
     public $evaluacion;
+
     public $evaluado;
+
     public $evaluador;
+
     public $calificaciones_autoevaluacion_competencias;
+
     public $calificaciones_autoevaluacion_competencias_compare_first;
+
     public $calificaciones_autoevaluacion_competencias_compare;
+
     public $calificaciones_jefe_competencias;
+
     public $calificaciones_equipo_competencias;
+
     public $calificaciones_area_competencias;
+
+    public $calificaciones_meta_competencias;
+
     public $competencias_lista_nombre;
+
     public $competencias_lista_nombre_max;
+
     public $calificaciones;
+
     public $calificaciones_compare_first;
+
     public $calificaciones_compare;
+
     public $informacion_obtenida;
+
     public $informacion_obtenida_compare_first;
+
     public $informacion_obtenida_compare;
+
     public $equipo;
+
     public $evaluacion1;
+
     public $evaluacion2;
+
     public $showCompare = false;
 
     public function mount($evaluacion, $evaluado, $equipo, $evaluador = null)
@@ -42,14 +64,16 @@ class ConsultaDeEvaluciones extends Component
     public function render()
     {
         $evaluacionController = new EV360EvaluacionesController;
-        $this->informacion_obtenida = $evaluacionController->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion, $this->evaluado);
+        $ev360ResumenTabla = new Ev360ResumenTabla();
+        $this->informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion, $this->evaluado);
         $this->calificaciones = $evaluacionController->desglosarCalificaciones($this->informacion_obtenida);
         $this->calificaciones_autoevaluacion_competencias = $this->calificaciones['calificaciones_autoevaluacion_competencias'];
         $this->calificaciones_jefe_competencias = $this->calificaciones['calificaciones_jefe_competencias'];
         $this->calificaciones_equipo_competencias = $this->calificaciones['calificaciones_equipo_competencias'];
         $this->calificaciones_area_competencias = $this->calificaciones['calificaciones_area_competencias'];
+        $this->calificaciones_meta_competencias = $this->calificaciones['calificaciones_meta_competencias'];
         $this->competencias_lista_nombre = $this->calificaciones['competencias_lista_nombre'];
-        $evaluaciones = Evaluacion::all();
+        $evaluaciones = Evaluacion::getAll();
         $this->emit('renderCharts');
 
         if ($this->equipo) {
@@ -75,9 +99,10 @@ class ConsultaDeEvaluciones extends Component
             'evaluacion2' => 'required',
         ]);
         // dd($this->evaluacion1);
+        $ev360ResumenTabla = new Ev360ResumenTabla();
         $evaluacionController = new EV360EvaluacionesController;
-        $this->informacion_obtenida_compare_first = $evaluacionController->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion1, $this->evaluado);
-        $this->informacion_obtenida_compare = $evaluacionController->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion2, $this->evaluado);
+        $this->informacion_obtenida_compare_first = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion1, $this->evaluado);
+        $this->informacion_obtenida_compare = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion2, $this->evaluado);
 
         $this->calificaciones_compare_first = $evaluacionController->desglosarCalificaciones($this->informacion_obtenida_compare_first);
         $this->calificaciones_autoevaluacion_competencias_compare_first = $this->calificaciones_compare_first['calificaciones_autoevaluacion_competencias'];

@@ -1,10 +1,10 @@
 <div>
     <div class="container">
-        <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
                     <div class="w-100">
-                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                     </div>
                 </div>
                 <div class="col-11">
@@ -42,7 +42,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="razon_social_id"><i class="far fa-building iconos-crear"></i>Razón Social</label>
+                <label for="razon_social_id"><i class="far fa-building iconos-crear"></i>Razón Social</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="razon_social_id" class="c-switch-input">
@@ -50,7 +50,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="rfc_id"><i class="fas fa-file-alt iconos-crear"></i>RFC</label>
+                <label  for="rfc_id"><i class="fas fa-file-alt iconos-crear"></i>RFC</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="rfc_id" class="c-switch-input">
@@ -75,7 +75,7 @@
             </div>
             <div class="form-group col-sm-3">
                 {{-- {{$pagina_web_id}} --}}
-                <label class="required" for="pagina_web_id"><i class="far fa-envelope iconos-crear"></i> Página Web</label>
+                <label  for="pagina_web_id"><i class="far fa-envelope iconos-crear"></i> Página Web</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="pagina_web_id" class="c-switch-input">
@@ -84,7 +84,7 @@
             </div>
 
             <div class="form-group col-sm-3">
-                <label class="required" for="schedule_id"><i class="iconos-crear fas fa-calendar-alt"></i>Horario Laboral</label>
+                <label  for="schedule_id"><i class="iconos-crear fas fa-calendar-alt"></i>Horario Laboral</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="schedule_id" class="c-switch-input">
@@ -92,7 +92,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="representante_legal_id"><i class="iconos-crear fas fa-user"></i>Representante Legal </label>
+                <label  for="representante_legal_id"><i class="iconos-crear fas fa-user"></i>Representante Legal </label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="representante_legal_id" class="c-switch-input">
@@ -100,7 +100,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="fecha_constitucion_id"><i class="iconos-crear fas fa-calendar-alt"></i>Fecha de
+                <label for="fecha_constitucion_id"><i class="iconos-crear fas fa-calendar-alt"></i>Fecha de
                     constitución</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
@@ -109,7 +109,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="num_empleados_id"><i class="iconos-crear fas fa-users"></i>Número
+                <label for="num_empleados_id"><i class="iconos-crear fas fa-users"></i>Número
                     de empleados</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
@@ -118,7 +118,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="tamano_id"><i class="iconos-crear fas fa-building"></i>Tamaño</label>
+                <label for="tamano_id"><i class="iconos-crear fas fa-building"></i>Tamaño</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="tamano_id" class="c-switch-input">
@@ -126,7 +126,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="giro_id"> <i class="fas fa-briefcase iconos-crear"></i>Giro</label>
+                <label  for="giro_id"> <i class="fas fa-briefcase iconos-crear"></i>Giro</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="giro_id" class="c-switch-input">
@@ -134,7 +134,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="servicios_id"><i class="fas fa-briefcase iconos-crear"></i>Servicios</label>
+                <label for="servicios_id"><i class="fas fa-briefcase iconos-crear"></i>Servicios</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="servicios_id" class="c-switch-input">
@@ -142,7 +142,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="mision_id"><i class="fas fa-flag iconos-crear"></i>Misión</label>
+                <label  for="mision_id"><i class="fas fa-flag iconos-crear"></i>Misión</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="mision_id" class="c-switch-input">
@@ -150,7 +150,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="vision_id"><i class="far fa-eye iconos-crear"></i>Visión</label>
+                <label  for="vision_id"><i class="far fa-eye iconos-crear"></i>Visión</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="vision_id" class="c-switch-input">
@@ -158,7 +158,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="valores_id"><i class="far fa-heart iconos-crear"></i>Valores</label>
+                <label  for="valores_id"><i class="far fa-heart iconos-crear"></i>Valores</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="valores_id" class="c-switch-input">
@@ -166,7 +166,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="antecedentes_id"><i class="far fa-file-alt iconos-crear"></i>Antecedentes</label>
+                <label  for="antecedentes_id"><i class="far fa-file-alt iconos-crear"></i>Antecedentes</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="antecedentes_id" class="c-switch-input">
@@ -174,7 +174,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="linkedln_id"><i class="fab fa-linkedin iconos-crear"></i>Linkedln</label>
+                <label  for="linkedln_id"><i class="fab fa-linkedin iconos-crear"></i>Linkedln</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="linkedln_id" class="c-switch-input">
@@ -182,7 +182,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="facebook_id"><i class="fab fa-facebook-square iconos-crear"></i>Facebook</label>
+                <label  for="facebook_id"><i class="fab fa-facebook-square iconos-crear"></i>Facebook</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="facebook_id" class="c-switch-input">
@@ -190,7 +190,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="youtube_id"><i class="fab fa-youtube iconos-crear"></i>Youtube</label>
+                <label for="youtube_id"><i class="fab fa-youtube iconos-crear"></i>Youtube</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="youtube_id" class="c-switch-input">
@@ -198,7 +198,7 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="twitter_id"><i class="fab fa-twitter-square iconos-crear"></i>Twitter</label>
+                <label  for="twitter_id"><i class="fab fa-twitter-square iconos-crear"></i>Twitter</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                     <input type="checkbox" wire:model.debounce.800ms="twitter_id" class="c-switch-input">

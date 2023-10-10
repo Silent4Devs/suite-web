@@ -8,14 +8,18 @@ use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
 use App\Models\Amenaza;
 use App\Repositories\AmenazaRepository;
+use App\Traits\ObtenerOrganizacion;
 use Flash;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
 class AmenazaController extends AppBaseController
 {
     use CsvImportTrait;
+    use ObtenerOrganizacion;
+
     /** @var AmenazaRepository */
     private $amenazaRepository;
 
@@ -26,6 +30,7 @@ class AmenazaController extends AppBaseController
 
     public function index(Request $request)
     {
+        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Amenaza::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -34,9 +39,9 @@ class AmenazaController extends AppBaseController
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'user_show';
-                $editGate = 'user_edit';
-                $deleteGate = 'user_delete';
+                $viewGate = 'amenazas_ver';
+                $editGate = 'amenazas_editar';
+                $deleteGate = 'amenazas_eliminar';
                 $crudRoutePart = 'amenazas';
 
                 return view('partials.datatablesActions', compact(
@@ -65,8 +70,11 @@ class AmenazaController extends AppBaseController
 
             return $table->make(true);
         }
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.amenazas.index');
+        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual'));
     }
 
     /**
@@ -76,18 +84,21 @@ class AmenazaController extends AppBaseController
      */
     public function create()
     {
-        return view('admin.amenazas.create');
+        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $amenaza = new Amenaza();
+
+        return view('admin.amenazas.create', compact('amenaza'));
     }
 
     /**
      * Store a newly created Amenaza in storage.
      *
-     * @param CreateAmenazaRequest $request
      *
      * @return Response
      */
     public function store(CreateAmenazaRequest $request)
     {
+        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $input = $request->all();
 
         $amenaza = $this->amenazaRepository->create($input);
@@ -97,27 +108,16 @@ class AmenazaController extends AppBaseController
         return redirect(route('admin.amenazas.index'));
     }
 
-    /**
-     * Display the specified Amenaza.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
     public function show(Amenaza $amenaza)
     {
+        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.amenazas.show')->with('amenaza', $amenaza);
     }
 
-    /**
-     * Show the form for editing the specified Amenaza.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
     public function edit($id)
     {
+        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {
@@ -129,16 +129,9 @@ class AmenazaController extends AppBaseController
         return view('admin.amenazas.edit')->with('amenaza', $amenaza);
     }
 
-    /**
-     * Update the specified Amenaza in storage.
-     *
-     * @param  int              $id
-     * @param UpdateAmenazaRequest $request
-     *
-     * @return Response
-     */
     public function update($id, UpdateAmenazaRequest $request)
     {
+        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {
@@ -157,12 +150,12 @@ class AmenazaController extends AppBaseController
     /**
      * Remove the specified Amenaza from storage.
      *
-     * @param  int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function destroy($id)
     {
+        abort_if(Gate::denies('amenazas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {

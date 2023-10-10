@@ -7,10 +7,11 @@
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
+    <h5 class="col-12 titulo_general_funcion">Editar: Análisis de Riesgo</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
+        {{-- <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Análisis de Riesgo</h3>
-        </div>
+        </div> --}}
 
         <div class="card-body">
             <form method="POST" action="{{ route('admin.analisisdebrechas.update', [$analisisBrecha->id]) }}"
@@ -28,8 +29,8 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="nombre"><i class="fas fa-table iconos-crear"></i>Nombre</label>
-                        <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                        <label for="nombre" class="required"><i class="fas fa-table iconos-crear"></i>Nombre</label>
+                        <input required class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre', $analisisBrecha->nombre) }}">
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
@@ -41,8 +42,9 @@
 
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="fecha"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha</label>
-                        <input class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
-                            id="fecha" value="{{ date('d-m-Y') }}" disabled>
+                        <input required class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
+                            id="fecha" value="{{ date('d-m-Y') }}" min="1945-01-01"
+                            disabled>
                         @if ($errors->has('fecha'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha') }}
@@ -52,9 +54,9 @@
                     {{ Form::hidden('fecha', date('Y-m-d')) }}
 
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                        <label class="required" for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                         <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
-                            id="estatus">
+                            id="estatus" required>
                             <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
@@ -74,8 +76,9 @@
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
-                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
+                        <label for="id_elaboro" class="required">
+                            <i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
+                        <select required class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
                             name="id_elaboro" id="id_elaboro">
                             <option value="">Seleccione una opción</option>
                             @foreach ($empleados as $id => $empleado)
@@ -116,7 +119,7 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.analisisdebrechas.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -160,15 +163,23 @@
             let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
             let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('id_puesto').innerHTML = puesto_init;
-            document.getElementById('id_area').innerHTML = area_init;
+            document.getElementById('id_puesto').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('id_area').innerHTML = recortarTexto(area_init);
             elaboro.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('id_puesto').innerHTML = puesto;
-                document.getElementById('id_area').innerHTML = area;
+                document.getElementById('id_puesto').innerHTML = recortarTexto(puesto);
+                document.getElementById('id_area').innerHTML = recortarTexto(area);
             })
+
+            function recortarTexto(texto, length = 30)
+            {
+                let trimmedString = texto?.length > length ?
+                    texto.substring(0, length - 3) + "..." :
+                    texto;
+                return trimmedString;
+            }
         });
     </script>
 @endsection

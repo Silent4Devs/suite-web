@@ -5,7 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class MatrizRiesgo.
@@ -44,7 +45,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property string|null $impacto_residual
  * @property string|null $nivelriesgo_residual
  * @property string|null $riesgo_total_residual
- *
  * @property Controle|null $controle
  * @property Activo|null $activo
  * @property Amenaza|null $amenaza
@@ -57,13 +57,11 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property Team|null $team
  * @property Collection|MatrizRiesgosControlesPivot[] $matriz_riesgos_controles_pivots
  */
-class MatrizRiesgo extends Model
+class MatrizRiesgo extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'matriz_riesgos';
 
     protected $dates = [
@@ -78,17 +76,44 @@ class MatrizRiesgo extends Model
     ];
 
     const PROBABILIDAD_SELECT = [
-        '9'  => 'ALTA (9)',
+        '9' => 'ALTA (9)',
         '6' => 'MEDIA (6)',
-        '3'  => 'BAJA (3)',
-        '0'  => 'NULA (0)',
+        '3' => 'BAJA (3)',
+        '0' => 'NULA (0)',
+    ];
+
+    const PROBABILIDAD27000_SELECT = [
+        '5' => 'MUY ALTA (5)',
+        '4' => 'ALTA (4)',
+        '3' => 'MODERADA (3)',
+        '2' => 'BAJA (2)',
+        '1' => 'MUY BAJA (1)',
+    ];
+
+    const IMPACTO27000_SELECT = [
+        '5' => 'SIGNIFICATIVO (5)',
+        '4' => 'MAYOR (4)',
+        '3' => 'IMPORTANTE (3)',
+        '2' => 'BAJO (2)',
+        '1' => 'MENOR (1)',
     ];
 
     const IMPACTO_SELECT = [
         '9' => 'MUY ALTO (9)',
-        '6'     => 'ALTO (6)',
-        '3'    => 'MEDIO (3)',
-        '0'     => 'BAJO (0)',
+        '6' => 'ALTO (6)',
+        '3' => 'MEDIO (3)',
+        '0' => 'BAJO (0)',
+    ];
+
+    const EV_INICIAL_SELECT = [
+        '11.1' => 'Sí',
+        '0' => 'No',
+    ];
+
+    const TIPO_TRATAMIENTO_SELECT = [
+        '1' => 'Aceptar',
+        '0' => 'Mitigar',
+        '2' => 'transferir',
     ];
 
     protected $casts = [
@@ -103,6 +128,7 @@ class MatrizRiesgo extends Model
         'nivelriesgo' => 'float',
         'riesgototal' => 'float',
         'resultadoponderacion' => 'float',
+        'resultadoponderacionRes' => 'float',
         'riesgoresidual' => 'float',
         //'controles_id' => 'int',
         'team_id' => 'int',
@@ -114,6 +140,7 @@ class MatrizRiesgo extends Model
         'id_amenaza' => 'int',
         'id_area' => 'int',
         'id_vulnerabilidad' => 'int',
+        'version_historico' => 'boolean',
     ];
 
     protected $fillable = [
@@ -127,6 +154,7 @@ class MatrizRiesgo extends Model
         'nivelriesgo',
         'riesgototal',
         'resultadoponderacion',
+        'resultadoponderacionRes',
         'riesgoresidual',
         'justificacion',
         //'controles_id',
@@ -149,12 +177,20 @@ class MatrizRiesgo extends Model
         'riesgo_total_residual',
         'tipo_tratamiento',
         'aceptar_transferir',
+        'version_historico',
     ];
 
     /*protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }*/
+
+    public static function getAll()
+    {
+        return Cache::remember('matriz_riesgos_all', 3600 * 12, function () {
+            return self::get();
+        });
+    }
 
     public function generateTwoFactorCode()
     {
@@ -179,7 +215,7 @@ class MatrizRiesgo extends Model
 
     public function activo()
     {
-        return $this->belongsTo(Activo::class);
+        return $this->belongsTo(SubcategoriaActivo::class);
     }
 
     public function amenaza()
@@ -204,7 +240,7 @@ class MatrizRiesgo extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_responsable');
+        return $this->belongsTo(Empleado::class, 'id_responsable')->alta();
     }
 
     public function sede()
@@ -230,6 +266,6 @@ class MatrizRiesgo extends Model
 
     public function matriz_riesgos_controles_pivots()
     {
-        return $this->hasMany(MatrizRiesgosControlesPivot::class, 'matriz_id');
+        return $this->belongsToMany(DeclaracionAplicabilidad::class, 'matriz_riesgos_controles_pivot', 'matriz_id', 'controles_id');
     }
 }

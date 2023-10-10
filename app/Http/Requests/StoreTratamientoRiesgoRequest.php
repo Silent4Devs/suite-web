@@ -9,29 +9,29 @@ class StoreTratamientoRiesgoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('tratamiento_riesgo_create');
+        return Gate::allows('tratamiento_de_los_riesgos_agregar');
     }
 
     public function rules()
     {
         return [
-            'nivelriesgo'         => [
+            'nivelriesgo' => [
                 'string',
                 'nullable',
             ],
-            'fechacompromiso'     => [
+            'fechacompromiso' => [
                 'date:',
                 'nullable',
             ],
-            'estatus'             => [
+            'estatus' => [
                 'string',
                 'nullable',
             ],
-            'probabilidad'        => [
+            'probabilidad' => [
                 'string',
                 'nullable',
             ],
-            'impacto'             => [
+            'impacto' => [
                 'string',
                 'nullable',
             ],

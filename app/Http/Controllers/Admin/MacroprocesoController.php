@@ -20,7 +20,7 @@ class MacroprocesoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_macroproceso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macroprocesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($query = Macroproceso::get());
         if ($request->ajax()) {
             $query = Macroproceso::get();
@@ -29,9 +29,9 @@ class MacroprocesoController extends Controller
             $table->addColumn('actions', '&nbsp;');
             $table->addIndexColumn();
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'recurso_show';
-                $editGate = 'recurso_edit';
-                $deleteGate = 'recurso_delete';
+                $viewGate = 'macroprocesos_ver';
+                $editGate = 'macroprocesos_editar';
+                $deleteGate = 'macroprocesos_eliminar';
                 $crudRoutePart = 'macroprocesos';
 
                 return view('partials.datatablesActions', compact(
@@ -74,21 +74,16 @@ class MacroprocesoController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('configuracion_macroproceso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macroprocesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
         //dd("teasdas". $organizaciones);
 
         return view('admin.macroprocesos.create')->with('grupos', $grupos);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('macroprocesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate(
             [
                 'codigo' => 'required|string',
@@ -98,20 +93,21 @@ class MacroprocesoController extends Controller
             ]
         );
         $macroprocesos = Macroproceso::create($request->all());
+
         // Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
         return redirect()->route('admin.macroprocesos.index')->with('success', 'Guardado con éxito');
     }
 
     public function show(Macroproceso $macroproceso)
     {
-        abort_if(Gate::denies('configuracion_macroproceso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macroprocesos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.macroprocesos.show', compact('macroproceso'));
     }
 
     public function edit(Macroproceso $macroproceso)
     {
-        abort_if(Gate::denies('configuracion_macroproceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macroprocesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
 
         return view('admin.macroprocesos.edit', compact('macroproceso'))->with('grupos', $grupos);
@@ -119,6 +115,7 @@ class MacroprocesoController extends Controller
 
     public function update(Request $request, Macroproceso $macroproceso)
     {
+        abort_if(Gate::denies('macroprocesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate(
             [
                 'codigo' => 'required|string',
@@ -134,7 +131,7 @@ class MacroprocesoController extends Controller
 
     public function destroy(Macroproceso $macroproceso)
     {
-        abort_if(Gate::denies('configuracion_macroproceso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macroprocesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

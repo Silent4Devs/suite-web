@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('content')
+
+
+    <h5 class="col-12 titulo_general_funcion">Registro de Áreas</h5>
     <div class="mt-5 card">
-        @can('configuracion_area_create')
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Registro de Áreas</strong></h3>
-            </div>
+        @can('crear_area_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', ['model' => 'Area', 'route' => 'admin.areas.parseCsvImport'])
@@ -12,20 +12,18 @@
             </div>
         @endcan
 
-        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
                     <div class="w-100">
-                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                     </div>
                 </div>
                 <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 2</p>
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
                     <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización comenzando
-                        por la de más alta jerarquía y dé
-                        clic en finalizar
-                        <a href="{{ route('admin.areas.renderJerarquia') }}" class="item-right col-2 btn text-light"
-                            style="background-color:rgb(85, 217, 226); float:right">Finalizar</a>
+                        por la de más alta jerarquía
+
                     </p>
 
                 </div>
@@ -37,11 +35,9 @@
             <table class="table table-bordered w-100 datatable-Area">
                 <thead class="thead-dark">
                     <tr>
+                        <th style="max-width: 40px;">ID</th>
                         <th>
-                            ID
-                        </th>
-                        <th>
-                            Nombre de Área
+                            Nombre&nbsp;de&nbsp;Área
                         </th>
                         <th>
                             Foto
@@ -50,7 +46,7 @@
                             Grupo
                         </th>
                         <th>
-                            Reporta a
+                            Reporta&nbsp;a
                         </th>
                         <th>
                             Descripción
@@ -60,6 +56,7 @@
                         </th>
                     </tr>
                 </thead>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -136,7 +133,7 @@
 
             ];
 
-            @can('configuracion_area_create')
+            @can('crear_area_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar area',
@@ -158,7 +155,7 @@
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
             @endcan
-            @can('configuracion_area_delete')
+            @can('crear_area_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -197,7 +194,7 @@
                 ajax: "{{ route('admin.areas.index') }}",
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',               
                     },
                     {
                         data: 'area',
@@ -215,11 +212,17 @@
                     },
                     {
                         data: 'reporta',
-                        name: 'reporta'
+                        name: 'reporta',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'descripcion',
-                        name: 'descripcion'
+                        name: 'descripcion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'actions',

@@ -2,93 +2,80 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.auditoria-anuals.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Editar: Programa Anual de Auditoría</h5>
 <div class="mt-4 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Programa Anual de Auditoría </h3>
-    </div>
-
     <div class="card-body">
         <form method="POST" class="row" action="{{ route("admin.auditoria-anuals.update", [$auditoriaAnual->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group col-md-6">
-                <label class="required"><i class="fas fa-list iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.tipo') }}</label>
-                <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo" required>
-                    <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\AuditoriaAnual::TIPO_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('tipo', $auditoriaAnual->tipo) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('tipo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('tipo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.tipo_helper') }}</span>
-            </div>
-            <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                <label for="fechainicio"> <i class="fas fa-calendar-alt iconos-crear"></i>
-                    Fecha
-                    Inicio</label>
-                <input class="form-control" type="datetime-local" id="fechainicio"
-                    name="fechainicio"
-                    value="{{ old('fechainicio', \Carbon\Carbon::parse($auditoriaAnual->fechainicio)->format('Y-m-d\TH:i')) }}">
-                <span class="text-danger error_text fecha_curso_error"></span>
-            </div>
-            <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                <label for="fechafin"> <i class="fas fa-calendar-alt iconos-crear"></i>
-                    Fecha
-                    Fin</label>
-                <input class="form-control" type="datetime-local" id="fechafin"
-                    name="fechafin"
-                    value="{{ old('fechafin', \Carbon\Carbon::parse($auditoriaAnual->fechafin)->format('Y-m-d\TH:i')) }}">
-                <span class="text-danger error_text fecha_curso_error"></span>
-            </div>
-            {{-- <div class="form-group col-md-6">
-                <label for="dias"><i class="far fa-calendar-minus iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.dias') }}</label>
-                <input class="form-control {{ $errors->has('dias') ? 'is-invalid' : '' }}" type="number" name="dias" id="dias" value="{{ old('dias', $auditoriaAnual->dias) }}" step="0.01" min="1" max="100">
-                @if($errors->has('dias'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('dias') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.dias_helper') }}</span>
-            </div> --}}
 
+            <div class="form-group col-md-12 col-sm-12">
+                <label for="nombre" class="required"><i class="fas fa-clipboard-list iconos-crear"></i>Nombre</label>
+                <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                    name="nombre" id="nombre" value="{{ old('nombre', $auditoriaAnual->nombre) }}" required>
+                @if ($errors->has('nombre'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('nombre') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
+                <span style="font-size: 15px; font-weight: bold;">
+                    Periodo</span>
+            </div>
 
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>Auditor(a) líder</label>
-                <select class="form-control {{ $errors->has('auditorlider_id') ? 'is-invalid' : '' }}" name="auditorlider_id"
-                    id="auditorlider_id">
-                    <option value="">Seleccione una opción</option>
-                    @foreach ($empleados as $id => $empleado)
-                        <option value="{{ $empleado->id }}"
-                            {{ old('auditorlider_id', $auditoriaAnual->auditorlider_id) == $empleado->id ? 'selected' : '' }}>
-                            {{ $empleado->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @if ($errors->has('id_asignada'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_asignada') }}
-                    </div>
+                <label for="fechainicio"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio</label>
+                <input class="form-control {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="date"
+                name="fechainicio" id="fechainicio" min="1945-01-01"
+                value="{{ old('fechainicio', $auditoriaAnual->fechainicio ? \Carbon\Carbon::parse($auditoriaAnual->fechainicio)->format('Y-m-d') : null) }}">
+                @if($errors->has('fechainicio'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('fechainicio') }}
+                </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
             </div>
 
-            <div class="form-group col-12">
-                <label for="observaciones"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.observaciones') }}</label>
-                <textarea class="form-control {{ $errors->has('observaciones') ? 'is-invalid' : '' }}" name="observaciones" id="observaciones">{{ old('observaciones', $auditoriaAnual->observaciones) }}</textarea>
-                @if($errors->has('observaciones'))
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="fechafin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin</label>
+                <input class="form-control {{ $errors->has('fechafin', $auditoriaAnual->fechafin) ? 'is-invalid' : '' }}" type="date"
+                name="fechafin" id="fechafin" min="1945-01-01"
+                value="{{ old('fechafin', $auditoriaAnual->fechafin ? \Carbon\Carbon::parse($auditoriaAnual->fechafin)->format('Y-m-d') : null) }}">
+                @if($errors->has('fechafin'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('fechafin') }}
+                </div>
+                @endif
+            </div>
+
+            <div class="form-group col-md-12 col-sm-12  mt-3">
+                <label for="objetivo" class="required"><i class="fas fa-bullseye iconos-crear"></i>Objetivo</label>
+                <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
+                    name="objetivo" id="objetivo" required>{{ old('objetivo', $auditoriaAnual->objetivo) }}</textarea>
+                @if($errors->has('objetivo'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('observaciones') }}
+                        {{ $errors->first('objetivo') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.observaciones_helper') }}</span>
             </div>
+
+            <div class="form-group col-md-12 col-sm-12  mt-3">
+                <label for="alcance" class="required"><i class="fas fa-chart-line iconos-crear"></i>Alcance</label>
+                <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}"
+                    name="alcance" id="alcance" required>{{ old('alcance', $auditoriaAnual->alcance) }}</textarea>
+                @if($errors->has('alcance'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('alcance') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.observaciones_helper') }}</span>
+            </div>
+
+
             <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route("admin.auditoria-anuals.index") }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -97,6 +84,114 @@
     </div>
 </div>
 
+@endsection
 
 
+@section('scripts')
+<script>
+            $(document).ready(function() {
+            CKEDITOR.replace('objetivo', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+                ]
+            });
+
+            CKEDITOR.replace('alcance', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+                ]
+            });
+
+        });
+</script>
 @endsection

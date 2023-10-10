@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPartesInteresadaRequest;
-use App\Http\Requests\StorePartesInteresadaRequest;
-use App\Http\Requests\UpdatePartesInteresadaRequest;
 use App\Models\Clausula;
+use App\Models\ParteInteresadaExpectativaNecesidad;
 use App\Models\PartesInteresada;
 use App\Models\Team;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,21 +16,23 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PartesInteresadasController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
-        abort_if(Gate::denies('partes_interesada_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('partes_interesadas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PartesInteresada::with(['team', 'clausulas'])->select(sprintf('%s.*', (new PartesInteresada)->table))->orderByDesc('id');
+            $query = PartesInteresada::with('clausulas', 'expectativasNecesidadesWithNormas')->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'partes_interesada_show';
-                $editGate = 'partes_interesada_edit';
-                $deleteGate = 'partes_interesada_delete';
+                $viewGate = 'partes_interesadas_ver';
+                $editGate = 'partes_interesadas_editar';
+                $deleteGate = 'partes_interesadas_eliminar';
                 $crudRoutePart = 'partes-interesadas';
 
                 return view('partials.datatablesActions', compact(
@@ -43,17 +44,8 @@ class PartesInteresadasController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('parteinteresada', function ($row) {
-                return $row->parteinteresada ? $row->parteinteresada : '';
-            });
-            $table->editColumn('requisitos', function ($row) {
-                return $row->requisitos ? $row->requisitos : '';
-            });
-            $table->editColumn('clausala', function ($row) {
-                return $row->clausulas ? $row->clausulas : '';
+            $table->editColumn('expectativas', function ($row) {
+                return $row->expectativasNecesidadesWithNormas ? $row->expectativasNecesidadesWithNormas : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -62,58 +54,77 @@ class PartesInteresadasController extends Controller
         }
 
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.partesInteresadas.index', compact('teams'));
+        return view('admin.partesInteresadas.index', compact('teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('partes_interesada_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clausulas = Clausula::all();
+        abort_if(Gate::denies('partes_interesadas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $clausulas = Clausula::get();
 
         return view('admin.partesInteresadas.create', compact('clausulas'));
     }
 
-    public function store(StorePartesInteresadaRequest $request)
+    public function store(Request $request)
     {
-        $partesInteresada = PartesInteresada::create($request->all());
-        $partesInteresada->clausulas()->sync($request->clausulas);
-        //dd($request['pdf-value'], $request->all());
-        //  $generar = new GeneratePdf();
-        //$generar->Generate($request['pdf-value'], $request);
-        //  $generar->Generate($request['pdf-value'], $partesInteresada);
-        return redirect()->route('admin.partes-interesadas.index')->with('success', 'Guardado con éxito');
+        abort_if(Gate::denies('partes_interesadas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'parteinteresada' => ['required'],
+        ]);
+
+        $partes = PartesInteresada::create($request->all());
+        if (array_key_exists('ajax', $request->all())) {
+            return response()->json(['success' => true, 'activo' => $partes]);
+        }
+
+        return redirect()->route('admin.partes-interesadas.edit', ['id' => $partes]);
     }
 
-    public function edit(PartesInteresada $partesInteresada)
+    public function edit(Request $request, $id)
     {
-        abort_if(Gate::denies('partes_interesada_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clausulas = Clausula::all();
+        abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $partesInteresada = PartesInteresada::find($id);
+        $clausulas = Clausula::get();
         $partesInteresada->load('team');
 
-        return view('admin.partesInteresadas.edit', compact('partesInteresada', 'clausulas'));
+        return view('admin.partesInteresadas.edit', ['id' => $partesInteresada], compact('partesInteresada', 'clausulas'));
     }
 
-    public function update(UpdatePartesInteresadaRequest $request, PartesInteresada $partesInteresada)
+    public function update(Request $request, $partesInteresada)
     {
+        abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'parteinteresada' => ['required'],
+        ]);
+
+        $partesInteresada = PartesInteresada::find($partesInteresada);
         $partesInteresada->update($request->all());
-        $clausulas = Clausula::all();
+        $clausulas = Clausula::get();
 
         return redirect()->route('admin.partes-interesadas.index')->with('success', 'Editado con éxito');
     }
 
     public function show(PartesInteresada $partesInteresada)
     {
-        abort_if(Gate::denies('partes_interesada_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('partes_interesadas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $partesInteresada->load('team');
+        $partesInteresada->load('clausulas');
 
-        return view('admin.partesInteresadas.show', compact('partesInteresada'));
+        $requisitos = ParteInteresadaExpectativaNecesidad::with('normas')->where('id_interesada', '=', $partesInteresada->id)->get();
+        $result = ParteInteresadaExpectativaNecesidad::where('id_interesada', '=', $partesInteresada->id)->exists();
+
+        return view('admin.partesInteresadas.show', compact('partesInteresada', 'requisitos', 'result'));
     }
 
     public function destroy(PartesInteresada $partesInteresada)
     {
-        abort_if(Gate::denies('partes_interesada_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('partes_interesadas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $partesInteresada->delete();
 

@@ -48,6 +48,15 @@
             animation: lds-hourglass 1.2s infinite;
         }
 
+        .btn-reg{
+            align-content: center; 
+            background-color:#1E3A8A; 
+            color:#DBEAFE; 
+            width: 430px; 
+            height: 40px; 
+            border-radius: 5px;
+        }
+
         @keyframes lds-hourglass {
             0% {
                 transform: rotate(0);
@@ -68,7 +77,7 @@
     @if ($revisionDocumento->estatus != 1)
         <div class="row w-100 justify-content-center">
             <div class="col-sm-9">
-                <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                     <div class="row w-100">
                         <div class="text-center col-1 align-items-center d-flex justify-content-center">
                             <div class="w-40 ml-3">
@@ -88,9 +97,10 @@
             <div class="row justify-content-center">
                 <div class="mt-4 text-center card col-7 display:inline">
                     <img src="{{ asset('img/mensaje2.png') }}">
+                    <a href="{{asset('admin/inicioUsuario')}}#aprobaciones" style="padding-bottom: 10px">
+                        <button class="btn-reg">Regresar</button></a>
                 </div>
             </div>
-            <a href="{{asset('admin/inicioUsuario')}}#aprobaciones" class="mt-2 btn btn-primary">Regresar</a>
         </div>
     @else
         <div class="m-0 row justify-content-center w-100" style="position: relative">

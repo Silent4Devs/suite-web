@@ -12,11 +12,11 @@
 </style>
 <div class="pr-0 row">
     <div class="col-12">
-        <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
                     <div class="w-100">
-                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                     </div>
                 </div>
                 <div class="col-11">
@@ -32,7 +32,7 @@
     <div class="col-sm-12 col-lg-6 col-md-6 col-12">
         <div class="form-group">
             <label for="nombre">
-                <i class="fas fa-star iconos-crear"></i> Nombre<span class="text-danger">*</span>
+                <i class="fas fa-star iconos-crear"></i> Nombre de la competencia<span class="text-danger">*</span>
             </label>
             <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
                 aria-describedby="nombreHelp" name="nombre" value="{{ old('nombre', $competencia->nombre) }}">
@@ -48,11 +48,11 @@
     <div class="col-sm-12 col-lg-6 col-md-6 col-12">
         <div class="form-group">
             <label for="tipo_id">
-                <i class="fas fa-layer-group iconos-crear"></i> Tipo <span class="text-danger">*</span>
+                <i class="fas fa-layer-group iconos-crear"></i> Tipo de competencia <span class="text-danger">*</span>
             </label>
             {{-- Modulo para tipo de competencia --}}
             <div class="row align-items-center">
-                <div class="col-11" style=" margin-top:-9px">
+                <div class="col-9" style=" margin-top:-9px">
                     @livewire('tipo-competencia-select',['tipo_seleccionado'=>$tipo_seleccionado])
                 </div>
                 <div class="pl-0 col" style="text-align: center;
@@ -61,6 +61,7 @@
                     <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
                         data-toggle="modal" data-target="#tipoCompetenciaModal" title="Agregar Tipo"><i
                             class="fas fa-plus"></i></button>
+                            <a href="{{ route('admin.Tipo.index')}}" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             @livewire('tipo-competencia-create')

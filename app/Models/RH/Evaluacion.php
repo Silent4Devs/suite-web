@@ -5,29 +5,46 @@ namespace App\Models\RH;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Evaluacion extends Model
+class Evaluacion extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use HasFactory, SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'ev360_evaluaciones';
+
     protected $guarded = ['id'];
+
     protected $appends = ['estatus_formateado', 'color_estatus', 'color_estatus_text'];
+
     protected $casts = [
         'fecha_inicio' => 'date:d-m-Y',
         'fecha_fin' => 'date:d-m-Y',
     ];
 
     const DRAFT = '1';
+
     const ACTIVE = '2';
+
     const CLOSED = '3';
 
     const TODA_LA_EMPRESA = '0';
+
     const GRUPO_DINAMICO = '3';
+
     const POR_AREA = '1';
+
     const SELECCION_MANUAL = '2';
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Evaluacion_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function getEstatusFormateadoAttribute()
     {
@@ -85,7 +102,7 @@ class Evaluacion extends Model
 
     public function evaluados()
     {
-        return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluaciones_evaluados', 'evaluacion_id', 'evaluado_id');
+        return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluaciones_evaluados', 'evaluacion_id', 'evaluado_id')->withPivot('puesto_id');
     }
 
     public function competencias()

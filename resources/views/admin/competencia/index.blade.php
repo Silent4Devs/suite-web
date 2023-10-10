@@ -143,7 +143,6 @@
 
             ];
 
-            @can('objetivosseguridad_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar competencia',
@@ -154,9 +153,10 @@
                 window.location.href = url;
                 }
                 };
+            @can('competencias_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('competencium_delete')
+            @can('competencias_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -201,9 +201,9 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
 
-                            
+
                             let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.nombrecolaborador.avatar}" title="${row.nombrecolaborador.name}"></img>`;
-                            
+
                             return `${row.nombrecolaborador ? html: ''}`;
                         }
                     },

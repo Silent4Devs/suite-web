@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PerfilEmpleado extends Model
+class PerfilEmpleado extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'perfil_empleados';
     // protected $guarded = ['id'];
 
@@ -33,4 +31,9 @@ class PerfilEmpleado extends Model
     {
         return $this->hasMany('App\Models\Empleado', 'perfil_empleado_id', 'id');
     }
+
+    // public function puestos()
+    // {
+    //     return $this->hasMany('App\Models\Empleado', 'perfil_empleado_id', 'id');
+    // }
 }

@@ -1,0 +1,339 @@
+/* Movil -----------------------------------------------------------------*/
+.d-mobile, .d-mobile-initial{
+    display: none;
+}
+.text-eliminar-actividad-mobile{
+    display: none;
+}
+.barra-herramientas-bottom-molbile{
+    display: none;
+}
+@media(max-width: 800px){
+    .d-mobile{
+        display: block;
+    }
+    .d-mobile-initial{
+        display: initial;
+    }
+    .d-mobile-none{
+        display: none !important;
+    }
+
+    header.c-header-fixed{
+        display: flex !important;
+        justify-content: space-between !important;
+        position: fixed !important;
+    }
+
+    header.c-header-fixed .c-header-nav{
+        margin-left: 0px !important;
+    }
+    header.c-header-fixed button{
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+
+    header.c-header-fixed form.form-inline{
+        width: auto !important;
+    }
+    main.c-main{
+        margin-top: 56px;
+        margin-bottom: 40px;
+    }
+
+    .titulo_general_funcion{
+        text-align: center;
+        margin-bottom: 20px !important;
+    }
+
+    .card.not-card-mobile{
+        background-color: rgba(0, 0, 0, 0) !important;
+        box-shadow: none !important;
+    }
+
+    .card-mobile{
+        background-color: #fff !important;
+        padding: 8px 12px;
+        box-shadow: 0px 3px 6px 1px #00000029;
+        margin: 0;
+    }
+
+    .barra-herramientas-bottom-molbile{
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        height: 40px;
+        background-color: #fff;
+        box-shadow: -3px 0px 6px 0px #00000029;
+        z-index: 10;
+        display: flex;
+    }
+    .btn-barra-bottom-mobile{
+        width: 25%;
+        text-align: center;
+        padding-top: 3px;
+        color: #747474;
+    }
+    .btn-barra-bottom-mobile i{
+        font-size: 17px;
+    }
+    .btn-barra-bottom-mobile p{
+        font-size: 9px;
+        margin: 0;
+        padding: 0;
+        margin-top: -5px
+    }
+
+    .modal.fade.show{
+        padding-right: 0px !important;
+    }
+
+    /*login -----------------------------------*/
+    body::before, body::after{
+        content: "";
+        display: none !important;
+    }
+    #layout-app-body .container-fluid{
+        padding-left: 0px !important;
+    }
+    #layout-app-body .caja_marca{
+        background: linear-gradient(0deg, rgba(48,133,174,1) 0%, rgba(51,99,146,1) 30%, rgba(52,82,132,1) 100%);
+    }
+    #layout-app-body .caja_marca .marca{
+        display: flex;
+        align-items: center;
+    }
+    .tabantaj-logo-mobile-login{
+        min-height: 85vh;
+        width: auto !important;
+        filter: grayscale(500%) brightness(10) opacity(10%);
+        margin-left: -30px;
+    }
+    #layout-app-body .caja_form{
+        background-color: rgba(0, 0, 0, 0);
+        top: 0;
+    }
+    #layout-app-body .caja_form .btn_enviar{
+        margin-bottom: 50px;
+    }
+    #layout-app-body .caja_form a{
+        color: #fff !important;
+    }
+    #layout-app-body .caja_form h3{
+        color: #fff !important;
+    }
+
+    #layout-app-body form img.logo_silent{
+        filter: grayscale(100%) brightness(10) opacity(0.8);
+    }
+
+    /* timesheet ------------------------------- */
+    .caja-calendar-semana{
+        justify-content: space-between !important;
+        padding-bottom: 24px;
+    }
+    .caja-calendar-semana label{
+        font-size: 13px !important;
+    }
+    #fecha_dia{
+        max-width: 120px !important;
+        margin-right: -50px !important;
+    }
+    .semanas-tras-time-text{
+        margin-bottom: 0px !important;
+        margin-left: 12px;
+        opacity: 0.6;
+    }
+    .tabla-llenar-horas{
+        display: block !important;
+        overflow: inherit !important;
+        max-width: 100% !important;
+    }
+    .tabla-llenar-horas tbody{
+        max-width: 100% !important;
+        display: block !important;
+    }
+    .tabla-llenar-horas tr{
+        background-color: #fff !important;
+        margin-top: 30px;
+        display: block !important;
+        overflow: hidden;
+        max-height: 50px;
+        position: relative;
+        transition: 0.5s;
+        max-width: 100% !important;
+    }
+    .tabla-llenar-horas tr::before{
+        content: attr(data-title);
+        width: 100%;
+        font-size: 16px;
+        font-weight: 400;
+        color: #3086AF;
+        display: block;
+        margin: 5px 0;
+    }
+    .tabla-llenar-horas tr::after{
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        font-size: 14px;
+        content: "\f078";
+        position: absolute;
+        right: 16px;
+        top: 12px;
+        transition: 0.2s;
+    }
+    .tabla-llenar-horas tr.ver-tr-time-mobile{
+        max-height: inherit;
+    }
+    .tabla-llenar-horas tr.ver-tr-time-mobile::after{
+        content: "\f078";
+        transform: rotate(180deg);
+    }
+    .select2.select2-container.select2-container--bootstrap4.select2-container--below{
+        max-width: 100% !important;
+    }
+    .select2-dropdown.select2-dropdown--below{
+        max-width: 75vw !important;
+    }
+
+    .tabla-llenar-horas td{
+        display: block !important;
+        border-top: none !important;
+    }
+    .tabla-llenar-horas .td-date-time{
+        display: inline-block !important;
+    }
+    .tabla-llenar-horas .td-date-time small{
+        margin-bottom: -7px !important;
+        margin-left: 5px;
+    }
+    .time-responsivo .card-mobile{
+        border-radius: 6px;
+    }
+    .td-facturable-time{
+        display: flex !important;
+        margin-bottom: 35px;
+        position: relative;
+    }
+    .td-facturable-time .d-mobile{
+        display: inline !important;
+    }
+    .td-facturable-time input{
+        margin-top: 0px !important;
+        transform: scale(1.6);
+    }
+    .text-eliminar-actividad-mobile{
+        display: initial;
+    }
+    table td.td_opciones{
+        text-align: center !important;
+    }
+
+    table td.td_opciones div.btn{
+        color: #345183 !important;
+        transform: scale(0.9);
+    }
+
+    .caja-suma-horas-filas-time{
+        background-color: rgba(0, 0, 0, 0) !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .tabla-llenar-horas tr.tr-sumas-facturables-horas{
+        display: none !important;
+    }
+    .caja-botones-time-acciones{
+        display: block !important;
+        justify-content: center !important;
+        text-align: center;
+    }
+    .caja-botones-time-acciones .btn-time-mas-fila{
+        border: none !important;
+        min-width: 100%;
+    }
+    .caja-botones-time-acciones .caja-botones-time-forms{
+        width: 100% !important;
+        height: 140px;
+        position: relative;
+        margin-top: 40px;
+    }
+    .caja-botones-time-acciones .caja-botones-time-forms .btn{
+        display: block;
+        min-width: 100% !important;
+        margin-top: 20px;
+        height: 50px !important;
+        position: absolute !important;
+        background-color: #fff !important;
+        box-shadow: 0px 3px 6px 1px #00000029;
+    }
+    .caja-botones-time-acciones .caja-botones-time-forms .btn-borrador-time{
+        bottom: 0;
+        color: #747474 !important;
+        border: 1px solid #747474 !important;
+    }
+    .caja-botones-time-acciones .caja-botones-time-forms .btn-regisrtar-time{
+        top: 0;
+        color: #345183 !important;
+        border: 1px solid #345183 !important;
+    }
+
+    /*inicio usuario --------------------------------------------------*/
+    #inicio_usuario .titulo_general_funcion{
+        color: #fff !important;
+    }
+
+    #inicio_usuario .img_empleado_presentacion_mis_datos{
+        margin-left: 50%;
+        margin-top: -90px;
+        transform: translate(-50%);
+    }
+
+    .caja-cards-mobile-datos{
+        width: 100%;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .caja-cards-mobile-datos .card{
+        max-width: 48% !important;
+        padding: 10px 8px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+    .caja-cards-mobile-datos .card i{
+        margin: 0px !important;
+        padding: 0 !important;
+        width: 20%;
+        font-size: 20px;
+        color: #345183;
+    }
+    .caja-cards-mobile-datos .card h6{
+        margin: 0px !important;
+        padding: 0 !important;
+        width: 80%;
+    }
+    .item-competencia{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between !important;
+        padding: 15px 0px;
+    }
+
+}
+
+/* tablet ------------------------------------------------------------------ */
+@media(max-width: 1250px){
+
+}
+
+/* extras --------------------------------------------------------------------*/
+html:not([dir="rtl"]) .c-sidebar:not(.c-sidebar-right) {
+    margin-left: -276px;
+}

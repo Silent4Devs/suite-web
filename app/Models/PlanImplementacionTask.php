@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PlanImplementacionTask extends Model
+class PlanImplementacionTask extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'plan_implementacion_tasks';
+
     protected $fillable = [
         'name',
         'progress',
@@ -46,6 +45,6 @@ class PlanImplementacionTask extends Model
 
     public function assigs()
     {
-        return $this->belongsToMany(Empleado::class, 'empleado_task');
+        return $this->belongsToMany(Empleado::class, 'empleado_task')->alta();
     }
 }

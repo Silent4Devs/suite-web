@@ -8,15 +8,14 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PoliticaSgsi extends Model
+class PoliticaSgsi extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'politica_sgsis';
 
     public static $searchable = [
@@ -34,6 +33,7 @@ class PoliticaSgsi extends Model
     ];
 
     protected $fillable = [
+        'nombre_politica',
         'politicasgsi',
         'fecha_publicacion',
         'fecha_entrada',
@@ -44,6 +44,13 @@ class PoliticaSgsi extends Model
         'deleted_at',
         'team_id',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('politicas_sgsi_all', 3600 * 12, function () {
+            return self::get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -72,6 +79,6 @@ class PoliticaSgsi extends Model
 
     public function reviso()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id');
+        return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id')->alta();
     }
 }

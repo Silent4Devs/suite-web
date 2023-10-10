@@ -26,6 +26,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/';
 
+    public const MIPERFIL = '/admin/inicioUsuario';
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *

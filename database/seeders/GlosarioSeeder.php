@@ -15,35 +15,35 @@ class GlosarioSeeder extends Seeder
     public function run()
     {
         $glosario = [
-                    [
-                        'numero' => '3.1',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Control de Acceso',
-                        'definicion' => '“medios para garantizar que el acceso a los activos esté autorizado y restringido según los
+            [
+                'numero' => '3.1',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Control de Acceso',
+                'definicion' => '“Medios para garantizar que el acceso a los activos esté autorizado y restringido según los
                             requisitos comerciales y de seguridad”',
-                        'explicacion' => 'El control de acceso es una forma de limitar el acceso a un sistema o a recursos físicos o
+                'explicacion' => 'El control de acceso es una forma de limitar el acceso a un sistema o a recursos físicos o
                             virtuales. En sistemas de la información, el control de acceso es un proceso mediante el cual
                             los usuarios obtienen acceso y ciertos privilegios a los sistemas, recursos o información.
                             En los sistemas de control de acceso, los usuarios deben presentar las credenciales antes de que
                             se les pueda otorgar el acceso. En los sistemas físicos, estas credenciales pueden tener muchas
                             formas, pero las credenciales que no se pueden transferir brindan la mayor seguridad.',
-                    ],
-                    [
-                        'numero' => '3.2',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Ataque',
-                        'definicion' => '"Intentar destruir, exponer, alterar, deshabilitar, robar u obtener acceso no autorizado o hacer
+            ],
+            [
+                'numero' => '3.2',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Ataque',
+                'definicion' => '"Intentar destruir, exponer, alterar, deshabilitar, robar u obtener acceso no autorizado o hacer
                             un uso no autorizado de un activo"',
-                        'explicacion' => 'Los ataques cibernéticos son los mas comunes hoy en día. Un ciber ataque es un ataque contra un
+                'explicacion' => 'Los ataques cibernéticos son los mas comunes hoy en día. Un ciber ataque es un ataque contra un
                             sistema informático, una red o una aplicación o dispositivo habilitado para Internet. Los
                             piratas informáticos utilizan una variedad de herramientas para lanzar ataques, incluidos
                             malware, ransomware , kits de explotación y otros métodos.',
-                    ],
-                    [
-                        'numero' => '3.3.',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Auditoría',
-                        'definicion' => 'Proceso sistemático, independiente y documentado para obtener evidencia de auditoría y evaluarla
+            ],
+            [
+                'numero' => '3.3.',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Auditoría',
+                'definicion' => 'Proceso sistemático, independiente y documentado para obtener evidencia de auditoría y evaluarla
                             objetivamente para determinar hasta qué punto se cumplen los criterios de auditoría.
 
                             Las auditorias pueden ser internas o externas
@@ -54,7 +54,7 @@ class GlosarioSeeder extends Seeder
                             Los conceptos de "Evidencia de auditoría" y "criterios de auditoría" se definen en ISO 19011
                             dentro del proceso de recopilación de información para alcanzar las conclusiones de auditoria.
                         ',
-                        'explicacion' => 'Una auditoría incluye una verificación que garantice que la seguridad de la información cumple
+                'explicacion' => 'Una auditoría incluye una verificación que garantice que la seguridad de la información cumple
                             con todas las expectativas y requisitos de la norma ISO 27001 dentro de una organización.
                             Durante este proceso, se revisa la documentación del SGSI se entrevista a los empleados sobre
                             los roles de seguridad y otros detalles relevantes.
@@ -80,22 +80,22 @@ class GlosarioSeeder extends Seeder
                             mejora tanto en los controles establecidos como en las necesidades de hacer cambios en la
                             evaluación de los riesgos de los activos.',
 
-                    ],
-                    [
-                        'numero' => '3.4 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Alcance de Auditoría',
-                        'definicion' => 'Alcance y límites de una auditoría',
-                        'explicacion' => 'El alcance de una auditoria generalmente incluye una descripción de las áreas físicas, unidades
+            ],
+            [
+                'numero' => '3.4 ',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Alcance de Auditoría',
+                'definicion' => 'Alcance y límites de una auditoría',
+                'explicacion' => 'El alcance de una auditoria generalmente incluye una descripción de las áreas físicas, unidades
                             organizacionales, actividades y procesos, así como el periodo de tiempo cubierto',
 
-                    ],
-                    [
-                        'numero' => '3.5 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Autenticación',
-                        'definicion' => '"Garantía de que una característica reivindicada de una entidad es correcta"',
-                        'explicacion' => 'En el contexto de los sistemas informáticos, la autenticación es un proceso que garantiza y
+            ],
+            [
+                'numero' => '3.5 ',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Autenticación',
+                'definicion' => '"Garantía de que una característica reivindicada de una entidad es correcta"',
+                'explicacion' => 'En el contexto de los sistemas informáticos, la autenticación es un proceso que garantiza y
                             confirma la identidad de un usuario. La autenticación es uno de los aspectos básicos en la
                             seguridad de la informacion, junto con los tres pilares, a saber: la integridad, disponibilidad,
                             y confidencialidad.
@@ -116,13 +116,13 @@ class GlosarioSeeder extends Seeder
                             autenticación ocurre con el correo electrónico, donde la autenticidad suele ser difícil de
                             verificar.',
 
-                    ],
-                    [
-                        'numero' => '3.6',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Autenticidad',
-                        'definicion' => 'Propiedad que una entidad es lo que dice ser.',
-                        'explicacion' => '¿Qué es la autenticidad? ¿Qué entendemos por autenticidad en Seguridad de la Información? La
+            ],
+            [
+                'numero' => '3.6',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Autenticidad',
+                'definicion' => 'Propiedad que una entidad es lo que dice ser.',
+                'explicacion' => '¿Qué es la autenticidad? ¿Qué entendemos por autenticidad en Seguridad de la Información? La
                             autenticidad es la seguridad de que un mensaje, una transacción u otro intercambio de
                             información proviene de la fuente de la que afirma ser. Autenticidad implica prueba de
                             identidad.
@@ -138,13 +138,13 @@ class GlosarioSeeder extends Seeder
                             Recordar docenas de contraseñas para docenas de aplicaciones puede ser frustrante para usuarios
                             domésticos y usuarios empresariales',
 
-                    ],
-                    [
-                        'numero' => '3.7 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Disponibiidad',
-                        'definicion' => 'Propiedad de ser accesible y utilizable a solicitud de una entidad autorizada',
-                        'explicacion' => 'Los sistemas de almacenamiento de datos son los que en definitiva nos garantizan la
+            ],
+            [
+                'numero' => '3.7 ',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Disponibiidad',
+                'definicion' => 'Propiedad de ser accesible y utilizable a solicitud de una entidad autorizada',
+                'explicacion' => 'Los sistemas de almacenamiento de datos son los que en definitiva nos garantizan la
                             disponibilidad de la información. El almacenamiento de datos por lo general puede ser local o en
                             una instalación externa o en la nube. También pueden establecerse planes para garantizar la
                             disponibilidad de la información en instalaciones externas cuando fallan los elementos de
@@ -152,14 +152,14 @@ class GlosarioSeeder extends Seeder
                             El caso es que la información debe estar disponible para en todo momento pero solo para aquellos
                             con autorización para acceder a ella.',
 
-                    ],
-                    [
-                        'numero' => '3.8 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => ' Medida Base',
-                        'definicion' => 'Definida en términos de un atributo y el método para cuantificarlo.
+            ],
+            [
+                'numero' => '3.8 ',
+                'norma' => 'ISO 27001',
+                'concepto' => ' Medida Base',
+                'definicion' => 'Definida en términos de un atributo y el método para cuantificarlo.
                             Una medida base es funcionalmente independiente de otras medidas ',
-                        'explicacion' => 'Se ha realizado un trabajo considerable para desarrollar medidas e indicadores que puedan
+                'explicacion' => 'Se ha realizado un trabajo considerable para desarrollar medidas e indicadores que puedan
                             utilizarse para los resultados de los proyectos de desarrollo.
 
                             Los términos "medida", "métrica" e indicador "a menudo se usan indistintamente y sus
@@ -176,14 +176,14 @@ class GlosarioSeeder extends Seeder
                             Un estándar es un conjunto de indicadores, puntos de referencia o índices relacionados que
                             proporcionan información socialmente significativa con respecto al desempeño.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.9',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Competencia',
-                        'definicion' => 'Capacidad de aplicar conocimientos y habilidades para lograr los resultados esperados. ',
-                        'explicacion' => 'Hoy más que nunca, en el mundo interconectado y moderno se revela como algo absolutamente
+            [
+                'numero' => '3.9',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Competencia',
+                'definicion' => 'Capacidad de aplicar conocimientos y habilidades para lograr los resultados esperados. ',
+                'explicacion' => 'Hoy más que nunca, en el mundo interconectado y moderno se revela como algo absolutamente
                             necesario, establecer requisitos en las competencias para los profesionales de seguridad de la
                             información. Las peculiaridades del enfoque europeo para el desarrollo de las competencias
                             profesionales de la seguridad de la información se discuten utilizando el ejemplo del Marco
@@ -201,15 +201,15 @@ class GlosarioSeeder extends Seeder
                             método para evaluar en qué medida la seguridad de la información está incorporada en la cultura
                             corporativa actual de una organización.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.10',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Confidencialidad',
-                        'definicion' => 'Propiedad por la que la información no se pone a disposición o se divulga a personas, entidades
+            [
+                'numero' => '3.10',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Confidencialidad',
+                'definicion' => 'Propiedad por la que la información no se pone a disposición o se divulga a personas, entidades
                             o procesos no autorizados ',
-                        'explicacion' => 'La confidencialidad, cuando nos referimos a sistemas de información, permite a los usuarios
+                'explicacion' => 'La confidencialidad, cuando nos referimos a sistemas de información, permite a los usuarios
                             autorizados acceder a datos confidenciales y protegidos. Existen mecanismos específicos
                             garantizan la confidencialidad y salvaguardan los datos de intrusos no deseados o que van a
                             causar daño.
@@ -240,13 +240,13 @@ class GlosarioSeeder extends Seeder
                             Por ejemplo, si un usuario está autorizado para leer pero no escribir datos, los controles del
                             sistema definidos pueden integrarse.',
 
-                    ],
-                    [
-                        'numero' => '3.11',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Conformidad',
-                        'definicion' => 'Cumplimiento de un requisito ',
-                        'explicacion' => 'La conformidad es el “cumplimiento de un requisito”. Cumplir significa cumplir o cumplir con los
+            ],
+            [
+                'numero' => '3.11',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Conformidad',
+                'definicion' => 'Cumplimiento de un requisito ',
+                'explicacion' => 'La conformidad es el “cumplimiento de un requisito”. Cumplir significa cumplir o cumplir con los
                             requisitos. Hay muchos tipos de requisitos. Existen requisitos de calidad, requisitos del
                             cliente, requisitos del producto, requisitos de gestión, requisitos legales, requisitos de la
                             seguridad de la información etc. Los requisitos pueden especificarse explícitamente (como los
@@ -284,14 +284,14 @@ class GlosarioSeeder extends Seeder
                             del producto, o aquellas que impiden el desempeño de procesos críticos para la organización.
                         ',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.12 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Consecuencia',
-                        'definicion' => 'Resultado de un evento que afecta a los objetivos ',
-                        'explicacion' => 'Como vemos las consecuencias son algo relacionado con los eventos y los objetivos de la
+            [
+                'numero' => '3.12 ',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Consecuencia',
+                'definicion' => 'Resultado de un evento que afecta a los objetivos ',
+                'explicacion' => 'Como vemos las consecuencias son algo relacionado con los eventos y los objetivos de la
                             seguridad de la información.
 
                             EVENTOS
@@ -373,14 +373,14 @@ class GlosarioSeeder extends Seeder
                             varían de acuerdo con los datos y su clasificación dentro del sistema de información y el
                             contexto empresarial en el que se utiliza.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.13',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Mejora Continua',
-                        'definicion' => 'Actividad recurrente para mejorar el rendimiento ',
-                        'explicacion' => 'Si la mejora se define como acciones que se traducen en una mejora de los resultados, entonces
+            [
+                'numero' => '3.13',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Mejora Continua',
+                'definicion' => 'Actividad recurrente para mejorar el rendimiento ',
+                'explicacion' => 'Si la mejora se define como acciones que se traducen en una mejora de los resultados, entonces
                             la mejora continua es simplemente identificar y realizar cambios enfocados a conseguir la mejora
                             del rendimiento y resultados de una organización. La mejora continua es un concepto que es
                             fundamental para las teorías y programas de gestión de la calidad y de la seguridad de la
@@ -413,13 +413,13 @@ class GlosarioSeeder extends Seeder
                             Establecer la expectativa de que la mejora es el objetivo, dará como resultado una mejor
                             seguridad.',
 
-                    ],
-                    [
-                        'numero' => '3.14',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Control',
-                        'definicion' => 'Medida que modifica un riesgo.',
-                        'explicacion' => 'Los controles de seguridad son medidas de seguridad técnicas o administrativas para evitar,
+            ],
+            [
+                'numero' => '3.14',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Control',
+                'definicion' => 'Medida que modifica un riesgo.',
+                'explicacion' => 'Los controles de seguridad son medidas de seguridad técnicas o administrativas para evitar,
                             contrarrestar o minimizar la pérdida o falta de disponibilidad debido a las amenazas que actúan
                             por una vulnerabilidad asociada a la amenaza. En esto consiste un riesgo de seguridad.
 
@@ -454,15 +454,15 @@ class GlosarioSeeder extends Seeder
                             Controles de detección para identificar que la amenaza ha aterrizado en nuestros sistemas.
                             Controles correctivos para mitigar o disminuir los efectos de la amenaza que se manifiesta.',
 
-                    ],
+            ],
 
-                    [
-                       'numero' => '3.15',
-                       'norma' => 'ISO 27001',
-                        'concepto' => 'Objetivo de Control',
-                        'definicion' => 'Declaración que describe lo que se debe lograr como resultado de la implementación de controles
+            [
+                'numero' => '3.15',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Objetivo de Control',
+                'definicion' => 'Declaración que describe lo que se debe lograr como resultado de la implementación de controles
                             (3.14)',
-                        'explicacion' => 'Este concepto hace posible cumplir con la filosofía de la norma ISO 27001 donde la base de la
+                'explicacion' => 'Este concepto hace posible cumplir con la filosofía de la norma ISO 27001 donde la base de la
                             misma se encuentra el ciclo PDCA donde se hace imprescindible conocer y averiguar hasta qué
                             punto se alcanzan los objetivos
 
@@ -483,14 +483,14 @@ class GlosarioSeeder extends Seeder
                             Esto no quita que podamos definir objetivos a otros niveles como departamentos, personales etc.
                         ',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.16',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Corrección',
-                        'definicion' => 'Acción para eliminar una no conformidad detectada',
-                        'explicacion' => 'Una no conformidad es cualquier incumplimiento de un requisito. VEASE 3.11
+            [
+                'numero' => '3.16',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Corrección',
+                'definicion' => 'Acción para eliminar una no conformidad detectada',
+                'explicacion' => 'Una no conformidad es cualquier incumplimiento de un requisito. VEASE 3.11
 
                             Un requisito puede ser el de un cliente, de un organismo legal o regulador, de la normas ISO
                             27001 o de un procedimiento interno de la propia organización o de la seguridad de la
@@ -504,24 +504,24 @@ class GlosarioSeeder extends Seeder
                             En este sentido una correccción se define como la acción tomada para evitar las consecuencias
                             inmediatas de una no conformidad.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.17',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Acción Correctiva',
-                        'definicion' => 'Acción para eliminar la causa de una no conformidad y para prevenir la recurrencia.',
-                        'explicacion' => 'Una acción correctiva se define como la acción tomada para evitar la repetición de una no
+            [
+                'numero' => '3.17',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Acción Correctiva',
+                'definicion' => 'Acción para eliminar la causa de una no conformidad y para prevenir la recurrencia.',
+                'explicacion' => 'Una acción correctiva se define como la acción tomada para evitar la repetición de una no
                             conformidad mediante la identificación y tratamiento de las causas que la provocaron.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.18',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Medida Derivada',
-                        'definicion' => 'Medida (3.42) que se define como una función de dos o más valores de medidas base (3.8)',
-                        'explicacion' => 'Las medidas o indicadores derivados son aquellos que se establecen en base a otro indicador
+            [
+                'numero' => '3.18',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Medida Derivada',
+                'definicion' => 'Medida (3.42) que se define como una función de dos o más valores de medidas base (3.8)',
+                'explicacion' => 'Las medidas o indicadores derivados son aquellos que se establecen en base a otro indicador
                             existente. Los indicadores derivados normalmente se refieren a:
 
                             Fórmulas de Cálculo como los subtotales o funciones de agregación dinámica de datos como son los
@@ -529,13 +529,13 @@ class GlosarioSeeder extends Seeder
                             Datos o indicadores y de funciones sin agregación dinámica intrínseca o propia como pueden ser
                             cálculos de promedios o conteo de ocurrencias de la variable o medida base.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.19',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Información Documentada',
-                        'definicion' => 'Se refiere a la información necesaria que una organización debe controlar y mantener actualizada
+            [
+                'numero' => '3.19',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Información Documentada',
+                'definicion' => 'Se refiere a la información necesaria que una organización debe controlar y mantener actualizada
                             tomando en cuenta y el soporte en que se encuentra. La información documentada puede estar en
                             cualquier formato (audio, video, ficheros de texto etc.) así como en cualquier tipo de soporte o
                             medio independientemente de la fuente de dicha información. En general la información
@@ -545,7 +545,7 @@ class GlosarioSeeder extends Seeder
                             * Información necesaria para la actividad de la propia
                             * Evidencias o registros de los resultados obtenidos en cualquier proceso del sistema de gestión
                             o de la organización',
-                        'explicacion' => 'En un sistema de gestión no debemos pasar por alto el control y la organización de nuestra
+                'explicacion' => 'En un sistema de gestión no debemos pasar por alto el control y la organización de nuestra
                             documentación de forma que cumplamos con los requisitos para almacenar, administrar y revisar la
                             documentación.
 
@@ -561,15 +561,15 @@ class GlosarioSeeder extends Seeder
                             organización necesita y que diseñas un sistema propio de gestión documental puede resultar
                             costoso y un gasto de tiempo y recursos que no siempre es necesario.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.20 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Efectividad',
-                        'definicion' => 'En qué medida se realizan las actividades planificadas y se logran los resultados planificados.
+            [
+                'numero' => '3.20 ',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Efectividad',
+                'definicion' => 'En qué medida se realizan las actividades planificadas y se logran los resultados planificados.
                         ',
-                        'explicacion' => 'Un sistema de Gestión para la seguridad de la información es un conjunto de elementos
+                'explicacion' => 'Un sistema de Gestión para la seguridad de la información es un conjunto de elementos
                             interrelacionados entre sí mediante las múltiples actividades de la organización. Cada actividad
                             definida por un proceso tendrá una o varias entradas así como salidas, necesarias por lo demás
                             para su control. Todas las salidas de los procesos estarán enfocadas a la consecución de los
@@ -589,18 +589,18 @@ class GlosarioSeeder extends Seeder
                             La efectividad consiste en hacer lo planificado, completar las actividades y alcanzar los
                             objetivos.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.21',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Evento',
-                        'definicion' => 'Ocurrencia o cambio de un conjunto particular de circunstancias
+            [
+                'numero' => '3.21',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Evento',
+                'definicion' => 'Ocurrencia o cambio de un conjunto particular de circunstancias
 
                             Un evento puede ser repetitivo y puede tener varias causas.
                             Un evento puede consistir en algo que no sucede.
                             Un evento puede ser clasificado como un “incidente” o “accidente”.',
-                        'explicacion' => 'Un evento de seguridad es cualquier ocurrencia observable que sea relevante para la seguridad de
+                'explicacion' => 'Un evento de seguridad es cualquier ocurrencia observable que sea relevante para la seguridad de
                             la información. Esto puede incluir intentos de ataques o fallos que descubren vulnerabilidades
                             de seguridad existentes
 
@@ -623,13 +623,13 @@ class GlosarioSeeder extends Seeder
                             los usuarios detectan actividad sospechosa, normalmente se recomienda que se reporte como un
                             incidente.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.22 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Contexto Externo',
-                        'definicion' => 'Entorno externo en el que la organización busca alcanzar sus objetivos el contexto externo puede
+            [
+                'numero' => '3.22 ',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Contexto Externo',
+                'definicion' => 'Entorno externo en el que la organización busca alcanzar sus objetivos el contexto externo puede
                             incluir :
 
                             El entorno cultural, social, político, jurídico, reglamentario, financiero, tecnológico,
@@ -637,7 +637,7 @@ class GlosarioSeeder extends Seeder
                             Influencias y tendencias clave que tienen impacto en los objetivos de la organización
                             los valores de actores externos y como es percibida la organización (sus relaciones con el
                             entorno externo)',
-                        'explicacion' => 'Para definir correctamente el contexto externo podríamos comenzar por un análisis del entorno
+                'explicacion' => 'Para definir correctamente el contexto externo podríamos comenzar por un análisis del entorno
                             centrándonos en aquellos factores que podrían afectar a la organización o que están relacionados
                             con las actividades y objetivos de la organización.
 
@@ -665,15 +665,15 @@ class GlosarioSeeder extends Seeder
                             Los factores ambientales incluyen el clima global, regional y local, el clima adverso, los
                             peligros naturales, los desechos peligrosos y las tendencias relacionadas.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.23 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Gobernanza de la Seguridad de la Información',
-                        'definicion' => 'Sistema por el cual las actividades de seguridad de la información de una organización son
+            [
+                'numero' => '3.23 ',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Gobernanza de la Seguridad de la Información',
+                'definicion' => 'Sistema por el cual las actividades de seguridad de la información de una organización son
                             dirigidas y controladas.',
-                        'explicacion' => 'El gobierno de la seguridad de la información es la estrategia de una empresa para reducir el
+                'explicacion' => 'El gobierno de la seguridad de la información es la estrategia de una empresa para reducir el
                             riesgo de acceso no autorizado a los sistemas y datos de tecnología de la información.
 
                             Las actividades de gobierno de la seguridad implican el desarrollo, la planificación, la
@@ -698,15 +698,15 @@ class GlosarioSeeder extends Seeder
                             cerraduras, sistemas de cercado y respuesta a incendios, así como sistemas de iluminación,
                             detección de intrusos, alarmas y cámaras.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.24 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Órgano Rector',
-                        'definicion' => 'Persona o grupo de personas que son responsables del desempeño de la organización. El órgano
+            [
+                'numero' => '3.24 ',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Órgano Rector',
+                'definicion' => 'Persona o grupo de personas que son responsables del desempeño de la organización. El órgano
                             rector puede ser una junta directiva o consejo de administración. ',
-                        'explicacion' => 'En el caso de la seguridad de la información el órgano rector será el responsable del desempeño
+                'explicacion' => 'En el caso de la seguridad de la información el órgano rector será el responsable del desempeño
                             o el resultado del sistema de gestión de la seguridad de la información. EN definitiva, el
                             órgano rector tendrá la responsabilidad de rendir cuentas del rendimiento del sistema de gestión
                             de la seguridad de la información
@@ -725,14 +725,14 @@ class GlosarioSeeder extends Seeder
                             responsabilidad de impulsar y mantener el sistema de gestión para la seguridad de la información
                             reside en los órganos rectores de cada organización.',
 
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.25',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Indicador',
-                        'definicion' => 'Medida que proporciona una estimación o evaluación.',
-                        'explicacion' => 'Los indicadores para la evaluación de la seguridad de la información a menudo sirven como
+            [
+                'numero' => '3.25',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Indicador',
+                'definicion' => 'Medida que proporciona una estimación o evaluación.',
+                'explicacion' => 'Los indicadores para la evaluación de la seguridad de la información a menudo sirven como
                             evidencia forense de posibles intrusiones en un sistema o red host.
 
                             Un sistema de información debe permitir a los especialistas de la seguridad de la información y
@@ -766,14 +766,14 @@ class GlosarioSeeder extends Seeder
                             son propiedad de la empresa puedan ser robados o dañados. En este contexto, el gobierno de la
                             seguridad incluye barreras físicas, cerraduras, sistemas de cercado y respuesta a incendios, así
                             como sistemas de iluminación, detección de intrusos, alarmas y cámaras.',
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.26 ',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Necesidad de Información',
-                        'definicion' => 'Conocimiento necesario para gestionar objetivos, riesgos y problemas.',
-                        'explicacion' => 'Este es un concepto relacionado con el desarrollo de procesos de medición que determinen qué
+            [
+                'numero' => '3.26 ',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Necesidad de Información',
+                'definicion' => 'Conocimiento necesario para gestionar objetivos, riesgos y problemas.',
+                'explicacion' => 'Este es un concepto relacionado con el desarrollo de procesos de medición que determinen qué
                             información de medición se requiere, cómo se deben aplicar las medidas y los resultados del
                             análisis, y cómo determinar si los resultados del análisis son válidos más que nada en
                             escenarios aplicables a las disciplinas de ingeniería y gestión de sistemas y software.
@@ -785,15 +785,15 @@ class GlosarioSeeder extends Seeder
 
                             Idealmente los procesos de medición deben ser flexibles, adaptables y adaptables a las
                             necesidades de los diferentes usuarios.',
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.27',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Instalaciones de Procesamiento de Información',
-                        'definicion' => 'Cualquier sistema de procesamiento de información, servicio o infraestructura, o la ubicación
+            [
+                'numero' => '3.27',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Instalaciones de Procesamiento de Información',
+                'definicion' => 'Cualquier sistema de procesamiento de información, servicio o infraestructura, o la ubicación
                             física que lo alberga.',
-                        'explicacion' => 'Las instalaciones de procesamiento de información en una empresa, deben ser consideradas como un
+                'explicacion' => 'Las instalaciones de procesamiento de información en una empresa, deben ser consideradas como un
                             activo de información que es necesario alcanzar las metas y objetivos de la organización
 
                             Para comprender esto en el escenario de una certificación de una norma de seguridad de la
@@ -806,17 +806,17 @@ class GlosarioSeeder extends Seeder
                             información es la evaluación de cualquier sistema, servicio, infraestructura o ubicación física
                             que contenga y procese información. Una instalación puede ser una actividad o un lugar que puede
                             ser tangible o intangible; así como, un hardware o un software.',
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.28',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Seguridad de la Información',
-                        'definicion' => 'Preservación de la confidencialidad, integridad y disponibilidad de la información
+            [
+                'numero' => '3.28',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Seguridad de la Información',
+                'definicion' => 'Preservación de la confidencialidad, integridad y disponibilidad de la información
 
                             Además hay que considerar otras propiedades, como la autenticidad, la responsabilidad, el no
                             repudio y la confiabilidad también pueden estar involucrados.',
-                        'explicacion' => 'La seguridad de la información como vemos tiene por objetivo la protección de la
+                'explicacion' => 'La seguridad de la información como vemos tiene por objetivo la protección de la
                             confidencialidad, integridad y disponibilidad de los datos de los sistemas de información de
                             cualquier amenaza y de cualquiera que tenga intenciones maliciosas.
 
@@ -836,15 +836,15 @@ class GlosarioSeeder extends Seeder
                             Las firmas digitales pueden mejorar la seguridad de la información al mejorar los procesos de
                             autenticidad y hacer que las personas prueben su identidad antes de poder acceder a los datos de
                             un sistema de información.',
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.29',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Continuidad de la Seguridad de la Información',
-                        'definicion' => 'Procesos y procedimientos para garantizar la continuidad de las operaciones de seguridad de la
+            [
+                'numero' => '3.29',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Continuidad de la Seguridad de la Información',
+                'definicion' => 'Procesos y procedimientos para garantizar la continuidad de las operaciones de seguridad de la
                             información',
-                        'explicacion' => 'El termino continuidad de la seguridad de la información se utiliza dentro de la norma ISO 27001
+                'explicacion' => 'El termino continuidad de la seguridad de la información se utiliza dentro de la norma ISO 27001
                             para describir el proceso que garantice la confidencialidad, integridad y disponibilidad de la
                             información cuando un incidente ocurre o una amenaza se materializa.
 
@@ -872,16 +872,16 @@ class GlosarioSeeder extends Seeder
                             perspectiva de seguridad de la información, también debe poder asegurarse de que los datos estén
                             protegidos mientras se implementan métodos de trabajo alternativos, por ejemplo, los usuarios
                             que acceda por teletrabajo y procesan datos confidenciales.',
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.30',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Evento de Seguridad de la Información',
-                        'definicion' => 'Ocurrencia identificada de un sistema, servicio o estado de red que indica un posible
+            [
+                'numero' => '3.30',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Evento de Seguridad de la Información',
+                'definicion' => 'Ocurrencia identificada de un sistema, servicio o estado de red que indica un posible
                             incumplimiento de la política de seguridad de la información o falla de los controles o una
                             situación desconocida que puede ser relevante para la seguridad.',
-                        'explicacion' => 'Podríamos considerar como un evento en la seguridad de la información a cualquier cambio
+                'explicacion' => 'Podríamos considerar como un evento en la seguridad de la información a cualquier cambio
                             observado en el comportamiento normal de un sistema de información, entorno, proceso, flujo de
                             trabajo o persona y que pueda afectar a la seguridad de la información. Por ejemplo: si se
                             encuentran modificaciones en las listas de control de acceso para un router o modificaciones en
@@ -891,16 +891,16 @@ class GlosarioSeeder extends Seeder
                             alertas. Una alerta es una notificación de que se ha producido un evento en particular (o una
                             serie de eventos), que y que se envía a los responsables para la seguridad de la información en
                             cada caso con el propósito de generar una acción.',
-                    ],
+            ],
 
-                    [
-                        'numero' => '3.31',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Incidente de Seguridad de la Información',
-                        'definicion' => 'Un evento o una serie de eventos de seguridad de la información no deseados o inesperados que
+            [
+                'numero' => '3.31',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Incidente de Seguridad de la Información',
+                'definicion' => 'Un evento o una serie de eventos de seguridad de la información no deseados o inesperados que
                             tienen una probabilidad significativa de comprometer las operaciones comerciales y amenazar la
                             seguridad de la información.',
-                        'explicacion' => 'Un incidente de seguridad de la información puede definirse también como cualquier evento que
+                'explicacion' => 'Un incidente de seguridad de la información puede definirse también como cualquier evento que
                             tenga el potencial de afectar la preservación de la confidencialidad, integridad, disponibilidad
                             o valor de la información
 
@@ -922,18 +922,15 @@ class GlosarioSeeder extends Seeder
                             Acceso no autorizado a áreas que contienen equipo de TI que almacena información confidencial o
                             confidencial; p.ej. entrada no autorizada en un centro de datos o salas de control de la red
                             informática.',
-                    ],
+            ],
 
-
-
-
-                    [
-                        'numero' => '3.32',
-                        'norma' => 'ISO 27001',
-                        'concepto' => 'Gestión de Incidentes de Seguridad de a Información',
-                        'definicion' => 'Conjunto de procesos para detectar, informar, evaluar, responder, tratar y aprender de los
+            [
+                'numero' => '3.32',
+                'norma' => 'ISO 27001',
+                'concepto' => 'Gestión de Incidentes de Seguridad de a Información',
+                'definicion' => 'Conjunto de procesos para detectar, informar, evaluar, responder, tratar y aprender de los
                             incidentes de seguridad de la información.',
-                        'explicacion' => 'El conjunto de procesos para tratar los incidentes de la seguridad de la información debe
+                'explicacion' => 'El conjunto de procesos para tratar los incidentes de la seguridad de la información debe
 
                             Identificar,
                             Administrar y registrar,
@@ -978,14 +975,14 @@ class GlosarioSeeder extends Seeder
 
                             El proceso de respuesta a incidentes suele comenzar con una investigación completa de un sistema
                             anómalo o irregularidad en el sistema, los datos o el comportamiento del usuario.',
-                    ],
+            ],
 
-                    ////////////ISO 9001/////////////////////////////
-                    [
-                        'numero' => '3.1.1',
-                        'norma' => 'ISO 9001',
-                        'concepto' => 'Alta Dirección',
-                        'definicion' => 'persona o grupo de personas que dirige y controla una organización (3.2.1) al más alto nivel
+            ////////////ISO 9001/////////////////////////////
+            [
+                'numero' => '3.1.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Alta Dirección',
+                'definicion' => 'Persona o grupo de personas que dirige y controla una organización (3.2.1) al más alto nivel
                         Nota 1 a la entrada: La alta dirección tiene el poder para delegar autoridad y proporcionar recursos dentro de la
                         organización.
                         Nota 2 a la entrada: Si el alcance del sistema de gestión (3.5.3) comprende sólo una parte de una organización
@@ -993,60 +990,60 @@ class GlosarioSeeder extends Seeder
                         Nota 3 a la entrada: Este término constituye uno de los términos comunes y definiciones esenciales para las
                         normas de sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1
                         de las Directivas ISO/IEC.',
-                        'explicacion' => 'Sin información',
-                    ],
-                    [
-                        'numero' => '3.1.2',
-                        'norma' => 'ISO 9001',
-                        'concepto' => 'Consultor del Sistema de Gestión de la Calidad',
-                        'definicion' => 'persona que ayuda a la organización (3.2.1) en la realización de un sistema de gestión de la calidad (3.4.3),
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.1.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Consultor del Sistema de Gestión de la Calidad',
+                'definicion' => 'Persona que ayuda a la organización (3.2.1) en la realización de un sistema de gestión de la calidad (3.4.3),
                         dando asesoramiento o información (3.8.2)
                         Nota 1 a la entrada: El consultor del sistema de gestión de la calidad puede también ayudar en la realización de
                         parte del sistema de gestión de la calidad (3.5.4).
                         Nota 2 a la entrada: La Norma ISO 10019:2005 proporciona orientación sobre cómo distinguir un consultor de
                         sistema de gestión de la calidad competente de uno que no lo es.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.1.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Participación Activa',
-                            'definicion' => 'tomar parte en una actividad, evento o situación',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.1.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Compromiso',
-                            'definicion' => 'participación activa (3.1.3) en, y contribución a, las actividades para lograr objetivos compartidos (3.7.1)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.1.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Autoridad Para Disponer',
-                            'definicion' => 'gestión de la decisión
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.1.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Participación Activa',
+                'definicion' => 'Tomar parte en una actividad, evento o situación',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.1.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Compromiso',
+                'definicion' => 'Participación activa (3.1.3) en, y contribución a, las actividades para lograr objetivos compartidos (3.7.1)',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.1.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Autoridad Para Disponer',
+                'definicion' => 'Gestión de la decisión
                         autoridad de decisión
                         persona o grupo de personas a quienes se ha asignado la responsabilidad y la autoridad para tomar
                         decisiones sobre la configuración (3.10.6)
                         Nota 1 a la entrada: Las partes interesadas (3.2.3) pertinentes dentro y fuera de la organización (3.2.1) deberían
                         estar representadas en la autoridad para disponer.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.1.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Responsable de la Resolución de Conflictos',
-                            'definicion' => '<satisfacción del cliente> persona individual designada por un proveedor de PRC (3.2.7) para ayudar a
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.1.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Responsable de la Resolución de Conflictos',
+                'definicion' => '<Satisfacción del cliente> Persona individual designada por un proveedor de PRC (3.2.7) para ayudar a
                         las partes en la resolución de un conflicto (3.9.6)
                         EJEMPLO Empleado, voluntario, personal contratado (3.4.7).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.2.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Organización',
-                            'definicion' => 'persona o grupo de personas que tiene sus propias funciones con responsabilidades, autoridades y
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.2.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Organización',
+                'definicion' => 'Persona o grupo de personas que tiene sus propias funciones con responsabilidades, autoridades y
                         relaciones para lograr sus objetivos (3.7.1)
                         Nota 1 a la entrada: El concepto de organización incluye, entre otros, un trabajador independiente, compañía,
                         corporación, firma, empresa, autoridad, sociedad, asociación (3.2.8), organización benéfica o institución, o una
@@ -1054,13 +1051,13 @@ class GlosarioSeeder extends Seeder
                         Nota 2 a la entrada: Este término constituye uno de los términos comunes y definiciones esenciales para las
                         normas de sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1
                         de las Directivas ISO/IEC. La definición original se ha modificado añadiendo la nota 1 a la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.2.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Contexto de la Organización',
-                            'definicion' => 'combinación de cuestiones internas y externas que pueden tener un efecto en el enfoque de la
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.2.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Contexto de la Organización',
+                'definicion' => 'Combinación de cuestiones internas y externas que pueden tener un efecto en el enfoque de la
                         organización (3.2.1) para el desarrollo y logro de sus objetivos (3.7.1)
                         Nota 1 a la entrada: Los objetivos de la organización pueden estar relacionados con sus productos (3.7.6) y
                         servicios (3.7.7), inversiones y comportamiento hacia sus partes interesadas (3.2.3).
@@ -1069,13 +1066,13 @@ class GlosarioSeeder extends Seeder
                         Nota 3 a la entrada: En inglés, este concepto con frecuencia se denomina mediante otros términos, tales como
                         “entorno empresarial”, “entorno de la organización” o “ecosistema de una organización”.
                         Nota 4 a la entrada: Entender la infraestructura (3.5.2) puede ayudar a definir el contexto de la organización.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.2.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Parte Interesada',
-                            'definicion' => 'persona u organización (3.2.1) que puede afectar, verse afectada o percibirse como afectada por una
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.2.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Parte Interesada',
+                'definicion' => 'Persona u organización (3.2.1) que puede afectar, verse afectada o percibirse como afectada por una
                         decisión o actividad
                         EJEMPLO Clientes (3.2.4), propietarios, personas de una organización, proveedores (3.2.5), banca,
                         legisladores, sindicatos, socios o sociedad en general que puede incluir competidores o grupos de presión con
@@ -1083,42 +1080,42 @@ class GlosarioSeeder extends Seeder
                         Nota 1 a la entrada: Este término constituye uno de los términos comunes y definiciones esenciales para las
                         normas de sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1
                         de las Directivas ISO/IEC. La definición original se ha modificado añadiendo el ejemplo.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.2.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Cliente',
-                            'definicion' => 'persona u organización (3.2.1) que podría recibir o que recibe un producto (3.7.6) o un servicio (3.7.7)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.2.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Cliente',
+                'definicion' => 'Persona u organización (3.2.1) que podría recibir o que recibe un producto (3.7.6) o un servicio (3.7.7)
                         destinado a esa persona u organización o requerido por ella
                         EJEMPLO Consumidor, cliente, usuario final, minorista, receptor de un producto o servicio de un proceso
                         (3.4.1) interno, beneficiario y comprador.
                         Nota 1 a la entrada: Un cliente puede ser interno o externo a la organización.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.2.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Proveedor',
-                            'definicion' => 'organización (3.2.1) que proporciona un producto (3.7.6) o un servicio (3.7.7)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.2.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Proveedor',
+                'definicion' => 'Organización (3.2.1) que proporciona un producto (3.7.6) o un servicio (3.7.7)
                         EJEMPLO Productor, distribuidor, minorista o vendedor de un producto, o un servicio.
                         Nota 1 a la entrada: Un proveedor puede ser interno o externo a la organización.
                         Nota 2 a la entrada: En una situación contractual, un proveedor puede denominarse a veces “contratista”.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.2.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Proveedor externo',
-                            'definicion' => 'proveedor (3.2.5) que no es parte de la organización (3.2.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.2.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Proveedor externo',
+                'definicion' => 'Proveedor (3.2.5) que no es parte de la organización (3.2.1)
                         EJEMPLO Productor, distribuidor, minorista o vendedor de un producto (3.7.6), o un servicio (3.7.7)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.2.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Proveedor de PRC',
-                            'definicion' => 'proveedor de un proceso de resolución de conf lictos
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.2.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Proveedor de PRC',
+                'definicion' => 'Proveedor de un proceso de resolución de conf lictos
                         persona u organización (3.2.1) que provee y opera un proceso (3.4.1) de resolución de conf lictos
                         (3.9.6) externo
                         Nota 1 a la entrada: Generalmente, un proveedor de PRC es una entidad legal, distinta de la organización o de la
@@ -1135,35 +1132,35 @@ class GlosarioSeeder extends Seeder
                         proveedor de PRC.
                         Nota 4 a la entrada: En la Norma ISO 10003:2007, se utiliza el término “proveedor” en lugar del término
                         proveedor de PRC.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.2.8',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Asociación',
-                            'definicion' => '<satisfacción del cliente> organización (3.2.1) formada por organizaciones o personas miembro',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.2.9',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Función Metrológica',
-                            'definicion' => 'unidad funcional con responsabilidad administrativa y técnica para definir e implementar el sistema de gestión de las mediciones',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Mejora',
-                            'definicion' => 'actividad para mejorar el desempeño (3.7.8)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.2.8',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Asociación',
+                'definicion' => '<Satisfacción del cliente> Organización (3.2.1) Formada por organizaciones o personas miembro',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.2.9',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Función Metrológica',
+                'definicion' => 'Unidad funcional con responsabilidad administrativa y técnica para definir e implementar el sistema de gestión de las mediciones',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Mejora',
+                'definicion' => 'Actividad para mejorar el desempeño (3.7.8)
                         Nota 1 a la entrada: La actividad puede ser recurrente o puntual.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Mejora Continua',
-                            'definicion' => 'actividad recurrente para mejorar el desempeño (3.7.8)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Mejora Continua',
+                'definicion' => 'Actividad recurrente para mejorar el desempeño (3.7.8)
                         Nota 1 a la entrada: El proceso (3.4.1) de establecer objetivos (3.7.1) y de encontrar oportunidades para la mejora
                         (3.3.1) es un proceso continuo mediante el uso de hallazgos de la auditoría (3.13.9) y de conclusiones de la auditoría
                         (3.13.10), del análisis de los datos (3.8.1), de las revisiones (3.11.2) por la dirección (3.3.3) u otros medios, y
@@ -1171,110 +1168,110 @@ class GlosarioSeeder extends Seeder
                         Nota 2 a la entrada: Este término constituye uno de los términos comunes y definiciones esenciales para las
                         normas de sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1
                         de las Directivas ISO/IEC. La definición original se ha modificado añadiendo la nota 1 a la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Gestión',
-                            'definicion' => 'actividades coordinadas para dirigir y controlar una organización (3.2.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Gestión',
+                'definicion' => 'Actividades coordinadas para dirigir y controlar una organización (3.2.1)
                         Nota 1 a la entrada: La gestión puede incluir el establecimiento de políticas (3.5.8) y objetivos (3.7.1) y procesos
                         (3.4.1) para lograr estos objetivos.
                         Nota 2 a la entrada: Esta nota no se aplica a la versión española de la Norma.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Gestión de la Calidad',
-                            'definicion' => 'gestión (3.3.3) con respecto a la calidad (3.6.2)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Gestión de la Calidad',
+                'definicion' => 'Gestión (3.3.3) con respecto a la calidad (3.6.2)
                         Nota 1 a la entrada: La gestión de la calidad puede incluir el establecimiento de políticas de la calidad (3.5.9)
                         y los objetivos de la calidad (3.7.2) y los procesos (3.4.1) para lograr estos objetivos de la calidad a través de
                         la planificación de la calidad (3.3.5), el aseguramiento de la calidad (3.3.6), el control de la calidad (3.3.7) y la
                         mejora de la calidad (3.3.8).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Planificación de la Calidad',
-                            'definicion' => 'parte de la gestión de la calidad (3.3.4) orientada a establecer los objetivos de la calidad (3.7.2) y a la
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Planificación de la Calidad',
+                'definicion' => 'Parte de la gestión de la calidad (3.3.4) orientada a establecer los objetivos de la calidad (3.7.2) y a la
                         especificación de los procesos (3.4.1) operativos necesarios y de los recursos relacionados para lograr
                         los objetivos de la calidad
                         Nota 1 a la entrada: El establecimiento de planes de la calidad (3.8.9) puede ser parte de la planificación de la calidad.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Aseguramiento de la Calidad',
-                            'definicion' => 'parte de la gestión de la calidad (3.3.4) orientada a proporcionar confianza en que se cumplirán los
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Aseguramiento de la Calidad',
+                'definicion' => 'Parte de la gestión de la calidad (3.3.4) orientada a proporcionar confianza en que se cumplirán los
                         requisitos de la calidad (3.6.5)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Control de la Calidad',
-                            'definicion' => 'parte de la gestión de la calidad (3.3.4) orientada al cumplimiento de los requisitos de la calidad (3.6.5)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.8',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Mejora de la Calidad',
-                            'definicion' => 'parte de la gestión de la calidad (3.3.4) orientada a aumentar la capacidad de cumplir con los requisitos
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Control de la Calidad',
+                'definicion' => 'Parte de la gestión de la calidad (3.3.4) orientada al cumplimiento de los requisitos de la calidad (3.6.5)',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.8',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Mejora de la Calidad',
+                'definicion' => 'Parte de la gestión de la calidad (3.3.4) orientada a aumentar la capacidad de cumplir con los requisitos
                         de la calidad (3.6.5)
                         Nota 1 a la entrada: Los requisitos de la calidad pueden estar relacionados con cualquier aspecto tal como la
                         eficacia (3.7.11), la eficiencia (3.7.10) o la trazabilidad (3.6.13).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.9',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Gestión de la Configuración',
-                            'definicion' => 'actividades coordinadas para dirigir y controlar la configuración (3.10.6)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.9',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Gestión de la Configuración',
+                'definicion' => 'Actividades coordinadas para dirigir y controlar la configuración (3.10.6)
                         Nota 1 a la entrada: La gestión de la configuración generalmente se concentra en actividades técnicas y
                         organizativas que establecen y mantienen el control de un producto (3.7.6) o servicio (3.7.7) y su información
                         sobre configuración del producto (3.6.8) durante todo el ciclo de vida del producto.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.10',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Control de Cambios',
-                            'definicion' => '<gestión de la configuración> actividades para controlar las salidas (3.7.5) después de la aprobación
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.10',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Control de Cambios',
+                'definicion' => '<Gestión de la configuración> Actividades para controlar las salidas (3.7.5) después de la aprobación
                         formal de su información sobre configuración del producto (3.6.8)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.11',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Actividad',
-                            'definicion' => '<gestión de proyectos> el menor objeto de trabajo identificado en un proyecto (3.4.2)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.12',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Gestión de Proyectos',
-                            'definicion' => 'planificación, organización, seguimiento (3.11.3), control e informe de todos los aspectos de un
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.11',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Actividad',
+                'definicion' => '<Gestión de proyectos> El menor objeto de trabajo identificado en un proyecto (3.4.2)',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.12',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Gestión de Proyectos',
+                'definicion' => 'Planificación, organización, seguimiento (3.11.3), control e informe de todos los aspectos de un
                         proyecto (3.4.2) y la motivación de todos aquellos que están involucrados en él para alcanzar los
                         objetivos del proyecto',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.3.13',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Objeto de la Configuración',
-                            'definicion' => 'objeto (3.6.1) dentro de una configuración (3.10.6) que satisface una función de uso final',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.4.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Proceso',
-                            'definicion' => 'conjunto de actividades mutuamente relacionadas que utilizan las entradas para proporcionar un
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.3.13',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Objeto de la Configuración',
+                'definicion' => 'Objeto (3.6.1) dentro de una configuración (3.10.6) que satisface una función de uso final',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.4.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Proceso',
+                'definicion' => 'Conjunto de actividades mutuamente relacionadas que utilizan las entradas para proporcionar un
                         resultado previsto
                         Nota 1 a la entrada: Que el “resultado previsto” de un proceso se denomine salida (3.7.5), producto (3.7.6) o
                         servicio (3.7.7) depende del contexto de la referencia.
@@ -1292,13 +1289,13 @@ class GlosarioSeeder extends Seeder
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC. La definición original se ha modificado para evitar circularidad entre proceso y salida, y las
                         notas 1 a 5 a la entrada se han añadido.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.4.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Proyecto',
-                            'definicion' => 'proceso (3.4.1) único, consistente en un conjunto de actividades coordinadas y controladas con fechas
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.4.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Proyecto',
+                'definicion' => 'Proceso (3.4.1) único, consistente en un conjunto de actividades coordinadas y controladas con fechas
                         de inicio y de finalización, llevadas a cabo para lograr un objetivo (3.7.1) conforme con requisitos (3.6.4)
                         específicos, incluyendo las limitaciones de tiempo, costo y recursos
                         Nota 1 a la entrada: Un proyecto individual puede formar parte de la estructura de un proyecto mayor y
@@ -1310,56 +1307,56 @@ class GlosarioSeeder extends Seeder
                         de duración del proyecto.
                         Nota 5 a la entrada: La complejidad de las interacciones existentes entre las actividades del proyecto no está
                         necesariamente relacionadas con la magnitud del proyecto.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.4.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Realización del sistema de gestión de la calidad',
-                            'definicion' => 'proceso (3.4.1) de establecimiento, documentación, implementación, mantenimiento y mejora continua
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.4.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Realización del sistema de gestión de la calidad',
+                'definicion' => 'Proceso (3.4.1) de establecimiento, documentación, implementación, mantenimiento y mejora continua
                         de un sistema de gestión de la calidad (3.5.4)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.4.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Adquisición de competencia',
-                            'definicion' => 'proceso (3.4.1) para alcanzar competencia (3.10.4).',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.4.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Procedimiento',
-                            'definicion' => 'forma especificada de llevar a cabo una actividad o un proceso (3.4.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.4.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Adquisición de competencia',
+                'definicion' => 'Proceso (3.4.1) para alcanzar competencia (3.10.4).',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.4.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Procedimiento',
+                'definicion' => 'Forma especificada de llevar a cabo una actividad o un proceso (3.4.1)
                         Nota 1 a la entrada: Los procedimientos pueden estar documentados o no.',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.4.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Contratar externamente',
-                            'definicion' => 'establecer un acuerdo mediante el cual una organización (3.2.1) externa realiza parte de una función o
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.4.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Contratar externamente',
+                'definicion' => 'Establecer un acuerdo mediante el cual una organización (3.2.1) externa realiza parte de una función o
                         proceso (3.4.1) de una organización
                         Nota 1 a la entrada: Una organización externa está fuera del alcance del sistema de gestión (3.5.3), aunque la
                         función o proceso contratado externamente forme parte del alcance.
                         Nota 2 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC.',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.4.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Contrato',
-                            'definicion' => 'acuerdo vinculante',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.4.8',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Diseño y desarrollo',
-                            'definicion' => 'conjunto de procesos (3.4.1) que transforman los requisitos (3.6.4) para un objeto (3.6.1) en requisitos
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.4.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Contrato',
+                'definicion' => 'Acuerdo vinculante',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.4.8',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Diseño y desarrollo',
+                'definicion' => 'Conjunto de procesos (3.4.1) que transforman los requisitos (3.6.4) para un objeto (3.6.1) en requisitos
                         más detallados para ese objeto
                         Nota 1 a la entrada: Los requisitos que forman la entrada para el diseño y desarrollo son con frecuencia el
                         resultado de la investigación y pueden expresarse de un modo más amplio, en un sentido más general que el
@@ -1370,28 +1367,28 @@ class GlosarioSeeder extends Seeder
                         Nota 3 a la entrada: Puede aplicarse un calificativo para indicar la naturaleza de lo que se está diseñando y
                         desarrollando (por ejemplo, diseño y desarrollo de un producto (3.7.6), diseño y desarrollo de un servicio (3.7.7) o
                         diseño y desarrollo de un proceso (3.4.1).',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Sistema',
-                            'definicion' => 'conjunto de elementos interrelacionados o que interactúan',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Infraestructura',
-                            'definicion' => '<organización> sistema (3.5.1) de instalaciones, equipos y servicios (3.7.7) necesarios para el
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Sistema',
+                'definicion' => 'Conjunto de elementos interrelacionados o que interactúan',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Infraestructura',
+                'definicion' => '<Organización> Sistema (3.5.1) de instalaciones, equipos y servicios (3.7.7) necesarios para el
                             funcionamiento de una organización (3.2.1)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Sistema de Gestión',
-                            'definicion' => 'conjunto de elementos de una organización (3.2.1) interrelacionados o que interactúan para establecer
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Sistema de Gestión',
+                'definicion' => 'Conjunto de elementos de una organización (3.2.1) interrelacionados o que interactúan para establecer
                         políticas (3.5.8), objetivos (3.7.1) y procesos (3.4.1) para lograr estos objetivos.
                         Nota 1 a la entrada: Un sistema de gestión puede tratar una sola disciplina o varias disciplinas, por ejemplo,
                         gestión de la calidad (3.3.4), gestión financiera o gestión ambiental.
@@ -1404,29 +1401,29 @@ class GlosarioSeeder extends Seeder
                         Nota 4 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC. La definición original se ha modificado mediante la modificación de las notas 1 a 3 la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Sistema de Gestión de la Calidad',
-                            'definicion' => 'parte de un sistema de gestión (3.5.3) relacionada con la calidad (3.6.2)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Ambiente de Trabajo',
-                            'definicion' => 'conjunto de condiciones bajo las cuales se realiza el trabajo
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Sistema de Gestión de la Calidad',
+                'definicion' => 'Parte de un sistema de gestión (3.5.3) relacionada con la calidad (3.6.2)',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Ambiente de Trabajo',
+                'definicion' => 'Conjunto de condiciones bajo las cuales se realiza el trabajo
                         Nota 1 a la entrada: Las condiciones pueden incluir factores físicos, sociales, psicológicos y ambientales (tales como
                         temperatura, iluminación, esquemas de reconocimiento, estrés laboral, ergonomía y atmósfera en el trabajo).',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Confirmación Metrológica',
-                            'definicion' => 'conjunto de operaciones necesarias para asegurarse de que el equipo de medición (3.11.6) es conforme
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Confirmación Metrológica',
+                'definicion' => 'Conjunto de operaciones necesarias para asegurarse de que el equipo de medición (3.11.6) es conforme
                         con los requisitos (3.6.4) para su uso previsto
                         Nota 1 a la entrada: La confirmación metrológica generalmente incluye calibración o verificación (3.8.12),
                         cualquier ajuste necesario o reparación (3.12.9) y posterior recalibración, comparación con los requisitos
@@ -1437,102 +1434,102 @@ class GlosarioSeeder extends Seeder
                         rango, la resolución y los errores máximos permitidos.
                         Nota 4 a la entrada: Los requisitos metrológicos normalmente son distintos de los requisitos del producto (3.7.6)
                         y no se encuentran especificados en los mismos.',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Sistema de Gestión de las Mediciones',
-                            'definicion' => 'conjunto de elementos interrelacionados, o que interactúan, necesarios para lograr la confirmación
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Sistema de Gestión de las Mediciones',
+                'definicion' => 'Conjunto de elementos interrelacionados, o que interactúan, necesarios para lograr la confirmación
                         metrológica (3.5.6) y el control de los procesos de medición (3.11.5).',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.8',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Política',
-                            'definicion' => '<organización> intenciones y dirección de una organización (3.2.1), como las expresa formalmente su
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.8',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Política',
+                'definicion' => '<Organización> Intenciones y dirección de una organización (3.2.1), como las expresa formalmente su
                         alta dirección (3.1.1)
                         Nota 1 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC.',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.9',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Política de la Calidad',
-                            'definicion' => 'política (3.5.8) relativa a la calidad (3.6.2)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.9',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Política de la Calidad',
+                'definicion' => 'Política (3.5.8) relativa a la calidad (3.6.2)
                         Nota 1 a la entrada: Generalmente la política de la calidad es coherente con la política global de la organización
                         (3.2.1), puede alinearse con la visión (3.5.10) y la misión (3.5.11) de la organización y proporciona un marco de
                         referencia para el establecimiento de los objetivos de la calidad (3.7.2).
                         Nota 2 a la entrada: Los principios de gestión de la calidad presentados en esta Norma Internacional pueden
                         constituir la base para el establecimiento de la política de la calidad.',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.10',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Visión',
-                            'definicion' => '<organización> aspiración de aquello que una organización (3.2.1) querría llegar a ser, tal como lo
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.10',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Visión',
+                'definicion' => '<Organización> Aspiración de aquello que una organización (3.2.1) querría llegar a ser, tal como lo
                         expresa la alta dirección (3.1.1)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.11',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Misión',
-                            'definicion' => '<organización> propósito de la existencia de la organización (3.2.1), tal como lo expresa la alta
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.11',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Misión',
+                'definicion' => '<Organización> Propósito de la existencia de la organización (3.2.1), tal como lo expresa la alta
                         dirección (3.1.1)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.5.12',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Estrategia',
-                            'definicion' => 'plan para lograr un objetivo (3.7.1) a largo plazo o global',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Objeto
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.5.12',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Estrategia',
+                'definicion' => 'Plan para lograr un objetivo (3.7.1) a largo plazo o global',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Objeto
                             Entidad
                             Item',
-                            'definicion' => 'cualquier cosa que puede percibirse o concebirse
+                'definicion' => 'Cualquier cosa que puede percibirse o concebirse
                         EJEMPLO Producto (3.7.6), servicio (3.7.7), proceso (3.4.1), persona, organización (3.2.1), sistema (3.5.1),
                         recurso.
                         Nota 1 a la entrada: Los objetos pueden ser materiales (por ejemplo, un motor, una hoja de papel, un diamante),
                         no materiales (por ejemplo, una tasa de conversión, un plan de proyecto) o imaginarios (por ejemplo, el estado
                         futuro de una organización ).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Calidad',
-                            'definicion' => 'grado en el que un conjunto de características (3.10.1) inherentes de un objeto (3.6.1) cumple con los
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Calidad',
+                'definicion' => 'Grado en el que un conjunto de características (3.10.1) inherentes de un objeto (3.6.1) cumple con los
                         requisitos (3.6.4).
                         Nota 1 a la entrada: El término “calidad” puede utilizarse acompañado de adjetivos tales como pobre, buena o
                         excelente.
                         Nota 2 a la entrada: “Inherente”, en contraposición a “asignado”, significa que existe en el objeto (3.6.1).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Clase',
-                            'definicion' => 'categoría o rango dado a diferentes requisitos (3.6.4) para un objeto (3.6.1) que tienen el mismo uso
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Clase',
+                'definicion' => 'Categoría o rango dado a diferentes requisitos (3.6.4) para un objeto (3.6.1) que tienen el mismo uso
                         funcional
                         EJEMPLO Clases de billetes de una compañía aérea o categorías de hoteles en un folleto.
                         Nota 1 a la entrada: Cuando se establece un requisito de la calidad (3.6.5), generalmente se especifica la clase.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Requisito',
-                            'definicion' => 'necesidad o expectativa establecida, generalmente implícita u obligatoria
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Requisito',
+                'definicion' => 'Necesidad o expectativa establecida, generalmente implícita u obligatoria
                             Nota 1 a la entrada: “Generalmente implícita” significa que es habitual o práctica común para la organización
                         (3.2.1) y las partes interesadas (3.2.3) el que la necesidad o expectativa bajo consideración está implícita.
                         Nota 2 a la entrada: Un requisito especificado es aquel que está establecido, por ejemplo, en información
@@ -1550,78 +1547,78 @@ class GlosarioSeeder extends Seeder
                         3.6.5
                         requisito de la calidad
                         requisito (3.6.4) relativo a la calidad (3.6.2)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Requisito Legal',
-                            'definicion' => 'requisito (3.6.4) obligatorio especificado por un organismo legislativo',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Requisito Reglamentario',
-                            'definicion' => 'requisito (3.6.4) obligatorio especificado por una autoridad que recibe el mandato de un órgano legislativo',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.8',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Información Sobre Configuración del Producto',
-                            'definicion' => 'requisito (3.6.4) u otra información para el diseño, la realización, la verificación (3.8.12), el
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Requisito Legal',
+                'definicion' => 'Requisito (3.6.4) obligatorio especificado por un organismo legislativo',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Requisito Reglamentario',
+                'definicion' => 'Requisito (3.6.4) obligatorio especificado por una autoridad que recibe el mandato de un órgano legislativo',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.8',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Información Sobre Configuración del Producto',
+                'definicion' => 'Requisito (3.6.4) u otra información para el diseño, la realización, la verificación (3.8.12), el
                         funcionamiento y el soporte de un producto (3.7.6)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.9',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'No Conformidad',
-                            'definicion' => 'incumplimiento de un requisito (3.6.4)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.9',
+                'norma' => 'ISO 9001',
+                'concepto' => 'No Conformidad',
+                'definicion' => 'Incumplimiento de un requisito (3.6.4)
                         Nota 1 a la entrada: Este es uno de los términos comunes y definiciones esenciales para las normas de sistemas de
                         gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las Directivas ISO/IEC.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.10',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Defecto',
-                            'definicion' => 'no conformidad (3.6.9) relativa a un uso previsto o especificado
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.10',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Defecto',
+                'definicion' => 'No conformidad (3.6.9) relativa a un uso previsto o especificado
                         Nota 1 a la entrada: La distinción entre los conceptos defecto y no conformidad es importante por sus
                         connotaciones legales, particularmente aquellas asociadas a la responsabilidad legal de los productos (3.7.6) y
                         servicios (3.7.7).
                         Nota 2 a la entrada: El uso previsto tal y como lo prevé el cliente (3.2.4) podría estar afectado por la naturaleza de
                         la información (3.8.2), tal como las instrucciones de funcionamiento o de mantenimiento, proporcionadas por el
                         proveedor (3.2.5).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.11',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Conformidad',
-                            'definicion' => 'cumplimiento de un requisito (3.6.4)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.11',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Conformidad',
+                'definicion' => 'Cumplimiento de un requisito (3.6.4)
                         Nota 1 a la entrada: Esta nota no se aplica a la versión española de la Norma.
                         Nota 2 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC. La definición original se ha modificado añadiendo la nota 1 a la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.12',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Capacidad',
-                            'definicion' => 'aptitud de un objeto (3.6.1) para realizar una salida (3.7.5) que cumplirá los requisitos (3.6.4) para esa
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.12',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Capacidad',
+                'definicion' => 'Aptitud de un objeto (3.6.1) para realizar una salida (3.7.5) que cumplirá los requisitos (3.6.4) para esa
                         salida
                         Nota 1 a la entrada: En la Norma ISO 3534-2 se definen términos relativos a la capacidad de los procesos (3.4.1)
                         en el campo de la estadística.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.13',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Trazabilidad',
-                            'definicion' => 'capacidad para seguir el histórico, la aplicación o la localización de un objeto (3.6.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.13',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Trazabilidad',
+                'definicion' => 'Capacidad para seguir el histórico, la aplicación o la localización de un objeto (3.6.1)
                         Nota 1 a la entrada: Al considerar un producto (3.7.6) o un servicio (3.7.7), la trazabilidad puede estar
                         relacionada con:
                         — el origen de los materiales y las partes;
@@ -1630,29 +1627,29 @@ class GlosarioSeeder extends Seeder
                         21
                         — la distribución y localización del producto o servicio después de la entrega.
                         Nota 2 a la entrada: En el campo de la metrología, se acepta la definición dada en la Guía ISO/IEC 99:2007.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.14',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Confiabilidad',
-                            'definicion' => 'capacidad para desempeñar cómo y cuándo se requiera',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.6.15',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Innovación',
-                            'definicion' => 'objeto (3.6.1) nuevo o cambiado que crea o redistribuye valor.
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.14',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Confiabilidad',
+                'definicion' => 'Capacidad para desempeñar cómo y cuándo se requiera',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.6.15',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Innovación',
+                'definicion' => 'Objeto (3.6.1) nuevo o cambiado que crea o redistribuye valor.
                         Nota 1 a la entrada: Las actividades que resultan en innovación generalmente se gestionan.
                         Nota 2 a la entrada: La innovación es generalmente significativa en su efecto.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.1 objetivo',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Resultado a lograr',
-                            'definicion' => 'Nota 1 a la entrada: Un objetivo puede ser estratégico, táctico u operativo.
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.1 objetivo',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Resultado a lograr',
+                'definicion' => 'Nota 1 a la entrada: Un objetivo puede ser estratégico, táctico u operativo.
                         Nota 2 a la entrada: Los objetivos pueden referirse a diferentes disciplinas (tales como objetivos financieros,
                         de salud y seguridad y ambientales) y se pueden aplicar en diferentes niveles [como estratégicos, para toda la
                         organización (3.2.1), para el proyecto (3.4.2), el producto (3.7.6) y el proceso (3.4.1)].
@@ -1665,59 +1662,59 @@ class GlosarioSeeder extends Seeder
                         Nota 5 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC. La definición original se ha modificado mediante la modificación de la nota 2 a la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Objetivo de la calidad',
-                            'definicion' => 'objetivo (3.7.1) relativo a la calidad (3.6.2)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Objetivo de la calidad',
+                'definicion' => 'Objetivo (3.7.1) relativo a la calidad (3.6.2)
                         Nota 1 a la entrada: Los objetivos de la calidad generalmente se basan en la política de la calidad (3.5.9) de la
                         organización (3.2.1).
                         Nota 2 a la entrada: Los objetivos de la calidad generalmente se especifican para las funciones, niveles y procesos
                         (3.4.1) pertinentes de la organización (3.2.1).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Éxito',
-                            'definicion' => '<organización> logro de un objetivo (3.7.1).
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Éxito',
+                'definicion' => '<Organización> logro de un objetivo (3.7.1).
                         Nota 1 a la entrada: El éxito de una organización (3.2.1) enfatiza la necesidad de un equilibrio entre sus intereses
                         económicos o financieros y las necesidades de sus partes interesadas (3.2.3), tales como clientes (3.2.4), usuarios,
                         inversionistas/accionistas (propietarios), las personas de la organización, proveedores (3.2.5), socios, grupos de
                         interés y comunidades.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Éxito Sostenido',
-                            'definicion' => '<organización> éxito (3.7.3) durante un periodo de tiempo
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Éxito Sostenido',
+                'definicion' => '<Organización> éxito (3.7.3) Durante un periodo de tiempo
                         Nota 1 a la entrada: El éxito sostenido enfatiza la necesidad de un equilibrio entre los intereses económicofinancieros
                         de una organización (3.2.1) y aquellos del entorno social y ecológico.
                         Nota 2 a la entrada: El éxito sostenido se relaciona con las partes interesadas (3.2.3) de una organización tales
                         como clientes (3.2.4), propietarios, personas de una organización, proveedores (3.2.5), banqueros, sindicatos,
                         socios o la sociedad.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Salida',
-                            'definicion' => 'resultado de un proceso (3.4.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Salida',
+                'definicion' => 'Resultado de un proceso (3.4.1)
                         Nota 1 a la entrada: Que una salida de una organización (3.2.1) sea un producto (3.7.6) o un servicio (3.7.7) depende
                         de la preponderancia de las características (3.10.1) involucradas, por ejemplo, una pintura que se vende en una
                         galería es un producto mientras que el suministro de una pintura encargada es un servicio, una hamburguesa
                         comprada en una tienda minorista es un producto mientras que una hamburguesa recibida, ordenada y servida
                         en un restaurantes es parte de un servicio.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Producto',
-                            'definicion' => 'salida (3.7.5) de una organización (3.2.1) que puede producirse sin que se lleve a cabo ninguna
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Producto',
+                'definicion' => 'Salida (3.7.5) de una organización (3.2.1) que puede producirse sin que se lleve a cabo ninguna
                         transacción entre la organización y el cliente (3.2.4)
                         Nota 1 a la entrada: La producción de un producto se logra sin que necesariamente se lleve a cabo ninguna
                         transacción, entre el proveedor (3.2.5) y el cliente pero frecuentemente el elemento servicio (3.7.7) está
@@ -1729,13 +1726,13 @@ class GlosarioSeeder extends Seeder
                         denominan bienes. El software consiste en información (3.8.2) independientemente del medio de entrega (por
                         ejemplo un programa informático, una aplicación de teléfono móvil, un manual de instrucciones, el contenido de
                         un diccionario, los derechos de autor de una composición musical, la licencia de conductor).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Servicio',
-                            'definicion' => 'salida (3.7.5) de una organización (3.2.1) con al menos una actividad, necesariamente llevada a cabo
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Servicio',
+                'definicion' => 'Salida (3.7.5) de una organización (3.2.1) con al menos una actividad, necesariamente llevada a cabo
                         entre la organización y el cliente (3.2.4)
                         Nota 1 a la entrada: Los elementos dominantes de un servicio son generalmente intangibles.
                         Nota 2 a la entrada: Los servicios con frecuencia involucran actividades en la interfaz con el cliente para establecer
@@ -1750,25 +1747,25 @@ class GlosarioSeeder extends Seeder
                         transmisión de conocimiento);
                         — la creación de un ambiente para el cliente (por ejemplo, en hoteles y restaurantes).
                         Nota 4 a la entrada: Un servicio generalmente se experimenta por el cliente.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.8 desempeño',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Resultado Medible',
-                            'definicion' => 'Nota 1 a la entrada: El desempeño se puede relacionar con hallazgos cuantitativos o cualitativos.
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.8 desempeño',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Resultado Medible',
+                'definicion' => 'Nota 1 a la entrada: El desempeño se puede relacionar con hallazgos cuantitativos o cualitativos.
                         Nota 2 a la entrada: El desempeño se puede relacionar con la gestión (3.3.3) de actividades (3.3.11), procesos
                         (3.4.1), productos (3.7.6), servicios (3.7.7), sistemas (3.5.1) u organizaciones (3.2.1).
                         Nota 3 a la entrada: Este es uno de los términos comunes y definiciones esenciales para las normas de sistemas
                         de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las Directivas
                         ISO/IEC. La definición original se ha modificado con la modificación de la nota 2 a la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.9',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Riesgo',
-                            'definicion' => 'efecto de la incertidumbre
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.9',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Riesgo',
+                'definicion' => 'Efecto de la incertidumbre
                         Nota 1 a la entrada: Un efecto es una desviación de lo esperado, ya sea positivo o negativo.
                         Nota 2 a la entrada: Incertidumbre es el estado, incluso parcial, de deficiencia de información (3.8.2) relacionada
                         con la comprensión o conocimiento de un evento, su consecuencia o su probabilidad.
@@ -1783,64 +1780,64 @@ class GlosarioSeeder extends Seeder
                         Nota 6 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC. La definición original se ha modificado añadiendo la nota 5 a la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.10',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Eficiencia',
-                            'definicion' => 'relación entre el resultado alcanzado y los recursos utilizados',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.7.11',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Eficacia',
-                        'definicion' => 'grado en el que se realizan las actividades planificadas y se logran los resultados planificados
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.10',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Eficiencia',
+                'definicion' => 'Relación entre el resultado alcanzado y los recursos utilizados',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.7.11',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Eficacia',
+                'definicion' => 'Grado en el que se realizan las actividades planificadas y se logran los resultados planificados
                         Nota 1 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Datos',
-                            'definicion' => 'hechos sobre un objeto (3.6.1)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Información',
-                            'definicion' => 'datos (3.8.1) que poseen significado',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Evidencia objetiva',
-                            'definicion' => 'datos (3.8.1) que respaldan la existencia o veracidad de algo
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Datos',
+                'definicion' => 'Hechos sobre un objeto (3.6.1)',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Información',
+                'definicion' => 'Datos (3.8.1) que poseen significado',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Evidencia objetiva',
+                'definicion' => 'Datos (3.8.1) que respaldan la existencia o veracidad de algo
                         Nota 1 a la entrada: La evidencia objetiva puede obtenerse por medio de la observación, medición (3.11.4), ensayo
                         (3.11.8) o por otros medios.
                         Nota 2 a la entrada: La evidencia objetiva con fines de auditoría (3.13.1) generalmente se compone de registros
                         (3.8.10), declaraciones de hechos u otra información (3.8.2) que son pertinentes para los criterios de auditoría
                         (3.13.7) y verificables.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Sistema de Información',
-                            'definicion' => '<sistema de gestión de la calidad> red de canales de comunicación utilizados dentro de una
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Sistema de Información',
+                'definicion' => '<Sistema de gestión de la calidad> Red de canales de comunicación utilizados dentro de una
                         organización (3.2.1)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Documento',
-                            'definicion' => 'información (3.8.2) y el medio en el que está contenida
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Documento',
+                'definicion' => 'Información (3.8.2) y el medio en el que está contenida
                         EJEMPLO Registro (3.8.10), especificación (3.8.7), documento de procedimiento, plano, informe, norma.
                         Nota 1 a la entrada: El medio de soporte puede ser papel, disco magnético, electrónico u óptico, fotografía o
                         muestra patrón o una combinación de éstos.
@@ -1849,13 +1846,13 @@ class GlosarioSeeder extends Seeder
                         Nota 3 a la entrada: Algunos requisitos (3.6.4) (por ejemplo, el requisito de ser legible) se refieren a todo tipo de
                         documento. Sin embargo puede requisitos diferentes para las especificaciones (por ejemplo, el requisito de estar
                         controlado por revisiones) y los registros (por ejemplo, el requisito de ser recuperable).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Información Documentada',
-                            'definicion' => 'información (3.8.2) que una organización (3.2.1) tiene que controlar y mantener, y el medio que la contiene
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Información Documentada',
+                'definicion' => 'Información (3.8.2) que una organización (3.2.1) tiene que controlar y mantener, y el medio que la contiene
                         Nota 1 a la entrada: La información documentada puede estar en cualquier formato y medio, y puede provenir de
                         cualquier fuente.
                         Nota 2 a la entrada: La información documentada puede hacer referencia a:
@@ -1865,13 +1862,13 @@ class GlosarioSeeder extends Seeder
                         Nota 3 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Especificación',
-                            'definicion' => 'documento (3.8.5) que establece requisitos (3.6.4)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Especificación',
+                'definicion' => 'Documento (3.8.5) que establece requisitos (3.6.4)
                         EJEMPLO Manual de la calidad (3.8.8), plan de la calidad (3.8.9), plano técnico, documento de procedimiento,
                         instrucción de trabajo.
                         Nota 1 a la entrada: Una especificación puede estar relacionada con actividades (por ejemplo, un documento de
@@ -1880,22 +1877,22 @@ class GlosarioSeeder extends Seeder
                         Nota 2 a la entrada: Puede que, al establecer requisitos una especificación esté estableciendo adicionalmente
                         resultados logrados por el diseño y desarrollo (3.4.8) y de este modo en algunos casos puede utilizarse como un
                         registro (3.8.10).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.8',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Manual de la Calidad',
-                            'definicion' => 'especificación (3.8.7) para el sistema de gestión de la calidad (3.5.4) de una organización (3.2.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.8',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Manual de la Calidad',
+                'definicion' => 'Especificación (3.8.7) para el sistema de gestión de la calidad (3.5.4) de una organización (3.2.1)
                         Nota 1 a la entrada: Los manuales de la calidad pueden variar en cuanto a detalle y formato para adecuarse al
                         tamaño y complejidad de cada organización (3.2.1) en particular.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.9',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Plan de la Calidad',
-                            'definicion' => 'especificación (3.8.7) de los procedimientos (3.4.5) y recursos asociados a aplicar, cuándo deben aplicarse
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.9',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Plan de la Calidad',
+                'definicion' => 'Especificación (3.8.7) de los procedimientos (3.4.5) y recursos asociados a aplicar, cuándo deben aplicarse
                         y quién debe aplicarlos a un objeto (3.6.1) específico
                         Nota 1 a la entrada: Estos procedimientos generalmente incluyen aquellos relativos a los procesos (3.4.1) de
                         gestión de la calidad (3.3.4) y a los procesos de realización del producto (3.7.6) y servicio (3.7.7)
@@ -1903,36 +1900,36 @@ class GlosarioSeeder extends Seeder
                         a documentos (3.8.5) de procedimiento.
                         Nota 3 a la entrada: Un plan de la calidad es generalmente uno de los resultados de la planificación de la
                         calidad (3.3.5).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.10',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Registro',
-                            'definicion' => 'documento (3.8.5) que presenta resultados obtenidos o proporciona evidencia de actividades realizadas
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.10',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Registro',
+                'definicion' => 'Documento (3.8.5) que presenta resultados obtenidos o proporciona evidencia de actividades realizadas
                         Nota 1 a la entrada: Los registros pueden utilizarse, por ejemplo, para formalizar la trazabilidad (3.6.13) y para
                         proporcionar evidencia de verificaciones (3.8.12), acciones preventivas (3.12.1) y acciones correctivas (3.12.2).
                         Nota 2 a la entrada: En general los registros no necesitan estar sujetos al control del estado de revisión.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.11',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Plan de Gestión de Proyecto',
-                            'definicion' => 'documento (3.8.5) que especifica qué es necesario para cumplir los objetivos (3.7.1) del proyecto (3.4.2)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.11',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Plan de Gestión de Proyecto',
+                'definicion' => 'Documento (3.8.5) que especifica qué es necesario para cumplir los objetivos (3.7.1) del proyecto (3.4.2)
                         Nota 1 a la entrada: Un plan de gestión de proyecto debería incluir o hacer referencia al plan de la calidad (3.8.9)
                         del proyecto.
                         Nota 2 a la entrada: Cuando sea apropiado, el plan de gestión de proyecto también incluye o hace referencia a otros
                         planes como aquellos relativos a las estructuras de la organización, los recursos, el calendario, el presupuesto, la
                         gestión (3.3.3) del riesgo (3.7.9), la gestión ambiental, la gestión de la salud y seguridad y la gestión (3.3.3) de la
                         seguridad, según sea apropiado.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.12',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Verificación',
-                            'definicion' => 'confirmación, mediante la aportación de evidencia objetiva (3.8.3) de que se han cumplido los requisitos
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.12',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Verificación',
+                'definicion' => 'Confirmación, mediante la aportación de evidencia objetiva (3.8.3) de que se han cumplido los requisitos
                         (3.6.4) especificados
                         Nota 1 a la entrada: La evidencia objetiva necesaria para una verificación puede ser el resultado de una inspección
                         (3.11.7) o de otras formas de determinación (3.11.1), tales como realizar cálculos alternativos o revisar los
@@ -1940,50 +1937,50 @@ class GlosarioSeeder extends Seeder
                         Nota 2 a la entrada: Las actividades llevadas a cabo para la verificación a veces se denominan proceso (3.4.1) de
                         calificación.
                         Nota 3 a la entrada: La palabra “verificado” se utiliza para designar el estado correspondiente.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.13',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Validación',
-                            'definicion' => 'confirmación, mediante la aportación de evidencia objetiva (3.8.3), de que se han cumplido los
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.13',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Validación',
+                'definicion' => 'Confirmación, mediante la aportación de evidencia objetiva (3.8.3), de que se han cumplido los
                         requisitos (3.6.4) para una utilización o aplicación específica prevista
                         Nota 1 a la entrada: La evidencia objetiva necesaria para una validación es el resultado de un ensayo (3.11.8) u
                         otra forma de determinación (3.11.1), tal como realizar cálculos alternativos o revisar los documentos (3.8.5).
                         Nota 2 a la entrada: La palabra “validado” se utiliza para designar el estado correspondiente.
                         Nota 3 a la entrada: Las condiciones de utilización para la validación pueden ser reales o simuladas.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.8.14',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Justificación del Estado de la Configuración',
-                            'definicion' => 'registro e informe formalizado de la información sobre configuración del producto (3.6.8) , el estado de
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.14',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Justificación del Estado de la Configuración',
+                'definicion' => 'Registro e informe formalizado de la información sobre configuración del producto (3.6.8) , el estado de
                         los cambios propuestos y el estado de la implementación de los cambios aprobados',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                        'numero' => '3.8.15',
-                        'norma' => 'ISO 9001',
-                        'concepto' => 'Caso Específico',
-                        'definicion' => '<plan de la calidad> tema del plan de la calidad (3.8.9)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.8.15',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Caso Específico',
+                'definicion' => '<Plan de la calidad> Tema del plan de la calidad (3.8.9)
                         Nota 1 a la entrada: Este término se utiliza para evitar la repetición de “proceso (3.4.1), producto (3.7.6), proyecto
                         (3.4.2) o contrato (3.4.7)” dentro de la Norma ISO 10005.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.9.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Retroalimentación',
-                            'definicion' => '<satisfacción del cliente> opiniones, comentarios y muestras de interés por un producto (3.7.6), un
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.9.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Retroalimentación',
+                'definicion' => '<Satisfacción del cliente> Opiniones, comentarios y muestras de interés por un producto (3.7.6), un
                         servicio (3.7.7) o un proceso de tratamiento de quejas (3.4.1)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.9.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Satisfacción del Cliente',
-                            'definicion' => 'percepción del cliente (3.2.4) sobre el grado en que se han cumplido las expectativas de los clientes
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.9.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Satisfacción del Cliente',
+                'definicion' => 'Percepción del cliente (3.2.4) sobre el grado en que se han cumplido las expectativas de los clientes
                         Nota 1 a la entrada: Puede que la expectativa del cliente no sea conocida por la organización (3.2.1), o incluso por
                         el propio cliente, hasta que el producto (3.7.6) o servicio (3.7.7) se entregue. Para alcanzar una alta satisfacción
                         del cliente puede ser necesario cumplir una expectativa de un cliente incluso si no está declarada, ni está
@@ -1992,42 +1989,42 @@ class GlosarioSeeder extends Seeder
                         ausencia de las mismas no implica necesariamente una elevada satisfacción del cliente.
                         Nota 3 a la entrada: Incluso cuando los requisitos del cliente (3.6.4) se han acordado con el cliente y éstos se han
                         cumplido, esto no asegura necesariamente una elevada satisfacción del cliente.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.9.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Queja',
-                        'definicion' => '<satisfacción del cliente> expresión de insatisfacción hecha a una organización (3.2.1), relativa a su
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.9.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Queja',
+                'definicion' => '<Satisfacción del cliente> Expresión de insatisfacción hecha a una organización (3.2.1), relativa a su
                         producto (3.7.6) o servicio (3.7.7), o al propio proceso (3.4.1) de tratamiento de quejas, donde explícita o
                         implícitamente se espera una respuesta o resolución',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.9.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Servicio al Cliente',
-                            'definicion' => 'interacción de la organización (3.2.1) con el cliente (3.2.4) a lo largo del ciclo de vida de un producto
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.9.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Servicio al Cliente',
+                'definicion' => 'Interacción de la organización (3.2.1) con el cliente (3.2.4) a lo largo del ciclo de vida de un producto
                         (3.7.6) o un servicio (3.7.7).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.9.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Código de Conducta de la Satisfacción del Cliente',
-                            'definicion' => 'promesas hechas a los clientes (3.2.4) por una organización (3.2.1) relacionadas con su comportamiento,
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.9.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Código de Conducta de la Satisfacción del Cliente',
+                'definicion' => 'Promesas hechas a los clientes (3.2.4) por una organización (3.2.1) relacionadas con su comportamiento,
                         orientadas a aumentar la satisfacción del cliente (3.9.2) y las disposiciones relacionadas
                         Nota 1 a la entrada: Las disposiciones relacionadas pueden incluir objetivos (3.7.1), condiciones, limitaciones,
                         información (3.8.2) del contrato y procedimientos (3.4.5) de tratamiento de quejas (3.9.3).
                         Nota 2 a la entrada: En la Norma ISO 10001:2007 el término “código” se utiliza en lugar de “código de conducta de
                         la satisfacción del cliente”.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.9.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Conflicto',
-                            'definicion' => '<satisfacción del cliente> desacuerdo, que surge de una queja (3.9.3) presentada a un proveedor de PRC
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.9.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Conflicto',
+                'definicion' => '<Satisfacción del cliente> Desacuerdo, que surge de una queja (3.9.3) presentada a un proveedor de PRC
                         (3.2.7).
                         Nota 1 a la entrada: Algunas organizaciones (3.2.1) permiten a sus clientes (3.2.4) expresar su insatisfacción a
                         un proveedor de PRC en primer lugar. En esta situación, la expresión de insatisfacción se convierte en una queja
@@ -2035,13 +2032,13 @@ class GlosarioSeeder extends Seeder
                         organización sin la intervención del proveedor de PRC. Muchas organizaciones prefieren que sus clientes expresen
                         primero cualquier insatisfacción a la organización antes de utilizar una resolución de conf lictos externa a la
                         organización.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.10.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Característica',
-                            'definicion' => 'rasgo diferenciador
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.10.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Característica',
+                'definicion' => 'Rasgo diferenciador
                         Nota 1 a la entrada: Una característica puede ser inherente o asignada.
                         Nota 2 a la entrada: Una característica puede ser cualitativa o cuantitativa.
                         Nota 3 a la entrada: Existen varias clases de características, tales como las siguientes:
@@ -2051,87 +2048,87 @@ class GlosarioSeeder extends Seeder
                         d) de tiempo (por ejemplo, puntualidad, confiabilidad, disponibilidad, continuidad);
                         e) ergonómicas (por ejemplo, características fisiológicas, o relacionadas con la seguridad de las personas);
                         f ) funcionales (por ejemplo, velocidad máxima de un avión).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.10.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Característica de la Calidad',
-                            'definicion' => 'característica (3.10.1) inherente a un objeto (3.6.1) relacionada con un requisito (3.6.4)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.10.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Característica de la Calidad',
+                'definicion' => 'Característica (3.10.1) inherente a un objeto (3.6.1) relacionada con un requisito (3.6.4)
                         Nota 1 a la entrada: Inherente significa que existe en algo, especialmente como una característica permanente.
                         Nota 2 a la entrada: Una característica asignada a un objeto (por ejemplo, el precio de un objeto) no es una
                         característica de la calidad de ese objeto.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.10.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Factor Humano',
-                            'definicion' => 'característica (3.10.1) de una persona que tiene un impacto sobre un objeto (3.6.1) bajo consideración
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.10.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Factor Humano',
+                'definicion' => 'Característica (3.10.1) de una persona que tiene un impacto sobre un objeto (3.6.1) bajo consideración
                         Nota 1 a la entrada: Las características pueden ser físicas, cognitivas o sociales.
                         Nota 2 a la entrada: Los factores humanos pueden tener un impacto significativo en un sistema de gestión (3.5.3).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.10.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Competencia',
-                            'definicion' => 'capacidad para aplicar conocimientos y habilidades con el fin de lograr los resultados previstos
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.10.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Competencia',
+                'definicion' => 'Capacidad para aplicar conocimientos y habilidades con el fin de lograr los resultados previstos
                         Nota 1 a la entrada: La competencia demostrada a veces se denomina cualificación.
                         Nota 2 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC. La definición original se ha modificado añadiendo la nota 1 a la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.10.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Característica Metrológica',
-                            'definicion' => 'característica (3.10.1) que puede inf luir sobre los resultados de la medición (3.11.4)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.10.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Característica Metrológica',
+                'definicion' => 'Característica (3.10.1) que puede inf luir sobre los resultados de la medición (3.11.4)
                         Nota 1 a la entrada: El equipo de medición (3.11.6) generalmente tiene varias características metrológicas.
                         Nota 2 a la entrada: Las características metrológicas pueden estar sujetas a calibración.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.10.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Configuración',
-                            'definicion' => 'características (3.10.1) funcionales y físicas interrelacionadas de un producto (3.7.6) o servicio (3.7.7)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.10.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Configuración',
+                'definicion' => 'Características (3.10.1) funcionales y físicas interrelacionadas de un producto (3.7.6) o servicio (3.7.7)
                         definidas en la información sobre configuración del producto (3.6.8)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.10.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Configuración de Referencia',
-                            'definicion' => 'información sobre configuración del producto (3.6.8) aprobada, que establece las características (3.10.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.10.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Configuración de Referencia',
+                'definicion' => 'Información sobre configuración del producto (3.6.8) aprobada, que establece las características (3.10.1)
                         de un producto (3.7.6) o servicio (3.7.7) en un punto determinado en el tiempo, que sirve como referencia
                         para actividades durante todo el ciclo de vida del producto o servicio.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.11.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Determinación',
-                            'definicion' => 'actividad para encontrar una o más características (3.10.1) y sus valores característicos',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.11.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Revisión',
-                            'definicion' => 'determinación (3.11.1) de la conveniencia, adecuación o eficacia (3.7.11) de un objeto (3.6.1) para lograr
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.11.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Determinación',
+                'definicion' => 'Actividad para encontrar una o más características (3.10.1) y sus valores característicos',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.11.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Revisión',
+                'definicion' => 'Determinación (3.11.1) de la conveniencia, adecuación o eficacia (3.7.11) de un objeto (3.6.1) para lograr
                         unos objetivos (3.7.1) establecidos
                         EJEMPLO Revisión por la dirección, revisión del diseño y desarrollo (3.4.8), revisión de los requisitos (3.6.4)
                         del cliente (3.2.4), revisión de acciones correctivas (3.12.2) y evaluación entre pares.
                         Nota 1 a la entrada: La revisión puede incluir también la determinación de la eficiencia (3.7.10).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.11.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Seguimiento',
-                            'definicion' => 'determinación (3.11.1) del estado de un sistema (3.5.1), un proceso (3.4.1), un producto (3.7.6), un
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.11.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Seguimiento',
+                'definicion' => 'Determinación (3.11.1) del estado de un sistema (3.5.1), un proceso (3.4.1), un producto (3.7.6), un
                         servicio (3.7.7) o una actividad
                         Nota 1 a la entrada: Para determinar el estado puede ser necesario verificar, supervisar u observar de forma crítica.
                         Nota 2 a la entrada: El seguimiento generalmente es una determinación del estado de un objeto (3.6.1) al que se
@@ -2139,175 +2136,175 @@ class GlosarioSeeder extends Seeder
                         Nota 3 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC. La definición original y la nota 1 a la entrada se han modificado, y se ha añadido la nota 2.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.11.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Medición',
-                            'definicion' => 'proceso (3.4.1) para determinar un valor
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.11.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Medición',
+                'definicion' => 'Proceso (3.4.1) para determinar un valor
                         Nota 1 a la entrada: De acuerdo con la Norma ISO 3534-2, el valor determinado generalmente es el valor de
                         una magnitud.
                         Nota 2 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC. La definición original a la entrada se ha modificado y se ha añadido la nota 1 a la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.11.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Proceso de Medición',
-                            'definicion' => 'conjunto de operaciones que permiten determinar el valor de una magnitud',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.11.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Equipo de Medición',
-                            'definicion' => 'instrumento de medición, software, patrón de medición, material de referencia o equipos auxiliares o
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.11.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Proceso de Medición',
+                'definicion' => 'Conjunto de operaciones que permiten determinar el valor de una magnitud',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.11.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Equipo de Medición',
+                'definicion' => 'Instrumento de medición, software, patrón de medición, material de referencia o equipos auxiliares o
                         combinación de ellos necesarios para llevar a cabo un proceso de medición (3.11.5)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.11.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Inspección',
-                            'definicion' => 'determinación (3.11.1) de la conformidad (3.6.11) con los requisitos (3.6.4) especificados
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.11.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Inspección',
+                'definicion' => 'Determinación (3.11.1) de la conformidad (3.6.11) con los requisitos (3.6.4) especificados
                         Nota 1 a la entrada: Si el resultado de una inspección muestra conformidad puede utilizarse con fines de
                         verificación (3.8.12).
                         Nota 2 a la entrada: El resultado de una inspección puede mostrar conformidad o no conformidad (3.6.9) o un
                         cierto grado de conformidad.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.11.8',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Ensayo',
-                            'definicion' => 'determinación (3.11.1) de acuerdo con los requisitos (3.6.4) para un uso o aplicación previsto específico
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.11.8',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Ensayo',
+                'definicion' => 'Determinación (3.11.1) de acuerdo con los requisitos (3.6.4) para un uso o aplicación previsto específico
                         Nota 1 a la entrada: Si el resultado de un ensayo muestra conformidad (3.6.11), puede utilizarse con fines de
                         validación (3.8.13).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.11.9',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Evaluación del Avance',
-                            'definicion' => '<gestión de proyectos> evaluación del progreso en el logro de los objetivos (3.4.2) del proyecto (3.7.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.11.9',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Evaluación del Avance',
+                'definicion' => '<Gestión de proyectos> Evaluación del progreso en el logro de los objetivos (3.4.2) del proyecto (3.7.1)
                         Nota 1 a la entrada: Esta evaluación debería llevarse a cabo en puntos adecuados del ciclo de vida del proyecto
                         a través de los procesos (3.4.1) del proyecto, basada en los criterios para los procesos del proyecto y el producto
                         (3.7.6) o servicio (3.7.7).
                         Nota 2 a la entrada: Los resultados de las evaluaciones de progreso pueden conducir a la revisión del plan de
                         gestión de proyecto (3.8.11).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Acción Preventiva',
-                            'definicion' => 'acción tomada para eliminar la causa de una no conformidad (3.6.9) potencial u otra situación
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Acción Preventiva',
+                'definicion' => 'Acción tomada para eliminar la causa de una no conformidad (3.6.9) potencial u otra situación
                         potencial no deseable
                         Nota 1 a la entrada: Puede haber más de una causa para una no conformidad potencial.
                         Nota 2 a la entrada: La acción preventiva se toma para prevenir que algo ocurra, mientras que la acción correctiva
                         (3.12.2) se toma para prevenir que vuelva a ocurrir.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Acción Correctiva',
-                            'definicion' => 'acción para eliminar la causa de una no conformidad (3.6.9) y evitar que vuelva a ocurrir
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Acción Correctiva',
+                'definicion' => 'Acción para eliminar la causa de una no conformidad (3.6.9) y evitar que vuelva a ocurrir
                         Nota 1 a la entrada: Puede haber más de una causa para una no conformidad.
                         Nota 2 a la entrada: La acción correctiva se toma para prevenir que algo vuelva a ocurrir, mientras que la acción
                         preventiva (3.12.1) se toma para prevenir que algo ocurra.
                         Nota 3 a la entrada: Este término es uno de los términos comunes y definiciones esenciales para las normas de
                         sistemas de gestión que se proporcionan en el Anexo SL del Suplemento ISO consolidado de la Parte 1 de las
                         Directivas ISO/IEC. La definición original se ha modificado añadiendo las notas 1 a 2 a la entrada.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Corrección',
-                            'definicion' => 'acción para eliminar una no conformidad (3.6.9) detectada
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Corrección',
+                'definicion' => 'Acción para eliminar una no conformidad (3.6.9) detectada
                         Nota 1 a la entrada: Una corrección puede realizarse con anterioridad, simultáneamente, o después de una acción
                         correctiva (3.12.2).
                         Nota 2 a la entrada: Una corrección puede ser, por ejemplo, un reproceso (3.12.8) o una reclasificación (3.12.4).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Reclasificación',
-                            'definicion' => 'variación de la clase (3.6.3) de un producto (3.6.9) o servicio (3.7.7) no conforme (3.6.9) para hacerlo
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Reclasificación',
+                'definicion' => 'Variación de la clase (3.6.3) de un producto (3.6.9) o servicio (3.7.7) no conforme (3.6.9) para hacerlo
                         conforme a requisitos (3.6.4) diferentes de los requisitos iniciales',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Concesión',
-                            'definicion' => 'autorización para utilizar o liberar (3.12.7) un producto (3.7.6) o servicio (3.7.7) que no es conforme con
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Concesión',
+                'definicion' => 'Autorización para utilizar o liberar (3.12.7) un producto (3.7.6) o servicio (3.7.7) que no es conforme con
                         los requisitos (3.6.4) especificados
                         Nota 1 a la entrada: Una concesión está generalmente limitada a la entrega de productos y servicios que tienen
                         características (3.10.1) no conformes (3.6.9), dentro de límites especificados y generalmente dados para una
                         cantidad limitada de productos y servicios para un periodo de tiempo, y para un uso específico.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Permiso de Desviación',
-                            'definicion' => 'autorización para apartarse de los requisitos (3.6.4) originalmente especificados de un producto (3.7.6)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Permiso de Desviación',
+                'definicion' => 'Autorización para apartarse de los requisitos (3.6.4) originalmente especificados de un producto (3.7.6)
                         o servicio (3.7.7), antes de su realización
                         Nota 1 a la entrada: Un permiso de desviación se concede generalmente para una cantidad limitada de productos
                         y servicios o para un periodo de tiempo limitado, y para un uso específico.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Liberación',
-                            'definicion' => 'autorización para proseguir con la siguiente etapa de un proceso (3.4.1) o el proceso siguiente
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Liberación',
+                'definicion' => 'Autorización para proseguir con la siguiente etapa de un proceso (3.4.1) o el proceso siguiente
                         Nota 1 a la entrada: Esta nota no se aplica a la versión española de la Norma.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.8',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Reproceso',
-                            'definicion' => 'acción tomada sobre un producto o servicio no conforme para hacerlo conforme con los requisitos (3.6.4)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.8',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Reproceso',
+                'definicion' => 'Acción tomada sobre un producto o servicio no conforme para hacerlo conforme con los requisitos (3.6.4)
                         Nota 1 a la entrada: El reproceso puede afectar o cambiar partes del producto (3.7.6) o servicio (3.7.7) no
                         conforme (3.6.9).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.9',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Reparación',
-                            'definicion' => 'acción tomada sobre un producto (3.7.6) o servicio (3.7.7) no conforme (3.6.9) para convertirlo en
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.9',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Reparación',
+                'definicion' => 'Acción tomada sobre un producto (3.7.6) o servicio (3.7.7) no conforme (3.6.9) para convertirlo en
                         aceptable para su utilización prevista
                         Nota 1 a la entrada: Una reparación exitosa de un producto no conforme no necesariamente hace al producto o
                         servicio conforme con los requisitos (3.6.4). Puede que junto con una reparación se requiera una concesión (3.12.5).
                         Nota 2 a la entrada: La reparación incluye las acciones reparadoras adoptadas sobre un producto o servicio
                         previamente conforme para devolverle su aptitud al uso, por ejemplo, como parte del mantenimiento.
                         Nota 3 a la entrada: La reparación puede afectar o cambiar partes del producto o servicio no conforme.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.12.10',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Desecho',
-                            'definicion' => 'acción tomada sobre un producto (3.7.6) o servicio (3.7.7) no conforme (3.6.9) para impedir su uso
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.12.10',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Desecho',
+                'definicion' => 'Acción tomada sobre un producto (3.7.6) o servicio (3.7.7) no conforme (3.6.9) para impedir su uso
                         inicialmente previsto
                         EJEMPLO Reciclaje, destrucción.
                         Nota 1 a la entrada: En el caso de un servicio no conforme, el uso se impide no continuando el servicio.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.1',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Auditoría',
-                            'definicion' => 'proceso (3.4.1) sistemático, independiente y documentado para obtener evidencias objetivas (3.8.3)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.1',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Auditoría',
+                'definicion' => 'Proceso (3.4.1) sistemático, independiente y documentado para obtener evidencias objetivas (3.8.3)
                         y evaluarlas de manera objetiva con el fin de determinar el grado en que se cumplen los criterios de
                         auditoría (3.13.7)
                         Nota 1 a la entrada: Los elementos fundamentales de una auditoría incluyen la determinación (3.11.1) de la
@@ -2329,149 +2326,147 @@ class GlosarioSeeder extends Seeder
                         de las Directivas ISO/IEC. La definición original y las notas se han modificado para eliminar los efectos de
                         circularidad entre las entradas de términos de criterios de auditoría y los de evidencia de auditoría y se han
                         añadido las notas 3 y 4.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.2',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Auditoría Combinada',
-                            'definicion' => 'auditoría (3.13.1) llevada a cabo conjuntamente a un único auditado (3.13.12) en dos o más sistemas de
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.2',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Auditoría Combinada',
+                'definicion' => 'Auditoría (3.13.1) Llevada a cabo conjuntamente a un único auditado (3.13.12) en dos o más sistemas de
                         gestión (3.5.3)
                         Nota 1 a la entrada: Las partes de un sistema de gestión que pueden estar involucradas en una auditoría
                         combinada pueden identificarse por las normas de sistemas de gestión pertinentes, normas de producto, normas
                         de servicio o normas de proceso que se aplican por la organización (3.2.1).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.3',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Auditoría Conjunta',
-                            'definicion' => 'auditoría (3.13.1) llevada a cabo a un único auditado (3.13.12) por dos o más organizaciones (3.2.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.3',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Auditoría Conjunta',
+                'definicion' => 'Auditoría (3.13.1) Llevada a cabo a un único auditado (3.13.12) por dos o más organizaciones (3.2.1)
                         auditoras',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.4',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Programa de la Auditoría',
-                            'definicion' => 'conjunto de una o más auditorías (3.13.1) planificadas para un periodo de tiempo determinado y
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.4',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Programa de la Auditoría',
+                'definicion' => 'Conjunto de una o más auditorías (3.13.1) planificadas para un periodo de tiempo determinado y
                         dirigidas hacia un propósito específico',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.5',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Alcance de la Auditoría',
-                            'definicion' => 'extensión y límites de una auditoría (3.13.1)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.5',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Alcance de la Auditoría',
+                'definicion' => 'Extensión y límites de una auditoría (3.13.1)
                         Nota 1 a la entrada: El alcance de la auditoría incluye generalmente una descripción de las ubicaciones, las
                         unidades de la organización, las actividades y los procesos (3.4.1).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.6',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Plan de Auditoría',
-                            'definicion' => 'descripción de las actividades y de los detalles acordados de una auditoría (3.13.1)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.7',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Criterios de Auditoría',
-                            'definicion' => 'conjunto de políticas (3.5.8), procedimientos (3.4.5) o requisitos (3.6.4) usados como referencia frente a
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.6',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Plan de Auditoría',
+                'definicion' => 'Descripción de las actividades y de los detalles acordados de una auditoría (3.13.1)',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.7',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Criterios de Auditoría',
+                'definicion' => 'Conjunto de políticas (3.5.8), procedimientos (3.4.5) o requisitos (3.6.4) usados como referencia frente a
                         la cual se compara la evidencia objetiva (3.8.3)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.8',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Evidencia de la Auditoría',
-                            'definicion' => 'registros, declaraciones de hechos o cualquier otra información que es pertinente para los criterios de
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.8',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Evidencia de la Auditoría',
+                'definicion' => 'Registros, declaraciones de hechos o cualquier otra información que es pertinente para los criterios de
                         auditoría (3.13.7) y que es verificable',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.9',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Hallazgos de la Auditoría',
-                            'definicion' => 'resultados de la evaluación de la evidencia de la auditoría (3.13.8) recopilada frente a los criterios de
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.9',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Hallazgos de la Auditoría',
+                'definicion' => 'Resultados de la evaluación de la evidencia de la auditoría (3.13.8) recopilada frente a los criterios de
                         auditoría (3.13.7)
                         Nota 1 a la entrada: Los hallazgos de la auditoría indican conformidad (3.6.11) o no conformidad (3.6.9).
                         Nota 2 a la entrada: Los hallazgos de la auditoría pueden conducir a la identificación de oportunidades para la
                         mejora (3.3.1) o el registro de buenas prácticas.
                         Nota 3 a la entrada: Si los criterios de auditoria (3.13.7) se seleccionan a partir de requisitos legales (3.6.6.) o
                         reglamentarios (3.6.7), los hallazgos de auditoría pueden denominarse cumplimiento o no cumplimiento.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.10',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Conclusiones de la Auditoría',
-                            'definicion' => 'resultado de una auditoría (3.13.1), tras considerar los objetivos de la auditoría y todos los hallazgos de
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.10',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Conclusiones de la Auditoría',
+                'definicion' => 'Resultado de una auditoría (3.13.1), tras considerar los objetivos de la auditoría y todos los hallazgos de
                         la auditoría (3.13.9)',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.11',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Cliente de la Auditoría',
-                            'definicion' => 'organización (3.2.1) o persona que solicita una auditoría (3.13.1)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.12',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Auditado',
-                            'definicion' => 'organización (3.2.1) que es auditada',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.13',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Guía',
-                            'definicion' => '<auditoría> persona designada por el auditado (3.13.12) para asistir al equipo auditor (3.13.14)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.14',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Equipo Auditor',
-                            'definicion' => 'una o más personas que llevan a cabo una auditoría (3.13.1) con el apoyo, si es necesario, de expertos
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.11',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Cliente de la Auditoría',
+                'definicion' => 'Organización (3.2.1) o persona que solicita una auditoría (3.13.1)',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.12',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Auditado',
+                'definicion' => 'Organización (3.2.1) que es auditada',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.13',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Guía',
+                'definicion' => '<Auditoría> Persona designada por el auditado (3.13.12) para asistir al equipo auditor (3.13.14)',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.14',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Equipo Auditor',
+                'definicion' => 'Una o más personas que llevan a cabo una auditoría (3.13.1) con el apoyo, si es necesario, de expertos
                         técnicos (3.13.16)
                         Nota 1 a la entrada: A un auditor (3.13.15) del equipo auditor se le designa como auditor líder del mismo.
                         Nota 2 a la entrada: El equipo auditor puede incluir auditores en formación.',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.15',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Auditor',
-                            'definicion' => 'persona que lleva a cabo una auditoría (3.13.1)',
-                            'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.16',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Experto Técnico',
-                            'definicion' => '<auditoría> persona que aporta conocimientos o experiencia específicos al equipo auditor (3.13.14)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.15',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Auditor',
+                'definicion' => 'Persona que lleva a cabo una auditoría (3.13.1)',
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.16',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Experto Técnico',
+                'definicion' => '<Auditoría> Persona que aporta conocimientos o experiencia específicos al equipo auditor (3.13.14)
                         Nota 1 a la entrada: El conocimiento o experiencia específicos son los relacionados con la organización (3.2.1), el
                         proceso (3.4.1) o la actividad a auditar, el idioma o la cultura.
                         Nota 2 a la entrada: Un experto técnico no actúa como auditor (3.13.15) en el equipo auditor (3.13.14).',
-                        'explicacion' => 'Sin información',
-                        ],
-                        [
-                            'numero' => '3.13.17',
-                            'norma' => 'ISO 9001',
-                            'concepto' => 'Observador',
-                            'definicion' => '<auditoría> persona que acompaña al equipo auditor (3.13.14) pero que no actúa como un auditor (3.13.15)
+                'explicacion' => 'Sin información',
+            ],
+            [
+                'numero' => '3.13.17',
+                'norma' => 'ISO 9001',
+                'concepto' => 'Observador',
+                'definicion' => '<Auditoría> Persona que acompaña al equipo auditor (3.13.14) pero que no actúa como un auditor (3.13.15)
                         Nota 1 a la entrada: Un observador puede ser un miembro del auditado (3.13.12), un ente regulador u otra parte
                         interesada (3.2.3) que testifica la auditoría (3.13.1).',
-                        'explicacion' => 'Sin información',
-                        ]
+                'explicacion' => 'Sin información',
+            ],
 
-
-
-                    ];
+        ];
 
         Glosario::insert($glosario);
     }

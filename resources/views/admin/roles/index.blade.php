@@ -1,50 +1,49 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
 
-<style>
+        .btn_cargar:hover {
+            color: #fff;
+            background: #345183;
+        }
 
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #00abb2;
-        color: #00abb2;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#00abb2 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-</style>
+        .agregar {
+            margin-right: 15px;
+        }
+
+    </style>
     @can('role_create')
-
-
-
+        <h5 class="col-12 titulo_general_funcion">Roles</h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Roles</strong></h3>
-            </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalroles', ['model' => 'Role', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modalroles', [
+                        'model' => 'Role',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -58,33 +57,10 @@
                         <th>
                             Nombre&nbsp;del&nbsp;rol
                         </th>
-                        {{-- <th>
-                            {{ trans('cruds.role.fields.permissions') }}
-                        </th> --}}
                         <th style="max-width: 100px;">
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($permissions as $key => $item)
-                                    <option value="{{ $item->title }}">{{ $item->title }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -161,7 +137,7 @@
                 }
 
             ];
-            @can('role_create')
+            @can('roles_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar rol',
@@ -173,28 +149,29 @@
                 }
                 };
                 let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
+                text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-roles') }}",
                 action: function(e, dt, node, config) {
-                    $('#').modal('show');
+                let {url} = config;
+                window.location.href = url;
                 }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
+                };
+                let btnImport = {
+                text: '<i class="fas fa-file-upload"></i>',
                 titleAttr: 'Importar datos',
                 className: "btn btn_cargar",
                 action: function(e, dt, node, config) {
-                    $('#xlsxImportModal').modal('show');
+                $('#xlsxImportModal').modal('show');
                 }
-            };
+                };
 
-            dtButtons.push(btnAgregar);
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
-
+                dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
             @endcan
-            @can('role_delete')
+            @can('roles_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -239,13 +216,18 @@
                         data: 'title',
                         name: 'title'
                     },
-                    // {
-                    //     data: 'permissions',
-                    //     name: 'permissions.title'
-                    // },
                     {
                         data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        render: function(data, type, row) {
+                            return `
+                            <div class="d-flex align-items-center">
+                                @can('roles_copiar')
+                                <i class="fas fa-copy text-dark mr-2" title="Copiar" style="cursor:pointer" data-action="copy" data-id="${row.id}"></i>
+                                ${data}
+                                @endcan
+                            </div>
+                            `;
+                        }
                     }
                 ],
                 orderCellsTop: true,
@@ -254,18 +236,73 @@
                 ]
             };
             let table = $('.datatable-Role').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            document.querySelector('.dataTables_scrollBody').addEventListener('click', function(event) {
+                console.log(event);
+                if (event.target.tagName === 'I' && event.target.getAttribute('data-action') === 'copy') {
+                    let id = event.target.dataset.id;
+                    let url = `{{ route('admin.roles.copy', ':id') }}`;
+                    url = url.replace(':id', id);
+                    Swal.fire({
+                        title: '¿Desea copiar el rol?',
+                        text: 'El rol será copiado con el nombre ingresado',
+                        icon: 'question',
+                        input: 'text',
+                        inputAttributes: {
+                            autocapitalize: 'off'
+                        },
+                        inputValidator: (value) => {
+                            if (value.trim().length < 3) {
+                                return 'El nombre del rol debe tener al menos 3 caracteres'
+                            }
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Copiar',
+                        cancelButtonText: 'Cancelar',
+                        showLoaderOnConfirm: true,
+                        preConfirm: (login) => {
+                            console.log(login);
+                            return fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': _token,
+                                        'Content-Type': 'application/json',
+                                        Accept: 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        nombre_rol: login
+                                    })
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(response.statusText)
+                                    }
+                                    return response.json()
+                                })
+                                .catch(error => {
+                                    if (error.statusCode === 422) {
+                                        error = error.errors.title[0];
+                                    }
+                                    console.log(error);
+                                    Swal.showValidationMessage(
+                                        `Request failed: ${error}`
+                                    )
+                                })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Rol copiado',
+                                text: `El rol ${result.value.rol_creado.title} ha sido creado con éxito`,
+                                type: 'success'
+                            }).then(() => {
+                                // window.location.reload();
+                                table.ajax.reload();
+                            });
+                        }
+                    })
+                }
+            });
         });
     </script>
 @endsection

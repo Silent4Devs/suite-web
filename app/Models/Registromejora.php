@@ -7,15 +7,13 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Registromejora extends Model
+class Registromejora extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'registromejoras';
 
     public static $searchable = [
@@ -29,9 +27,9 @@ class Registromejora extends Model
     ];
 
     const PRIORIDAD_SELECT = [
-        'alta'  => 'Alta',
+        'alta' => 'Alta',
         'media' => 'Media',
-        'Baja'  => 'Baja',
+        'Baja' => 'Baja',
     ];
 
     protected $fillable = [
@@ -88,6 +86,6 @@ class Registromejora extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_reporta');
+        return $this->belongsTo(Empleado::class, 'id_reporta')->alta();
     }
 }

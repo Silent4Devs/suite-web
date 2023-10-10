@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PanelInicioRule;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class PanelInicioRuleController extends Controller
 {
@@ -15,6 +17,8 @@ class PanelInicioRuleController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('configurar_vista_mis_datos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.panel-inicio.index');
     }
 
@@ -31,7 +35,6 @@ class PanelInicioRuleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,7 +45,6 @@ class PanelInicioRuleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PanelInicioRule  $panelInicioRule
      * @return \Illuminate\Http\Response
      */
     public function show(PanelInicioRule $panelInicioRule)
@@ -53,7 +55,6 @@ class PanelInicioRuleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\PanelInicioRule  $panelInicioRule
      * @return \Illuminate\Http\Response
      */
     public function edit(PanelInicioRule $panelInicioRule)
@@ -64,8 +65,6 @@ class PanelInicioRuleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PanelInicioRule  $panelInicioRule
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, PanelInicioRule $panelInicioRule)
@@ -76,7 +75,6 @@ class PanelInicioRuleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PanelInicioRule  $panelInicioRule
      * @return \Illuminate\Http\Response
      */
     public function destroy(PanelInicioRule $panelInicioRule)

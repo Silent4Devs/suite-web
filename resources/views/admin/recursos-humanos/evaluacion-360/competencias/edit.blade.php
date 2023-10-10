@@ -81,14 +81,11 @@
         }
 
     </style>
+    <h5 class="col-12 titulo_general_funcion">Editar: Competencia: ({{ $competencia->nombre }})</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Competencia: ({{ $competencia->nombre }})
-            </h3>
-        </div>
         <div class="card-body">
             <form id="formGrupo" method="POST" action="{{ route('admin.ev360-competencias.update', $competencia) }}"
-                class="mt-3 row">
+                class="mt-3 row" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 @include('admin.recursos-humanos.evaluacion-360.competencias._formEdit')
@@ -109,10 +106,9 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="background: #345183;color: white;">
-                    <h4 class="modal-title" id="conductasModalLabel"><i class="mr-1 fas fa-chalkboard-teacher"></i>
-                        Conductas
-                        Esperadas
-                    </h4>
+
+                    <h4 class="modal-title" id="nivelEditCreate2"></h4>
+
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="color: white;font-size: 28px;">&times;</span>
                     </button>
@@ -160,13 +156,19 @@
                     $('#formConductaCreate').attr('method', 'POST');
                     CKEDITOR.instances.definicion.setData('');
                     $('#conductasModal').modal('show');
-                    document.getElementById('nivelEditCreate').innerHTML =
-                        `<i class="fas fa-circle-notch fa-spin mr-2"></i> Cargando...`;
+                    // document.getElementById('nivelEditCreate').innerHTML =
+                    //     `<i class="fas fa-circle-notch fa-spin mr-2"></i> Cargando...`;
                     let ultimo_nivel = obtenerUltimoNivel(@json($competencia->id));
                     ultimo_nivel.then(data => {
                         document.getElementById('nivelEditCreate').innerHTML =
-                            `<i class="fas fa-info-circle mr-1"></i>Siguiente Nivel: <strong>${ data + 1 }</strong>`;
+                            `<i class="fas fa-info-circle mr-1"></i>Nivel <strong>${ data + 1 }</strong>`;
                     });
+                    let ultimo_nivel2 = obtenerUltimoNivel(@json($competencia->id));
+                    ultimo_nivel2.then(data => {
+                        document.getElementById('nivelEditCreate2').innerHTML =
+                            `<i class="mr-1 fas fa-chalkboard-teacher"></i> Conductas Esperadas - Nivel <strong>${ data + 1 }</strong>`;
+                    });
+
 
                 }
             };
@@ -181,10 +183,9 @@
                 columns: [{
                     data: 'ponderacion'
                 }, {
-                    data: 'definicion_h',
-                    render: function(data) {
-                        let html = `<div>${data}</div>`;
-                        return html;
+                    data: 'definicion',
+                    render: function(data, type, row, meta) {
+                        return $('<div/>').html(data).text();
                     },
                 }, {
                     data: 'id',
@@ -205,7 +206,7 @@
                     }
                 }],
                 order: [
-                    [1, 'asc']
+                    [0, 'asc']
                 ],
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
@@ -409,7 +410,7 @@
                             if (response.length > 0) {
                                 let select = `
                                 <label for="nivel_esperado">Establece el nivel esperado general
-                                <span class="text-danger">*</span>    
+                                <span class="text-danger">*</span>
                                 </label>
                                 <select name="nivel_esperado" id="nivel_esperado" class="form-control" required>
                             `;
@@ -422,7 +423,7 @@
                                 contenedor.innerHTML = select;
                             } else {
                                 contenedor.innerHTML = `<span class="mt-2 alerta-error">
-                                    <i class='mr-2 fas fa-exclamation-triangle'></i> 
+                                    <i class='mr-2 fas fa-exclamation-triangle'></i>
                                     Debes ingresar niveles a la competencia primero, luego deselecciona y vuelve a seleccionar.
                                     </span>`;
                             }

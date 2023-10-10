@@ -68,7 +68,7 @@
     @if ($revisionMinuta->estatus != 1)
         <div class="row w-100 justify-content-center">
             <div class="col-sm-9">
-                <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                     <div class="row w-100">
                         <div class="text-center col-1 align-items-center d-flex justify-content-center">
                             <div class="w-40 ml-3">

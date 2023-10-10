@@ -8,7 +8,9 @@ use Livewire\Component;
 class TipoObjetivosSelect extends Component
 {
     protected $listeners = ['render-tipo-objetivo-select' => 'render'];
+
     public $tipos;
+
     public $tipo_seleccionado;
 
     public function mount($tipo_seleccionado)
@@ -19,7 +21,7 @@ class TipoObjetivosSelect extends Component
 
     public function render()
     {
-        $this->tipos = TipoObjetivo::all();
+        $this->tipos = TipoObjetivo::getAll();
 
         return view('livewire.tipo-objetivos-select', ['tipos' => $this->tipos]);
     }

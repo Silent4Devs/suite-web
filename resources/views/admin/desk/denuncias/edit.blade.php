@@ -3,11 +3,14 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-    <style>
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+
         ol.breadcrumb {
             margin-bottom: 0px;
         }
-
     </style>
 @endsection
 {{ Breadcrumbs::render('denuncias-create') }}
@@ -35,16 +38,16 @@
                             @csrf
 
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
-                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                 <div class="row w-100">
                                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                         <div class="w-100">
-                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                         </div>
                                     </div>
                                     <div class="col-11">
-                                        <p class="m-0"
-                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
                                             cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
                                             de lo contrario la información capturada no será guardada.
@@ -67,16 +70,14 @@
                             </div>
 
                             <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i
-                                        class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+                                <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control">{{ $denuncias->folio }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control" id="opciones"
-                                    onchange='cambioOpciones();'>
+                                <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
                                     <option {{ old('estatus', $denuncias->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
                                     <option {{ old('estatus', $denuncias->estatus) == 'en curso' ? 'selected' : '' }}
@@ -116,7 +117,6 @@
                             </div>
 
                             @if ($denuncias->anonimo == 'no')
-
                                 <div class="mt-2 form-group col-12">
                                     <label class="form-label">
                                         <strong>Denuncia emitida por:</strong>
@@ -129,8 +129,7 @@
                                 </div>
 
                                 <div class="mt-2 form-group col-4">
-                                    <label class="form-label"><i
-                                            class="fas fa-user-tag iconos-crear"></i>Puesto</label>
+                                    <label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto</label>
                                     <div class="form-control">{{ $denuncias->denuncio->puesto }}</div>
                                 </div>
 
@@ -147,8 +146,7 @@
                                 </div>
 
                                 <div class="mt-2 form-group col-6">
-                                    <label class="form-label"><i
-                                            class="fas fa-phone iconos-crear"></i>Teléfono</label>
+                                    <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
                                     <div class="form-control">{{ $denuncias->denuncio->telefono }}</div>
                                 </div>
                             @endif
@@ -160,9 +158,9 @@
                             </div>
 
                             <div class="mt-4 form-group col-4">
-                                <label class="form-label"><i
-                                        class="fas fa-user-times iconos-crear"></i>Nombre</label>
-                                <div class="form-control">{{ $denuncias->denunciado->name }}</div>
+                                <label class="form-label"><i class="fas fa-user-times iconos-crear"></i>Nombre</label>
+                                <div class="form-control">{{ Str::limit($denuncias->denunciado->name, 30, '...') }}
+                                </div>
                             </div>
 
                             <div class="mt-4 form-group col-4">
@@ -179,20 +177,21 @@
 
                             <div class="mt-4 form-group col-12">
                                 <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Tipo de
-                                    denuncia</label>
-                                <input type="" name="tipo" class="form-control" value="{{ $denuncias->tipo }}">
+                                    denuncia<sup>*</sup></label>
+                                <input type="" name="tipo" class="form-control"
+                                    value="{{ $denuncias->tipo }}">
                             </div>
 
                             <div class="mt-4 form-group col-12">
                                 <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Otro
-                                    <input type="" name="tipo" class="form-control" value="{{ $denuncias->tipo }}">
+                                    <input type="" name="tipo" class="form-control"
+                                        value="{{ $denuncias->tipo }}">
                             </div>
 
                             <div class="mt-4 form-group col-12">
                                 <label class="form-label"><i
-                                        class="fas fa-file-alt iconos-crear"></i>Descripción</label><br>
-                                <textarea type="" name="descripcion"
-                                    class="form-control">{{ $denuncias->descripcion }}</textarea>
+                                        class="fas fa-file-alt iconos-crear"></i>Descripción<sup>*</sup></label><br>
+                                <textarea type="" name="descripcion" class="form-control" required>{{ $denuncias->descripcion }}</textarea>
                             </div>
 
                             <div class="mt-4 text-center form-group col-12">
@@ -217,16 +216,27 @@
                                                                 @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
                                                                     <li data-target='#carouselExampleIndicators'
                                                                         data-slide-to='{{ $idx }}'
-                                                                        class='{{ $idx == 0 ? 'active' : '' }}'></li>
+                                                                        class='{{ $idx == 0 ? 'active' : '' }}'>
+                                                                    </li>
                                                                 @endforeach
                                                             </ol>
                                                             <div class='carousel-inner'>
                                                                 @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
-                                                                    <div
-                                                                        class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                                        <iframe class='img-size'
-                                                                            src='{{ asset('storage/evidencias_denuncias' . '/' . $evidencia->evidencia) }}'></iframe>
-                                                                    </div>
+                                                                    @if (pathinfo($evidencia->evidencia, PATHINFO_EXTENSION) == 'pdf')
+                                                                        <div
+                                                                            class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                            <iframe class='img-size' style="width:100%;height:300px;"
+                                                                                src='{{ asset('storage/evidencias_denuncias' . '/' . $evidencia->evidencia) }}'></iframe>
+                                                                        </div>
+                                                                    @else
+                                                                        <div
+                                                                            class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                            <a
+                                                                                href="{{ asset('storage/evidencias_denuncias') }}/{{ $evidencia->evidencia }}">
+                                                                                <i class="fas fa-file-download mr-2"
+                                                                                    style="font-size:18px"></i>{{ $evidencia->evidencia }}</a>
+                                                                        </div>
+                                                                    @endif
                                                                 @endforeach
                                                             </div>
                                                             <a class='carousel-control-prev'
@@ -276,16 +286,16 @@
                     <div class="seccion_div">
                         <div class="row">
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
-                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                 <div class="row w-100">
                                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                         <div class="w-100">
-                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                         </div>
                                     </div>
                                     <div class="col-11">
-                                        <p class="m-0"
-                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
                                             cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
                                             de lo contrario la información capturada no será guardada.
@@ -321,14 +331,12 @@
                                     <div id="ideas" class="caja_oculta_dinamica row">
                                         <div class="form-group col-12">
                                             <label>Ideas</label>
-                                            <textarea class="form-control"
-                                                name="ideas">{{ $analisis->ideas }}</textarea>
+                                            <textarea class="form-control" name="ideas">{{ $analisis->ideas }}</textarea>
                                         </div>
 
                                         <div class="form-group col-12">
                                             <label>Causa Raíz</label>
-                                            <textarea class="form-control"
-                                                name="causa_ideas">{{ $analisis->causa_ideas }}</textarea>
+                                            <textarea class="form-control" name="causa_ideas">{{ $analisis->causa_ideas }}</textarea>
                                         </div>
                                     </div>
 
@@ -336,8 +344,8 @@
 
                                     <div id="porque" class="caja_oculta_dinamica row">
                                         <div class="form-group col-12">
-                                            Problema: <textarea class="form-control"
-                                                name="problema_porque">{{ $analisis->problema_porque }}</textarea>
+                                            Problema:
+                                            <textarea class="form-control" name="problema_porque">{{ $analisis->problema_porque }}</textarea>
                                         </div>
                                         <div class="form-group col-12">
                                             <label>1er porqué:</label>
@@ -357,51 +365,94 @@
                                                 value="{{ $analisis->porque_5 }}">
                                         </div>
                                         <div class="form-group col-12">
-                                            Causa Raíz: <textarea class="form-control"
-                                                name="causa_porque">{{ $analisis->causa_porque }}</textarea>
+                                            Causa Raíz:
+                                            <textarea class="form-control" name="causa_porque">{{ $analisis->causa_porque }}</textarea>
                                         </div>
                                     </div>
 
 
 
                                     <div id="digrama" class="caja_oculta_dinamica">
-                                        <div class="mt-5 col-12" style="overflow: auto;">
-                                            <div style="width: 100%; min-width:540px; position: relative;">
+                                        <div class="mt-5 col-md-12" style="overflow: auto;">
+                                            <div style="width: 100%; min-width:980px; margin-left:80px;">
                                                 <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
-                                                    style="width:100%">
-
-                                                <textarea name="control_a"
-                                                    class="politicas_txtarea">{{ $analisis->control_a }}</textarea>
-                                                <textarea name="control_b"
-                                                    class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea>
-
-                                                <textarea name="proceso_a"
-                                                    class="procesos_txtarea">{{ $analisis->proceso_a }}</textarea>
-                                                <textarea name="proceso_b"
-                                                    class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea>
-
-                                                <textarea name="personas_a"
-                                                    class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
-                                                <textarea name="personas_b"
-                                                    class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea>
-
-                                                <textarea name="tecnologia_a"
-                                                    class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
-                                                <textarea name="tecnologia_b"
-                                                    class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea>
-
-                                                <textarea name="metodos_a"
-                                                    class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis->metodos_a }}</textarea>
-                                                <textarea name="metodos_b"
-                                                    class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea>
-
-                                                <textarea name="ambiente_a"
-                                                    class="ambiente_txtarea txt_obj_secundarios_b">{{ $analisis->ambiente_a }}</textarea>
-                                                <textarea name="ambiente_b"
-                                                    class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea>
-
-                                                <textarea name="problema_diagrama"
-                                                    class="problemas_txtarea">{{ $analisis->problema_diagrama }}</textarea>
+                                                    style="width:190%; margin-top:20px;">
+                                                <div
+                                                    style="top:0px;left:150px; position: absolute;height:35px; width:150px;  background-color:#63e4e4; border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Control</strong>
+                                                </div>
+                                                <div
+                                                    style="top:0px; left:680px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Proceso</strong>
+                                                </div>
+                                                <div
+                                                    style="top:0px; left:1200px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-users"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Personas</strong>
+                                                </div>
+                                                <div
+                                                    style="buttom:0px; left:410px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Tecnología</strong>
+                                                </div>
+                                                <div
+                                                    style="buttom:0px; left:920px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Métodos</strong>
+                                                </div>
+                                                <div
+                                                    style="buttom:0px;left:1450px; position: absolute;height:35px; width:150px; background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-chalkboard"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Recursos</strong>
+                                                </div>
+                                                <div class="col-6"
+                                                    style="top:55px; left:290px; position: absolute; height:30px !important;">
+                                                    <textarea name="control_a" id="analisisControl" class="politicas_txtarea">{{ $analisis->control_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="control_b"
+                                                    class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea> --}}
+                                                <div class="col-6"
+                                                    style="top:55px; left:810px; position: absolute; height:30px !important;">
+                                                    <textarea name="proceso_a" id="analisisProceso" class="procesos_txtarea">{{ $analisis->proceso_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="proceso_b"
+                                                    class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea> --}}
+                                                <div class="col-6"
+                                                    style="top:55px; left:1315px; position: absolute; height:30px !important;">
+                                                    <textarea name="personas_a" id="analisisPersona" class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="personas_b"
+                                                    class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea> --}}
+                                                <div class="col-6"
+                                                    style="bottom:5px; right:480px; position: absolute;">
+                                                    <textarea name="tecnologia_a" id="analisisTecnologia" class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="tecnologia_b"
+                                                    class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea> --}}
+                                                <div class="col-6"
+                                                    style="bottom:5px; left:540px; position: absolute;">
+                                                    <textarea name="metodos_a" class="metodos_txtarea txt_obj_secundarios_b" id="analisisMetodos">{{ $analisis->metodos_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="metodos_b"
+                                                    class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea> --}}
+                                                <div class="col-6"
+                                                    style="bottom:5px; left:1060px; position: absolute;">
+                                                    <textarea name="ambiente_a" class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis->ambiente_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="ambiente_b"
+                                                    class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea> --}}
+                                                <div class="col-6"
+                                                    style="bottom:5px; left:1600px; position: absolute;">
+                                                    <textarea name="problema_diagrama" class="problemas_txtarea" id="analisisProblema">{{ $analisis->problema_diagrama }}</textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -428,7 +479,7 @@
                             @if (count($denuncias->planes))
                                 <a style="position:absolute; right: 170px; top:2px;"
                                     href="{{ route('admin.planes-de-accion.show', $denuncias->planes->first()->id) }}"
-                                    class="btn btn-success btn_modal_form"><i class="mr-2 fas fa-stream"></i> Plan De
+                                    class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
                                     Acción</a>
                             @endif
                         </div>
@@ -465,7 +516,8 @@
                                         <div class="form-group col-md-12">
                                             <label class="form-label"><i
                                                     class="fas fa-wrench iconos-crear"></i>Actividad</label>
-                                            <input type="" name="actividad" class="form-control" id="actividad">
+                                            <input type="" name="actividad" class="form-control"
+                                                id="actividad">
                                             <span class="text-danger error_actividad errors"></span>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -479,7 +531,8 @@
                                         <div class="form-group col-md-6">
                                             <label class="form-label"><i
                                                     class="fas fa-calendar-alt iconos-crear"></i>Fecha de fin</label>
-                                            <input type="date" name="fecha_fin" class="form-control" id="fecha_fin">
+                                            <input type="date" name="fecha_fin" class="form-control"
+                                                id="fecha_fin">
                                             <span class="text-danger error_fecha_fin errors"></span>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -517,8 +570,7 @@
                                         <div class="form-group col-md-12">
                                             <label class="form-label"><i
                                                     class="fas fa-comments iconos-crear"></i>Comentarios</label>
-                                            <textarea class="form-control" name="comentarios"
-                                                id="comentarios"></textarea>
+                                            <textarea class="form-control" name="comentarios" id="comentarios"></textarea>
                                             <span class="text-danger error_comentarios errors"></span>
                                         </div>
                                         <div class="text-right form-group col-md-12">
@@ -688,6 +740,109 @@
         $(".caja_oculta_dinamica").removeClass("d-block");
         var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
         $(document.getElementById(metodo_v)).addClass("d-block");
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('analisisControl', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisProceso', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisPersona', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisTecnologia', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisMetodos', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisAmbiente', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisProblema', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
     });
 </script>
 @endsection

@@ -1,9 +1,6 @@
 <table class="table table-bordered w-100 datatable datatable-calendarioOficial">
     <thead class="thead-dark">
         <tr>
-            <th>
-                ID
-            </th>
             <th style="min-width: 100px;">
                 Nombre
             </th>

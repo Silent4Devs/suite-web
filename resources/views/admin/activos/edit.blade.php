@@ -1,23 +1,27 @@
 @extends('layouts.admin')
 @section('content')
-
+    <h5 class="col-12 titulo_general_funcion">Registrar: Alta de Activo</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Alta de Activo </h3>
-        </div>
-
         <div class="card-body">
-            <form method="POST" class="row" action="{{ route('admin.activos.update', [$activo->id]) }}"
-                enctype="multipart/form-data">
-                @method('PUT')
+            <form method="POST" action="{{ route('admin.activos.update', [$activo->id]) }}" enctype="multipart/form-data" class="row">
                 @csrf
-
-                <div class="form-group col-md-12">
-                    <label class="required" for="nombreactivo_id"><i class="fas fa-chart-line iconos-crear"></i>Nombre
-                        del Activo</label>
-                    <input class="form-control {{ $errors->has('nombreactivo') ? 'is-invalid' : '' }}" type="text"
-                        name="nombreactivo" id="n_serie" value="{{ old('nombreactivo', $activo->nombreactivo) }}"
-                        required>
+                @method('PUT')
+                <div class="form-group col-md-3">
+                    <label class="required " for="identificador"><i class="fa-solid fa-list-ol iconos-crear"></i>ID</label>
+                    <input class="form-control select2 {{ $errors->has('identificador') ? 'is-invalid' : '' }}"
+                        name="identificador" id="identificador" value="{{old("identificador", $activo->identificador)}}" required>
+                    @if ($errors->has('identificador'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('identificador') }}
+                        </div>
+                    @endif
+                    <span class="help-block"></span>
+                </div>
+                <div class="form-group col-md-9">
+                    <label class="required " for="nombreactivo_id"><i class="fas fa-chart-line iconos-crear"></i>Nombre del
+                        Activo</label>
+                    <input class="form-control select2 {{ $errors->has('nombre_activo') ? 'is-invalid' : '' }}"
+                        name="nombreactivo" id="nombre_activo" value="{{old("nombreactivo", $activo->nombreactivo)}}"required>
                     @if ($errors->has('nombreactivo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombreactivo') }}
@@ -26,52 +30,13 @@
                     <span class="help-block"></span>
                 </div>
 
-
-
-
-                <div class="form-group col-md-6">
-                    <label for="tipoactivo_id" class="required"><i
-                            class="fas fa-layer-group iconos-crear"></i>Categoría</label>
-                    <select class="form-control select2 {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}"
-                        name="tipoactivo_id" id="tipoactivo_id">
-                        @foreach ($tipoactivos as $id => $tipoactivo)
-                            <option value="{{ $id }}"
-                                {{ (old('tipoactivo_id') ? old('tipoactivo_id') : $activo->tipoactivo->id ?? '') == $id ? 'selected' : '' }}>
-                                {{ $tipoactivo }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('tipoactivo'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('tipoactivo') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.activo.fields.tipoactivo_helper') }}</span>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="subtipo_id" class="required"><i
-                            class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
-                    <select class="form-control select2 {{ $errors->has('subtipo') ? 'is-invalid' : '' }}"
-                        name="subtipo_id" id="subtipo_id">
-                        @foreach ($subtipos as $id => $subtipo)
-                            <option value="{{ $id }}"
-                                {{ (old('subtipo_id') ? old('subtipo_id') : $activo->subtipo->id ?? '') == $id ? 'selected' : '' }}>
-                                {{ $subtipo }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('subtipo'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('subtipo') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.activo.fields.subtipo_helper') }}</span>
-                </div>
-
+                    @livewire('categoria-subcategoria', ['categoriasSeleccionado'=>$categoriasSeleccionado, 'subcategoriaSeleccionado'=>$subcategoriaSeleccionado])
 
                 <div class="form-group col-12">
                     <label for="descripcion"><i
                             class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.activo.fields.descripcion') }}</label>
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                        name="descripcion" id="descripcion">{{ old('descripcion', $activo->descripcion) }}</textarea>
+                        name="descripcion" id="descripcion" >{{ old('descripcion', $activo->descripcion) }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -80,109 +45,122 @@
                     <span class="help-block">{{ trans('cruds.activo.fields.descripcion_helper') }}</span>
                 </div>
 
-                <div class="mb-3 col-sm-9 input-group">
-                    <label for="documentos_relacionados"><i class="fas fa-file iconos-crear"></i>Documento
-                        Relacionado</label>
-                    <div class="ml-3 custom-file">
-                        <input type="file" class="custom-file-input"
-                            {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}" multiple
-                            name="documentos_relacionados[]" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
-                            {{ old('documentos_relacionados', $activo->documentos_relacionados) }}>
+
+                <div class="col-sm-12 form-group">
+                    <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documentos Relacionados</label>
+                    <div class="custom-file">
+                        <input type="file" name="documentos_relacionados[]" multiple id="inputGroupFile01" class="form-control {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}"
+                            value="{{ old('documentos_relacionados', '') }}">
                         @if ($errors->has('documentos_relacionados'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('documentos_relacionados') }}
                             </div>
                         @endif
-                        <label class="custom-file-label" for="inputGroupFile01"></label>
                     </div>
-                </div>
-
-                <div class="pl-0 ml-0 col-sm-3">
-                    <span type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"
-                        data-target="#documentos_activos">
+                    @if ($activo->documento)
+                    Documento actual: {{ $activo->documento }}<br>
+                    <span type="button" data-toggle="modal" data-target="#largeModal">
                         <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Documentos
                     </span>
+                    @endif
+
                 </div>
-
-
 
                 <div class="form-group col-md-4">
                     <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>Dueño</label>
-                    <select class="form-control select2 {{ $errors->has('dueno') ? 'is-invalid' : '' }}" name="dueno_id"
-                        id="dueno_id">
-                        @foreach ($empleados as $id => $empleado)
+                    <select class="form-control select2 {{ $errors->has('dueno_id') ? 'is-invalid' : '' }}"
+                        name="dueno_id" id="dueno_id">
+                        @foreach ($empleados as $empleado)
                             <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                                 data-area="{{ $empleado->area->area }}"
                                 {{ old('dueno_id', $activo->dueno_id) == $empleado->id ? 'selected' : '' }}>
-
                                 {{ $empleado->name }}
                             </option>
                         @endforeach
                     </select>
-                    @if ($errors->has('empleados'))
+                    @if ($errors->has('dueno_id'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('empleados') }}
+                            {{ $errors->first('dueno_id') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="id_puesto_dueno"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                     <div class="form-control" id="puesto_dueno"></div>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="id_area_dueno"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="form-control" id="area_dueno"></div>
-
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="id_responsable"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                    <select class="form-control select2 {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
+                    <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
                         name="id_responsable" id="id_responsable">
-                        @foreach ($empleados as $id => $empleado)
+                        @foreach ($empleados as $empleado)
                             <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                                 data-area="{{ $empleado->area->area }}"
                                 {{ old('id_responsable', $activo->id_responsable) == $empleado->id ? 'selected' : '' }}>
-
                                 {{ $empleado->name }}
                             </option>
                         @endforeach
                     </select>
                     @if ($errors->has('empleados'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('empleados') }}
+                            {{ $errors->first('area') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
                 </div>
-
 
                 <div class="form-group col-md-4">
-                    <label for="id_responsable"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                    <label for="id_puesto_responsable"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                     <div class="form-control" id="puesto_responsable"></div>
-
                 </div>
-
-
 
                 <div class="form-group col-md-4">
                     <label for="id_area_responsable"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="form-control" id="area_responsable"></div>
+                </div>
 
+                <div class="form-group col-md-4">
+                    <label for="proceso_id"><i class="bi bi-file-earmark-post iconos-crear"></i>Proceso</label>
+                        <select class="form-control select2 {{ $errors->has('proceso_id') ? 'is-invalid' : '' }}"
+                            name="proceso_id" id="proceso_id">
+                            @foreach ($procesos as $proceso)
+                                <option data-codigo="{{ $proceso->codigo }}" value="{{ $proceso->id }}"
+                                    data-macroproceso="{{ $proceso->macroproceso->nombre }}"
+                                    {{ old('proceso_id', $activo->proceso_id) == $proceso->id ? 'selected' : '' }}>
+                                    {{ $proceso->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @if ($errors->has('empleados'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('area') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="codigo_proceso"><i class="fas fa-barcode iconos-crear" style="margin-top: 8px"></i>Codigo</label>
+                    <div class="form-control" id="codigo_proceso"></div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="macroproceso"><i class="bi bi-file-earmark-post-fill iconos-crear"></i>Macroproceso</label>
+                    <div class="form-control" id="macroproceso"></div>
                 </div>
 
 
-
-                <div class="form-group col-md-6">
-                    <label for="ubicacion_id"><i class="fas fa-map-marker-alt iconos-crear"></i>Sede</label>
+                <div class="form-group col-md-6 sm-12">
+                    <label for="ubicacion_id" class="required"><i
+                            class="fas fa-map-marker-alt iconos-crear"></i>Sede</label>
                     <select class="form-control select2 {{ $errors->has('ubicacion') ? 'is-invalid' : '' }}"
-                        name="ubicacion_id" id="ubicacion_id">
+                        name="ubicacion_id" id="ubicacion_id" >
                         @foreach ($ubicacions as $id => $ubicacion)
-                            <option value="{{ $id }}"
-                                {{ (old('ubicacion_id') ? old('ubicacion_id') : $activo->ubicacion->id ?? '') == $id ? 'selected' : '' }}>
+                            <option value="{{ $id }}" {{ old('ubicacion_id') == $id ? 'selected' : '' }}>
                                 {{ $ubicacion }}</option>
                         @endforeach
                     </select>
@@ -194,13 +172,10 @@
                     <span class="help-block">{{ trans('cruds.activo.fields.ubicacion_helper') }}</span>
                 </div>
 
-
-
-
-                <div class="form-group col-6">
+                <div class="form-group col-sm-6">
                     <label for="sede"><i class="fas fa-map iconos-crear"></i>Ubicación</label>
-                    <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" name="sede" id="sede"
-                        value="{{ old('sede', $activo->sede) }}">
+                    <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" type="text"
+                        name="sede" id="sede" value="{{ old('sede', $activo->sede) }}">
                     @if ($errors->has('sede'))
                         <div class="invalid-feedback">
                             {{ $errors->first('sede') }}
@@ -209,24 +184,37 @@
                 </div>
 
 
+                {{-- <div class="form-group col-md-5 sm-9">
+                <label for="marca">Marca</label>
+                <input class="form-control {{ $errors->has('marca') ? 'is-invalid' : '' }}" name="marca" id="marca" required>
+                @if ($errors->has('marca'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('marca') }}
+                    </div>
+                @endif
+                  <span class="help-block"></span>
+            </div> --}}
                 <div class="col-md-6">
                     <div class="row align-items-center">
                         <div class="form-group col-md-11">
-                            <label class="required" for="marca"><i class="fas fa-copyright iconos-crear"></i>
-                                Marca</label>
-                            <select class="selecmarca form-control {{ $errors->has('marca') ? 'is-invalid' : '' }}"
-                                type="text" name="marca" id="marca" >
-                                @if ($errors->has('marca'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('marca') }}
-                                    </div>
-                                @endif
+                            <label for="marca"><i class="fas fa-copyright iconos-crear"></i>Marca</label>
+                            <select class="selecmarca" name="marca">
+                                {{-- @foreach ($marcas as $marca)
+                        <option value="{{ $marca->id }}" >{{ $marca->nombre }}</option>
+                        @endforeach --}}
                             </select>
+                            @if ($errors->has('marca'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('marca') }}
+                                </div>
+                            @endif
+                            <span class="help-block"></span>
                         </div>
 
-                        <div class="col-md-1 col-sm-1" class="btn btn-primary" data-toggle="modal" data-target="#marcaslec"
-                            data-whatever="@mdo" style="padding: 0; margin-top: 15px;">
-                            <i class="fas fa-plus-circle iconos-crear" style="font-size:25px;!important"></i>
+                        <div style="margin-top:17px;height: 28px !important;margin-left: -10px !important;">
+                            <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                            data-toggle="modal" data-target="#marcaslec" data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo"><i
+                                class="fas fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
@@ -234,94 +222,92 @@
                 <div class="col-md-6">
                     <div class="row align-items-center">
                         <div class="form-group col-md-11">
-                            <label class="required" for="modelo">
-                                Modelo</label>
-                            <select class="selecmodelo form-control {{ $errors->has('modelo') ? 'is-invalid' : '' }}"
-                                type="text" name="modelo" id="modelo" value="{{ old('modelo', $activo->modelo) }}"
-                                >
-                                @if ($errors->has('modelo'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('modelo') }}
-                                    </div>
-                                @endif
+                            <label for="modelo">Modelo</label>
+                            <select class="selecmodelo" name="modelo">
+                                @foreach ($modelos as $modelo)
+                                    <option value="{{ $modelo->id }}">{{ $modelo->nombre }}</option>
+                                @endforeach
                             </select>
+                            @if ($errors->has('modelo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('modelo') }}
+                                </div>
+                            @endif
+                            <span class="help-block"></span>
                         </div>
 
-                        <div class="col-md-1 col-sm-1" class="btn btn-primary" data-toggle="modal" data-target="#modelolec"
-                            data-whatever="@mdo" style="padding: 0; margin-top: 15px;">
-                            <i class="fas fa-plus-circle iconos-crear" style="font-size:25px;!important"></i>
+                        <div style="margin-top:17px;height: 28px !important;margin-left: -10px !important;">
+                            <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                            data-toggle="modal" data-target="#modelolec" data-whatever="@mdo" title="Agregar Tipo"><i
+                                class="fas fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group col-sm-6">
-                    <label class="required" for="n_serie"><i class="fas fa-barcode iconos-crear"></i>No de
-                        serie</label>
-                    <input class="form-control {{ $errors->has('n_serie') ? 'is-invalid' : '' }}" type="text"
-                        name="n_serie" id="n_serie" value="{{ old('n_serie', $activo->n_serie) }}" required>
+
+                <div class="form-group col-md-6">
+                    <label for="n_serie"><i class="fas fa-barcode iconos-crear"></i>No de serie</label>
+                    <input class="form-control {{ $errors->has('n_serie') ? 'is-invalid' : '' }}" name="n_serie"
+                        id="n_serie" value="{{ old('sede', $activo->n_producto) }}" >
                     @if ($errors->has('n_serie'))
                         <div class="invalid-feedback">
                             {{ $errors->first('n_serie') }}
                         </div>
                     @endif
+                    <span class="help-block"></span>
                 </div>
 
-
-                <div class="form-group col-sm-6">
-                    <label class="required" for="n_producto"><i class="fas fa-barcode iconos-crear"></i>No de
-                        producto</label>
-                    <input class="form-control {{ $errors->has('n_serie') ? 'is-invalid' : '' }}" type="text"
-                        name="n_producto" id="n_producto" value="{{ old('n_producto', $activo->n_producto) }}" required>
+                <div class="form-group col-md-6">
+                    <label for="n_producto"><i class="fas fa-barcode iconos-crear"></i>No de producto</label>
+                    <input class="form-control {{ $errors->has('n_producto') ? 'is-invalid' : '' }}" name="n_producto"
+                        id="n_producto" value="{{ old('sede', $activo->n_serie) }}">
                     @if ($errors->has('n_producto'))
                         <div class="invalid-feedback">
                             {{ $errors->first('n_producto') }}
                         </div>
                     @endif
-                </div>
-
-                <div class="form-group col-sm-6">
-                    <label for="fecha_alta"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha de alta</label>
-                    <input class="form-control {{ $errors->has('fecha_alta') ? 'is-invalid' : '' }}" type="date"
-                        name="fecha_alta" id="fecha_alta" value="{{ date('Y-m-d') }}">
-                    @if ($errors->has('fecha_alta'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fecha_alta') }}
-                        </div>
-                    @endif
+                    <span class="help-block"></span>
                 </div>
 
 
-                <div class="form-group col-sm-6">
-                    <label class="required" for="fecha_compra"><i class="fas fa-calendar-alt iconos-crear"></i>
-                        Fecha de compra</label>
-                    <input class="form-control {{ $errors->has('fecha_compra') ? 'is-invalid' : '' }}" type="date"
-                        name="fecha_compra" id="fecha_compra" value="{{ old('fecha_compra', $activo->fecha_compra) }}"
-                        required>
-                    @if ($errors->has('fecha_compra'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fecha_compra') }}
-                        </div>
-                    @endif
-                </div>
+                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                        <label for="fecha_alta"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de alta </label>
+                        <input class="form-control" type="date" id="fecha_alta" value="{{old('descripcion', $activo->fecha_alta) }}"
+                            name="fecha_alta">
+                        @if ($errors->has('fecha_alta'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_alta') }}
+                            </div>
+                        @endif
+                    </div>
 
 
-                <div class="form-group col-sm-6">
-                    <label class="required" for="fecha_fin"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
-                        fin de garantía</label>
-                    <input class="form-control {{ $errors->has('fecha_fin') ? 'is-invalid' : '' }}" type="date"
-                        name="fecha_fin" id="fecha_fin" value="{{ old('fecha_fin', $activo->fecha_fin) }}" required>
-                    @if ($errors->has('fecha_fin'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fecha_fin') }}
-                        </div>
-                    @endif
-                </div>
 
-                <div class="form-group col-sm-6">
-                    <label class="required" for="fecha_baja"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
-                        de baja</label>
-                    <input class="form-control {{ $errors->has('fecha_baja') ? 'is-invalid' : '' }}" type="date"
-                        name="fecha_baja" id="fecha_baja" value="{{ old('fecha_baja', $activo->fecha_baja) }}" required>
+                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                        <label for="fecha_compra"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de compra </label>
+                        <input class="form-control" type="date" id="fecha_compra" name="fecha_compra" value="{{old('descripcion', $activo->fecha_compra) }}" >
+                        @if ($errors->has('fecha_compra'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_compra') }}
+                            </div>
+                        @endif
+                    </div>
+
+
+                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                        <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin de garantía</label>
+                        <input class="form-control" type="date" id="fecha_fin" name="fecha_fin" value="{{old('descripcion', $activo->fecha_fin) }}">
+                        @if ($errors->has('fecha_fin'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_fin') }}
+                            </div>
+                        @endif
+                    </div>
+
+
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <label for="fecha_baja"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de baja</label>
+                    <input class="form-control" type="date" id="fecha_baja" name="fecha_baja">
                     @if ($errors->has('fecha_baja'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_baja') }}
@@ -329,11 +315,11 @@
                     @endif
                 </div>
 
+
                 <div class="form-group col-12">
                     <label for="observaciones"><i class="fas fa-align-left iconos-crear"></i>Observaciones</label>
                     <textarea class="form-control {{ $errors->has('observaciones') ? 'is-invalid' : '' }}"
-                        name="observaciones"
-                        id="observaciones">{{ old('observaciones', $activo->observaciones) }}</textarea>
+                        name="observaciones" id="observaciones">{{ old('descripcion', $activo->observaciones) }}</textarea>
                     @if ($errors->has('observaciones'))
                         <div class="invalid-feedback">
                             {{ $errors->first('observaciones') }}
@@ -341,123 +327,164 @@
                     @endif
                 </div>
 
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <li><a href="{{url('admin/activos/descargar')}}">Descargar formato sugerido de responsiva </a></li>
+                </div>
 
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <label  for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Responsiva</label>
+                    <form method="POST" action="{{ route('admin.activos.store') }}" accept-charset="UTF-8" enctype="multipart/form-data">
+                    <input type="file" name="documento" multiple class="form-control" id="documento"
+                        accept="application/pdf" value="{{ old('files[]') }}" >
+                        @if ($activo->documento)
+                        Documento actual: {{ $activo->documento }}<br>
+                        @endif
+                </div>
 
-                {{-- <div class="text-right form-group col-12">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div> --}}
-
-                <div class="text-right form-group col-12">
+                <div class="text-right form-group col-12" style="margin-left:15px;" >
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
 
-                <div class="modal" tabindex="-1" id="documentos_activos">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Descargar Documentos</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
 
-                                {{-- @dump(json_decode($activo->documentos_relacionados)) --}}
-                                @if (json_decode($activo->documentos_relacionados))
-                                    <div class="list-group">
-                                        @foreach (json_decode($activo->documentos_relacionados) as $documento)
+                {{-- Modales  --}}
 
-                                            <a class="list-group-item list-group-item-action" target="_blank"
-                                                href="{{ asset('storage/activos' . '/' . $documento) }}">
-                                                <i class="mr-2 fas fa-file"></i><span>{{ $documento }}</span>
-                                            </a>
-                                        @endforeach
-                                    </div>
-                                @else
-                                    <p>Sin archivos cargados</p>
-                                @endif
-
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                            </div>
-
-
-
-                        </div>
+            <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nuevo Modelo</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
-                </div>
-
-                <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nueva Modelo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="modelo-name" class="col-form-label">Nombre:</label>
-                                        <input type="text" class="form-control" id="modelo-name">
-                                        <span class="text-danger" id="nombre_error" class="nombre_error"></span>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="guardar_modelo">Guardar</button>
-                            </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="modelo-name" class="col-form-label">Nombre:</label>
+                          <input type="text" class="form-control" id="modelo-name">
+                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
                         </div>
+                      </form>
                     </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" id="guardar_modelo">Guardar</button>
+                    </div>
+                  </div>
                 </div>
+            </div>
 
-                <div class="modal fade" id="marcaslec" tabindex="-1" aria-labelledby="marcaslecLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Marca</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                                        <input type="text" class="form-control" id="recipient-name">
-                                        <span class="text-danger" id="nombre_error" class="nombre_error"></span>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="guardar_marca">Guardar</button>
-                            </div>
-                        </div>
+            <div class="modal fade" id="marcaslec" tabindex="-1" aria-labelledby="marcaslecLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Marca</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Nombre:</label>
+                          <input type="text" class="form-control" id="recipient-name">
+                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" id="guardar_marca">Guardar</button>
+                    </div>
+                  </div>
                 </div>
+            </div>
+
+
+            <div class="modal fade" id="categorialec" tabindex="-1" aria-labelledby="categorialecLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nueva Categoria</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="modelo-name" class="col-form-label">Nombre:</label>
+                          <input type="text" class="form-control" id="tipo-name">
+                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" id="guardar_categoria" data-dismiss="modal">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="subcategorialec" tabindex="-1" aria-labelledby="subcategorialecLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Subcategoria</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+
+                        {{-- <div class="form-group">
+                            <label for="id_asignada">Categoría</label>
+                            <select class="form-control  {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
+                                name="categoria_id" id="categoria_id">
+                                <option value="">Seleccione una opción</option>
+                                @foreach ($tipos as $tipo)
+                                    <option data-puesto="{{ $tipo->tipo }}" value="{{ $tipo->id }}">
+                                        {{ $tipo->tipo }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('tipo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('tipo') }}
+                                </div>
+                            @endif
+                        </div> --}}
+
+                        {{-- <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Subcategoria:</label>
+                          <input type="text" class="form-control" id="subtipo-name">
+                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                        </div> --}}
+                      </form>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" id="guardar_subcategoria">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
 
             </form>
         </div>
-    </div>
 
 
 
-@endsection
+    @endsection
 
 
-@section('scripts')
+    @section('scripts')
 
     <script>
         document.addEventListener('DOMContentLoaded', function(e) {
@@ -467,12 +494,24 @@
             let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
             document.getElementById('puesto_responsable').innerHTML = puesto_init
             document.getElementById('area_responsable').innerHTML = area_init
+            let proceso = document.getElementById('proceso_id');
+
+            document.getElementById('codigo_proceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-codigo')
+            document.getElementById('macroproceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-macroproceso')
 
             let dueno = document.querySelector('#dueno_id');
             let area = dueno.options[dueno.selectedIndex].getAttribute('data-area');
             let puesto = dueno.options[dueno.selectedIndex].getAttribute('data-puesto');
             document.getElementById('puesto_dueno').innerHTML = puesto
             document.getElementById('area_dueno').innerHTML = area
+
+            proceso.addEventListener('change', function(e) {
+                e.preventDefault();
+                console.log()
+                document.getElementById('codigo_proceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-codigo')
+                document.getElementById('macroproceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-macroproceso')
+            })
+
 
             responsable.addEventListener('change', function(e) {
                 e.preventDefault();
@@ -488,9 +527,71 @@
                 document.getElementById('puesto_dueno').innerHTML = puesto
                 document.getElementById('area_dueno').innerHTML = area
             })
-            document.getElementById('guardar_marca').addEventListener('click', function(e) {
-                e.preventDefault();
-                let nombre = document.querySelector('#recipient-name').value;
+
+<<<<<<< HEAD
+                responsable.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    let area = this.options[this.selectedIndex].getAttribute('data-area');
+                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('puesto_responsable').innerHTML = puesto
+                    document.getElementById('area_responsable').innerHTML = area
+                })
+                dueno.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    let area = this.options[this.selectedIndex].getAttribute('data-area');
+                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('puesto_dueno').innerHTML = puesto
+                    document.getElementById('area_dueno').innerHTML = area
+                })
+
+                 // Script Marca activos
+                document.getElementById('guardar_marca').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let nombre = document.querySelector('#recipient-name').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.marcas.store') }}",
+                        data: {
+                            nombre
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.success) {
+                                document.querySelector('#recipient-name').value = '';
+                                $('.selecmarca').select2('destroy');
+                                $('.selecmarca').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.marcas.getMarcas') }}",
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+                                $('#marcaslec').modal('hide')
+                                $('.modal-backdrop').hide();
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const marca=response.marca
+                                // console.log(marca);
+                                var option = new Option(marca.nombre,marca.id, true, true);
+                                $('.selecmarca').append(option).trigger('change');
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            // console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
 
                 $.ajax({
                     type: "POST",
@@ -513,14 +614,191 @@
                                 },
                                 theme: "bootstrap4"
                             });
-                            // $('#marcaslec').modal('hide')
+                            $('#marcaslec').modal('hide')
+                            $('.modal-backdrop').hide();
                             Swal.fire(
                                 'Guardada con exito!',
                                 '',
                                 'success'
                             )
+                            const marca=response.marca
+                            console.log(marca);
+                            var option = new Option(marca.nombre,marca.id, true, true);
+                            $('.selecmarca').append(option).trigger('change');
 
                         }
+                    },
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+
+<<<<<<< HEAD
+                // Script categoria activos
+                document.getElementById('guardar_categoria').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let tipo = document.querySelector('#tipo-name').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.tipoactivos.store') }}",
+                        data: {
+                            tipo,ajax:true
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            // console.log("aqui");
+                            if (response.success) {
+                                document.querySelector('#recipient-name').value = '';
+                                $('.selecCategoria').select2('destroy');
+                                $('.selecCategoria').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.tipoactivos.getTipos') }}",
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+                                $('#categorialec').modal('hide')
+                                $('.modal-backdrop').hide();
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const activo=response.activo
+                                // console.log(activo);
+                                var option = new Option(activo.tipo,activo.id, true, true);
+                                $('.selecCategoria').append(option).trigger('change');
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            // console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                // console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                            });
+                        }
+                    });
+                    // console.log('Guardando')
+=======
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                        });
+                    }
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
+                });
+                console.log('Guardando')
+            });
+
+<<<<<<< HEAD
+                 // Script subcategoria activos
+
+                 document.getElementById('guardar_subcategoria').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let subcategoria = document.querySelector('#subtipo-name').value;
+                    let categoria_id = document.querySelector('#categoria_id').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.subtipoactivos.store') }}",
+                        data: {
+                            categoria_id,subcategoria, ajax:true
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.success) {
+                                document.querySelector('#recipient-name').value = '';
+                                $('.selecSubcategoria').select2('destroy');
+                                $('.selecSubcategoria').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                                        data: {
+                                            categoria:1
+                                        },
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+                                $('#subcategorialec').modal('hide')
+                                $('.modal-backdrop').hide();
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const subtipo=response.subtipo
+                                // const tipo=response.tipo
+                                // console.log(subtipo);
+                                var option = new Option(subtipo.subcategoria,subtipo.id, true, true);
+                                $('.selecSubcategoria').append(option).trigger('change');
+                                // var option = new Option(subtipo.categoria_id,subtipo.id, true, true);
+                                // $('.selecCategoria').append(option).trigger('change');
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            // console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                // console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+=======
+            // Script categoria activos
+            document.getElementById('guardar_categoria').addEventListener('click', function(e) {
+                e.preventDefault();
+                let tipo = document.querySelector('#tipo-name').value;
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
+
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                    },
+                    url: "{{ route('admin.tipoactivos.store') }}",
+                    data: {
+                        tipo,ajax:true
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success) {
+                            document.querySelector('#recipient-name').value = '';
+                            $('.selecCategoria').select2('destroy');
+                            $('.selecCategoria').select2({
+                                ajax: {
+                                    url: "{{ route('admin.tipoactivos.getTipos') }}",
+                                    dataType: "json",
+                                },
+                                theme: "bootstrap4"
+                            });
+                            $('#categorialec').modal('hide')
+                            $('.modal-backdrop').hide();
+                            Swal.fire(
+                                'Guardada con exito!',
+                                '',
+                                'success'
+                            )
+                            const activo=response.activo
+                            console.log(activo);
+                            var option = new Option(activo.tipo,activo.id, true, true);
+                            $('.selecCategoria').append(option).trigger('change');
+
+                        }
+<<<<<<< HEAD
+                    });
+                    // console.log('Guardando')
+=======
                     },
                     error: function(request, status, error) {
                         console.log(error)
@@ -532,15 +810,101 @@
 
                         });
                     }
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
                 });
                 console.log('Guardando')
             });
 
+             // Script subcategoria activos
 
+             document.getElementById('guardar_subcategoria').addEventListener('click', function(e) {
+                e.preventDefault();
+                let subcategoria = document.querySelector('#subtipo-name').value;
+                let categoria_id = document.querySelector('#categoria_id').value;
 
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                    },
+                    url: "{{ route('admin.subtipoactivos.store') }}",
+                    data: {
+                        categoria_id,subcategoria, ajax:true
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success) {
+                            document.querySelector('#recipient-name').value = '';
+                            $('.selecSubcategoria').select2('destroy');
+                            $('.selecSubcategoria').select2({
+                                ajax: {
+                                    url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                                    data: {
+                                        categoria:1
+                                    },
+                                    dataType: "json",
+                                },
+                                theme: "bootstrap4"
+                            });
+                            $('#subcategorialec').modal('hide')
+                            $('.modal-backdrop').hide();
+                            Swal.fire(
+                                'Guardada con exito!',
+                                '',
+                                'success'
+                            )
+                            const subtipo=response.subtipo
+                            // const tipo=response.tipo
+                            console.log(subtipo);
+                            var option = new Option(subtipo.subcategoria,subtipo.id, true, true);
+                            $('.selecSubcategoria').append(option).trigger('change');
+                            // var option = new Option(subtipo.categoria_id,subtipo.id, true, true);
+                            // $('.selecCategoria').append(option).trigger('change');
+
+<<<<<<< HEAD
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const modelo=response.modelo
+                                // console.log(modelo);
+                                var option = new Option(modelo.nombre,modelo.id, true, true);
+                                $('.selecmodelo').append(option).trigger('change');
+=======
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
+
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                        });
+                    }
+                });
+                console.log('Guardando')
+            });
+
+<<<<<<< HEAD
+                        },
+                        error: function(request, status, error) {
+                            // console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                // console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+=======
+
+             // Script Modelo activos
             document.getElementById('guardar_modelo').addEventListener('click', function(e) {
                 e.preventDefault();
                 let nombre = document.querySelector('#modelo-name').value;
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
 
                 $.ajax({
                     type: "POST",
@@ -553,13 +917,14 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        $('#marcaslec').modal('hide')
+                        $('#modelolec').modal('hide')
+                        $('.modal-backdrop').hide();
                         if (response.success) {
                             document.querySelector('#modelo-name').value = '';
                             $('.selecmodelo').select2('destroy');
                             $('.selecmodelo').select2({
                                 ajax: {
-                                    url: "{{ route('admin.modelos.getModelos', $activo->modelo) }}",
+                                    url: "{{ route('admin.modelos.getModelos') }}",
                                     dataType: "json",
                                 },
                                 theme: "bootstrap4"
@@ -570,8 +935,18 @@
                                 '',
                                 'success'
                             )
+                            const modelo=response.modelo
+                            console.log(modelo);
+                            var option = new Option(modelo.nombre,modelo.id, true, true);
+                            $('.selecmodelo').append(option).trigger('change');
 
                         }
+<<<<<<< HEAD
+                    });
+                    // console.log('Guardando')
+                });
+=======
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
 
 
                     },
@@ -591,42 +966,91 @@
 
         })
 
+<<<<<<< HEAD
+                $('.selecCategoria').select2({
+                    ajax: {
+                        url: "{{ route('admin.tipoactivos.getTipos') }}",
+                        dataType: "json",
+                    },
+                    theme: "bootstrap4"
+                });
+                $('.selecSubcategoria').select2({
+                    ajax: {
+                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                        data:{categoria:1},
+                        dataType: "json",
+                    },
+                    theme: "bootstrap4"
+                });
+                $('.selecCategoria').on('select2:select', function (e) {
+                    var data = e.params.data;
+                    // console.log(data);
+                    $('.selecSubcategoria').select2({
+                        ajax: {
+                            url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                            data:{categoria:data.id},
+                            dataType: "json",
+                        },
+                        theme: "bootstrap4"
+                    });
+                });
+=======
         $(document).ready(function() {
-            $('#marca').select2({
+            $('.selecmarca').select2({
                 ajax: {
                     url: "{{ route('admin.marcas.getMarcas') }}",
                     dataType: "json",
                 },
-
                 theme: "bootstrap4"
             });
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
 
 
-            let selectMarca = $('#marca');
-
-            var option = new Option(@json($marca_seleccionada?$marca_seleccionada->nombre:""), @json($marca_seleccionada?$marca_seleccionada->id:0), true, true);
-
-            selectMarca.append(option).trigger('change');
-
-
-
-            $('#modelo').select2({
+            $('.selecmodelo').select2({
                 ajax: {
                     url: "{{ route('admin.modelos.getModelos') }}",
                     dataType: "json",
                 },
-
                 theme: "bootstrap4"
-
             });
 
-            let selectModelo = $('#modelo');
 
-            var optionModelo = new Option(@json($modelo_seleccionado?$modelo_seleccionado->nombre:""), @json($modelo_seleccionado?$modelo_seleccionado->id:0), true, true);
-
-            selectModelo.append(optionModelo).trigger('change');
-
+            $('.selecCategoria').select2({
+                ajax: {
+                    url: "{{ route('admin.tipoactivos.getTipos') }}",
+                    dataType: "json",
+                },
+                theme: "bootstrap4"
+            });
+            $('.selecSubcategoria').select2({
+                ajax: {
+                    url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                    data:{categoria:1},
+                    dataType: "json",
+                },
+                theme: "bootstrap4"
+            });
+            $('.selecCategoria').on('select2:select', function (e) {
+                var data = e.params.data; console.log(data);
+                $('.selecSubcategoria').select2({
+                ajax: {
+                    url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                    data:{categoria:data.id},
+                    dataType: "json",
+                },
+                theme: "bootstrap4"
+            });
+              });
 
         });
+
+        // $('.selecCategoria').val('1');
+        // $('.selecCategoria').trigger('changue');
+
+
+
     </script>
+
+
+
 @endsection

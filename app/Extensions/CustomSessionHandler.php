@@ -27,7 +27,6 @@ class CustomSessionHandler implements \SessionHandlerInterface
     /**
      * Create a new file driven handler instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
      * @param  string  $path
      * @param  int  $minutes
      * @return void

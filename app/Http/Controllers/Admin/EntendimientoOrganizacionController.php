@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyEntendimientoOrganizacionRequest;
+use App\Models\AmenazasEntendimientoOrganizacion;
+use App\Models\DebilidadesEntendimientoOrganizacion;
 use App\Models\Empleado;
 use App\Models\EntendimientoOrganizacion;
+use App\Models\FortalezasEntendimientoOrganizacion;
+use App\Models\OportunidadesEntendimientoOrganizacion;
 use App\Models\Team;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,21 +24,21 @@ class EntendimientoOrganizacionController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //$obtener_FODA = EntendimientoOrganizacion::first();
         // $query = EntendimientoOrganizacion::with('empleado')->get();
         // dd($query);
         if ($request->ajax()) {
-            $query = EntendimientoOrganizacion::with('empleado')->orderByDesc('id')->get();
+            $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'entendimiento_organizacion_show';
-                $editGate = 'entendimiento_organizacion_edit';
-                $deleteGate = 'entendimiento_organizacion_delete';
+                $viewGate = 'analisis_foda_ver';
+                $editGate = 'analisis_foda_editar';
+                $deleteGate = 'analisis_foda_eliminar';
                 $crudRoutePart = 'entendimiento-organizacions';
 
                 return view('partials.datatablesActions', compact(
@@ -75,7 +80,7 @@ class EntendimientoOrganizacionController extends Controller
         }
 
         $obtener_FODA = EntendimientoOrganizacion::first();
-        $empleado = Empleado::get();
+        $empleado = Empleado::getaltaAll();
         $teams = Team::get();
 
         return view('admin.entendimientoOrganizacions.index', compact('obtener_FODA', 'teams', 'empleado'));
@@ -83,70 +88,114 @@ class EntendimientoOrganizacionController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('entendimiento_organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entendimientoOrganizacion = new EntendimientoOrganizacion;
-        $empleados = Empleado::get();
+        $empleados = Empleado::getaltaAll();
+        $isEdit = false;
+        $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
-        return view('admin.entendimientoOrganizacions.create', compact('entendimientoOrganizacion', 'empleados'));
+        return view('admin.entendimientoOrganizacions.create', compact('isEdit', 'entendimientoOrganizacion', 'esta_vinculado', 'empleados'));
     }
 
     public function store(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
     {
+        abort_if(Gate::denies('analisis_foda_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'fortalezas' => 'required|string',
-            'debilidades' => 'required|string',
-            'oportunidades' => 'required|string',
-            'amenazas' => 'required|string',
-            'analisis' => 'required|string',
-            'fecha' => 'required|string',
+            'analisis' => 'required|string|max:255',
+            'fecha' => 'required|date',
             'id_elabora' => 'required|string',
 
+        ], [
+            'analisis.required' => 'El campo Análisis es obligatorio',
+            'analisis.string' => 'El campo Análisis debe ser un texto',
+            'analisis.max' => 'El campo Análisis debe tener como máximo 255 caracteres',
+            'fecha.required' => 'El campo Fecha es obligatorio',
+            'fecha.date' => 'El campo Fecha debe ser una fecha',
+            'id_elabora.required' => 'El campo Elabora es obligatorio',
         ]);
-        $entendimientoOrganizacion->create($request->all());
+        $foda = $entendimientoOrganizacion->create($request->all());
+        // Almacenamiento de participantes relacionados
+        if (!is_null($request->participantes)) {
+            $this->vincularParticipantes($request->participantes, $foda);
+        }
 
-        return redirect()->route('admin.entendimiento-organizacions.index')->with('success', 'Análisis FODA creado correctamente');
+        return redirect()->route('admin.entendimiento-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
+    }
+
+    public function vincularParticipantes($participantesA, $model)
+    {
+        if (is_array($participantesA)) {
+            $participantes = $participantesA;
+        } else {
+            $arrstrParticipantes = explode(',', $participantesA);
+            $participantes = array_map(function ($valor) {
+                return intval($valor);
+            }, $arrstrParticipantes);
+        }
+
+        // dd($participantes);
+        $model->participantes()->sync($participantes);
     }
 
     public function edit(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::get();
+        $entendimientoOrganizacion->load('participantes');
 
-        return view('admin.entendimientoOrganizacions.edit', compact('entendimientoOrganizacion', 'empleados'));
+        $empleados = Empleado::getaltaAll();
+
+        $isEdit = true;
+
+        $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
+
+        // $entendimiento->load('participantes');
+
+        return view('admin.entendimientoOrganizacions.edit', compact('isEdit', 'entendimientoOrganizacion', 'esta_vinculado', 'empleados'));
     }
 
     public function update(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
     {
+        abort_if(Gate::denies('analisis_foda_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'fortalezas' => 'required|string',
-            'debilidades' => 'required|string',
-            'oportunidades' => 'required|string',
-            'amenazas' => 'required|string',
-            'analisis' => 'required|string',
-            'fecha' => 'required|string',
+            'analisis' => 'required|string|max:255',
+            'fecha' => 'required|date',
             'id_elabora' => 'required|string',
 
+        ], [
+            'analisis.required' => 'El campo Análisis es obligatorio',
+            'analisis.string' => 'El campo Análisis debe ser un texto',
+            'analisis.max' => 'El campo Análisis debe tener como máximo 255 caracteres',
+            'fecha.required' => 'El campo Fecha es obligatorio',
+            'fecha.date' => 'El campo Fecha debe ser una fecha',
+            'id_elabora.required' => 'El campo Elabora es obligatorio',
         ]);
 
         $entendimientoOrganizacion->update($request->all());
+        if (!is_null($request->participantes)) {
+            $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
+        }
 
         return redirect()->route('admin.entendimiento-organizacions.index')->with('success', 'Análisis FODA actualizado correctamente');
     }
 
     public function show(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getaltaAll();
         $obtener_FODA = $entendimientoOrganizacion;
+        $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
+        $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
+        $amenazas = AmenazasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
+        $debilidades = DebilidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
 
-        return view('admin.entendimientoOrganizacions.show', compact('empleados', 'obtener_FODA'));
+        return view('admin.entendimientoOrganizacions.show', compact('fortalezas', 'oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA'));
     }
 
     public function destroy(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entendimientoOrganizacion->delete();
 
@@ -158,6 +207,57 @@ class EntendimientoOrganizacionController extends Controller
         EntendimientoOrganizacion::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function duplicarFoda(Request $request)
+    {
+        $fodaOld = EntendimientoOrganizacion::with('participantes', 'fodafortalezas', 'fodaoportunidades', 'fodadebilidades', 'fodamenazas')->find($request->id);
+        $participantes = $fodaOld->participantes->pluck('id')->toArray();
+        $fortalezas = $fodaOld->fodafortalezas;
+        $oportunidades = $fodaOld->fodaoportunidades;
+        $debilidades = $fodaOld->fodadebilidades;
+        $amenazas = $fodaOld->fodamenazas;
+
+        $foda = EntendimientoOrganizacion::create([
+            'analisis' => $request->nombreFoda,
+            'fecha' => $fodaOld->fecha,
+            'id_elabora' => $fodaOld->id_elabora,
+        ]);
+        // Almacenamiento de participantes relacionados
+        $this->vincularParticipantes($participantes, $foda);
+        foreach ($fortalezas as $fortaleza) {
+            FortalezasEntendimientoOrganizacion::create([
+                'foda_id' => $foda->id,
+                'fortaleza' => $fortaleza->fortaleza,
+                'riesgo' => $fortaleza->riesgo,
+            ]);
+        }
+
+        foreach ($oportunidades as $oportunidad) {
+            OportunidadesEntendimientoOrganizacion::create([
+                'foda_id' => $foda->id,
+                'oportunidad' => $oportunidad->oportunidad,
+                'riesgo' => $oportunidad->riesgo,
+            ]);
+        }
+
+        foreach ($debilidades as $debilidad) {
+            DebilidadesEntendimientoOrganizacion::create([
+                'foda_id' => $foda->id,
+                'debilidad' => $debilidad->debilidad,
+                'riesgo' => $debilidad->riesgo,
+            ]);
+        }
+
+        foreach ($amenazas as $amenaza) {
+            AmenazasEntendimientoOrganizacion::create([
+                'foda_id' => $foda->id,
+                'amenaza' => $amenaza->amenaza,
+                'riesgo' => $amenaza->riesgo,
+            ]);
+        }
+
+        return response()->json(['success' => true, 'analisis_creado' => $foda]);
     }
 
     // public function edit()

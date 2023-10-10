@@ -6,20 +6,18 @@ use App\Notifications\MyResetPassword;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Hash;
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     use SoftDeletes, Notifiable, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'users';
 
     protected $hidden = [
@@ -58,7 +56,40 @@ class User extends Authenticatable
         'team_id',
         'two_factor_expires_at',
         'is_active',
+        'empleado_id',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Users:users_all', 3600 * 13, function () {
+            return self::select('name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')->get();
+        });
+    }
+
+    public static function getCurrentUser()
+    {
+        $cacheKey = 'Auth_user:user' . auth()->user()->id;
+
+        return Cache::remember($cacheKey, now()->addMinutes(60), function () {
+            return auth()->user();
+        });
+    }
+
+    public function empleado()
+    {
+        if ($this->empleado_id != null) {
+            return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
+        } else {
+            return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
+        }
+    }
+
+    //empleadoId attribute
+    public function getEmpleadoIdAttribute($value)
+    {
+        return $value ? $value : null;
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -174,8 +205,19 @@ class User extends Authenticatable
         $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
-    public function empleado()
+    //# Get empleado_id
+    public function getEmpleadoId()
     {
-        return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado');
+        return $this->empleado_id;
+    }
+
+    public function nEmpleado()
+    {
+        return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\esculea\Review');
     }
 }

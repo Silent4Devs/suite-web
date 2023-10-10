@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRevisionDireccionRequest;
 use App\Http\Requests\StoreRevisionDireccionRequest;
-use App\Http\Requests\UpdateRevisionDireccionRequest;
 use App\Models\RevisionDireccion;
 use App\Models\Team;
 use Gate;
@@ -17,7 +16,7 @@ class RevisionDireccionController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('revision_direccion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = RevisionDireccion::with(['team'])->select(sprintf('%s.*', (new RevisionDireccion)->table));
@@ -27,9 +26,9 @@ class RevisionDireccionController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'revision_direccion_show';
-                $editGate = 'revision_direccion_edit';
-                $deleteGate = 'revision_direccion_delete';
+                $viewGate = 'revision_por_direccion_ver';
+                $editGate = 'revision_por_direccion_editar';
+                $deleteGate = 'revision_por_direccion_eliminar';
                 $crudRoutePart = 'revision-direccions';
 
                 return view('partials.datatablesActions', compact(
@@ -78,13 +77,15 @@ class RevisionDireccionController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('revision_direccion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.revisionDireccions.create');
     }
 
     public function store(StoreRevisionDireccionRequest $request)
     {
+        abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $revisionDireccion = RevisionDireccion::create($request->all());
 
         return redirect()->route('admin.revision-direccions.index');
@@ -92,15 +93,18 @@ class RevisionDireccionController extends Controller
 
     public function edit(RevisionDireccion $revisionDireccion)
     {
-        abort_if(Gate::denies('revision_direccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $revisionDireccion->load('team');
 
         return view('admin.revisionDireccions.edit', compact('revisionDireccion'));
     }
 
-    public function update(UpdateRevisionDireccionRequest $request, RevisionDireccion $revisionDireccion)
+    public function update(Request $request, $revisionDireccion)
     {
+        abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $revisionDireccion = RevisionDireccion::find($revisionDireccion);
         $revisionDireccion->update($request->all());
 
         return redirect()->route('admin.revision-direccions.index');
@@ -108,7 +112,7 @@ class RevisionDireccionController extends Controller
 
     public function show(RevisionDireccion $revisionDireccion)
     {
-        abort_if(Gate::denies('revision_direccion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $revisionDireccion->load('team');
 
@@ -117,7 +121,7 @@ class RevisionDireccionController extends Controller
 
     public function destroy(RevisionDireccion $revisionDireccion)
     {
-        abort_if(Gate::denies('revision_direccion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $revisionDireccion->delete();
 

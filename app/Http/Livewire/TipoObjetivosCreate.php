@@ -13,6 +13,7 @@ class TipoObjetivosCreate extends Component
     use WithFileUploads;
 
     public $nombre;
+
     public $fotoPerspectiva;
 
     // protected $rules = [

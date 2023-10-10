@@ -19,10 +19,10 @@ class UpdateFaqQuestionRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'question'    => [
+            'question' => [
                 'required',
             ],
-            'answer'      => [
+            'answer' => [
                 'required',
             ],
         ];

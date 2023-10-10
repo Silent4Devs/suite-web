@@ -12,8 +12,11 @@ class NotificacionEvaluacion360 extends Notification
     use Queueable;
 
     public $email;
+
     public $evaluacion;
+
     public $evaluador;
+
     public $evaluado;
 
     /**
@@ -48,7 +51,7 @@ class NotificacionEvaluacion360 extends Notification
      */
     public function toMail($notifiable)
     {
-        return Mail::to($this->email)->send(new NotificacionEvaluador($this->evaluacion, $this->evaluador, $this->evaluados));
+        return Mail::to(removeUnicodeCharacters($this->email))->send(new NotificacionEvaluador($this->evaluacion, $this->evaluador, $this->evaluados));
     }
 
     /**

@@ -34,13 +34,14 @@ class IdiomasEmpleadosController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-            'nombre' => 'required|string',
+            // 'nombre' => 'required|string',
+            'id_language' => 'required',
             'nivel' => 'required|string',
             'porcentaje' => 'nullable|numeric|min:1|max:100',
             'certificado' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf',
@@ -69,15 +70,21 @@ class IdiomasEmpleadosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, IdiomaEmpleado $idiomaEmpleado)
     {
-        if (array_key_exists('nombre', $request->all())) {
+        // if (array_key_exists('nombre', $request->all())) {
+        //     $request->validate([
+        //         'nombre' => 'required|string|max:255',
+        //     ]);
+        //     $idiomaEmpleado->update($request->all());
+        // }
+
+        if (array_key_exists('id_language', $request->all())) {
             $request->validate([
-                'nombre' => 'required|string|max:255',
+                'id_language' => 'required',
             ]);
             $idiomaEmpleado->update($request->all());
         }

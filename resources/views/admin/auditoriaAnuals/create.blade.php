@@ -2,33 +2,32 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.auditoria-anuals.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Registrar: Programa Anual de Auditoría</h5>
 <div class="mt-4 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Programa Anual de Auditoría </h3>
-    </div>
-
     <div class="card-body">
         <form method="POST" action="{{ route("admin.auditoria-anuals.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group col-md-6">
-                <label class="required"><i class="fas fa-list iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.tipo') }}</label>
-                <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo" required>
-                    <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\AuditoriaAnual::TIPO_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('tipo', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('tipo'))
+
+            <div class="form-group col-md-12 col-sm-12">
+                <label for="nombre" class="required"><i class="fas fa-clipboard-list iconos-crear"></i>Nombre</label>
+                <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                    name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
+                @if ($errors->has('nombre'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('tipo') }}
+                        {{ $errors->first('nombre') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.tipo_helper') }}</span>
             </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
+                <span style="font-size: 15px; font-weight: bold;">
+                    Periodo</span>
+            </div>
+
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="fechainicio"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de inicio</label>
-                <input class="form-control {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="datetime-local" name="fechainicio" id="fechainicio" value="{{ old('fechainicio') }}">
+                <label for="fechainicio"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de inicio</label>
+                <input class="form-control {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="date"
+                name="fechainicio" id="fechainicio" min="1945-01-01" value="{{ old('fechainicio') }}">
                 @if($errors->has('fechainicio'))
                 <div class="invalid-feedback">
                     {{ $errors->first('fechainicio') }}
@@ -37,8 +36,9 @@
             </div>
 
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="fechafin"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha fin</label>
-                <input class="form-control {{ $errors->has('fechafin') ? 'is-invalid' : '' }}" type="datetime-local" name="fechafin" id="fechafin" value="{{ old('fechafin') }}">
+                <label for="fechafin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin</label>
+                <input class="form-control {{ $errors->has('fechafin') ? 'is-invalid' : '' }}" type="date"
+                name="fechafin" id="fechafin" min="1945-01-01" value="{{ old('fechafin') }}">
                 @if($errors->has('fechafin'))
                 <div class="invalid-feedback">
                     {{ $errors->first('fechafin') }}
@@ -46,54 +46,33 @@
                 @endif
             </div>
 
-            {{-- <div class="form-group col-md-6">
-                <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.auditorlider') }}</label>
-                <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}" name="auditorlider_id" id="auditorlider_id">
-                    @foreach($auditorliders as $id => $auditorlider)
-                        <option value="{{ $id }}" {{ old('auditorlider_id') == $id ? 'selected' : '' }}>{{ $auditorlider }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('auditorlider'))
+            <div class="form-group col-md-12 col-sm-12  mt-3">
+                <label for="objetivo" class="required"><i class="fas fa-bullseye iconos-crear"></i>Objetivo</label>
+                <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
+                    name="objetivo" id="objetivo" required>{{ old('objetivo') }}</textarea>
+                @if($errors->has('objetivo'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('auditorlider') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.auditorlider_helper') }}</span>
-            </div> --}}
-
-
-            <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>Auditor(a) líder</label>
-                <select class="form-control  {{ $errors->has('auditorlider_id') ? 'is-invalid' : '' }}"
-                    name="auditorlider_id" id="auditorlider_id">
-                    <option value="">Seleccione una opción</option>
-                    @foreach ($empleados as $empleado)
-                        <option value="{{ $empleado->id }}">
-                            {{ $empleado->name }}
-                        </option>
-
-                    @endforeach
-                </select>
-                @if ($errors->has(' id_asignada'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first(' id_asignada') }}
-                    </div>
-                @endif
-            </div>
-
-
-            <div class="form-group col-12">
-                <label for="observaciones"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.observaciones') }}</label>
-                <textarea class="form-control {{ $errors->has('observaciones') ? 'is-invalid' : '' }}" name="observaciones" id="observaciones">{{ old('observaciones') }}</textarea>
-                @if($errors->has('observaciones'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('observaciones') }}
+                        {{ $errors->first('objetivo') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.observaciones_helper') }}</span>
             </div>
+
+            <div class="form-group col-md-12 col-sm-12 mt-3 ">
+                <label for="alcance" class="required"><i class="fas fa-chart-line iconos-crear"></i>Alcance</label>
+                <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}"
+                    name="alcance" id="alcance" required>{{ old('alcance') }}</textarea>
+                @if($errors->has('alcance'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('alcance') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.observaciones_helper') }}</span>
+            </div>
+
+
             <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route("admin.auditoria-anuals.index") }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -104,4 +83,114 @@
 
 
 
+@endsection
+
+
+@section('scripts')
+<script>
+            $(document).ready(function() {
+            CKEDITOR.replace('objetivo', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+                ]
+            });
+
+            CKEDITOR.replace('alcance', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+                ]
+            });
+
+        });
+</script>
 @endsection

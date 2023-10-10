@@ -9,16 +9,20 @@ use Illuminate\Queue\SerializesModels;
 class InvitacionCapacitacionMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $nombre;
+
+    public $empleado;
+
+    public $recurso;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($nombre)
+    public function __construct($empleado, $recurso)
     {
-        $this->nombre = $nombre;
+        $this->empleado = $empleado;
+        $this->recurso = $recurso;
     }
 
     /**
@@ -28,6 +32,6 @@ class InvitacionCapacitacionMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.capacitaciones.invitacion-capacitacion');
+        return $this->view('mails.capacitaciones.invitacion-capacitacion', ['empleado' => $this->empleado, 'recurso' => $this->recurso]);
     }
 }

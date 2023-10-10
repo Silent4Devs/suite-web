@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGlosarioRequest;
 use App\Models\Glosario;
-use Gate;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class GlosarioController extends Controller
 {
@@ -20,13 +18,13 @@ class GlosarioController extends Controller
 
     public function create()
     {
-
         return view('admin.glosarios.create');
     }
 
     public function store(StoreGlosarioRequest $request)
     {
         $glosario = Glosario::create($request->all());
+
         return redirect()->route('admin.glosarios.index');
     }
 
@@ -40,12 +38,12 @@ class GlosarioController extends Controller
     public function update(Request $request, Glosario $glosario)
     {
         $glosario->update($request->all());
+
         return redirect()->route('admin.glosarios.index');
     }
 
     public function show(Glosario $glosario)
     {
-
         return view('admin.glosarios.show', compact('glosario'));
     }
 

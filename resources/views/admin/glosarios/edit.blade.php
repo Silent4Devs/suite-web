@@ -1,11 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-
+<h5 class="col-12 titulo_general_funcion">Editar Glosario</h5>
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.glosario.title_singular') }}
-    </div>
-
     <div class="card-body">
         <form method="POST" action="{{ route("admin.glosarios.update", $glosario) }}" enctype="multipart/form-data">
             @method('PUT')

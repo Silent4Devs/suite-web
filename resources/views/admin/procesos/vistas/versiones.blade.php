@@ -266,29 +266,29 @@
                             <div class="row">
                                 <div class="text-center col-sm-3 col-lg-3 d-flex flex-column">
                                     <span class="userimage d-flex justify-content-center"><img class="rounded-circle"
-                                            src="{{ asset('storage/empleados/imagenes/') . '/' . $version->elaborador->avatar }}"
-                                            title="{{ $version->revisor->name }}" alt=""></span>
+                                            src="{{ asset('storage/empleados/imagenes/')}}/{{$version->elaborador ? $version->elaborador->avatar : 'user.png' }}"
+                                            title="{{ $version->revisor ? $version->revisor->name : 'Sin registro' }}" alt=""></span>
                                     <span class="username">
                                         <small></small>Elaborador</span>
                                 </div>
                                 <div class="text-center col-sm-3 col-lg-3 d-flex flex-column justify-content-center">
                                     <span class="userimage d-flex justify-content-center"><img class="rounded-circle"
-                                            src="{{ asset('storage/empleados/imagenes/') . '/' . $version->revisor->avatar }}"
-                                            title="{{ $version->revisor->name }}" alt=""></span>
+                                            src="{{ asset('storage/empleados/imagenes/')}}/{{$version->revisor ? $version->revisor->avatar: 'user.png' }}"
+                                            title="{{ $version->revisor ? $version->revisor->name : 'Sin registro' }}" alt=""></span>
                                     <span class="username">
                                         <small></small>Revisor</span>
                                 </div>
                                 <div class="text-center col-sm-3 col-lg-3 d-flex flex-column justify-content-center">
                                     <span class="userimage d-flex justify-content-center"><img class="rounded-circle"
-                                            src="{{ asset('storage/empleados/imagenes/') . '/' . $version->aprobador->avatar }}"
-                                            title="{{ $version->revisor->name }}" alt=""></span>
+                                            src="{{ asset('storage/empleados/imagenes/')}}{{ $version->aprobador ? $version->aprobador->avatar: 'user.png' }}"
+                                            title="{{ $version->revisor ? $version->revisor->name : 'Sin registro' }}" alt=""></span>
                                     <span class="username">
                                         <small></small>Aprobador</span>
                                 </div>
                                 <div class="text-center col-sm-3 col-lg-3 d-flex flex-column justify-content-center">
                                     <span class="userimage d-flex justify-content-center"><img class="rounded-circle"
-                                            src="{{ asset('storage/empleados/imagenes/') . '/' . $version->responsable->avatar }}"
-                                            title="{{ $version->revisor->name }}" alt=""></span>
+                                            src="{{ asset('storage/empleados/imagenes/')}} {{$version->responsable ? $version->responsable->avatar: 'user.png' }}"
+                                            title="{{ $version->revisor ? $version->revisor->name : 'Sin registro' }}" alt=""></span>
                                     <span class="username">
                                         <small></small>Responsable</span>
                                 </div>

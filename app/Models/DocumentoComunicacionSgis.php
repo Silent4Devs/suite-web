@@ -3,16 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class DocumentoComunicacionSgis extends Model
+class DocumentoComunicacionSgis extends Model implements Auditable
 {
-    use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use \OwenIt\Auditing\Auditable;
     public $table = 'documentos_comunicacion_sgis';
 
     protected $dates = [

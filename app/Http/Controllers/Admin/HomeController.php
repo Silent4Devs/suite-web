@@ -7,7 +7,6 @@ use App\Models\AuditoriaAnual;
 use App\Models\CategoriaCapacitacion;
 use App\Models\ControlDocumento;
 use App\Models\Documento;
-use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\IndicadoresSgsi;
 use App\Models\PlanBaseActividade;
@@ -23,42 +22,43 @@ class HomeController
     public function index()
     {
         $settings1 = [
-            'chart_title'        => 'Actividades por colaborador',
-            'chart_type'         => 'bar',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\PlanBaseActividade',
-            'group_by_field'     => 'name',
+            'chart_title' => 'Actividades por colaborador',
+            'chart_type' => 'bar',
+            'report_type' => 'group_by_relationship',
+            'model' => 'App\Models\PlanBaseActividade',
+            'group_by_field' => 'name',
             'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'filter_period'      => 'year',
-            'column_class'       => 'col-md-6',
-            'entries_number'     => '5',
-            'relationship_name'  => 'colaborador',
+            'filter_field' => 'created_at',
+            'filter_period' => 'year',
+            'column_class' => 'col-md-6',
+            'entries_number' => '5',
+            'relationship_name' => 'colaborador',
         ];
         // dd($settings1);
 
         $chart1 = new LaravelChart($settings1);
 
         $settings2 = [
-            'chart_title'        => 'Incidentes de seguridad',
-            'chart_type'         => 'bar',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\IncidentesDeSeguridad',
-            'group_by_field'     => 'estado',
+            'chart_title' => 'Incidentes de seguridad',
+            'chart_type' => 'bar',
+            'report_type' => 'group_by_relationship',
+            'model' => 'App\Models\IncidentesDeSeguridad',
+            'group_by_field' => 'estado',
             'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-6',
-            'entries_number'     => '5',
-            'relationship_name'  => 'estado',
+            'filter_field' => 'created_at',
+            'column_class' => 'col-md-6',
+            'entries_number' => '5',
+            'relationship_name' => 'estado',
         ];
 
         // DB::enableQueryLog();
-        $total = IncidentesSeguridad::select('id')->get()->count();
-        $nuevos = IncidentesSeguridad::select('id')->where('estatus', 'nuevo')->get()->count();
-        $en_curso = IncidentesSeguridad::select('id')->where('estatus', 'en curso')->get()->count();
-        $en_espera = IncidentesSeguridad::select('id')->where('estatus', 'en espera')->get()->count();
-        $cerrados = IncidentesSeguridad::select('id')->where('estatus', 'cerrado')->get()->count();
-        $cancelados = IncidentesSeguridad::select('id')->where('estatus', 'cancelado')->get()->count();
+        $incidentesSeguridad = IncidentesSeguridad::getAll();
+        $total = $incidentesSeguridad->count();
+        $nuevos = $incidentesSeguridad->where('estatus', 'nuevo')->count();
+        $en_curso = $incidentesSeguridad->where('estatus', 'en curso')->count();
+        $en_espera = $incidentesSeguridad->where('estatus', 'en espera')->count();
+        $cerrados = $incidentesSeguridad->where('estatus', 'cerrado')->count();
+        $cancelados = $incidentesSeguridad->where('estatus', 'cancelado')->count();
 
         // Show results of log
 
@@ -80,32 +80,32 @@ class HomeController
         // $chart3 = new LaravelChart($settings3);
 
         $settings4 = [
-            'chart_title'        => 'Documentación',
-            'chart_type'         => 'bar',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\ControlDocumento',
-            'group_by_field'     => 'estado',
+            'chart_title' => 'Documentación',
+            'chart_type' => 'bar',
+            'report_type' => 'group_by_relationship',
+            'model' => 'App\Models\ControlDocumento',
+            'group_by_field' => 'estado',
             'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-12',
-            'entries_number'     => '5',
-            'relationship_name'  => 'estado',
+            'filter_field' => 'created_at',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
+            'relationship_name' => 'estado',
         ];
 
         $chart4 = new LaravelChart($settings4);
 
         $settings5 = [
-            'chart_title'           => 'Total acciones correctivas',
-            'chart_type'            => 'number_block',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AccionCorrectiva',
-            'group_by_field'        => 'fecharegistro',
-            'group_by_period'       => 'day',
-            'aggregate_function'    => 'count',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Total acciones correctivas',
+            'chart_type' => 'number_block',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AccionCorrectiva',
+            'group_by_field' => 'fecharegistro',
+            'group_by_period' => 'day',
+            'aggregate_function' => 'count',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-2',
-            'entries_number'        => '10',
+            'column_class' => 'col-md-2',
+            'entries_number' => '10',
         ];
 
         $settings5['total_number'] = 0;
@@ -140,17 +140,17 @@ class HomeController
         }
 
         $settings6 = [
-            'chart_title'           => 'Total acciones de mejora',
-            'chart_type'            => 'number_block',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\Registromejora',
-            'group_by_field'        => 'created_at',
-            'group_by_period'       => 'day',
-            'aggregate_function'    => 'count',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Total acciones de mejora',
+            'chart_type' => 'number_block',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Registromejora',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'day',
+            'aggregate_function' => 'count',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y H:i:s',
-            'column_class'          => 'col-md-2',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-2',
+            'entries_number' => '5',
         ];
 
         $settings6['total_number'] = 0;
@@ -185,69 +185,69 @@ class HomeController
         }
 
         $settings7 = [
-            'chart_title'           => 'Auditoria Interna - Total No conformidad menor',
-            'chart_type'            => 'pie',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AuditoriaInterna',
-            'group_by_field'        => 'fechaauditoria',
-            'group_by_period'       => 'year',
-            'aggregate_function'    => 'count',
-            'aggregate_field'       => 'totalnoconformidadmenor',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Auditoria Interna - Total No conformidad menor',
+            'chart_type' => 'pie',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AuditoriaInterna',
+            'group_by_field' => 'fechaauditoria',
+            'group_by_period' => 'year',
+            'aggregate_function' => 'count',
+            'aggregate_field' => 'totalnoconformidadmenor',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-12',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
         ];
 
         $chart7 = new LaravelChart($settings7);
 
         $settings8 = [
-            'chart_title'           => 'Auditoria Interna - Total No conformidad mayor',
-            'chart_type'            => 'line',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AuditoriaInterna',
-            'group_by_field'        => 'fechaauditoria',
-            'group_by_period'       => 'year',
-            'aggregate_function'    => 'sum',
-            'aggregate_field'       => 'totalnoconformidadmayor',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Auditoria Interna - Total No conformidad mayor',
+            'chart_type' => 'line',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AuditoriaInterna',
+            'group_by_field' => 'fechaauditoria',
+            'group_by_period' => 'year',
+            'aggregate_function' => 'sum',
+            'aggregate_field' => 'totalnoconformidadmayor',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-12',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
         ];
 
         $chart8 = new LaravelChart($settings8);
 
         $settings9 = [
-            'chart_title'           => 'Auditoria Interna - Total Observación',
-            'chart_type'            => 'line',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AuditoriaInterna',
-            'group_by_field'        => 'fechaauditoria',
-            'group_by_period'       => 'year',
-            'aggregate_function'    => 'sum',
-            'aggregate_field'       => 'totalobservacion',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Auditoria Interna - Total Observación',
+            'chart_type' => 'line',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AuditoriaInterna',
+            'group_by_field' => 'fechaauditoria',
+            'group_by_period' => 'year',
+            'aggregate_function' => 'sum',
+            'aggregate_field' => 'totalobservacion',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-12',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
         ];
 
         $chart9 = new LaravelChart($settings9);
 
         $settings10 = [
-            'chart_title'           => 'Auditoria Interna - Total mejora',
-            'chart_type'            => 'pie',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AuditoriaInterna',
-            'group_by_field'        => 'fechaauditoria',
-            'group_by_period'       => 'year',
-            'aggregate_function'    => 'sum',
-            'aggregate_field'       => 'totalmejora',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Auditoria Interna - Total mejora',
+            'chart_type' => 'pie',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AuditoriaInterna',
+            'group_by_field' => 'fechaauditoria',
+            'group_by_period' => 'year',
+            'aggregate_function' => 'sum',
+            'aggregate_field' => 'totalmejora',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-12',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
         ];
 
         $chart10 = new LaravelChart($settings10);
@@ -255,22 +255,22 @@ class HomeController
         $registro = Registromejora::select('id')->count('id');
         $accionc = AccionCorrectiva::select('id')->count('id');
 
-        $incidentesasignado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '4')->count('id');
-        $incidentescerrado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '1')->count('id');
-        $incidentespendiente = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '3')->count('id');
-        $incidentescancelado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '5')->count('id');
-        $incidentescurso = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '2')->count('id');
+        $incidentesasignado = $incidentesSeguridad->where('estado_id', '=', '4')->count('id');
+        $incidentescerrado = $incidentesSeguridad->where('estado_id', '=', '1')->count('id');
+        $incidentespendiente = $incidentesSeguridad->where('estado_id', '=', '3')->count('id');
+        $incidentescancelado = $incidentesSeguridad->where('estado_id', '=', '5')->count('id');
+        $incidentescurso = $incidentesSeguridad->where('estado_id', '=', '2')->count('id');
 
         $actividadsininici = PlanBaseActividade::select('id')->where('estatus_id', '=', '1')->count('id');
         $actividadenproc = PlanBaseActividade::select('id')->where('estatus_id', '=', '2')->count('id');
         $actividadcompl = PlanBaseActividade::select('id')->where('estatus_id', '=', '3')->count('id');
         $actividadretr = PlanBaseActividade::select('id')->where('estatus_id', '=', '4')->count('id');
 
-        $auditexterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Interna')->count('id');
-        $auditinterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Externa')->count('id');
+        $auditexterna = AuditoriaAnual::select('id')->count('id');
+        $auditinterna = AuditoriaAnual::select('id')->count('id');
 
         $exist_doc = ControlDocumento::select('deleted_at')->where('deleted_at', '=', null)->count();
-        $capacitaciones = Recurso::get();
+        $capacitaciones = Recurso::getAll();
         $categorias_arr = [];
         $recursos_categoria_arr = [];
         $categorias = CategoriaCapacitacion::with('recursos')->get();
@@ -282,7 +282,7 @@ class HomeController
         $diplomado = 0;
         $certificado = 0;
         $curso = 0;
-        $tipos = Recurso::get();
+        $tipos = Recurso::getAll();
 
         foreach ($tipos as $tipo) {
             if ($tipo->tipo == 'diplomado') {
@@ -350,6 +350,7 @@ class HomeController
             array_push($evaluaciones, $evaluacion['resultado']);
             array_push($evaluacion_nombre, $evaluacion['nombre']);
         }
+
         // dd(DB::getQueryLog());
         // dd($evaluacion_nombre);
         return view('home', compact(

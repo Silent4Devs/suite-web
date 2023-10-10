@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="esp">
 
 <head>
     <meta charset="UTF-8">
@@ -8,9 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <title>{{ trans('panel.site_title') }}</title>
+    @yield('css')
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- boostrap icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <!-- Google Fonts -->
@@ -19,16 +23,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
-
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>-->
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
-          rel="tylesheet"/>-->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"/>-->
-    <!--<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>-->
-    <!--<link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet"/>-->
-    <!--<link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet"/>-->
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
@@ -42,27 +38,89 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
         integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
         crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    {{-- <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
+    {{-- <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css"> --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.css" rel="stylesheet">
+
+
     <style type="text/css">
-        
-        .material-modulos{
+        .custom-file-input~.custom-file-label::after {
+            content: "Elegir";
+        }
+
+        .printModal {
+            font-family: sans-serif;
+            display: flex;
+            text-align: center;
+            font-weight: 300;
+            font-size: 30px;
+            left: 0;
+            top: 0;
+            position: absolute;
+            color: #0460b5;
+            width: 100%;
+            height: 100%;
+            background-color: hsla(0, 0%, 100%, .91)
+        }
+
+        .printClose {
+            position: absolute;
+            right: 10px;
+            top: 10px
+        }
+
+        .printClose:before {
+            content: "\00D7";
+            font-family: Helvetica Neue, sans-serif;
+            font-weight: 100;
+            line-height: 1px;
+            padding-top: .5em;
+            display: block;
+            font-size: 2em;
+            text-indent: 1px;
+            overflow: hidden;
+            height: 1.25em;
+            width: 1.25em;
+            text-align: center;
+            cursor: pointer
+        }
+
+        .DTFC_LeftBodyWrapper {
+            top: -13px !important;
+        }
+
+        /* .DTFC_RightBodyWrapper {
+            top: -13px !important;
+        } */
+
+        .DTFC_LeftHeadWrapper table thead tr th {
+            background: #788bac !important;
+        }
+
+        .DTFC_RightHeadWrapper table thead tr th {
+            background: #788bac !important;
+        }
+
+        .material-modulos {
             font-size: 50px;
             margin-bottom: 3px;
             display: block;
         }
+
         .select2-selection--multiple {
             overflow: hidden !important;
             height: auto !important;
             padding: 0 5px 5px 5px !important;
-        }
-
-        .select2-container {
-            margin-top: 10px !important;
         }
 
         /*TOASTR*/
@@ -98,22 +156,6 @@
             border-collapse: collapse !important;
         }
 
-        /*body::before {
-            content: "";
-            position: fixed;
-            background: url({{ asset('img/auth-bg2.jpg') }});
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            z-index: -1;
-            filter: grayscale(100%) brightness(230%);
-            opacity: 0.2;
-        }*/
         .btn-read {
             display: inline-block;
             cursor: pointer;
@@ -130,7 +172,7 @@
 
         .iconos-crear {
             font-size: 15pt;
-            color: #345183;
+            color: #3086AF;
             margin-right: 10px;
         }
 
@@ -143,7 +185,7 @@
         }
 
         .iconos_cabecera {
-            color: #345183;
+            color: #ffffff;
             font-size: 1.2rem;
         }
 
@@ -217,11 +259,11 @@
 
         .btn.btn-success,
         .btn.btn-danger {
-            width: 150px;
+            min-width: 150px !important;
             height: 35px;
             background-color: #345183 !important;
             color: #fff !important;
-            border-radius: 100px;
+            border-radius: 2px;
             border: none !important;
         }
 
@@ -238,11 +280,11 @@
         }
 
         .btn_cancelar {
-            width: 150px;
+            min-width: 150px !important;
             height: 35px;
             background-color: #aaa !important;
             color: #fff !important;
-            border-radius: 100px;
+            border-radius: 2px;
             border: none !important;
             transition: 0.2s;
             display: inline-block;
@@ -287,13 +329,13 @@
             border-bottom: 1px solid #fff;
             color: #fff !important;
         }
-        .buscador-global::placeholder{
+
+        .buscador-global::placeholder {
             color: #fff;
         }
 
-        .buscador-global:focus-visible{
-            all: unset;
-            border-bottom: 2px solid #fff;
+        .buscador-global:focus-visible {
+            outline: none;
         }
 
 
@@ -335,27 +377,29 @@
             border-bottom: 1px solid #7fabfd;
         }
 
-        table.dataTable thead {
-            background: #F2F2F2 !important;
+        table.dataTable thead,
+        table.table thead {
+            background: #788BAC !important;
+            color: #fff !important;
         }
 
         table.dataTable tr th {
             font-weight: normal;
             border: none !important;
         }
-
     </style>
     {{-- menu tabs --}}
     <style type="text/css">
         .caja_botones_menu {
             display: flex;
+            justify-content: center;
         }
 
         .caja_botones_menu a {
             text-decoration: none;
             display: inline-block;
             color: #345183;
-            padding: 5px 20px;
+            padding: 5px 13px;
             font-weight: bold;
             margin: 0;
             text-align: center;
@@ -364,11 +408,9 @@
             border-top-right-radius: 5px;
         }
 
-        .caja_botones_menu a:first-child {
-        }
+        .caja_botones_menu a:first-child {}
 
-        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {
-        }
+        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {}
 
         .caja_botones_menu a i {
             margin-right: 7px;
@@ -443,7 +485,6 @@
         .scroll_estilo::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
-
     </style>
     {{-- Estilos Select 2 --}}
     <style>
@@ -913,37 +954,211 @@
 
 
         .table td {
-            text-align: justify !important;
+            {{--  text-align: justify !important;  --}}
         }
 
-        .titulo_general_funcion{
+        .titulo_general_funcion {
             color: #788BAC;
-            margin-bottom: 75px;
+            margin-bottom: 65px;
         }
 
+        .form-group label {
+            color: #3086AF;
+        }
+
+        .titulo-formulario {
+            /*background-color: #fff; */
+            font-size: 20px;
+        }
+
+        .card_formulario {
+            background-color: #FCFCFC;
+        }
+
+        /*iconos de alertas azules*/
+        .w-100 .bi.bi-info.mr-3 {
+            margin-right: 0px !important;
+            margin-left: 20px !important;
+            font-size: 20px;
+        }
+
+        .nav.nav-tabs {
+            margin-bottom: 30px !important;
+        }
+
+        .nav.nav-tabs .nav-link.active {
+            background-color: #345183 !important;
+            color: #fff !important;
+        }
+
+        .ventana_menu ul {
+            margin-top: 100px !important;
+        }
+
+        .dt-button-collection.dropdown-menu {
+            max-height: 250px;
+            overflow: auto;
+        }
+
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+
+        /* Track */
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0);
+        }
+
+        /* Handle */
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
+        }
+
+        /* Handle on hover */
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .table.table-striped tr {
+            background-color: white !important;
+        }
     </style>
 
+    <style>
+        #loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            opacity: 0.8;
+            background-color: #fff;
+            z-index: 990000;
+        }
+
+        #loading-image {
+            position: absolute;
+            z-index: 100;
+        }
+    </style>
+
+    <style>
+        #contenido_imprimir {
+            padding: 20px;
+        }
+
+        .solo-print {
+            display: none;
+        }
+
+        .encabezado-print {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 35px;
+        }
+
+        .encabezado-print td {
+            padding: 10px 5px;
+            text-align: center;
+            border: 1px #ccc solid;
+        }
+
+        @media print {
+
+            .vista_print,
+            .print-none {
+                display: none !important;
+            }
+
+            .solo-print {
+                display: block !important;
+            }
+
+            body {
+                background-color: #fff !important;
+            }
+
+            .table th {
+                background-color: #788BAC !important;
+            }
+
+            #tabla_blanca_imprimir_global thead tr,
+            #tabla_blanca_imprimir_global thead tr th,
+            #tabla_blanca_imprimir_global thead tr th div {
+                height: unset !important;
+                color: #fff !important;
+                padding-top: 10px;
+            }
+
+            #tabla_blanca_imprimir_global thead tr:first-child th:last-child,
+            #tabla_blanca_imprimir_global tbody tr td:last-child {
+                display: none !important;
+            }
+        }
+    </style>
     @yield('styles')
     @livewireStyles
 </head>
 
 <body class="">
+
+    <div id="loading">
+
+        <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
+            alt="Loading..." />
+    </div>
+
+
+    @php
+        use App\Models\Organizacion;
+        $organizacion = Organizacion::getLogo();
+        if (!is_null($organizacion)) {
+            $logotipo = $organizacion->logotipo;
+        } else {
+            $logotipo = 'logotipo-tabantaj.png';
+        }
+        $hoy_format_global = \Carbon\Carbon::now()->format('d/m/Y');
+    @endphp
+
     @include('partials.menu')
-    <div class=" c-wrapper">
+    <div class="c-wrapper" id="contenido_body_general_wrapper">
         <header class="px-3 c-header c-header-fixed" style="border: none;">
-            <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
+            <button class="c-header-toggler c-class-toggler d-lg-none" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
-                <i class="fas fa-fw fa-bars iconos_cabecera"></i>
+                <i class="fas fa-fw fa-bars iconos_cabecera" style="color:#fff;"></i>
             </button>
 
 
-            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
-                data-class="c-sidebar-lg-show" responsive="true">
-                <i id="btnMenu" class="fas fa-fw fa-bars" style=""></i>
+            <button id="btnMenu" style="all:unset; color: #fff; cursor:pointer;" class="d-md-down-none">
+                <i class="fas fa-fw fa-bars" style=""></i>
             </button>
 
+            <script>
+                const btnMenu = document.querySelector('#btnMenu');
 
-            <form class="form-inline col-sm-3" style="position: relative;">
+                btnMenu.addEventListener('click', () => {
+                    document.body.classList.toggle('c-sidebar-lg-show');
+
+                    if (document.body.classList.contains('c-sidebar-lg-show')) {
+                        localStorage.setItem('menu-mode', 'true');
+                    } else {
+                        localStorage.setItem('menu-mode', 'false');
+                    }
+                });
+
+                if (localStorage.getItem('menu-mode') === 'true') {
+                    document.body.classList.add('c-sidebar-lg-show');
+                } else {
+                    document.body.classList.remove('c-sidebar-lg-show');
+                }
+            </script>
+
+
+            <form class="form-inline col-sm-3 d-mobile-none" style="position: relative;">
 
                 {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
                 <input class="buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
@@ -957,15 +1172,16 @@
             <ul class="ml-auto c-header-nav">
                 @if (count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                            aria-expanded="false">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
                             {{ strtoupper(app()->getLocale()) }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             @foreach (config('panel.available_languages') as $langLocale => $langName)
                                 <a class="dropdown-item"
                                     href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                    ({{ $langName }})</a>
+                                    ({{ $langName }})
+                                </a>
                             @endforeach
                         </div>
                     </li>
@@ -1006,127 +1222,250 @@
                 <ul class="ml-auto c-header-nav">
 
                     <li class="c-header-nav-item dropdown show">
-                        <a class="c-header-nav-link" data-toggle="dropdown"
-                            href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
-                                    <span class="mr-2" style="font-weight: bold;">
-                                        {!! auth()->user()->empleado->saludo !!}
-                                    </span>
-                                    <img class="img_empleado"
-                                        style=""
-                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                        alt="{{ auth()->user()->empleado->name }}">
+                                    <div style="width: 40px; overflow:hidden;" class="mr-2">
+
+                                        <img class="img_empleado" style=""
+                                            src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                            alt="{{ auth()->user()->empleado->name }}">
+                                    </div>
+                                    <div class="d-mobile-none">
+                                        <span class="mr-2" style="font-weight: bold;">
+                                            {{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->name)[0] : '' }}
+                                        </span>
+                                        <p class="m-0" style="font-size: 8px">
+                                            {{ auth()->user()->empleado ? Str::limit(auth()->user()->empleado->puesto, 30, '...') : '' }}
+                                        </p>
+                                    </div>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
                             </div>
                         </a>
-                        <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
-                            <div class="p-2">
-                                @if (auth()->user()->empleado)
-                                    <img class="shadow rounded-circle"
-                                        style="max-width: 65px;clip-path: circle(50% at 50% 50%);"
-                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                        alt="" srcset="">
-                                    <p class="m-0 text-muted mt-2" style="font-weight: bold; font-size:13px">
-                                        Hola, {{ auth()->user()->empleado->name }}</p>
+
+                        @if (auth()->user()->empleado == null)
+                            <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                                style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                                <div class="px-3 mt-1 d-flex justify-content-center">
+                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                        <i class="bi bi-box-arrow-right"></i> Salir
+                                    </a>
                                 @else
-                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
-                                @endif
-                            </div>
-                            <div>
-                                {{-- @if (auth()->user()->empleado)
-                                    <p class="m-0" style="font-weight: 600">
-                                        {{ auth()->user()->empleado->name }}
-                                    </p>
-                                    @foreach (auth()->user()->roles as $rol)
-                                        <span class="badge badge-dark"
-                                            style="font-size:13px;">{{ $rol->title }}</span>
-                                    @endforeach
+                                    <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                                        style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                                        <div class="p-2">
+                                            @if (auth()->user()->empleado)
+                                                <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
+                                                    <strong>{{ auth()->user()->empleado->name }}</strong>
+                                                </p>
+                                            @else
+                                                <i class="fas fa-user-circle iconos_cabecera"
+                                                    style="font-size: 33px;"></i>
+                                            @endif
+                                        </div>
+                                        <div class="px-3 mt-1 d-flex justify-content-center">
+                                            @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                                                @can('profile_password_edit')
+                                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                                        class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                                        href="{{ route('profile.password.edit') }}">
+                                                        <i class="bi bi-gear"></i>
+                                                        Configurar Perfil
+                                                    </a>
+                                                @endcan
+                                            @endif
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a style="all: unset; color: #747474; cursor: pointer;"
+                                                onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                                <i class="bi bi-box-arrow-right"></i> Salir
+                                            </a>
+                        @endif
+    </div>
+    </div>
+    </li>
+    </ul>
+    </ul>
+    </header>
 
-                                @else
-                                    {{ auth()->user()->name }}
-                                    <span>{{ auth()->user()->empleado->name }}</span>
-                                @endif --}}
-                            </div>
-                            {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
-                            <div class="px-3 mt-1 d-flex justify-content-center">
-                                @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                                    @can('profile_password_edit')
-
-                                        <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
-                                            href="{{ route('profile.password.edit') }}">
-                                            <i class="mr-1 fas fa-user-cog">
-                                            </i>
-                                            Configurar Perfil
-                                        </a>
-
-                                    @endcan
-                                @endif
-                                {{-- <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
-                                <i class="mr-1 fas fa-fw fa-lock">
-                                </i> Bloquear
-                            </a> --}}
-                                <a class="p-2 border rounded shadow-xs btn btn-sm"
-                                    onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                    <i class="mr-1 fas fa-sign-out-alt">
-                                    </i> Salir
-                                </a>
-                            </div>
+    <div class="c-body">
+        <main class="c-main">
+            <div class="container-fluid" id="app">
+                @if (session('message'))
+                    <div class="mb-2 row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
                         </div>
-                    </li>
-
-                </ul>
-            </ul>
-        </header>
-
-        <div class="c-body">
-            <main class="c-main">
-                <div class="container-fluid" id="app">
-                    @if (session('message'))
-                        <div class="mb-2 row">
-                            <div class="col-lg-12">
-                                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
-                            </div>
-                        </div>
-                </div>
+                    </div>
+            </div>
+            @endif
+            <div id="errores_generales_admin_quitar_recursos">
+                @if ($errors->count() > 0)
+                    <div class="alert alert-danger">
+                        <ul class="list-unstyled">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
-                <div id="errores_generales_admin_quitar_recursos">
-                    @if ($errors->count() > 0)
-                        <div class="alert alert-danger">
-                            <ul class="list-unstyled">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
-                @yield('content')
+            </div>
+            @yield('content')
 
-        </div>
+    </div>
 
 
-        </main>
-        <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
-            {{ csrf_field() }}
-        </form>
+    </main>
+    <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
     </div>
     <!-- incluir de footer -->
     {{-- @include('partials.footer') --}}
+    <footer class="app-footer">
+        <font>
+            TABANTAJ
+            <font style="margin: 0px 20px;"> | </font>
+            SILENT4BUSINESS
+        </font>
+        <font>
+            2023
+            <font style="margin: 0px 20px;"> | </font>
+            Version: 4.12.15
+        </font>
+    </footer>
     </div>
+
+    <div id="elementos_imprimir" class="d-none">
+        <div id="contenido_imprimir">
+
+        </div>
+    </div>
+
+    <div id="tabla_imprimir_global" class="d-none">
+        <div id="contenido_imprimir">
+            <table class="encabezado-print">
+                <tr>
+                    <td style="width: 25%;">
+                        <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
+                    </td>
+                    <td style="width: 50%;">
+                        <h4><strong>{{ !is_null($organizacion) ? $organizacion->empresa : 'Tabantaj' }}</strong></h4>
+                        <div id="titulo_tabla"></div>
+                    </td>
+                    <td style="width: 25%;" class="encabezado_print_td_no_paginas">
+                        Fecha: {{ $hoy_format_global }} <br>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="table mt-3 w-100" id="tabla_blanca_imprimir_global">
+
+            </table>
+        </div>
+    </div>
+
+    <div class="barra-herramientas-bottom-molbile">
+        <a href="{{ route('admin.inicio-Usuario.index') }}#datos" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'style=color:#3086AF !important;"' : '' }}>
+            <i class="bi bi-file-person"></i>
+            <p>Perfil</p>
+        </a>
+        <a href="{{ route('admin.timesheet-inicio') }}" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'style=color:#3086AF !important;"' : '' }}>
+            <i class="bi bi-calendar3-range"></i>
+            <p>Timesheet</p>
+        </a>
+        <a href="{{ route('admin.systemCalendar') }}" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'style=color:#3086AF !important;"' : '' }}>
+            <i class="bi bi-calendar3"></i>
+            <p>Calendario</p>
+        </a>
+        <a href="{{ route('admin.portal-comunicacion.index') }}" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'style=color:#3086AF !important;"' : '' }}>
+            <i class="bi bi-newspaper"></i>
+            <p>Comunicación</p>
+        </a>
+    </div>
+    <script>
+        document.onreadystatechange = function() {
+            if (document.readyState !== "complete") {
+                document.querySelector(
+                    "body").style.visibility = "hidden";
+                document.querySelector(
+                    "#loading").style.visibility = "visible";
+            } else {
+                document.querySelector(
+                    "#loading").style.display = "none";
+                document.querySelector(
+                    "body").style.visibility = "visible";
+            }
+        };
+    </script>
+
+    <script>
+        function imprimirElemento(elemento) {
+            let elemento_seleccionado = document.getElementById(elemento);
+            let contenido_imprimir = document.getElementById('contenido_imprimir').innerHTML = elemento_seleccionado
+                .innerHTML;
+            document.querySelector('#elementos_imprimir').classList.remove('d-none');
+            document.querySelector('#contenido_body_general_wrapper').classList.add('vista_print');
+            print();
+            document.querySelector('#elementos_imprimir').classList.add('d-none');
+            document.querySelector('#contenido_body_general_wrapper').classList.remove('vista_print');
+        }
+
+        function imprimirTabla(elemento, html = `
+                    <h5>
+                        <strong>
+                            Registros
+                        </strong>
+                        <font style="font-weight: lighter;">
+
+                        </font>
+                    </h5>
+                `) {
+            let elemento_seleccionado = document.getElementById(elemento);
+            document.getElementById('tabla_blanca_imprimir_global').innerHTML = elemento_seleccionado.innerHTML;
+            document.getElementById('titulo_tabla').innerHTML = html;
+
+            document.querySelector('#tabla_imprimir_global').classList.remove('d-none');
+            document.querySelector('#contenido_body_general_wrapper').classList.add('vista_print');
+            print();
+            document.querySelector('#tabla_imprimir_global').classList.add('d-none');
+            document.querySelector('#contenido_body_general_wrapper').classList.remove('vista_print');
+        }
+    </script>
+
     {{-- daterangepicker --}}
-
-
+    <script>
+        @if (auth()->user()->empleado)
+            window.NotificationUser = {!! json_encode(['user' => auth()->check() ? auth()->user()->empleado->id : null]) !!};
+        @else
+            window.NotificationUser = 1
+        @endif
+    </script>
+    {{-- Librerías para visualizar en campo el dolar --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script> --}}
 
 
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('js')
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    {{--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  --}}
+    {{-- #lazyload --}}
+    {{--  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js">  --}}
+    </script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
@@ -1135,8 +1474,8 @@
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
     </script> --}}
     {{-- <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script> --}}
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
@@ -1144,11 +1483,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+
+    {{-- <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script> --}}
+    <script src="{{ asset('js/buttons.print.js') }}"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
     <script
         src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
-        defer></script>
+        defer></script> {{-- quitar script en el glosario --}}
     <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -1161,21 +1502,22 @@
     <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
-    <script src="https://cdn.datatables.net/fixedcolumns/4.0.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+        integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/monthSelect/style.min.css"
+        integrity="sha512-V7B1IY1DE/QzU/pIChM690dnl44vAMXBidRNgpw0mD+hhgcgbxHAycRpOCoLQVayXGyrbC+HdAONVsF+4DgrZA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <link href="https://cdnout.com/flatpickr/themes/material_blue.css" rel="stylesheet" media="all">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css"> --}}
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-
-
-    <script>
-        window.Laravel.user = {!! json_encode([
-    'user' => auth()->check() ? auth()->user()->id : null,
-]) !!};
-    </script>
     <script src="//unpkg.com/alpinejs" defer></script>
-
     <script src="{{ asset('js/main.js') }}"></script>
 
     <!-- x editable -->
@@ -1184,7 +1526,7 @@
     <script>
         $(document).ready(function() {
             $('.c-sidebar-nav').animate({
-                scrollTop: $(".c-active").offset().top - 350
+                scrollTop: $(".c-active").offset()?.top - 350
             }, 0);
         });
         $(function() {
@@ -1196,13 +1538,18 @@
             $('.c-sidebar-nav').delay(1000).scrollTop(900);
         });
     </script>
+    {{-- lazyload
+          <script>
+        $(function() {
+            $('img').Lazy();
+        });
+    </script>  --}}
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
     @livewireScripts
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <x-livewire-alert::scripts />
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
@@ -1289,10 +1636,10 @@
                     searchable: false,
                     targets: -1
                 }],
-                select: {
-                    style: 'multi+shift',
-                    selector: 'td:first-child'
-                },
+                // select: {
+                //     style: 'multi+shift',
+                //     selector: 'td:first-child'
+                // },
                 order: [],
                 scrollX: true,
                 pageLength: 5,
@@ -1302,7 +1649,7 @@
                 ],
                 //dom: 'lBfrtip<"actions">',
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 p-0'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 buttons: [{
                         extend: 'selectAll',
@@ -1381,6 +1728,23 @@
             $.fn.dataTable.ext.classes.sPageButton = '';
         });
     </script>
+
+    {{-- responsive --}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if ($(window).width() <= 800) {
+                $('body').addClass('body-responsive-mobile');
+            }
+        });
+        $(window).resize(function() {
+            if ($(window).width() <= 800) {
+                $('body').addClass('body-responsive-mobile');
+            } else {
+                $('body').removeClass('body-responsive-mobile');
+            }
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
             $(".notifications-menu").on('click', function() {
@@ -1551,13 +1915,43 @@
             var id_seccion = $(".caja_botones_menu a:hover").attr('data-tabs');
             $(document.getElementById(id_seccion)).addClass("caja_tab_reveldada");
         });
+        $('.modal').on('shown.bs.modal', function(event) {
+            let modalBackDrop = document.querySelector('.modal-backdrop');
+            if (modalBackDrop) {
+                modalBackDrop.style.width = "100%";
+                modalBackDrop.style.height = "100%"
+            }
+        })
     </script>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>
     @yield('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js"
+        integrity="sha512-hh4Bnn1GtJOoCXufO1cvrBF6BzRWBp7rFiQCEdSRwwxJVdCIlrp6AWeD8GJVbnLO9V1XovnJSylI5/tZGOzVAg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    {{-- <script>
+        $(function() {
+            let idleTime = Number(@json(env('SESSION_LIFETIME')))*60*1000; // in milliseconds
+            if (idleTime == 0) {
+                idleTime = 120*60*1000;
+            }
+            console.log(idleTime);
+            // Set idle time
+            $(document).idleTimer(idleTime); // in milliseconds
+        });
 
+        $(function() {
+            $(document).on("idle.idleTimer", function(event, elem, obj) {
+                console.log('idle');
+                window.location.href = "/login"
+            });
+        });
+    </script> --}}
 
 </body>
+
 
 </html>

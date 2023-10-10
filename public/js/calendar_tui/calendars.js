@@ -49,7 +49,7 @@ function hexToRGBA(hex) {
     id += 1;
     calendar.id = String(id);
     calendar.name = 'Mis&nbsp;Actividades';
-    calendar.color = '#ffffff';
+    calendar.color = '#2E2E2E';
     calendar.bgColor = '#A0CDFF';
     calendar.dragBgColor = '#A0CDFF';
     calendar.borderColor = '#A0CDFF';
@@ -60,28 +60,28 @@ function hexToRGBA(hex) {
     id += 1;
     calendar.id = String(id);
     calendar.name = 'Mis&nbsp;Capacitaciones';
-    calendar.color = '#ffffff';
+    calendar.color = '#2E2E2E';
     calendar.bgColor = '#B1F094';
     calendar.dragBgColor = '#B1F094';
     calendar.borderColor = '#B1F094';
     addCalendar(calendar);
 
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = 'Mis&nbsp;Auditorias';
-    calendar.color = '#ffffff';
-    calendar.bgColor = '#FCB3C2';
-    calendar.dragBgColor = '#FCB3C2';
-    calendar.borderColor = '#FCB3C2';
-    addCalendar(calendar);
+    // calendar = new CalendarInfo();
+    // id += 1;
+    // calendar.id = String(id);
+    // calendar.name = 'Mis&nbsp;Auditorias';
+    // calendar.color = '#2E2E2E';
+    // calendar.bgColor = '#FCB3C2';
+    // calendar.dragBgColor = '#FCB3C2';
+    // calendar.borderColor = '#FCB3C2';
+    // addCalendar(calendar);
 
 
     calendar = new CalendarInfo();
-    id += 1;
+    id += 2;
     calendar.id = String(id);
     calendar.name = 'Eventos';
-    calendar.color = '#000000';
+    calendar.color = '#2E2E2E';
     calendar.bgColor = '#FFD698';
     calendar.dragBgColor = '#FFD698';
     calendar.borderColor = '#FFD698';
@@ -91,7 +91,7 @@ function hexToRGBA(hex) {
     id += 1;
     calendar.id = String(id);
     calendar.name = 'Cumpleaños';
-    calendar.color = '#ffffff';
+    calendar.color = '#2E2E2E';
     calendar.bgColor = '#BBB9FF';
     calendar.dragBgColor = '#BBB9FF';
     calendar.borderColor = '#BBB9FF';
@@ -101,7 +101,7 @@ function hexToRGBA(hex) {
     id += 1;
     calendar.id = String(id);
     calendar.name = 'Aniversarios';
-    calendar.color = '#ffffff';
+    calendar.color = '#2E2E2E';
     calendar.bgColor = '#FFF690';
     calendar.dragBgColor = '#FFF690';
     calendar.borderColor = '#FFF690';
@@ -111,10 +111,43 @@ function hexToRGBA(hex) {
     id += 1;
     calendar.id = String(id);
     calendar.name = 'Festivos';
-    calendar.color = '#000000';
+    calendar.color = '#2E2E2E';
     calendar.bgColor = '#CFD8DF';
     calendar.dragBgColor = '#CFD8DF';
     calendar.borderColor = '#CFD8DF';
+    addCalendar(calendar);
+
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = 'Contratos';
+    calendar.color = '#5499C7';
+    calendar.bgColor = '#171717';
+    calendar.dragBgColor = '#171717';
+    calendar.borderColor = '#171717';
+    addCalendar(calendar);
+
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = 'Fecha de recepción  y liberación de factura';
+    calendar.color = '#171717';
+    calendar.bgColor = '#FC0329';
+    calendar.dragBgColor = '#FC0329';
+    calendar.borderColor = '#FC0329';
+    addCalendar(calendar);
+
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = 'Revisión de entregables';
+    calendar.color = '#171717';
+    calendar.bgColor = '#0312FC';
+    calendar.dragBgColor = '#0312FC';
+    calendar.borderColor = '#0312FC';
     addCalendar(calendar);
 
 

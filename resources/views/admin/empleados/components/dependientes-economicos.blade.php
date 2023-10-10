@@ -1,8 +1,8 @@
 <table class="table" id="tblDependientes">
     <thead>
         <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Parentesco</th>
+            <th scope="col" style="width: 45%;">Nombre</th>
+            <th scope="col" style="width: 44%;">Parentesco</th>
             <th scope="col">Opción</th>
         </tr>
     </thead>
@@ -17,7 +17,7 @@
                     <input class="form-control" type="hidden" name="dependientes[${position}][id]">
                     <input class="form-control" type="text" name="dependientes[${position}][nombre]">
                     <small class="text-danger" id="error_dependientes_${position}_nombre"></small>
-                </td>    
+                </td>
                 <td>
                     <input class="form-control" type="text" name="dependientes[${position}][parentesco]">
                     <small class="text-danger" id="error_dependientes_${position}_parentesco"></small>
@@ -74,7 +74,7 @@
                         <input class="form-control" type="hidden" value="${element.id}" name="dependientes[${index}][id]">
                         <input class="form-control" data-model-id="${element.id}" data-type-input="nombre" type="text" value="${element.nombre}" name="dependientes[${index}][nombre]">
                         <small class="text-danger" id="error_dependientes_${index}_nombre"></small>
-                    </td>    
+                    </td>
                     <td>
                         <input class="form-control" data-model-id="${element.id}" data-type-input="parentesco" type="text" value="${element.parentesco}" name="dependientes[${index}][parentesco]">
                         <small class="text-danger" id="error_dependientes_${index}_parentesco"></small>

@@ -15,15 +15,15 @@ class UpdateRevisionDireccionRequest extends FormRequest
     public function rules()
     {
         return [
-            'estadorevisionesprevias'            => [
+            'estadorevisionesprevias' => [
                 'string',
                 'nullable',
             ],
-            'cambiosinternosexternos'            => [
+            'cambiosinternosexternos' => [
                 'string',
                 'nullable',
             ],
-            'retroalimentaciondesempeno'         => [
+            'retroalimentaciondesempeno' => [
                 'string',
                 'nullable',
             ],
@@ -31,11 +31,11 @@ class UpdateRevisionDireccionRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'resultadosriesgos'                  => [
+            'resultadosriesgos' => [
                 'string',
                 'nullable',
             ],
-            'oportunidadesmejoracontinua'        => [
+            'oportunidadesmejoracontinua' => [
                 'string',
                 'nullable',
             ],

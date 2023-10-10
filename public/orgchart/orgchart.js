@@ -40,7 +40,6 @@ export default class OrgChart {
     chart.dataset.options = JSON.stringify(opts);
     chart.setAttribute('class', 'orgchart' + (opts.chartClass !== '' ? ' ' + opts.chartClass : '') +
       (opts.direction !== 't2b' ? ' ' + opts.direction : ''));
-    console.log(typeof data);
     if (typeof data === 'object') { // local json datasource
       this.buildHierarchy(chart, opts.ajaxURL ? data : this._attachRel(data, '00'), 0);
     } else if (typeof data === 'string' && data.startsWith('#')) { // ul datasource
@@ -68,7 +67,7 @@ export default class OrgChart {
     // append the export button to the chart-container
     if (opts.exportButton && !chartContainer.querySelector('.oc-export-btn')) {
       let exportBtn = document.createElement('button'),
-        exportCSV = document.createElement('button'),
+        exportCSV = document.createElement('a'),
         downloadBtn = document.createElement('a');
 
       exportBtn.setAttribute('class', 'oc-export-btn btn btn-lg' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
@@ -381,8 +380,72 @@ export default class OrgChart {
       this._renderEmployeeInformation();
     } else if (this.options.typeOrgChart == 'area') {
       this._renderAreaInformation();
+    } else if (this.options.typeOrgChart == 'arbol-riesgos') {
+      this._renderRiesgosInformacion();
     }
 
+  }
+
+  _renderRiesgosInformacion() {
+    let dataSource = event.currentTarget.getAttribute('data-source');
+    let dataSourceJSON = JSON.parse(dataSource);
+    let chartContainer = document.querySelector('#chart-side');
+    chartContainer.classList.add('side');
+    chartContainer.classList.add('nav-shadow');
+    // Close button
+    let a_close = document.createElement('a');
+    a_close.href = 'javascript:void(0)';
+    a_close.classList.add('closebtn');
+    a_close.onclick = function () {
+      chartContainer.innerHTML = '';
+      chartContainer.style.width = "0px";
+      chartContainer.classList.remove('side');
+      chartContainer.classList.remove('nav-shadow');
+    };
+    a_close.innerHTML = '&times;';
+    //Title information
+    let title_info = document.createElement('h3');
+    title_info.classList.add('side');
+    title_info.classList.add('title-info-nav');
+    title_info.innerText = `${dataSourceJSON.name}`;
+
+
+    //photo
+    let div_img = document.createElement('div');
+    div_img.style.borderBottom = `8px solid ${dataSourceJSON.color}`;
+    div_img.classList.add('container-img-nav');
+    //title
+    let title_info_text = document.createElement('p');
+    title_info_text.classList.add('side');
+    // title_info_text.classList.add('title-nav');
+    title_info_text.style.backgroundColor = `${dataSourceJSON.color}`;
+    title_info_text.innerText = ``;
+
+    let c_more = document.createElement('div');
+    title_info_text.classList.add('side');
+    c_more.classList.add('c_more');
+    let content_more = `
+      <div class="p-2">
+        <h4>Descripción</h4>
+        <p class="text-justify mr-3" style="text-align: justify !important">${dataSourceJSON.content}</p>
+      </div>
+        `;
+
+    c_more.innerHTML = content_more;
+    chartContainer.appendChild(a_close);
+    chartContainer.appendChild(div_img);
+    chartContainer.appendChild(title_info);
+    chartContainer.appendChild(title_info_text);
+    chartContainer.appendChild(c_more);
+
+    if (chartContainer.clientWidth == 0) {
+      chartContainer.style.width = "250px";
+    } else {
+      chartContainer.innerHTML = '';
+      chartContainer.style.width = "0px";
+      chartContainer.classList.remove('side');
+      chartContainer.classList.remove('nav-shadow');
+    }
   }
 
   _renderAreaInformation() {
@@ -426,14 +489,14 @@ export default class OrgChart {
         photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
       }
     }
-      else {
-        photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
-      }
-      console.log(dataSourceJSON);
-      photo_info.classList.add('side');
-      photo_info.classList.add('img-nav');
-      photo_info.src = `${dataSourceJSON.foto_ruta}`
-      div_img.appendChild(photo_info);
+    else {
+      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
+    }
+    photo_info.classList.add('side');
+    photo_info.classList.add('img-nav');
+    photo_info.style.clipPath = "circle()"
+    photo_info.src = `${dataSourceJSON.foto_ruta}`
+    div_img.appendChild(photo_info);
 
     //title
     let title_info_text = document.createElement('p');
@@ -446,27 +509,16 @@ export default class OrgChart {
     c_more.classList.add('c_more');
     let content_more = `
         <h4>Descripción</h4>
-        <p>${dataSourceJSON.descripcion}</p>
+        <p class="text-justify mr-3" style="text-align: justify !important">${dataSourceJSON.descripcion}</p>
         `;
-          if (dataSourceJSON.supervisor != null) {
-            let photo_s;
-            if (dataSourceJSON.supervisor.foto == null) {
-              if (dataSourceJSON.supervisor.genero == 'H') {
-                  photo_s = `${this.options.nodeRepositoryImages}/man.png`;
-                } else if(dataSourceJSON.supervisor.genero == 'M') {
-                  photo_s = `${this.options.nodeRepositoryImages}/woman.png`;
-                }else{
-                  photo_s = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
-                }
-            }
-          else {
-            photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
-          }
-          content_more += `
-                <div class="supervisor justify-content-center" >
+    if (dataSourceJSON.lider != null) {
+      content_more += `
+                <div class="supervisor justify-content-center" style="text-align:center !important" >
                 <h4 class="supervisor-title">Responsable del área:</h4>
-                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.area}</span></p>
-                <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+                <img src="${dataSourceJSON.lider?.avatar_ruta}"
+                class="text-center img_empleado" title="${dataSourceJSON.lider?.name}" >
+                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider ? dataSourceJSON.lider.name : 'sin definir'}</span></p>
+                <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?.puesto}</span></p>
               </div>
             `;
     }
@@ -509,7 +561,7 @@ export default class OrgChart {
     let title_info = document.createElement('h3');
     title_info.classList.add('side');
     title_info.classList.add('title-info-nav');
-    title_info.innerText = `${dataSourceJSON.name}`;
+    title_info.innerText = `${dataSourceJSON.estatus == 'alta' ? dataSourceJSON.name : ''}`;
 
 
     //photo
@@ -517,28 +569,34 @@ export default class OrgChart {
     div_img.classList.add('container-img-nav');
     let photo = "";
     let photo_info = document.createElement('img');
-    if (dataSourceJSON.foto == null) {
-      if (dataSourceJSON.genero == 'H') {
-        photo = `${this.options.nodeRepositoryImages}/man.png`;
-      } else if (dataSourceJSON.genero == 'M') {
-        photo = `${this.options.nodeRepositoryImages}/woman.png`;
-      } else {
-        photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
+    if (dataSourceJSON.estatus == 'alta') {
+
+      if (dataSourceJSON.foto == null) {
+        if (dataSourceJSON.genero == 'H') {
+          photo = `${this.options.nodeRepositoryImages}/man.png`;
+        } else if (dataSourceJSON.genero == 'M') {
+          photo = `${this.options.nodeRepositoryImages}/woman.png`;
+        } else {
+          photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
+        }
       }
-    }
-    else {
-      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
+      else {
+        photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
+      }
+    } else {
+      photo = `${this.options.nodeRepositoryImages}/candidate.png`;
     }
 
     photo_info.classList.add('side');
     photo_info.classList.add('img-nav');
+    photo_info.style.clipPath = "circle()"
     photo_info.src = photo;
     div_img.appendChild(photo_info);
     //Name
     let name_info = document.createElement('p');
     name_info.classList.add('side');
     name_info.classList.add('name-nav');
-    name_info.innerText = `Nombre: ${dataSourceJSON.name}`;
+    name_info.innerText = `Nombre: ${dataSourceJSON.estatus == 'alta' ? dataSourceJSON.name : ''}`;
 
     //title
     let title_info_text = document.createElement('p');
@@ -555,7 +613,60 @@ export default class OrgChart {
     let c_more = document.createElement('div');
     title_info_text.classList.add('side');
     c_more.classList.add('c_more');
-    let content_more = `
+
+    //Only for employees
+    window.deleteVacant = (id) => {
+      Swal.fire({
+        title: '¿Desea remover esta vacante?',
+        text: "Esta acción no se puede deshacer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Remover',
+        cancelButtonText: 'Cancelar',
+        showLoaderOnConfirm: true,
+        preConfirm: (empleadoId) => {
+          return fetch(`empleados/baja/remover-vacante`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            body: JSON.stringify({ id })
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText)
+              }
+              return response.json()
+            })
+            .catch(error => {
+              Swal.showValidationMessage(
+                `Request failed: ${error}`
+              )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (result.value.status == 200) {
+            Swal.fire(
+              'Buen Trabajo',
+              result.value.message,
+              'success'
+            ).then(() => {
+              if (document.getElementById('reloadOrg')) {
+                document.getElementById('reloadOrg')?.click();
+              } else {
+                window.location.reload();
+              }
+            })
+          }
+        }
+      })
+    }
+    // end only for employees
+
+    let content_more = dataSourceJSON.estatus == 'alta' ? `
         <h4 class="m-0">Información de Contácto</h4>
         <div class="row container mb-2">
           ${dataSourceJSON.telefono != null ? '<div class="col-4 p-0"><a href="https://wa.me/' + dataSourceJSON.telefono + '" class="btn text-success p-0" target="_blank" title="Enviar Mensaje" style="text-align:left;"><i class="fab fa-whatsapp" style="margin:0;font-size:15pt"></i></a></div>' : ''}
@@ -572,7 +683,13 @@ export default class OrgChart {
         <p class="it_5"><i class="fas fa-info-circle" style="margin: 0 7px 0 0px;"></i>
           Teléfono: <span>${dataSourceJSON.telefono == null ? 'Sin dato' : dataSourceJSON.telefono}</span>
         </p>
+        ` : `
+        <div class="text-center">
+          <button class="btn btn-danger" onclick="event.preventDefault();deleteVacant('${dataSourceJSON.id
+    }')"><i class="fas fa-trash-alt mr-2"></i>Remover Vacante</button>
+        </div>
         `;
+
     if (dataSourceJSON.supervisor != null) {
       let photo_s;
       if (dataSourceJSON.supervisor.foto == null) {
@@ -588,13 +705,14 @@ export default class OrgChart {
         photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
       }
       content_more += `
-                <div class="supervisor">
-                <h4 class="supervisor-title">Supervisado Por:</h4>
-                <img src="${photo_s}" alt="Admin" class="rounded-circle mb-2" style="height: 140px;width: 80px;clip-path:circle(40px at 50% 50%);margin: auto;">
-                <p class="supervisor-name"><i class="fas fa-user"></i><span>${dataSourceJSON.supervisor.name}</span></p>
-                <p class="supervisor-puesto"><i class="fas fa-info-circle"></i><span>${dataSourceJSON.supervisor.puesto}</span></p>
-              </div>
-            `;
+      <div class="supervisor justify-content-center" >
+        <h4 class="supervisor-title">Supervisor:</h4>
+        <img src="${dataSourceJSON.supervisor?.avatar_ruta}" style="clip-path: circle(50% at 50% 50%);"
+        class="text-center img_empleado m-auto" title="${dataSourceJSON.supervisor?.name}" >
+        <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.name}</span></p>
+        <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.puesto}</span></p>
+    </div>`;
+
     }
     c_more.innerHTML = content_more;
     chartContainer.appendChild(a_close);
@@ -1071,6 +1189,8 @@ export default class OrgChart {
           if (this.options.typeOrgChart == 'employees') {
             symbol.setAttribute('class', 'fa fa-users symbol');
           } else if (this.options.typeOrgChart == 'area') {
+            symbol.setAttribute('class', 'fa fa-sitemap symbol');
+          } else if (this.options.typeOrgChart == 'arbol-riesgos') {
             symbol.setAttribute('class', 'fa fa-sitemap symbol');
           }
           // symbol.setAttribute('class', 'fa ' + opts.parentNodeSymbol + ' symbol');
@@ -1615,6 +1735,10 @@ export default class OrgChart {
         nodeDiv.style.border = `3px solid ${nodeData.grupo.color}`;
         // nodeDiv.style.background = `${nodeData.grupo.color}`;
       }
+      if (nodeData.color != null) {
+        nodeDiv.style.border = `3px solid ${nodeData.color}`;
+        // nodeDiv.style.background = `${nodeData.grupo.color}`;
+      }
 
       delete nodeData.children;
       nodeDiv.dataset.source = JSON.stringify(nodeData);
@@ -1657,15 +1781,25 @@ export default class OrgChart {
       //   photo = `${opts.nodeRepositoryImages}/${nodeData[opts.nodePhoto]}`;
       // }else{
       //   photo = `${opts.nodeRepositoryImages}/${opts.nodeNotPhoto}`
-      // }
-
-      nodeDiv.innerHTML = `
+      // } 
+      let nodeHTML = "";
+      if (nodeData.estatus == 'alta') {
+        nodeHTML = `
           <div class="mb-2" style="text-align:center">
           ${opts.withImage ? `<img class="avatar object-cover w-20 h-20 rounded-full m-auto" src="${photo}" style="position:relative">` : ''}
           </div>
           <div class="title">${nodeData[opts.nodeTitle]}</div>
           ${opts.nodeContent ? `<div class="content">${nodeData[opts.nodeContent]}</div>` : ''}
         `;
+      } else {
+        nodeHTML = `
+          <div class="mb-2" style="text-align:center">
+          ${opts.withImage ? `<img class="avatar object-cover w-20 h-20 rounded-full m-auto" src="${opts.nodeRepositoryImages}/candidate.png" style="position:relative">` : ''}
+          </div>       
+          ${opts.nodeContent ? `<div class="content"><i class="fas fa-circle text-danger mr-1"></i><span class="title">${nodeData[opts.nodeContent]}</span></div>` : ''}
+        `;
+      }
+      nodeDiv.innerHTML = nodeHTML;
       // append 4 direction arrows or expand/collapse buttons
       let flags = nodeData.relationship || '';
 
@@ -1704,6 +1838,10 @@ export default class OrgChart {
             symbol.setAttribute('class', 'fa fa-users symbol');
           } else if (opts.typeOrgChart == 'area') {
             symbol.setAttribute('class', 'fa fa-sitemap symbol');
+          } else if (opts.typeOrgChart == 'arbol-riesgos') {
+            symbol.setAttribute('class', 'fa fa-sitemap symbol');
+            symbol.style.backgroundColor = `${nodeData.color}`;
+            symbol.style.color = `${nodeData.color}`;
           }
           //symbol.setAttribute('class', 'fa ' + opts.parentNodeSymbol + ' symbol');
           nodeDiv.appendChild(symbol);
@@ -1735,33 +1873,66 @@ export default class OrgChart {
       nodeWrapper,
       childNodes = nodeData.children != undefined ? nodeData.children.length > 0 ? nodeData.children : undefined : undefined, // Review if parent contains children´s array null
       isVerticalNode = opts.verticalDepth && (level + 1) >= opts.verticalDepth;
+
     if (Object.keys(nodeData).length > 1) { // if nodeData has nested structure
       nodeWrapper = isVerticalNode ? appendTo : document.createElement('table');
       nodeWrapper.classList.add('charContainerAll');
       if (!isVerticalNode) {
         appendTo.appendChild(nodeWrapper);
       }
-      this._createNode(nodeData, level)
-        .then(function (nodeDiv) {
-          if (isVerticalNode) {
-            nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
-          } else {
-            let tr = document.createElement('tr');
+      if (opts.typeOrgChart == 'employees') {
+        childNodes = childNodes?.filter(function (item) {
+          return item.estatus == 'alta' || item.es_supervisor;
+        });
 
-            tr.innerHTML = `
+        if (nodeData.estatus == 'alta' || nodeData.es_supervisor) {
+          this._createNode(nodeData, level)
+            .then(function (nodeDiv) {
+              if (isVerticalNode) {
+                nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
+              } else {
+                let tr = document.createElement('tr');
+
+                tr.innerHTML = `
+                <td ${childNodes ? `colspan="${childNodes.length * 2}"` : ''}>
+                </td>
+              `;
+                tr.children[0].appendChild(nodeDiv);
+                nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
+              }
+              if (callback) {
+                callback();
+              }
+            })
+            .catch(function (err) {
+              console.error('Failed to creat node', err);
+            });
+        }
+      } else {
+        this._createNode(nodeData, level)
+          .then(function (nodeDiv) {
+            if (isVerticalNode) {
+              nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
+            } else {
+              let tr = document.createElement('tr');
+
+              tr.innerHTML = `
               <td ${childNodes ? `colspan="${childNodes.length * 2}"` : ''}>
               </td>
             `;
-            tr.children[0].appendChild(nodeDiv);
-            nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
-          }
-          if (callback) {
-            callback();
-          }
-        })
-        .catch(function (err) {
-          console.error('Failed to creat node', err);
-        });
+              tr.children[0].appendChild(nodeDiv);
+              nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
+            }
+            if (callback) {
+              callback();
+            }
+          })
+          .catch(function (err) {
+            console.error('Failed to creat node', err);
+          });
+      }
+
+
     }
     // Construct the inferior nodes and connectiong lines
     if (childNodes) {
@@ -1792,8 +1963,8 @@ export default class OrgChart {
       }
       // draw the lines close to children nodes
       let lineLayer = document.createElement('tr');
-
       lineLayer.setAttribute('class', 'lines' + isHidden);
+
       lineLayer.innerHTML = `
           <td class="rightLine">&nbsp;</td>
           ${childNodes.slice(1).map(() => `
@@ -1801,7 +1972,10 @@ export default class OrgChart {
             <td class="rightLine topLine">&nbsp;</td>
             `).join('')}
           <td class="leftLine">&nbsp;</td>
-        `;
+      `;
+
+
+
       let nodeLayer;
 
       if (isVerticalLayer) {
@@ -1856,26 +2030,30 @@ export default class OrgChart {
       chartContainer.innerHTML = '';
       chartContainer.style.width = "0px";
     }
-}
-    _clickExportButton() {
-      let opts = this.options,
-        chartContainer = this.chartContainer,
-        mask = chartContainer.querySelector(':scope > .mask'),
-        sourceChart = chartContainer.querySelector('.charContainerAll:not(.hidden)'),
-        flag = opts.direction === 'l2r' || opts.direction === 'r2l' || opts.direction === 'b2t';
-        console.log()
-        let tableAll = document.querySelector('.charContainerAll');
-      if (!mask) {
-        mask = document.createElement('div');
-        mask.setAttribute('class', 'mask');
-        mask.innerHTML = `<i class="fa fa-circle-o-notch fa-spin spinner"></i>`;
-        chartContainer.appendChild(mask);
-      } else {
-        mask.classList.remove('hidden');
-      }
-      chartContainer.classList.add('canvasContainer');
-      let zoomActual = document.querySelector("#zoomer").value;
-     if(opts.typeOrgChart =='employees'){
+  }
+  _clickExportCSVButton(e, options) {
+    let opts = this.options;
+    e.target.closest('a').setAttribute('href', opts.urlExportCSV);
+  }
+  _clickExportButton() {
+    let opts = this.options,
+      chartContainer = this.chartContainer,
+      mask = chartContainer.querySelector(':scope > .mask'),
+      sourceChart = chartContainer.querySelector('.charContainerAll:not(.hidden)'),
+      flag = opts.direction === 'l2r' || opts.direction === 'r2l' || opts.direction === 'b2t';
+
+    let tableAll = document.querySelector('.charContainerAll');
+    if (!mask) {
+      mask = document.createElement('div');
+      mask.setAttribute('class', 'mask');
+      mask.innerHTML = `<i class="fa fa-circle-o-notch fa-spin spinner"></i>`;
+      chartContainer.appendChild(mask);
+    } else {
+      mask.classList.remove('hidden');
+    }
+    chartContainer.classList.add('canvasContainer');
+    let zoomActual = document.querySelector("#zoomer").value;
+    if (opts.typeOrgChart == 'employees') {
       if (flag) {
         let contenedorL2R = document.querySelector('.orgchart').classList.contains('l2r');
         let contenedorR2L = document.querySelector('.orgchart').classList.contains('r2l');
@@ -1904,72 +2082,71 @@ export default class OrgChart {
         }
       }
     }
-    else if (opts.typeOrgChart == 'area'){
-        document.querySelector('.orgchart').classList.remove('l2r');
+    else if (opts.typeOrgChart == 'area') {
+      document.querySelector('.orgchart').classList.remove('l2r');
 
-        document.querySelector('.orgchart').classList.add('t2b');
+      document.querySelector('.orgchart').classList.add('t2b');
     }
     setTimeout(() => {
-        window.html2canvas(sourceChart, {
-            // 'width': 1000,
-            height: tableAll.clientHeight + 100,
-            onclone: function (cloneDoc) {
+      window.html2canvas(sourceChart, {
+        // 'width': 1000,
+        height: tableAll.clientHeight + 100,
+        onclone: function (cloneDoc) {
 
-              // let canvasContainer = cloneDoc.querySelector('.canvasContainer');
-              // canvasContainer.style.overflow = 'visible';
-              // canvasContainer.querySelector('.orgchart:not(.hidden)').transform = '';
+          // let canvasContainer = cloneDoc.querySelector('.canvasContainer');
+          // canvasContainer.style.overflow = 'visible';
+          // canvasContainer.querySelector('.orgchart:not(.hidden)').transform = '';
 
-            // if (flag) {
-            //   let contenedorL2R = cloneDoc.querySelector('.orgchart').classList.contains('l2r');
-            //   let contenedorR2L = cloneDoc.querySelector('.orgchart').classList.contains('r2l');
-            //   if (contenedorL2R) {
-            //     cloneDoc.querySelector('.orgchart').classList.remove('l2r')
-            //   }
-            //   if (contenedorR2L) {
-            //     cloneDoc.querySelector('.orgchart').classList.remove('r2l')
-            //   }
-            // }
-            // let orgChart = cloneDoc.querySelector('.charContainerAll');
-            // console.log(orgChart);
-            // orgChart.style.transform="scale(0.5) rotate(-90deg) rotateY(180deg)";
-            // orgChart.style.background="red";
+          // if (flag) {
+          //   let contenedorL2R = cloneDoc.querySelector('.orgchart').classList.contains('l2r');
+          //   let contenedorR2L = cloneDoc.querySelector('.orgchart').classList.contains('r2l');
+          //   if (contenedorL2R) {
+          //     cloneDoc.querySelector('.orgchart').classList.remove('l2r')
+          //   }
+          //   if (contenedorR2L) {
+          //     cloneDoc.querySelector('.orgchart').classList.remove('r2l')
+          //   }
+          // }
+          // let orgChart = cloneDoc.querySelector('.charContainerAll');
+          // orgChart.style.transform="scale(0.5) rotate(-90deg) rotateY(180deg)";
+          // orgChart.style.background="red";
 
-            let title = cloneDoc.querySelectorAll('.title');
-            title.forEach(element => {
-              element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
-            });
-            let content = cloneDoc.querySelectorAll('.content');
-            content.forEach(element => {
-              element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
-            });
-          }
-        })
-          .then((canvas) => {
-            let downloadBtn = chartContainer.querySelector('.oc-download-btn');
-            chartContainer.querySelector('.mask').classList.add('hidden');
-            downloadBtn.setAttribute('href', canvas.toDataURL());
-            // Hola
-            downloadBtn.click();
-          })
-
-          .catch((err) => {
-            console.error('Failed to export the curent orgchart!', err);
-          })
-          .finally(() => {
-            if (opts.typeOrgChart == 'employees') {
-              document.querySelector('.orgchart').classList.remove('t2b');
-              document.querySelector('.orgchart').classList.add(localStorage.getItem('orientationOrgChart'));
-              document.querySelector("#zoomer").value = zoomActual;
-              document.querySelector("#output").innerHTML = zoomActual;
-              let newScale = zoomActual / 100;
-              this._setNewChartScale(this.chart, newScale);
-              chartContainer.classList.remove('canvasContainer');
-            }else if (opts.typeOrgChart == 'area') {
-                document.querySelector('.orgchart').classList.add('l2r');
-                document.querySelector('.orgchart').classList.remove('t2b');
-
-            }
+          let title = cloneDoc.querySelectorAll('.title');
+          title.forEach(element => {
+            element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
           });
+          let content = cloneDoc.querySelectorAll('.content');
+          content.forEach(element => {
+            element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
+          });
+        }
+      })
+        .then((canvas) => {
+          let downloadBtn = chartContainer.querySelector('.oc-download-btn');
+          chartContainer.querySelector('.mask').classList.add('hidden');
+          downloadBtn.setAttribute('href', canvas.toDataURL());
+          // Hola
+          downloadBtn.click();
+        })
+
+        .catch((err) => {
+          console.error('Failed to export the curent orgchart!', err);
+        })
+        .finally(() => {
+          if (opts.typeOrgChart == 'employees') {
+            document.querySelector('.orgchart').classList.remove('t2b');
+            document.querySelector('.orgchart').classList.add(localStorage.getItem('orientationOrgChart'));
+            document.querySelector("#zoomer").value = zoomActual;
+            document.querySelector("#output").innerHTML = zoomActual;
+            let newScale = zoomActual / 100;
+            this._setNewChartScale(this.chart, newScale);
+            chartContainer.classList.remove('canvasContainer');
+          } else if (opts.typeOrgChart == 'area') {
+            document.querySelector('.orgchart').classList.add('l2r');
+            document.querySelector('.orgchart').classList.remove('t2b');
+
+          }
+        });
     }, 1000);
 
   }

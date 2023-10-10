@@ -2,14 +2,8 @@
 @section('content')
 
     <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}">
-
+    <h5 class="col-12 titulo_general_funcion"> Editar: </h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Mi organización </h3>
-        </div>
-
-
-
         <div class="card-body">
             <form method="POST" action="{{ route('admin.organizacions.update', [$organizacion->id]) }}"
                 enctype="multipart/form-data">
@@ -25,7 +19,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-sm-12">
+                    <div class="form-group col-sm-7">
                         <label class="required" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de la
                             Empresa</label>
                         <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
@@ -38,6 +32,19 @@
                         <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span>
                     </div>
 
+                    <div class="form-group col-sm-5">
+                        {{-- @dump($organizacion['logotipo']) --}}
+                        <label for="logotipo">Logotipo <strong>(Selecciona tu imagen en formato .png)</strong></label>
+                        <div class="mb-3 input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="logotipo" id="logotipo" accept="image/*">
+                                <label class="custom-file-label"
+                                    for="inputGroupFile02">{{ $organizacion->logotipo != null ? $organizacion->logotipo : 'imagenes' }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-sm-12">
                         <label class="required" for="direccion"><i
                                 class="fas fa-map-marker-alt iconos-crear"></i>{{ trans('cruds.organizacion.fields.direccion') }}</label>
@@ -52,6 +59,7 @@
                         <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
                     </div>
                 </div>
+
                 {{-- <div class="row">
                     <div class="form-group col-sm-6">
                         <label class="" for="razon_social">Razón Social</label>
@@ -188,7 +196,7 @@
                     </div>
                 </div>
 
-                <div class="form-group col-12">
+                <div class="form-group col-12 mt-2">
                     <table class="table" id="user_table">
                         <tbody>
                             <div class=" row col-12 p-0 m-0">
@@ -208,17 +216,7 @@
 
 
                 <div class="row">
-                    <div class="form-group col-sm-6">
-                        {{-- @dump($organizacion['logotipo']) --}}
-                        <label for="logotipo">Logotipo <strong>(Selecciona tu imagen en formato .png)</strong></label>
-                        <div class="mb-3 input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="logotipo" id="logotipo" accept="image/*">
-                                <label class="custom-file-label"
-                                    for="inputGroupFile02">{{ $organizacion->logotipo != null ? $organizacion->logotipo : 'imagenes' }}</label>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="col-md-12 col-sm-12">
@@ -244,7 +242,7 @@
                         <label for="fecha_constitucion">Fecha de constitución</label>
                         <input class=" form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}"
                             type="date" name="fecha_constitucion" id="fecha_constitucion"
-                            value="{{ old('fecha_constitucion', \Carbon\Carbon::parse($organizacion->fecha_constitucion))->format('Y-m-d') }}">
+                            value="{{ old('fecha_constitucion', $organizacion->fecha_constitucion) }}">
                         @if ($errors->has('fecha_constitucion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_constitucion') }}
@@ -257,8 +255,8 @@
                     <div class="form-group col-sm-6">
                         <label class="" for="num_empleados">Número de empleados</label>
                         <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number"
-                            name="num_empleados" id="num_empleados"
-                            value="{{ old('num_empleados', $organizacion->num_empleados) }}" readonly>
+                            name="num_empleados" id="num_empleados" value="{{ old('num_empleados', $countEmpleados) }}"
+                            readonly>
                         @if ($errors->has('num_empleados'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('num_empleados') }}
@@ -269,7 +267,7 @@
                     <div class="form-group col-sm-6">
                         <label class="" for="tamano">Tamaño</label>
                         <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text"
-                            name="tamano" id="tamano" value="{{ old('tamano', $organizacion->tamano) }}" readonly>
+                            name="tamano" id="tamano" value="{{ old('tamano', $tamanoEmpresa) }}" readonly>
                         @if ($errors->has('tamano'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('tamano') }}
@@ -310,7 +308,7 @@
                     <div class="form-group col-sm-6">
                         <label for="mision"><i class="fas fa-flag iconos-crear"></i>Misión </label>
                         <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision"
-                            id="mision">{{ old('mision', strip_tags($organizacion->mision)) }}</textarea>
+                            id="mision">{{ old('mision', $organizacion->mision) }}</textarea>
                         @if ($errors->has('mision'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('mision') }}
@@ -322,7 +320,7 @@
                         <label for="vision"><i class="far fa-eye iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.vision') }}</label>
                         <textarea class="form-control {{ $errors->has('vision') ? 'is-invalid' : '' }}" name="vision"
-                            id="vision">{{ old('vision', strip_tags($organizacion->vision)) }}</textarea>
+                            id="vision">{{ old('vision', $organizacion->vision) }}</textarea>
                         @if ($errors->has('vision'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('vision') }}
@@ -337,7 +335,7 @@
                         <label for="valores"><i class="far fa-heart iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.valores') }}</label>
                         <textarea class="form-control {{ $errors->has('valores') ? 'is-invalid' : '' }}" name="valores"
-                            id="valores">{{ old('valores', strip_tags($organizacion->valores)) }}</textarea>
+                            id="valores">{{ old('valores', $organizacion->valores) }}</textarea>
                         @if ($errors->has('valores'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('valores') }}
@@ -350,7 +348,7 @@
                         <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i>Antecedentes</label>
                         <textarea class="form-control {{ $errors->has('antecedentes') ? 'is-invalid' : '' }}"
                             name="antecedentes"
-                            id="antecedentes">{{ old('antecedentes', strip_tags($organizacion->antecedentes)) }}</textarea>
+                            id="antecedentes">{{ old('antecedentes', $organizacion->antecedentes) }}</textarea>
                         @if ($errors->has('antecedentes'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('antecedentes') }}
@@ -374,15 +372,15 @@
 
 @section('scripts')
     <script>
-        $(function(){
-            $('.fantasma').change(function(){
-            if(!$(this).prop('checked')){
-                $('#dvOcultar').hide();
-            }else{
-                $('#dvOcultar').show();
-            }
+        $(function() {
+            $('.fantasma').change(function() {
+                if (!$(this).prop('checked')) {
+                    $('#dvOcultar').hide();
+                } else {
+                    $('#dvOcultar').show();
+                }
 
-        })
+            })
 
         })
     </script>
@@ -401,7 +399,9 @@
                     console.log(0);
 
                     html = "<tr>";
-                    html += '<td class="col-3"><input class="form-control" type="hidden" value="0"  name="working[' + number +'][id][]"><select class="workingSelect form-control" name="working[' + number +
+                    html +=
+                        '<td class="col-3"><input class="form-control" type="hidden" value="0"  name="working[' +
+                        number + '][id][]"><select class="workingSelect form-control" name="working[' + number +
                         '][day][]" id="working_day"><option value="">Seleccione una opción</option>';
                     html += '<option value="Lunes" >Lunes</option>';
                     html += '<option value="Martes" >Martes</option>';
@@ -467,7 +467,8 @@
                     // console.log(html);
                     if (number > 1) {
                         html +=
-                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3 removeWithFetch" style="background-color: #d96161 !important;" data-model-id="' + element.id + '"><i class="fas fa-trash-alt"></i></button></td></tr>';
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3 removeWithFetch" style="background-color: #d96161 !important;" data-model-id="' +
+                            element.id + '"><i class="fas fa-trash-alt"></i></button></td></tr>';
                         $("#user_table tbody").append(html);
                     } else {
                         html +=
@@ -610,82 +611,66 @@
         });
     </script>
 
-<script>
-    CKEDITOR.replace('mision', {
-        toolbar: [{
-        name: 'document',
-            items: [
-                'Maximize', '-',
-                'Styles', 'Format', 'Font', 'FontSize', '-',
-                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-                'Bold', 'Italic', 'Underline', 'Strike', '-',
-                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                'Undo', 'Redo', '-', 'Scayt', '-',
-                'TextColor', 'BGColor', '-',
-                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
-                'Outdent', 'Indent', '-',
-                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
-            ]
-        }]
-    });
-</script>
-<script>
-    CKEDITOR.replace('vision', {
-        toolbar: [{
-        name: 'document',
-            items: [
-                'Maximize', '-',
-                'Styles', 'Format', 'Font', 'FontSize', '-',
-                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-                'Bold', 'Italic', 'Underline', 'Strike', '-',
-                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                'Undo', 'Redo', '-', 'Scayt', '-',
-                'TextColor', 'BGColor', '-',
-                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
-                'Outdent', 'Indent', '-',
-                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
-            ]
-        }]
-    });
-</script>
-<script>
-    CKEDITOR.replace('valores', {
-        toolbar: [{
-        name: 'document',
-            items: [
-                'Maximize', '-',
-                'Styles', 'Format', 'Font', 'FontSize', '-',
-                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-                'Bold', 'Italic', 'Underline', 'Strike', '-',
-                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                'Undo', 'Redo', '-', 'Scayt', '-',
-                'TextColor', 'BGColor', '-',
-                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
-                'Outdent', 'Indent', '-',
-                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
-            ]
-        }]
-    });
-</script>
-<script>
-    CKEDITOR.replace('antecedentes', {
-        toolbar: [{
-        name: 'document',
-            items: [
-                'Maximize', '-',
-                'Styles', 'Format', 'Font', 'FontSize', '-',
-                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-                'Bold', 'Italic', 'Underline', 'Strike', '-',
-                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                'Undo', 'Redo', '-', 'Scayt', '-',
-                'TextColor', 'BGColor', '-',
-                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
-                'Outdent', 'Indent', '-',
-                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
-            ]
-        }]
-    });
-</script>
+    <script>
+        CKEDITOR.replace('mision', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+    </script>
+    <script>
+        CKEDITOR.replace('vision', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+    </script>
+    <script>
+        CKEDITOR.replace('valores', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+    </script>
+    <script>
+        CKEDITOR.replace('antecedentes', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+    </script>
 
     <script>
         document.querySelector('.custom-file-input').addEventListener('change', function(e) {

@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOrganizacionRequest;
-use App\Http\Requests\StoreOrganizacionRequest;
 use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\PanelOrganizacion;
 use App\Models\Schedule;
+use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -25,13 +25,9 @@ class OrganizacionController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organizacions = Organizacion::first();
-        $logotipo_organizacion = $organizacions->logotipo;
-        $logotipo = 'img/logotipo-tabantaj.png';
-        if ($logotipo_organizacion) {
-            $logotipo = 'images/' . $logotipo_organizacion;
-        }
+        abort_if(Gate::denies('mi_organizacion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $organizacions = Organizacion::getFirst();
 
         $schedule = collect();
         if ($organizacions) {
@@ -50,7 +46,7 @@ class OrganizacionController extends Controller
             return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('panel_rules', $panel_rules)->with('schedule', $schedule);
         } else {
             $empty = true;
-            $count = Organizacion::get()->count();
+            $count = Organizacion::getAll()->count();
             $logotipo = $organizacions->logotipo;
             // dd($schedule);
 
@@ -60,7 +56,7 @@ class OrganizacionController extends Controller
 
     public function create()
     {
-        $countEmpleados = Empleado::get()->count();
+        $countEmpleados = Empleado::getaltaAll()->count();
 
         if ($countEmpleados == 0) {
             $tamanoEmpresa = 'debe registrar a los empleados';
@@ -76,9 +72,9 @@ class OrganizacionController extends Controller
 
         $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
-        $count = Organizacion::get()->count();
+        $count = Organizacion::getAll()->count();
         if ($count == 0) {
-            abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(Gate::denies('mi_organizacion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             return view('admin.organizacions.create')->with('countEmpleados', $countEmpleados)->with('tamanoEmpresa', $tamanoEmpresa)->with('dias', $dias);
         } else {
@@ -88,10 +84,10 @@ class OrganizacionController extends Controller
         }
     }
 
-    public function store(StoreOrganizacionRequest $request)
+    public function store(Request $request)
     {
         // dd($request->working);
-        abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('mi_organizacion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacions = Organizacion::create([
             'empresa' => $request->empresa,
@@ -159,18 +155,32 @@ class OrganizacionController extends Controller
 
     public function edit(Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $countEmpleados = Empleado::alta()->get()->count();
+        $organizacion->fecha_constitucion = Carbon::parse($organizacion->fecha_constitucion)->format('Y-m-d');
+        // dd($organizacion->fecha_constitucion);
+
+        if ($countEmpleados == 0) {
+            $tamanoEmpresa = 'debe registrar a los empleados';
+        } elseif ($countEmpleados >= 1 && $countEmpleados <= 249) {
+            $tamanoEmpresa = 'Chica (menos de 250 empleados)';
+        } elseif ($countEmpleados >= 250 && $countEmpleados <= 1000) {
+            $tamanoEmpresa = 'Mediana (entre 250 y 1000 empleados)';
+        } elseif ($countEmpleados >= 1000) {
+            $tamanoEmpresa = 'Grande (más de 1000 empleados)';
+        }
+
+        abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
-        $schedule = Organizacion::find(1)->schedules;
+        $schedule = Organizacion::getAll()->find(1)->schedules;
 
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
-        return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule'));
+        return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule', 'countEmpleados', 'tamanoEmpresa'));
     }
 
     public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->update($request->all());
         // dd($organizacion);
 
@@ -196,7 +206,7 @@ class OrganizacionController extends Controller
 
     public function show(Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
 
         return view('admin.organizacions.show', compact('organizacion'));
@@ -204,7 +214,7 @@ class OrganizacionController extends Controller
 
     public function destroy(Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
@@ -212,7 +222,7 @@ class OrganizacionController extends Controller
 
     public function massDestroy(MassDestroyOrganizacionRequest $request)
     {
-        abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         Organizacion::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
@@ -220,8 +230,6 @@ class OrganizacionController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('organizacion_create') && Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $model = new Organizacion();
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
@@ -232,7 +240,7 @@ class OrganizacionController extends Controller
 
     public function visualizarOrganizacion()
     {
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
         // dd($organizacions);
         $schedule = collect();
         if ($organizacions) {
@@ -244,13 +252,13 @@ class OrganizacionController extends Controller
         $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule', 'linkedln', 'facebook', 'youtube', 'twitter')->get()->first();
 
         if (empty($organizacions)) {
-            $count = Organizacion::get()->count();
+            $count = Organizacion::getAll()->count();
             $empty = false;
 
             return view('admin.organizacions.visualizarorganizacion')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('schedule', $schedule)->with('dias', $dias)->with('panel_rules', $panel_rules);
         } else {
             $empty = true;
-            $count = Organizacion::get()->count();
+            $count = Organizacion::getAll()->count();
             $logotipo = $organizacions->logotipo;
         }
 
@@ -278,19 +286,19 @@ class OrganizacionController extends Controller
                             $dataModel = $model->first();
 
                             $dataModel->update([
-                                'working_day'  => $w['day'][$i],
-                                'start_work_time' =>  $w['start_time'][$i],
+                                'working_day' => $w['day'][$i],
+                                'start_work_time' => $w['start_time'][$i],
                                 'end_work_time' => $w['end_time'][$i],
 
-                                ]);
+                            ]);
                         }
                     } else {
                         $schedule = Schedule::create([
-                                'working_day'  => $w['day'][$i],
-                                'start_work_time' =>  $w['start_time'][$i],
-                                'end_work_time' => $w['end_time'][$i],
-                                'organizacions_id'=> $id,
-                            ]);
+                            'working_day' => $w['day'][$i],
+                            'start_work_time' => $w['start_time'][$i],
+                            'end_work_time' => $w['end_time'][$i],
+                            'organizacions_id' => $id,
+                        ]);
                     }
                 }
             }

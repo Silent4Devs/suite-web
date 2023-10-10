@@ -1,12 +1,50 @@
 @extends('layouts.admin')
 @section('content')
-    @can('control_documento_create')
+    @can('control_documentar_agregar')
+        <h5 class="col-12 titulo_general_funcion">Control de Documentos</h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Control de Documentos</strong></h3>
-            </div>
         @endcan
         <div class="card-body datatable-fix">
+
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por Tipo</label>
+                    <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="tipoSelect">
+                        <option value="" disabled selected>--Seleccionar--</option>
+                        <option value="Proceso">Proceso</option>
+                        <option value="Politica">Política</option>
+                        <option value="Procedimiento">Procedimiento</option>
+                        <option value="Manual">Manual</option>
+                        <option value="Plan">Plan</option>
+                        <option value="Instructivo">Instructivo</option>
+                        <option value="Reglamento">Reglamento</option>
+                        <option value="Externo">Documento Externo</option>
+                        <option value="Formato">Formato</option>
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por Estatus</label>
+                    <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="estatusSelect">
+                        <option value="" disabled selected>--Seleccionar--</option>
+                        <option value="Publicado">Publicado</option>
+                        <option value="Rechazado">Rechazado</option>
+                        <option value="En Revisión">En Revisión</option>
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por Vínculo</label>
+                    <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="vinculadoSelect">
+                        <option value="" disabled selected>--Seleccionar--</option>
+                        @foreach ($macroprocesosAndProcesos as $item)
+                            <option value="{{ $item }}">{{ $item }}</option>
+                        @endforeach
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+            </div>
+
             @include('partials.flashMessages')
             <table id="tbl_documentos_control" class="table table-bordered w-100 datatable-ControlDocumento">
                 <thead class="thead-dark">
@@ -77,19 +115,22 @@
                                         @case(1)
                                             <span class="badge badge-info">EN ELABORACIÓN</span>
                                         @break
+
                                         @case(2)
                                             <span class="badge badge-primary">EN REVISIÓN</span>
                                         @break
+
                                         @case(3)
                                             <span class="badge badge-success">PUBLICADO</span>
                                         @break
+
                                         @case(4)
                                             <span class="badge badge-danger">RECHAZADO</span>
                                         @break
+
                                         @default
                                             <span class="badge badge-info">EN ELABORACIÓN</span>
                                     @endswitch
-
                                 @endif
                             </td>
                             <td>
@@ -136,7 +177,7 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    @can('documentos_edit')
+                                    @can('control_documentar_editar')
                                         @if ($documento->estatus != '2')
                                             <a class="btn btn-sm " title="Editar"
                                                 href="{{ route('admin.documentos.edit', $documento->id) }}">
@@ -144,11 +185,11 @@
                                             </a>
                                         @endif
                                     @endcan
-                                    @can('documentos_show')
+                                    @can('control_documentar_visualizar_documento')
                                         <a class="btn btn-sm" title="Visualizar Documento"
                                             href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
                                                 <path
                                                     d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
                                                 <path
@@ -156,11 +197,11 @@
                                             </svg>
                                         </a>
                                     @endcan
-                                    @can('documentos_history_reviews', Model::class)
+                                    @can('control_documentar_visualizar_revisiones')
                                         <a class="btn btn-sm " title="Visualizar revisiones"
                                             href="{{ route('admin.documentos.renderHistoryReview', $documento->id) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                class="bi bi-clock-history" viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
                                                 <path
                                                     d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z" />
                                                 <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
@@ -169,7 +210,7 @@
                                             </svg>
                                         </a>
                                     @endcan
-                                    @can('documentos_versiones')
+                                    @can('control_documentar_visualizar_versionamiento')
                                         @if ($documento->version >= 1)
                                             <a class="btn btn-sm " title="Visualizar versionamiento"
                                                 href="{{ route('admin.documentos.renderHistoryVersions', $documento->id) }}">
@@ -181,12 +222,12 @@
                                             </a>
                                         @endif
                                     @endcan
-                                    @can('documentos_delete')
+                                    @can('control_documentar_eliminar')
                                         <button data-tipo="{{ $documento->tipo }}" title="Hacer obsoleto"
                                             onclick="hacerObsoleto(this,'{{ route('admin.documentos.destroy', $documento) }}','{{ $documento->id }}');return false;"
                                             class="btn btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                class="bi bi-trash" viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                 <path
                                                     d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                                 <path fill-rule="evenodd"
@@ -206,255 +247,299 @@
     </div>
 @endsection
 @section('scripts')
-@parent
-<script>
-    $(function() {
-        let dtButtons = [{
-                extend: 'csvHtml5',
-                title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
-                text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                className: "btn-sm rounded pr-2",
-                titleAttr: 'Exportar CSV',
-                exportOptions: {
-                    columns: ['th:not(:last-child):visible']
-                }
-            },
-            {
-                extend: 'excelHtml5',
-                title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
-                text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                className: "btn-sm rounded pr-2",
-                titleAttr: 'Exportar Excel',
-                exportOptions: {
-                    columns: ['th:not(:last-child):visible']
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
-                text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                className: "btn-sm rounded pr-2",
-                titleAttr: 'Exportar PDF',
-                orientation: 'portrait',
-                exportOptions: {
-                    columns: ['th:not(:last-child):visible']
+    @parent
+    <script>
+        // $(function() {
+
+
+        //     let table = $('#tbl_documentos_control').DataTable({
+        //         destroy: true,
+        //         buttons: dtButtons,
+        //     });
+        // });
+
+        async function obtenerDependencias(documento_id) {
+            let api = await fetch("{{ route('admin.documentos.getDocumentDependencies') }}", {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                customize: function(doc) {
-                    doc.pageMargins = [20, 60, 20, 30];
-                    // doc.styles.tableHeader.fontSize = 7.5;
-                    // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                }
-            },
-            {
-                extend: 'print',
-                title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
-                text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                className: "btn-sm rounded pr-2",
-                titleAttr: 'Imprimir',
-                exportOptions: {
-                    columns: ['th:not(:last-child):visible']
-                }
-            },
-            {
-                extend: 'colvis',
-                text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                className: "btn-sm rounded pr-2",
-                titleAttr: 'Seleccionar Columnas',
-            },
-            {
-                extend: 'colvisGroup',
-                text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                className: "btn-sm rounded pr-2",
-                show: ':hidden',
-                titleAttr: 'Ver todo',
-            },
-            {
-                extend: 'colvisRestore',
-                text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                className: "btn-sm rounded pr-2",
-                titleAttr: 'Restaurar a estado anterior',
-            }
+                body: JSON.stringify({
+                    documento_id
+                }) // body data type must match "Content-Type" header
+            });
+            let data = await api.json();
+            return data;
+        }
 
-        ];
-
-        let btnAgregar = {
-            text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-            titleAttr: 'Agregar documento',
-            url: "{{ route('admin.documentos.create') }}",
-            className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-            action: function(e, dt, node, config) {
-                let {
-                    url
-                } = config;
-                window.location.href = url;
-            }
-        };
-
-        dtButtons.push(btnAgregar);
-
-        let table = $('#tbl_documentos_control').DataTable({
-            buttons: dtButtons,
-        });
-    });
-
-    async function obtenerDependencias(documento_id) {
-        let api = await fetch("{{ route('admin.documentos.getDocumentDependencies') }}", {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            body: JSON.stringify({
-                documento_id
-            }) // body data type must match "Content-Type" header
-        });
-        let data = await api.json();
-        return data;
-    }
-
-    const hacerObsoleto = async function(boton, url, documento_id) {
-        let isTipoProceso = boton.getAttribute('data-tipo') == 'proceso';
-        let dependencias = await obtenerDependencias(
-            documento_id); // se obtienen las dependencias del proceso
-        console.log(dependencias);
-        Swal.fire({
-            title: '¿Está seguro de marcar como obsoleto este documento?',
-            html: `<div style="text-align: left;">El documento será <strong style="color:red">eliminado</strong> de los siguientes apartados:</div>
+        const hacerObsoleto = async function(boton, url, documento_id) {
+            let isTipoProceso = boton.getAttribute('data-tipo') == 'proceso';
+            let dependencias = await obtenerDependencias(
+                documento_id); // se obtienen las dependencias del proceso
+            console.log(dependencias);
+            Swal.fire({
+                title: '¿Está seguro de marcar como obsoleto este documento?',
+                html: `<div style="text-align: left;">El documento será <strong style="color:red">eliminado</strong> de los siguientes apartados:</div>
                     <ul style="text-align:left;">
                         ${isTipoProceso ? '<li>Procesos</li>':''}
                         <li>Gestor documental</li>
                         <li>Tabla documentos</li>
                     </ul>
                 `,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Hacer obsoleto',
-            cancelButtonText: 'Cancelar',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                if (dependencias.dependencias == null || dependencias.dependencias.length == 0) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: url,
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                "content"),
-                        },
-                        data: {
-                            delete_documents: false
-                        },
-                        dataType: "JSON",
-                        success: function(response) {
-                            console.log(response);
-                            if (response.success) {
-                                Swal.fire('Documentos obsoleto',
-                                    'El documento se ha hecho obsoleto',
-                                    'info')
-                                setTimeout(() => {
-                                    window.location.reload();
-                                }, 1500);
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Hacer obsoleto',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (dependencias.dependencias == null || dependencias.dependencias.length == 0) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: url,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    "content"),
+                            },
+                            data: {
+                                delete_documents: false
+                            },
+                            dataType: "JSON",
+                            success: function(response) {
+                                console.log(response);
+                                if (response.success) {
+                                    Swal.fire('Documentos obsoleto',
+                                        'El documento se ha hecho obsoleto',
+                                        'info')
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1500);
+                                }
+                            },
+                            error: function(err) {
+                                console.log(err);
+                                Swal.fire(
+                                    'Error!',
+                                    `${err.responseText}`,
+                                    'error'
+                                );
                             }
-                        },
-                        error: function(err) {
-                            console.log(err);
-                            Swal.fire(
-                                'Error!',
-                                `${err.responseText}`,
-                                'error'
-                            );
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        title: '¿Desea eliminar los documentos dependientes al proceso?',
-                        html: `<div style="overflow: auto;max-height: 200px;">
+                        });
+                    } else {
+                        Swal.fire({
+                            title: '¿Desea eliminar los documentos dependientes al proceso?',
+                            html: `<div style="overflow: auto;max-height: 200px;">
                         <ul>
                         ${dependencias.dependencias.map(dependencia => {
                             return `<li><i class="fas fa-file-pdf"></i> ${dependencia.codigo}-${dependencia.nombre}-<span style="text-transform:capitalize">[${dependencia.tipo}]</span></li>`;
                         })}
                         </ul>
                     </div>`,
-                        icon: 'question',
-                        showDenyButton: true,
-                        showCancelButton: false,
-                        confirmButtonText: `Eliminar`,
-                        denyButtonText: `Conservarlos`,
-                    }).then((result) => {
-                        /* Read more about isConfirmed, isDenied below */
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: "DELETE",
-                                url: url,
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        "content"),
-                                },
-                                data: {
-                                    delete_documents: true
-                                },
-                                dataType: "JSON",
-                                success: function(response) {
-                                    console.log(response);
-                                    if (response.success) {
-                                        Swal.fire('Obsoleto!',
-                                            'El proceso y todas sus dependencias fueron eliminadas',
-                                            'success')
-                                        setTimeout(() => {
-                                            window.location.reload();
-                                        }, 1500);
+                            icon: 'question',
+                            showDenyButton: true,
+                            showCancelButton: false,
+                            confirmButtonText: `Eliminar`,
+                            denyButtonText: `Conservarlos`,
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: url,
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            "content"),
+                                    },
+                                    data: {
+                                        delete_documents: true
+                                    },
+                                    dataType: "JSON",
+                                    success: function(response) {
+                                        console.log(response);
+                                        if (response.success) {
+                                            Swal.fire('Obsoleto!',
+                                                'El proceso y todas sus dependencias fueron eliminadas',
+                                                'success')
+                                            setTimeout(() => {
+                                                window.location.reload();
+                                            }, 1500);
+                                        }
+                                    },
+                                    error: function(err) {
+                                        console.log(err);
+                                        Swal.fire(
+                                            'Error!',
+                                            `${err.responseText}`,
+                                            'error'
+                                        );
                                     }
-                                },
-                                error: function(err) {
-                                    console.log(err);
-                                    Swal.fire(
-                                        'Error!',
-                                        `${err.responseText}`,
-                                        'error'
-                                    );
-                                }
-                            });
-                        } else if (result.isDenied) {
-                            $.ajax({
-                                type: "DELETE",
-                                url: url,
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        "content"),
-                                },
-                                data: {
-                                    delete_documents: false
-                                },
-                                dataType: "JSON",
-                                success: function(response) {
-                                    console.log(response);
-                                    if (response.success) {
-                                        Swal.fire('Documentos conservados',
-                                            'Las dependecias fueron conservadas, pero no están asignadas a ningun proceso',
-                                            'info')
-                                        setTimeout(() => {
-                                            window.location.reload();
-                                        }, 1500);
+                                });
+                            } else if (result.isDenied) {
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: url,
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            "content"),
+                                    },
+                                    data: {
+                                        delete_documents: false
+                                    },
+                                    dataType: "JSON",
+                                    success: function(response) {
+                                        console.log(response);
+                                        if (response.success) {
+                                            Swal.fire('Documentos conservados',
+                                                'Las dependecias fueron conservadas, pero no están asignadas a ningun proceso',
+                                                'info')
+                                            setTimeout(() => {
+                                                window.location.reload();
+                                            }, 1500);
+                                        }
+                                    },
+                                    error: function(err) {
+                                        console.log(err);
+                                        Swal.fire(
+                                            'Error!',
+                                            `${err.responseText}`,
+                                            'error'
+                                        );
                                     }
-                                },
-                                error: function(err) {
-                                    console.log(err);
-                                    Swal.fire(
-                                        'Error!',
-                                        `${err.responseText}`,
-                                        'error'
-                                    );
-                                }
-                            });
-                        }
-                    });
+                                });
+                            }
+                        });
+                    }
                 }
-            }
-        })
-    }
-</script>
+            })
+        }
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'portrait',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [20, 60, 20, 30];
+                        // doc.styles.tableHeader.fontSize = 7.5;
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
+
+            ];
+
+            let btnAgregar = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar Documento',
+                titleAttr: 'Agregar documento',
+                url: "{{ route('admin.documentos.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                }
+            };
+
+            dtButtons.push(btnAgregar);
+            let tblDocumentos = $("#tbl_documentos_control").DataTable({
+                buttons: dtButtons,
+            });
+
+            $('#tipoSelect').on('change', function() {
+                console.log(this.value);
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    tblDocumentos.columns(2).search(this.value, true, false).draw();
+                } else {
+                    this.style.border = "1px solid rgb(206 212 218)";
+                    tblDocumentos.columns(2).search(this.value).draw();
+                }
+            });
+            $('#estatusSelect').on('change', function() {
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    tblDocumentos.search(this.value.toUpperCase(), true, false)
+                        .draw();
+                } else {
+                    this.style.border = "1px solid rgb(206 212 218)";
+                    tblDocumentos.search(this.value)
+                        .draw();
+                }
+            });
+            $('#vinculadoSelect').on('change', function() {
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    tblDocumentos.search(this.value, true, false)
+                        .draw();
+                } else {
+                    this.style.border = "1px solid rgb(206 212 218)";
+                    tblDocumentos.search(this.value)
+                        .draw();
+                }
+            });
+        });
+    </script>
 @endsection

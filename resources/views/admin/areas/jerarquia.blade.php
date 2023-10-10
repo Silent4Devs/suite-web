@@ -267,8 +267,8 @@
         }
 
         /* #shot_screen{
-            width:100% !important;
-        } */
+                width:100% !important;
+            } */
 
     </style>
     <style>
@@ -282,7 +282,7 @@
 
         .range-slider__range {
             -webkit-appearance: none;
-            width:100%;
+            width: 100%;
             height: 10px;
             border-radius: 5px;
             background: #d7dcdf;
@@ -492,49 +492,63 @@
             margin-bottom: -2px;
             margin-right: 10px;
         }
-        #chart-container{
+
+        #chart-container {
             /* background-color:red; */
             /* z-index:1 !important; */
-            position:relative !important;
-        }
-        .charContainerAll{
-            /* background-color:yellow; */
-            z-index:0 !important;
             position: relative !important;
         }
-        .caja_grupos{
-            left:20px;
-            transition:0.5s !important;
-            margin-left:-200px;
-            position:absolute;
-            top:30px;
-            background: white;
-            z-index:1;
+
+        .charContainerAll {
+            /* background-color:yellow; */
+            z-index: 0 !important;
+            position: relative !important;
         }
-        .grupos_funciones .caja_grupos{
-            margin-left:0px;
+
+        .caja_grupos {
+            left: 20px;
+            transition: 0.5s !important;
+            margin-left: -200px;
+            position: absolute;
+            top: 30px;
+            background: white;
+            z-index: 1;
+        }
+
+        .grupos_funciones .caja_grupos {
+            margin-left: 0px;
             /* transition:0.5s !important; */
 
         }
-        .btn_grupos{
-            transform:rotate(0deg);
-            transition:0.5s;
+
+        .btn_grupos {
+            transform: rotate(0deg);
+            transition: 0.5s;
         }
-        .grupos_funciones .btn_grupos{
-            transform:rotate(180deg);
+
+        .grupos_funciones .btn_grupos {
+            transform: rotate(180deg);
         }
-        .modal-backdrop{
-            display:none;
+
+        .modal-backdrop {
+            display: none;
         }
-        .caja_grupos ul{
-            transition:0.5s !important;
+
+        .caja_grupos ul {
+            transition: 0.5s !important;
         }
-        .btn_iconos_areas{
-            margin-top:15px;
+
+        .btn_iconos_areas {
+            margin-top: 15px;
             transform: scale(1.25);
         }
-        @media(min-width:2000px){
-            .contenido_blanco{
+
+        .text-center.img_empleado{
+            margin:auto !important;
+        }
+
+        @media(min-width:2000px) {
+            .contenido_blanco {
                 padding-bottom: 300px !important;
             }
         }
@@ -542,25 +556,19 @@
     </style>
 @endsection
 @section('content')
-{{ Breadcrumbs::render('areas-render') }}
+    {{ Breadcrumbs::render('areas-render') }}
 
 
-
+    <h5 class="col-12 titulo_general_funcion" style="font-size:20px;">Áreas de {{ $organizacion->empresa ? $organizacion->empresa : 'La Organización' }}</h5>
     <!-- component -->
     <div class="w-full px-6 py-4 mb-16 bg-white rounded-lg shadow-lg contenido_blanco">
-        <div class="card-body">
-            @if ($organizacion)
-                <h3 class="mb-2 text-center text-white" style="background: #345183;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de {{ $organizacion->empresa}}</strong></h3>
-            @else
-                 <h3 class="mb-2 text-center text-white" style="background: #345183;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de la organización</strong></h3>
-            @endif
-        </div>
+
         @if (!$areasTree)
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
                 <div class="row w-100">
                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                         <div class="w-100">
-                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                         </div>
                     </div>
                     <div class="col-11">
@@ -579,16 +587,16 @@
         @else
             <div class="caja_botones_menu">
                 <div class="caja_botones_menu">
-                    <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-sitemap"
-                            style="font-size:30px;" style="text-decoration:none;"></i> Áreas por Jerarquia</a>
-                    <a href="#" data-tabs="contenido2"><i class="mr-2 fas fa-cubes" style="font-size:30px;"></i> Áreas por
+                    <a href="#" data-tabs="contenido2" class="btn_activo"><i class="mr-2 bi bi-boxes" style="font-size:30px;"></i> Áreas por
                         Grupo</a>
+                    <a href="#" data-tabs="contenido1"><i class="mr-2 bi bi-diagram-3"
+                            style="font-size:30px;" style="text-decoration:none;"></i> Áreas por Jerarquia</a>
+
                 </div>
             </div>
             <div class="caja_caja_secciones">
                 <div class="caja_secciones">
-                    <section id="contenido1" class="caja_tab_reveldada">
-
+                    <section id="contenido1">
                         <div class="row">
                             <div class="col-8">
                                 <div class="m-0 range-slider h-100">
@@ -596,7 +604,8 @@
                                         <i class="mr-1 fas fa-search-plus"></i>
                                         Control de zoom
                                     </span>
-                                    <div class="d-flex justify-content-center align-items-center" style="height: 75%; width:100% !important;">
+                                    <div class="d-flex justify-content-center align-items-center"
+                                        style="height: 75%; width:100% !important;">
                                         <input id="zoomer" class="range-slider__range" type="range" value="70" min="10"
                                             max="200">
                                         <span id="output" class="range-slider__value">70</span>
@@ -619,7 +628,8 @@
 
                         {{-- <div id="exportData"></div> --}}
                         <div class="contenedor-areas grupos_funciones">
-                            <i class="fas fa-caret-right btn_grupos" title="Ver grupos" style= "position:absolute; top:0; font-size:25pt; cursor:pointer;"></i>
+                            <i class="fas fa-caret-right btn_grupos" title="Ver grupos"
+                                style="position:absolute; top:0; font-size:25pt; cursor:pointer;"></i>
                             <div class="row caja_grupos">
                                 <ul style="max-width: 200px !important; overflow:hidden !important;">
                                     @foreach ($grupos as $grupo)
@@ -690,10 +700,12 @@
 
                     </section>
 
-                    <section id="contenido2" class="mt-4">
+                    <section id="contenido2" class="mt-4 caja_tab_reveldada">
                         <div class="col-12 text-right">
-                        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-file-csv" style="font-size:18pt;"></i></a>
-                        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-camera" style="font-size:18pt;"></i></a>
+                            <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-file-csv"
+                                    style="font-size:18pt;"></i></a>
+                            <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-camera"
+                                    style="font-size:18pt;"></i></a>
                         </div>
                         <div class="row">
 
@@ -718,7 +730,8 @@
                                                                 <div class="mb-3 ml-2 mr-2 bg-white rounded col-3 sesioninicio"
                                                                     style="height:40px; border:1px solid #ccc !important"
                                                                     onclick="renderModal(this,'{{ $area->area }}', '{{ $area->descripcion }}', '{{ $grupo->color }}')">
-                                                                    <p class="text-center" style="cursor:pointer border:1px solid #ccc !important">
+                                                                    <p class="text-center"
+                                                                        style="cursor:pointer border:1px solid #ccc !important">
                                                                         {{ $area->area }}
                                                                     </p>
                                                                 </div>
@@ -758,11 +771,9 @@
 @section('scripts')
 
     <script>
-
-    $(".btn_grupos").click(function(){
-        $(".contenedor-areas").toggleClass("grupos_funciones");
-    });
-
+        $(".btn_grupos").click(function() {
+            $(".contenedor-areas").toggleClass("grupos_funciones");
+        });
     </script>
 
     <script type="module">
@@ -824,13 +835,14 @@
                         let container = document.querySelector('.imagen-search');
                         container.src = "";
                         document.querySelector('.texto-search').innerHTML = "";
+
                         let orgchart = new OrgChart({
                             'chartContainer': '#chart-container',
                             'zoomSlider': '#zoomer',
                             'data': JSON.parse(response),
                             'depth': 999,
                             'nodeTitle': 'area',
-                            'nodeContent': 'grupo_name',
+                            'nodeContent': 'area',
                             'withImage': false,
                             // 'nodePhoto': 'foto',
                             // 'nodeRepositoryImages': repositorioImagenes,
@@ -868,7 +880,7 @@
 
                                 </div>
 
-                                <p class="mb-5 text-center" style="margin-top:20px;" >${descripcion}</p>
+                                <p class="mb-5 text-justify ml-4 mr-4" style="margin-top:20px;" >${descripcion}</p>
                                 `;
             let btnCerrar = document.querySelector(".btnCerrar");
             btnCerrar.addEventListener("click", function(e) {

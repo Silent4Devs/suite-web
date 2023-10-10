@@ -22,7 +22,9 @@ use PhpOffice\PhpWord\Style\TOC;
 class GenerarPdfComponent extends Component
 {
     const NUEVA_LINEA = '</w:t><w:br/><w:t>';
+
     const PASSWORD_WORD = '12345678';
+
     public $nombre_documento;
 
     public function mount($nombre_control_documento)
@@ -135,7 +137,6 @@ class GenerarPdfComponent extends Component
 
     public function generarEstudioContexto($filename, $organizacion, $logotipo, $matriz_requisitos_legales, $foda, $partes_interesadas, $control_documento)
     {
-
         // $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
         // if (!$control_documento) {
         //     session()->flash('error_control_documento', 'No existe el control de documento: Contexto de la organización');
@@ -188,16 +189,16 @@ class GenerarPdfComponent extends Component
         $header = $section->addHeader();
         $tableStyle = [
             'borderColor' => '000000',
-            'borderSize'  => '5',
-            'cellMargin'  => '20',
+            'borderSize' => '5',
+            'cellMargin' => '20',
         ];
 
         $phpWord->addTableStyle('encabezado_table', $tableStyle);
         $table = $header->addTable('encabezado_table');
         $table->addRow();
         $table->addCell(4000)->addImage(public_path($logotipo), [
-            'width'         => 70,
-            'alignment'    => JC::CENTER,
+            'width' => 70,
+            'alignment' => JC::CENTER,
             'valign' => 'center',
         ]);
 

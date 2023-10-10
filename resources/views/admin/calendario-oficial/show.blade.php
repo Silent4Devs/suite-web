@@ -9,16 +9,24 @@
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
-            @include('coreui-templates::common.errors')
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Details</strong>
-                            <a href="{{ route('calendario-oficial.index') }}" class="btn btn-light">Volver</a>
+                            <strong>Calendario Oficial</strong>
                         </div>
                         <div class="card-body">
+                            <div class="form-group">
+                                <a class="btn btn-default" href="{{ route('admin.calendario-oficial.index') }}">
+                                    {{ trans('global.back_to_list') }}
+                                </a>
+                            </div>
                             @include('admin.calendario-oficial.show_fields')
+                            <div class="form-group">
+                                <a class="btn btn-default" href="{{ route('admin.calendario-oficial.index') }}">
+                                    {{ trans('global.back_to_list') }}
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

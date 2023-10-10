@@ -12,8 +12,8 @@
     </div>
     <div class="form-group col-sm-6">
         <label class="required" for="name"><i class="fas fa-user-circle iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name"
-            value="{{ old('name', $empleado->name) }}" required>
+        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
+            id="name" value="{{ old('name', $empleado->name) }}" required>
         <small id="error_name" class="text-danger errores"></small>
         @if ($errors->has('name'))
             <div class="invalid-feedback">
@@ -22,11 +22,11 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label class="required" for="n_empleado"><i class="fas fa-id-card iconos-crear"></i>N°
+        <label for="n_empleado"><i class="fas fa-id-card iconos-crear"></i>N°
             de
             empleado</label>
-        <input class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}" type="text" name="n_empleado"
-            id="n_empleado" value="{{ old('n_empleado', $empleado->n_empleado) }}" required>
+        <input class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}" type="text"
+            name="n_empleado" id="n_empleado" value="{{ old('n_empleado', $empleado->n_empleado) }}" required>
         <small id="error_n_empleado" class="text-danger errores"></small>
         @error('n_empleado')
             <span class="invalid-feedback d-block" role="alert">
@@ -67,15 +67,13 @@
                     </option>
                 @endforeach
             </select> --}}
-            @livewire('puesto-select',['puestos_seleccionado'=>$puestos_seleccionado])
+            @livewire('puesto-select', ['puestos_seleccionado' => $puestos_seleccionado])
             <small id="error_puesto_id" class="text-danger errores"></small>
         </div>
-        <div class="col-1 col-md-1 col-sm-1">
-            <button id="btnAgregarPuesto" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
-                data-toggle="modal" data-target="#PuestoModal" title="Agregar Puesto"><i
-                    class="fas fa-plus"></i></button>
-
-        </div>
+        <button id="btnAgregarPuesto" onclick="event.preventDefault();" class="text-white btn btn-sm"
+            style="background:#3eb2ad;height: 34px;" data-toggle="modal" data-target="#PuestoModal"
+            title="Agregar Puesto"><i class="fas fa-plus"></i></button>
+        @livewire('puesto-create')
 
         @if ($errors->has('puesto_id'))
             <div class="invalid-feedback">
@@ -90,14 +88,15 @@
             <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Jefe
                 Inmediato</label>
             <div class="mb-3 input-group">
-
                 <select class="custom-select supervisor" id="inputGroupSelect01" name="supervisor_id">
                     <option value="" selected disabled>-- Selecciona supervisor --</option>
                     @forelse ($empleados as $empleado_s)
-                        <option value="{{ $empleado_s->id }}"
-                            {{ old('supervisor_id', $empleado->supervisor_id) == $empleado_s->id ? 'selected' : '' }}>
-                            {{ $empleado_s->name }}
-                        </option>
+                        @if ($empleado->id != $empleado_s->id)
+                            <option value="{{ $empleado_s->id }}"
+                                {{ old('supervisor_id', $empleado->supervisor_id) == $empleado_s->id ? 'selected' : '' }}>
+                                {{ $empleado_s->name }}
+                            </option>
+                        @endif
                     @empty
                         <option value="" disabled>Sin Datos</option>
                     @endforelse
@@ -118,25 +117,12 @@
                     Nivel Jerárquico</label>
             </div>
             <div class="col-sm-9 col-md-9 col-9 pr-0">
-                <select class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
-                    name="perfil_empleado_id" id="perfil_empleado_id" value="{{ old('perfil_empleado_id', '') }}"
-                    required>
-                    <option value="" selected disabled>
-                        -- Selecciona un perfil --
-                    </option>
-                    @foreach ($perfiles as $perfil)
-                        <option value="{{ $perfil->id }}"
-                            {{ old('perfil_empleado_id', $empleado->perfil_empleado_id) == $perfil->id ? ' selected="selected"' : '' }}>
-                            {{ $perfil->nombre }}
-                        </option>
-                    @endforeach
-                </select>
-                <small id="error_perfil_empleado_id" class="text-danger errores"></small>
+                @livewire('perfil-select', ['perfiles_seleccionado' => $perfiles_seleccionado])
             </div>
             <div class="col-sm-3 col-md-3 col-3">
-                <button id="btnAgregarPerfil" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
-                    data-toggle="modal" data-target="#PerfilModal" title="Agregar Perfil"><i
-                        class="fas fa-plus"></i></button>
+                <button id="btnAgregarPerfil" onclick="event.preventDefault();" class="text-white btn btn-sm"
+                    style="background:#3eb2ad;height: 34px;" data-toggle="modal" data-target="#PerfilModal"
+                    title="Agregar Perfil"><i class="fas fa-plus"></i></button>
                 @livewire('perfil-create')
             </div>
             @if ($errors->has('perfil_empleado_id'))
@@ -147,7 +133,7 @@
         </div>
     </div>
     <div class="form-group col-sm-6">
-        <label class="required" for="genero"><i class="fas fa-venus-mars iconos-crear"></i>Género</label>
+        <label class="required" for="genero"><i class="fas fa-venus-mars iconos-crear"></i>Sexo</label>
         <div class="mb-3 input-group">
             <select class="custom-select genero select-search" id="genero" name="genero">
                 <option selected value="" disabled>-- Selecciona Género --</option>
@@ -157,9 +143,9 @@
                 <option value="M" {{ old('genero', $empleado->genero) == 'M' ? 'selected' : '' }}>
                     Mujer
                 </option>
-                <option value="X" {{ old('genero', $empleado->genero) == 'X' ? 'selected' : '' }}>
+                {{-- <option value="X" {{ old('genero', $empleado->genero) == 'X' ? 'selected' : '' }}>
                     Otro
-                </option>
+                </option> --}}
             </select>
             <small id="error_genero" class="text-danger errores"></small>
         </div>
@@ -171,7 +157,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="form-group col-sm-6">
+    {{-- <div class="form-group col-sm-6">
         <label class="required" for="estatus"><i class="fas fa-business-time iconos-crear"></i>Estatus</label>
         <select class="form-control validate" required="" name="estatus">
             <option value="" disabled selected>Escoga una opción</option>
@@ -186,8 +172,8 @@
                 {{ $errors->first('estatus') }}
             </div>
         @endif
-    </div>
-    <div class="form-group col-sm-6">
+    </div> --}}
+    <div class="form-group col-sm-12">
         <label class="required" for="email"><i class="far fa-envelope iconos-crear"></i>Correo
             electrónico</label>
         <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="email"
@@ -205,7 +191,8 @@
         <label for="telefono_movil"><i class="fas fa-mobile-alt iconos-crear"></i></i>Teléfono
             móvil</label>
         <input class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}" type="text"
-            name="telefono_movil" id="telefono_movil" value="{{ old('telefono_movil', $empleado->telefono_movil) }}">
+            name="telefono_movil" id="telefono_movil"
+            value="{{ old('telefono_movil', $empleado->telefono_movil) }}">
         <small id="error_telefono_movil" class="text-danger errores"></small>
         @if ($errors->has('telefono_movil'))
             <div class="invalid-feedback">
@@ -216,8 +203,8 @@
     <div class="form-group col-sm-4">
         <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono
             oficina</label>
-        <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="text" name="telefono"
-            id="telefono" value="{{ old('telefono', $empleado->telefono) }}">
+        <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="text"
+            name="telefono" id="telefono" value="{{ old('telefono', $empleado->telefono) }}">
         <small id="error_telefono" class="text-danger errores"></small>
         @if ($errors->has('telefono'))
             <div class="invalid-feedback">
@@ -227,8 +214,8 @@
     </div>
     <div class="form-group col-sm-2">
         <label for="extension"><i class="fas fa-phone-volume iconos-crear"></i>Ext.</label>
-        <input class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}" type="text" name="extension"
-            id="extension" value="{{ old('extension', $empleado->extension) }}">
+        <input class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}" type="text"
+            name="extension" id="extension" value="{{ old('extension', $empleado->extension) }}">
         <small id="error_extension" class="text-danger errores"></small>
         @if ($errors->has('extension'))
             <div class="invalid-feedback">
@@ -333,6 +320,19 @@
         @if ($errors->has('esquema_contratacion'))
             <div class="invalid-feedback">
                 {{ $errors->first('esquema_contratacion') }}
+            </div>
+        @endif
+    </div>
+    <div class="form-group col-sm-12" id="c_semanas_min_timesheet">
+        <label for="semanas_min_timesheet"><i class="fa-solid fa-calendar-week iconos-crear"></i>Semanas limite de
+            registros atrasados en Timesheet</label>
+        <input class="form-control {{ $errors->has('semanas_min_timesheet') ? 'is-invalid' : '' }}" type="number"
+            name="semanas_min_timesheet" id="semanas_min_timesheet"
+            value="{{ old('semanas_min_timesheet', $empleado != null ? $empleado->semanas_min_timesheet : ($organizacion != null ? $organizacion->semanas_min_timesheet : 3)) }}"
+            min="0">
+        @if ($errors->has('semanas_min_timesheet'))
+            <div class="invalid-feedback">
+                {{ $errors->first('semanas_min_timesheet') }}
             </div>
         @endif
     </div>

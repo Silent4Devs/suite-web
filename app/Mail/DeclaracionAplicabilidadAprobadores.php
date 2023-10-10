@@ -16,12 +16,17 @@ class DeclaracionAplicabilidadAprobadores extends Mailable
      * @return void
      */
     public $tipo;
+
     public $nombre;
 
-    public function __construct($nombre, $tipo)
+    public $controles;
+
+    //inicializa de la clase
+    public function __construct($nombre, $tipo, $controles)
     {
         $this->tipo = $tipo;
         $this->nombre = $nombre;
+        $this->controles = $controles;
     }
 
     /**

@@ -7,8 +7,10 @@ use Livewire\Component;
 
 class PuestoSelect extends Component
 {
-    protected $listeners = ['render-puesto-select' => 'render'];
+    protected $listeners = ['render-puesto-select' => 'render', 'PuestoStore' => 'PuestoStore'];
+
     public $puestos;
+
     public $puestos_seleccionado;
 
     public function mount($puestos_seleccionado)
@@ -19,9 +21,14 @@ class PuestoSelect extends Component
 
     public function render()
     {
-        $this->puestos = Puesto::get();
+        $this->puestos = Puesto::getAll();
 
         return view('livewire.puesto-select', ['puestos' => $this->puestos]);
+    }
+
+    public function PuestoStore()
+    {
+        $this->puestos = Puesto::getAll();
     }
 
     public function hydrate()

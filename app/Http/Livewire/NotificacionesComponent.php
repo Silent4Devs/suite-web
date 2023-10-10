@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -9,8 +10,11 @@ use Livewire\WithPagination;
 class NotificacionesComponent extends Component
 {
     use WithPagination;
+
     public $view = 'no-leidas';
+
     private $lista_notificaciones;
+
     protected $paginationTheme = 'bootstrap';
 
     protected $listeners = [
@@ -66,21 +70,21 @@ class NotificacionesComponent extends Component
 
     public function getUnreadNotifications()
     {
-        $this->lista_notificaciones = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->paginate(10);
+        $this->lista_notificaciones = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->fastPaginate(10);
 
         return response()->noContent();
     }
 
     public function getReadedNotifications()
     {
-        $this->lista_notificaciones = Auth::user()->readNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->paginate(10);
+        $this->lista_notificaciones = Auth::user()->readNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->fastPaginate(10);
 
         return response()->noContent();
     }
 
     public function markAsRead(string $notificationId)
     {
-        auth()->user()->unreadNotifications
+        User::getCurrentUser()->unreadNotifications
             ->when($notificationId, function ($query) use ($notificationId) {
                 return $query->where('id', $notificationId)->markAsRead();
             });

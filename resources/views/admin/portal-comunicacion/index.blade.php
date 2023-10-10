@@ -99,6 +99,9 @@
             color: #1040dd;
         }
 
+        .modal-dialog {
+            margin-top: 170px !important;
+        }
     </style>
     <style>
         .c_main,
@@ -130,14 +133,14 @@
 
         .btn-silent:after {
             /*content: "";
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 5px;
-            background-color: #e6e6e6;
-            transition: 0.4s;
-            left: 0;
-            z-index: 0;*/
+                        position: absolute;
+                        width: 100%;
+                        height: 2px;
+                        bottom: 5px;
+                        background-color: #e6e6e6;
+                        transition: 0.4s;
+                        left: 0;
+                        z-index: 0;*/
         }
 
         .btn-silent:hover:before {
@@ -156,16 +159,11 @@
         .btn-silent:hover {
             color: #345183 !important;
         }
-
     </style>
     <style type="text/css">
-        
-
         .titulo-seccion {
-            font-weight: bolder;
-            font-size: 15pt;
+            font-size: 20px;
             margin-bottom: 0px;
-            color: #345183;
             border-bottom: 2px solid #ccc;
             padding-bottom: 7px;
             padding-left: 20px;
@@ -186,7 +184,7 @@
             height: 320px !important;
             opacity: 0.8;
 
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: all;
@@ -247,14 +245,14 @@
         }
 
         .comunicado {
-            margin-top: 10px;
+            /*margin-top: 10px;*/
         }
 
         .img_comunicado {
             width: 33.3%;
-            height: 200px;
+            height: 160px;
 
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: all;
@@ -262,7 +260,7 @@
 
         .text_comunicado {
             width: calc(100% - 200px);
-            padding: 0 20px;
+            padding: 0 40px;
 
         }
 
@@ -275,8 +273,6 @@
             display: flex;
             align-items: center;
             position: relative;
-            background-color: #f0f0f0;
-            padding: 0px 20px;
             padding-top: 7px;
             box-sizing: border-box;
             border-radius: 7px;
@@ -289,30 +285,45 @@
         .icon_doc {
             display: flex;
             align-items: center;
-            width: 10%;
+            justify-content: center;
+            width: 20%;
         }
 
         .icon_doc i {
-            font-size: 50pt;
-            color: #B30909;
+            font-size: 35pt;
+            color: #1E94A8;
             transition: 0.1s;
         }
 
         .icon_doc i:hover {
             transform: scale(1.1);
-            filter: brightness(1.5);
+            filter: brightness(1.2);
         }
 
         .text_doc {
-            width: 70%;
+            width: 60%;
         }
 
         .text_doc h5 {
-            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .text_doc p {
+            font-size: 12px;
+        }
+
+        .text_doc .badge {
+            background-color: #1E94A8;
+            color: #fff;
         }
 
         .opciones_doc {
             width: 20%;
+            text-align: right;
+        }
+
+        .opciones_doc {
+            font-size: 12px;
         }
 
         .img_empleado {
@@ -326,7 +337,8 @@
         .cuadro_empleados {
             position: sticky;
             top: 56px;
-            height: 600px;
+            height: auto;
+            max-height: 600px;
             overflow-y: auto;
         }
 
@@ -348,11 +360,12 @@
         }
 
         .nombre_nuevo {
-            font-size: 12pt;
+            font-size: 14px;
             text-align: center;
             width: 100%;
             margin-top: 10px;
-            font-weight: bold;
+            font-weight: medium;
+            color: #345183;
         }
 
         .img_nuevo {
@@ -360,15 +373,21 @@
             text-align: center;
         }
 
-        .img_nuevo img {}
+        .img_nuevo img {
+            height: 50px;
+            clip-path: circle(25px at 50% 50%);
+        }
 
         .datos_nuevo {
             width: 100%;
+            font-size: 14px !important;
+            margin-top: 21px;
+            font-weight: lighter;
         }
 
         .datos_nuevo h6 {
             margin: 0;
-            font-weight: bold;
+            font-weight: medium;
         }
 
         .datos_nuevo p {
@@ -386,43 +405,49 @@
             transition: 0.09;
         }
 
-        .opciones_felicitar{
+        .opciones_felicitar {
             display: flex;
             justify-content: space-between;
         }
-        .opciones_felicitar i{
+
+        .opciones_felicitar i {
             color: #345183;
             font-size: 15pt;
             cursor: pointer;
         }
-        
-        .modal-backdrop.fade.show{
+
+        .modal-backdrop.fade.show {
             display: none !important;
         }
-        .modal-dialog{
-            margin-top: 200px !important;
+
+        .carrusel-modal .modal-dialog {
+            margin-top: 30px !important;
         }
 
+        .carousel-indicators {
+            z-index: 5 !important;
+        }
     </style>
 
 
     <div class="card" style="box-shadow: none; background-color: transparent;">
-        
+
 
         @include('partials.flashMessages')
 
         <div class="card-body">
             <div class="row">
-                <h5 class="col-12 titulo_general_funcion">l de Comunicación </h5>
+                <h5 class="col-12 titulo_general_funcion">Portal de Comunicación </h5>
 
-                <div class="col-9">
+                <div class="col-sm-9">
                     <div class="row">
                         <div class="col-sm-12 col-12 col-lg-4">
-                            <div class="card" id="clima" style="padding:5px !important; background-color: #FFF9F0 !important;"></div>
-                            <div class="card" style="position: relative; padding: 5px !important; background-color:#DFECFF !important;">
-                                <a href="{{ asset('admin/system-calendar') }}" class="btn_link_agenda"
-                                    style="" title="Agenda organizacional"><i
-                                        class="fas fa-calendar-alt"></i></a>
+                            <div class="card" id="clima"
+                                style="padding:5px !important; background-color: #FFF9F0 !important;"></div>
+                            <div class="card"
+                                style="position: relative; padding: 5px !important; background-color:#DFECFF !important;">
+                                <a href="{{ asset('admin/system-calendar') }}" class="btn_link_agenda" style=""
+                                    title="Agenda organizacional"><i class="fas fa-calendar-alt"></i></a>
                                 <div class="calendar calendar-first" id="calendar_first" style="">
                                     <div class="calendar_header">
                                         <button class="switch-month switch-left"> <i
@@ -462,16 +487,29 @@
                                             } else {
                                                 $imagen = 'img/tabantaj_fondo_blanco.png';
                                             }
-
+                                            
                                         @endphp
-                                        <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
-                                            <div class="img_carrusel"
-                                                style="background-image: url('{{ asset($imagen) }}');">
+                                        @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
+                                            <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal"
+                                                data-target="#comunicado_carrusel_modal{{ $idx }}"
+                                                style="cursor: pointer;">
+                                                <div class="img_carrusel"
+                                                    style="display: flex; justify-content: center; align-items: center;">
+                                                    <video muted controls src="{{ asset($imagen) }}" width="100%"></video>
+                                                </div>
                                             </div>
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <h5>{{ $carrusel->titulo }}</h5>
+                                        @else
+                                            <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal"
+                                                data-target="#comunicado_carrusel_modal{{ $idx }}"
+                                                style="cursor: pointer;">
+                                                <div class="img_carrusel"
+                                                    style="background-image: url('{{ asset($imagen) }}');">
+                                                </div>
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5>{{ $carrusel->titulo }}</h5>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @empty
                                         <div class="carousel-item active">
                                             <div class="img_carrusel"
@@ -499,115 +537,176 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="mt-5 col-lg-12">
-                            <div class="card card-body">
-                                <h2 class="titulo-seccion"><i class="mr-3 far fa-newspaper"></i>Comunicados</h2>
-                                @forelse($comunicacionSgis as $comunicacionSgi)
-                                    <div class="comunicado" style="position:relative;">
-                                        @php
-                                            if ($comunicacionSgi->first()->count()) {
-                                                if ($carrusel->imagenes_comunicacion->first()) {
-                                                    $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
-                                                }
-                                            } else {
-                                                $imagen = 'img/portal_404.png';
-                                            }
 
-                                        @endphp
-
-                                        {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
-
-                                        <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');">
-                                        </div>
-                                        <div class="text_comunicado">
-                                            <h4 class="w-100">{{ $comunicacionSgi->titulo }}</h4>
-
-                                            <div
-                                                style="text-align:left !important; overflow:hidden; height:100px !important; background-color:#EEE; !important; padding:10px; display:block !important; justify-content:start !important;">
-                                                {!! $comunicacionSgi->descripcion !!}
+                        {{-- modal carrusel --}}
+                        @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
+                            @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
+                                <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{ $idx }}"
+                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document" style="max-width: 75% !important;">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <a
+                                                    href="{{ $carrusel->link }}">{{ Str::limit($carrusel->link, 50, '...') }}</a>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <video muted controls
+                                                    src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
+                                                    width="100%"></video>
                                             </div>
-                                            <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}">Leer
-                                                más</a>
                                         </div>
                                     </div>
-                                @empty
-                                    <div class="comunicado" style="position:relative;">
-                                        <div class="img_comunicado"
-                                            style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
-                                        <div class="text_comunicado">
-                                            <h4 class="w-100">Sin comunicados que mostar</h4>
-                                            <p class="w-100">
-
-                                            </p>
-                                            <a href=""></a>
+                                </div>
+                            @else
+                                <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{ $idx }}"
+                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document" style="max-width: 75% !important;">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <a
+                                                    href="{{ $carrusel->link }}">{{ Str::limit($carrusel->link, 50, '...') }}</a>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <img src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
+                                                    style="width: 100%;">
+                                            </div>
                                         </div>
                                     </div>
-                                @endforelse
-                            </div>
+                                </div>
+                            @endif
+                        @endforeach
 
+                        <div class="col-lg-12">
+                            @can('portal_comunicacion_mostrar_comunicados')
                                 <div class="card card-body">
-                                <h2 class="titulo-seccion"><i class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
-                                @forelse($documentos_publicados as $documento)
-                                    <div class="doc_publicado">
-                                        <div class="icon_doc">
-                                            <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
-                                                title="Ver documento">
-                                                <i class="fas fa-file-pdf"></i>
-                                            </a>
-                                        </div>
-                                        <div class="text_doc">
-                                            <h5>{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
-                                            </h5>
-                                            <p>
-                                                Se ha publicado el documento {{ $documento->codigo }}
-                                                {{ $documento->nombre }} el
-                                                10/10/21.
-                                            </p>
-                                            <p>
-                                                <span class="badge badge-dark"
-                                                    style="text-transform: capitalize">{{ $documento->tipo }}</span>
-                                                @if ($documento->macroproceso_id)
-                                                    <span class="badge badge-primary"
-                                                        style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
-                                                @endif
-                                                @if ($documento->proceso_id)
-                                                    <span class="badge badge-success"
-                                                        style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
-                                                @endif
-                                                <span style="color:red; margin-left:20px;"><i class="fas fa-eye"></i>
-                                                    <strong>{{ $documento->no_vistas }}</strong></span>
-                                            </p>
-                                        </div>
-                                        <div class="opciones_doc">
-                                            <h6><strong>Responsable:</strong></h6>
-                                            <img src="{{ asset('storage/empleados/imagenes/' . $documento->responsable->foto) }}"
-                                                class="img_empleado" title="{{ $documento->responsable->name }}"><br />
-                                            <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver
-                                                documento</a>
-                                        </div>
-                                    </div>
-                                @empty
-                                    <div class="comunicado" style="position:relative;">
-                                        <div class="img_comunicado"
-                                            style="background-image: url('{{ asset('img/no_docs.svg') }}'); transform: scale(0.8);">
-                                        </div>
-                                        <div class="text_comunicado">
-                                            <h4 class="w-100">Sin documentos que mostar</h4>
-                                            <p class="w-100">
+                                    <h2 class="titulo-seccion mb-3" style="font-weight:normal;"><i
+                                            class="mr-3 far fa-newspaper"></i>Comunicados</h2>
+                                    @forelse($comunicacionSgis as $comunicacionSgi)
+                                        <div class="comunicado" style="position:relative;">
+                                            @php
+                                                if ($comunicacionSgi->first()->count()) {
+                                                    if ($comunicacionSgi->imagenes_comunicacion->first()) {
+                                                        $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                                                    }
+                                                } else {
+                                                    $imagen = 'img/portal_404.png';
+                                                }
+                                                
+                                            @endphp
 
-                                            </p>
+                                            {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
+                                            @if ($comunicacionSgi->imagenes_comunicacion->first()->tipo == 'video')
+                                                <div class="img_comunicado"
+                                                    style="display:flex; justify-content: center; align-items:center;">
+                                                    <video autoplay muted controls src="{{ asset($imagen) }}"
+                                                        width="100%"></video>
+                                                </div>
+                                            @else
+                                                <div class="img_comunicado"
+                                                    style="background-image: url('{{ asset($imagen) }}');">
+                                                </div>
+                                            @endif
+                                            <div class="text_comunicado">
+                                                <h4 class="w-100 mb-4" style="font-size:16px;">
+                                                    {{ $comunicacionSgi->titulo }}</h4>
+
+                                                <div
+                                                    style="text-align:left !important; overflow:hidden; height:100px !important;  padding:0px; display:block !important; justify-content:start !important;">
+                                                    {!! $comunicacionSgi->descripcion !!}
+                                                </div>
+                                                <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}"
+                                                    style="font-size:12px;">Leer
+                                                    más</a>
+                                            </div>
                                         </div>
-                                            
-                                    </div>
 
+                                        <hr style="margin: 18px 0;">
+                                    @empty
+                                        <div class="comunicado" style="position:relative;">
+                                            <div class="img_comunicado"
+                                                style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
+                                            <div class="text_comunicado">
+                                                <h4 class="w-100">Sin comunicados que mostar</h4>
+                                                <p class="w-100">
 
-                                    
-                                @endforelse
-                            </div>
+                                                </p>
+                                                <a href=""></a>
+                                            </div>
+                                        </div>
+                                    @endforelse
+                                </div>
+                            @endcan
+                            @can('portal_comunicacion_mostrar_documentos_publicados')
+                                <div class="card card-body">
+                                    <h2 class="titulo-seccion" style="font-weight:normal;"><i
+                                            class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
+                                    @forelse($documentos_publicados as $documento)
+                                        <div class="doc_publicado">
+                                            <div class="icon_doc">
+                                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
+                                                    title="Ver documento">
+                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                </a>
+                                            </div>
+                                            <div class="text_doc">
+                                                <h5>{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
+                                                </h5>
+                                                <p>
+                                                    Se ha publicado el documento {{ $documento->codigo }}
+                                                    {{ $documento->nombre }} el
+                                                    10/10/21.
+                                                </p>
+                                                <p>
+                                                    <span class="badge"
+                                                        style="text-transform: capitalize">{{ $documento->tipo }}</span>
+                                                    @if ($documento->macroproceso_id)
+                                                        <span class="badge"
+                                                            style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
+                                                    @endif
+                                                    @if ($documento->proceso_id)
+                                                        <span class="badge"
+                                                            style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
+                                                    @endif
+                                                    <span style="color:#1E94A8; margin-left:20px;"><i class="fas fa-eye"></i>
+                                                        <strong>{{ $documento->no_vistas }}</strong></span>
+                                                </p>
+                                            </div>
+                                            <div class="opciones_doc">
+                                                <p>Responsable:</p>
+                                                <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $documento->responsable ? $documento->responsable->avatar : 'user.png' }}"
+                                                    class="img_empleado"
+                                                    title="{{ $documento->responsable ? $documento->responsable->name : 'Sin dato' }}"><br />
+                                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver
+                                                    documento</a>
+                                            </div>
+                                        </div>
+
+                                        <hr style="margin: 18px 0;">
+                                    @empty
+                                        <div class="comunicado" style="position:relative;">
+                                            <div class="img_comunicado"
+                                                style="background-image: url('{{ asset('img/no_docs.svg') }}'); transform: scale(0.8);">
+                                            </div>
+                                            <div class="text_comunicado">
+                                                <h4 class="w-100">Sin documentos que mostar</h4>
+                                                <p class="w-100">
+
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    @endforelse
+                                </div>
+                            @endcan
                         </div>
+
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-sm-3">
                     @livewire('eventos-portal')
                 </div>
             </div>

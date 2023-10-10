@@ -7,8 +7,11 @@ use Livewire\Component;
 class AlertasControlDocumentoComponent extends Component
 {
     public $show_success_alert;
+
     public $message_success;
+
     public $show_error_alert;
+
     public $message_error;
 
     protected $listeners = [

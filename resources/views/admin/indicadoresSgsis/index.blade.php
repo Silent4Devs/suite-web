@@ -6,11 +6,75 @@
     @can('indicadores_sgsi_create')
 
     @endcan
-    <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Indicadores SGSI</strong></h3>
-        </div>
 
+    <style>
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+        .table tr th:nth-child(2) {
+            width: 150px !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+
+        }
+
+        .table tr th:nth-child(3) {
+            width: 100px !important;
+            max-width: 100px !important;
+            min-width: 100px !important;
+
+        }
+
+        .table tr td:nth-child(4) {
+            text-align: center !important;
+
+        }
+
+        .table tr th:nth-child(6) {
+            width: 400px !important;
+            max-width: 350px !important;
+            min-width: 350px !important;
+
+        }
+    </style>
+    <h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión</h5>
+    <div class="mt-5 card">
+
+        <div class="text-right mt-5 mr-5">
+            <a class="btn btn-danger" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
+        </div>
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -22,6 +86,12 @@
                         </th>
                         <th>
                             Nombre del indicador
+                        </th>
+                        <th>
+                            Área
+                        </th>
+                        <th>
+                            Responsable
                         </th>
                         {{--<th>
                             Proceso
@@ -185,29 +255,46 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Indicadores SGSI ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [5, 20, 5, 20];
-                        doc.styles.tableHeader.fontSize = 7.1;
-                        doc.defaultStyle.fontSize = 7.1; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
                     extend: 'print',
                     title: `Indicadores SGSI ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">INDICADORES DEL SISTEMA DE GESTIÓN</strong>
+                                </div>
+                                <div class="col-3 p-2">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -232,7 +319,7 @@
 
             ];
 
-            @can('indicadores_sgsi_delete')
+            @can('indicadores_sgsi_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar indicador SGSI',
@@ -245,7 +332,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('indicadores_sgsi_delete')
+            @can('indicadores_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -291,6 +378,26 @@
                         name: 'nombre'
                     },
                     {
+                        data: 'area',
+                        name: 'area',
+                    },
+                    {
+                        data: 'responsable_name',
+                        render: function(data, type, row, meta) {
+                            let empleado = JSON.parse(row.responsable_name ? row.responsable_name : '{}');
+                            if (type === "empleadoText") {
+                                return empleado.name;
+                            }      
+                            let responsable_name = "";
+                            if (empleado) {
+                                responsable_name += `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
+                            }
+                            return responsable_name;
+                        }                        
+                    },
+                    {
                         data: 'año',
                         name: 'año',
                     },
@@ -318,7 +425,11 @@
                         data: 'enlace',
                         name: 'enlace',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100"><a href="evaluaciones-sgsisInsertar/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>`;
+                            return `
+                            @can('indicadores_sgsi_vinculo')
+                            <div class="text-center w-100"><a href="evaluaciones-sgsisInsertar/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>
+                            @endcan
+                            `;
                         }
                     },
                     /*{

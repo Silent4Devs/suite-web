@@ -1959,7 +1959,7 @@ Echo.channel("notificaciones-campana").listen(".RecursosEvent", function (e) {
       break;
   }
 });
-Echo["private"]("App.Models.User." + window.Laravel.user).notification(function (e) {
+Echo["private"]("App.Models.User." + window.NotificationUser).notification(function (e) {
   toastr.info(e.mensaje);
   Livewire.emit("render-task-count");
   Livewire.emit("render-task-list");

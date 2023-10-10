@@ -9,6 +9,7 @@ use Livewire\Component;
 class MetricaObjetivoCreate extends Component
 {
     public $definicion;
+
     protected $rules = [
         'definicion' => 'required|string|max:255',
     ];

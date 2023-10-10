@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .select-revisores .select2-selection {
             height: 50px !important;
@@ -25,23 +24,28 @@
         .table tr td:nth-child(4) {
             min-width: 300px !important;
         }
-
     </style>
-     {{ Breadcrumbs::render('admin.paneldeclaracion.index') }}
+    {{ Breadcrumbs::render('admin.paneldeclaracion.index') }}
 
     @include('partials.flashMessages')
-
+    <x-loading-indicator />
+    <h5 class="col-12 titulo_general_funcion">Asignación Controles</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Asignación Controles</strong></h3>
+        <div id="loaderComponent" style="display:none">
+            <div
+                style="display:flex; justify-content: center;align-items: center;background-color: black;position: fixed;top: 0px;left: 0px;z-index: 9999;width: 100%;height: 100%;opacity: .65;">
+                <div style="color: #9784ed" class="la-ball-scale-ripple-multiple la-3x">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
         </div>
-
-
-        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
                     <div class="w-100">
-                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                     </div>
                 </div>
                 <div class="col-11">
@@ -71,7 +75,9 @@
                         <th>
                             Aprobador
                         </th>
+                        <th>
 
+                        </th>
                     </tr>
 
                 </thead>
@@ -104,13 +110,14 @@
                                     </select> --}}
                                     <p>Realizó modificaciones en la lista de responsables. Elija una de las opciones
                                         siguientes</p>
-                                    <input type="radio" id="contactChoice1" name="contact" value="1"> Enviar actualizaciones
+                                    <input type="radio" id="contactChoice1" name="contact" value="1"> Enviar
+                                    actualizaciones
                                     solo
-                                    a los responsables agregados o eliminados
+                                    a los responsables agregados.
                                     <br>
-                                    <input type="radio" id="contactChoice1" name="contact" value="2">&nbsp;Enviar
+                                    <input type="radio" id="contactChoice2" name="contact" value="2">&nbsp;Enviar
                                     actualizaciones a todos
-                                    los responsables
+                                    los responsables.
                                     <br>
 
                                 </div>
@@ -126,6 +133,7 @@
                 </div>
             </div>
 
+
         </div>
     </div>
 @endsection
@@ -138,52 +146,88 @@
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        doc.styles.tableHeader.fontSize = 7.5;
-                        doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
+            let dtButtons = [
+                // {
+                //     extend: 'csvHtml5',
+                //     title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar CSV',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible'],
+                //         orthogonal: "responsableText"
+                //     }
+                // },
+                // {
+                //     extend: 'excelHtml5',
+                //     title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar Excel',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible'],
+                //         orthogonal: "responsableText"
+                //     }
+                // },
+                // {
+                //     extend: 'pdfHtml5',
+                //     title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar PDF',
+                //     orientation: 'landscape',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible'],
+                //         orthogonal: "responsableText"
+                //     },
+                //     customize: function(doc) {
+                //         doc.pageMargins = [20, 60, 20, 30];
+                //         // doc.styles.tableHeader.fontSize = 7.5;
+                //         // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                //     }
+                // },
+                // {
+                //     extend: 'print',
+                //     title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Imprimir',
+                //     customize: function(doc) {
+                //         let logo_actual = @json($logo_actual);
+                //         let empresa_actual = @json($empresa_actual);
+
+                //         var now = new Date();
+                //         var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                //         $(doc.document.body).prepend(`
+                //         <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                //             <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                //                     <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                //                 </div>
+                //                 <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                //                     <p>${empresa_actual}</p>
+                //                     <strong style="color:#345183">ASIGNACIÓN CONTROLES</strong>
+                //                 </div>
+                //                 <div class="col-3 p-2">
+                //                     Fecha: ${jsDate}
+                //                 </div>
+                //             </div>
+                //         `);
+
+                //         $(doc.document.body).find('table')
+                //             .css('font-size', '12px')
+                //             .css('margin-top', '15px')
+                //         // .css('margin-bottom', '60px')
+                //         $(doc.document.body).find('th').each(function(index) {
+                //             $(this).css('font-size', '18px');
+                //             $(this).css('color', '#fff');
+                //             $(this).css('background-color', 'blue');
+                //         });
+                //     },
+                //     title: '',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible']
+                //     }
+                // },
                 {
                     extend: 'colvis',
                     text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
@@ -211,59 +255,6 @@
                 }
 
             ];
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-            let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.paneldeclaracion.massDestroy') }}",
-                className: 'btn-danger',
-                action: function(e, dt, node, config) {
-                    var ids = $.map(dt.rows({
-                        selected: true
-                    }).data(), function(entry) {
-                        return entry.id
-                    });
-
-                    if (ids.length === 0) {
-                        alert('{{ trans('global.datatables.zero_selected') }}')
-
-                        return
-                    }
-
-                    if (confirm('{{ trans('global.areYouSure') }}')) {
-                        $.ajax({
-                                headers: {
-                                    'x-csrf-token': _token
-                                },
-                                method: 'POST',
-                                url: config.url,
-                                data: {
-                                    ids: ids,
-                                    _method: 'DELETE'
-                                }
-                            })
-                            .done(function() {
-                                location.reload()
-                            })
-                    }
-                }
-            }
-            //dtButtons.push(deleteButton)
-
-
-            // let btnAgregar = {
-            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-            //     titleAttr: 'Agregar nuevo',
-            //     url: "{{ route('admin.paneldeclaracion.create') }}",
-            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-            //     action: function(e, dt, node, config) {
-            //         let {
-            //             url
-            //         } = config;
-            //         window.location.href = url;
-            //     }
-            // };
-            // dtButtons.push(btnAgregar);
-
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -274,204 +265,60 @@
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-                ajax: "{{ route('admin.paneldeclaracion.index') }}",
+                ajax: {
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('admin.paneldeclaracion.controles') }}",
+                    type: 'POST',
+                },
                 columns: [{
-                        data: 'controles',
-                        name: 'controles'
+                        data: 'anexo_indice',
+                        name: 'anexo_indice'
                     },
                     {
-                        data: 'politica',
-                        name: 'politica'
+                        data: 'anexo_politica',
+                        name: 'anexo_politica'
                     },
                     {
-                        data: 'responsable',
-                        name: 'responsable',
+                        data: 'id',
+                        name: 'id',
                         render: function(data, type, row, meta) {
+                            if (type === "responsableText") {
+                                return data.name;
+                            }
                             let responsableselect = "";
-                            let responsableselects = JSON.parse(row.empleados);
-                            //  console.log(row.empleados.declaraciones_responsable);
-                            responsableselect = `
-                            <select class="revisoresSelect" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
-                                ${responsableselects?.map ((responsable,idx)=>{
-                                    return`
-                                                    <option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>
-                                                                    ${responsable.name }</option>`})}
-                            </select>`;
-                            $(`select#responsables${row.id}`).select2({
-                                theme: 'bootstrap4',
-                                templateResult: formatState,
-                                templateSelection: formatState
-                            });
-                            $(`select#responsables${row.id}`).on('select2:select', function(e) {
-                                const declaracion = this.getAttribute('data-id');
-                                const {
-                                    element
-                                } = e.params.data;
-                                const responsable = element.getAttribute('data-id-empleado')
-                                const url =
-                                    "{{ route('admin.paneldeclaracion.responsables') }}";
-                                const token = "{{ csrf_token() }}";
-                                const request = fetch(url, {
-                                    mode: 'cors', // this cannot be 'no-cors'
-                                    headers: {
-                                        'X-CSRF-TOKEN': token,
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        declaracion,
-                                        responsable
-                                    })
-                                });
-                                request.then(response => response.json()).
-                                then(data => {
-                                    if (data.estatus == 'limite_alcanzado') {
-                                        const usuarioSeleccionado = $(
-                                            `select#responsables${row.id} option[data-id-empleado="${responsable}"]`
-                                        );
-                                        usuarioSeleccionado.prop('selected', false);
-                                        $(`select#responsables${row.id}`).trigger(
-                                            'change.select2');
-                                    }
-                                    console.log(data.estatus)
-                                    if (data.estatus == 'ya_es_aprobador') {
-                                        const usuarioSeleccionadoResp = $(
-                                            `select#responsables${row.id} option[data-id-empleado="${responsable}"]`
-                                        );
-                                        usuarioSeleccionadoResp.prop('selected', false);
-                                        $(`select#responsables${row.id}`).trigger(
-                                            'change.select2');
-                                    }
-                                    toastr.success(data.message);
-                                }).
-                                catch(error => console.log)
-                            });
-                            $(`select#responsables${row.id}`).on('select2:unselect', function(e) {
-                                const declaracion = this.getAttribute('data-id');
-                                const {
-                                    element
-                                } = e.params.data;
-                                const responsable = element.getAttribute('data-id-empleado')
-                                const url =
-                                    "{{ route('admin.paneldeclaracion.responsables.quitar') }}";
-                                const token = "{{ csrf_token() }}";
-                                const request = fetch(url, {
-                                    mode: 'cors', // this cannot be 'no-cors'
-                                    headers: {
-                                        'X-CSRF-TOKEN': token,
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        declaracion,
-                                        responsable
-                                    })
-                                });
-                                request.then(response => response.json()).
-                                then(data => {
-                                    toastr.success(data.message);
-                                }).
-                                catch(error => console.log)
-
-                            });
+                            let responsableselects = @json($empleados);
+                            responsableselect =
+                                `<select class="revisoresSelect responsables" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
+                            ${responsableselects?.map ((responsable,idx)=>{
+                                return`<option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>${responsable.name }</option>`})}</select>`;
                             return responsableselect;
                         }
                     },
                     {
-                        data: 'aprobador',
-                        name: 'aprobador',
+                        data: 'id',
+                        name: 'id',
                         render: function(data, type, row, meta) {
+                            if (type === "responsableText") {
+                                return data.name;
+                            }
                             let aprobadorselect = "";
-                            let aprobadoreselects = JSON.parse(row.empleados);
+                            let aprobadoreselects = @json($empleados);
                             aprobadorselect = `
-                        <select class="revisoresSelect" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
-                            ${aprobadoreselects?.map ((aprobador,idx)=>{
-                                return`
-                                                            <option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>
-                                                                ${aprobador.name }</option>`})}
-                                </select>`;
-                            $(`select#aprobadores${row.id}`).select2({
-                                theme: 'bootstrap4',
-                                templateResult: formatState,
-                                templateSelection: formatState
-                            });
-                            $(`select#aprobadores${row.id}`).on('select2:select', function(e) {
-                                const declaracion = this.getAttribute('data-id');
-                                const {
-                                    element
-                                } = e.params.data;
-                                const aprobador = element.getAttribute('data-id-empleado')
-                                const url =
-                                    "{{ route('admin.paneldeclaracion.aprobadores') }}";
-                                const token = "{{ csrf_token() }}";
-                                const request = fetch(url, {
-                                    mode: 'cors', // this cannot be 'no-cors'
-                                    headers: {
-                                        'X-CSRF-TOKEN': token,
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        declaracion,
-                                        aprobador
-                                    })
-                                });
-                                request.then(response => response.json()).
-                                then(data => {
-                                    if (data.estatus == 'limite_alcanzado') {
-                                        const usuarioSeleccionado = $(
-                                            `select#aprobadores${row.id} option[data-id-empleado="${aprobador}"]`
-                                        );
-                                        usuarioSeleccionado.prop('selected', false);
-                                        $(`select#aprobadores${row.id}`).trigger(
-                                            'change.select2');
-                                    }
-                                    if (data.estatus == 'ya_es_responsable') {
-                                        const usuarioSeleccionadoAprob = $(
-                                            `select#aprobadores${row.id} option[data-id-empleado="${aprobador}"]`
-                                        );
-                                        usuarioSeleccionadoAprob.prop('selected',
-                                            false);
-                                        $(`select#aprobadores${row.id}`).trigger(
-                                            'change.select2');
-                                    }
-                                    toastr.success(data.message);
-                                }).
-                                catch(error => console.log)
-                            });
-                            $(`select#aprobadores${row.id}`).on('select2:unselect', function(e) {
-                                const declaracion = this.getAttribute('data-id');
-                                const {
-                                    element
-                                } = e.params.data;
-                                const aprobador = element.getAttribute('data-id-empleado')
-                                const url =
-                                    "{{ route('admin.paneldeclaracion.aprobadores.quitar') }}";
-                                const token = "{{ csrf_token() }}";
-                                const request = fetch(url, {
-                                    mode: 'cors', // this cannot be 'no-cors'
-                                    headers: {
-                                        'X-CSRF-TOKEN': token,
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        declaracion,
-                                        aprobador
-                                    })
-                                });
-                                request.then(response => response.json()).
-                                then(data => {
-                                    toastr.success(data.message);
-                                }).
-                                catch(error => console.log)
-                                console.log(declaracion, aprobador);
-                            });
+                    <select class="revisoresSelect aprobadores" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
+                        ${aprobadoreselects?.map ((aprobador,idx)=>{
+                            return`<option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>${aprobador.name }</option>`})}
+                            </select>`;
+
                             return aprobadorselect;
+                        }
+                    },
+                    {
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                            return '';
                         }
                     }
                 ],
@@ -479,23 +326,204 @@
                 order: [
                     [0, 'desc']
                 ],
-                paging: false
+                "drawCallback": function(settings) {
+                    $('select.empleado').select2({
+                        theme: 'bootstrap4',
+                        templateResult: formatState,
+                        templateSelection: formatState
+                    });
+
+                    $('.revisoresSelect').select2({
+                        theme: 'bootstrap4',
+                        templateResult: formatState,
+                        templateSelection: formatState
+                    });
+
+                    $(`select#responsables`).select2({
+                        theme: 'bootstrap4',
+                        templateResult: formatState,
+                        templateSelection: formatState
+                    });
+
+                    $(`select.aprobadores`).on('select2:select', function(e) {
+                        document.getElementById('loaderComponent').style.display =
+                            'block';
+                        const declaracion = this.getAttribute('data-id');
+                        const {
+                            element
+                        } = e.params.data;
+                        const aprobador = element.getAttribute('data-id-empleado')
+                        const url =
+                            "{{ route('admin.paneldeclaracion.aprobadores') }}";
+                        const token = "{{ csrf_token() }}";
+                        const request = fetch(url, {
+                            mode: 'cors', // this cannot be 'no-cors'
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                declaracion,
+                                aprobador
+                            })
+                        });
+                        request.then(response => response.json()).
+                        then(data => {
+                            if (data.estatus == 'limite_alcanzado') {
+                                const usuarioSeleccionado = $(
+                                    `option[data-id-empleado="${aprobador}"]`
+                                );
+                                usuarioSeleccionado.prop('selected', false);
+                                $(`select.aprobadores`).trigger(
+                                    'change.select2');
+                            }
+                            if (data.estatus == 'ya_es_responsable') {
+                                const usuarioSeleccionadoAprob = $(
+                                    `option[data-id-empleado="${aprobador}"]`
+                                );
+                                usuarioSeleccionadoAprob.prop('selected',
+                                    false);
+                                $(`select.aprobadores`).trigger(
+                                    'change.select2');
+                            }
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                            toastr.success(data.message);
+                        }).
+                        catch(error => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                        })
+                    });
+                    $(`select.aprobadores`).on('select2:unselect', function(e) {
+                        document.getElementById('loaderComponent').style.display =
+                            'block';
+                        const declaracion = this.getAttribute('data-id');
+                        const {
+                            element
+                        } = e.params.data;
+                        const aprobador = element.getAttribute('data-id-empleado')
+                        const url =
+                            "{{ route('admin.paneldeclaracion.aprobadores.quitar') }}";
+                        const token = "{{ csrf_token() }}";
+                        const request = fetch(url, {
+                            mode: 'cors', // this cannot be 'no-cors'
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                declaracion,
+                                aprobador
+                            })
+                        });
+                        request.then(response => response.json()).
+                        then(data => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                            toastr.success(data.message);
+                        }).
+                        catch(error => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                        })
+                    });
+
+                    $(`select.responsables`).on('select2:select', function(e) {
+                        document.getElementById('loaderComponent').style.display =
+                            'block';
+                        const declaracion = this.getAttribute('data-id');
+                        const {
+                            element
+                        } = e.params.data;
+                        const responsable = element.getAttribute('data-id-empleado')
+                        const url =
+                            "{{ route('admin.paneldeclaracion.responsables') }}";
+                        const token = "{{ csrf_token() }}";
+                        const request = fetch(url, {
+                            mode: 'cors', // this cannot be 'no-cors'
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                declaracion,
+                                responsable
+                            })
+                        });
+                        request.then(response => response.json()).
+                        then(data => {
+                            if (data.estatus == 'limite_alcanzado') {
+                                const usuarioSeleccionado = $(
+                                    `option[data-id-empleado="${responsable}"]`
+                                );
+                                usuarioSeleccionado.prop('selected', false);
+                                $(`.responsables`).trigger(
+                                    'change.select2');
+                            }
+                            if (data.estatus == 'ya_es_aprobador') {
+                                const usuarioSeleccionadoResp = $(
+                                    `option[data-id-empleado="${responsable}"]`
+                                );
+                                usuarioSeleccionadoResp.prop('selected', false);
+                                $(`.responsables`).trigger(
+                                    'change.select2');
+                            }
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                            toastr.success(data.message);
+                        }).
+                        catch(error => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                        })
+                    });
+                    $(`select.responsables`).on('select2:unselect', function(e) {
+                        document.getElementById('loaderComponent').style.display =
+                            'block';
+                        const declaracion = this.getAttribute('data-id');
+                        const {
+                            element
+                        } = e.params.data;
+                        const responsable = element.getAttribute('data-id-empleado')
+                        const url =
+                            "{{ route('admin.paneldeclaracion.responsables.quitar') }}";
+                        const token = "{{ csrf_token() }}";
+                        const request = fetch(url, {
+                            mode: 'cors', // this cannot be 'no-cors'
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                declaracion,
+                                responsable
+                            })
+                        });
+                        request.then(response => response.json()).
+                        then(data => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                            toastr.success(data.message);
+                        }).
+                        catch(error => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                        })
+
+                    });
+                }
+                // paging: false
             };
             let table = $('.datatable-PanelDeclaracion').DataTable(dtOverrideGlobals);
-            // buttons: dtButtons
-            // })
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
 
 
@@ -504,23 +532,24 @@
 
             window.enviarCorreo = (e, tipo) => {
                 let enviarRadio = document.getElementsByName('contact');
-                let dataRadio = "";
-                for (var i = 0, length = enviarRadio.length; i < length; i++) {
-                    if (enviarRadio[i].checked) {
-                        // do whatever you want with the checked radio
-                        dataRadio = enviarRadio[i].value;
-                        // only one radio can be logically checked, don't check the rest
-                        break;
-                    }
-                }
+                //false
+                let dataRadio = document.querySelector('input[name=contact]:checked').value;
 
                 const responsables = $(e.target.parentElement.querySelector('select')).select2('data');
-                console.log(responsables);
+                console.log(dataRadio,'saul');
                 const array_responsables = [];
-                responsables.forEach(responsable => {
-                    const responsable_id = responsable.element.getAttribute('data-id-empleado')
-                    array_responsables.push(responsable_id)
-                })
+                if (responsables) {
+                    responsables.forEach(responsable => {
+                        const responsable_id = responsable.element.getAttribute('data-id-empleado')
+                        array_responsables.push(responsable_id)
+                    })
+                }
+
+                document.getElementById('loaderComponent').style.display = 'block';
+
+
+                const enviarTodos = dataRadio == 1 ? false : true;
+                const enviarNoNotificados = dataRadio == 2 ? false : true;
                 const url = "{{ route('admin.paneldeclaracion.enviarcorreo') }}"
                 const token = "{{ csrf_token() }}";
                 const request = fetch(url, {
@@ -532,14 +561,27 @@
                         },
                         method: 'POST',
                         body: JSON.stringify({
-                            dataRadio: dataRadio,
+                            enviarTodos,
+                            enviarNoNotificados,
                             responsables: JSON.stringify(array_responsables),
                             tipo
                         })
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
+                        toastr.success('Correo(s) enviado(s) con éxito');
+                        document.getElementById('loaderComponent').style.display = 'none';
+
+                        $('#ResponsablesModal').modal('hide');
+
+                        $('.modal-backdrop').hide();
+                    })
+                    .catch(error => {
+                        document.getElementById('loaderComponent').style.display = 'none';
+                        $('#ResponsablesModal').modal('hide');
+
+                        $('.modal-backdrop').hide();
+                        toastr.error(error);
                     })
             }
 
@@ -568,7 +610,7 @@
         });
 
         window.formatState = (opt) => {
-            if(!opt.id) {
+            if (!opt.id) {
                 return opt.text;
             }
             var optimage = $(opt.element).attr('data-avatar');
@@ -582,10 +624,5 @@
 
             return $opt;
         };
-
-
     </script>
-
-
 @endsection
-

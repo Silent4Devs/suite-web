@@ -99,7 +99,7 @@
     })
 
     async function importar(formData) {
-        const url = "{{ route('carga-categoria') }}";
+        const url = "{{ route('carga-categoriacapacitacion') }}";
             const response = await fetch(url, {
                 method: 'POST',
                 body: formData,

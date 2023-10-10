@@ -4,8 +4,8 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #00abb2;
-            color: #00abb2;
+            border: 1px solid #345183;
+            color: #345183;
             text-align: center;
             padding: 0;
             width: 45px;
@@ -19,7 +19,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #00abb2;
+            background: #345183;
         }
 
         .btn_cargar i {
@@ -36,12 +36,12 @@
         }
 
     </style>
-
+    <h5 class="col-12 titulo_general_funcion">Inventario de Activos</h5>
     <div class="mt-5 card">
-        @can('configuracion_activo_create')
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+        @can('inventario_activos_agregar')
+            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Inventario de Activos</strong></h3>
-            </div>
+            </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalactivoinventario', ['model' => 'Vulnerabilidad', 'route' =>
@@ -67,7 +67,7 @@
                         <th>
                             Subcategoría
                         </th>
-                        <th>
+                        <th style="min-width: 350px !important;">
                             {{ trans('cruds.activo.fields.descripcion') }}
                         </th>
                         <th>
@@ -113,54 +113,71 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($tipoactivos as $key => $item)
-                                    <option value="{{ $item->tipo }}">{{ $item->tipo }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($tipoactivos as $key => $item)
-                                    <option value="{{ $item->subtipo }}">{{ $item->subtipo }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($sedes as $key => $item)
-                                    <option value="{{ $item->sede }}">{{ $item->sede }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
+                {{-- <tbody>
+                    @foreach ( $activos_nuevo as $sub )
+                <tr>
+                    <td>
+                        {{$sub->id}}
+                    </td>
+                    <td>
+                        {{$sub->nombreactivo}}
+                    </td>
+                    <td>
+                        {{$sub->tipoactivo->tipo}}
+                    </td>
+                    <td>
+                        {{$sub->subcategoria->subcategoria}}
+                    </td>
+                    <td>
+                        {{ trans('cruds.activo.fields.descripcion') }}
+                    </td>
+                    <td>
+                        {{ trans('cruds.activo.fields.dueno') }}
+                    </td>
+                    <td>
+                        Responsable
+                    </td>
+                    <td>
+                        Sede
+                    </td>
+                    <td>
+                        Ubicación
+                    </td>
+                    <td>
+                        Marca
+                    </td>
+                    <td>
+                        Modelo
+                    </td>
+                    <td>
+                        N° serie
+                    </td>
+                    <td>
+                        N° producto
+                    </td>
+                    <td>
+                        Fecha de alta
+                    </td>
+                    <td>
+                        Fecha fin de garantía
+                    </td>
+                    <td>
+                        Fecha compra
+                    </td>
+                    <td>
+                        Fecha de baja
+                    </td>
+                    <td>
+                        Observaciones
+                    </td>
+                    <td>
+                        Opciones
+                    </td>
+                </tr>
+
+                    @endforeach
+                </tbody> --}}
             </table>
         </div>
     </div>
@@ -236,7 +253,7 @@
                 }
 
             ];
-            @can('configuracion_activo_create')
+            @can('inventario_activos_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar inventario de activos',
@@ -251,8 +268,12 @@
                 text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-activo_inventario') }}",
                 action: function(e, dt, node, config) {
-                $('#').modal('show');
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
                 };
                 let btnImport = {
@@ -268,7 +289,7 @@
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
-            @can('configuracion_activo_delete')
+            @can('inventario_activos_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -310,8 +331,8 @@
                     visible: false
                 }],
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'identificador',
+                        name: 'identificador'
                     },
                     {
                         data: 'nombreactivo',
@@ -324,8 +345,9 @@
                         name: 'tipoactivo.tipo'
                     },
                     {
-                        data: 'subtipo_subtipo',
-                        name: 'subtipo.subtipo'
+                        data: 'subcategoria',
+                        name: 'subcategoria.subcategoria'
+
                     },
                     {
                         data: 'descripcion',
@@ -345,12 +367,10 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-
-
                             let html =
-                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.responsable.avatar}" title="${row.responsable.name}"></img>`;
+                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.empleado.avatar}" title="${row.empleado.name}"></img>`;
 
-                            return `${row.responsable ? html: ''}`;
+                            return  html;
                         }
                     },
                     {

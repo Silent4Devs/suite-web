@@ -6,6 +6,7 @@ use App\Models\Vulnerabilidad;
 
 /**
  * Class VulnerabilidadRepository.
+ *
  * @version August 5, 2021, 7:45 pm UTC
  */
 class VulnerabilidadRepository extends BaseRepository

@@ -2,16 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateObjetivosseguridadRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('objetivosseguridad_edit');
-    }
-
     public function rules()
     {
         return [
@@ -19,11 +13,11 @@ class UpdateObjetivosseguridadRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'indicador'         => [
+            'indicador' => [
                 'string',
                 'nullable',
             ],
-            'anio'              => [
+            'anio' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],

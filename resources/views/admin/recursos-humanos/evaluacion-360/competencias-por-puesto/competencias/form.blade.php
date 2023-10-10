@@ -8,7 +8,7 @@
                         <select class="form-control" name="competencia_id" id="competencia_id">
                             <option value="" selected disabled>-- Selecciona un competencia --</option>
                             @foreach ($competencias as $competencia)
-                                <option value="{{ $competencia->id }}">{{ $competencia->nombre }}</option>
+                                <option value="{{ $competencia->id }}" data-description="{{$competencia->descripcion}}">{{ $competencia->nombre }}</option>
                             @endforeach
                         </select>
                         <small class="text-danger errores error_competencia_id"></small>
@@ -53,6 +53,9 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                </div>
+                <div style="padding-left: 20px; padding-right:20px;text-align: justify;">
+                    <p id="descripcion_competencia"></p>
                 </div>
                 <div class="pb-0 modal-body">
                     <div class="row"

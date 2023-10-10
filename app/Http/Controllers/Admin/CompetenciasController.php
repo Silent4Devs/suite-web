@@ -13,6 +13,8 @@ use App\Models\Competencium;
 use App\Models\CursosDiplomasEmpleados;
 use App\Models\Empleado;
 use App\Models\EvidenciasDocumentosEmpleados;
+use App\Models\Language;
+use App\Models\ListaDocumentoEmpleado;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
@@ -30,7 +32,7 @@ class CompetenciasController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('competencium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('competencias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Competencium::with(['nombrecolaborador', 'team'])->select(sprintf('%s.*', (new Competencium)->table));
@@ -40,9 +42,9 @@ class CompetenciasController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'competencium_show';
-                $editGate = 'competencium_edit';
-                $deleteGate = 'competencium_delete';
+                $viewGate = 'competencias_show';
+                $editGate = 'competencias_editar';
+                $deleteGate = 'competencias_eliminar';
                 $crudRoutePart = 'competencia';
 
                 return view('partials.datatablesActions', compact(
@@ -83,7 +85,7 @@ class CompetenciasController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.competencia.index', compact('users', 'teams'));
@@ -91,15 +93,17 @@ class CompetenciasController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('competencium_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('competencias_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrecolaboradors = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.competencia.create', compact('nombrecolaboradors'));
     }
 
     public function store(StoreCompetenciumRequest $request)
     {
+        abort_if(Gate::denies('competencias_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $competencium = Competencium::create($request->all());
 
         foreach ($request->input('certificados', []) as $file) {
@@ -115,9 +119,9 @@ class CompetenciasController extends Controller
 
     public function edit(Competencium $competencium)
     {
-        abort_if(Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('competencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrecolaboradors = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $competencium->load('nombrecolaborador', 'team');
 
@@ -126,6 +130,8 @@ class CompetenciasController extends Controller
 
     public function update(UpdateCompetenciumRequest $request, Competencium $competencium)
     {
+        abort_if(Gate::denies('competencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $competencium->update($request->all());
 
         if (count($competencium->certificados) > 0) {
@@ -149,7 +155,7 @@ class CompetenciasController extends Controller
 
     public function show(Competencium $competencium)
     {
-        abort_if(Gate::denies('competencium_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('competencias_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $competencium->load('nombrecolaborador', 'team');
 
@@ -158,7 +164,7 @@ class CompetenciasController extends Controller
 
     public function destroy(Competencium $competencium)
     {
-        abort_if(Gate::denies('competencium_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('competencias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $competencium->delete();
 
@@ -174,7 +180,7 @@ class CompetenciasController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Competencium();
         $model->id = $request->input('crud_id', 0);
@@ -186,39 +192,53 @@ class CompetenciasController extends Controller
 
     public function buscarcv(Request $request)
     {
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.competencia.buscarCV', compact('areas'));
     }
 
     public function expedientesProfesionales(Request $request)
     {
-        $areas = Area::get();
+        abort_if(Gate::denies('perfiles_profesionales_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $areas = Area::getAll();
 
         return view('admin.competencia.expedientes', compact('areas'));
     }
 
     public function miCurriculum(Request $request, Empleado $empleado)
     {
-        return view('admin.competencia.mi-cv', compact('empleado'));
+        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleado->load('idiomas');
+        $lista_docs = ListaDocumentoEmpleado::getAll();
+
+        return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
     }
 
     public function editarCompetencias(Empleado $empleado)
     {
+        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $isEditAdmin = false;
+        $idiomas = Language::get();
 
-        return view('admin.empleados.edit', compact('isEditAdmin', 'empleado'));
+        return view('admin.empleados.edit', compact('isEditAdmin', 'empleado', 'idiomas'));
     }
 
     public function cargarDocumentos(Request $request, Empleado $empleado)
     {
+        $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
+        if ($doc_viejo) {
+            $doc_viejo->update([
+                'archivado' => true,
+            ]);
+        }
+
         $request->merge([
             'empleado_id' => $empleado->id,
         ]);
         $request->validate([
             'nombre' => 'required|string|max:255',
             // 'numero' => 'required|string|max:255',
-            'documentos' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
+            // 'documentos' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
             'empleado_id' => 'required|exists:empleados,id',
         ]);
 
@@ -232,6 +252,12 @@ class CompetenciasController extends Controller
                     'documentos' => $file->getClientOriginalName(),
                 ]);
             }
+        }
+
+        dd(back());
+
+        if (back() == route('inicio-Usuario.expediente')) {
+            return redirect()->route('inicio-Usuario.expediente');
         }
 
         return response()->json(['status' => 'success', 'message' => 'Documentos cargados con éxito']);
@@ -259,10 +285,10 @@ class CompetenciasController extends Controller
         $curso = CursosDiplomasEmpleados::create([
             'empleado_id' => $empleado->id,
             'curso_diploma' => $request->curso_diploma,
-            'tipo' =>  $request->tipo,
-            'año' =>  $request->año,
-            'fecha_fin' =>  $request->fecha_fin,
-            'duracion' =>  $request->duracion,
+            'tipo' => $request->tipo,
+            'año' => $request->año,
+            'fecha_fin' => $request->fecha_fin,
+            'duracion' => $request->duracion,
         ]);
 
         if ($request->hasFile('file')) {
@@ -306,8 +332,8 @@ class CompetenciasController extends Controller
         $certificado = CertificacionesEmpleados::create([
             'empleado_id' => $empleado->id,
             'nombre' => $request->nombre,
-            'estatus' =>  $request->estatus,
-            'vigencia' =>  $request->vigencia,
+            'estatus' => $request->estatus,
+            'vigencia' => $request->vigencia,
         ]);
         if ($request->hasFile('documento')) {
             $filenameWithExt = $request->file('documento')->getClientOriginalName();

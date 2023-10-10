@@ -31,24 +31,23 @@ class MarcaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         if ($request->ajax()) {
             $request->validate([
-                'nombre'=>'required|string|unique:marca,nombre',
+                'nombre' => 'required|string|unique:marca,nombre',
             ]);
             $nombre = $request->nombre;
             // dd($request->all());
             $marca = Marca::create([
-                'nombre'=>$nombre,
+                'nombre' => $nombre,
             ]);
             if ($marca) {
-                return response()->json(['success'=>true]);
+                return response()->json(['success' => true, 'marca' => $marca]);
             } else {
-                return response()->json(['success'=>false]);
+                return response()->json(['success' => false]);
             }
         }
     }
@@ -78,7 +77,6 @@ class MarcaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -102,15 +100,15 @@ class MarcaController extends Controller
     {
         if ($request->ajax()) {
             $marcas_arr = [];
-            $marcas = Marca::get();
+            $marcas = Marca::getAll();
             // dd($marcas);
             foreach ($marcas as $marca) {
-                $marcas_arr[] = ['id'=>$marca->id, 'text'=>$marca->nombre];
+                $marcas_arr[] = ['id' => $marca->id, 'text' => $marca->nombre];
             }
 
             $array_m = [];
             $array_m['results'] = $marcas_arr;
-            $array_m['pagination'] = ['more'=>false];
+            $array_m['pagination'] = ['more' => false];
 
             return $array_m;
         }

@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EvidenciasDocumentosEmpleados extends Model
+class EvidenciasDocumentosEmpleados extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'evidencias_documentos_empleados';
 
     protected $dates = [
@@ -33,6 +31,8 @@ class EvidenciasDocumentosEmpleados extends Model
         'documentos',
         'nombre',
         'numero',
+        'archivado',
+        'lista_documentos_empleados_id',
     ];
 
     protected $appends = ['ruta_documento', 'ruta_absoluta_documento'];
@@ -53,6 +53,6 @@ class EvidenciasDocumentosEmpleados extends Model
 
     public function empleados_documentos()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 }

@@ -2,26 +2,16 @@
 
 namespace App\Http\Requests;
 
-use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateComiteseguridadRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('comiteseguridad_edit');
-    }
-
     public function rules()
     {
         return [
-            'nombrerol'  => [
+            'nombre_comite' => [
                 'string',
                 'required',
-            ],
-            'fechavigor' => [
-                'date',
-                'nullable',
             ],
         ];
     }

@@ -10,21 +10,22 @@ use Illuminate\Support\Str;
 class LaravelChart
 {
     public $options = [];
+
     private $datasets = [];
 
     /**
      * Group Periods.
      */
     const GROUP_PERIODS = [
-        'day'   => 'Y-m-d',
-        'week'  => 'Y-W',
+        'day' => 'Y-m-d',
+        'week' => 'Y-W',
         'month' => 'Y-m',
-        'year'  => 'Y',
+        'year' => 'Y',
     ];
 
     /**
      * LaravelChart constructor.
-     * @param $chart_options
+     *
      * @throws \Exception
      */
     public function __construct($chart_options)
@@ -36,6 +37,7 @@ class LaravelChart
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
     private function prepareData()
@@ -178,21 +180,20 @@ class LaravelChart
     }
 
     /**
-     * @param array $options
      * @throws \Exception
      */
     private function validateOptions(array $options)
     {
         $rules = [
-            'chart_title'           => 'required',
-            'report_type'           => 'required|in:group_by_date,group_by_string,group_by_relationship',
-            'model'                 => 'required|bail',
-            'group_by_field'        => 'required|bail',
-            'group_by_period'       => 'in:day,week,month,year|bail',
-            'aggregate_function'    => 'in:count,sum,avg|bail',
-            'chart_type'            => 'required|in:line,bar,pie,doughnut|bail',
-            'filter_days'           => 'integer',
-            'filter_period'         => 'in:week,month,year',
+            'chart_title' => 'required',
+            'report_type' => 'required|in:group_by_date,group_by_string,group_by_relationship',
+            'model' => 'required|bail',
+            'group_by_field' => 'required|bail',
+            'group_by_period' => 'in:day,week,month,year|bail',
+            'aggregate_function' => 'in:count,sum,avg|bail',
+            'chart_type' => 'required|in:line,bar,pie,doughnut|bail',
+            'filter_days' => 'integer',
+            'filter_period' => 'in:week,month,year',
         ];
 
         $messages = [
@@ -205,15 +206,15 @@ class LaravelChart
         ];
 
         $attributes = [
-            'chart_title'           => 'chart_title',
-            'report_type'           => 'report_type',
-            'group_by_field'        => 'group_by_field',
-            'group_by_period'       => 'group_by_period',
-            'aggregate_function'    => 'aggregate_function',
-            'chart_type'            => 'chart_type',
-            'filter_days'           => 'filter_days',
-            'filter_period'         => 'filter_period',
-            'field_distinct'        => 'field_distinct',
+            'chart_title' => 'chart_title',
+            'report_type' => 'report_type',
+            'group_by_field' => 'group_by_field',
+            'group_by_period' => 'group_by_period',
+            'aggregate_function' => 'aggregate_function',
+            'chart_type' => 'chart_type',
+            'filter_days' => 'filter_days',
+            'filter_period' => 'filter_period',
+            'field_distinct' => 'field_distinct',
         ];
 
         $validator = Validator::make($options, $rules, $messages, $attributes);

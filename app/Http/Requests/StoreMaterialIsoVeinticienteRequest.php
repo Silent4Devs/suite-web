@@ -15,7 +15,7 @@ class StoreMaterialIsoVeinticienteRequest extends FormRequest
     public function rules()
     {
         return [
-            'objetivo'                    => [
+            'objetivo' => [
                 'string',
                 'required',
             ],

@@ -5,16 +5,21 @@
 
 	<style type="text/css">
 		body{
-				margin: 0;
-			}
+			margin: 0;
+		}
+
+		.c-body{
+			background-image: url({{asset('img/fondo_soporte.png')}});
+			background-size: 100%;
+			position: relative;
+		}
+		.caja_general_soporte{
+			height: 90%;
+			position: absolute;
+		}
 		.contacto{
 			width: 100%;
-			height: 471px;
-			max-width: 1000px;
-			background-image: url(../img/implementacion/fondo_consultoria.jpg);
-			background-size: cover;
-			background-color: #ccc;
-			/* font-family: calibri; */
+			height: 100%;
 		}
 		.tiulo {
 			width: 100%;
@@ -35,12 +40,11 @@
 			 */
 			margin: 0;
 
-			font-size: 12pt;
+			font-size: 12px;
 			font-weight: lighter;
 			/* float: right; */
 			/* margin-right: 10%; */
 			text-align: center;
-			color: #05192c;
 		}
 		.boton{
 			float: left;
@@ -66,7 +70,7 @@
 			box-shadow: 0px 0px 5px -1px;
 			cursor: pointer;
 			margin:auto;
-			
+
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -149,18 +153,22 @@
 			display:none;
 		}
 		.card_equipos{
-			background-color:rgba(255,255,255, 0.4);
+			background-color:rgba(255,255,255, 1);
 			width:350px;
-			padding:25px;
+			padding:40px;
 			border-radius:6px;
 			box-shadow:0px 0px 5px 1px rgba(0,0,0,0.3);
-			margin-top:35px;
-
+			margin:10px;
+			font-size: 12px !important;
+			text-align: center;
 		}
 		.info strong{
-			font-size:16pt;
+			font-size:16px;
 			font-weight: bold;
-			color:#30289d;
+			color:#788BAC;
+		}
+		.info i{
+			font-size: 40px;
 		}
 		.caja_btn{
 			margin-bottom:25px;
@@ -170,43 +178,67 @@
 			margin-right:10px;
 			transform:scale(1.4);
 		}
-}
-
-	
 	</style>
 
 
-	<div class="card card-body caja_general_soporte">
-		<div class="contacto">
-			<div class="genreal">
-				<p class="tiulo">¿CÓMO PODEMOS AYUDARTE? &nbsp;&nbsp; <font>CONTÁCTANOS</font></p>
-                <div class="row col-12" style="margin:auto;">
-                    <div class="col-6 text-center " style="display:flex; justify-content:center;">
+	<div class="caja_general_soporte" style="width: 100% !important;">
+		<div class="contacto" style=" width:100% !important;">
+			<div class="genreal" style=" width:100% !important;">
+				{{-- <p class="tiulo">¿CÓMO PODEMOS AYUDARTE? &nbsp;&nbsp; <font>CONTÁCTANOS</font></p> --}}
+
+                    <div class="" style="display:flex; justify-content:center; align-items: center; width:100% !important; margin-top: 150px;">
 						<div class="card_equipos">
-							<p class="info"><strong>Equipo de consultores</strong><br><br>
+							<p class="info">
+								<i class="fas fa-headset"></i><br><br>
+								<strong>Equipo de consultores</strong><br><br>
 								Si requieres asesoría sobre el llenado de un módulo, contacta a nuestro equipo de consultores.</p><br>
-								<div  id="btn_consultores" class="btn btn-success" style="margin:auto;">Consultores
-								</div>
+								<div  id="btn_consultores" class="btn btn-success">Consultores</div>
 						</div>
-                    </div>
-                    <div class="col-6 text-center" style="display:flex; justify-content:center;">
 						<div class="card_equipos">
-							<p class="info"><strong>Equipo de soporte técnico</strong><br><br> Si deseas reportar alguna falla del sistema, contacta a nuestro equipo de soporte técnico.</p><br>
+							<p class="info">
+								<i class="fas fa-headset"></i><br><br>
+								<strong>Equipo de soporte técnico</strong><br><br> Si deseas reportar alguna falla del sistema, contacta a nuestro equipo de soporte técnico.</p><br>
 								<div id="btn_soporte" class="btn btn-success">Soporte técnico</div>
 						</div>
                     </div>
-                </div>
+
 			</div>
 			<div class="tabla_consultores">
 				<div class="py-3 col-md-12 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
 					<h3 class="mb-2 text-center text-white"><strong>Consultores</strong></h3>
 				</div>
 				<div class="caja_btn text-center">
-					<a class="btn btn-success" href="tel:525572480010"><i class="fas fa-phone-square"></i>Teléfono</a>
-					<a class="btn btn-success" href="https://wa.me/525572480010" target="_blank"><i class="fab fa-whatsapp-square"></i>Whatsapp</a>
-					<a class="btn btn-success" href="mailto:miguel.gaspar@silent4business.com"><i class="fas fa-envelope-square"></i>Correo</a>
+					<a class="btn btn-success" href="tel:525572480010"><i class="fas fa-phone"></i>Teléfono</a>
+					<a class="btn btn-success" href="https://wa.me/525572480010" target="_blank"><i class="fab fa-whatsapp"></i>Whatsapp</a>
+					<a class="btn btn-success" href="mailto:miguel.gaspar@silent4business.com"><i class="fas fa-envelope"></i>Correo</a>
 				</div>
+
 				<table>
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Puesto</th>
+							<th>Teléfono</th>
+							<th>Extensión</th>
+							<th>Correo</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($ConfigurarSoporteModel as $key)
+                        @if ($key->rol == 'Consultor')
+						<tr>
+							<td>{{ $key->name}}</td>
+							<td>{{ $key->puesto }}</td>
+							<td>{{ $key->telefono}}</td>
+							<td>{{ $key->extension}}</td>
+							<td>{{ $key->correo }}</td>
+						</tr>
+                        @endif
+						@endforeach
+					</tbody>
+				</table>
+				{{-- <table>
 					<thead>
 						<tr>
 							<th>Nombre</th>
@@ -235,17 +267,17 @@
 							<td>marco.luna@silent4business.com</td>
 						</tr>
 					</tbody>
-				</table>
-				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 40px;margin-right:10px;">Cancelar</div>
+				</table> --}}
+				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 40px;margin-right:10px;">Regresar</div>
 			</div>
 			<div class="tabla_soporte">
 				<div class="py-3 col-md-12 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
 					<h3 class="mb-2 text-center text-white"><strong>Soporte Técnico</strong></h3>
 				</div>
 				<div class="caja_btn text-center">
-					<a class="btn btn-success" href="tel:525525115770"><i class="fas fa-phone-square"></i>Teléfono</a>
-					<a class="btn btn-success" href="https://wa.me/525525115770" target="_blank"><i class="fab fa-whatsapp-square"></i>Whatsapp</a>
-					<a class="btn btn-success" href="mailto:contacto@silent4business.com"><i class="fas fa-envelope-square"></i>Correo</a>
+					<a class="btn btn-success" href="tel:525525115770"><i class="fas fa-phone"></i>Teléfono</a>
+					<a class="btn btn-success" href="https://wa.me/525525115770" target="_blank"><i class="fab fa-whatsapp"></i>Whatsapp</a>
+					<a class="btn btn-success" href="mailto:contacto@silent4business.com"><i class="fas fa-envelope"></i>Correo</a>
 				</div>
 				<table>
 					<thead>
@@ -253,37 +285,25 @@
 							<th>Nombre</th>
 							<th>Puesto</th>
 							<th>Teléfono</th>
+                            <th>Extensión</th>
 							<th>Correo</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Miguel Ángel Gaspar Galicia</td>
-							<td>Líder de Innovación y Desarrollo.</td>
-							<td>5578233000 <br> Ext. 151 5572480010</td>
-							<td>miguel.gaspar@silent4business.com</td>
-						</tr>
-						<tr>
-							<td>Luis Fernando Jonathan Vargas Osornio</td>
-							<td>Coordinador de Desarrollo Innovación y Desarrollo.</td>
-							<td>55 7823 3000</td>
-							<td>luis.vargas@silent4business.com</td>
-						</tr>
-						<tr>
-							<td>Uriel Santiago Reyes</td>
-							<td>Desarrollador Jr.</td>
-							<td>55 7823 3000</td>
-							<td>uriel.santiago@silent4business.com</td>
-						</tr>
-						{{-- <tr style="border: none;">
-							<td>Marco Luna Robles</td>
-							<td>Líder de Consultoría Estratégica</td>
-							<td>5578232000 Ext. 158</td>
-							<td>marco.luna@silent4business.com</td>
-						</tr> --}}
+                        @foreach($ConfigurarSoporteModel as $key)
+                        @if ($key->rol == 'Soporte técnico')
+                        <tr>
+                            <td>{{ $key->name}}</td>
+                            <td>{{ $key->puesto }}</td>
+                            <td>{{ $key->telefono }}</td>
+							<td>{{ $key->extension}}</td>
+                            <td>{{ $key->correo }}</td>
+                        </tr>
+                        @endif
+                        @endforeach
 					</tbody>
 				</table>
-				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 15px;margin-right:10px;">Cancelar</div>
+				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 15px;margin-right:10px;">Regresar</div>
 			</div>
 		</div>
 	</div>
@@ -295,25 +315,25 @@
 @section('scripts')
 
 	<script type="text/javascript">
-		
+
 		$("#btn_consultores").click(function(){
 			$('.caja_general_soporte').addClass('secundario_revelado');
-			
+
 		});
-	
+
 		$(".btn_cerrar").click(function(){
 			$('.caja_general_soporte').removeClass('secundario_revelado');
-			
+
 		});
 
 		$("#btn_soporte").click(function(){
 			$('.caja_general_soporte').addClass('tercero_revelado');
-			
+
 		});
-	
+
 		$(".btn_cerrar").click(function(){
 			$('.caja_general_soporte').removeClass('tercero_revelado');
-			
+
 		});
 
 	</script>

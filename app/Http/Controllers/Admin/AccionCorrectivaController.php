@@ -6,20 +6,25 @@ use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
-use App\Http\Requests\UpdateAccionCorrectivaRequest;
+use App\Mail\AprobacionAccionCorrectivaEmail;
 use App\Models\AccionCorrectiva;
+use App\Models\ActividadAccionCorrectiva;
 use App\Models\AnalisisAccionCorrectiva;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\PlanaccionCorrectiva;
 use App\Models\Proceso;
 use App\Models\Puesto;
+use App\Models\QuejasCliente;
 use App\Models\Team;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
 use App\Models\Tipoactivo;
 use App\Models\User;
 use Flash;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -30,11 +35,11 @@ class AccionCorrectivaController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('accion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('accion_correctiva_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados','reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
         // dd($query);
         if ($request->ajax()) {
-            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados', 'reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
+            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados', 'reporto'])->where('aprobada', true)->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -42,8 +47,8 @@ class AccionCorrectivaController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate = 'accion_correctiva_show';
-                $editGate = 'accion_correctiva_edit';
-                $deleteGate = 'accion_correctiva_delete';
+                $editGate = 'accion_correctiva_show';
+                $deleteGate = 'accion_correctiva_show';
                 $crudRoutePart = 'accion-correctivas';
 
                 return view('partials.datatablesActions', compact(
@@ -55,9 +60,9 @@ class AccionCorrectivaController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
+            // $table->editColumn('id', function ($row) {
+            //     return $row->id ? $row->id : '';
+            // });
 
             $table->addColumn('folio', function ($row) {
                 return $row->folio ? $row->folio : '';
@@ -107,7 +112,7 @@ class AccionCorrectivaController extends Controller
                 return $row->causaorigen ? $row->causaorigen : '';
             });
             $table->addColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
+                return $row->descripcion ? html_entity_decode(strip_tags($row->descripcion), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
             $table->addColumn('comentarios', function ($row) {
                 return $row->comentarios ? $row->comentarios : '';
@@ -118,58 +123,106 @@ class AccionCorrectivaController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
-        $puestos = Puesto::get();
-        $users = User::get();
-        $puestos = Puesto::get();
-        $users = User::get();
-        $users = User::get();
+        $users = User::getAll();
+        $puestos = Puesto::getAll();
         $teams = Team::get();
 
-        return view('admin.accionCorrectivas.index', compact('users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
+        $total_AC = AccionCorrectiva::get()->count();
+        $nuevos_AC = AccionCorrectiva::where('estatus', 'Sin atender')->get()->count();
+        $en_curso_AC = AccionCorrectiva::where('estatus', 'En curso')->get()->count();
+        $en_espera_AC = AccionCorrectiva::where('estatus', 'En espera')->get()->count();
+        $cerrados_AC = AccionCorrectiva::where('estatus', 'Cerrado')->get()->count();
+        $cancelados_AC = AccionCorrectiva::where('estatus', 'No procedente')->get()->count();
+
+        return view('admin.accionCorrectivas.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
+    }
+
+    public function obtenerAccionesCorrectivasSinAprobacion()
+    {
+        $accionesCorrectivas = AccionCorrectiva::with(['deskQuejaCliente' => function ($query) {
+            $query->with('registro', 'responsableSgi');
+        }])->where('aprobada', false)->where('aprobacion_contestada', false)->get();
+
+        return datatables()->of($accionesCorrectivas)->toJson();
+    }
+
+    public function aprobaroRechazarAc(Request $request)
+    {
+        $accionCorrectiva = AccionCorrectiva::with('quejascliente')->find($request->id);
+        $esAprobada = $request->aprobada == 'true' ? true : false;
+        // dd($esAprobada);
+        $accionCorrectiva->update([
+            'aprobada' => $esAprobada,
+            'aprobacion_contestada' => true,
+            'comentarios_aprobacion' => $request->comentarios,
+        ]);
+        // dd($accionCorrectiva->quejasCliente);
+
+        $quejasClientes = QuejasCliente::find($request->id_queja_cliente)->load('responsableSgi', 'registro', 'accionCorrectiva');
+        Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc($quejasClientes->responsableSgi->email)->send(new AprobacionAccionCorrectivaEmail($quejasClientes));
+
+        if ($esAprobada) {
+            return response()->json(['success' => true, 'message' => 'Acción Correctiva Generada', 'aprobado' => true]);
+        } else {
+            return response()->json(['success' => true, 'message' => 'Acción Correctiva Rechazada', 'aprobado' => false]);
+        }
     }
 
     public function create()
     {
-        abort_if(Gate::denies('accion_correctiva_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('accion_correctiva_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $nombrereportas = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $user = User::getAll();
+        $puestos = Puesto::getAll();
 
-        $puestoreportas = Puesto::get()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrereportas = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombreregistras = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoreportas = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $puestoregistras = Puesto::get()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombreregistras = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsable_accions = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoregistras = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombre_autorizas = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsable_accions = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::with('area')->get();
+        $nombre_autorizas = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::get();
+        $empleados = Empleado::alta()->with('area')->get();
 
-        $procesos = Proceso::get();
+        $areas = Area::getAll();
 
-        $activos = Tipoactivo::get();
+        $procesos = Proceso::getAll();
+
+        $activos = Tipoactivo::getAll();
 
         return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'empleados', 'areas', 'procesos', 'activos'));
     }
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('accion_correctiva_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'tema' => 'required|string',
+            'fecharegistro' => 'required',
+            'id_reporto' => 'required',
+            'id_registro' => 'required',
+            'causaorigen' => 'required',
+            'descripcion' => 'required|string',
+        ]);
+
         $accionCorrectiva = AccionCorrectiva::create([
-        'tema' => $request->tema,
-        'fecharegistro' => $request->fecharegistro,
-        'id_reporto' => $request->id_reporto,
-        'id_registro' => $request->id_registro,
-        'causaorigen' => $request->causaorigen,
-        'descripcion' => $request->descripcion,
-        'areas' => $request->areas,
-        'procesos' => $request->procesos,
-        'activos' => $request->activos,
-        'estatus'=> 'Nuevo',
-    ]);
+            'tema' => $request->tema,
+            'fecharegistro' => $request->fecharegistro,
+            'id_reporto' => $request->id_reporto,
+            'id_registro' => $request->id_registro,
+            'causaorigen' => $request->causaorigen,
+            'descripcion' => $request->descripcion,
+            'areas' => $request->areas,
+            'procesos' => $request->procesos,
+            'activos' => $request->activos,
+            'estatus' => 'Sin atender',
+        ]);
 
         // $accionCorrectiva = AccionCorrectiva::create($request->all());;
         //dd($request['pdf-value']);
@@ -186,40 +239,51 @@ class AccionCorrectivaController extends Controller
              $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
 
         Flash::success('Registro guardado exitosamente');
+
         // return redirect('admin/plan-correctiva?param=' . $accionCorrectiva->id);
         return redirect()->route('admin.accion-correctivas.edit', $accionCorrectiva);
     }
 
     public function edit(AccionCorrectiva $accionCorrectiva)
     {
-        abort_if(Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($accionCorrectiva);
+        abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $users = User::getAll();
+        $puestos = Puesto::getAll();
 
-        $nombrereportas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrereportas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $puestoreportas = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoreportas = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombreregistras = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombreregistras = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $puestoregistras = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoregistras = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsable_accions = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsable_accions = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombre_autorizas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombre_autorizas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::with('area')->orderBy('name')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Tipoactivo::get();
+        $activos = Tipoactivo::getAll();
 
         $id = $accionCorrectiva->id;
 
+        $quejasClientes = QuejasCliente::getAll()->where('accion_correctiva_id', '=', $accionCorrectiva->id);
+
+        $clientes = TimesheetCliente::getAll();
+
+        $proyectos = TimesheetProyecto::getAll();
+
         $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accionCorrectiva->id)->first();
 
+        // dd($accionCorrectiva->quejascliente);
         // $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name','empleados')
         //     ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
         //     ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
@@ -228,13 +292,23 @@ class AccionCorrectivaController extends Controller
         // $Count = $PlanAccion->count();
         // dd($accionCorrectiva);
 
-        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
+        return view('admin.accionCorrectivas.edit', compact('clientes', 'proyectos', 'quejasClientes', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
-    public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
+    public function update(Request $request, AccionCorrectiva $accionCorrectiva)
     {
+        abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'tema' => 'required|string',
+            'fecharegistro' => 'required',
+            'id_reporto' => 'required',
+            'id_registro' => 'required',
+            'causaorigen' => 'required',
+            'descripcion' => 'required|string',
+        ]);
+
         $accionCorrectiva->update($request->all());
-        //dd($accionCorrectiva);
         if ($request->input('documentometodo', false)) {
             if (!$accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
                 if ($accionCorrectiva->documentometodo) {
@@ -247,25 +321,45 @@ class AccionCorrectivaController extends Controller
             $accionCorrectiva->documentometodo->delete();
         }
 
-        return redirect()->route('admin.accion-correctivas.index');
+        // QuejasCliente::create([
+        //     'titulo' => $request->titulo,
+        //     'cliente_id'=>$request->cliente_id,
+        //     'proyectos_id'=>$request->proyectos_id,
+        //     'descripcion' => $request->descripcion,
+        //     'nombre' => $request->nombre,
+        //     'puesto' => $request->puesto,
+        //     'telefono' => $request->telefono,
+        //     'correo' => $request->correo,
+        //     'area_quejado' => $request->area_quejado,
+        //     'colaborador_quejado' => $request->colaborador_quejado,
+        //     'proceso_quejado' => $request->proceso_quejado,
+        //     'otro_quejado' => $request->otro_quejado,
+        //     'accion_correctiva_id' => $accionCorrectiva->id,
+        // ]);
+
+        Flash::success('Editado con éxito');
+
+        return redirect()->route('admin.accion-correctivas.index')->with('success', 'Editado con éxito');
     }
 
     public function show(AccionCorrectiva $accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas');
+        $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accionCorrectiva->id)->get();
+        $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas', 'planes');
 
-        return view('admin.accionCorrectivas.show', compact('accionCorrectiva'));
+        // dd($accionCorrectiva->planes);
+        return view('admin.accionCorrectivas.show', compact('accionCorrectiva', 'actividades'));
     }
 
     public function destroy(AccionCorrectiva $accionCorrectiva)
     {
-        abort_if(Gate::denies('accion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('accion_correctiva_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $accionCorrectiva->delete();
 
-        Flash::success('Registro guardado exitosamente');
+        Flash::success('Registro eliminado exitosamente');
 
         return back();
     }
@@ -277,9 +371,18 @@ class AccionCorrectivaController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
+    public function planesAccionCorrectiva(Request $request)
+    {
+        $accionCorrectiva = AccionCorrectiva::find($request->id);
+        // $accionCorrectiva->planes()->detach();
+        $accionCorrectiva->planes()->sync($request->planes);
+
+        return response()->json(['success' => true]);
+    }
+
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('accion_correctiva_create') && Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('accion_correctiva_crear') && Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new AccionCorrectiva();
         $model->id = $request->input('crud_id', 0);
@@ -296,12 +399,21 @@ class AccionCorrectivaController extends Controller
 
     public function storeAnalisis(Request $request, $accion)
     {
+        $request->validate([
+            'control_a' => 'nullable|string|max:350',
+            'proceso_a' => 'nullable|string|max:350',
+            'personas_a' => 'nullable|string|max:350',
+            'tecnologia_a' => 'nullable|string|max:350',
+            'ambiente_a' => 'nullable|string|max:350',
+            'metodos_a' => 'nullable|string|max:350',
+            'problema_diagrama' => 'nullable|string|max:350',
+        ]);
         $exist_accion_id = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->exists();
         if ($exist_accion_id) {
             $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->first();
             $analisis->update($request->all());
         } else {
-            $analisis = AnalisisAccionCorrectiva::create(array_merge($request->all(), ['accion_correctiva_id'=>$accion]));
+            $analisis = AnalisisAccionCorrectiva::create(array_merge($request->all(), ['accion_correctiva_id' => $accion]));
         }
 
         return redirect()->route('admin.accion-correctivas.edit', $accion);

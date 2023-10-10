@@ -10,6 +10,8 @@ use App\Models\RH\CompetenciaPuesto;
 use App\Models\RH\Conducta;
 use App\Models\RH\EvaluacionRepuesta;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -17,6 +19,7 @@ class EV360CompetenciasController extends Controller
 {
     public function index(Request $request)
     {
+        // abort_if(Gate::denies('capital_humano_competencias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $competencias = Competencia::with('tipo')->get();
 
@@ -28,6 +31,7 @@ class EV360CompetenciasController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('competencias_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $competencia = new Competencia;
         $tipo_seleccionado = null;
 
@@ -36,9 +40,10 @@ class EV360CompetenciasController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('competencias_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string',
             'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::create($request->all());
@@ -67,9 +72,10 @@ class EV360CompetenciasController extends Controller
 
     public function storeAndRedirect(Request $request)
     {
+        abort_if(Gate::denies('competencias_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string',
             'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::create($request->all());
@@ -82,6 +88,7 @@ class EV360CompetenciasController extends Controller
 
     public function edit($competencia, $onlyConductas = null)
     {
+        abort_if(Gate::denies('competencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $competencia = Competencia::find(intval($competencia));
         $tipo_seleccionado = $competencia->tipo_id;
         $editar_solo_conductas = false;
@@ -94,9 +101,10 @@ class EV360CompetenciasController extends Controller
 
     public function update(Request $request, $competencia)
     {
+        abort_if(Gate::denies('competencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string',
             'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::find(intval($competencia));
@@ -119,7 +127,7 @@ class EV360CompetenciasController extends Controller
         }
         // Almacenamos la competencia en todos los puestos
         if ($request->toda_la_empresa) {
-            $puestos = Puesto::all();
+            $puestos = Puesto::getAll();
             foreach ($puestos as $puesto) {
                 $exists = CompetenciaPuesto::where('puesto_id', '=', $puesto->id)
                     ->where('competencia_id', '=', $competencia->id)
@@ -143,10 +151,19 @@ class EV360CompetenciasController extends Controller
     public function conductas(Request $request, $competencia)
     {
         if ($request->ajax()) {
-            $conductas = Conducta::where('competencia_id', intval($competencia))->get()->sortBy('ponderacion');
+            // $conductas = Conducta::where('competencia_id', intval($competencia))->get()->sortBy('ponderacion');
+            $conductas = Conducta::where('competencia_id', intval($competencia))->orderBy('ponderacion')->get();
 
             return datatables()->of($conductas)->toJson();
         }
+    }
+
+    public function show($id)
+    {
+        abort_if(Gate::denies('competencias_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $competencia = Competencia::find($id);
+
+        return view('admin.recursos-humanos.evaluacion-360.competencias.show', compact('competencia'));
     }
 
     public function informacionCompetencia(Request $request, $competencia)
@@ -211,5 +228,14 @@ class EV360CompetenciasController extends Controller
         }
 
         return $nivel;
+    }
+
+    public function destroy(Competencia $competencia)
+    {
+        abort_if(Gate::denies('competencias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // $competencia = Competencia::find($competencia);
+        $competencia->delete();
+
+        return response()->json(['deleted' => true]);
     }
 }

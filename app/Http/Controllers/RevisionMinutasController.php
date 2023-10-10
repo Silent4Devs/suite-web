@@ -22,7 +22,7 @@ class RevisionMinutasController extends Controller
         if (!$minuta) {
             abort_if(!$minuta, 404);
         }
-        $empleado = Empleado::find(intval($revisionMinuta->empleado_id));
+        $empleado = Empleado::alta()->find(intval($revisionMinuta->empleado_id));
 
         return view('externos.minutas.revisiones.edit', compact('minuta', 'empleado', 'revisionMinuta'));
     }
@@ -207,21 +207,21 @@ class RevisionMinutasController extends Controller
 
     public function sendMailApprove($mail, $modelo, $revision)
     {
-        Mail::to($mail)->send(new MinutaConfirmacionAprobacion($modelo, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaConfirmacionAprobacion($modelo, $revision));
     }
 
     public function sendMailPublish($mail, $modelo)
     {
-        Mail::to($mail)->send(new MinutaAprobada($modelo));
+        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaAprobada($modelo));
     }
 
     public function sendMailNotPublish($mail, $modelo)
     {
-        Mail::to($mail)->send(new MinutaRechazada($modelo));
+        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaRechazada($modelo));
     }
 
     public function sendMailReject($mail, $modelo, $revision)
     {
-        Mail::to($mail)->send(new MinutaConfirmacionRechazo($modelo, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaConfirmacionRechazo($modelo, $revision));
     }
 }

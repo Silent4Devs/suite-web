@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyObjetivosseguridadRequest;
 use App\Http\Requests\UpdateObjetivosseguridadRequest;
 use App\Models\Empleado;
+use App\Models\Norma;
 use App\Models\Objetivosseguridad;
 use App\Models\Team;
+use App\Models\TiposObjetivosSistema;
 use App\Models\VariablesObjetivosseguridad;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,9 +19,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ObjetivosseguridadController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
-        abort_if(Gate::denies('objetivosseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_del_sistema_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Objetivosseguridad::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -27,9 +32,9 @@ class ObjetivosseguridadController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'objetivosseguridad_show';
-                $editGate = 'objetivosseguridad_edit';
-                $deleteGate = 'objetivosseguridad_delete';
+                $viewGate = 'objetivos_del_sistema_ver';
+                $editGate = 'objetivos_del_sistema_editar';
+                $deleteGate = 'objetivos_del_sistema_eliminar';
                 $crudRoutePart = 'objetivosseguridads';
 
                 return view('partials.datatablesActions', compact(
@@ -45,7 +50,7 @@ class ObjetivosseguridadController extends Controller
                 return $row->id ? $row->id : '';
             });
             $table->editColumn('objetivoseguridad', function ($row) {
-                return $row->objetivoseguridad ? $row->objetivoseguridad : '';
+                return $row->objetivoseguridad ? html_entity_decode(strip_tags($row->objetivoseguridad)) : '';
             });
             $table->editColumn('indicador', function ($row) {
                 return $row->indicador ? $row->indicador : '';
@@ -79,45 +84,98 @@ class ObjetivosseguridadController extends Controller
         }
 
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.objetivosseguridads.index', compact('teams'));
+        return view('admin.objetivosseguridads.index', compact('teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('objetivosseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $responsables = Empleado::get();
+        abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $responsables = Empleado::alta()->with('area', 'puesto')->get();
+        $tiposObjetivosSistemas = TiposObjetivosSistema::get();
+        $normas = Norma::get();
 
-        return view('admin.objetivosseguridads.create', compact('responsables'));
+        return view('admin.objetivosseguridads.create', compact('normas', 'responsables', 'tiposObjetivosSistemas'));
     }
 
     public function store(Request $request)
     {
-        // dd($request);
+        abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $request->validate([
+            'objetivoseguridad' => 'required',
+            'indicador' => 'required',
+            'responsable_id' => 'required',
+            'formula' => 'required',
+            'verde' => 'required',
+            'amarillo' => 'required',
+            'rojo' => 'required',
+            'unidadmedida' => 'required',
+            'meta' => 'required',
+            'frecuencia' => 'required',
+            'revisiones' => 'required',
+            'ano' => 'required',
+            'tipo_objetivo_sistema_id' => 'required',
+            'normas' => 'required',
+        ]);
         $objetivosseguridad = Objetivosseguridad::create($request->all());
-        //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
+        $normas = array_map(function ($value) {
+            return intval($value);
+        }, $request->normas);
+        $objetivosseguridad->normas()->sync($normas);
+
         return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with('success', 'Guardado con éxito');
     }
 
     public function edit(Objetivosseguridad $objetivosseguridad)
     {
-        abort_if(Gate::denies('objetivosseguridad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $responsables = Empleado::get();
+        $tiposObjetivosSistemas = TiposObjetivosSistema::get();
 
-        return view('admin.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables'));
+        $objetivosseguridad->load('normas');
+        $normas_seleccionadas = $objetivosseguridad->normas->pluck('id')->toArray();
+
+        $normas = Norma::get();
+        $responsables = Empleado::getaltaAll();
+
+        return view('admin.objetivosseguridads.edit', compact('normas_seleccionadas', 'normas', 'objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
     }
 
     public function update(UpdateObjetivosseguridadRequest $request, Objetivosseguridad $objetivosseguridad)
     {
+        abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'objetivoseguridad' => 'required',
+            'indicador' => 'required',
+            'responsable_id' => 'required',
+            'formula' => 'required',
+            'verde' => 'required',
+            'amarillo' => 'required',
+            'rojo' => 'required',
+            'unidadmedida' => 'required',
+            'meta' => 'required',
+            'frecuencia' => 'required',
+            'revisiones' => 'required',
+            'ano' => 'required',
+            'tipo_objetivo_sistema_id' => 'required',
+            'normas' => 'required',
+        ]);
         $objetivosseguridad->update($request->all());
+        $normas = array_map(function ($value) {
+            return intval($value);
+        }, $request->normas);
+        $objetivosseguridad->normas()->sync($normas);
 
         return redirect()->route('admin.objetivosseguridads.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Objetivosseguridad $objetivosseguridad)
     {
-        abort_if(Gate::denies('objetivosseguridad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_del_sistema_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $objetivosseguridad->load('team');
 
@@ -126,7 +184,7 @@ class ObjetivosseguridadController extends Controller
 
     public function destroy(Objetivosseguridad $objetivosseguridad)
     {
-        abort_if(Gate::denies('objetivosseguridad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_del_sistema_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $objetivosseguridad->delete();
 
@@ -182,10 +240,18 @@ class ObjetivosseguridadController extends Controller
     public function evaluacionesShow(Request $request)
     {
         $id = $request->all();
-
         $objetivos = Objetivosseguridad::find($id['id']);
 
         return view('admin.objetivosseguridads.evaluacion')
             ->with('objetivos', $objetivos);
+    }
+
+    public function objetivosDashboard(Request $request)
+    {
+        $objetivos = Objetivosseguridad::with('evaluacion_objetivos')->get();
+
+        $tipos = TiposObjetivosSistema::get();
+
+        return view('admin.objetivosseguridads.dashboard', compact('objetivos', 'tipos'));
     }
 }

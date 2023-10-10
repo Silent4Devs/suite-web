@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('EV360-Evaluaciones-Evaluacion', $evaluacion) }}
     <style>
         .nav-pills .nav-link.active,
@@ -72,10 +71,8 @@
         }
 
     </style>
+    <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong>Evaluación: </strong>{{ $evaluacion->nombre }}</h3>
-        </div>
         <div class="card-body">
             <div>
                 {{-- <h3><i class="mr-2 fas fa-book"></i>Información general de la evaluación:
@@ -89,26 +86,26 @@
                                 INFORMACIÓN GENERAL
                             </div>
                             <div style="float: right">
-                                <button id="btnEnviarRecordatorio" class="btn btn-sm"
-                                    style="background: #99faa6;color: rgb(54, 54, 54);"><i
-                                        class="mr-2 fas fa-envelope-open-text"></i>Enviar
-                                    recordatorio a evaluadores</button>
                                 @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
-                                    <button id="btnIniciarEvaluacion" class="btn btn-sm"
-                                        style="background: #3ddf58;color: #fff;"><i
-                                            class="mr-2 fas fa-calendar-check"></i>Iniciar
-                                        Evaluación</button>
+                                        <button id="btnIniciarEvaluacion" class="btn btn-sm"
+                                            style="background: #3ddf58;color: #fff;"><i
+                                                class="mr-2 fas fa-calendar-check"></i>Iniciar
+                                            Evaluación</button>
                                 @elseif ($evaluacion->estatus == App\Models\RH\Evaluacion::CLOSED)
-                                    <button id="btnPostergarEvaluacion" class="btn btn-sm"
-                                        style="background: #4e59d4;color: #fff;"><i
-                                            class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
-                                        nueva fecha de finalización</button>
+                                        <button id="btnPostergarEvaluacion" class="btn btn-sm"
+                                            style="background: #4e59d4;color: #fff;"><i
+                                                class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
+                                            nueva fecha de finalización</button>
                                 @else
-                                    <button id="btnCerrarEvaluacion"
-                                        onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
-                                        class="btn btn-sm" style="background: #eb4a4a;color: #fff;"><i
-                                            class="mr-2 fas fa-calendar-times"></i>Cerrar
-                                        Evaluación</button>
+                                        <button id="btnEnviarRecordatorio" class="btn btn-sm"
+                                            style="background: #99faa6;color: rgb(54, 54, 54);"><i
+                                                class="mr-2 fas fa-envelope-open-text"></i>Enviar
+                                            recordatorio a evaluadores</button>
+                                        <button id="btnCerrarEvaluacion"
+                                            onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
+                                            class="btn btn-sm" style="background: #eb4a4a;color: #fff;"><i
+                                                class="mr-2 fas fa-calendar-times"></i>Cerrar
+                                            Evaluación</button>
                                 @endif
                             </div>
                         </div>
@@ -132,7 +129,7 @@
                         <li class="px-0 text-center list-group-item w-100" style="border:none;">
                             <p class="m-0 text-center text-muted">Comienza el</p>
                             <p class="m-0"><i class="mr-1 fas fa-calendar-check"></i>
-                                {{ $evaluacion->fecha_inicio ? \Carbon\Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y') : 'Sin definir' }}
+                                {{ $evaluacion->fecha_inicio? \Carbon\Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y'): 'Sin definir' }}
                             </p>
                         </li>
                         <li class="px-0 text-center list-group-item w-100" style="border:none;">
@@ -188,7 +185,9 @@
                                     <form id="formIniciarEvaluacion"
                                         action="{{ route('admin.ev360-evaluaciones.iniciarEvaluacion', $evaluacion) }}"
                                         method="POST">
-                                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form')
+                                        @include(
+                                            'admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form'
+                                        )
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -216,7 +215,9 @@
                                     <form id="formPostergarEvaluacion"
                                         action="{{ route('admin.ev360-evaluaciones.postergarEvaluacion', $evaluacion) }}"
                                         method="POST">
-                                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar')
+                                        @include(
+                                            'admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar'
+                                        )
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -538,11 +539,11 @@
                                 data.forEach((element, idx) => {
                                     if (idx <= 5) {
                                         html +=
-                                            `                                        
+                                            `
                                         <img style="" src="${@json(asset('storage/empleados/imagenes/'))}/${element.evaluador.avatar}"
                                             class="rounded-circle" alt="${element.evaluador.name}"
                                             title="${element.evaluador.name}" width="40" height="37">
-                                            ${element.evaluado?'<i class="fas fa-check-circle" style="    position: relative;top: 0;left: -20px;z-index: 1;color: #002102;text-shadow: 1px 1px 0px gainsboro;"></i>':''}                                
+                                            ${element.evaluado?'<i class="fas fa-check-circle" style="    position: relative;top: 0;left: -20px;z-index: 1;color: #002102;text-shadow: 1px 1px 0px gainsboro;"></i>':''}
                                         `
                                     }
                                     seleccionados.push(element.evaluador.id);
@@ -593,6 +594,7 @@
                                 `/admin/recursos-humanos/evaluacion-360/evaluacion/${@json($evaluacion->id)}/consulta/${data}`;
                             let html = `
                                 <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-arrow-right"></i></a>
+
                             `;
 
                             return html;
@@ -624,7 +626,7 @@
                         JSON.parse(response).forEach(element => {
                             html +=
                                 `<li class="list-group-item ${seleccionados.includes(element.id)?'active':''}">${element.name}${evaluado==element.id?'<span class="ml-2 badge badge-light">Autoevaluación</span>':''}
-                                ${seleccionados.includes(element.id)?`<span onclick="event.preventDefault();QuitarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Quitar" style="float: right;cursor: pointer;"><i class="text-white fas fa-trash-alt"></i></span>`:`<span onclick="event.preventDefault();AgregarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Añadir" style="float: right;cursor: pointer;"><i class="text-dark fas fa-plus-circle"></i></span>`}    
+                                ${seleccionados.includes(element.id)?`<span onclick="event.preventDefault();QuitarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Quitar" style="float: right;cursor: pointer;"><i class="text-white fas fa-trash-alt"></i></span>`:`<span onclick="event.preventDefault();AgregarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Añadir" style="float: right;cursor: pointer;"><i class="text-dark fas fa-plus-circle"></i></span>`}
                                 </li>`;
                         });
                         html += '</ul></div>';

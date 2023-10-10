@@ -10,7 +10,7 @@ class MassDestroyPlanificacionControlRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('planificacion_control_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('planificacion_control_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -18,7 +18,7 @@ class MassDestroyPlanificacionControlRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids'   => 'required|array',
+            'ids' => 'required|array',
             'ids.*' => 'exists:planificacion_controls,id',
         ];
     }

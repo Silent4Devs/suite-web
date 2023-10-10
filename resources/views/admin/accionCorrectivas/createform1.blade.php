@@ -7,10 +7,10 @@
 
 
     <div class="form-group col-md-8 col-lg-8 col-sm-12">
-        <label for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto del incidente
+        <label class="required" for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto de la acción correctiva
         </label>
         <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema"
-            {{ old('tema') }}>
+            maxlength="255" {{ old('tema') }} required>
         @if ($errors->has('tema'))
             <div class="invalid-feedback">
                 {{ $errors->first('tema') }}
@@ -31,9 +31,9 @@
     </div> --}}
 
     <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="fecharegistro"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha y hora de registro de la AC</label>
-        <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local"
-            name="fecharegistro" id="fecharegistro" value="{{ old('fecharegistro') }}">
+        <label class="required" for="fecharegistro"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha y hora de registro de la AC</label>
+        <input required class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local"
+            min="1945-01-01T00:00" name="fecharegistro" id="fecharegistro" value="{{ old('fecharegistro') }}">
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecharegistro') }}
@@ -64,9 +64,9 @@
 
 
     <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+        <label class="required" for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
         <select class="form-control  {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
-            id="id_reporto">
+            id="id_reporto" required>
             <option selected value="" disabled>-- Selecciona un empleado --</option>
             @foreach ($empleados as $empleado)
                 <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
@@ -101,9 +101,9 @@
 
 
     <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="id_registro"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+        <label class="required" for="id_registro"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
         <select class="form-control  {{ $errors->has('id_registro') ? 'is-invalid' : '' }}" name="id_registro"
-            id="id_registro">
+            id="id_registro" required>
             <option selected value="" disabled>-- Selecciona un empleado --</option>
             @foreach ($empleados as $empleado)
                 <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
@@ -137,11 +137,11 @@
 
 
     <div class="form-group col-12">
-        <label><i
+        <label class="required"><i
                 class="fas fa-project-diagram iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.causaorigen') }}
         </label>
         <select class="form-control {{ $errors->has('causaorigen') ? 'is-invalid' : '' }}" name="causaorigen"
-            id="causaorigen">
+            id="causaorigen" required>
             <option></option>
             <option value disabled {{ old('causaorigen', null) === null ? 'selected' : '' }}>
                 {{ trans('global.pleaseSelect') }}</option>
@@ -159,10 +159,10 @@
     </div>
 
     <div class="form-group col-12">
-        <label for="descripcion"><i
+        <label class="required" for="descripcion"><i
                 class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.descripcion') }}
         </label>
-        <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
+        <textarea required class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
             id="descripcion">{{ old('descripcion') }}</textarea>
         @if ($errors->has('descripcion'))
             <div class="invalid-feedback">
@@ -172,58 +172,9 @@
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.descripcion_helper') }}</span>
     </div>
 
-    <div class="mt-2 form-group col-md-4 areas_multiselect">
-        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área(s)
-            afectada(s)</label>
-        <select class="form-control" id="activos">
-            <option disabled selected>Seleccionar áreas</option>
-            @foreach ($areas as $area)
-                <option value="{{ $area->area }}">{{ $area->area }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="areas" class="form-control" id="texto_activos"
-            required></textarea>
-    </div>
-
-    <div class="mt-2 form-group col-md-4 procesos_multiselect">
-        <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Proceso(s)
-            afectado(s)</label>
-        <select class="form-control" id="activos">
-            <option disabled selected>Seleccionar procesos</option>
-            @foreach ($procesos as $proceso)
-                <option value="{{ $proceso->nombre }}">{{ $proceso->nombre }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="procesos" class="form-control" id="texto_activos"
-            required></textarea>
-    </div>
-
-    <div class="mt-2 form-group col-md-4 activos_multiselect">
-        <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activo(s)
-            afectado(s)</label>
-        <select class="form-control" id="activos">
-            <option disabled selected>Seleccionar afectados</option>
-            @foreach ($activos as $activo)
-                <option value="{{ $activo->tipo }}">{{ $activo->tipo }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="activos" class="form-control" id="texto_activos"
-            required></textarea>
-    </div>
-
-    <div class="mt-2 form-group col-md-12">
-        <label class="form-label"><i
-                class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
-        <textarea name="comentarios"
-            class="form-control"></textarea>
-    </div>
-
 
     <div class="text-right form-group col-12">
-        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+        <a href="{{ route('admin.accion-correctivas.index') }}" class="btn_cancelar">Cancelar</a>
         <button class="btn btn-danger" type="submit" id="btnGuardar">
             {{ trans('global.save') }}
         </button>

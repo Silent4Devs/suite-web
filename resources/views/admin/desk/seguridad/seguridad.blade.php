@@ -4,7 +4,7 @@
         height: 80px;
         color: #fff;
         margin-bottom: 40px;
-        font-size: 15pt;
+        font-size: 12pt;
         border-radius: 6px;
     }
 
@@ -32,7 +32,7 @@
     }
 
     .numero {
-        font-size: 20pt;
+        font-size: 16pt;
     }
 
     .botones_tabla {
@@ -45,50 +45,48 @@
 
 <div class="row">
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(12, 119, 255, 1) 35%, rgba(0, 213, 214, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-celeste">
             <div class="numero"><i class="fas fa-exclamation-triangle"></i> {{ $total_seguridad }}</div>
             <div>Incidentes</div>
         </div>
     </div>
     <div class="col-6 col-md-2 ">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(255, 115, 0, 1) 33%, rgba(237, 255, 86, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-amarillo">
             <div class="numero"><i class="far fa-arrow-alt-circle-right"></i> {{ $nuevos_seguridad }}</div>
-            <div>Nuevos</div>
+            <div>Sin atender</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style=" background: linear-gradient(144deg, rgba(132, 0, 255, 1) 34%, rgba(255, 54, 240, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-morado">
             <div class="numero"><i class="fas fa-redo-alt"></i> {{ $en_curso_seguridad }}</div>
             <div>En curso</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(0, 27, 222, 1) 33%, rgba(0, 164, 255, 1) 91%);">
+        <div class="tarjetas_seguridad_indicadores cdr-azul">
             <div class="numero"><i class="fas fa-history"></i> {{ $en_espera_seguridad }}</div>
             <div>En espera</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(56, 198, 67, 1) 34%, rgba(57, 255, 220, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-verde">
             <div class="numero"><i class="far fa-check-circle"></i> {{ $cerrados_seguridad }}</div>
             <div>Cerrados</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(255, 61, 61, 1) 33%, rgba(255, 86, 223, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-rojo">
             <div class="numero"><i class="far fa-circle"></i> {{ $cancelados_seguridad }}</div>
-            <div>Cancelados</div>
+            <div>No procedentes</div>
         </div>
     </div>
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
+    <div class="mb-3 text-right">
+        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/seguridad')}}">Crear reporte</a>
+    </div>
+
     <table class="table tabla_incidentes_seguridad">
         <thead>
             <tr>
@@ -98,16 +96,14 @@
                 <th style="min-width: 250px;">Sede</th>
                 <th style="min-width: 250px;">Ubicación</th>
                 <th style="min-width: 500px;">Descripción</th>
-                <th style="min-width: 250px;">Areas, Afectadas</th>
-                <th style="min-width: 250px;">Procesos, Afectados</th>
-                <th style="min-width: 250px;">Activos, Afectados</th>
+                <th style="min-width: 250px;">Areas Afectadas</th>
+                <th style="min-width: 250px;">Procesos Afectados</th>
+                <th style="min-width: 250px;">Activos Afectados</th>
                 <th style="min-width: 150px;">Fecha</th>
-                <th style="min-width: 250px;">Quién reporto</th>
+                <th style="min-width: 250px;">Quién reportó</th>
                 <th style="min-width: 250px;">Correo</th>
                 <th style="min-width: 250px;">Teléfono</th>
-                <th>Urgencia</th>
-                <th>Impacto</th>
-                <th>Estatus</th>
+                <th style="min-width: 90px;">Estatus</th>
                 <th style="min-width: 150px;">Fecha de cierre</th>
                 <th style="min-width: 250px;">Asignado a</th>
                 <th style="min-width: 500px;">Comentarios</th>
@@ -230,21 +226,21 @@
                 }
 
             ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
-            };
-                dtButtons.push(btnAgregar)
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar empleado',
+            //     url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+            //     action: function(e, dt, node, config) {
+            //     let {
+            //     url
+            //     } = config;
+            //     window.location.href = url;
+            //     }
+            // };
+            //     dtButtons.push(btnAgregar)
             if (!$.fn.dataTable.isDataTable('.tabla_incidentes_seguridad')) {
-                let tabla_incidentes = $(".tabla_incidentes_seguridad").DataTable({
+                window.tabla_incidentes = $(".tabla_incidentes_seguridad").DataTable({
                     ajax: '/admin/desk/seguridad',
                     buttons: dtButtons,
                     columns: [
@@ -265,13 +261,22 @@
                             data: 'descripcion'
                         },
                         {
-                            data: 'areas_afectados'
+                            data: 'areas_afectados',
+                            render: function(data, type, row, meta) {
+                                return `${row.areas_afectados?row.areas_afectados :'n/a'}`;
+                            }
                         },
                         {
-                            data: 'procesos_afectados'
+                            data: 'procesos_afectados',
+                            render: function(data, type, row, meta) {
+                                return `${row.procesos_afectados?row.procesos_afectados :'n/a'}`;
+                            }
                         },
                         {
-                            data: 'activos_afectados'
+                            data: 'activos_afectados',
+                            render: function(data, type, row, meta) {
+                                return `${row.activos_afectados?row.activos_afectados :'n/a'}`;
+                            }
                         },
                         {
                             data: 'fecha_creacion'
@@ -287,23 +292,20 @@
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.reporto.email}`;
+                                return `${row.reporto?.email}`;
                             }
                         },
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.reporto.telefono}`;
+                                return `${row.reporto?.telefono}`;
                             }
                         },
                         {
-                            data: 'urgencia'
-                        },
-                        {
-                            data: 'impacto'
-                        },
-                        {
-                            data: 'estatus'
+                            data: 'estatus',
+                            render: function(data, type, row, meta) {
+                                return `<span style="text-transform:capitalize">${data}</span>`;
+                            }
                         },
                         {
                             data: 'fecha_cerrado'
@@ -319,7 +321,10 @@
                             }
                         },
                         {
-                            data: 'comentarios'
+                            data: 'comentarios',
+                            render: function(data, type, row, meta) {
+                                return `${row.comentarios?row.comentarios :'n/a'}`;
+                            }
                         },
                         {
                             data: 'id',
@@ -327,20 +332,52 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/seguridad-edit/"><i class="fas fa-edit"></i></a>`;
+                                @can('centro_atencion_incidentes_de_seguridad_editar')
+                				<a href="/admin/desk/${data}/seguridad-edit/"><i class="fas fa-edit"></i></a>
+                                @endcan
+                                `;
 
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivar"); return false;' >
-				       						<i class="fas fa-archive"></i></a>
+                                    html += `<button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivar"); return false;' style="margin-top:-10px">
+				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 				       					</div>`;
                                 }
                                 return html;
                             }
                         },
-                    ],
+                    ],  
+                    createdRow: (row, data, dataIndex, cells) => {
+                        let fondo = "green";
+                        let letras = "white";
+                        if (data.estatus == 'Sin atender') {
+                            fondo = "#FFCB63";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'En curso') {
+                            fondo = "#AC84FF";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'En espera') {
+                            fondo = "#6863FF";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'Cerrado') {
+                            fondo = "#6DC866";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'No procedente') {
+                            fondo = "#FF417B";
+                            letras = "white";
+                        }
+                        if(data.estatus !=null){
+                            $(cells[12]).css('background-color', fondo)
+                            $(cells[12]).css('color', letras)
+                        }
+                      
+                    },
                         order:[
                             [0,'desc']
                         ]
@@ -397,25 +434,6 @@
                     let incidente_id = this.getAttribute('data-id');
                     console.log(incidente_id);
                     let url = `/admin/desk/${incidente_id}/archivar`;
-                    // $.ajax({
-
-                    //     type: "post",
-
-                    //     url: url,
-
-                    //     data: {
-                    //     	_token: '{{ csrf_token() }}'
-                    //     },
-
-                    //     dataType: "json",
-
-                    //     success: function (response) {
-
-                    //         console.log(response);
-
-                    //     }
-
-                    // });
                 });
             });
 

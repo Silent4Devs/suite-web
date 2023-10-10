@@ -9,7 +9,7 @@ class StorePlanAuditoriumRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('plan_auditorium_create');
+        return Gate::allows('plan_de_auditoria_agregar');
     }
 
     public function rules()
@@ -19,10 +19,10 @@ class StorePlanAuditoriumRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'auditados.*'   => [
+            'auditados.*' => [
                 'integer',
             ],
-            'auditados'     => [
+            'auditados' => [
                 'array',
             ],
         ];

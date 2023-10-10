@@ -2,18 +2,29 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Registrar: Política del Sistema de Gestión</h5>
 <div class="mt-4 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Política SGSI </h3>
-    </div>
-
     <div class="card-body">
         <form method="POST" action="{{ route("admin.politica-sgsis.store") }}" enctype="multipart/form-data">
             @csrf
+
             <div class="form-group">
-                <label for="politicasgsi"><i class="fas fa-landmark iconos-crear"></i>Política del Sistema de Gestión de Seguridad de la Información (SGSI)</label>
-                <textarea class="form-control {{ $errors->has('politicasgsi') ? 'is-invalid' : '' }}" name="politicasgsi" id="politicasgsi">{{ old('politicasgsi') }}</textarea>
+                <label class="required" for="nombre_politica"><i class="fas fa-file-invoice iconos-crear"></i>Nombre de la política</label>
+                <input class="form-control {{ $errors->has('nombre_politica') ? 'is-invalid' : '' }}"
+                name="nombre_politica" id="nombre_politica"
+                value="{{ old('nombre_politica') }}" required>
+                @if($errors->has('nombre_politica'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('nombre_politica') }}
+                    </div>
+                @endif
+            </div>
+
+
+            <div class="form-group">
+                <label class="required" for="politicasgsi"><i class="fas fa-landmark iconos-crear"></i>Política del Sistema de Gestión</label>
+                <textarea class="form-control {{ $errors->has('politicasgsi') ? 'is-invalid' : '' }}"
+                    name="politicasgsi" id="politicasgsi" required>{{ old('politicasgsi') }}</textarea>
                 @if($errors->has('politicasgsi'))
                     <div class="invalid-feedback">
                         {{ $errors->first('politicasgsi') }}
@@ -27,8 +38,10 @@
 
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de publicación</label>
-                    <input class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}" type="date" name="fecha_publicacion" id="fecha_publicacion" value="{{ old('fecha_publicacion')}}">
+                    <label class="required" for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de publicación</label>
+                    <input class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
+                    type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
+                    value="{{ old('fecha_publicacion')}}" required>
                     @if($errors->has('fecha_publicacion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_publicacion') }}
@@ -39,8 +52,10 @@
 
 
                 <div class="form-group col-md-4">
-                    <label for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de entrada en vigor</label>
-                    <input class="form-control {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}" type="date" name="fecha_entrada" id="fecha_entrada" value="{{ old('fecha_entrada')}}">
+                    <label class="required" for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de entrada en vigor</label>
+                    <input class="form-control {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}"
+                    type="date" name="fecha_entrada" id="fecha_entrada" min="1945-01-01"
+                    value="{{ old('fecha_entrada')}}" required>
                     @if($errors->has('fecha_entrada'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_entrada') }}
@@ -50,8 +65,10 @@
 
 
                 <div class="form-group col-md-4">
-                    <label for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de revisión</label>
-                    <input class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}" type="date" name="fecha_revision" id="fecha_revision" value="{{ old('fecha_revision')}}">
+                    <label class="required" for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de revisión</label>
+                    <input class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
+                    type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
+                    value="{{ old('fecha_revision')}}" required>
                     @if($errors->has('fecha_revision'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_revision') }}
@@ -68,8 +85,9 @@
 
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="id_reviso_politica"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                    <select class="form-control select2 {{ $errors->has('reviso_politica') ? 'is-invalid' : '' }}" name="id_reviso_politica" id="id_reviso_politica">
+                    <label class="required" for="id_reviso_politica"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                    <select class="form-control select2 {{ $errors->has('reviso_politica') ? 'is-invalid' : '' }}"
+                        name="id_reviso_politica" id="id_reviso_politica" required>
                         <option value="">Seleccione una opción</option>
                         @foreach ($empleados as $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}" {{ old('id_reviso_politica')==$empleado->id ? ' selected="selected"' : '' }}>
@@ -79,9 +97,9 @@
                         @endforeach
                     </select>
                     @if ($errors->has('id_reviso_politica'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_reviso_politica') }}
-                    </div>
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_reviso_politica') }}
+                        </div>
                     @endif
                 </div>
 
@@ -103,7 +121,7 @@
 
 
             <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route('admin.politica-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -188,16 +206,23 @@
         let area_init = reviso_politica.options[reviso_politica.selectedIndex].getAttribute('data-area');
         let puesto_init = reviso_politica.options[reviso_politica.selectedIndex].getAttribute('data-puesto');
 
-        document.getElementById('puesto_reviso').innerHTML = puesto_init;
-        document.getElementById('area_reviso').innerHTML = area_init;
+        document.getElementById('puesto_reviso').innerHTML =  recortarTexto (puesto_init);
+        document.getElementById('area_reviso').innerHTML =  recortarTexto (area_init);
         reviso_politica.addEventListener('change', function(e) {
             e.preventDefault();
             let area = this.options[this.selectedIndex].getAttribute('data-area');
             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('puesto_reviso').innerHTML = puesto;
-            document.getElementById('area_reviso').innerHTML = area;
+            document.getElementById('puesto_reviso').innerHTML =  recortarTexto (puesto);
+            document.getElementById('area_reviso').innerHTML =  recortarTexto (area);
         })
 
     })
+
+    function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
 </script>
 @endsection

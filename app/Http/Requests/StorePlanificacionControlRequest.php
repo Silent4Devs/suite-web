@@ -9,21 +9,21 @@ class StorePlanificacionControlRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('planificacion_control_create');
+        return Gate::allows('planificacion_y_control_agregar');
     }
 
     public function rules()
     {
         return [
-            'activo'           => [
+            'activo' => [
                 'string',
                 'required',
             ],
-            'vulnerabilidad'   => [
+            'vulnerabilidad' => [
                 'string',
                 'nullable',
             ],
-            'amenaza'          => [
+            'amenaza' => [
                 'string',
                 'nullable',
             ],
@@ -31,23 +31,23 @@ class StorePlanificacionControlRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'integridad'       => [
+            'integridad' => [
                 'string',
                 'nullable',
             ],
-            'disponibilidad'   => [
+            'disponibilidad' => [
                 'string',
                 'nullable',
             ],
-            'probabilidad'     => [
+            'probabilidad' => [
                 'string',
                 'nullable',
             ],
-            'impacto'          => [
+            'impacto' => [
                 'string',
                 'nullable',
             ],
-            'nivelriesgo'      => [
+            'nivelriesgo' => [
                 'string',
                 'nullable',
             ],

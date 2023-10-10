@@ -13,16 +13,21 @@ class ExpedienteEmpleadoComponent extends Component
     use WithFileUploads;
 
     public $empleado;
+
     public $documentoIne;
+
     public $documentoImss;
+
     public $documentoCurp;
+
     public $documentoRfc;
+
     public $documentosExistentes;
 
     public function updatedDocumentoIne()
     {
         $this->validate([
-            'documentoIne' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
+            'documentoIne' => 'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoIne->extension();
         $this->documentoIne->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "INE.{$extension}");
@@ -36,7 +41,7 @@ class ExpedienteEmpleadoComponent extends Component
     public function updatedDocumentoImss()
     {
         $this->validate([
-            'documentoImss' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
+            'documentoImss' => 'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoImss->extension();
         $nombre_documento = 'IMSS';
@@ -51,7 +56,7 @@ class ExpedienteEmpleadoComponent extends Component
     public function updatedDocumentoCurp()
     {
         $this->validate([
-            'documentoCurp' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
+            'documentoCurp' => 'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoCurp->extension();
         $nombre_documento = 'CURP';
@@ -66,7 +71,7 @@ class ExpedienteEmpleadoComponent extends Component
     public function updatedDocumentoRFC()
     {
         $this->validate([
-            'documentoRfc' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
+            'documentoRfc' => 'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoRfc->extension();
         $nombre_documento = 'RFC';

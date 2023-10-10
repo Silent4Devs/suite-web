@@ -59,13 +59,9 @@
 
     {{ Breadcrumbs::render('admin.comunicacion-sgis.index') }}
 
-    @can('comunicacion_sgi_create')
+    <h5 class="col-12 titulo_general_funcion">Comunicados Generales</h5>
 
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Comunicados Generales</strong></h3>
-            </div>
-        @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -176,7 +172,7 @@
 
             ];
 
-            @can('comunicacion_sgi_create')
+            @can('comunicados_generales_agregar')
                 let btnAgregar = {
 
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
@@ -195,7 +191,7 @@
 
 
 
-            @can('comunicacion_sgi_delete')
+            @can('comunicados_generales_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -250,7 +246,9 @@
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
+                                        @can('comunicados_generales_vinculo')
                                         <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;archivos</a>
+                                        @endcan
                                     </div>
                                     </div>
 
@@ -278,10 +276,21 @@
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
-                                                        return `
-                                                        <div class='carousel-item ${idx==0?"active":""}'>
-                                                            <iframe seamless class='img-size' src='{{ asset('tmp/uploads/') }}/${archivo.documento}'></iframe>
-                                                        </div>`
+                                                        // console.log(archivo);
+                                                        const [extension, ...nameParts] = archivo.documento.split('.').reverse();
+
+                                                        if(extension == 'pdf'){
+                                                            return `
+                                                                    <div class='carousel-item ${idx==0?"active":""}'>
+                                                                        <embed seamless class='img-size' src='{{ asset("storage/documento_comunicado_SGI") }}/${archivo.documento}'></embed>
+                                                                    </div>`
+                                                        }else{
+                                                            return `
+                                                                    <div class='text-center my-5 carousel-item ${idx==0?"active":""}'>
+                                                                       <a href='{{ asset("storage/documento_comunicado_SGI") }}/${archivo.documento}'><i class="fas fa-file-download mr-2" style="font-size:18px"></i> ${archivo.documento}</a>
+                                                                    </div>`
+                                                        }
+
                                                     })}
 
                                             </div>

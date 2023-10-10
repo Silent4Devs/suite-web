@@ -174,16 +174,17 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Emotality\TawkTo\TawkToServiceProvider::class,
         Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         // Jenssegers\Date\DAteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Geocoder\GeocoderServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        EloquentFilter\ServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
         App\Providers\TenancyServiceProvider::class, // <-- here
-
-
     ],
 
     /*
@@ -235,7 +236,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'TawkTo' => Emotality\TawkTo\TawkTo::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
@@ -245,8 +245,10 @@ return [
         'Flash' => Laracasts\Flash\Flash::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Date' => Jenssegers\Date\Date::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+
     ],
-
-
 
 ];

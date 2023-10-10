@@ -13,9 +13,13 @@ class TaskRecursosEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $tabla;
+
     public $slug;
+
     public $mensaje;
+
     public $user;
+
     public $tipo_notificacion;
 
     public function __construct($tabla, $slug, $mensaje, $user, $tipo_notificacion)

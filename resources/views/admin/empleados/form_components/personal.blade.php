@@ -1,17 +1,110 @@
+<div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+    Datos Personales
+</div>
+
 <div class="row mt-4">
-    <div class="form-group col-sm-12">
-        <label for="domicilio_personal"><i class="fas fa-home iconos-crear"></i>Domicilio
-            Personal</label>
-        <input class="form-control {{ $errors->has('domicilio_personal') ? 'is-invalid' : '' }}" type="text"
-            name="domicilio_personal" id="domicilio_personal"
-            value="{{ old('domicilio_personal', $empleado->domicilio_personal) }}">
-        <small id="error_domicilio_personal" class="text-danger"></small>
-        @if ($errors->has('domicilio_personal'))
+    <div class="form-group col-sm-6">
+        <label for="calle"><i class="fas fa-home iconos-crear"></i>Calle</label>
+        <input class="form-control {{ $errors->has('calle') ? 'is-invalid' : '' }}" type="text" maxlength="255"
+            name="calle" id="calle" value="{{ old('calle', $empleado->calle) }}">
+        <small id="error_calle" class="text-danger"></small>
+        @if ($errors->has('calle'))
             <div class="invalid-feedback">
-                {{ $errors->first('domicilio_personal') }}
+                {{ $errors->first('calle') }}
             </div>
         @endif
     </div>
+
+    <div class="form-group col-sm-3">
+        <label for="num_exterior"><i class="fas fa-home iconos-crear"></i>Núm. Exterior</label>
+        <input class="form-control {{ $errors->has('num_exterior') ? 'is-invalid' : '' }}" type="text" pattern="\d*"
+            maxlength="255" name="num_exterior" id="num_exterior"
+            value="{{ old('num_exterior', $empleado->num_exterior) }}">
+        <small id="error_num_exterior" class="text-danger"></small>
+        @if ($errors->has('num_exterior'))
+            <div class="invalid-feedback">
+                {{ $errors->first('num_exterior') }}
+            </div>
+        @endif
+    </div>
+
+
+
+    <div class="form-group col-sm-3">
+        <label for="num_interior"><i class="fas fa-home iconos-crear"></i>Núm. Interior</label>
+        <input class="form-control {{ $errors->has('num_interior') ? 'is-invalid' : '' }}" name="num_interior"
+            id="num_interior" value="{{ old('num_interior', $empleado->num_interior) }}" type="text" pattern="\d*"
+            maxlength="255">
+        <small id="error_num_interior" class="text-danger"></small>
+        @if ($errors->has('num_interior'))
+            <div class="invalid-feedback">
+                {{ $errors->first('num_interior') }}
+            </div>
+        @endif
+    </div>
+
+    <div class="form-group col-sm-6">
+        <label for="colonia"><i class="fas fa-home iconos-crear"></i>Colonia</label>
+        <input class="form-control {{ $errors->has('colonia') ? 'is-invalid' : '' }}" type="text" maxlength="255"
+            name="colonia" id="colonia" value="{{ old('colonia', $empleado->colonia) }}">
+        <small id="error_colonia" class="text-danger"></small>
+        @if ($errors->has('colonia'))
+            <div class="invalid-feedback">
+                {{ $errors->first('colonia') }}
+            </div>
+        @endif
+    </div>
+
+    <div class="form-group col-sm-6">
+        <label for="delegacion"><i class="fas fa-home iconos-crear"></i>Delegación o Municipio</label>
+        <input class="form-control {{ $errors->has('delegacion') ? 'is-invalid' : '' }}" type="text" maxlength="255"
+            name="delegacion" id="delegacion" value="{{ old('delegacion', $empleado->delegacion) }}">
+        <small id="error_delegacion" class="text-danger"></small>
+        @if ($errors->has('delegacion'))
+            <div class="invalid-feedback">
+                {{ $errors->first('delegacion') }}
+            </div>
+        @endif
+    </div>
+
+    <div class="form-group col-sm-4">
+        <label for="estado"><i class="fas fa-home iconos-crear"></i>Estado</label>
+        <input class="form-control {{ $errors->has('estado') ? 'is-invalid' : '' }}" type="text" maxlength="255"
+            name="estado" id="estado" value="{{ old('estado', $empleado->estado) }}">
+        <small id="error_estado" class="text-danger"></small>
+        @if ($errors->has('estado'))
+            <div class="invalid-feedback">
+                {{ $errors->first('estado') }}
+            </div>
+        @endif
+    </div>
+
+    <div class="form-group col-sm-4">
+        <label for="pais"><i class="fas fa-home iconos-crear"></i>País</label>
+        <input class="form-control {{ $errors->has('pais') ? 'is-invalid' : '' }}" type="text" maxlength="255"
+            name="pais" id="pais" value="{{ old('pais', $empleado->pais) }}">
+        <small id="error_pais" class="text-danger"></small>
+        @if ($errors->has('pais'))
+            <div class="invalid-feedback">
+                {{ $errors->first('pais') }}
+            </div>
+        @endif
+    </div>
+
+    <div class="form-group col-sm-4">
+        <label for="cp"><i class="fas fa-home iconos-crear"></i>C. P.</label>
+        <input class="form-control {{ $errors->has('cp') ? 'is-invalid' : '' }}" type="text" pattern="\d*"
+            maxlength="255" name="cp" id="cp" value="{{ old('delegacion', $empleado->cp) }}">
+        <small id="error_cp" class="text-danger"></small>
+        @if ($errors->has('cp'))
+            <div class="invalid-feedback">
+                {{ $errors->first('cp') }}
+            </div>
+        @endif
+    </div>
+
+
+
     <div class="form-group col-sm-6">
         <label for="telefono_casa"><i class="fas fa-phone iconos-crear"></i>Teléfono de casa</label>
         <input class="form-control {{ $errors->has('telefono_casa') ? 'is-invalid' : '' }}" type="text"
@@ -35,14 +128,7 @@
             </div>
         @endif
     </div>
-    {{-- Componente dependientes economicos --}}
-    <div class="col-sm-12">
-        <label for=""><i class="fas fa-users iconos-crear"></i>Dependientes Económicos</label>
-        @include('admin.empleados.components.dependientes-economicos',[
-        'empleado'=>$empleado
-        ])
-    </div>
-    {{-- Fin componente dependientes economicos --}}
+
     <div class="form-group col-sm-6">
         <label for="estado_civil"><i class="fas fa-book iconos-crear"></i>Estado
             civil</label>
@@ -53,8 +139,7 @@
             </option>
             <option value="casado" {{ old('estado_civil', $empleado->estado_civil) == 'casado' ? 'selected' : '' }}>
                 Casado</option>
-            <option value="soltero"
-                {{ old('estado_civil', $empleado->estado_civil) == 'soltero' ? 'selected' : '' }}>
+            <option value="soltero" {{ old('estado_civil', $empleado->estado_civil) == 'soltero' ? 'selected' : '' }}>
                 Soltero</option>
         </select>
         <small id="error_estado_civil" class="text-danger"></small>
@@ -66,8 +151,8 @@
     </div>
     <div class="form-group col-sm-6">
         <label for="NSS"><i class="fas fa-clinic-medical iconos-crear"></i>NSS</label>
-        <input class="form-control {{ $errors->has('NSS') ? 'is-invalid' : '' }}" type="text" name="NSS" id="NSS"
-            value="{{ old('NSS', $empleado->NSS) }}">
+        <input class="form-control {{ $errors->has('NSS') ? 'is-invalid' : '' }}" type="text" name="NSS"
+            id="NSS" value="{{ old('NSS', $empleado->NSS) }}">
         <small id="error_NSS" class="text-danger"></small>
         @if ($errors->has('NSS'))
             <div class="invalid-feedback">
@@ -77,8 +162,8 @@
     </div>
     <div class="form-group col-sm-6">
         <label for="CURP"><i class="fas fa-address-card iconos-crear"></i>CURP</label>
-        <input class="form-control {{ $errors->has('CURP') ? 'is-invalid' : '' }}" type="text" name="CURP" id="CURP"
-            value="{{ old('CURP', $empleado->CURP) }}">
+        <input class="form-control {{ $errors->has('CURP') ? 'is-invalid' : '' }}" type="text" name="CURP"
+            id="CURP" value="{{ old('CURP', $empleado->CURP) }}">
         <small id="error_CURP" class="text-danger"></small>
         @if ($errors->has('CURP'))
             <div class="invalid-feedback">
@@ -88,8 +173,8 @@
     </div>
     <div class="form-group col-sm-6">
         <label for="RFC"><i class="fas fa-address-card iconos-crear"></i>RFC</label>
-        <input class="form-control {{ $errors->has('RFC') ? 'is-invalid' : '' }}" type="text" name="RFC" id="RFC"
-            value="{{ old('RFC', $empleado->RFC) }}">
+        <input class="form-control {{ $errors->has('RFC') ? 'is-invalid' : '' }}" type="text" name="RFC"
+            id="RFC" value="{{ old('RFC', $empleado->RFC) }}">
         <small id="error_RFC" class="text-danger"></small>
         @if ($errors->has('RFC'))
             <div class="invalid-feedback">
@@ -122,7 +207,7 @@
         @endif
     </div>
     <div class="form-group col-sm-12">
-        <label for="nacionalidad"><i class="fas fa-globe-americas iconos-crear"></i>Nacionalidad</label>
+        <label for="nacionalidad"><i class="fas fa-globe-americas iconos-crear"></i>País de nacimiento</label>
         <select class="form-control {{ $errors->has('nacionalidad') ? 'is-invalid' : '' }}" name="nacionalidad"
             id="nacionalidad">
             <option value="" selected disabled>-- Selecciona la nacionalidad --</option>
@@ -143,52 +228,18 @@
     {{-- Componente contacto(s) de emergencia --}}
     <div class="col-sm-12">
         <label><i class="fas fa-users iconos-crear"></i>Contáctos de emergencia</label>
-        @include('admin.empleados.components.contactos-emergencia',[
-        'empleado'=>$empleado
+        @include('admin.empleados.components.contactos-emergencia', [
+            'empleado' => $empleado,
         ])
     </div>
     {{-- Fin Componente contacto(s) de emergencia --}}
-    <div class="form-group col-sm-6">
-        <label for="entidad_crediticias_id"><i class="fas fa-landmark iconos-crear"></i>Entidad
-            crediticia</label>
-        <select class="form-control select-search {{ $errors->has('entidad_crediticias_id') ? 'is-invalid' : '' }}"
-            name="entidad_crediticias_id" id="entidad_crediticias_id"
-            value="{{ old('entidad_crediticias_id', $empleado->entidad_crediticias_id) }}">
-            <option value="" selected disabled>
-                -- Selecciona una entidad crediticia --
-            </option>
-            @foreach ($entidadesCrediticias as $entidad)
-                <option value="{{ $entidad->id }}">{{ $entidad->entidad }}</option>
-            @endforeach
-        </select>
-        <small id="error_entidad_crediticias_id" class="text-danger"></small>
-        @if ($errors->has('entidad_crediticias_id'))
-            <div class="invalid-feedback">
-                {{ $errors->first('entidad_crediticias_id') }}
-            </div>
-        @endif
+    {{-- Componente dependientes economicos --}}
+    <div class="col-sm-12">
+        <label for=""><i class="fas fa-users iconos-crear"></i>Dependientes Económicos</label>
+        @include('admin.empleados.components.dependientes-economicos', [
+            'empleado' => $empleado,
+        ])
     </div>
-    <div class="form-group col-sm-6">
-        <label for="numero_credito"><i class="fas fa-barcode iconos-crear"></i>Número de crédito</label>
-        <input class="form-control {{ $errors->has('numero_credito') ? 'is-invalid' : '' }}" type="text"
-            name="numero_credito" id="numero_credito" value="{{ old('numero_credito', $empleado->numero_credito) }}">
-        <small id="error_numero_credito" class="text-danger"></small>
-        @if ($errors->has('numero_credito'))
-            <div class="invalid-feedback">
-                {{ $errors->first('numero_credito') }}
-            </div>
-        @endif
-    </div>
-    <div class="form-group col-sm-12">
-        <label for="descuento"><i class="fas fa-percentage iconos-crear"></i>Descuento</label>
-        <input placeholder="$1,000,000.00" data-type='currency'
-            class="form-control {{ $errors->has('descuento') ? 'is-invalid' : '' }}" type="text" name="descuento"
-            id="descuento" value="{{ old('descuento', $empleado->descuento) }}">
-        <small id="error_descuento" class="text-danger"></small>
-        @if ($errors->has('descuento'))
-            <div class="invalid-feedback">
-                {{ $errors->first('descuento') }}
-            </div>
-        @endif
-    </div>
+    {{-- Fin componente dependientes economicos --}}
+
 </div>

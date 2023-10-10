@@ -21,7 +21,7 @@ class PlanaccionCorrectivaController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('planaccion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('planaccion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = PlanaccionCorrectiva::with(['accioncorrectiva', 'responsable', 'team'])->select(sprintf('%s.*', (new PlanaccionCorrectiva)->table));
@@ -72,7 +72,7 @@ class PlanaccionCorrectivaController extends Controller
         }
 
         $accion_correctivas = AccionCorrectiva::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.planaccionCorrectivas.index', compact('accion_correctivas', 'users', 'teams'));
@@ -80,11 +80,11 @@ class PlanaccionCorrectivaController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('planaccion_correctiva_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('planaccion_correctiva_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $accioncorrectivas = AccionCorrectiva::all()->pluck('tema', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.planaccionCorrectivas.create', compact('accioncorrectivas', 'responsables'));
     }
@@ -94,17 +94,19 @@ class PlanaccionCorrectivaController extends Controller
         //dd(request()->all());
         $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
         $accionCorrectiva = AccionCorrectiva::find($planaccionCorrectiva->accioncorrectiva_id);
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $nombrereportas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $puestoreportas = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::getAll();
+        $puestos = Puesto::getAll();
+        $responsables = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrereportas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoreportas = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombreregistras = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombreregistras = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $puestoregistras = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoregistras = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsable_accions = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsable_accions = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombre_autorizas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombre_autorizas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $id = $accionCorrectiva->id;
         $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name')
             ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
@@ -113,7 +115,7 @@ class PlanaccionCorrectivaController extends Controller
             ->orderBy('planaccion_correctivas.id', 'ASC')
             ->get();
         $Count = $PlanAccion->count();
-        $users = User::all('id', 'name');
+        $users = User::getAll();
         $tab = true;
 
         Flash::success('Se ha registrado correctamente actividad del plan de acción');
@@ -127,6 +129,7 @@ class PlanaccionCorrectivaController extends Controller
         //dd($planaccionCorrectiva);
         $id = $request->get('accioncorrectiva_id');
         Flash::success('Se ha registrado correctamente la actividad del plan de acción');
+
         //return redirect()->route('admin.accionCorrectivas.edit');
         return redirect('admin/plan-correctiva?param=' . $id);
         //return view('admin.accionCorrectivas.plan_accion')->with('ids', $id)->with('users', $users);
@@ -134,11 +137,11 @@ class PlanaccionCorrectivaController extends Controller
 
     public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
     {
-        abort_if(Gate::denies('planaccion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('planaccion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $accioncorrectivas = AccionCorrectiva::all()->pluck('tema', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $planaccionCorrectiva->load('accioncorrectiva', 'responsable', 'team');
         //dd($planaccionCorrectiva);
@@ -189,7 +192,7 @@ class PlanaccionCorrectivaController extends Controller
 
     public function show(PlanaccionCorrectiva $planaccionCorrectiva)
     {
-        abort_if(Gate::denies('planaccion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('planaccion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planaccionCorrectiva->load('accioncorrectiva', 'responsable', 'team');
 
@@ -198,7 +201,7 @@ class PlanaccionCorrectivaController extends Controller
 
     public function destroy(PlanaccionCorrectiva $planaccionCorrectiva)
     {
-        abort_if(Gate::denies('planaccion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('planaccion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planaccionCorrectiva->delete();
 
@@ -214,7 +217,7 @@ class PlanaccionCorrectivaController extends Controller
 
     public function planformulario(Request $request)
     {
-        $users = User::all('id', 'name');
+        $users = User::getAll();
         $id = request()->param;
         $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name')
             ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')

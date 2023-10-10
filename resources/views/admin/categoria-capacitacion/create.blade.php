@@ -2,12 +2,8 @@
 @section('content')
 
     <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}">
-
+    <h5 class="col-12 titulo_general_funcion">Registrar: Categoría</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white align-items-centera"><strong> Registrar: </strong>Categoría </h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" action="{{ route('admin.categoria-capacitacion.store') }}" class="row">
                 @csrf
@@ -24,7 +20,7 @@
                     @endif
                 </div>
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.categoria-capacitacion.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

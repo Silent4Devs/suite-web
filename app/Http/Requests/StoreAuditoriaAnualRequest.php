@@ -9,19 +9,19 @@ class StoreAuditoriaAnualRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('auditoria_anual_create');
+        return Gate::allows('programa_anual_auditoria_agregar');
     }
 
     public function rules()
     {
         return [
-            'tipo'        => [
+            'tipo' => [
                 'required',
             ],
             'fechainicio' => [
                 'required',
             ],
-            'dias'        => [
+            'dias' => [
                 'numeric',
                 'min:1',
                 'max:100',

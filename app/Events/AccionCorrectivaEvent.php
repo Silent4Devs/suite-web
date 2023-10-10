@@ -14,8 +14,11 @@ class AccionCorrectivaEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $accion_correctiva;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     /**

@@ -8,15 +8,13 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TratamientoRiesgo extends Model
+class TratamientoRiesgo extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'tratamiento_riesgos';
 
     public static $searchable = [
@@ -32,12 +30,24 @@ class TratamientoRiesgo extends Model
 
     const PRIORIDAD_SELECT = [
         'Critica' => 'Crítica',
-        'Alta'    => 'Alta',
-        'Media'   => 'Media',
-        'Baja'    => 'Baja',
+        'Alta' => 'Alta',
+        'Media' => 'Media',
+        'Baja' => 'Baja',
+    ];
+
+    const TIPO_INVERSION_SELECT = [
+        '1' => 'Sí',
+        '0' => 'No',
     ];
 
     protected $fillable = [
+        'identificador',
+        'descripcionriesgo',
+        'tipo_riesgo',
+        'riesgototal',
+        'riesgo_total_residual',
+        'acciones',
+        'id_proceso',
         'nivelriesgo',
         'control_id',
         'id_reviso',
@@ -49,10 +59,16 @@ class TratamientoRiesgo extends Model
         'probabilidad',
         'impacto',
         'nivelriesgoresidual',
+        'id_dueno',
+        'inversion_requerida',
+        'matriz_sistema_gestion_id',
+        'id_registro',
+        'comentarios',
+        'firma_responsable_aprobador',
+        'es_aprobado',
         'created_at',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -62,13 +78,13 @@ class TratamientoRiesgo extends Model
 
     public function control()
     {
-        return $this->belongsTo(Controle::class, 'control_id');
+        return $this->belongsTo(DeclaracionAplicabilidad::class, 'control_id', 'id');
     }
 
-    public function responsable()
-    {
-        return $this->belongsTo(User::class, 'responsable_id');
-    }
+    // public function responsable()
+    // {
+    //     return $this->belongsTo(User::class, 'responsable_id');
+    // }
 
     public function getFechacompromisoAttribute($value)
     {
@@ -85,8 +101,23 @@ class TratamientoRiesgo extends Model
         return $this->belongsTo(Team::class, 'team_id');
     }
 
-    public function empleado()
+    public function responsable()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'id_dueno', 'id')->alta()->with('area');
+    }
+
+    public function registro()
+    {
+        return $this->belongsTo(Empleado::class, 'id_registro', 'id')->alta()->with('area');
+    }
+
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'id_proceso');
+    }
+
+    public function participantes()
+    {
+        return $this->belongsToMany(Empleado::class, 'empleados_tratamiento_riesgos', 'tratamiento_id', 'empleado_id')->alta()->with('area');
     }
 }

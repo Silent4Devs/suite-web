@@ -2,31 +2,34 @@
 
 namespace App\Http\Requests;
 
-use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateEvidenciasSgsiRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('evidencias_sgsi_edit');
-    }
-
     public function rules()
     {
         return [
+
+            'nombredocumento' => [
+                'string',
+                'required',
+            ],
             'objetivodocumento' => [
                 'string',
                 'required',
             ],
-            'arearesponsable'   => [
+            'responsable_evidencia_id' => [
                 'string',
-                'nullable',
+                'required',
             ],
-            'fechadocumento'    => [
+            'area_id' => [
+                'string',
+                'required',
+            ],
+            'fechadocumento' => [
                 // 'date_format:' . config('panel.date_format'),
                 'date',
-                'nullable',
+                'required',
             ],
         ];
     }

@@ -19,7 +19,7 @@ class StorePartesInteresadaRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'requisitos'      => [
+            'requisitos' => [
                 'string',
                 'required',
             ],

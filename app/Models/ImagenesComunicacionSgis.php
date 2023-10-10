@@ -4,15 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ImagenesComunicacionSgis extends Model
+class ImagenesComunicacionSgis extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'imagenes_comunicacion_sgis';
 
     protected $dates = [
@@ -24,7 +22,7 @@ class ImagenesComunicacionSgis extends Model
     protected $fillable = [
         'comunicacion_id',
         'imagen',
-
+        'tipo',
     ];
 
     public function imagenes_comunicacion()

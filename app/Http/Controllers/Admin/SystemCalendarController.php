@@ -7,11 +7,15 @@ use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
 use App\Models\Calendario;
 use App\Models\CalendarioOficial;
+use App\Models\ContractManager\Contrato;
+use App\Models\ContractManager\EntregaMensual;
+use App\Models\ContractManager\Factura;
 use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\PlanBaseActividade;
 use App\Models\PlanImplementacion;
 use App\Models\Recurso;
+use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,8 +23,12 @@ class SystemCalendarController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('agenda_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $implementaciones = PlanImplementacion::get();
+        abort_if(Gate::denies('calendario_corporativo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $usuario = User::getCurrentUser();
+        $empleado = $usuario->empleado;
+
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
 
         if ($implementaciones) {
@@ -54,17 +62,42 @@ class SystemCalendarController extends Controller
         // $actividades = $actividades->flatten(1);
 
         $plan_base = PlanBaseActividade::get();
-        $auditorias_anual = AuditoriaAnual::get();
+        $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = AuditoriaInterna::get();
         // dd($auditoria_internas);
-        $recursos = Recurso::get();
-        $eventos = Calendario::get();
-        $oficiales = CalendarioOficial::get();
 
-        $cumples_aniversarios = Empleado::get();
-        $nombre_organizacion = Organizacion::first();
+        $recursos = collect();
+        if ($usuario->empleado) {
+            $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
+                $query->where('empleados.id', $empleado->id);
+            })->get();
+        }
+
+        $eventos = Calendario::getAll();
+        $oficiales = CalendarioOficial::get();
+        $contratos = Contrato::select('nombre_servicio', 'fecha_inicio', 'fecha_fin')->get();
+
+        $facturas = Factura::select('concepto', 'fecha_recepcion', 'fecha_liberacion')->get();
+
+        $niveles_servicio = EntregaMensual::select('nombre_entregable', 'plazo_entrega_inicio', 'plazo_entrega_termina')->get();
+
+        $cumples_aniversarios = Empleado::getaltaAll();
+        $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas', 'eventos', 'oficiales', 'cumples_aniversarios', 'nombre_organizacion'));
+        return view('admin.calendar.calendar', compact(
+            'plan_base',
+            'auditorias_anual',
+            'recursos',
+            'actividades',
+            'auditoria_internas',
+            'eventos',
+            'oficiales',
+            'cumples_aniversarios',
+            'nombre_organizacion',
+            'contratos',
+            'facturas',
+            'niveles_servicio'
+        ));
     }
 }

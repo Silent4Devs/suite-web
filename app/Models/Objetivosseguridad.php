@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Objetivosseguridad.
@@ -27,24 +27,22 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property character varying|null $frecuencia
  * @property character varying|null $revisiones
  * @property int|null $ano
- *
  * @property Team|null $team
  * @property Empleado|null $empleado
  * @property Collection|VariablesObjetivosseguridad[] $variables_objetivosseguridads
  * @property Collection|EvaluacionObjetivo[] $evaluacion_objetivos
  */
-class Objetivosseguridad extends Model
+class Objetivosseguridad extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'objetivosseguridads';
 
     protected $dates = ['deleted_at'];
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $casts = [
@@ -76,6 +74,10 @@ class Objetivosseguridad extends Model
         'frecuencia',
         'revisiones',
         'ano',
+        'tipo_objetivo_sistema_id',
+        'norma_id',
+        'objetivo_id',
+
     ];
 
     public function team()
@@ -85,7 +87,7 @@ class Objetivosseguridad extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'responsable_id');
+        return $this->belongsTo(Empleado::class, 'responsable_id')->alta();
     }
 
     public function variables_objetivosseguridads()
@@ -96,5 +98,20 @@ class Objetivosseguridad extends Model
     public function evaluacion_objetivos()
     {
         return $this->hasMany(EvaluacionObjetivo::class, 'id_objetivo');
+    }
+
+    public function tipo_objetivo_sistema()
+    {
+        return $this->belongsTo(TiposObjetivosSistema::class, 'tipo_objetivo_sistema_id');
+    }
+
+    public function norma()
+    {
+        return $this->belongsTo(Norma::class);
+    }
+
+    public function normas()
+    {
+        return $this->belongsToMany(Norma::class, 'normas_objetivos', 'objetivo_id', 'norma_id');
     }
 }

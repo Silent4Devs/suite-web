@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .table tr td:nth-child(1) {
             min-width: 200px !important;
@@ -9,24 +8,27 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
-
     </style>
-    @can('user_create')
-
-        @include('partials.flashMessages')
-        <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Usuarios</strong></h3>
+    @include('flash::message')
+    @include('partials.flashMessages')
+    <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
+    <div class="mt-5 card">
+        <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
+            <div class="p-2">
+                <a href={{ route('admin.users.eliminados') }} class="btn btn-danger" role="button" aria-pressed="true">
+                    <i class="fas fa-user-slash"></i>&nbsp &nbsp Usuarios eliminados</a>
             </div>
-        @endcan
+        </div>
 
         <div class="card-body datatable-fix">
+            @if (!$existsVinculoEmpleadoAdmin)
+                <h5>Por favor da clic en el icono <small class="p-1 border border-primary rounded"><i
+                            class="fas fa-user-tag"></i></small> de la fila del usuario Admin</h5>
+            @endif
             <table class="table table-bordered w-100 datatable-User">
                 <thead class="thead-dark">
                     <tr>
-                        {{-- <th style="vertical-align: top">
-                            {{ trans('cruds.user.fields.id') }}
-                        </th> --}}
+
                         <th style="vertical-align: top">
                             {{ trans('cruds.user.fields.name') }}
                         </th>
@@ -49,63 +51,12 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($roles as $key => $item)
-                                    <option value="{{ $item->title }}">{{ $item->title }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($organizaciones as $key => $item)
-                                    <option value="{{ $item->organizacion }}">{{ $item->organizacion }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($areas as $key => $item)
-                                    <option value="{{ $item->area }}">{{ $item->area }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($puestos as $key => $item)
-                                    <option value="{{ $item->puesto }}">{{ $item->puesto }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -181,45 +132,57 @@
                 }
 
             ];
-            @can('user_create')
+            @can('usuarios_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar usuario',
-                url: "{{ route('admin.users.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar usuario',
+                    url: "{{ route('admin.users.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('user_delete')
+            @can('usuarios_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.users.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.users.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 // dtButtons.push(deleteButton)
             @endcan
@@ -230,7 +193,13 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.users.index') }}",
+                ajax: {
+                    url: "{{ route('admin.users.getUsersIndex') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token
+                    }
+                },
                 columns: [{
                         data: 'name',
                         name: 'name'
@@ -239,7 +208,6 @@
                         data: 'email',
                         name: 'email'
                     },
-
                     {
                         data: 'roles',
                         name: 'roles.title',
@@ -253,58 +221,77 @@
                         }
                     },
                     {
-                        data: 'n_empleado',
+                        data: 'id',
                         render: function(data, type, row, meta) {
-                            if (data) {
-                                return row.empleado?.name;
-                            } else {
-                                return 'Sin vincular a empleado';
+                            if (row.n_empleado != null || row.empleado_id != null) {
+                                if (row.empleado) {
+                                    return row.empleado?.name;
+                                }
                             }
-                        }
-                    },
-                    {
-                        data: 'n_empleado',
-                        render: function(data, type, row, meta) {
-                            if (data) {
-                                return row.empleado?.area?.area;
-                            } else {
-                                return 'Sin vincular a empleado';
-                            }
-                        }
-                    },
-                    {
-                        data: 'n_empleado',
-                        render: function(data, type, row, meta) {
-                            if (data) {
-                                return row.empleado?.puesto;
-                            } else {
-                                return 'Sin vincular a empleado';
-                            }
+                            return 'Sin vincular a empleado';
+
                         }
                     },
                     {
                         data: 'id',
-                        name: '{{ trans('global.actions') }}',
                         render: function(data, type, row, meta) {
+                            if (row.n_empleado != null || row.empleado_id != null) {
+                                if (row.empleado) {
+                                    return row.empleado?.area?.area;
+                                }
+                            }
+                            return 'Sin vincular a empleado';
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.n_empleado != null || row.empleado_id != null) {
+                                if (row.empleado) {
+                                    return row.empleado?.puesto;
+                                }
+                            }
+                            return 'Sin vincular a empleado';
+                        }
+                    },
+                    {
+                        data: 'id',
+                        name: 'actions',
+                        render: function(data, type, row, meta) {
+                            let empleados = @json($empleados);
                             let urlButtonShow = `/admin/users/${data}`;
                             let urlButtonDelete = `/admin/users/${data}`;
                             let urlButtonEdit = `/admin/users/${data}/edit`;
                             let urlButtonTwoFactor = `/admin/users/two-factor/${data}/change`;
                             let urlButtonBloquearUsuario = `/admin/users/bloqueo/${data}/change`;
-                            let htmlBotones = `
+                            let existsVinculoEmpleadoAdmin = @json($existsVinculoEmpleadoAdmin);
+                            let htmlBotones =
+                                `
                                 <div class="btn-group">
+                                    @can('usuarios_editar')
                                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    @can('usuarios_ver')
                                     <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
-                                    <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm" onclick="AbrirModal('${data}');">
+                                    @endcan
+                                    @can('usuarios_vincular_empleados')
+                                    <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm ${row.n_empleado?'':'border border-primary rounded'}" onclick="AbrirModal('${data}');">
                                         <i class="fas fa-user-tag"></i>
                                     </button>
+                                    @endcan
+                                    @can('usuarios_verificacion_dos_factores')
                                     <a href="${urlButtonTwoFactor}" title="${row.two_factor?'Quitar Verificación por dos factores':'Activar verificación por dos factores'}" class="btn btn-sm">
                                         ${row.two_factor?' <i class="fas fa-key"></i>':' <i class="fas fa-key"></i>'}
                                     </a>
+                                    @endcan
+                                    @can('usuarios_bloquear_usuario')
                                     <a href="${urlButtonBloquearUsuario}" title="${row.is_active?'Bloquear usuario':'Desbloquear usuario'}" class="btn btn-sm">
                                         ${row.is_active?' <i class="fas fa-unlock"></i>':' <i class="fas fa-lock"></i>'}
                                     </a>
+                                    @endcan
+                                    @can('usuarios_eliminar')
                                     <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>
+                                    @endcan
                                 </div>
 
 
@@ -322,17 +309,18 @@
                                             <div class="modal-body">
                                                 <p><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</p>
                                                 <select name="n_empleado" id="n_empleado${data}" class="select2">
-                                                    <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>
-                                                    @foreach ($empleados as $empleado)
-                                                        <option value="{{ $empleado->n_empleado }}">{{ $empleado->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                                    <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`;
+                            empleados.forEach(empleado => {
+                                htmlBotones += `
+                                                            <option value="${empleado.n_empleado != null ? `NEMPLEADO-${empleado.n_empleado}`:`IDEMPLEADO-${empleado.id}`}">${empleado.name}</option>
+                                                        `;
+                            });
+                            htmlBotones += `</select>
                                                 <span class="text-sm n_empleado_error errores text-danger"></span>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary"
-                                                    onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
+                                                <button type="button" class="btn btn-primary" onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
                                             </div>
                                         </div>
                                     </div>
@@ -409,8 +397,8 @@
             }
 
             window.VincularEmpleado = function(nombre, user_id) {
-                let n_empleado = $(`#n_empleado${user_id}`).val()
-                console.log(n_empleado);
+                console.log(user_id);
+                let n_empleado = document.getElementById(`n_empleado${user_id}`).value;
                 $.ajax({
                     type: "POST",
                     url: "/admin/users/vincular",

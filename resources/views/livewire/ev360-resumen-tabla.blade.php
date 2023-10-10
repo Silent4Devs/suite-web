@@ -1,68 +1,5 @@
 <div>
-    <style>
-        #tblResumen th:first-child {
-            position: sticky;
-            left: 0px;
-            background-color: #343a40;
-            z-index: 2;
-        }
 
-        #tblResumen td:first-child {
-            position: sticky;
-            left: 0px;
-            background-color: #343a40;
-            color: #fff;
-            z-index: 2;
-        }
-
-        #tblResumen th:nth-child(2) {
-            position: sticky;
-            left: 60px;
-            background-color: #343a40;
-            z-index: 2;
-        }
-
-        #tblResumen td:nth-child(2) {
-            position: sticky;
-            left: 60px;
-            background-color: #343a40;
-            color: #fff;
-            z-index: 2;
-        }
-
-        #tblResumen th:nth-child(3) {
-            position: sticky;
-            left: 140px;
-            background-color: #343a40;
-            z-index: 2;
-        }
-
-        #tblResumen td:nth-child(3) {
-            position: sticky;
-            left: 140px;
-            background-color: #343a40;
-            color: #fff;
-            z-index: 2;
-        }
-
-    </style>
-    <div class="mt-3 ml-2 row align-items-center">
-        <div class="pl-2 col-6">
-            <input type="text" class="form-control" placeholder="Buscar..." wire:model.debounce.800ms="search">
-        </div>
-        <div class="text-center col-3 d-flex align-items-center">
-            <span class="mr-2" style="display: inline-block;">Mostrar</span>
-            <select class="form-control" wire:model.debounce.800ms="perPage" style="display: inline-block; width:30%">
-                <option value="1">1</option>
-                <option value="5">5</option>
-                <option value="10" selected="">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-            <span class="ml-2">Página</span>
-        </div>
-    </div>
     <div class="mt-3 ml-3">
         <span wire:loading wire:target="perPage" class="text-muted"><i class="fas fa-spinner fa-pulse"></i> Obteniendo
             Información</span>
@@ -70,14 +7,14 @@
             ...</span>
     </div>
     <div class="container">
-        <div class="container pl-0 datatable-fix" style="overflow: auto">
-            <table class="table table-bordered w-100 datatable-Activo" id="tblResumen" style="font-size: 10px;">
+        <div wire:ignore class="container pl-0 datatable-fix">
+            <table class="table table-bordered w-100 datatable-Activo tabla-fija" id="tblResumen" style="font-size: 10px;">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="text-center" colspan="10">
+                        <th class="text-center" colspan="9">
                             Resultados de la evaluación
                         </th>
-                        <th class="text-center" colspan="{{ $competencias_evaluadas }}">
+                        <th class="text-center" colspan="{{ count($competencias_evaluadas) }}">
                             Competencias
                         </th>
                         <th class="text-center" colspan="{{ $objetivos_evaluados }}">
@@ -85,10 +22,10 @@
                         </th>
                     </tr>
                     <tr>
-                        <th style="vertical-align: top;">Nombre</th>
-                        <th style="vertical-align: top;">Puesto</th>
-                        <th style="vertical-align: top;">Área</th>
-                        <th style="vertical-align: top;">Evaluador(es)</th>
+                        <th style="vertical-align: top;" class="celdas-colaborador">Colaborador</th>
+                        <th style="vertical-align: top;" class="celdas-puesto">Puesto / Área</th>
+                        {{-- <th style="vertical-align: top;">Área</th> --}}
+                        <th style="vertical-align: top;" class="celdas-evaluacion">Evaluador(es)</th>
                         <th style="vertical-align: top;">Peso Competencias(%)</th>
                         <th style="vertical-align: top;">Peso Objetivos(%)</th>
                         <th style="vertical-align: top;">Competencias</th>
@@ -106,59 +43,62 @@
                 <tbody>
                     @forelse ($lista as $evaluado)
                         <tr>
-                            <td style="text-align: left !important">{{ $evaluado['evaluado'] }}</td>
-                            <td>{{ $evaluado['puesto'] }}</td>
-                            <td>{{ $evaluado['area'] }}</td>
-                            <td>
+                            <td style="text-align: left !important" class="celdas-colaborador">{{ $evaluado['evaluado'] }}</td>
+                            <td class="celdas-puesto"><span class="badge badge-primary">{{ $evaluado['puesto'] }}</span><br><span
+                                    class="badge badge-success">{{ $evaluado['area'] }}</span></td>
+                            {{-- <td>{{ $evaluado['area'] }}</td> --}}
+                            <td class="celdas-evaluacion">
                                 <div class="flex-wrap d-flex">
                                     @foreach ($evaluado['informacion_evaluacion']['evaluadores'] as $evaluador)
-                                        <img src="{{ asset('storage/empleados/imagenes/' . $evaluador->avatar) }}"
-                                            class="rounded-circle" title="{{ $evaluador->name }}">
+                                        @if ($evaluado['evaluado'] != $evaluador->name)
+                                            <span class="badge badge-secondary">{{ $evaluador->name }}</span>
+                                        @endif
                                     @endforeach
                                 </div>
                             </td>
-                            <td>{{ $evaluado['informacion_evaluacion']['peso_general_competencias'] }} %</td>
-                            <td>{{ $evaluado['informacion_evaluacion']['peso_general_objetivos'] }} %</td>
+                            @php
+                                $promedio_competencias = ($evaluado['informacion_evaluacion']['promedio_competencias'] * 100) / $evaluado['informacion_evaluacion']['peso_general_competencias'];
+                                $promedio_objetivos = ($evaluado['informacion_evaluacion']['promedio_general_objetivos'] * 100) / $evaluado['informacion_evaluacion']['peso_general_objetivos'];
+                            @endphp
+                            <td>{{ $evaluado['informacion_evaluacion']['peso_general_competencias'] }}%</td>
+                            <td>{{ $evaluado['informacion_evaluacion']['peso_general_objetivos'] }}%</td>
                             <td class="p-0" style="position: relative;">
                                 <div
-                                    style="width: {{ $evaluado['informacion_evaluacion']['promedio_general_competencias'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
+                                    style="width: {{ round($promedio_competencias) }}%;max-width: 100%;height: 100%;background: #5AFF94;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $evaluado['informacion_evaluacion']['promedio_general_competencias'] }}
-                                    %</span>
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_competencias']) }}%
+                                </span>
                             </td>
                             <td class="p-0" style="position: relative;">
                                 <div
-                                    style="width: {{ $evaluado['informacion_evaluacion']['promedio_general_objetivos'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
+                                    style="width: {{ $promedio_objetivos }}%;max-width: 100%;height: 100%;background: #5AFF94;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $evaluado['informacion_evaluacion']['promedio_general_objetivos'] }}
-                                    %</span>
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_general_objetivos']) }}%</span>
                             </td>
                             <td class="p-0" style="position: relative;">
                                 <div
-                                    style="width: {{ $evaluado['informacion_evaluacion']['calificacion_final'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
+                                    style="width: {{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}%;max-width: 100%;height: 100%;background: #5AD7FF;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $evaluado['informacion_evaluacion']['calificacion_final'] }}
-                                    %</span>
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}%</span>
                             </td>
-                            @if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 60)
+                            @if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['inaceptable'])
                                 <td style="background-color:#ff4747;color:white;text-align: center !important"><i
                                         class="mr-1 fas fa-exclamation-triangle"></i>Inaceptable</td>
-                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <=80) <td
-                                    style="background-color:#e89036;color:white;text-align: center !important"><i
-                                        class="mr-1 fas fa-exclamation-triangle"></i>Mínimo
-                                    Aceptable</td>
-                                @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <=100) <td
-                                        style="background-color:#3e6cd2;color:white;text-align: center !important"><i
-                                            class="mr-1 fas fa-check-circle"></i>Aceptable
-                                        </td>
-                                    @elseif($evaluado['informacion_evaluacion']['calificacion_final']>100)
-                                        <td style="background-color:#3ed257;color:white;text-align: center !important">
-                                            <i class="mr-1 fas fa-check-circle"></i>
-                                            Sobresaliente
-                                        </td>
+                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['minimo_aceptable'])
+                                <td style="background-color:#e89036;color:white;text-align: center !important"><i
+                                        class="mr-1 fas fa-exclamation-triangle"></i>Mínimo Aceptable</td>
+                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['aceptable'])
+                                <td style="background-color:#3e6cd2;color:white;text-align: center !important"><i
+                                        class="mr-1 fas fa-check-circle"></i>Aceptable
+                                </td>
+                            @elseif($evaluado['informacion_evaluacion']['calificacion_final'] > $rangos['sobresaliente'])
+                                <td style="background-color:#5AFF94;color:white;text-align: center !important">
+                                    <i class="mr-1 fas fa-check-circle"></i>
+                                    Sobresaliente
+                                </td>
                             @endif
                             </td>
                             @foreach ($competencias_evaluadas as $competencia)
@@ -172,8 +112,8 @@
                                             })
                                             ->first();
                                         if ($calificacion_auto) {
-                                            $calificacion_auto_promedio = ($calificacion_auto['calificacion'] * 100) / $calificacion_auto['meta'];
-                                            $collect_calificaciones->push($calificacion_auto_promedio);
+                                            $calificacion_auto_promedio = ($calificacion_auto['calificacion'] / $calificacion_auto['meta']) * 100;
+                                            $collect_calificaciones->push($calificacion_auto_promedio * ($calificacion_auto['peso'] / 100));
                                         }
                                     }
                                     
@@ -185,8 +125,8 @@
                                             })
                                             ->first();
                                         if ($calificacion_jefe) {
-                                            $calificacion_jefe_promedio = ($calificacion_jefe['calificacion'] * 100) / $calificacion_jefe['meta'];
-                                            $collect_calificaciones->push($calificacion_jefe_promedio);
+                                            $calificacion_jefe_promedio = ($calificacion_jefe['calificacion'] / $calificacion_jefe['meta']) * 100;
+                                            $collect_calificaciones->push($calificacion_jefe_promedio * ($calificacion_auto['peso'] / 100));
                                         }
                                     }
                                     
@@ -198,8 +138,8 @@
                                             })
                                             ->first();
                                         if ($calificacion_equipo) {
-                                            $calificacion_equipo_promedio = ($calificacion_equipo['calificacion'] * 100) / $calificacion_equipo['meta'];
-                                            $collect_calificaciones->push($calificacion_equipo_promedio);
+                                            $calificacion_equipo_promedio = ($calificacion_equipo['calificacion'] / $calificacion_equipo['meta']) * 100;
+                                            $collect_calificaciones->push($calificacion_equipo_promedio * ($calificacion_auto['peso'] / 100));
                                         }
                                     }
                                     
@@ -211,16 +151,18 @@
                                             })
                                             ->first();
                                         if ($calificacion_area) {
-                                            $calificacion_area_promedio = ($calificacion_area['calificacion'] * 100) / $calificacion_area['meta'];
-                                            $collect_calificaciones->push($calificacion_area_promedio);
+                                            $calificacion_area_promedio = ($calificacion_area['calificacion'] / $calificacion_area['meta']) * 100;
+                                            $collect_calificaciones->push($calificacion_area_promedio * ($calificacion_auto['peso'] / 100));
                                         }
                                     }
+                                    
                                     $promedio = 0;
                                     foreach ($collect_calificaciones as $calif) {
                                         $promedio += $calif;
                                     }
+                                    
                                     if (count($collect_calificaciones)) {
-                                        $promedio = number_format($promedio / count($collect_calificaciones), 2);
+                                        $promedio = number_format($promedio, 2);
                                     } else {
                                         $promedio = number_format($promedio / 1, 2);
                                     }
@@ -228,11 +170,10 @@
                                 <td class="p-0" style="position: relative;">
                                     @if (count($collect_calificaciones))
                                         <div
-                                            style="width: {{ $promedio }}%;max-width: 100%;height: 100%;background: #56de4d;">
+                                            style="width: {{ $promedio }}%;max-width: 100%;height: 100%;background: #5AFF94;">
                                         </div>
                                         <span
-                                            style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $promedio }}
-                                            %</span>
+                                            style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $promedio }}%</span>
                                     @else
                                         <span
                                             style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">N/A
@@ -245,10 +186,10 @@
                                     @if (isset($evaluado['informacion_evaluacion']['evaluadores_objetivos'][0]['objetivos'][$i]))
                                         @php
                                             $objetivo_info = $evaluado['informacion_evaluacion']['evaluadores_objetivos'][0]['objetivos'][$i];
-                                            $avance_porcentaje = number_format(($objetivo_info['calificacion'] * 100) / $objetivo_info['meta'], 2);
+                                            $avance_porcentaje = number_format(($objetivo_info['calificacion'] * 100) / ($objetivo_info['meta'] > 0 ? $objetivo_info['meta'] : 1), 2);
                                         @endphp
                                         <div
-                                            style="width: {{ $avance_porcentaje }}%;max-width: 100%;height: 100%;background: #56de4d;">
+                                            style="width: {{ $avance_porcentaje }}%;max-width: 100%;height: 100%;background: #5AFF94;">
                                         </div>
                                         <span title="{{ $objetivo_info['nombre'] }}"
                                             style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;text-align: left;">{{ Str::limit($objetivo_info['nombre'], 20, '...') }}
@@ -267,7 +208,7 @@
                     @endforelse
                 </tbody>
             </table>
-            {{ $lista->links() }}
+            {{-- {{ $lista->links() }} --}}
         </div>
     </div>
 </div>

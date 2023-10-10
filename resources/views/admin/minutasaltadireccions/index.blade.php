@@ -2,40 +2,47 @@
 @section('content')
 
     <style>
-        .table tr td:nth-child(4) {
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
 
-            text-align: center !important;
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
         }
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #00abb2;
-            color: #00abb2;
+            border: 1px solid #345183;
+            color: #345183;
             text-align: center;
             padding: 0;
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 0 !important;
             margin-right: 10px !important;
         }
+        .table tr td:nth-child(4) {
 
-        .btn_cargar:hover {
-            color: #fff;
-            background: #00abb2;
+            text-align: center !important;
         }
 
-        .btn_cargar i {
-            font-size: 15pt;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        
         .agregar {
             margin-right: 15px;
         }
@@ -44,13 +51,10 @@
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
 
-    @can('minutasaltadireccion_create')
+    @can('revision_por_direccion_agregar')
 
-
+        <h5 class="col-12 titulo_general_funcion">Revisión por dirección</h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Minutas de Sesiones con Alta Dirección</strong></h3>
-            </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalvulnerabilidad', ['model' => 'Vulnerabilidad', 'route' =>
@@ -128,31 +132,45 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Minutas de Sesiones con Alta Dirección ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible'],
-                        orthogonal: "empleadoText"
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
                     extend: 'print',
                     title: `Minutas de Sesiones con Alta Dirección ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">DETERMINACIÓN DE ALCANCE</strong>
+                                </div>
+                                <div class="col-3 p-2">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible'],
-                        orthogonal: "empleadoText"
+                        columns: ['th:not(:last-child):visible']
                     }
                 },
                 {
@@ -176,7 +194,7 @@
                 }
 
             ];
-            @can('minutasaltadireccion_delete')
+            @can('revision_por_direccion_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -205,7 +223,7 @@
                 }
                 //dtButtons.push(deleteButton)
             @endcan
-            @can('minutasaltadireccion_create')
+            @can('revision_por_direccion_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva minuta de Sesión con alta Dirección',
@@ -217,13 +235,17 @@
                 }
                 };
                 let btnExport = {
-                text: '<i class="fas fa-download"></i>',
+                text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-alta_direccion') }}",
                 action: function(e, dt, node, config) {
-                $('#').modal('show');
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
-                };
+            };
                 let btnImport = {
                 text: '<i class="fas fa-file-upload"></i>',
                 titleAttr: 'Importar datos',
@@ -316,11 +338,18 @@
                             let urlBotonEliminar = `/admin/minutasaltadireccions/${data}`;
 
                             let htmlButtons = `
+                            @can('revision_por_direccion_editar')
                                 <a href="${urlBotonEditar}" class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
+                            @endcan
+                            @can('revision_por_direccion_ver')
                                 <a href="${urlBotonMostrar}" class="btn btn-sm" title="Visualizar"><i class="fa fa-eye"></i></a>
+                            @endcan
+                            @can('revision_por_direccion_plan_accion')
                                 ${row.planes.map(plan=>{
                                     return `<a href="/admin/planes-de-accion/${plan.id}" class="btn btn-sm" title="Plan de Acción"><i class="fa fa-stream"></i></a>`;
                                 })}
+                            @endcan
+                            @can('revision_por_direccion_visualizar_revisiones')
                                 <a class="btn btn-sm " title="Visualizar revisiones"
                                     href="/admin/minutasaltadireccions/${data}/historial-revisiones">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -332,7 +361,10 @@
                                             d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
                                     </svg>
                                 </a>
+                            @endcan
+                            @can('revision_por_direccion_eliminar')
                                 <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlBotonEliminar}','${row.tema_reunion}')"><i class="fa fa-trash-alt"></i></button>
+                            @endcan
                             `;
                             return htmlButtons;
                         }

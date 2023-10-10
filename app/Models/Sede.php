@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -11,7 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Sede.
@@ -26,20 +23,17 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property int|null $organizacion_id
  * @property int|null $team_id
  * @property string|null $direccion
- *
  * @property Organizacion|null $organizacion
  * @property Team|null $team
  * @property Collection|Activo[] $activos
  * @property Collection|Empleado[] $empleados
  */
-class Sede extends Model
+class Sede extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'sedes';
 
     protected $casts = [
@@ -58,6 +52,22 @@ class Sede extends Model
         'longitud',
     ];
 
+    //Redis methods
+    public static function getAll($columns = ['id', 'sede'])
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('sedes_all', 3600 * 24, function () use ($columns) {
+            return self::select($columns)->get();
+        });
+    }
+
+    public static function getbyId($id)
+    {
+        return Cache::remember('sede_' . $id, 3600 * 24, function () use ($id) {
+            return self::find($id);
+        });
+    }
+
     public function organizacion()
     {
         return $this->belongsTo(Organizacion::class, 'organizacion_id', 'id');
@@ -75,6 +85,6 @@ class Sede extends Model
 
     public function empleados()
     {
-        return $this->hasMany(Empleado::class);
+        return $this->hasMany(Empleado::class)->alta();
     }
 }

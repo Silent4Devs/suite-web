@@ -9,7 +9,9 @@ use Livewire\Component;
 class PerfilCreate extends Component
 {
     public $nombre;
+
     public $descripcion;
+
     protected $rules = [
         'nombre' => 'required|string|max:255',
         'descripcion' => 'nullable|string|max:1500',
@@ -33,6 +35,7 @@ class PerfilCreate extends Component
         $this->reset(['nombre', 'descripcion']);
         $this->emit('PerfilStore');
         $this->emit('render-perfil-select');
+        $this->emitTo('perfilSelect', 'perfilEvent');
     }
 
     public function render()

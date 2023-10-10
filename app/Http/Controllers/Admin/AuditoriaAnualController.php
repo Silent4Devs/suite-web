@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAuditoriaAnualRequest;
-use App\Http\Requests\StoreAuditoriaAnualRequest;
-use App\Http\Requests\UpdateAuditoriaAnualRequest;
 use App\Models\AuditoriaAnual;
+use App\Models\AuditoriaAnualDocumento;
 use App\Models\Empleado;
 use App\Models\Team;
 use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,21 +17,23 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AuditoriaAnualController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
-        abort_if(Gate::denies('auditoria_anual_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AuditoriaAnual::with(['auditorlider', 'team'])->select(sprintf('%s.*', (new AuditoriaAnual)->table))->orderByDesc('id');
+            $query = AuditoriaAnual::with(['auditorlider', 'team', 'documentos_material'])->select(sprintf('%s.*', (new AuditoriaAnual)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'auditoria_anual_show';
-                $editGate = 'auditoria_anual_edit';
-                $deleteGate = 'auditoria_anual_delete';
+                $viewGate = 'programa_anual_auditoria_ver';
+                $editGate = 'programa_anual_auditoria_editar';
+                $deleteGate = 'programa_anual_auditoria_eliminar';
                 $crudRoutePart = 'auditoria-anuals';
 
                 return view('partials.datatablesActions', compact(
@@ -47,8 +49,8 @@ class AuditoriaAnualController extends Controller
                 return $row->id ? $row->id : '';
             });
 
-            $table->editColumn('tipo', function ($row) {
-                return $row->tipo ? AuditoriaAnual::TIPO_SELECT[$row->tipo] : '';
+            $table->editColumn('nombre', function ($row) {
+                return $row->nombre ? $row->nombre : '';
             });
 
             $table->editColumn('fechainicio', function ($row) {
@@ -58,12 +60,12 @@ class AuditoriaAnualController extends Controller
             $table->editColumn('fechafin', function ($row) {
                 return $row->fechafin ? \Carbon\Carbon::parse($row->fechafin)->format('d-m-Y') : '';
             });
-            $table->addColumn('auditorlider_name', function ($row) {
-                return $row->auditorlider ? $row->auditorlider->name : '';
+            $table->addColumn('objetivo', function ($row) {
+                return $row->objetivo ? html_entity_decode(strip_tags($row->objetivo), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
 
-            $table->editColumn('observaciones', function ($row) {
-                return $row->observaciones ? $row->observaciones : '';
+            $table->editColumn('alcance', function ($row) {
+                return $row->alcance ? html_entity_decode(strip_tags($row->alcance), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'auditorlider']);
@@ -71,44 +73,71 @@ class AuditoriaAnualController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
+        $auditoriaAnual = AuditoriaAnual::with('documentos_material')->get();
+        $documentoAuditoriaAnuals = AuditoriaAnualDocumento::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.auditoriaAnuals.index', compact('users', 'teams'));
+        return view('admin.auditoriaAnuals.index', compact('auditoriaAnual', 'documentoAuditoriaAnuals', 'users', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('auditoria_anual_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $empleados = Empleado::get();
+        // $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $auditorliders = Empleado::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $auditorliders = Empleado::alta()->get()->pluck('name', 'id');
+        // dd($auditorliders);
 
-        return view('admin.auditoriaAnuals.create', compact('auditorliders', 'empleados'));
+        return view('admin.auditoriaAnuals.create', compact('auditorliders'));
     }
 
-    public function store(StoreAuditoriaAnualRequest $request)
+    public function store(Request $request)
     {
+        abort_if(Gate::denies('programa_anual_auditoria_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'nombre' => 'required|string',
+            'fechainicio' => 'nullable|date',
+            'fechafin' => 'nullable|date',
+            'objetivo' => 'required|string',
+            'alcance' => 'required|string',
+        ]);
+
         $auditoriaAnual = AuditoriaAnual::create($request->all());
 
-        return redirect()->route('admin.auditoria-anuals.index');
+        return redirect()->route('admin.auditoria-anuals.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(AuditoriaAnual $auditoriaAnual)
     {
-        abort_if(Gate::denies('auditoria_anual_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $auditorliders = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $auditoriaAnual->load('auditorlider', 'team');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
     }
 
-    public function update(UpdateAuditoriaAnualRequest $request, AuditoriaAnual $auditoriaAnual)
+    public function update(Request $request, AuditoriaAnual $auditoriaAnual)
     {
+        abort_if(Gate::denies('programa_anual_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'nombre' => 'required|string',
+            'fechainicio' => 'nullable|date',
+            'fechafin' => 'nullable|date',
+            'objetivo' => 'required|string',
+            'alcance' => 'required|string',
+        ]);
+
         $auditoriaAnual->update($request->all());
 
         return redirect()->route('admin.auditoria-anuals.index');
@@ -116,16 +145,16 @@ class AuditoriaAnualController extends Controller
 
     public function show(AuditoriaAnual $auditoriaAnual)
     {
-        abort_if(Gate::denies('auditoria_anual_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditoriaAnual->load('auditorlider', 'team', 'fechaPlanAuditoria');
+        $auditoriaAnual->load('team');
 
         return view('admin.auditoriaAnuals.show', compact('auditoriaAnual'));
     }
 
     public function destroy(AuditoriaAnual $auditoriaAnual)
     {
-        abort_if(Gate::denies('auditoria_anual_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditoriaAnual->delete();
 
@@ -137,5 +166,26 @@ class AuditoriaAnualController extends Controller
         AuditoriaAnual::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function programa($id)
+    {
+        return view('admin.auditoriaAnuals.programa', compact('id'));
+    }
+
+    public function programaDocumentos(Request $request)
+    {
+        $auditoria = AuditoriaAnual::with('documentos_material')->find($request->auditoriaId);
+        $paths = [];
+        foreach ($auditoria->documentos_material as $documento) {
+            $path = asset('storage/programaAnualAuditoria/documentos/' . $auditoria->id . '/' . $documento->documento);
+            $extension = pathinfo($path, PATHINFO_EXTENSION);
+            array_push($paths, [
+                'path' => $path,
+                'extension' => $extension,
+            ]);
+        }
+
+        return response()->json(['paths' => $paths]);
     }
 }

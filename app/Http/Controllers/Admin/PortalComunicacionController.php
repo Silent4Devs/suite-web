@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comiteseguridad;
 use App\Models\ComunicacionSgi;
 use App\Models\Documento;
 use App\Models\Empleado;
-use App\Models\Area;
 use App\Models\FelicitarCumpleaños;
 use App\Models\Organizacione;
+use App\Models\PoliticaSgsi;
+use App\Models\User;
 use Carbon\Carbon;
+use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class PortalComunicacionController extends Controller
 {
@@ -21,13 +27,18 @@ class PortalComunicacionController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();
         $hoy->toDateString();
-        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+        $authId = Auth::user()->id;
 
-        $cumpleaños = Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        $aniversarios = Cache::remember('portal_aniversarios_' . $authId, 3600 * 2, function () use ($hoy) {
+            return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
+        });
 
-        $aniversarios = Empleado::whereMonth('antiguedad', '=', $hoy->format('m'))->get();
+        $aniversarios_contador_circulo = Cache::remember('portal_aniversarios_contador_circulo_' . $authId, 3600 * 2, function () use ($hoy) {
+            return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
+        });
 
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
 
@@ -36,9 +47,12 @@ class PortalComunicacionController extends Controller
 
         $comunicacionSgis_carrusel = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
 
-        $empleado_asignado = auth()->user()->n_empleado;
+        $empleado_asignado = User::getCurrentUser()->n_empleado;
 
-        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado'));
+        $politica_existe = PoliticaSgsi::getAll()->count();
+        $comite_existe = Comiteseguridad::getAll()->count();
+
+        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe'));
     }
 
     /**
@@ -54,7 +68,6 @@ class PortalComunicacionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -87,7 +100,6 @@ class PortalComunicacionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -109,6 +121,7 @@ class PortalComunicacionController extends Controller
 
     public function reportes()
     {
+        abort_if(Gate::denies('portal_comunicacion_mostrar_reportar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacione::first();
 
         return view('admin.portal-comunicacion.reportes', compact('organizacions'));
@@ -118,7 +131,7 @@ class PortalComunicacionController extends Controller
     {
         $felicitar = FelicitarCumpleaños::create([
             'cumpleañero_id' => $cumpleañero_id,
-            'felicitador_id' => auth()->user()->empleado->id,
+            'felicitador_id' => User::getCurrentUser()->empleado->id,
             'like' => true,
         ]);
 
@@ -139,7 +152,7 @@ class PortalComunicacionController extends Controller
     {
         $comentario = FelicitarCumpleaños::create([
             'cumpleañero_id' => $cumpleañero_id,
-            'felicitador_id' => auth()->user()->empleado->id,
+            'felicitador_id' => User::getCurrentUser()->empleado->id,
             'comentarios' => $request->comentarios,
         ]);
 

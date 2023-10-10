@@ -7,18 +7,16 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class ComunicacionSgi extends Model implements HasMedia
+class ComunicacionSgi extends Model implements HasMedia, Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'comunicacion_sgis';
 
     // protected $appends = [
@@ -26,9 +24,9 @@ class ComunicacionSgi extends Model implements HasMedia
     // ];
 
     const TipoSelect = [
-    'Carrusel' => 'Carrusel',
-    'Blog'     => 'Blog',
-    'Ambos'    => 'Ambos',
+        'Carrusel' => 'Carrusel',
+        'Blog' => 'Blog',
+        'Ambos' => 'Ambos',
     ];
 
     public static $searchable = [
@@ -91,6 +89,6 @@ class ComunicacionSgi extends Model implements HasMedia
 
     public function empleados()
     {
-        return $this->belongsToMany(Empleado::class, 'empleado_comunicacion', 'comunicacion_id', 'empleado_id');
+        return $this->belongsToMany(Empleado::class, 'empleado_comunicacion', 'comunicacion_id', 'empleado_id')->alta();
     }
 }

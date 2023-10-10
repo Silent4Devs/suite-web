@@ -15,7 +15,7 @@ class StorePlanaccionCorrectivaRequest extends FormRequest
     public function rules()
     {
         return [
-            'actividad'       => [
+            'actividad' => [
                 'string',
                 'required',
             ],

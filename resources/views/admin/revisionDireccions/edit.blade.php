@@ -2,15 +2,13 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.revision-direccions.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Editar: Revisión por Dirección</h5>
 <div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Revisión por Dirección  </h3>
-    </div>
-
     <div class="card-body">
-        <form method="POST" class="row" action="{{ route("admin.revision-direccions.update", [$revisionDireccion->id]) }}" enctype="multipart/form-data">
+        <form method="POST" class="row" action="{{ route("admin.revision-direccions.update",$revisionDireccion) }}" enctype="multipart/form-data">
+            @csrf
             @method('PUT')
+
             <div class="form-group col-md-6">
                 <label for="estadorevisionesprevias"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.revisionDireccion.fields.estadorevisionesprevias') }}</label>
                 <input class="form-control {{ $errors->has('estadorevisionesprevias') ? 'is-invalid' : '' }}" type="text" name="estadorevisionesprevias" id="estadorevisionesprevias" value="{{ old('estadorevisionesprevias', $revisionDireccion->estadorevisionesprevias) }}">
@@ -23,7 +21,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="cambiosinternosexternos"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.revisionDireccion.fields.cambiosinternosexternos') }}</label>
-                <input class="form-control {{ $errors->has('cambiosinternosexternos') ? 'is-invalid' : '' }}" type="text" name="cambiosinternosexternos" id="cambiosinternosexternos" value="{{ old('cambiosinternosexternos', $revisionDireccion->cambiosinternosexternos) }}">
+                <input class="form-control {{ $errors->has('cambiosinternosexternos') ? 'is-invalid' : '' }}" type="text" name="cambiosinternosexternos" id="cambiosinternosexternos" value="{{ old('cambiosinternosexternos',$revisionDireccion->cambiosinternosexternos) }}">
                 @if($errors->has('cambiosinternosexternos'))
                     <div class="invalid-feedback">
                         {{ $errors->first('cambiosinternosexternos') }}
@@ -31,9 +29,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.revisionDireccion.fields.cambiosinternosexternos_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="retroalimentaciondesempeno"><i class="fas fa-shield-alt iconos-crear"></i>{{ trans('cruds.revisionDireccion.fields.retroalimentaciondesempeno') }}</label>
-                <input class="form-control {{ $errors->has('retroalimentaciondesempeno') ? 'is-invalid' : '' }}" type="text" name="retroalimentaciondesempeno" id="retroalimentaciondesempeno" value="{{ old('retroalimentaciondesempeno', $revisionDireccion->retroalimentaciondesempeno) }}">
+                <textarea class="form-control {{ $errors->has('retroalimentaciondesempeno') ? 'is-invalid' : '' }}" name="retroalimentaciondesempeno" id="retroalimentaciondesempeno">{{ old('retroalimentaciondesempeno', $revisionDireccion->retroalimentaciondesempeno) }}</textarea>
                 @if($errors->has('retroalimentaciondesempeno'))
                     <div class="invalid-feedback">
                         {{ $errors->first('retroalimentaciondesempeno') }}
@@ -41,9 +39,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.revisionDireccion.fields.retroalimentaciondesempeno_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="retroalimentacionpartesinteresadas"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.revisionDireccion.fields.retroalimentacionpartesinteresadas') }}</label>
-                <input class="form-control {{ $errors->has('retroalimentacionpartesinteresadas') ? 'is-invalid' : '' }}" type="text" name="retroalimentacionpartesinteresadas" id="retroalimentacionpartesinteresadas" value="{{ old('retroalimentacionpartesinteresadas', $revisionDireccion->retroalimentacionpartesinteresadas) }}">
+                <textarea class="form-control {{ $errors->has('retroalimentacionpartesinteresadas') ? 'is-invalid' : '' }}" type="text" name="retroalimentacionpartesinteresadas" id="retroalimentacionpartesinteresadas">{{ old('retroalimentacionpartesinteresadas', $revisionDireccion->retroalimentacionpartesinteresadas) }}</textarea>
                 @if($errors->has('retroalimentacionpartesinteresadas'))
                     <div class="invalid-feedback">
                         {{ $errors->first('retroalimentacionpartesinteresadas') }}
@@ -53,7 +51,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="resultadosriesgos"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.revisionDireccion.fields.resultadosriesgos') }}</label>
-                <input class="form-control {{ $errors->has('resultadosriesgos') ? 'is-invalid' : '' }}" type="text" name="resultadosriesgos" id="resultadosriesgos" value="{{ old('resultadosriesgos', $revisionDireccion->resultadosriesgos) }}">
+                <input class="form-control {{ $errors->has('resultadosriesgos') ? 'is-invalid' : '' }}" type="text" name="resultadosriesgos" id="resultadosriesgos" value="{{ old('resultadosriesgos',$revisionDireccion->resultadosriesgos) }}">
                 @if($errors->has('resultadosriesgos'))
                     <div class="invalid-feedback">
                         {{ $errors->first('resultadosriesgos') }}

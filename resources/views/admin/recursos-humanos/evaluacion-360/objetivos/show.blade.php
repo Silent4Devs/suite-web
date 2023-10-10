@@ -2,14 +2,14 @@
 @section('content')
     <style>
         .img-profile {
-            width: 80px;
-            height: 80px;
+            width: 95px;
+            height: 95px;
             clip-path: circle(40px at 50% 50%);
         }
 
         .img-profile-lg {
-            width: 120px;
-            height: 120px;
+            width: 95px;
+            /* height: 95px; */
             clip-path: circle(100px at 50% 50%);
         }
 
@@ -18,7 +18,6 @@
             margin: 8px 0;
             border: 1px solid #345183
         }
-
     </style>
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Objetivos-Show', ['empleado' => $empleado]) }}
@@ -50,15 +49,16 @@
                         <div class="text-center col-2">
                             @php
                                 use App\Models\Organizacion;
-                                $organizacion = Organizacion::first();
+                                $organizacion = Organizacion::getFirst();
                                 $logotipo = 'img/logo_policromatico_2.png';
                                 if ($organizacion) {
                                     if ($organizacion->logotipo) {
-                                        $logotipo = 'images/' . $organizacion->logotipo;
+                                        $logotipo = '' . $organizacion->logotipo;
                                     }
                                 }
                             @endphp
-                            <img class="img-profile-lg" style="position: relative;" src="{{ asset($logotipo) }}">
+
+                            <img class="img-profile-lg" style="position: relative;" src="{{ $logotipo }}">
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <br>
             </div>
             <div class="col-12 datatable-fix">
-                <table class="table table-bordered w-100 tblObjetivos">
+                <table class="table table-bordered w-100 tblObjetivos ">
                     <thead class="thead-dark">
                         <tr>
                             <th style="vertical-align: top">
@@ -107,10 +107,11 @@
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
+                pageLength: 10,
                 processing: true,
                 serverSide: true,
                 retrieve: true,
-                ajax: "{{ route('admin.ev360-objetivos-empleado.create', $empleado->id) }}",
+                ajax: "{{ route('admin.ev360-objetivos-empleado.show', $empleado->id) }}",
                 columns: [{
                     data: 'objetivo.tipo.nombre',
                 }, {

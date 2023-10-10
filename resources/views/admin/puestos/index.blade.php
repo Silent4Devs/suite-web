@@ -5,8 +5,8 @@
 
     .btn_cargar{
         border-radius: 100px !important;
-        border: 1px solid #00abb2;
-        color: #00abb2;
+        border: 1px solid #345183;
+        color: #345183;
         text-align: center;
         padding: 0;
         width: 45px;
@@ -19,7 +19,7 @@
     }
     .btn_cargar:hover{
         color: #fff;
-        background:#00abb2 ;
+        background:#345183 ;
     }
     .btn_cargar i{
         font-size: 15pt;
@@ -36,12 +36,9 @@
 </style>
 
     {{ Breadcrumbs::render('perfil-puesto') }}
-    @can('puesto_create')
-
+    @can('puestos_agregar')
+        <h5 class="col-12 titulo_general_funcion">Perfiles de Puestos</h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Perfiles de Puestos</strong></h3>
-            </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalperfilpuesto', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
@@ -59,15 +56,28 @@
                 </div>
             </div> --}}
         @endcan
+
         <div class="card-body datatable-fix">
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
+                    <select class="form-control" id="lista_areas">
+                        <option value="" disabled selected>-- Selecciona un área --</option>
+                        @foreach ($areas as $area)
+                            <option value="{{ $area->area }}">{{ $area->area }}</option>
+                        @endforeach
+                        <option value="">Todas</option>
+                    </select>
+                </div>
+            </div>
             <table class="table table-bordered w-100 datatable-Puesto">
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            {{ trans('cruds.puesto.fields.id') }}
+                            {{ trans('cruds.puesto.fields.puesto') }}
                         </th>
                         <th>
-                            {{ trans('cruds.puesto.fields.puesto') }}
+                            Área
                         </th>
                         <th style="min-width: 500px;">
                             {{ trans('cruds.puesto.fields.descripcion') }}
@@ -76,21 +86,6 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -168,7 +163,7 @@
 
             ];
 
-            @can('puesto_create')
+            @can('puestos_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar area',
@@ -183,8 +178,12 @@
                 text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-puesto') }}",
                 action: function(e, dt, node, config) {
-                    $('#').modal('show');
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
             let btnImport = {
@@ -200,7 +199,7 @@
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
             @endcan
-            @can('puesto_delete')
+            @can('puestos_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -238,13 +237,13 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.puestos.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'puesto',
                         name: 'puesto'
 
+                    },
+                    {
+                        data: 'area',
+                        name: 'area'
                     },
                     {
                         data: 'descripcion',
@@ -261,18 +260,16 @@
                 ]
             };
             let table = $('.datatable-Puesto').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            $('#lista_areas').on('change', function() {
+                console.log(this.value);
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    table.columns(1).search("(^" + this.value + "$)", true, false).draw();
+                } else {
+                    this.style.border = "none";
+                    table.columns(1).search(this.value).draw();
+                }
+            });
         });
     </script>
 

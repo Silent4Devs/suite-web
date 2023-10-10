@@ -9,11 +9,13 @@ class UpdateControlAccesoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('control_acceso_edit');
+        return Gate::allows('control_de_accesos_editar');
     }
 
     public function rules()
     {
-        return [];
+        return [
+            'descripcion' => ['required', 'string'],
+        ];
     }
 }

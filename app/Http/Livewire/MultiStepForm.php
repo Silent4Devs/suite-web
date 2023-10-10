@@ -12,8 +12,10 @@ use App\Models\RH\EvaluacionObjetivo;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\GruposEvaluado;
+use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RH\TipoCompetencia;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
@@ -23,51 +25,90 @@ class MultiStepForm extends Component
 {
     //TABLA
     use WithPagination;
+
     public $showTable = false;
+
     public $search = '';
+
     public $perPage = 10;
+
     public $filter = 1;
+
     public $selected = [];
 
     public $sendEmail = true;
 
     //STEP 1
     public $showContentTable = false;
+
     public $nombre;
+
     public $descripcion;
+
     public $includeCompetencias;
+
     public $includeObjetivos;
+
     public $showPesoGeneralCompetencias = false;
+
     public $pesoGeneralCompetencias = 50;
+
     public $showPesoGeneralObjetivos = false;
+
     public $pesoGeneralObjetivos = 50;
+
     public $sumaTotalPesoGeneral;
     // public $description;
 
     //STEP 2
     protected $listeners = ['grupoEvaluadosSaved' => 'render'];
+
     public $evaluados_objetivo;
+
     public $by_manual;
+
     public $by_area;
+
     public $habilitarSelectManual = false;
+
     public $habilitarSelectAreas = false;
+
+    public $listaEvaluados;
 
     //STEP 3
     public $typeEvaluation = 360;
+
     public $evaluado_por_jefe = true;
+
     public $evaluado_por_misma_area = true;
+
     public $evaluado_por_equipo_a_cargo = true;
+
     public $autoevaluacion = true;
+
     public $pesoEvaluacionJefe = 25;
+
     public $pesoEvaluacionArea = 25;
+
     public $pesoEvaluacionEquipo = 25;
+
     public $pesoAutoevaluacion = 25;
+
     public $sumaTotalPeso;
+
+    public $aceptado = true;
 
     //STEP 4
     public $periodos = [];
 
+    public $hayEmpleadosSinCompetencias = false;
+
+    public $totalEmpleadosSinCompetencias = 0;
+
+    public $listaEmpleadosSinCompetencias;
+
     public $totalSteps = 5;
+
     public $currentStep = 1;
 
     public function mount()
@@ -88,7 +129,7 @@ class MultiStepForm extends Component
     {
         $evaluacion = new Evaluacion;
         $areas = Area::all();
-        $empleados = Empleado::all();
+        $empleados = Empleado::orderBy('name')->alta()->get();
         $grupos_evaluados = GruposEvaluado::all();
 
         $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
@@ -166,6 +207,23 @@ class MultiStepForm extends Component
         $this->validateData();
         $this->emit('increaseStep');
         $this->currentStep++;
+        if ($this->currentStep == 3) {
+            $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
+            // dd($this->evaluados_objetivo);
+        }
+        if ($this->currentStep == 4) {
+            $this->listaEmpleadosSinCompetencias = collect();
+            $this->totalEmpleadosSinCompetencias = 0;
+            $this->hayEmpleadosSinCompetencias = false;
+            foreach ($this->listaEvaluados as $evaluadoL) {
+                if ($evaluadoL['evaluado']['competencias_asignadas'] == 0) {
+                    $this->hayEmpleadosSinCompetencias = true;
+                    $this->totalEmpleadosSinCompetencias++;
+                    $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
+                }
+            }
+        }
+
         if ($this->currentStep > $this->totalSteps) {
             $this->currentStep = $this->totalSteps;
         }
@@ -176,6 +234,9 @@ class MultiStepForm extends Component
         $this->resetErrorBag();
         $this->emit('decreaseStep');
         $this->currentStep--;
+        if ($this->currentStep == 3) {
+            $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
+        }
         if ($this->currentStep < 1) {
             $this->currentStep = 1;
         }
@@ -273,6 +334,18 @@ class MultiStepForm extends Component
 
     public function validateStepThree()
     {
+        // foreach($this->listaEvaluados as $listaEvaluado){
+        //     foreach($listaEvaluado['evaluadores'] as $evaluador){
+        //         if($evaluador['id'] == 0){
+        //             $this->aceptado = false;
+        //             break;
+        //         }
+        //     }
+        // }
+        // dd($this->listaEvaluados[83]);
+        // $this->validate([
+        //     'listaEvaluados.*.evaluadores.*.id' => 'required|numeric|gt:0'
+        // ]);
         $this->sumaTotalPeso = 0;
         if ($this->evaluado_por_jefe == false && $this->evaluado_por_misma_area == false && $this->evaluado_por_equipo_a_cargo == false && $this->autoevaluacion == false) {
             $this->validate([
@@ -339,7 +412,7 @@ class MultiStepForm extends Component
     public function validateStepFour()
     {
         $this->validate([
-            'periodos'    => 'required|array|min:1',
+            'periodos' => 'required|array|min:1',
             //"periodos.*"  => "required|date|distinct|min:2"
         ]);
     }
@@ -383,10 +456,10 @@ class MultiStepForm extends Component
     public function createEvaluation($idx, $nombre, $descripcion, $estatus, $evaluados_objetivo, $autoevaluacion, $evaluado_por_jefe, $evaluado_por_equipo_a_cargo, $evaluado_por_misma_area, $fecha_inicio, $fecha_fin)
     {
         if ($evaluados_objetivo == 'all') {
-            $evaluados = Empleado::pluck('id')->toArray();
+            $evaluados = Empleado::getaltaAll()->pluck('id')->toArray();
         } elseif ($evaluados_objetivo == 'area') {
             $evaluados_area = intval($this->by_area);
-            $evaluados = Empleado::where('area_id', $evaluados_area)->pluck('id')->toArray();
+            $evaluados = Empleado::getaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
         } elseif ($evaluados_objetivo == 'manual') {
             $evaluados = $this->by_manual;
         } else {
@@ -397,7 +470,7 @@ class MultiStepForm extends Component
             'descripcion' => $descripcion,
             'estatus' => $estatus,
             'evaluados_objetivo' => $evaluados_objetivo,
-            'autor_id' => auth()->user()->empleado->id,
+            'autor_id' => User::getCurrentUser()->empleado->id,
             'autoevaluacion' => $autoevaluacion,
             'evaluado_por_jefe' => $evaluado_por_jefe,
             'evaluado_por_equipo_a_cargo' => $evaluado_por_equipo_a_cargo,
@@ -413,12 +486,21 @@ class MultiStepForm extends Component
             'include_competencias' => $this->includeCompetencias ? $this->includeCompetencias : false,
             'include_objetivos' => $this->includeObjetivos ? $this->includeObjetivos : false,
         ]);
-        $evaluacion->evaluados()->sync($evaluados);
-
+        $evaluados_puesto = [];
         foreach ($evaluados as $evaluado) {
-            $this->relacionarEvaluadoConEvaluadores($evaluacion, $evaluado);
+            $evaluados_puesto[] = [
+                'evaluado_id' => $evaluado,
+                'puesto_id' => Empleado::with('puestoRelacionado')->find($evaluado)->puestoRelacionado->id,
+            ];
         }
+        $evaluacion->evaluados()->sync($evaluados_puesto);
 
+        // foreach ($evaluados as $evaluado) {
+        //     $this->relacionarEvaluadoConEvaluadores($evaluacion, $evaluado);
+        // }
+        foreach ($this->listaEvaluados as $listaEvaluado) {
+            $this->relacionarEvaluadoConEvaluadores($evaluacion, $listaEvaluado);
+        }
         // if ($this->includeCompetencias) {
         //     $competenciasSeleccionadas = $this->selected;
         //     foreach ($competenciasSeleccionadas as $competencia) {
@@ -443,63 +525,75 @@ class MultiStepForm extends Component
         }
     }
 
-    public function relacionarEvaluadoConEvaluadores($evaluacion, $evaluado)
+    public function relacionarEvaluadoConEvaluadores($evaluacion, $listaEvaluado)
     {
-        $empleado = Empleado::with('children', 'supervisor')->find(intval($evaluado));
-        $evaluadores = collect();
-        $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
+        // $empleado = Empleado::with('children', 'supervisor')->find(intval($evaluado));
+        // $evaluadores = collect();
+        // $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
 
-        if ($evaluacion->autoevaluacion) {
-            $evaluadores->push(['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
-        }
-        if ($evaluacion->evaluado_por_jefe) {
-            if ($empleado->supervisor) {
-                $evaluadores->push(['id' => intval($empleado->supervisor->id), 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+        // if ($evaluacion->autoevaluacion) {
+        //     $evaluadores->push(['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
+        // }
+        // if ($evaluacion->evaluado_por_jefe) {
+        //     if ($empleado->supervisor) {
+        //         $evaluadores->push(['id' => intval($empleado->supervisor->id), 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+        //     }
+        // }
+        // $lista_evaluado_por_equipo_a_cargo = collect();
+        // if ($evaluacion->evaluado_por_equipo_a_cargo) {
+        //     if ($empleado->children) {
+        //         $childrens = $empleado->children;
+        //         $equipo = $this->obtenerEquipoACargo($childrens);
+        //         foreach ($equipo as $e) {
+        //             $lista_evaluado_por_equipo_a_cargo->push(['id' => $e, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+        //         }
+        //         if (count($lista_evaluado_por_equipo_a_cargo)) {
+        //             $evaluadores->push($lista_evaluado_por_equipo_a_cargo->random());
+        //         }
+        //     }
+        // }
+
+        // $lista_empleados_misma_area = collect();
+        // if ($evaluacion->evaluado_por_misma_area) {
+        //     if ($empleado->empleados_misma_area) {
+        //         foreach ($empleado->empleados_misma_area as $evaluador) {
+        //             if ($evaluador != $empleado->id) {
+        //                 $lista_empleados_misma_area->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+        //             }
+        //         }
+        //         if (count($lista_empleados_misma_area)) {
+        //             $evaluadores->push($lista_empleados_misma_area->random());
+        //             // while (count($lista_empleados_misma_area)) {
+        //             //     if (!$evaluadores->contains('id', $lista_empleados_misma_area->random()['id'])) {
+
+        //             //         break;
+        //             //     }
+        //             // }
+        //         }
+        //     }
+        // }
+
+        // $evaluadores = $evaluadores->unique('id')->toArray();
+        // foreach ($evaluadores as $evaluador) {
+        //     EvaluadoEvaluador::create([
+        //         'evaluado_id' => $empleado->id,
+        //         'evaluador_id' => $evaluador['id'],
+        //         'evaluacion_id' => $evaluacion->id,
+        //         'peso' => intval($evaluador['peso']),
+        //         'tipo' => $evaluador['tipo'],
+        //     ]);
+        // }
+        // dd($listaEvaluado);
+        foreach ($listaEvaluado['evaluadores'] as $evaluador) {
+            if ($evaluador['id'] != 0 && $evaluador['id'] != '' && $evaluador['id'] != null) {
+                EvaluadoEvaluador::create([
+                    'evaluado_id' => $listaEvaluado['evaluado']['id'],
+                    'evaluador_id' => $evaluador['id'],
+                    'evaluacion_id' => $evaluacion->id,
+                    'peso' => intval($evaluador['peso']),
+                    'tipo' => $evaluador['tipo'],
+                ]);
             }
-        }
-        $lista_evaluado_por_equipo_a_cargo = collect();
-        if ($evaluacion->evaluado_por_equipo_a_cargo) {
-            if ($empleado->children) {
-                $childrens = $empleado->children;
-                $equipo = $this->obtenerEquipoACargo($childrens);
-                foreach ($equipo as $e) {
-                    $lista_evaluado_por_equipo_a_cargo->push(['id' => $e, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
-                }
-                if (count($lista_evaluado_por_equipo_a_cargo)) {
-                    $evaluadores->push($lista_evaluado_por_equipo_a_cargo->random());
-                }
-            }
-        }
-
-        $lista_empleados_misma_area = collect();
-        if ($evaluacion->evaluado_por_misma_area) {
-            if ($empleado->empleados_misma_area) {
-                foreach ($empleado->empleados_misma_area as $evaluador) {
-                    if ($evaluador != $empleado->id) {
-                        $lista_empleados_misma_area->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
-                    }
-                }
-                if (count($lista_empleados_misma_area)) {
-                    $evaluadores->push($lista_empleados_misma_area->random());
-                    // while (count($lista_empleados_misma_area)) {
-                    //     if (!$evaluadores->contains('id', $lista_empleados_misma_area->random()['id'])) {
-
-                    //         break;
-                    //     }
-                    // }
-                }
-            }
-        }
-
-        $evaluadores = $evaluadores->unique('id')->toArray();
-        foreach ($evaluadores as $evaluador) {
-            EvaluadoEvaluador::create([
-                'evaluado_id' => $empleado->id,
-                'evaluador_id' => $evaluador['id'],
-                'evaluacion_id' => $evaluacion->id,
-                'peso' => intval($evaluador['peso']),
-                'tipo' => $evaluador['tipo'],
-            ]);
         }
     }
 
@@ -541,55 +635,16 @@ class MultiStepForm extends Component
         $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
 
         //Los objetivos siempre se evaluan por autoevalución y jefe inmediato
-        $evaluadores_objetivos->push(['id' => intval($empleado->id), 'peso' => 0]);
-        if ($empleado->supervisor) {
-            $evaluadores_objetivos->push(['id' => intval($empleado->supervisor->id), 'peso' => 100]);
+        if ($includeObjetivos) {
+            $supervisorObjetivos = $evaluadores->filter(function ($item) {
+                return intval($item->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
+            })->first();
+            $evaluadores_objetivos->push(['id' => intval($empleado->id), 'peso' => 0]);
+            // if ($empleado->supervisorObjetivos) {
+            $evaluadores_objetivos->push(['id' => intval($supervisorObjetivos->evaluador_id), 'peso' => 100]);
+            // }
         }
 
-        // // Las competencias se pueden evaluar en de una manera de 360,270,180,90
-        // if ($evaluacion->autoevaluacion) {
-        //     $evaluadores->push(['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion]);
-        //     // $evaluadores_objetivos->push(['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion]);
-        // }
-        // if ($evaluacion->evaluado_por_jefe) {
-        //     if ($empleado->supervisor) {
-        //         $evaluadores->push(['id' => intval($empleado->supervisor->id), 'peso' => $this->pesoEvaluacionJefe]);
-        //         // $evaluadores_objetivos->push(['id' => intval($empleado->supervisor->id), 'peso' => $this->pesoEvaluacionJefe]);
-        //     }
-        // }
-
-        // $lista_evaluado_por_equipo_a_cargo = collect();
-        // if ($evaluacion->evaluado_por_equipo_a_cargo) {
-        //     if ($empleado->children) {
-        //         $childrens = $empleado->children;
-        //         $equipo = $this->obtenerEquipoACargo($childrens);
-        //         foreach ($equipo as $e) {
-        //             $lista_evaluado_por_equipo_a_cargo->push(['id' => $e, 'peso' => $this->pesoEvaluacionEquipo]);
-        //         }
-        //         if (count($lista_evaluado_por_equipo_a_cargo)) {
-        //             $evaluadores->push($lista_evaluado_por_equipo_a_cargo->random());
-        //         }
-        //     }
-        // }
-
-        // $lista_empleados_misma_area = collect();
-        // if ($evaluacion->evaluado_por_misma_area) {
-        //     if ($empleado->empleados_misma_area) {
-        //         foreach ($empleado->empleados_misma_area as $evaluador) {
-        //             $lista_empleados_misma_area->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionArea]);
-        //         }
-
-        //         if (count($lista_empleados_misma_area)) {
-        //             while ($evaluadores->contains('id', $lista_empleados_misma_area->random()['id'])) {
-        //                 if (!$evaluadores->contains('id', $lista_empleados_misma_area->random()['id'])) {
-        //                     $evaluadores->push($lista_empleados_misma_area->random());
-        //                     break;
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-        // $evaluadores = $evaluadores->unique('id')->toArray();
         if ($includeCompetencias) {
             foreach ($evaluadores as $evaluador) {
                 $competencias_por_puesto = Empleado::with(['puestoRelacionado' => function ($q) {
@@ -597,16 +652,18 @@ class MultiStepForm extends Component
                         $q->with(['competencia']);
                     }]);
                 }])->find($empleado->id);
-                $competencias = $competencias_por_puesto->puestoRelacionado->competencias;
-                foreach ($competencias as $competencia) {
-                    EvaluacionRepuesta::create([
-                        'calificacion' => 0,
-                        'descripcion' => null,
-                        'competencia_id' => $competencia->competencia_id,
-                        'evaluado_id' => $empleado->id,
-                        'evaluador_id' => $evaluador->evaluador_id,
-                        'evaluacion_id' => $evaluacion->id,
-                    ]);
+                $competencias = !is_null($competencias_por_puesto->puestoRelacionado) ? $competencias_por_puesto->puestoRelacionado->competencias : null;
+                if (!is_null($competencias)) {
+                    foreach ($competencias as $competencia) {
+                        EvaluacionRepuesta::create([
+                            'calificacion' => 0,
+                            'descripcion' => null,
+                            'competencia_id' => $competencia->competencia_id,
+                            'evaluado_id' => $empleado->id,
+                            'evaluador_id' => $evaluador->evaluador_id,
+                            'evaluacion_id' => $evaluacion->id,
+                        ]);
+                    }
                 }
             }
         }
@@ -614,16 +671,28 @@ class MultiStepForm extends Component
         $evaluadores_objetivos = $evaluadores_objetivos->unique('id')->toArray();
         if ($includeObjetivos) {
             $objetivos = $empleado->objetivos;
-            foreach ($evaluadores_objetivos as $evaluador) {
-                foreach ($objetivos as $objetivo) {
-                    ObjetivoRespuesta::create([
-                        'meta_alcanzada' => 'Sin evaluar',
-                        'calificacion' => 0,
-                        'objetivo_id' => $objetivo->objetivo_id,
-                        'evaluado_id' => $empleado->id,
-                        'evaluador_id' => $evaluador['id'],
-                        'evaluacion_id' => $evaluacion->id,
-                    ]);
+            if (!is_null($objetivos)) {
+                foreach ($evaluadores_objetivos as $evaluador) {
+                    foreach ($objetivos as $objetivo) {
+                        $objvo = Objetivo::find($objetivo->objetivo_id);
+                        if ($objvo->esta_aprobado == Objetivo::APROBADO) {
+                            ObjetivoRespuesta::create([
+                                'meta_alcanzada' => 'Sin evaluar',
+                                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+                                'calificacion' => 0,
+                                'objetivo_id' => $objetivo->objetivo_id,
+                                'evaluado_id' => $empleado->id,
+                                'evaluador_id' => $evaluador['id'],
+                                'evaluacion_id' => $evaluacion->id,
+                            ]);
+                            ObjetivoEmpleado::where('empleado_id', '=', $empleado->id)
+                                ->where('objetivo_id', '=', $objetivo->objetivo_id)
+                                ->where('en_curso', '=', true)
+                                ->update([
+                                    'evaluacion_id' => $evaluacion->id,
+                                ]);
+                        }
+                    }
                 }
             }
         }
@@ -648,6 +717,101 @@ class MultiStepForm extends Component
 
     public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
     {
-        Mail::to($email)->send(new NotificacionEvaluador($evaluacion, $evaluador, $evaluados));
+        Mail::to(removeUnicodeCharacters($email))->send(new NotificacionEvaluador($evaluacion, $evaluador, $evaluados));
+    }
+
+    public function obtenerEvaluadosConEvaluadores($evaluados_objetivo)
+    {
+        if ($evaluados_objetivo == 'all') {
+            $evaluados = Empleado::getaltaAll()->pluck('id')->toArray();
+        } elseif ($evaluados_objetivo == 'area') {
+            $evaluados_area = intval($this->by_area);
+            $evaluados = Empleado::getaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
+        } elseif ($evaluados_objetivo == 'manual') {
+            $evaluados = $this->by_manual;
+        } else {
+            $evaluados = GruposEvaluado::find(intval($evaluados_objetivo))->empleados->pluck('id')->toArray();
+        }
+
+        $evaluadosEvaluadores = collect();
+
+        foreach ($evaluados as $evaluado) {
+            $empleado = Empleado::with('children', 'supervisor')->find(intval($evaluado));
+            $evaluadores = collect();
+
+            $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
+            $lista_par_jefe = collect();
+            if ($empleado->supervisor) {
+                $evaluadores->put('jefe', ['id' => intval($empleado->supervisor->id), 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+            } else {
+                // foreach ($empleado->empleados_pares as $evaluador) {
+                //     if ($evaluador != $empleado->id) {
+                //         $lista_par_jefe->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+                //     } else {
+                //         $evaluadores->put('jefe', ['id' => 135, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+                //     }
+                // }
+                // if (count($lista_par_jefe)) {
+                //     $evaluadores->put('jefe', $lista_par_jefe->random());
+                // } else {
+                //     $evaluadores->put('jefe', ['id' => 135, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+                // }
+
+                $evaluadores->put('jefe', ['id' => Empleado::getaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+            }
+
+            $lista_evaluado_por_equipo_a_cargo = collect();
+
+            if (count($empleado->children) > 0) {
+                $childrens = $empleado->children;
+                $equipo = $this->obtenerEquipoACargo($childrens);
+                foreach ($equipo as $e) {
+                    $lista_evaluado_por_equipo_a_cargo->push(['id' => $e, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+                }
+                if (count($lista_evaluado_por_equipo_a_cargo)) {
+                    $evaluadores->put('subordinado', $lista_evaluado_por_equipo_a_cargo->random());
+                }
+            } else {
+                $evaluadores->put('subordinado', ['id' => Empleado::getaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+            }
+
+            // $lista_empleados_misma_area = collect();
+            // dd(array_rand($empleado->empleados_pares));
+            // if (count($empleado->empleados_pares) > 0) {
+            //     // foreach ($empleado->empleados_pares as $evaluador) {
+            //     //     if ($evaluador != $empleado->id) {
+            //     //         $lista_empleados_misma_area->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+            //     //     } else {
+            //     //         $evaluadores->put('par', ['id' => 135, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+            //     //     }
+            //     // }
+            //     // if (count($lista_empleados_misma_area)) {
+            //     //     $evaluadores->put('par', $lista_empleados_misma_area->random());
+            //     // } else {
+            //     //     $evaluadores->put('par', ['id' => 135, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+            //     // }
+            //     $evaluadores->put('par', ['id' => array_rand($empleado->empleados_pares) > 0 ? array_rand($empleado->empleados_pares) : 135, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+            // } else {
+            //     $evaluadores->put('par', ['id' => 135, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+            // }
+
+            $evaluadores->put('par', ['id' => Empleado::getaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+
+            // foreach ($evaluadores as $key => $evaluador) {
+            //     if ($evaluador['id'] == 0) {
+            //         $base = $evaluadores[$key];
+            //         $reemplazo = ['id' => 135];
+            //         $evaluadores[$key] = array_replace($base, $reemplazo);
+            //     }
+            // }
+            // dd($evaluadores);
+
+            // $evaluadores = $evaluadores->unique('id')->sortBy('tipo')->toArray();
+
+            $evaluadosEvaluadores->push(['evaluado' => $empleado, 'evaluadores' => $evaluadores]);
+            // dd($evaluadosEvaluadores);
+        }
+
+        return $evaluadosEvaluadores;
     }
 }

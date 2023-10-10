@@ -104,12 +104,8 @@
 }
 
     </style>
-
+    <h5 class="col-12 titulo_general_funcion">Mi organización</h5>
     <div class="mt-5 card ">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong> Mi organización</strong></h3>
-        </div>
-
         <br>
         @include('layouts.errors')
         @include('flash::message')
@@ -118,17 +114,17 @@
             <div class="text-right col-lg-12" style="position:relative; z-index:1;">
                 @if (!empty($count == 1))
                 @else
-                    @can('organizacion_create')
+                    @can('mi_organizacion_agregar')
                         <a class="btn btn-danger" href="{{ route('admin.organizacions.create') }}">
                             Agregar Organización
                         </a>
                     @endcan
                 @endif
-                {{-- @can('organizacion_edit') --}}
+                @can('mi_organizacion_panel_de_control')
                 <a class="btn btn-success" style="float: left;" href="{{ route('admin.panel-organizacion.index') }}">
                     Panel de Control
-                {{-- @endcan --}}
-                @can('organizacion_edit')
+                @endcan
+                @can('mi_organizacion_editar_organizacion')
                     <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-danger'>
                         Editar Organización
                     </a>
@@ -139,21 +135,24 @@
                 <div class="row">
                     @if ($panel_rules->logotipo )
                     <div class="row col-12 justify-content-center d-flex" style="margin-top:-85px;">
-                        <div class="p-5 col-sm-6">
+                        <div class="text-center p-5 col-sm-6">
                             <label for="logotipo"></label>
-                            <img class="bg-light" src="{{ url($logotipo) }}" alt="Card image" style="width:100%;">
+                            <img class="  text-center bg-light" src="{{ url($logotipo) }} " alt="Card image" style="width:200px;">
                             <div class="caja-redes">
+                                @if ($panel_rules->pagina_web)
+                                <a class="redes" target="_blank" href='{{ $organizacion->pagina_web }}'><i class="fas fa-globe"></i></a>
+                                @endif
                                 @if ($panel_rules->linkedln)
-                                <a class="redes" href='{{ $organizacion->linkedln }}'><i class="fab fa-linkedin-in"></i></a>
+                                <a class="redes" target="_blank" href='{{ $organizacion->linkedln }}'><i class="fab fa-linkedin-in"></i></a>
                                 @endif
                                 @if ($panel_rules->youtube)
-                                <a class="redes" href='{{ $organizacion->youtube }}'><i class="fab fa-youtube"></i></a>
+                                <a class="redes" target="_blank" href='{{ $organizacion->youtube }}'><i class="fab fa-youtube"></i></a>
                                 @endif
                                 @if ($panel_rules->facebook)
-                                <a class="redes" href='{{ $organizacion->facebook }}'><i class="fab fa-facebook-f"></i></a>
+                                <a class="redes" target="_blank" href='{{ $organizacion->facebook }}'><i class="fab fa-facebook-f"></i></a>
                                 @endif
                                 @if ($panel_rules->twitter)
-                                <a class="redes" href='{{ $organizacion->twitter }}'><i class="fab fa-twitter"></i></a>
+                                <a class="redes" target="_blank" href='{{ $organizacion->twitter }}'><i class="fab fa-twitter"></i></a>
                                 @endif
                             </div>
                             @if ($errors->has('logotipo'))
@@ -230,7 +229,7 @@
                     </div>
                     @endif
                     @if ($panel_rules->telefono)
-                    <div class="form-group col-sm-4 col-md-4">
+                    <div class="form-group col-sm-6 col-md-6">
                         <label for="telefono"> <i class="fas fa-phone iconos-crear"></i> Teléfono
                         </label>
                         <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number"
@@ -244,7 +243,7 @@
                     </div>
                     @endif
                     @if ($panel_rules->correo)
-                    <div class="form-group col-sm-4 col-md-4">
+                    <div class="form-group col-sm-6 col-md-6">
                         <label for="correo"> <i class="far fa-envelope iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.correo') }}
                         </label>
@@ -258,7 +257,7 @@
                         <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
                     </div>
                     @endif
-                    @if ($panel_rules->pagina_web)
+                    {{-- @if ($panel_rules->pagina_web)
                     <div class="form-group col-sm-4 col-md-4">
                         <label for="pagina_web"> <i class="fas fa-pager iconos-crear"></i> Página Web
                         </label>
@@ -271,7 +270,7 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
                     </div>
-                    @endif
+                    @endif --}}
                     {{-- @if ($panel_rules->redessociales) --}}
                     {{-- <div class="form-group col-sm-4 col-md-3">
                         <label for="linkedln"><i class="fab fa-linkedin iconos-crear"></i>Linkedln
@@ -471,7 +470,7 @@
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i> Antecedentes
                         </label>
-                        <div class="c_text">{{ strip_tags($organizacion->antecedentes) }}</div>
+                        <div class="c_text">{!!$organizacion->antecedentes !!}</div>
                         <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
                     </div>
                     @endif

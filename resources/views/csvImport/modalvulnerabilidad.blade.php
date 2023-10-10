@@ -81,6 +81,7 @@
                         const response  = await importar(formData)
                         if (response.status=='success') {
                             toastr.success(response.message)
+                            $('.tblCSV').DataTable().ajax.reload();
                             $('#xlsxImportModal').modal('hide')
                         }
                     }
@@ -89,6 +90,7 @@
                 const response = await importar(formData)
                 if (response.status=='success') {
                     toastr.success(response.message)
+                     $('.tblCSV').DataTable().ajax.reload();
                     $('#xlsxImportModal').modal('hide')
                 }
             }

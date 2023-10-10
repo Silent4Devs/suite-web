@@ -19,7 +19,7 @@ class UpdateRolesResponsabilidadeRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'direccionsgsi'   => [
+            'direccionsgsi' => [
                 'string',
                 'required',
             ],
@@ -35,7 +35,7 @@ class UpdateRolesResponsabilidadeRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'rol'             => [
+            'rol' => [
                 'string',
                 'nullable',
             ],

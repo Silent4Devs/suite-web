@@ -4,19 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivoRequest;
-use App\Http\Requests\StoreActivoRequest;
 use App\Http\Requests\UpdateActivoRequest;
 use App\Models\Activo;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Marca;
 use App\Models\Modelo;
+use App\Models\Proceso;
 use App\Models\Sede;
+use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -24,19 +26,21 @@ class ActivosController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_activo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Activo::with(['tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table))->orderByDesc('id');
+            $query = Activo::with(['tipoactivo' => function ($query) {
+                $query->with('subcategoria_activos');
+            }, 'dueno', 'empleado', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'configuracion_activo_show';
-                $editGate = 'configuracion_activo_edit';
-                $deleteGate = 'configuracion_activo_delete';
+                $viewGate = 'inventario_activos_ver';
+                $editGate = 'inventario_activos_editar';
+                $deleteGate = 'inventario_activos_eliminar';
                 $crudRoutePart = 'activos';
 
                 return view('partials.datatablesActions', compact(
@@ -60,8 +64,8 @@ class ActivosController extends Controller
                 return $row->tipoactivo ? $row->tipoactivo->tipo : '';
             });
 
-            $table->addColumn('subtipo_subtipo', function ($row) {
-                return $row->subtipo ? $row->subtipo->subtipo : '';
+            $table->addColumn('subcategoria', function ($row) {
+                return $row->subcategoria ? $row->subcategoria->subcategoria : '';
             });
 
             $table->editColumn('descripcion', function ($row) {
@@ -120,57 +124,50 @@ class ActivosController extends Controller
             return $table->make(true);
         }
 
-        $tipoactivos = Tipoactivo::get();
-        $tipoactivos = Tipoactivo::get();
-        $users = User::get();
-        $sedes = Sede::get();
+        $tipoactivos = Tipoactivo::getAll();
+        $subtipo = SubcategoriaActivo::getAll();
+        $users = User::getAll();
+        $sedes = Sede::getAll();
         $teams = Team::get();
+        $activos_nuevo = Activo::getAll();
 
-        return view('admin.activos.index', compact('tipoactivos', 'tipoactivos', 'users', 'sedes', 'teams'));
+        return view('admin.activos.index', compact('tipoactivos', 'users', 'sedes', 'teams', 'subtipo', 'activos_nuevo'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_activo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $subtipos = Tipoactivo::all()->pluck('subtipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $ubicacions = Sede::getAll()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
+        $procesos = Proceso::with('macroproceso')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
-        $marcas = Marca::get();
+        $marcas = Marca::getAll();
 
-        $modelos = Modelo::get();
+        $modelos = Modelo::getAll();
+        $tipos = Tipoactivo::getAll();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos'));
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'procesos'));
     }
 
-    public function store(StoreActivoRequest $request)
+    public function store(Request $request)
     {
-        // $request->validate(
-        //     [
-        //         'nombre_activo_id' => 'required|string',
-        //         'tipoactivo_id' => 'required|string',
-        //         'subtipo' => 'required|integer',
-
-        //     ],
-        // );
-
+        abort_if(Gate::denies('inventario_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($request->all());
-        // dd($request->hasfile('documentos_relacionados'));
-        // $activo = Activo::create($request->all());
+
         $data = [];
 
         if ($request->hasfile('documentos_relacionados')) {
             foreach ($request->file('documentos_relacionados') as $file) {
-
                 // $nombre_original =  $request->nombreactivo;
                 // $nombre_compuesto = basename($nombre_original) . '.' . $file->extension();
                 $nombre_compuesto = $file->getClientOriginalName();
@@ -182,14 +179,8 @@ class ActivosController extends Controller
             $data = [];
         }
 
-        // $extension = pathinfo($request->file('documentos_relacionados')->getClientOriginalName(), PATHINFO_EXTENSION);
-        // $nombre_original =  $request->nombreactivo;
-        // $nombre_compuesto = basename($nombre_original) . '.' . $extension;
-        // $request->file('documentos_relacionados')->storeAs('public/activos', $nombre_compuesto); // Almacenar Archivo
-        // $activo->documentos_relacionados = $data;
-        // $activo->save();
-
-        Activo::create([
+        $activo = Activo::create([
+            'identificador' => $request->identificador,
             'nombreactivo' => $request->nombreactivo,
             'descripcion' => $request->descripcion,
             'marca' => intval($request->marca),
@@ -208,43 +199,60 @@ class ActivosController extends Controller
             'sede' => $request->sede,
             'observaciones' => $request->observaciones,
             'documentos_relacionados' => json_encode($data),
+            'documento' => $request->documento,
+            'proceso_id' => $request->proceso_id,
 
         ]);
+
+        if ($request->file('documento')) {
+            $file = $request->file('documento');
+
+            //obtenemos el nombre del archivo
+            $nombre = $file->getClientOriginalName();
+            //    dd($nombre);
+
+            //indicamos que queremos guardar un nuevo archivo en el disco local
+            //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
+            $file->storeAs('public\responsivasActivos', $nombre);
+            $activo->update(['documento' => $nombre]);
+        }
 
         return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Activo $activo)
     {
-        abort_if(Gate::denies('configuracion_activo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $subtipos = Tipoactivo::all()->pluck('subtipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $duenos = User::getall()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $ubicacions = Sede::getall()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team');
+        $empleados = Empleado::alta()->with('area')->get();
 
-        $empleados = Empleado::with('area')->get();
+        $procesos = Proceso::with('macroproceso')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
-        $marcas = Marca::get();
+        $marcas = Marca::getAll();
 
-        $modelos = Modelo::get();
+        $modelos = Modelo::getAll();
+        $tipos = Tipoactivo::getAll();
+        $categoriasSeleccionado = $activo->tipoactivo_id;
+        $subcategoriaSeleccionado = $activo->subtipo_id;
 
-        $marca_seleccionada = Marca::select('id', 'nombre')->find($activo->marca);
-
-        $modelo_seleccionado = Modelo::select('id', 'nombre')->find($activo->modelo);
-
-        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo', 'empleados', 'area', 'marcas', 'modelos', 'marca_seleccionada', 'modelo_seleccionado'));
+        // dd($subcategoriaSeleccionado);
+        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo', 'procesos', 'categoriasSeleccionado', 'subcategoriaSeleccionado'));
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)
     {
+        abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $data = [];
         if ($request->hasfile('documentos_relacionados')) {
             foreach ($request->file('documentos_relacionados') as $file) {
@@ -285,7 +293,7 @@ class ActivosController extends Controller
 
     public function show(Activo $activo)
     {
-        abort_if(Gate::denies('configuracion_activo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team', 'activoIncidentesDeSeguridads');
 
@@ -294,7 +302,7 @@ class ActivosController extends Controller
 
     public function destroy(Activo $activo)
     {
-        abort_if(Gate::denies('configuracion_activo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activo->delete();
 
@@ -306,5 +314,36 @@ class ActivosController extends Controller
         Activo::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    protected function downloadFile($src)
+    {
+        if (is_file($src)) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $content_type = finfo_file($finfo, $src);
+            finfo_close($finfo);
+            $file_name = basename($src) . PHP_EOL;
+            $size = filesize($src);
+            header("Content_Type: $content_type");
+            header("Content-Disposition: attachemt; filename=$file_name");
+            header('Content-Transfer-Encoding: binary');
+            header("Content-Lenght: $size");
+            readfile($src);
+
+            return true;
+        } else {
+            return false;
+        }
+
+        // $path = storage_path('app/public/exportActivos/Responsiva.docx');
+
+        // return response()->download($path);
+    }
+
+    public function DescargaFormato()
+    {
+        if (!$this->downloadFile(storage_path('app/public/exportActivos/Responsiva.docx'))) {
+            return redirect()->back();
+        }
     }
 }

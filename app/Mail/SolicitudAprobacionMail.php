@@ -6,10 +6,11 @@ use App\Models\Documento;
 use App\Models\HistorialRevisionDocumento;
 use App\Models\RevisionDocumento;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SolicitudAprobacionMail extends Mailable
+class SolicitudAprobacionMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +20,9 @@ class SolicitudAprobacionMail extends Mailable
      * @return void
      */
     public $documento;
+
     public $revision;
+
     public $historialRevisionDocumento;
 
     public function __construct(Documento $documento, RevisionDocumento $revision, HistorialRevisionDocumento $historialRevisionDocumento)

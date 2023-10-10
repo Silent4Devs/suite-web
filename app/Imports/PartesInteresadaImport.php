@@ -11,8 +11,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 class PartesInteresadaImport implements ToCollection
 {
     /**
-     * @param array $row
-     *
+     * @param  array  $row
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function collection(Collection $rows)
@@ -51,6 +50,7 @@ class PartesInteresadaImport implements ToCollection
                 array_push($clausulas_id, $clausula_bd->id);
             }
         }
+
         // dd($clausulas_id);
         return $clausulas_id;
     }

@@ -139,7 +139,6 @@ return [
 
     //********* Default configuration for DefaultConfigRepository END **********
 
-
     /***************************************************************************
  * ACL rules list - used for default ACL repository (ConfigACLRepository)
  *

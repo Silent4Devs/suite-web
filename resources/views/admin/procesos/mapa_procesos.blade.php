@@ -36,7 +36,7 @@
         .caja2 {
             box-shadow: 0px 0px 0px 1px #bbb;
             height: 500px;
-            position: fixed;
+            position: absolute;
             width: 100px;
 
             display: flex;
@@ -70,18 +70,8 @@
             margin-top: -15px;
         }
 
-
-
-        .caja_central .contenido_h5_and_grupos:nth-child(n) h5 {
-            background-color: var(--color1);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) h5 {
-            background-color: var(--color2);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) h5 {
-            background-color: var(--color3);
+        .caja_central{
+            text-shadow: 0px 0px 1px #000;
         }
 
         .caja_central h5 {
@@ -94,22 +84,6 @@
             position: relative;
             z-index: 2;
             font-size: 12pt;
-        }
-
-
-
-
-
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos {
-            border: 1px solid var(--color1);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos {
-            border: 1px solid var(--color2);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos {
-            border: 1px solid var(--color3);
         }
 
 
@@ -127,43 +101,6 @@
             box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.3);
         }
 
-
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p {
-            color: var(--color1);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p {
-            color: var(--color2);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p {
-            color: var(--color3);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p:hover {
-            border: 1px solid var(--color1);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p:hover {
-            border: 1px solid var(--color2);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p:hover {
-            border: 1px solid var(--color3);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p.activo {
-            background-color: var(--color1);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p.activo {
-            background-color: var(--color2);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p.activo {
-            background-color: var(--color3);
-        }
-
         .caja_central p {
             width: 200px;
             height: 80px;
@@ -178,7 +115,9 @@
             overflow-y: auto;
             margin-right: 10px;
         }
-
+        .caja_central p:not(p.activo){
+            background-color: #fff !important;
+        }
         .caja_central span {
             width: auto;
             height: auto;
@@ -188,12 +127,12 @@
         }
 
         .caja_central p:hover {
-            border: 1px solid #1255DB;
+            /*border: 1px solid #1255DB;*/
         }
 
         .caja_central p.activo {
             color: #fff !important;
-            background-color: #1255DB;
+            /*background-color: #1255DB;*/
             border: 1px solid #fff;
         }
 
@@ -213,20 +152,6 @@
 
         .caja_central::-webkit-scrollbar-thumb:hover {
             background-color: rgba(0, 0, 0, 0.3);
-        }
-
-
-
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_procesos_dinamica {
-            border: 1px solid var(--color1);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_procesos_dinamica {
-            border: 1px solid var(--color2);
-        }
-
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_procesos_dinamica {
-            border: 1px solid var(--color3);
         }
 
         .caja_procesos_dinamica {
@@ -264,30 +189,6 @@
 
 
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .macro_a a {
-            color: var(--color1) !important;
-        }
-
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .macro_a a {
-            color: var(--color2) !important;
-        }
-
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .macro_a a {
-            color: var(--color3) !important;
-        }
-
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_procesos_dinamica .macro_a:hover {
-            border: 1px solid var(--color1);
-        }
-
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_procesos_dinamica .macro_a:hover {
-            border: 1px solid var(--color2);
-        }
-
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_procesos_dinamica .macro_a:hover {
-            border: 1px solid var(--color3);
-        }
-
 
         .caja_procesos_dinamica .macro_a {
             width: 200px;
@@ -305,7 +206,7 @@
         }
 
         .caja_procesos_dinamica a {
-
+            color: unset;
             text-decoration: none;
         }
 
@@ -359,40 +260,29 @@
             <i class="fas fa-circle" style="color:yellow"></i> Pendiente de aprobación
         </div>
     @endif
-
-    <div class="card-body">
-        {{-- <div class="py-2 text-center form-group col-12 text-uppercase" style="background-color:#345183; border-radius:100px; color: white;"><h4>MAPA DE PROCESOS DE {{ $organizacion->empresa}}</h4></div> --}}
-        <div class="justify-content-center row m-0">
-            <div class="col-sm-10 col-md-10 col-lg-10 ">
-                <h3 class="mb-2 text-center text-white"
-                    style="background: #345183;color: white !important;padding: 5px;border-radius: 8px;"><strong>Mapa de Procesos de
-                        {{ $organizacion->empresa }} </strong>
-                </h3>
-            </div>
-        </div>
-    </div>
-
-
+    <h5 class="col-12 titulo_general_funcion">Mapa de Procesos de {{ $organizacion->empresa }}</h5>
+    
     <div class="col-12 text-right">
         <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-file-csv"
                 style="font-size:18pt;"></i></a>
         <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-camera"
                 style="font-size:18pt;"></i></a>
+        <i class="fas fa-compress-arrows-alt icono_contraer" style="font-size:18pt;"></i>
     </div>
     <div id="caja_mapa_procesos" style="margin-top:30px;">
         <div class="caja2">
             <p>Necesidades del cliente</p>
         </div>
-        {{-- <i class="fas fa-compress-arrows-alt icono_contraer"></i> --}}
+        
 
         <div class="caja_central">
             @foreach ($grupos_mapa as $grupo_map)
                 <div class="contenido_h5_and_grupos">
-                    <h5>{{ $grupo_map->nombre }}</h5>
-                    <div class="caja_grupos">
+                    <h5 style="background-color:{{ $grupo_map->color }} !important;">{{ $grupo_map->nombre }}</h5>
+                    <div class="caja_grupos" style="border: 1px solid {{ $grupo_map->color }} !important;">
                         @forelse($grupo_map->macroprocesos as $macro_map)
                             <span id="span_caja_macro{{ $macro_map->id }}">
-                                <p>{{ $macro_map->nombre }}</p>
+                                <p style="border: 1px solid {{ $grupo_map->color }} !important; background: {{ $grupo_map->color }};">{{ $macro_map->nombre }}</p>
                             </span>
                         @empty
                             <a href="{{ asset('admin/macroprocesos') }}">
@@ -403,19 +293,16 @@
 
 
                     @foreach ($grupo_map->macroprocesos as $macro_map)
-                        <div id="div_caja_macro{{ $macro_map->id }}" class="caja_procesos_dinamica">
+                        <div id="div_caja_macro{{ $macro_map->id }}" class="caja_procesos_dinamica"  style="border: 1px solid {{ $grupo_map->color }} !important;">
                             @forelse($macro_map->procesos as $proceso_map)
-                                <div class="macro_a"
-                                    style="{{ $proceso_map->estatus == '2' ? 'border:2px solid yellow; color:black !important' : '' }}">
-                                    <a class="{{ $proceso_map->estatus == '2' ? 'not-active' : '' }}"
-                                        href="{{ route('admin.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
-                                        {{ $proceso_map->nombre }}
-                                    </a>
-                                </div>
+                                    <div class="macro_a  {{ $proceso_map->documento_id == null ? 'not-active' : '' }}" style="{{ $proceso_map->estatus == '2' ? 'border:2px solid yellow; color:black !important;' : '' }} {{ $proceso_map->documento_id == null ? 'border:1px solid #aaa !important; color:black !important;' : '' }} border: 1px solid {{ $grupo_map->color }};">
+                                        
+                                        <a href="{{ route('admin.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
+                                            {{ $proceso_map->nombre }}
+                                        </a>
+                                    </div>
                             @empty
-                                <a href="{{ asset('admin/procesos') }}" class="registre">
-                                    Registrar procesos
-                                </a>
+                                Procesos no registrados
                             @endforelse
                         </div>
                     @endforeach
@@ -427,7 +314,7 @@
 
 
 
-        <div class="caja2" style="right: 30px;">
+        <div class="caja2" style="right: 0px;">
             <p>Satisfaccion del cliente</p>
         </div>
 
@@ -446,19 +333,16 @@
 
 @section('scripts')
     <script type="text/javascript">
-        $(".caja_central p").click(function() {
+        $(".caja_central p:not(.activo)").click(function() {
             $("span p").removeClass("activo");
             $("span:hover p").addClass("activo");
         });
-    </script>
 
-
-    <script type="text/javascript">
         @foreach ($grupos_mapa as $grupo_map)
             @foreach ($grupo_map->macroprocesos as $macro_map)
                 $("#span_caja_macro{{ $macro_map->id }}").click(function(){
-                $(".caja_revelada").removeClass("caja_revelada");
-                $("#div_caja_macro{{ $macro_map->id }}").addClass("caja_revelada");
+                    $(".caja_revelada").removeClass("caja_revelada");
+                    $("#div_caja_macro{{ $macro_map->id }}").addClass("caja_revelada");
                 });
             @endforeach
         @endforeach

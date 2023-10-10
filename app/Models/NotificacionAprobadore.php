@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class NotificacionAprobadore.
@@ -14,13 +15,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool|null $indicador_aprobador
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
- *
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  * @property DeclaracionAplicabilidadAprobadores|null $declaracion_aplicabilidad_aprobadore
  * @property DeclaracionAplicabilidadResponsable|null $declaracion_aplicabilidad_responsable
  */
-class NotificacionAprobadore extends Model
+class NotificacionAprobadore extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'notificacion_aprobadores';
 
     protected $casts = [
@@ -37,6 +39,8 @@ class NotificacionAprobadore extends Model
         'aprobadores_id',
         'responsables_id',
         'indicador_aprobador',
+        'correo_aprobadores',
+        'correo_responsables',
     ];
 
     public function declaracion_aplicabilidad()

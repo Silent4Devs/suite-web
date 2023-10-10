@@ -9,11 +9,18 @@ class StoreControlAccesoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('control_acceso_create');
+        return Gate::allows('control_de_accesos_agregar');
     }
 
     public function rules()
     {
-        return [];
+        return [
+            'tipo_control_acceso_id' => ['required'],
+            'descripcion' => ['required', 'string'],
+            'justificacion' => ['required', 'string'],
+            'fecha_inicio' => ['required', 'date'],
+            'fecha_fin' => ['required', 'date'],
+            'responsable_id' => ['required'],
+        ];
     }
 }

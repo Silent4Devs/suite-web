@@ -70,7 +70,6 @@
         .orgchart .node {
             width: 200px;
         }
-
     </style>
     <style>
         /* width */
@@ -265,7 +264,6 @@
             top: 0;
             right: 70px;
         }
-
     </style>
     <style>
         .range-slider {
@@ -366,17 +364,15 @@
         .supervisor img {
             height: 80px !important;
         }
-
-
     </style>
 @endsection
 
 @section('content')
-    <div class="text-center">
-        <h1 class="mb-4 text-2xl font-black leading-tight md:text-2xl lg:text-3xl">
-            Organigrama de {{ $organizacion }}
-        </h1>
-    </div>
+
+    <h5 class="col-12 titulo_general_funcion" style="font-size:20px; font-weight: bold;">Organigrama de
+        {{ $organizacion }}
+    </h5>
+
 
 
     <!-- component -->
@@ -403,8 +399,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="{{ asset('img/OrganigramaFinal.jpg') }}" alt="No se pudo cargar el organigrama"
-                    class="mt-3" style="width: 640px;height: 357px;">
+                <img src="{{ asset('img/OrganigramaFinal.jpg') }}" alt="No se pudo cargar el organigrama" class="mt-3"
+                    style="width: 640px;height: 357px;">
             </div>
         @else
             <div class="row">
@@ -416,7 +412,7 @@
                                 <label for="participantes_search"> <span
                                         class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
                                         <i class="mr-1 fas fa-user-circle"></i>
-                                        Búsqueda por empleado
+                                        Empleado
                                     </span></label>
                                 <input class="form-control" type="search" id="participantes_search"
                                     placeholder="Nombre del empleado" style="position: relative" autocomplete="off" />
@@ -432,9 +428,9 @@
                             <div class="col-sm-12 col-lg-4">
                                 <label for="areas"> <span class="text-sm leading-tight md:text-sm lg:text-sm">
                                         <i class="mr-1 fas fa-building"></i>
-                                        Búsqueda por área
+                                        Área
                                     </span></label>
-                                <select name="areas" id="areas" class="form-control" >
+                                <select name="areas" id="areas" class="form-control">
                                     <option value="" selected disabled>-- Selecciona área --</option>
                                     @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">
@@ -478,7 +474,8 @@
                             Control de zoom
                         </span>
                         <div class="d-flex justify-content-center align-items-center" style="height: 75%">
-                            <input id="zoomer" class="range-slider__range" type="range" value="70" min="10" max="200">
+                            <input id="zoomer" class="range-slider__range" type="range" value="70" min="10"
+                                max="200">
                             <span id="output" class="range-slider__value">70</span>
                         </div>
                     </div>
@@ -659,6 +656,10 @@
                         texto.style.fontWeight = '600';
                         container.appendChild(texto);
                         container.appendChild(img);
+                        const empleado = document.querySelector('#participantes_search');
+                        const areas = document.querySelector('#areas');
+                        empleado.setAttribute('disabled');
+                        areas.setAttribute('disabled');
                     },
                     success: function(response) {
                         let container = document.querySelector('.imagen-search');
@@ -667,7 +668,8 @@
                         let orgchart = new OrgChart({
                             'chartContainer': '#chart-container',
                             'zoomSlider': '#zoomer',
-                            'data': JSON.parse(response),
+                            'data': JSON.parse(response.replaceAll('children_organigrama',
+                                'children')),
                             'depth': 999,
                             'nodeContent': 'puesto',
                             'withImage': true,
@@ -681,6 +683,10 @@
                             'direction': orientacion,
                             'urlExportCSV': "{{ route('admin.organigrama.exportar') }}"
                         });
+                        const empleado = document.querySelector('#participantes_search');
+                        const areas = document.querySelector('#areas');
+                        empleado.removeAttribute('disabled');
+                        areas.removeAttribute('disabled');
                         document.getElementById("contenedorOrganigrama").style.pointerEvents =
                             'all';
                     },
@@ -704,13 +710,17 @@
                         texto.style.fontWeight = '600';
                         container.appendChild(texto);
                         container.appendChild(img);
+                        const empleado = document.querySelector('#participantes_search');
+                        const areas = document.querySelector('#areas');
+                        empleado.removeAttribute('disabled');
+                        areas.removeAttribute('disabled');
                     }
                 });
             }
 
             let areas = document.querySelector("#areas");
             areas.addEventListener('change', function(event) {
-                if($("#areas option:selected").attr("id") != "ver_todos_option"){
+                if ($("#areas option:selected").attr("id") != "ver_todos_option") {
                     let area_id = event.target.value;
                     orientacion = localStorage.getItem('orientationOrgChart');
                     renderOrganigrama(OrgChart, orientacion, null, true, area_id);
@@ -732,21 +742,21 @@
 
 
             document.querySelector('#areas').addEventListener('change', function(e) {
-                    e.preventDefault();
-                    if($("#areas option:selected").attr("id") == "ver_todos_option"){
-                        document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
-                        $('.areas').val(null).trigger('change');
-                        document.querySelector("#participantes_search").value = "";
-                        document.querySelector("#zoomer").value = 70;
-                        document.querySelector("#output").innerHTML = 70;
-                        contador = 0;
-                        orientacion = orientaciones[contador];
-                        localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                        img.src =
-                            `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                        renderOrganigrama(OrgChart, orientacion);
-                        console.log("funcion");
-                    }
+                e.preventDefault();
+                if ($("#areas option:selected").attr("id") == "ver_todos_option") {
+                    document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
+                    $('.areas').val(null).trigger('change');
+                    document.querySelector("#participantes_search").value = "";
+                    document.querySelector("#zoomer").value = 70;
+                    document.querySelector("#output").innerHTML = 70;
+                    contador = 0;
+                    orientacion = orientaciones[contador];
+                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
+                    img.src =
+                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
+                    renderOrganigrama(OrgChart, orientacion);
+                    console.log("funcion");
+                }
 
             });
 

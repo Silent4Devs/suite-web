@@ -24,7 +24,6 @@ class XFrameHeadersMiddleware
 
     public function handle($request, Closure $next)
     {
-
         /*
          * This middleware was created to prevent OWASP warnings, like:
          *
@@ -41,12 +40,14 @@ class XFrameHeadersMiddleware
          */
         $this->removeUnwantedHeaders($this->unwantedHeaderList);
         $response = $next($request);
+        $response->headers->remove('X-Powered-By');
+        $response->headers->remove('Server');
         $response->headers->set('Referrer-Policy', 'no-referrer-when-downgrade');
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('X-XSS-Protection', '1; mode=block');
         $response->headers->set('X-Frame-Options', 'DENY');
         $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-        //$response->headers->set('Content-Security-Policy', "style-src 'self'"); // Clearly, you will be more elaborate here.
+
         return $response;
     }
 

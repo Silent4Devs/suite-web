@@ -4,15 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class VistaDocumento extends Model
+class VistaDocumento extends Model implements Auditable
 {
     use HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'vistas_documentos';
 
     protected $guarded = [
@@ -21,7 +19,7 @@ class VistaDocumento extends Model
 
     public function empleados()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
     }
 
     public function docummentos()

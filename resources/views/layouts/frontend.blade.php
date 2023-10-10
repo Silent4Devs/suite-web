@@ -45,7 +45,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
-
+    <!-- PWA  -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
     <style type="text/css">
         .select2-selection--multiple {
             overflow: hidden !important;
@@ -300,7 +303,6 @@
         .breadcrumb-item.active {
             color: #000000;
         }
-
     </style>
     {{-- menu tabs --}}
     <style type="text/css">
@@ -399,7 +401,6 @@
         .scroll_estilo::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
-
     </style>
     {{-- Estilos Select 2 --}}
     <style>
@@ -865,7 +866,6 @@
             display: block;
             padding: 6px;
         }
-
     </style>
 
     @yield('styles')
@@ -891,8 +891,8 @@
             <form class="form-inline col-sm-3" style="position: relative;">
 
                 {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
-                <input class="form-control buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
-                    autocomplete="off" />
+                <input class="form-control buscador-global" type="search" id="buscador_global"
+                    placeholder="Buscador..." autocomplete="off" />
                 <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
                 <div id="resultados_sugeridos"
                     style="background-color: #fff; width:150%; position: absolute;top:50px;left:0">
@@ -902,15 +902,16 @@
             <ul class="ml-auto c-header-nav">
                 @if (count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                            aria-expanded="false">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
                             {{ strtoupper(app()->getLocale()) }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             @foreach (config('panel.available_languages') as $langLocale => $langName)
                                 <a class="dropdown-item"
                                     href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                    ({{ $langName }})</a>
+                                    ({{ $langName }})
+                                </a>
                             @endforeach
                         </div>
                     </li>
@@ -963,7 +964,8 @@
                                 @endif --}}
                             </div>
                         </a>
-                        <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
+                        <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                            style="width:300px;">
                             <div class="p-2">
                                 <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 {{-- @if (auth()->user()->empleado)
@@ -994,14 +996,12 @@
                             <div class="px-3 mt-3 d-flex justify-content-between">
                                 @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                                     @can('profile_password_edit')
-
                                         <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
                                             href="{{ route('profile.password.edit') }}">
                                             <i class="mr-1 fas fa-user-cog">
                                             </i>
                                             Conf. Perfil
                                         </a>
-
                                     @endcan
                                 @endif
                                 <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
@@ -1051,16 +1051,17 @@
         <!-- incluir de footer -->
         {{-- @include('partials.footer') --}}
     </div>
+
 </body>
 
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
 </script>
 <script src="{{ asset('push/bin/push.min.js') }}"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
@@ -1075,11 +1076,11 @@ integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yA
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+<script src="{{ asset('js/buttons.print.js') }}"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
 <script
-src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
-defer></script>
+    src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
+    defer></script>
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 {{-- <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -1097,8 +1098,8 @@ defer></script>
 
 <script>
     window.Laravel = {!! json_encode([
-    'user' => auth()->check() ? auth()->user()->id : null,
-]) !!};
+        'user' => auth()->check() ? auth()->user()->id : null,
+    ]) !!};
 </script>
 
 
@@ -1110,7 +1111,7 @@ defer></script>
 <script>
     $(document).ready(function() {
         $('.c-sidebar-nav').animate({
-            scrollTop: $(".c-active").offset().top - 350
+            scrollTop: $(".c-active").offset()?.top - 350
         }, 0);
     });
     $(function() {
@@ -1123,8 +1124,7 @@ defer></script>
 </script>
 @livewireScripts
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <x-livewire-alert::scripts />
 <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>

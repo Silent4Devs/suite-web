@@ -5,24 +5,26 @@ namespace App\Http\Controllers\Admin;
 use App\Functions\GenerateAnalisisB;
 use App\Functions\Porcentaje;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyAnalisisBrechasRequest;
 use App\Models\AnalisisBrecha;
 use App\Models\Empleado;
 use App\Models\GapDo;
 use App\Models\GapTre;
 use App\Models\GapUno;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisBrechaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
+        abort_if(Gate::denies('analisis_de_brechas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
             $query = AnalisisBrecha::with(['empleado', 'gap_logro_tres', 'gap_logro_dos', 'gap_logro_unos'])->orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -31,9 +33,9 @@ class AnalisisBrechaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'user_show';
-                $editGate = 'user_edit';
-                $deleteGate = 'user_delete';
+                $viewGate = 'analisis_de_brechas_ver';
+                $editGate = 'analisis_de_brechas_editar';
+                $deleteGate = 'analisis_de_brechas_eliminar';
                 $crudRoutePart = 'analisisdebrechas';
 
                 return view('partials.datatablesActions', compact(
@@ -62,15 +64,20 @@ class AnalisisBrechaController extends Controller
                 $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
                 $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $row->id)->count();
                 $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->get()->where('analisis_brechas_id', '=', $row->id);
-                $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->get()->where('analisis_brechas_id', '=', $row->id);
+                $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3satisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3parcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3asatisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3aparcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
                 $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
                 $total = 114 - $gap2noaplica;
                 $gapunoPorc = new Porcentaje();
                 $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
                 $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
-                $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
-                $cuentas = number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '');
+                $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap3satisfactorios, $gap3parcialmente, $gap31porcentaje, $gap3asatisfactorios, $gap3aparcialmente);
+
+                $cuentas = $gapunoPorc->GAPTotal($porcentajeGap1, $porcentajeGap2['Avance'], $porcentajeGap3['porcentaje']);
 
                 return $cuentas . '%' ? $cuentas . '%' : '';
             });
@@ -95,29 +102,32 @@ class AnalisisBrechaController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.analisisdebrechas.index');
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.analisisdebrechas.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $empleados = Empleado::get();
+        abort_if(Gate::denies('analisis_de_brechas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.analisisdebrechas.create', compact('empleados'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('analisis_de_brechas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'nombre' => ['required'],
+            'fecha' => ['required'],
+            'id_elaboro' => ['required'],
+            'estatus' => ['required'],
+        ]);
+
         $analisisBrecha = AnalisisBrecha::create($request->all());
 
         $dataCieCont = new GenerateAnalisisB();
@@ -132,26 +142,15 @@ class AnalisisBrechaController extends Controller
         return redirect()->route('admin.analisisdebrechas.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
-     * @return \Illuminate\Http\Response
-     */
     public function show(AnalisisBrecha $analisisBrecha)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $empleados = Empleado::get();
+        abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $empleados = Empleado::getaltaAll();
 
         $analisisBrecha = AnalisisBrecha::find($id);
 
@@ -160,48 +159,61 @@ class AnalisisBrechaController extends Controller
         $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
         $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
         $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id);
-        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id);
+        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap3satisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap3parcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap3asatisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap3aparcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
         $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
         $total = 114 - $gap2noaplica;
         $gapunoPorc = new Porcentaje();
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
         $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
-        $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
-        $cuentas = number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '');
+        $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap3satisfactorios, $gap3parcialmente, $gap31porcentaje, $gap3asatisfactorios, $gap3aparcialmente);
+
+        $cuentas = $gapunoPorc->GAPTotal($porcentajeGap1, $porcentajeGap2['Avance'], $porcentajeGap3['porcentaje']);
+
         // dd( $analisisBrecha);
         return view('admin.analisisdebrechas.edit', compact('empleados', 'analisisBrecha', 'gap1porcentaje', 'gap12porcentaje', 'gap2porcentaje', 'gap2satisfactorio', 'gap2parcialmente', 'gap3porcentaje', 'gap31porcentaje', 'gap2noaplica', 'total', 'gapunoPorc', 'porcentajeGap1', 'porcentajeGap2', 'porcentajeGap3', 'cuentas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, AnalisisBrecha $analisisBrecha)
+    public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'nombre' => ['required'],
+            'fecha' => ['required'],
+            'porcentaje_implementacion' => ['nullable'],
+            'id_elaboro' => ['required'],
+            'estatus' => ['required'],
+        ]);
+
         $analisisBrecha = AnalisisBrecha::find($id);
 
         $analisisBrecha->update([
-            'nombre' =>  $request->nombre,
-            'fecha' =>  $request->fecha,
-            'id_elaboro' =>  $request->id_elaboro,
+            'nombre' => $request->nombre,
+            'fecha' => $request->fecha,
+            'id_elaboro' => $request->id_elaboro,
             'porcentaje_implementacion' => $request->porcentaje_implementacion,
-            'estatus' =>  $request->estatus,
+            'estatus' => $request->estatus,
         ]);
 
         return redirect()->route('admin.analisisdebrechas.index')->with('success', 'Editado con éxito');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
-     * @return \Illuminate\Http\Response
-     */
-    public function massDestroy(Request $request)
+    public function destroy($AnalisisBrecha)
+    {
+        abort_if(Gate::denies('analisis_de_brechas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $AnalisisBrecha = AnalisisBrecha::find($AnalisisBrecha);
+        $AnalisisBrecha->delete();
+
+        return back()->with('deleted', 'Registro eliminado con éxito');
+    }
+
+    public function massDestroy(MassDestroyAnalisisBrechasRequest $request)
     {
         AnalisisBrecha::whereIn('id', request('ids'))->delete();
 

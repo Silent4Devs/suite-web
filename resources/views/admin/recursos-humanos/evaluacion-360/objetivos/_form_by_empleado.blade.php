@@ -8,24 +8,30 @@
     .select2-container {
         margin-top: 10px !important;
     }
-
 </style>
 
 @if (!$editar)
     <div class="col-12">
-        <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
                     <div class="w-100">
-                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                     </div>
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                     </p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Define los objetivos estratégicos
-                        esperados
-                        para: <strong>{{ $empleado->name }}</strong></p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
+                        @if (auth()->user()->empleado->id == $empleado->id)
+                            Define tus objetivos, <strong>los objetivos que sean creados deberan ser aprobados por tú
+                                Jefe Inmediato
+                                ({{ $empleado->supervisor ? $empleado->supervisor->name : 'No definido' }})</strong>
+                        @else
+                            Define los objetivos estratégicos esperados para: <strong>{{ $empleado->name }}</strong>
+                        @endif
+
+                    </p>
                 </div>
             </div>
         </div>
@@ -69,20 +75,27 @@
         </label>
         {{-- Modulo para tipo de objetivo --}}
         <div class="row align-items-center">
-            <div class="col-11" style="margin-top:-9px">
-                @livewire('tipo-objetivos-select',['tipo_seleccionado'=>$tipo_seleccionado])
+            <div class="col-10" style="margin-top:-9px">
+                @livewire('tipo-objetivos-select', ['tipo_seleccionado' => $tipo_seleccionado])
             </div>
             @if (!$editar)
                 <div class="p-0 col" style="margin-top: -26px;height: 28px;margin-left: -10px;">
                     <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
                         data-toggle="modal" data-target="#tipoObjetivoModal" title="Agregar Tipo"><i
                             class="fas fa-plus"></i></button>
+                    {{-- <button type="button" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></button> --}}
+                    {{-- <a href="{{ route('admin.glosarios.edit',$perspectiva->id )}}"><i class="fas fa-edit"></i></a> --}}
+                    <a href="{{ route('admin.Perspectiva.index') }}" class="text-white btn btn-sm"
+                        style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
             @endif
         </div>
+
         @livewire('tipo-objetivos-create')
         {{-- Fin Modulo para tipo de competencia --}}
+
     </div>
+
 </div>
 <div class="col-sm-12 col-lg-6 col-md-6 col-12">
     <div class="form-group">
@@ -133,14 +146,16 @@
         </label>
         {{-- Modulo para metrica de objetivo --}}
         <div class="row align-items-center">
-            <div class="col-11" style="margin-top:-9px">
-                @livewire('metrica-objetivo-select',['metrica_seleccionada'=>$metrica_seleccionada])
+            <div class="col-10" style="margin-top:-11px">
+                @livewire('metrica-objetivo-select', ['metrica_seleccionada' => $metrica_seleccionada])
             </div>
             @if (!$editar)
-                <div class="p-0 col" style="margin-top: -26px;height: 28px;margin-left: -10px;">
+                <div class="p-1 col" style="margin-top:-28px;height: 38px;margin-left: -12px;">
                     <button id="btnAgregarMetrica" class="text-white btn btn-sm"
                         style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#metricaObjetivoModal"
                         title="Agregar unidad"><i class="fas fa-plus"></i></button>
+                    <a href="{{ route('admin.Metrica.index') }}" class="text-white btn btn-sm"
+                        style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
             @endif
         </div>
@@ -155,10 +170,8 @@
         </label>
         {{-- <input class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" type="text"
             name="descripcion_meta" value="{{ old('descripcion_meta', $objetivo->descripcion_meta) }}"> --}}
-        <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}"
-            name="descripcion_meta" id="" cols="30" rows="1">
-                {{ old('descripcion_meta', $objetivo->descripcion_meta) }}
-            </textarea>
+        <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" name="descripcion_meta"
+            id="" cols="30" rows="1">{{ old('descripcion_meta', $objetivo->descripcion_meta) }}</textarea>
         <small id="descripcion_metaHelp" class="form-text text-muted">Ingresa una breve descripción del objetivo
             estratégico</small>
         @if ($errors->has('descripcion_meta'))
@@ -212,6 +225,10 @@
                 OBJETIVOS ESTRATÉGICOS ASIGNADOS
             </div>
         </div>
+        <div style="text-align: right">
+            <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Importar
+                Objetivos</button>
+        </div>
         <table class="table table-bordered w-100 tblObjetivos">
             <thead class="thead-dark">
                 <tr>
@@ -222,14 +239,17 @@
                         Objetivos Estratégicos
                     </th>
                     <th style="vertical-align: top">
+                        Evaluación Asignada
+                    </th>
+                    <th style="vertical-align: top">
                         KPI
                     </th>
                     <th style="vertical-align: top">
                         Meta
                     </th>
-                    {{-- <th style="vertical-align: top">
-                        Unidad
-                    </th> --}}
+                    <th style="vertical-align: top">
+                        Estatus
+                    </th>
                     <th style="vertical-align: top">
                         Descripción
                     </th>
@@ -239,6 +259,28 @@
                 </tr>
             </thead>
         </table>
+        <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #345183;color: white;">
+                        <h5 class="modal-title" id="modalCopiarObjetivosLabel"><i class="mr-2 fas fa-copy"></i>Copiar
+                            Objetivos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="contenidoModal"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
+                        <button type="button" id="btnGuardarCopiaObjs" class="btn btn-success">Guardar</button>
+                    </div>
+                    @include('layouts.loader')
+                </div>
+            </div>
+        </div>
     </div>
 @endif
 

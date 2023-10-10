@@ -4,14 +4,19 @@ namespace App\Models;
 
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
+use App\Mail\EnviarCorreoBienvenidaTabantaj;
 use App\Models\Area;
 use App\Models\CertificacionesEmpleados;
 use App\Models\CursosDiplomasEmpleados;
 use App\Models\EducacionEmpleados;
 use App\Models\Empleado;
+use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 use App\Models\EvidenciasCertificadosEmpleados;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
+use App\Models\Language;
+use App\Models\ListaDocumentoEmpleado;
+use App\Models\Organizacion;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\BeneficiariosEmpleado;
@@ -19,141 +24,52 @@ use App\Models\RH\ContactosEmergenciaEmpleado;
 use App\Models\RH\DependientesEconomicosEmpleados;
 use App\Models\RH\EntidadCrediticia;
 use App\Models\RH\TipoContratoEmpleado;
+use App\Models\Role;
 use App\Models\Sede;
+use App\Models\User;
+use App\Rules\MonthAfterOrEqual;
+use App\Traits\GeneratePassword;
+use App\Traits\ObtenerOrganizacion;
+use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
-/**
- * Class Empleado.
- *
- * @property int $id
- * @property string|null $name
- * @property string|null $n_registro
- * @property string|null $foto
- * @property string|null $puesto
- * @property Carbon|null $antiguedad
- * @property string|null $estatus
- * @property string|null $email
- * @property string|null $telefono
- * @property string|null $genero
- * @property string|null $n_empleado
- * @property int|null $supervisor_id
- * @property int|null $area_id
- * @property int|null $sede_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string|null $deleted_at
- *
- * @property Area|null $area
- * @property Sede|null $sede
- * @property Empleado|null $empleado
- * @property Collection|AnalisisDeRiesgo[] $analisis_de_riesgos
- * @property Collection|Documento[] $documentos
- * @property Collection|Recurso[] $recursos
- * @property Collection|Empleado[] $empleados
- * @property Collection|EntendimientoOrganizacion[] $entendimiento_organizacions
- * @property Collection|HistorialVersionesDocumento[] $historial_versiones_documentos
- * @property Collection|IndicadoresSgsi[] $indicadores_sgsis
- * @property Collection|MatrizRiesgo[] $matriz_riesgos
- * @property Collection|RevisionDocumento[] $revision_documentos
- * @property Collection|User[] $users
- */
-class Empleado extends Model
+//use Barryvdh\DomPDF\PDF as DomPDFPDF;
+
+class EmpleadoController extends Controller
 {
-    use SoftDeletes;
-    use HasFactory;
-    protected $table = 'empleados';
+    use ObtenerOrganizacion;
+    use GeneratePassword;
 
-    protected $casts = [
-        'supervisor_id' => 'int',
-        'area_id' => 'int',
-        'sede_id' => 'int',
-    ];
-
-    public static $searchable = [
-        'name',
-    ];
-
-    protected $dates = [
-        'antiguedad',
-    ];
-
-    //public $preventsLazyLoading = true;
-    //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto','declaraciones_responsable','declaraciones_aprobador'];
-    //, 'jefe_inmediato', 'empleados_misma_area'
-    protected $fillable = [
-        'name',
-        'n_registro',
-        'foto',
-        'puesto',
-        'antiguedad',
-        'estatus',
-        'email',
-        'telefono',
-        'extension',
-        'telefono_movil',
-        'genero',
-        'n_empleado',
-        'supervisor_id',
-        'area_id',
-        'sede_id',
-        'direccion',
-        'cumpleaños',
-        'resumen',
-        'puesto_id',
-        'perfil_empleado_id',
-    ];
-
-    protected function serializeDate(DateTimeInterface $date)
+    public function getListaEmpleadosIndex()
     {
-        return $date->format('Y-m-d H:i:s');
+        $empleados = Empleado::with('area', 'sede', 'supervisor')->alta()->orderByDesc('id')->get();
+
+        return dataTables()->of($empleados)->toJson();
     }
 
-            $table->editColumn('area', function ($row) {
-                return $row->area ? $row->area->area : '';
-            });
-            $table->editColumn('puesto', function ($row) {
-                return $row->puesto ? $row->puesto : '';
-            });
-            $table->editColumn(
-                'jefe',
-                function ($row) {
-                    return $row->supervisor ? $row->supervisor->name : '';
-                }
-            );
-            $table->editColumn('antiguedad', function ($row) {
-                return $row->obtener_antiguedad;
-                // return Carbon::parse(Carbon::parse($row->obtener_antiguedad))->diffForHumans(Carbon::now()->subDays());
-            });
-            $table->editColumn('estatus', function ($row) {
-                return $row->estatus ? $row->estatus : '';
-            });
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
-            });
-
-    public function getPuestoAttribute()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
-        return $this->puestoRelacionado ? $this->puestoRelacionado->puesto : 'Sin puesto';
-    }
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    public function getGeneroFormateadoAttribute()
-    {
-        if ($this->genero == 'H') {
-            return 'Masculino';
-        } elseif ($this->genero == 'M') {
-            return 'Femenino';
-        } else {
-            return 'Otro Género';
-        }
+        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.empleados.index', compact('ceo_exists', 'logo_actual', 'empresa_actual'));
     }
 
     public function getAvatarAttribute()
@@ -165,12 +81,17 @@ class Empleado extends Model
 
     public function area()
     {
-        return $this->belongsTo(Area::class, 'area_id', 'id');
+        $educacions = EducacionEmpleados::where('empleado_id', intval($empleado))->orderBy('id')->get();
+
+        return datatables()->of($educacions)->toJson();
     }
 
     public function sede()
     {
-        return $this->belongsTo(Sede::class, 'sede_id', 'id');
+        $experiencias = ExperienciaEmpleados::where('empleado_id', intval($empleado))->orderByDesc('inicio_mes')->get();
+
+        // dd($experiencias);
+        return datatables()->of($experiencias)->toJson();
     }
 
     public function empleado()
@@ -180,30 +101,30 @@ class Empleado extends Model
 
     public function analisis_de_riesgos()
     {
-        abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleados = Empleado::getaltaAll();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
-        $sedes = Sede::get();
-        $experiencias = ExperienciaEmpleados::get();
+        $areas = Area::getAll();
+        $sedes = Sede::getAll();
+        $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
         $certificaciones = CertificacionesEmpleados::get();
-        $puestos = Puesto::get();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::get();
         $perfiles_seleccionado = null;
         $puestos_seleccionado = null;
-        $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $empleado = new Empleado;
-
+        $idiomas = Language::get();
         $globalCountries = new CountriesFunction;
+        $organizacion = Organizacion::getFirst();
         $countries = $globalCountries->getCountries('ES');
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado'));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
     }
 
     /*public function documentos()
@@ -222,16 +143,12 @@ class Empleado extends Model
 
         $request->validate([
             'name' => 'required|string',
-            'n_empleado' => 'required|unique:empleados',
+            'n_empleado' => 'nullable|unique:empleados',
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
-            'estatus' => 'required',
             'email' => 'required|email',
-            // 'sede_id' => 'required|exists:sedes,id',
-            'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
-
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
@@ -352,21 +269,22 @@ class Empleado extends Model
 
     public function createEmpleado($request)
     {
+        // dd($request);
         $empleado = Empleado::create([
             'name' => $request->name,
-            'area_id' =>  $request->area_id,
-            'puesto_id' =>  $request->puesto_id,
+            'area_id' => $request->area_id,
+            'puesto_id' => $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
-            'supervisor_id' =>  $request->supervisor_id,
-            'antiguedad' =>  $request->antiguedad,
-            'estatus' =>  $request->estatus,
-            'email' =>  $request->email,
-            'telefono' =>  $request->telefono,
-            'genero' =>  $request->genero,
-            'n_empleado' =>  $request->n_empleado,
-            'n_registro' =>  $request->n_registro,
-            'sede_id' =>  $request->sede_id,
-            'resumen' =>  $request->resumen,
+            'supervisor_id' => $request->supervisor_id,
+            'antiguedad' => $request->antiguedad,
+            'email' => removeUnicodeCharacters($request->email),
+            'estatus' => 'alta',
+            'telefono' => $request->telefono,
+            'genero' => $request->genero,
+            'n_empleado' => $request->n_empleado,
+            'n_registro' => $request->n_registro,
+            'sede_id' => $request->sede_id,
+            'resumen' => $request->resumen,
             'cumpleaños' => $request->cumpleaños,
             'direccion' => $request->direccion,
             'telefono_movil' => $request->telefono_movil,
@@ -377,7 +295,16 @@ class Empleado extends Model
             'renovacion_contrato' => $request->renovacion_contrato,
             'esquema_contratacion' => $request->esquema_contratacion,
             'proyecto_asignado' => $request->proyecto_asignado,
+            // 'domicilio_personal' => $request->domicilio_personal,
+            'calle' => $request->calle,
+            'num_exterior' => $request->num_exterior,
             'domicilio_personal' => $request->domicilio_personal,
+            'num_interior' => $request->num_interior,
+            'colonia' => $request->colonia,
+            'delegacion' => $request->delegacion,
+            'estado' => $request->estado,
+            'pais' => $request->pais,
+            'cp' => $request->cp,
             'telefono_casa' => $request->telefono_casa,
             'correo_personal' => $request->correo_personal,
             'estado_civil' => $request->estado_civil,
@@ -399,11 +326,33 @@ class Empleado extends Model
             'salario_base_mensual' => $request->salario_base_mensual ? preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual) : null,
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
+            'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
-
+        $this->createUserFromEmpleado($empleado);
         $this->assignDependenciesModel($request, $empleado);
 
         return $empleado;
+    }
+
+    public function createUserFromEmpleado($empleado)
+    {
+        $generatedPassword = $this->generatePassword();
+        $user = User::create([
+            'name' => $empleado->name,
+            'email' => removeUnicodeCharacters($empleado->email),
+            'password' => $generatedPassword['hash'],
+            'n_empleado' => $empleado->n_empleado,
+            'empleado_id' => $empleado->id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        if (Role::find(4) != null) {
+            User::findOrFail($user->id)->roles()->sync(4);
+        }
+        //Send email with generated password
+        Mail::to(removeUnicodeCharacters($empleado->email))->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
+
+        return $user;
     }
 
     public function assignDependenciesModel($request, $empleado)
@@ -468,6 +417,7 @@ class Empleado extends Model
                             $dataModel = $model->first();
                             $dataModel->update([
                                 'nombre' => $beneficiario['nombre'],
+                                'edad' => $beneficiario['edad'],
                                 'parentesco' => $beneficiario['parentesco'],
                                 'porcentaje' => $beneficiario['porcentaje'],
                             ]);
@@ -475,6 +425,7 @@ class Empleado extends Model
                             BeneficiariosEmpleado::create([
                                 'empleado_id' => $empleado->id,
                                 'nombre' => $beneficiario['nombre'],
+                                'edad' => $beneficiario['edad'],
                                 'parentesco' => $beneficiario['parentesco'],
                                 'porcentaje' => $beneficiario['porcentaje'],
                             ]);
@@ -567,8 +518,8 @@ class Empleado extends Model
             $certificado = CertificacionesEmpleados::create([
                 'empleado_id' => $empleado->id,
                 'nombre' => $request->nombre,
-                'estatus' =>  $request->estatus,
-                'vigencia' =>  $request->vigencia,
+                'estatus' => $request->estatus,
+                'vigencia' => $request->vigencia,
             ]);
             if ($request->hasFile('documento')) {
                 $filenameWithExt = $request->file('documento')->getClientOriginalName();
@@ -669,10 +620,10 @@ class Empleado extends Model
             $curso = CursosDiplomasEmpleados::create([
                 'empleado_id' => $empleado->id,
                 'curso_diploma' => $request->curso_diploma,
-                'tipo' =>  $request->tipo,
-                'año' =>  $request->año,
-                'fecha_fin' =>  $request->fecha_fin,
-                'duracion' =>  $request->duracion,
+                'tipo' => $request->tipo,
+                'año' => $request->año,
+                'fecha_fin' => $request->fecha_fin,
+                'duracion' => $request->duracion,
             ]);
 
             if ($request->hasFile('file')) {
@@ -772,25 +723,33 @@ class Empleado extends Model
 
     public function storeExperiencia(Request $request, $empleado)
     {
+        // dd($request->trabactualmente);
         $request->validate([
             'empresa' => 'required|string|max:255',
             'puesto' => 'required|string|max:255',
-            'inicio_mes' => 'required|date',
-            'fin_mes' => 'required|date',
+            'inicio_mes' => 'required',
+            'fin_mes' => ['nullable', new MonthAfterOrEqual($request->inicio_mes, $request->fin_mes)],
             'descripcion' => 'required',
             'empleado_id' => 'required|exists:empleados,id',
 
         ]);
+
+        $fechaFin = null;
+        if ($request->trabactualmente == 'false') {
+            $request->validate(['fin_mes' => 'required']);
+            $fechaFin = $request->fin_mes;
+        }
         // dd($request->all());
         if ($request->ajax()) {
             $empleado = Empleado::find(intval($empleado));
             $experiencia = ExperienciaEmpleados::create([
                 'empleado_id' => $empleado->id,
                 'empresa' => $request->empresa,
-                'puesto' =>  $request->puesto,
-                'inicio_mes' =>  $request->inicio_mes,
-                'fin_mes' =>  $request->fin_mes,
-                'descripcion' =>  $request->descripcion,
+                'puesto' => $request->puesto,
+                'inicio_mes' => $request->inicio_mes,
+                'fin_mes' => $fechaFin,
+                'descripcion' => $request->descripcion,
+                'trabactualmente' => $request->trabactualmente,
             ]);
             if ($experiencia) {
                 return response()->json(['success' => true]);
@@ -802,6 +761,14 @@ class Empleado extends Model
 
     public function updateExperiencia(Request $request, ExperienciaEmpleados $experiencia)
     {
+        if (array_key_exists('trabactualmente', $request->all())) {
+            if ($request->trabactualmente == 'true') {
+                $isTrabActualmente = true;
+            } else {
+                $isTrabActualmente = false;
+            }
+            $request->replace(['trabactualmente' => $isTrabActualmente]);
+        }
         if (array_key_exists('empresa', $request->all())) {
             $request->validate([
                 'empresa' => 'required|string|max:255',
@@ -820,13 +787,17 @@ class Empleado extends Model
         }
         if (array_key_exists('inicio_mes', $request->all())) {
             $request->validate([
-                'inicio_mes' => 'required|date',
+                'inicio_mes' => ['required', new MonthAfterOrEqual($request->inicio_mes, $experiencia->fin_mes)],
             ]);
         }
-        if (array_key_exists('fin_mes', $request->all())) {
-            $request->validate([
-                'fin_mes' => 'required|date',
-            ]);
+        if ($request->trabactualmente == 'false' || $request->trabactualmente == null) {
+            if (array_key_exists('fin_mes', $request->all())) {
+                if ($request->fin_mes != 'undefided') {
+                    $request->validate([
+                        'fin_mes' => ['required', new MonthAfterOrEqual($experiencia->inicio_mes, $request->fin_mes)],
+                    ]);
+                }
+            }
         }
 
         $experiencia->update($request->all());
@@ -839,21 +810,27 @@ class Empleado extends Model
         $request->validate([
             'institucion' => 'required|string|max:255',
             'nivel' => 'required',
-            'año_inicio' => 'required|date',
-            'año_fin' => 'required|date',
+            'año_inicio' => ['required', new MonthAfterOrEqual($request->año_inicio, $request->año_fin)],
+            'año_fin' => ['nullable', new MonthAfterOrEqual($request->año_inicio, $request->año_fin)],
             'empleado_id' => 'required|exists:empleados,id',
             'titulo_obtenido' => 'required|string|max:255',
         ]);
+        $fechaFin = null;
+        if ($request->estudactualmente == 'false') {
+            $request->validate(['año_fin' => ['required', new MonthAfterOrEqual($request->año_inicio, $request->año_fin)]]);
+            $fechaFin = $request->año_fin;
+        }
         // dd($request->all());
         if ($request->ajax()) {
             $empleado = Empleado::find(intval($empleado));
             $educacion = EducacionEmpleados::create([
                 'empleado_id' => $empleado->id,
                 'institucion' => $request->institucion,
-                'nivel' =>  $request->nivel,
-                'año_inicio' =>  $request->año_inicio,
-                'año_fin' =>  $request->año_fin,
-                'titulo_obtenido' =>  $request->titulo_obtenido,
+                'nivel' => $request->nivel,
+                'año_inicio' => $request->año_inicio,
+                'año_fin' => $fechaFin,
+                'titulo_obtenido' => $request->titulo_obtenido,
+                'estudactualmente' => $request->estudactualmente,
             ]);
 
             if ($educacion) {
@@ -866,6 +843,14 @@ class Empleado extends Model
 
     public function updateEducacion(Request $request, EducacionEmpleados $educacion)
     {
+        if (array_key_exists('estudactualmente', $request->all())) {
+            if ($request->estudactualmente == 'true') {
+                $isEstdActualmente = true;
+            } else {
+                $isEstdActualmente = false;
+            }
+            $request->replace(['estudactualmente' => $isEstdActualmente]);
+        }
         if (array_key_exists('institucion', $request->all())) {
             $request->validate([
                 'institucion' => 'required|string|max:255',
@@ -878,13 +863,17 @@ class Empleado extends Model
         }
         if (array_key_exists('año_inicio', $request->all())) {
             $request->validate([
-                'año_inicio' => 'required|date',
+                'año_inicio' => ['required', new MonthAfterOrEqual($request->año_inicio, $educacion->año_fin)],
             ]);
         }
-        if (array_key_exists('año_fin', $request->all())) {
-            $request->validate([
-                'año_fin' => 'required|date',
-            ]);
+        if ($request->estudactualmente == 'false' || $request->estudactualmente == null) {
+            if (array_key_exists('año_fin', $request->all())) {
+                if ($request->año_fin != 'undefided') {
+                    $request->validate([
+                        'año_fin' => ['required', new MonthAfterOrEqual($educacion->año_inicio, $request->año_fin)],
+                    ]);
+                }
+            }
         }
         if (array_key_exists('titulo_obtenido', $request->all())) {
             $request->validate([
@@ -905,40 +894,156 @@ class Empleado extends Model
      */
     public function show($id)
     {
-        return $this->hasMany(Proceso::class);
+        abort_if(Gate::denies('bd_empleados_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
+        $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
+        $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
+        $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
+        $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
+        $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
+        $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
+        $empleado = Empleado::getaltaAll();
+
+        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
 
     public function tasks()
     {
-        abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
-        $empleados = Empleado::get();
+        $empleados = Empleado::getaltaAll();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $area = Area::find($empleado->area_id);
-        $sedes = Sede::get();
-        $sede = Sede::find($empleado->sede_id);
-        $experiencias = ExperienciaEmpleados::get();
+        $sedes = Sede::getAll();
+        $sede = Sede::getbyId($empleado->sede_id);
+        $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
-        $puestos = Puesto::all();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
-        $puestos = Puesto::get();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::get();
         $perfiles_seleccionado = $empleado->perfil_empleado_id;
         $puestos_seleccionado = $empleado->puesto_id;
-
+        $idiomas = Language::get();
+        $organizacion = Organizacion::getFirst();
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
         $isEditAdmin = true;
+        // dd($idiomas);
         // dd(Empleado::find(63));
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin'));
+        $id_empleado = $id;
+        $empleado = Empleado::find($id_empleado);
+        $lista_docs = $this->getListaDocumentos($id_empleado);
+        $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('archivado', false)->get();
+        // expediente ------------------------------------------------------------
+
+        $organizacion = Organizacion::getFirst();
+        // $lista_docs = $lista_docs->sortBy('tipo');
+
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion'));
     }
 
-    public function empleado_experiencia()
+    public function getListaDocumentos($id_empleado)
+    {
+        $lista_docs_model = ListaDocumentoEmpleado::getAll();
+        $lista_docs = collect();
+        $documento_versiones = '';
+        foreach ($lista_docs_model as $doc) {
+            $documentos_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
+            if ($documentos_empleado) {
+                $doc_empleado_id = $documentos_empleado->id;
+                $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
+                $documento_versiones = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', true)->get();
+                if ($documento) {
+                    $doc_viejo = $documento->ruta_documento;
+                    $nombre_doc = $documento->documento;
+                } else {
+                    $doc_viejo = null;
+                    $nombre_doc = null;
+                }
+            } else {
+                $doc_viejo = null;
+                $nombre_doc = null;
+                $doc_empleado_id = null;
+            }
+            $lista_docs->push((object) [
+                'id' => $doc->id,
+                'documento' => $doc->documento,
+                'tipo' => $doc->tipo,
+                'empleado' => $documentos_empleado,
+                'ruta_documento' => $doc_viejo,
+                'nombre_doc' => $nombre_doc,
+                'documento_versiones' => $documento_versiones,
+                'evidencia_viejo_id' => $doc_empleado_id,
+            ]);
+        }
+
+        return $lista_docs;
+    }
+
+    public function expedienteUpdate(Request $request)
+    {
+        if ($request->name == 'file') {
+            $fileName = time() . $request->file('value')->getClientOriginalName();
+            // dd($request->file('value'));
+            $empleado = Empleado::find($request->empleadoId);
+            $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
+
+            $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
+            if ($doc_viejo) {
+                $doc_viejo->update([
+                    'archivado' => true,
+                ]);
+            }
+
+            $archivo = EvidenciaDocumentoEmpleadoArchivo::create([
+                'evidencias_documentos_empleados_id' => $expediente->id,
+                'documento' => $fileName,
+                'archivado' => false,
+            ]);
+
+            return response()->json(['status' => 201, 'message' => 'Registro Actualizado']);
+        } else {
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
+        }
+
+        // $expediente->update([
+        //     $request->name => $request->value,
+        // ]);
+
+        return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
+    }
+
+    public function expedienteRestaurar(Request $request)
+    {
+        $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $request->expediente_id)->where('archivado', false)->first();
+        if ($doc_viejo) {
+            $doc_viejo->update([
+                'archivado' => true,
+            ]);
+        }
+        $evidencia_doc_archivo = EvidenciaDocumentoEmpleadoArchivo::find($request->id);
+        $evidencia_doc_archivo->update([
+            'archivado' => false,
+        ]);
+
+        return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
         return $this->hasMany(ExperienciaEmpleados::class);
     }
@@ -952,16 +1057,12 @@ class Empleado extends Model
         }
         $request->validate([
             'name' => 'required|string',
-            'n_empleado' => 'unique:empleados,n_empleado,' . $id,
+            'n_empleado' => 'nullable|unique:empleados,n_empleado,' . $id,
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
-            'estatus' => 'required',
             'email' => 'required|email',
-            // 'sede_id' => 'required|exists:sedes,id',
-            'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
-
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
@@ -1002,9 +1103,7 @@ class Empleado extends Model
                 }
             }
         } else {
-            if (
-                $request->file('foto') != null or !empty($request->file('foto'))
-            ) {
+            if ($request->file('foto')) {
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
                 $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
                 $new_name_image = 'UID_' . $empleado->id . '_' . $request->name . '.' . $extension;
@@ -1029,21 +1128,21 @@ class Empleado extends Model
         //         }
         //     }
         // }
-
         $empleado->update([
             'name' => $request->name,
-            'area_id' =>  $request->area_id,
-            'puesto_id' =>  $request->puesto_id,
+            'area_id' => $request->area_id,
+            'puesto_id' => $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
-            'supervisor_id' =>  $request->supervisor_id,
-            'antiguedad' =>  $request->antiguedad,
-            'estatus' =>  $request->estatus,
-            'email' =>  $request->email,
-            'telefono' =>  $request->telefono,
-            'genero' =>  $request->genero,
-            'n_empleado' =>  $request->n_empleado,
-            'n_registro' =>  $request->n_registro,
-            'sede_id' =>  $request->sede_id,
+            'supervisor_id' => $request->supervisor_id,
+            'antiguedad' => $request->antiguedad,
+            'estatus' => $request->estatus,
+            'email' => removeUnicodeCharacters($request->email),
+            'telefono' => $request->telefono,
+            'genero' => $request->genero,
+            'estatus' => 'alta',
+            'n_empleado' => $request->n_empleado,
+            'n_registro' => $request->n_registro,
+            'sede_id' => $request->sede_id,
             // 'resumen' =>  $request->resumen,
             'cumpleaños' => $request->cumpleaños,
             'direccion' => $request->direccion,
@@ -1056,7 +1155,16 @@ class Empleado extends Model
             'renovacion_contrato' => $request->renovacion_contrato,
             'esquema_contratacion' => $request->esquema_contratacion,
             'proyecto_asignado' => $request->proyecto_asignado,
+            // 'domicilio_personal' => $request->domicilio_personal,
+            'calle' => $request->calle,
+            'num_exterior' => $request->num_exterior,
             'domicilio_personal' => $request->domicilio_personal,
+            'num_interior' => $request->num_interior,
+            'colonia' => $request->colonia,
+            'delegacion' => $request->delegacion,
+            'estado' => $request->estado,
+            'pais' => $request->pais,
+            'cp' => $request->cp,
             'telefono_casa' => $request->telefono_casa,
             'correo_personal' => $request->correo_personal,
             'estado_civil' => $request->estado_civil,
@@ -1078,8 +1186,13 @@ class Empleado extends Model
             'salario_base_mensual' => $request->salario_base_mensual ? preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual) : null,
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
+            'foto' => $image,
+            'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
-
+        $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
+        $usuario->update([
+            'n_empleado' => $request->n_empleado,
+        ]);
         $this->assignDependenciesModel($request, $empleado);
 
         return response()->json(['status' => 'success', 'message' => 'Empleado Actualizado', 'from' => 'rh'], 200);
@@ -1104,17 +1217,16 @@ class Empleado extends Model
             }
         }
 
-        return response()->json(['status' => 'success', 'message' => 'Curriculum Actualizado', 'from' => 'curriculum'], 200);
+        return response()->json(['status' => 'success', 'message' => 'Curriculum Actualizado', 'from' => 'curriculum'], 200, $request->all());
     }
 
     public function empleado_cursos()
     {
-        return $this->hasMany(CursosDiplomasEmpleados::class);
-    }
+        abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // $empleado->delete();
+        $empleado->update(['estatus' => 'baja']);
 
-    public function empleado_educacion()
-    {
-        return $this->hasMany(EducacionEmpleados::class);
+        return response()->json(['success' => true, 'empleado' => $empleado->name, 'message' => 'Empleado dado de baja', 'from' => 'rh'], 200);
     }
 
     public function empleado_documentos()
@@ -1139,13 +1251,29 @@ class Empleado extends Model
 
     public function perfil()
     {
-        return $this->belongsTo('App\Models\PerfilEmpleado', 'perfil_empleado_id', 'id');
-    }
+        if ($request->ajax()) {
+            $nombre = $request->nombre;
+            if ($nombre != null) {
+                $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
 
-    // Recursos Humanos
-    public function evaluadores()
-    {
-        return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluado_evaluador', 'evaluador_id', 'id');
+                // dd(compact('usuarios'));
+                return compact('usuarios');
+            }
+        }
+        /*
+        if ($request->ajax()) {
+            $nombre = $request->nombre;
+            if ($nombre != null) {
+                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                $lista = "<ul class='list-group' id='empleados-lista'>";
+                foreach ($usuarios as $usuario) {
+                    $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.")' > <i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . '</button>';
+                }
+                $lista .= '</ul>';
+                return $lista;
+            }
+        }
+        */
     }
 
     // public function getJefeInmediatoAttribute()
@@ -1155,7 +1283,10 @@ class Empleado extends Model
 
     public function getEmpleadosMismaAreaAttribute()
     {
-        $by_area = self::where('area_id', $this->area_id)->pluck('id')->toArray();
+        if ($request->ajax()) {
+            $nombre = $request->nombre;
+            if ($nombre != null) {
+                $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
 
         return $by_area;
     }
@@ -1163,19 +1294,19 @@ class Empleado extends Model
 
     public function getDeclaracionesResponsableAttribute()
     {
-       $misDeclaraciones=DeclaracionAplicabilidadResponsable::select('id','declaracion_id')->where('empleado_id',$this->id)->pluck('declaracion_id')->toArray();
-       return $misDeclaraciones;
-    }
+        $empleados = Empleado::select('id', 'name')->alta()->get();
 
-    public function getDeclaracionesAprobadorAttribute()
-    {
-       $misDeclaraciones=DeclaracionAplicabilidadAprobadores::select('id','declaracion_id')->where('aprobadores_id',$this->id)->pluck('declaracion_id')->toArray();
-       return $misDeclaraciones;
+        return json_encode($empleados);
+        if ($request->ajax()) {
+            $empleados = Empleado::select('id', 'name')->alta()->get();
+
+            return json_encode($empleados);
+        }
     }
 
     public function updateImageProfile(Request $request)
     {
-        $empleado = auth()->user()->empleado;
+        $empleado = User::getCurrentUser()->empleado;
         if (preg_match('/^data:image\/(\w+);base64,/', $request->image)) {
             $value = substr($request->image, strpos($request->image, ',') + 1);
             $value = base64_decode($value);
@@ -1213,16 +1344,16 @@ class Empleado extends Model
 
     public function updateInformationProfile(Request $request)
     {
-        $empleadoID = auth()->user()->empleado->id;
+        $empleadoID = User::getCurrentUser()->empleado->id;
         $empleado = Empleado::find($empleadoID);
         $request->validate([
-            'name' => 'required|string|max:255',
+            // 'name' => 'required|string|max:255',
             // 'email'=>'required|email|max:255',
             'cumpleaños' => 'required|date',
             'telefono_movil' => 'nullable|string|max:255',
         ]);
         $empleado->update([
-            'name' => $request->name,
+            // 'name' => $request->name,
             // 'email'=>$request->email,
             'mostrar_telefono' => $request->has('mostrar_telefono'),
             'cumpleaños' => $request->cumpleaños,
@@ -1234,7 +1365,7 @@ class Empleado extends Model
 
     public function updateInformacionRelacionadaProfile(Request $request)
     {
-        $empleadoID = auth()->user()->empleado->id;
+        $empleadoID = User::getCurrentUser()->empleado->id;
         $empleado = Empleado::find($empleadoID);
         $this->validateDynamicForms($request);
         $this->assignDependenciesModel($request, $empleado);
@@ -1244,12 +1375,19 @@ class Empleado extends Model
 
     public function storeDocumentos(Request $request, Empleado $empleado)
     {
+        $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
+        if ($doc_viejo) {
+            $doc_viejo->update([
+                'archivado' => true,
+            ]);
+        }
+
         $request->merge([
             'empleado_id' => $empleado->id,
         ]);
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'numero' => 'required|string|max:255',
+            // 'numero' => 'string|max:255',
             'documentos' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
             'empleado_id' => 'required|exists:empleados,id',
         ]);
@@ -1328,5 +1466,93 @@ class Empleado extends Model
         ]);
 
         return response()->json(['status' => 'success', 'message' => 'Archivo eliminado']);
+    }
+
+    public function buscarEmpleadoPorCorreo(Request $request)
+    {
+        $participantes = $request->participantes;
+
+        $empleados = Empleado::getaltaAll()->whereIn('email', $participantes)->get();
+
+        return $empleados;
+    }
+
+    public function obtenerEmpleadoPorNombre($nombre)
+    {
+        $empleado_bd = Empleado::getaltaAll()->select('id', 'name')->where('name', $nombre)->first();
+
+        return $empleado_bd->id;
+    }
+
+    public function datosEmpleado($id)
+    {
+        $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
+        $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
+        $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
+        $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
+        $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
+        $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
+        $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
+        $empleado = Empleado::getaltaAll();
+
+        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
+    }
+
+    public function removerVacante(Request $request)
+    {
+        $empleado = Empleado::find($request->id);
+        $empleado->update([
+            'vacante_activa' => false,
+        ]);
+
+        return response()->json(['status' => 200, 'message' => 'Vacante eliminada']);
+    }
+
+    public function solicitudBaja(Empleado $empleado)
+    {
+        return view('admin.empleados.solicitudBaja', compact('empleado'));
+    }
+
+    // public function imprimir($id){
+
+    //     // PDF::setOptions(['isRemoteEnabled' => TRUE, 'enable_javascript' => TRUE]);
+    //     // $dompdf = new Dompdf();
+    //     // $html = view('empleados.datosEmpleado')->render();
+    //     // $dompdf->loadHtml($html);
+    //     // $dompdf->render();
+    //     // return $dompdf->download('empleado.pdf');
+
+    //     // $fun = $this->show('');
+    //     $visualizarEmpleados = Empleado::with('supervisor','sede','perfil')->find(intval($id));
+    //     $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
+    //     $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
+    //     $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
+    //     $certificados = CertificacionesEmpleados::where('empleado_id', $id)->get();
+    //     $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
+    //     $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
+    //     $empleado = Empleado::getAll();
+
+    //     $pdf = PDF::loadView('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'contactos','dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes', 'empleado'))->setOptions(['defaultFont' => 'sans-serif'])->render();;
+    //     $dompdf->loadHtml($pdf);
+    //     $dompdf->render();
+    //     return $pdf->download('empleado.pdf');
+
+    public function borradoMultiple(Request $request)
+    {
+        if ($request->ajax()) {
+            if (count($request->all()) >= 1) {
+                foreach ($request->all() as $key => $value) {
+                    $empleado = Empleado::find($value);
+                    $empleado->each->delete();
+
+                    return response()->json(['success' => 'deleted successfully!', $request->all()]);
+                }
+            }
+        }
+    }
+
+    public function importar()
+    {
+        return view('admin.empleados.importar');
     }
 }

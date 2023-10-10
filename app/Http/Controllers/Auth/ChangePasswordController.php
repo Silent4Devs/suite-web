@@ -28,7 +28,6 @@ class ChangePasswordController extends Controller
     public function updateProfile(UpdateProfileRequest $request)
     {
         $user = auth()->user();
-
         $user->update($request->validated());
 
         return redirect()->route('profile.password.edit')->with('message', __('global.update_profile_success'));
@@ -37,11 +36,9 @@ class ChangePasswordController extends Controller
     public function destroy()
     {
         $user = auth()->user();
-
         $user->update([
             'email' => time() . '_' . $user->email,
         ]);
-
         $user->delete();
 
         return redirect()->route('login')->with('message', __('global.delete_account_success'));
@@ -50,7 +47,6 @@ class ChangePasswordController extends Controller
     public function toggleTwoFactor(Request $request)
     {
         $user = auth()->user();
-
         if ($user->two_factor) {
             $message = __('global.two_factor.disabled');
         } else {
@@ -58,7 +54,6 @@ class ChangePasswordController extends Controller
         }
 
         $user->two_factor = !$user->two_factor;
-
         $user->save();
 
         return redirect()->route('profile.password.edit')->with('message', $message);

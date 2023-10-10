@@ -8,16 +8,16 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class AccionCorrectiva extends Model implements HasMedia
+class AccionCorrectiva extends Model implements HasMedia, Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+    use \OwenIt\Auditing\Auditable;
+
     public $table = 'accion_correctivas';
 
     protected $appends = [
@@ -32,14 +32,14 @@ class AccionCorrectiva extends Model implements HasMedia
 
     const ESTATUS_SELECT = [
         'por_iniciar' => 'Por iniciar',
-        'en_proceso'  => 'En proceso',
-        'terminado'   => 'Terminado',
+        'en_proceso' => 'En proceso',
+        'terminado' => 'Terminado',
     ];
 
     const METODO_CAUSA_SELECT = [
         'lluvia_ideas' => 'Lluvia de ideas',
         'cinco_porque' => 'Cinco porqués',
-        'Ishikawa'     => 'Ishikawa',
+        'Ishikawa' => 'Ishikawa',
     ];
 
     protected $dates = [
@@ -53,15 +53,16 @@ class AccionCorrectiva extends Model implements HasMedia
     ];
 
     const CAUSAORIGEN_SELECT = [
-        'desviacion_proceso'    => 'Desviación en los procesos',
-        'queja_cliente'         => 'Queja de un cliente',
-        'auditoria_interna'     => 'Auditoría Interna',
-        'desviacion_inicadores' => 'Desviación a los indicadores',
-        'incumplimiento_ns'     => 'Incumplimiento a los niveles de servicio',
-        'otro'                  => 'Otro',
+        'Desviación en los procesos' => 'Desviación en los procesos',
+        'Queja de un cliente' => 'Queja de un cliente',
+        'Auditoria Interna' => 'Auditoría Interna',
+        'Desviación a los indicadores' => 'Desviación a los indicadores',
+        'Incumplimiento a los niveles de servicio' => 'Incumplimiento a los niveles de servicio',
+        'otro' => 'Otro',
     ];
 
     protected $fillable = [
+        'folio',
         'fecharegistro',
         'tema',
         'causaorigen',
@@ -87,11 +88,17 @@ class AccionCorrectiva extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'es_externo',
+        'aprobada',
+        'aprobacion_contestada',
+        'colaborador_quejado',
+        'otros',
+        'comentarios_aprobacion',
     ];
 
     public function getFolioAttribute()
     {
-        return  sprintf('AC-%04d', $this->id);
+        return sprintf('AC-%04d', $this->id);
     }
 
     protected function serializeDate(DateTimeInterface $date)
@@ -167,12 +174,12 @@ class AccionCorrectiva extends Model implements HasMedia
 
     public function empleados()
     {
-        return $this->belongsTo(Empleado::class, 'id_registro', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'id_registro', 'id')->alta()->with('area');
     }
 
     public function reporto()
     {
-        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->alta()->with('area');
     }
 
     public function area()
@@ -198,5 +205,20 @@ class AccionCorrectiva extends Model implements HasMedia
     public function actividades()
     {
         return $this->hasMany(ActividadAccionCorrectiva::class, 'accion_correctiva_id', 'id');
+    }
+
+    public function analisis()
+    {
+        return $this->hasMany(AnalisisAccionCorrectiva::class, 'accion_correctiva_id', 'id');
+    }
+
+    public function quejascliente()
+    {
+        return $this->hasMany(QuejasCliente::class, 'accion_correctiva_id', 'id');
+    }
+
+    public function deskQuejaCliente()
+    {
+        return $this->morphedByMany(QuejasCliente::class, 'acciones_correctivas_aprobacionables', null, 'acciones_correctivas_id')->withPivot('created_at');
     }
 }

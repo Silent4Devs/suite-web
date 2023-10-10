@@ -17,9 +17,11 @@ class AreaSeeder extends Seeder
         $areas = Area::factory(10)->create();
         foreach ($areas as $idx => $area) {
             if ($idx != 0) {
-                $area->update([
-                    'id_reporta' => Area::all()->random()->id,
-                ]);
+                $area->update(
+                    [
+                        'id_reporta' => Area::all()->random()->id,
+                    ]
+                );
             }
         }
     }

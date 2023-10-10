@@ -20,7 +20,7 @@ class AnalisisBController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('analisis_brechas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_de_brechas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapuno = GapUno::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
         $gaptresVerif = GapTre::get()->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id);
         $gaptresAct = GapTre::get()->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id);
@@ -69,8 +69,8 @@ class AnalisisBController extends Controller
         $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap2nocumple = GapDo::select('id', 'valoracion')->where('valoracion', '=', '3')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->get()->where('analisis_brechas_id', '=', request()->id);
-        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->get()->where('analisis_brechas_id', '=', request()->id);
+        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap3satisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap3parcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap3nocumple = GapTre::select('id')->where('valoracion', '=', '3')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
@@ -82,7 +82,7 @@ class AnalisisBController extends Controller
         $gapunoPorc = new Porcentaje();
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
         $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
-        $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
+        $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap3satisfactorios, $gap3parcialmente, $gap31porcentaje, $gap3asatisfactorios, $gap3aparcialmente);
 
         $conteos = [
             'Gap1' => [
@@ -135,7 +135,6 @@ class AnalisisBController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -146,7 +145,7 @@ class AnalisisBController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function id($id)
@@ -157,7 +156,7 @@ class AnalisisBController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -168,8 +167,7 @@ class AnalisisBController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -184,7 +182,7 @@ class AnalisisBController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -4,15 +4,16 @@ namespace App\Models\RH;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ObjetivoEmpleado extends Model
+class ObjetivoEmpleado extends Model implements Auditable
 {
-    use HasFactory, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use HasFactory;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'ev360_objetivo_empleados';
-    protected $fillable = ['empleado_id', 'objetivo_id', 'completado'];
+
+    protected $fillable = ['empleado_id', 'objetivo_id', 'completado', 'en_curso'];
 
     public function objetivo()
     {

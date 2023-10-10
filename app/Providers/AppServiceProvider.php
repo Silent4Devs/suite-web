@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Extensions\CustomSessionHandler;
+use App\Models\VersionesIso;
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Pagination\Paginator;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Passport::ignoreRoutes();
     }
 
     /**
@@ -44,6 +46,12 @@ class AppServiceProvider extends ServiceProvider
             $path = Config::get('session.path');
 
             return new CustomSessionHandler($files, $path, $minutes);
+        });
+
+        view()->composer('*', function ($view) {
+            $version_historico = VersionesIso::getFirst();
+            $version_iso = $version_historico->version_historico;
+            $view->with('version_iso', $version_iso);
         });
     }
 }

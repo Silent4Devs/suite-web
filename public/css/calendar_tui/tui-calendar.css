@@ -1231,3 +1231,24 @@ input[type='checkbox'].tui-full-calendar-checkbox-round + span {
       position: absolute;
       left: 0;
    }
+
+   #calendar::-webkit-scrollbar {
+        width: 7px;
+        height: 7px;
+    }
+
+    /* Track */
+    #calendar::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0);
+    }
+
+    /* Handle */
+    #calendar::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 50px;
+    }
+
+    /* Handle on hover */
+    #calendar::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.5);
+    }

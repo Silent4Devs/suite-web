@@ -9,17 +9,15 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class ComiteseguridadImport implements ToModel
 {
     /**
-     * @param array $row
-     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
         return new Comiteseguridad([
             'nombrerol' => $row[0],
-            'fechavigor'=> $row[1],
-            'id_asignada'=> $this->obtenerEmpleadoPorNombre($row[2]),
-            'responsabilidades'=> $row[3],
+            'fechavigor' => $row[1],
+            'id_asignada' => $this->obtenerEmpleadoPorNombre($row[2]),
+            'responsabilidades' => $row[3],
         ]);
     }
 
@@ -35,8 +33,12 @@ class ComiteseguridadImport implements ToModel
 
     public function obtenerEmpleadoPorNombre($nombre)
     {
-        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('name', $nombre)->first();
 
-        return $empleado_bd->id;
+        if ($empleado_bd) {
+            return $empleado_bd->id;
+        }
+
+        return null;
     }
 }

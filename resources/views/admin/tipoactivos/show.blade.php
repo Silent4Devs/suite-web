@@ -17,7 +17,7 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.tipoactivo.fields.id') }}
+                            ID
                         </th>
                         <td>
                             {{ $tipoactivo->id }}
@@ -29,14 +29,6 @@
                         </th>
                         <td>
                             {{ $tipoactivo->tipo }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                           Subcategoría
-                        </th>
-                        <td>
-                            {{ $tipoactivo->subtipo }}
                         </td>
                     </tr>
                 </tbody>

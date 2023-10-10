@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\PlanImplementacion;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,16 +14,19 @@ use Illuminate\Support\Facades\Storage;
 
 class PlanTrabajoBaseController extends Controller
 {
+    use ObtenerOrganizacion;
+
+    public function listaDataTables()
+    {
+        $planes = PlanImplementacion::where('es_plan_trabajo_base', true)->with('elaborador')->get();
+
+        return datatables()->of($planes)->toJson();
+    }
+
     public function index()
     {
-        abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gantt_path = 'storage/gantt/';
-        $path = public_path($gantt_path);
-        $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
-
+        abort_if(Gate::denies('plan_de_implementacion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $files = glob('storage/gantt/versiones/gantt_inicial*.json');
         $archivos_gantt = [];
 
@@ -34,10 +38,47 @@ class PlanTrabajoBaseController extends Controller
         $path_asset = asset('storage/gantt/versiones/');
         $gant_readed = end($archivos_gantt);
         $file_gant = json_decode(file_get_contents($gant_readed), true);
-        $empleados = Empleado::select('name')->get();
         $name_file_gantt = 'gantt_inicial.json';
+        $texto = false;
+        //FIN REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
+        $empleados = Empleado::getAltaEmpleados();
 
-        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.planTrabajoBase.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual', 'archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
+    }
+
+    public function showTarea($texto)
+    {
+        abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // $gantt_path = 'storage/gantt/';
+        // $path = public_path($gantt_path);
+        // $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
+
+        //NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
+        $files = glob('storage/gantt/versiones/gantt_inicial*.json');
+        $archivos_gantt = [];
+
+        sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+        foreach ($files as $clave => $valor) {
+            array_push($archivos_gantt, $valor);
+        }
+
+        $path_asset = asset('storage/gantt/versiones/');
+        $gant_readed = end($archivos_gantt);
+        $file_gant = json_decode(file_get_contents($gant_readed), true);
+        $name_file_gantt = 'gantt_inicial.json';
+        $sinTexto = true;
+        //FIN REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
+
+        $empleados = Empleado::getaltaAll();
+
+        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto', 'sinTexto'));
     }
 
     public function saveImplementationProyect(Request $request)
@@ -70,7 +111,7 @@ class PlanTrabajoBaseController extends Controller
             ]);
         }
 
-        return response()->json(['success' => true, 'ultima_modificacion'=>Carbon::parse($plan_implementacion->updated_at)->format('d/m/Y g:i:s A')], 200);
+        return response()->json(['success' => true, 'ultima_modificacion' => Carbon::parse($plan_implementacion->updated_at)->format('d/m/Y g:i:s A')], 200);
     }
 
     public function loadProyect()

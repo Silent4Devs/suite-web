@@ -15,7 +15,7 @@ class StoreIncidentesDeSeguridadRequest extends FormRequest
     public function rules()
     {
         return [
-            'folio'           => [
+            'folio' => [
                 'string',
                 'required',
             ],
@@ -23,13 +23,13 @@ class StoreIncidentesDeSeguridadRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'activos.*'       => [
+            'activos.*' => [
                 'integer',
             ],
-            'activos'         => [
+            'activos' => [
                 'array',
             ],
-            'clasificacion'   => [
+            'clasificacion' => [
                 'string',
                 'nullable',
             ],

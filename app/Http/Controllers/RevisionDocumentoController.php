@@ -51,12 +51,15 @@ class RevisionDocumentoController extends Controller
             case 'proceso':
                 $path_documentos_aprobacion .= '/procesos';
                 break;
+            case 'formato':
+                $path_documentos_aprobacion .= '/formatos';
+                break;
             default:
                 $path_documentos_aprobacion .= '/procesos';
                 break;
         }
 
-        $empleado = Empleado::find(intval($revisionDocumento->empleado_id));
+        $empleado = Empleado::getaltaAll()->find(intval($revisionDocumento->empleado_id));
 
         return view('externos.revisiones.edit', compact('documento', 'empleado', 'path_documentos_aprobacion', 'revisionDocumento'));
     }
@@ -65,13 +68,12 @@ class RevisionDocumentoController extends Controller
     {
         if ($request->ajax()) {
             $documento = RevisionDocumento::where('id', '=', intval($request->revision))->first();
-
             $documento->update([
                 'comentarios' => $request->comentarios,
                 'estatus' => strval(Documento::APROBADO),
             ]);
-            $documentoOriginal = Documento::find($documento->documento_id);
-            $email = $documento->empleado->email;
+            $documentoOriginal = Documento::with('elaborador')->find($documento->documento_id);
+            $email = $documentoOriginal->elaborador->email;
 
             $this->sendMailApprove($email, $documentoOriginal, $documento);
             $this->allLevelSendAnswer($documento->documento_id, $documentoOriginal);
@@ -115,6 +117,9 @@ class RevisionDocumentoController extends Controller
                             case 'proceso':
                                 $path_documentos_aprobacion .= '/procesos';
                                 break;
+                            case 'formato':
+                                $path_documentos_aprobacion .= '/formatos';
+                                break;
                             default:
                                 $path_documentos_aprobacion .= '/procesos';
                                 break;
@@ -122,7 +127,7 @@ class RevisionDocumentoController extends Controller
 
                         $documentoOriginal->update([
                             'estatus' => strval(Documento::PUBLICADO),
-                            'version' => ($documentoOriginal->version + 1),
+                            'version' => ($documentoOriginal->version),
                         ]);
 
                         $historialDocumento->update([
@@ -190,7 +195,7 @@ class RevisionDocumentoController extends Controller
                             'estatus' => strval(Documento::DOCUMENTO_RECHAZADO),
                         ]);
 
-                    // $documentoActual = Documento::with('elaborador')->find($documento->documento_id);
+                        // $documentoActual = Documento::with('elaborador')->find($documento->documento_id);
                         // $this->sendMailNotPublish($documentoActual->elaborador->email, $documentoActual);
                     } else {
                         $path_documentos_aprobacion = 'public/Documentos en aprobacion';
@@ -219,6 +224,9 @@ class RevisionDocumentoController extends Controller
                             case 'proceso':
                                 $path_documentos_aprobacion .= '/procesos';
                                 break;
+                            case 'formato':
+                                $path_documentos_aprobacion .= '/formatos';
+                                break;
                             default:
                                 $path_documentos_aprobacion .= '/procesos';
                                 break;
@@ -226,7 +234,7 @@ class RevisionDocumentoController extends Controller
 
                         $documentoOriginal->update([
                             'estatus' => strval(Documento::PUBLICADO),
-                            'version' => ($documentoOriginal->version + 1),
+                            'version' => ($documentoOriginal->version),
                         ]);
 
                         $historialDocumento->update([
@@ -269,22 +277,22 @@ class RevisionDocumentoController extends Controller
 
     public function sendMailApprove($mail, $documento, $revision)
     {
-        Mail::to($mail)->send(new DocumentoAprobadoMail($documento, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoAprobadoMail($documento, $revision));
     }
 
     public function sendMailPublish($mail, $documento)
     {
-        Mail::to($mail)->send(new DocumentoPublicadoMail($documento));
+        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoPublicadoMail($documento));
     }
 
     public function sendMailNotPublish($mail, $documento)
     {
-        Mail::to($mail)->send(new DocumentoNoPublicadoMail($documento));
+        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoNoPublicadoMail($documento));
     }
 
     public function sendMailReject($mail, $documento, $revision)
     {
-        Mail::to($mail)->send(new DocumentoRechazadoMail($documento, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoRechazadoMail($documento, $revision));
     }
 
     public function allLevelSendAnswer($documento_id, $documento)
@@ -319,6 +327,7 @@ class RevisionDocumentoController extends Controller
                     $historialDocumento->update([
                         'estatus' => strval(Documento::DOCUMENTO_RECHAZADO),
                     ]);
+
                     // $documentoActual = Documento::with('elaborador')->find($documento->id);
                     // $this->sendMailNotPublish($documentoActual->elaborador->email, $documentoActual);
                     return;
@@ -342,7 +351,7 @@ class RevisionDocumentoController extends Controller
 
     public function sendEmailToNextLevel($email, Documento $documento, RevisionDocumento $revisor, HistorialRevisionDocumento $historialRevisionDocumento)
     {
-        Mail::to($email)->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
+        Mail::to(removeUnicodeCharacters($email))->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
     }
 
     public function checkMaxLevel($documento_id)
@@ -391,6 +400,9 @@ class RevisionDocumentoController extends Controller
         $this->createDocumentosPublicadosIfNotExists();
         $path_documentos_publicados = 'public/Documentos publicados';
         switch ($documento->tipo) {
+            case 'proceso':
+                $path_documentos_publicados .= '/procesos';
+                break;
             case 'politica':
                 $path_documentos_publicados .= '/politicas';
                 break;
@@ -412,8 +424,8 @@ class RevisionDocumentoController extends Controller
             case 'externo':
                 $path_documentos_publicados .= '/externos';
                 break;
-            case 'proceso':
-                $path_documentos_publicados .= '/procesos';
+            case 'formato':
+                $path_documentos_publicados .= '/formatos';
                 break;
             default:
                 $path_documentos_publicados .= '/procesos';
@@ -429,9 +441,10 @@ class RevisionDocumentoController extends Controller
         if (Storage::exists($path_documento_aprobacion)) {
             Storage::move($path_documento_aprobacion, $ruta_publicacion);
         }
+
         $ruta_publicacion_documento_anterior = $path_documentos_publicados . '/' . $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '-publicado.' . $extension;
 
-        // dd($ruta_publicacion);
+        //dd($ruta_publicacion);
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
             if (Storage::exists($ruta_publicacion_documento_anterior)) {
                 $this->moveBeforeVersionOfDirectory($ruta_publicacion_documento_anterior, $documento);
@@ -467,6 +480,9 @@ class RevisionDocumentoController extends Controller
                 break;
             case 'proceso':
                 $path_documentos_versiones_anteriores .= '/procesos';
+                break;
+            case 'formato':
+                $path_documentos_versiones_anteriores .= '/formatos';
                 break;
             default:
                 $path_documentos_versiones_anteriores .= '/procesos';
@@ -511,6 +527,9 @@ class RevisionDocumentoController extends Controller
         if (!Storage::exists('/public/Documentos publicados/procesos')) {
             Storage::makeDirectory('/public/Documentos publicados/procesos', 0775, true);
         }
+        if (!Storage::exists('/public/Documentos publicados/formatos')) {
+            Storage::makeDirectory('/public/Documentos publicados/formatos', 0775, true);
+        }
     }
 
     public function createDocumentoVersionesAnterioresIfNotExists()
@@ -541,6 +560,9 @@ class RevisionDocumentoController extends Controller
         }
         if (!Storage::exists('/public/Documento versiones anteriores/procesos')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/procesos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/formatos')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/formatos', 0775, true);
         }
     }
 }

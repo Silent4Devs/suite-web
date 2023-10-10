@@ -3,6 +3,41 @@
 
 <style>
 
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
     .img-size{
     /* 	padding: 0;
         margin: 0; */
@@ -75,12 +110,11 @@
 
     {{ Breadcrumbs::render('admin.concientizacion-sgis.index') }}
 
-    @can('concientizacion_sgi_create')
-
+        <h5 class="col-12 titulo_general_funcion">Concientización SGSI</h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Concientización SGSI</strong></h3>
-            </div>
+            </div> --}}
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.concientizacion-sgis.create') }}">
@@ -88,7 +122,6 @@
             </a>
         </div>
     </div> --}}
-        @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -192,28 +225,60 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Concientización SGSI ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
+                // {
+                //     extend: 'pdfHtml5',
+                //     title: `Concientización SGSI ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar PDF',
+                //     orientation: 'portrait',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible']
+                //     },
+                //     customize: function(doc) {
+                //         doc.pageMargins = [20, 60, 20, 30];
+                //         // doc.styles.tableHeader.fontSize = 7.5;
+                //         // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                //     }
+                // },
                 {
                     extend: 'print',
                     title: `Concientización SGSI ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">CONCIENTIZACIÓN SGSI</strong>
+                                </div>
+                                <div class="col-3 p-2">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -240,7 +305,7 @@
 
             ];
 
-            @can('concientizacion_sgi_create')
+            @can('concientizacion_sgsi_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar objetivo de seguridad',
@@ -253,7 +318,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('concientizacion_sgi_delete')
+            @can('concientizacion_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -325,7 +390,9 @@
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
+                                        @can('concientizacion_sgsi_vinculos')
                                         <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                        @endcan
                                     </div>
                                     </div>
 
@@ -349,10 +416,18 @@
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
+                                                        const [extension, ...nameParts] = archivo.documento.split('.').reverse();
+                                                        if(extension == 'pdf'){
                                                         return `
                                                     <div class='carousel-item ${idx==0?"active":""}'>
                                                         <iframe seamless class='img-size' src='{{asset("storage/documentos_concientSgsi")}}/${archivo.documento}'></iframe>
                                                     </div>`
+                                                }else{
+                                                    return `
+                                                            <div class='text-center my-5 carousel-item ${idx==0?"active":""}'>
+                                                                <a href='{{ asset("storage/documento_comunicado_SGI") }}/${archivo.documento}'><i class="fas fa-file-download mr-2" style="font-size:18px"></i> ${archivo.documento}</a>
+                                                            </div>`
+                                                }
                                                     })}
                                             </div>
 

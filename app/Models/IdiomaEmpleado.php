@@ -5,11 +5,13 @@ namespace App\Models;
 use App\Traits\DateTranslator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class IdiomaEmpleado extends Model
+class IdiomaEmpleado extends Model implements Auditable
 {
     use HasFactory;
     use DateTranslator;
+    use \OwenIt\Auditing\Auditable;
 
     const NIVELES = [
         'Basico' => 'Básico',
@@ -23,6 +25,7 @@ class IdiomaEmpleado extends Model
         'porcentaje',
         'certificado',
         'empleado_id',
+        'id_language',
     ];
 
     protected $appends = ['ruta_documento', 'ruta_absoluta_documento'];
@@ -39,6 +42,11 @@ class IdiomaEmpleado extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
+    }
+
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'id_language', 'id');
     }
 }

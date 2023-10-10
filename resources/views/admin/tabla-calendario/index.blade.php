@@ -1,30 +1,28 @@
 @extends('layouts.admin')
 
 @section('content')
+    {{ Breadcrumbs::render('admin.CalendarioEventos.index') }}
 
-    <ol class="breadcrumb">
-        {{-- <li class="breadcrumb-item">
-            <a href="{!! route('admin.tabla-calendario.index') !!}">Inicio</a>
-        </li>
-        <li class="breadcrumb-item active">Calendario</li> --}}
-    </ol>
+    @php
+        use App\Models\Organizacion;
+        $organizacion = Organizacion::getFirst();
+        $empresa = $organizacion->empresa;
+    @endphp
+    <h5 class="col-12 titulo_general_funcion">Eventos de {{ $empresa }}</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Calendario </strong></h3>
-        </div>
-            <div class="card-body">
-                <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">Control de Eventos</div>
-                    @include('partials.flashMessages')
-                    <div class="card-body datatable-fix">
-                    @include('admin.tabla-calendario.table')
-                    </div>
-                </div>
+        <div class="card-body">
+            <div class="py-1 text-center form-group col-12"
+                style="background-color:#345183; border-radius:100px; color: white;">Eventos</div>
+            @include('partials.flashMessages')
+            <div class="card-body datatable-fix">
+                @include('admin.tabla-calendario.table')
             </div>
         </div>
     </div>
-
-    @endsection
-    @section('scripts')
+    </div>
+    </div>
+@endsection
+@section('scripts')
     @parent
     <script>
         $(function() {
@@ -121,10 +119,6 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.tabla-calendario.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'nombre',
                         name: 'nombre'
                     },
@@ -154,5 +148,4 @@
             let table = $('.datatable-calendario').DataTable(dtOverrideGlobals);
         });
     </script>
-
 @endsection

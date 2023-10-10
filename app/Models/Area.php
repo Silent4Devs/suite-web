@@ -1,19 +1,17 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Area.
@@ -27,7 +25,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property int|null $team_id
- *
  * @property Grupo|null $grupo
  * @property Team|null $team
  * @property Collection|Area[] $areas
@@ -37,13 +34,11 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property Collection|MaterialSgsi[] $material_sgsis
  * @property Collection|User[] $users
  */
-class Area extends Model
+class Area extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use SoftDeletes, MultiTenantModelTrait, HasFactory, Filterable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'areas';
 
     protected $dates = [
@@ -65,10 +60,18 @@ class Area extends Model
         'descripcion',
         'foto_area',
         'team_id',
-        'id_lider',
+        'empleados_id',
     ];
 
     protected $appends = ['grupo_name', 'foto_ruta'];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('areas_all', 3600 * 24, function () {
+            return self::orderByDesc('id')->get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -107,7 +110,7 @@ class Area extends Model
 
     public function children()
     {
-        return $this->hasMany(self::class, 'id_reporta', 'id')->with('children', 'supervisor', 'grupo'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'id_reporta', 'id')->with('children', 'supervisor', 'grupo', 'lider'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
     public function concientizacion_sgis()
@@ -117,7 +120,12 @@ class Area extends Model
 
     public function empleados()
     {
-        return $this->hasMany(Empleado::class);
+        return $this->hasMany(Empleado::class)->alta();
+    }
+
+    public function totalEmpleados()
+    {
+        return $this->hasMany(Empleado::class, 'area_id');
     }
 
     public function material_iso_veinticientes()
@@ -157,6 +165,11 @@ class Area extends Model
 
     public function lider()
     {
-        return $this->hasMany(Empleado::class, 'id_lider');
+        return $this->belongsTo(Empleado::class, 'empleados_id', 'id')->alta();
+    }
+
+    public function indicadores_sistema_gestion()
+    {
+        return $this->hasMany(IndicadoresSgsi::class, 'id_area');
     }
 }

@@ -9,23 +9,32 @@ class StoreEvidenciasSgsiRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('evidencias_sgsi_create');
+        return Gate::allows('evidencia_asignacion_recursos_sgsi_agregar');
     }
 
     public function rules()
     {
         return [
+
+            'nombredocumento' => [
+                'string',
+                'required',
+            ],
             'objetivodocumento' => [
                 'string',
                 'required',
             ],
-            'arearesponsable'   => [
+            'responsable_evidencia_id' => [
                 'string',
-                'nullable',
+                'required',
             ],
-            'fechadocumento'    => [
+            'area_id' => [
+                'string',
+                'required',
+            ],
+            'fechadocumento' => [
                 'date',
-                'nullable',
+                'required',
             ],
         ];
     }

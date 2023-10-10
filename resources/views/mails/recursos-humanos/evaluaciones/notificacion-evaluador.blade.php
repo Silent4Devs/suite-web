@@ -35,12 +35,16 @@
                 <table role="presentation"
                     style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
                     <tr>
-                        <td align="center" style="padding:40px 0 30px 0;background:#358765;">
-                            <img src="https://image.flaticon.com/icons/png/512/4786/4786029.png" alt="" width="100"
-                                style="height:auto;display:block; margin-bottom: 10px;" />
+                        <td align="center" style="padding:40px 0 30px 0;background:#1D284B;">
                             <h3 class="p-0 m-0"
                                 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif; color:white">
-                                Sistema de Gestión Normativa - Tabantaj</h3>
+                                Evaluación de Desempeño - Tabantaj</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding:40px 0 0 0">
+                            <img src="{{ asset('img/logo_policromatico.png') }}" alt="" width="200"
+                                style="height:auto;display:block; margin-bottom: 10px;" />
                         </td>
                     </tr>
                     <tr>
@@ -78,7 +82,6 @@
                                         <div style="width: 100%; height: 5px; background-color: rgb(53, 53, 53);">&nbsp;
                                         </div>
                                         <div style="width: 100%; margin-top: 10px;">
-                                            <p>Descripción:</p>
                                             <p>Buen día {{ $evaluador->name }}, </p>
                                             @php
                                                 $autoevaluacion = $evaluados->filter(function ($evaluado) use ($evaluador) {
@@ -92,11 +95,11 @@
                                             @if ($exists_autoevaluacion)
                                                 <p>Ya se encuentra habilitada la <strong>Evaluación de
                                                         Desempeño</strong>
-                                                    para su autoevaluacion.
+                                                    para su autoevaluación.
                                                 </p>
                                             @endif
                                             <p>Así mismo le informamos que ha sido seleccionado para evaluar a los
-                                                siguientes empleados:
+                                                siguientes colaboradores:
                                             <ul>
                                                 @foreach ($evaluados as $evaluado)
                                                     @if ($evaluador->id != $evaluado->id)
@@ -104,8 +107,8 @@
                                                     @endif
                                                 @endforeach
                                             </ul>
-                                            <small>Por favor revise los links de cada una de las evaluaciones a los
-                                                empleados en su perfil de Tabantaj</small>
+                                            <p>Por favor dirijase a Tabantaj en la sección de "Mi Perfil" donde
+                                                encontrará las respectivas evaluaciones a realizar</p>
                                             <br><br>
                                             <a href="{{ route('admin.inicio-Usuario.index') }}"
                                                 style="outline: none; text-decoration: none; font-size: small; font-family: Arial, Helvetica, sans-serif; background-color: #358765; padding: 10px; border-radius: 10px; color: white;">
@@ -118,14 +121,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding:30px;background:#358765;">
+                        <td style="padding:30px;background:#1D284B;">
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;">
                                 <tr>
                                     <td style="padding:0;width:50%;" align="left">
                                         <p
                                             style="margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;">
-                                            &reg; Tabantaj, SilentForBussines {{ date('Y') }}<br />
+                                            &reg; Tabantaj, Silent For Business {{ date('Y') }}<br />
                                         </p>
                                     </td>
                                 </tr>

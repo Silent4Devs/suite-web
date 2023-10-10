@@ -5,27 +5,17 @@ namespace App\Models;
 //use Eloquent as Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-/**
- * Class Amenaza.
- * @version August 5, 2021, 6:19 pm UTC
- *
- * @property \Illuminate\Database\Eloquent\Collection $vulnerabilidads
- * @property string $nombre
- * @property string $categoria
- * @property string $descripcion
- */
-class Amenaza extends Model
+class Amenaza extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'amenazas';
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $dates = ['deleted_at'];
@@ -56,7 +46,7 @@ class Amenaza extends Model
     public static $rules = [
         'nombre' => 'required|string|max:255',
         'categoria' => 'nullable|string|max:255',
-        'descripcion' => 'nullable|string|max:255',
+        'descripcion' => 'nullable|string|max:1255',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable',

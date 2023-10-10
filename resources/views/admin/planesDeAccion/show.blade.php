@@ -217,11 +217,8 @@
         }
 
     </style>
+    <h5 class="col-12 titulo_general_funcion">Plan de Acción - {{ $planImplementacion->parent }}</h5>
     <div class="mt-5 mb-5">
-        <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Plan de Acción - {{ $planImplementacion->parent }}</strong>
-            </h3>
-        </div>
         <div id="bloqueado"></div>
 
         <div class="botones_vistas_gantt">

@@ -5,19 +5,19 @@
 
 </style>
 <div class="row align-items-center">
-    <div class="col-sm-12 col-md-6 col-6 text-center">
+    <div class="text-center col-sm-12 col-md-6 col-6">
         @php
             $foto = asset('storage/empleados/imagenes/man.png');
             if ($empleado->foto) {
                 $foto = asset('storage/empleados/imagenes/' . $empleado->foto);
             }
         @endphp
-        <img class="img-clip" src="{{ $foto }}" style="max-width:170px">
+        <img class="img-clip" id="picture" src="{{ $foto }}" style="max-width:170px">
     </div>
     <div class="col-sm-12 col-md-6 col-6">
         <div class="input-group is-invalid">
             <div class="form-group">
-                <div class="row text-center" style="padding: 20px 0;">
+                <div class="text-center row" style="padding: 20px 0;">
                     <div class="col-md-12 col-sm-12 col-12 d-flex justify-content-center">
                         <label style="cursor: pointer" for="foto">
                             <div class="d-flex align-items-center">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <input name="foto" type="file" accept="image/png, image/jpeg" class="imageCrop form-control-file"
-                    id="foto" hidden="">
+                    id="foto" hidden=""   enctype="multipart/form-data">
             </div>
         </div>
     </div>
@@ -76,5 +76,21 @@
                     class="fas fa-image"></i></button>
         </div>
     </div>
-    <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto" class="imageCrop">
+    <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto" class="imageCrop"   enctype="multipart/form-data">
 </div>
+
+<script>
+    //Cambiar imagen
+    document.getElementById("foto").addEventListener('change', cambiarImagen);
+
+    function cambiarImagen(event) {
+        var file = event.target.files[0];
+
+        var reader = new FileReader();
+        reader.onload = (event) => {
+            document.getElementById("picture").setAttribute('src', event.target.result);
+        };
+
+        reader.readAsDataURL(file);
+    }
+</script>

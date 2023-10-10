@@ -4,20 +4,14 @@
 
     @include('partials.flashMessages')
 
+    <h5 class="col-12 titulo_general_funcion">Niveles Jerárquicos</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Niveles Jerárquicos</strong></h3>
-        </div>
-
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable datatable-Perfiles">
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            ID
-                        </th>
-                        <th>
-                            Perfil
+                            Nivel
                         </th>
                         <th>
                             Descripción
@@ -144,7 +138,6 @@
             }
             //dtButtons.push(deleteButton)
 
-
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nuevo',
@@ -157,9 +150,9 @@
                     window.location.href = url;
                 }
             };
-            dtButtons.push(btnAgregar);
-
-
+            @can('niveles_jerarquicos_agregar')
+                dtButtons.push(btnAgregar);
+            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -171,10 +164,6 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 ajax: "{{ route('admin.perfiles.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'perfil',
                         name: 'perfil'
                     },
@@ -193,22 +182,7 @@
                 ]
             };
             let table = $('.datatable-Perfiles').DataTable(dtOverrideGlobals);
-            // buttons: dtButtons
-            // })
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+
         });
     </script>
-
-
 @endsection

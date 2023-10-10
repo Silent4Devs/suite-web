@@ -80,39 +80,32 @@
         .select2-selection__choice__remove {
             display: none;
         }
-
     </style>
+    <h5 class="col-12 titulo_general_funcion">Editar Documento</h5>
     <div class="card">
-        <div class="card-body">
-            <div class="mb-4 text-center" style="background: #098f94; border-radius: 5px;">
-                <h5 class="p-2 text-white">Editar Documento</h5>
-            </div>
+        <div class="card-body" style="position: relative">
             <form id="formEditarDocumento" data-id-documento="{{ $documentoActual->id }}" method="POST"
                 action="{{ route('admin.documentos.update', $documentoActual) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
                 @include('admin.documentos._form')
                 <div class="text-right form-group col-12">
-                <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
-                <input type="submit" class="btn btn-danger" value="Actualizar">
-                @can('documentos_publish')
+                    <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
+                    <input type="submit" class="btn btn-danger" value="Actualizar">
                     <button id="publicar" class="btn btn-danger">Publicar</button>
                 </div>
-                @endcan
             </form>
-
+            <style>
+                .modal {
+                    overflow-y: auto;
+                }
+            </style>
             <!-- Modal -->
             <div class="modal fade" id="modalPublicar" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                aria-labelledby="modalPublicarLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                aria-labelledby="modalPublicarLabel" aria-hidden="true" style="position: relative;">
+                <div class="modal-dialog modal-lg ">
                     <div class="modal-content">
-                        {{-- <div class="modal-header">
-                            <h5 class="modal-title" id="modalPublicarLabel">Configuración de revisores (antes de solicitud
-                                de aprobación)</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> --}}
+
                         <div class="modal-body">
                             <h5 class="titulo-modal">Publicar
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -177,28 +170,34 @@
                                             <div class="form-group select-revisores">
                                                 <label for="descripcion" class="labels-publicacion">Descripción
                                                     del cambio:</label>
-                                                <textarea class="form-control" id="descripcion" name="descripcion"
-                                                    rows="1"></textarea>
+                                                <textarea class="form-control" id="descripcion" name="descripcion" rows="1"></textarea>
                                                 <span class="text-danger" id="descripcion_error"></span>
                                             </div>
                                             <div class="form-group select-revisores">
                                                 <label for="comentarios" class="labels-publicacion">Comentarios
                                                     adicionales:</label>
-                                                <textarea class="form-control" id="comentarios" name="comentarios"
-                                                    rows="1"></textarea>
-                                                <span class="text-danger" id="comentarios_error"></span </div>
+                                                <textarea class="form-control" id="comentarios" name="comentarios" rows="1"></textarea>
+                                                <span class="text-danger" id="comentarios_error"></span> </div>
                                             </div>
                                         </div>
                                     </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <button type="button" class="btn_cancelar" data-dismiss="modal">Cancelar</button>
                             <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
                         </div>
                     </div>
                 </div>
+                <div id="cargando-window-modal"
+                    style="display:none !important;position: absolute; top: 0;left: 0;width: 100%; background: rgba(77, 77, 77, 0.384);height: 100%;z-index: 1;align-items: center;display: flex;justify-content: center;">
+                    <h5 style="color:black"><i class="fas fa-circle-notch fa-spin"></i> Espere un momento...</h5>
+                </div>
             </div>
+        </div>
+        <div id="cargando-window"
+            style="display:none!important;position: absolute; top: 0;left: 0;width: 100%; background: rgba(77, 77, 77, 0.384);height: 100%;z-index: 1;align-items: center;display: flex;justify-content: center;">
+            <h5 style="color:black"><i class="fas fa-circle-notch fa-spin"></i> Espere un momento...</h5>
         </div>
     </div>
 @endsection
@@ -242,9 +241,12 @@
                     processData: false,
                     contentType: false,
                     dataType: "JSON",
+                    beforeSend: function() {
+                        document.getElementById('cargando-window').style.display = 'flex';
+                    },
                     success: function(response) {
                         console.log(response);
-                        // console.log("#formCrearDocumento");
+                        document.getElementById('cargando-window').style.display = 'none';
                         if (response.success) {
                             let errores = document.querySelectorAll('span.error-ajax');
                             errores.forEach(element => {
@@ -254,27 +256,16 @@
                             let reviso_id = document.getElementById('reviso_id').value;
                             let aprobo_id = document.getElementById('aprobo_id').value;
                             $('#revisores1').val([reviso_id]);
-                            // document.querySelectorAll("#revisores1 option[data-id-empleado]")
-                            //     .forEach(element => {
-                            //         if (Number(element.value) == Number(reviso_id)) {
-                            //             console.log(element);
-                            //             element.setAttribute('disabled', 'disabled');
-                            //         }
-                            //     });
+
                             $('#revisores1').trigger(
                                 'change'); // Notify any JS components that the value changed
                             $('#revisores2').val([aprobo_id]);
-                            // document.querySelectorAll("#revisores2 option[data-id-empleado]")
-                            //     .forEach(element => {
-                            //         if (Number(element.value) == Number(aprobo_id)) {
-                            //             console.log(element);
-                            //             element.setAttribute('disabled', 'disabled');
-                            //         }
-                            //     });
+
                             $('#revisores2').trigger('change');
                         }
                     },
                     error: function(request, status, error) {
+                        document.getElementById('cargando-window').style.display = 'none';
                         let errores = document.querySelectorAll('span.error-ajax');
                         errores.forEach(element => {
                             element.innerHTML = "";
@@ -341,8 +332,16 @@
                                 processData: false,
                                 contentType: false,
                                 dataType: "JSON",
+                                beforeSend: function() {
+                                    document.getElementById('cargando-window-modal')
+                                        .style
+                                        .display = 'flex';
+                                },
                                 success: function(response) {
                                     console.log(response);
+                                    document.getElementById('cargando-window-modal')
+                                        .style
+                                        .display = 'none';
                                     documentoCreado = response.documento_id;
                                     $.ajax({
                                         type: "POST",
@@ -358,23 +357,31 @@
                                             documentoCreado
                                         },
                                         dataType: "JSON",
+                                        beforeSend: function() {
+                                            document.getElementById(
+                                                    'cargando-window-modal')
+                                                .style
+                                                .display = 'flex';
+                                        },
                                         success: function(response) {
-                                            console.log(response);
-                                            // $('#modalPublicar').modal('hide');
+                                            document.getElementById(
+                                                    'cargando-window-modal')
+                                                .style
+                                                .display = 'none';
+                                            Swal.fire(
+                                                'Enviado a revisión!',
+                                                'Tu documento ha sido enviado a revisión, mantente al tanto de las actualizaciones',
+                                                'success'
+                                            );
+                                            setTimeout(() => {
+                                                window.location
+                                                    .href =
+                                                    "{{ route('admin.documentos.index') }}";
+                                            }, 1500);
                                         }
                                     });
                                 }
                             });
-
-                            Swal.fire(
-                                'Enviado a revisión!',
-                                'Tu documento ha sido enviado a revisión, mantente al tanto de las actualizaciones',
-                                'success'
-                            );
-                            setTimeout(() => {
-                                window.location.href =
-                                    "{{ route('admin.documentos.index') }}";
-                            }, 1500);
                         }
                     })
                 }

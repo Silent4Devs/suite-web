@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class IndicadoresSgsi.
@@ -33,39 +33,35 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property string|null $amarillo_dos
  * @property string|null $rojo_uno
  * @property string|null $rojo_dos
- *
  * @property Empleado|null $empleado
  * @property Proceso|null $proceso
  * @property User|null $user
  * @property Team|null $team
  * @property Collection|EvaluacionIndicador[] $evaluacion_indicadors
  */
-class IndicadoresSgsi extends Model
+class IndicadoresSgsi extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'indicadores_sgsis';
 
     protected $casts = [
         'responsable_id' => 'int',
         'team_id' => 'int',
         'id_proceso' => 'int',
-        'id_empleado' => 'int',
     ];
 
     protected $fillable = [
         'nombre',
         'descripcion',
         'formula',
+        'formula_raw',
         'frecuencia',
         'unidadmedida',
         'meta',
         'no_revisiones',
         'resultado',
-        'responsable_id',
         'team_id',
         'id_proceso',
         'id_empleado',
@@ -73,6 +69,7 @@ class IndicadoresSgsi extends Model
         'amarillo',
         'rojo',
         'ano',
+        'id_area',
     ];
 
     public function getResultado()
@@ -82,17 +79,12 @@ class IndicadoresSgsi extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_empleado');
+        return $this->belongsTo(Empleado::class, 'id_empleado')->alta();
     }
 
     public function proceso()
     {
         return $this->belongsTo(Proceso::class, 'id_proceso');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'responsable_id');
     }
 
     public function team()
@@ -103,5 +95,10 @@ class IndicadoresSgsi extends Model
     public function evaluacion_indicadors()
     {
         return $this->hasMany(EvaluacionIndicador::class, 'id_indicador');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo('App\Models\Area', 'id_area', 'id');
     }
 }

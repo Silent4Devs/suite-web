@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class AnalisisBrecha.
@@ -20,19 +20,16 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Empleado|null $empleado
  * @property Collection|GapLogroTre[] $gap_logro_tres
  * @property Collection|GapLogroDo[] $gap_logro_dos
  * @property Collection|GapLogroUno[] $gap_logro_unos
  */
-class AnalisisBrecha extends Model
+class AnalisisBrecha extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'analisis_brechas';
 
     protected $casts = [
@@ -58,7 +55,7 @@ class AnalisisBrecha extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_elaboro');
+        return $this->belongsTo(Empleado::class, 'id_elaboro')->alta();
     }
 
     public function gap_logro_tres()

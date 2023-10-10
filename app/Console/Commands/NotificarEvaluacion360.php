@@ -45,7 +45,7 @@ class NotificarEvaluacion360 extends Command
         //One hour is added to compensate for PHP being one hour faster
         $now = date('Y-m-d', strtotime(Carbon::now()));
         logger($now);
-        $evaluaciones_no_enviadas = Evaluacion::get();
+        $evaluaciones_no_enviadas = Evaluacion::getAll();
         if (!$evaluaciones_no_enviadas) {
             $evaluaciones_no_enviadas->where('fecha_inicio', $now)
                 ->where('email_sended', false)->each(function ($evaluacion) {
@@ -53,8 +53,8 @@ class NotificarEvaluacion360 extends Command
                     foreach ($evaluadores as $evaluador) {
                         $evaluados = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
                             ->where('evaluador_id', $evaluador)->pluck('evaluado_id')->unique()->toArray();
-                        $evaluados = Empleado::find($evaluados);
-                        $evaluador_model = Empleado::find($evaluador);
+                        $evaluados = Empleado::getaltaAll()->find($evaluados);
+                        $evaluador_model = Empleado::getaltaAll()->find($evaluador);
                         dispatch(
                             new NotificacionEvaluacion360(
                                 $evaluador_model->email,

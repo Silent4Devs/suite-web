@@ -15,7 +15,7 @@ class UpdatePlanaccionCorrectivaRequest extends FormRequest
     public function rules()
     {
         return [
-            'actividad'       => [
+            'actividad' => [
                 'string',
                 'required',
             ],

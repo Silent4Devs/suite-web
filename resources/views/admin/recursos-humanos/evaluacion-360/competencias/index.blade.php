@@ -3,17 +3,25 @@
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Competencias') }}
     </div>
+    <style>
+        .imagen-responsiva {
+            clip-path: circle(10px at 50% 50%);
+            height: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+    </style>
+    <h5 class="col-12 titulo_general_funcion">Competencias</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Competencias</strong></h3>
-        </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+            <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                 <div class="row w-100">
                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                         <div class="w-100">
-                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                         </div>
                     </div>
                     <div class="col-11">
@@ -27,16 +35,16 @@
             <table class="table table-bordered w-100 tblCompetencias">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="vertical-align: top">
-                            ID
+                        <th style="min-width:50px;">
+                            Competencias
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:250px;">
                             Nombre
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:150px;">
                             Tipo
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top;min-width:150px;">
                             Opciones
                         </th>
                     </tr>
@@ -140,7 +148,17 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.ev360-competencias.index') }}",
                 columns: [{
-                        data: 'id'
+                        data: 'imagen',
+                        render: function(data, type, row, meta) {
+                            // console.log(row.imagen_ruta)
+                            let html = '<div>';
+                            html += `
+                                <img class="imagen-responsiva" src="${row.imagen_ruta}" title="${row.nombre}"/>
+                                `;
+                            html += '</div>';
+                            return html;
+                        },
+
                     }, {
                         data: 'nombre'
                     }, {
@@ -164,10 +182,17 @@
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
 
                             let botones = `
-                            <a class="mr-2 btn btn-sm btn-editar" title="Agregar Conductas" href="${urlBtnEditarConductas}"><i class="fas fa-chalkboard-teacher"></i></a>
+                            @can('competencias_editar')
+
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
+                            @endcan
+                            @can('competencias_show')
                                 <a class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
-                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                            @endcan
+                            @can('competencias_eliminar')
+                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" data-action="Eliminar"
+                                    data-url="${urlBtnEliminar}"><i class="fas fa-trash-alt"></i></button>
+                            @endcan
                             `;
                             return botones;
                         }
@@ -175,13 +200,99 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [0, 'desc']
                 ],
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             let table = $('.tblCompetencias').DataTable(dtOverrideGlobals);
+            document.querySelector('.datatable-fix').addEventListener('click', function(e) {
+                let target = e.target;
+                if (e.target.tagName == 'I') {
+                    target = e.target.closest('button');
+                }
+                if (target.getAttribute('data-action') == 'Eliminar') {
+                    const url = target.getAttribute('data-url');
+                    Swal.fire({
+                        title: '¿Desea eliminar esta competencia?',
+                        html: '',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Eliminar',
+                        cancelButtonText: 'Cancelar',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "DELETE",
+                                url: url,
+                                data: {
+                                    _token: "{{ csrf_token() }}"
+                                },
+                                beforeSend: function() {
+                                    let timerInterval
+                                    Swal.fire({
+                                        title: 'Eliminando!',
+                                        html: 'Estamos eliminando el registro, espere un momento.',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                        didOpen: () => {
+                                            Swal.showLoading()
+                                            timerInterval = setInterval(
+                                                () => {
+                                                    const content = Swal
+                                                        .getHtmlContainer()
+                                                    if (content) {
+                                                        const b =
+                                                            content
+                                                            .querySelector(
+                                                                'b')
+                                                        if (b) {
+                                                            b.textContent =
+                                                                Swal
+                                                                .getTimerLeft()
+                                                        }
+                                                    }
+                                                }, 100)
+                                        },
+                                        willClose: () => {
+                                            clearInterval(timerInterval)
+                                        }
+                                    })
+
+                                },
+                                success: function(response) {
+                                    if (response.deleted) {
+                                        Swal.fire(
+                                            '¡Registro Eliminado!',
+                                            // 'Las áreas relacionadas quedarán sin grupo asignado',
+                                            'success'
+                                        )
+                                        table.ajax.reload();
+                                    } else {
+                                        Swal.fire(
+                                            '¡No se eliminó el registro!',
+                                            'Ocurrió un error',
+                                            'error'
+                                        )
+                                    }
+
+                                },
+                                error: function(err) {
+                                    Swal.fire(
+                                        'Ocurrió un error',
+                                        `${err.message}`,
+                                        'error'
+                                    )
+                                }
+                            });
+
+                        }
+                    });
+                }
+            })
         });
     </script>
 @endsection

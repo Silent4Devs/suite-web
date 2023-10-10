@@ -4,8 +4,8 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #00abb2;
-            color: #00abb2;
+            border: 1px solid #345183;
+            color: #345183;
             text-align: center;
             padding: 0;
             width: 45px;
@@ -19,7 +19,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #00abb2;
+            background: #345183;
         }
 
         .btn_cargar i {
@@ -35,12 +35,23 @@
             margin-right: 15px;
         }
 
+        .table tr td:nth-child(2) {
+
+        min-width:150px;
+
+        }
+
+        .table tr td:nth-child(5) {
+
+        min-width:80px;
+
+        }
+
     </style>
+    <h5 class="col-12 titulo_general_funcion">Grupos de Áreas</h5>
     <div class="mt-5 card">
-        @can('configuracion_grupoarea_create')
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong> Grupos de Áreas</strong></h3>
-            </div>
+        @can('crear_grupo_agregar')
+
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
 
@@ -48,21 +59,17 @@
                 </div>
             </div>
         @endcan
-        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
                     <div class="w-100">
-                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                     </div>
                 </div>
                 <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 1</p>
-                    <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas, al
-                        finalizar
-                        dé
-                        clic en siguiente </span>
-                    <a href="{{ route('admin.areas.index') }}" class="item-right col-2 btn text-light"
-                        style="background-color:rgb(85, 217, 226); float:right">Siguiente</a>
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                    <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas</span>
+
                 </div>
             </div>
         </div>
@@ -166,7 +173,7 @@
 
             ];
 
-            @can('configuracion_grupoarea_create')
+            @can('crear_grupo_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Grupo Area',
@@ -181,8 +188,12 @@
                 text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-grupo_area') }}",
                 action: function(e, dt, node, config) {
-                $('#').modal('show');
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
                 };
                 let btnImport = {
@@ -198,7 +209,7 @@
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
-            @can('configuracion_grupoarea_delete')
+            @can('crear_grupo_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -261,13 +272,14 @@
                         name: 'Opciones',
                         render: function(data, type, row, meta) {
                             const opciones = `
-                            @can('configuracion_grupoarea_edit')
+                            @can('crear_grupo_ver')
+                                <a href="/admin/grupoarea/${data}" class="btn btn-sm"><i class="fas fa-eye" title="Ver"></i></a>
+                            @endcan
+                            @can('crear_grupo_editar')
                                 <a href="/admin/grupoarea/${data}/edit" class="btn btn-sm"><i class="fas fa-edit" title="Editar"></i></a>
                             @endcan
-                            @can('configuracion_grupoarea_show')
-                                <a href="/admin/grupoarea/${data}/show" class="btn btn-sm"><i class="fas fa-eye" title="Visualizar"></i></a>
-                            @endcan
-                            @can('configuracion_grupoarea_delete')
+
+                            @can('crear_grupo_eliminar')
                                 <button onclick="Eliminar('/admin/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash"
                                         title="Eliminar"></i></button>
                             @endcan
@@ -307,11 +319,11 @@
                     title: '¿Desea eliminar este grupo?',
                     html: `<div>
                             ${areasRelacionadas.length > 0 ? `<p>El grupo que desea eliminar está vinculado con las siguientes áreas</p>
-                                                                                        <ul class="list-group list-group-horizontal justify-content-center">
-                                                                                            ${areasRelacionadas.map(area=>{
-                                                                                                return `<li class="list-group-item">${area.area}</li>`;
-                                                                                            })}
-                                                                                        </ul>`:`<p>No hay relación con ningún área</p>`}
+                                                                                            <ul class="list-group list-group-horizontal justify-content-center">
+                                                                                                ${areasRelacionadas.map(area=>{
+                                                                                                    return `<li class="list-group-item">${area.area}</li>`;
+                                                                                                })}
+                                                                                            </ul>`:`<p>No hay relación con ningún área</p>`}
                         </div>`,
                     icon: 'warning',
                     showCancelButton: true,

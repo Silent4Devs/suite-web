@@ -1,80 +1,49 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
-        .table tr td:nth-child(2) {
-            text-align: center !important;
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
         }
 
-        .table tr th:nth-child(2) {
-            text-align: center !important;
-        }
-        .table tr th:nth-child(3) {
-            text-align: center !important;
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
         }
 
-        .table tr td:nth-child(3) {
-
-            min-width: 600px !important;
-            text-align: justify !important;
+        .btn-outline-success:active {
+            box-shadow: none !important;
         }
 
-        .table tr td:nth-child(4) {
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
 
-            min-width: 600px !important;
-            text-align: justify !important;
         }
 
-        .table tr th:nth-child(4) {
-
-        text-align: center !important;
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
         }
-
-        .table tr td:nth-child(5) {
-
-            min-width: 600px !important;
-            text-align: justify !important;
-        }
-
-        .table tr th:nth-child(5) {
-
-        text-align: center !important;
-        }
-
-        .table tr td:nth-child(6) {
-
-        min-width: 600px !important;
-        text-align: justify !important;
-        }
-
-        .table tr th:nth-child(6) {
-
-        text-align: center !important;
-        }
-
-
-        .table tr td:nth-child(8) {
-
-        min-width: 600px !important;
-        text-align: justify !important;
-        }
-
-        .table tr th:nth-child(8) {
-
-        text-align: center !important;
-        }
-
     </style>
 
     {{ Breadcrumbs::render('admin.plan-auditoria.index') }}
 
     @can('plan_auditorium_create')
-
     @endcan
+    <h5 class="col-12 titulo_general_funcion">Plan de Auditoría</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Plan de Auditoría</strong></h3>
-        </div>
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-PlanAuditorium">
                 <thead class="thead-dark">
@@ -83,78 +52,32 @@
                             {{ trans('cruds.planAuditorium.fields.id') }}
                         </th>
                         <th>
+                            Nombre&nbsp;auditoría
+                        </th>
+                        <th>
                             Fecha&nbsp;auditoría
                         </th>
 
-                        <th>
+                        <th style="min-width: 600px;">
                             Objetivo&nbsp;de&nbsp;la&nbsp;auditoría
                         </th>
-                        <th>
+                        <th style="min-width: 600px;">
                             {{ trans('cruds.planAuditorium.fields.alcance') }}
                         </th>
-                        <th>
+                        <th style="min-width: 600px;">
                             Criterios&nbsp;de&nbsp;auditoría&nbsp;a&nbsp;utilizar
                         </th>
-                        <th>
-                            Procesos&nbsp;y&nbsp;documentos&nbsp;auditar
+                        <th style="min-width: 600px;">
+                            Procesos&nbsp;y&nbsp;documentos&nbsp;a&nbsp;auditar
                         </th>
                         <th>
                             Equipo&nbsp;auditor
                         </th>
                         <th>
-                            Descripción&nbsp;general&nbsp;de&nbsp;actividades
-                        </th>
-                        <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($auditoria_anuals as $key => $item)
-                                    <option value="{{ $item->fechainicio }}">{{ $item->fechainicio }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+
                 </thead>
             </table>
         </div>
@@ -171,7 +94,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
                     }
                 },
                 {
@@ -181,23 +106,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Plan de Auditoría ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
                     }
                 },
                 {
@@ -206,8 +117,42 @@
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">PLAN DE AUDITORÍA</strong>
+                                </div>
+                                <div class="col-3 p-2">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
                     }
                 },
                 {
@@ -232,45 +177,57 @@
 
             ];
 
-            @can('plan_auditorium_create')
+            @can('plan_de_auditoria_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar plan de auditoría',
-                url: "{{ route('admin.plan-auditoria.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar plan de auditoría',
+                    url: "{{ route('admin.plan-auditoria.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
             @can('plan_auditorium_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.plan-auditoria.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.plan-auditoria.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -287,44 +244,66 @@
                         name: 'id'
                     },
                     {
-                        data: 'fecha_auditoria',
-                        name: 'fecha_auditoria'
+                        data: 'nombre_auditoria',
+                        name: 'nombre_auditoria'
+                    },
+                    {
+                        data: 'fecha_inicio_auditoria',
+                        name: 'fecha_inicio_auditoria'
                     },
                     {
                         data: 'objetivo',
-                        name: 'objetivo'
+                        name: 'objetivo',
+                        render: function(data, type, row, meta) {
+                            return row.objetivo_html;
+                        }
+
                     },
                     {
                         data: 'alcance',
-                        name: 'alcance'
+                        name: 'alcance',
+                        render: function(data, type, row, meta) {
+                            return row.alcance_html;
+                        }
                     },
                     {
                         data: 'criterios',
-                        name: 'criterios'
+                        name: 'criterios',
+                        render: function(data, type, row, meta) {
+                            return row.criterios_html;
+                        }
                     },
                     {
                         data: 'documentoauditar',
-                        name: 'documentoauditar'
+                        name: 'documentoauditar',
+                        render: function(data, type, row, meta) {
+                            return row.documento_auditar_html;
+                        }
                     },
                     {
                         data: 'equipo_auditor',
-                        render: function(data, type, row, meta){
+                        render: function(data, type, row, meta) {
                             let equipos = JSON.parse(data);
-                            let html = '<div class="d-flex">';
-                            equipos.forEach(empleado=>{
+                            if (type === "empleadoText") {
+                                let equiposTexto = "";
+                                equipos.forEach(equipo => {
+                                    equiposTexto += `
+                            ${equipo.name},
+                            `;
+                                });
+                                return equiposTexto.trim();
+                            }
+                            let html = '<div class="d-flex" style="flex-wrap:wrap">';
+                            equipos.forEach(empleado => {
                                 html += `
                                    <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
 
                                 `;
                             })
-                            html +='</div>'
+                            html += '</div>'
                             return html
                         },
-                        width:'20%'
-                    },
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion'
+                        width: '20%'
                     },
                     {
                         data: 'actions',

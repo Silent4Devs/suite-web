@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\DeclaracionAplicabilidadAprobadores as MailDeclaracionAplicabilidadAprobadores;
+use App\Mail\NotificacionDeclaracionAplicabilidadAprobadores;
+use App\Mail\NotificacionDeclaracionAplicabilidadResponsables;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\DeclaracionAplicabilidadAprobadores;
 use App\Models\DeclaracionAplicabilidadResponsable;
 use App\Models\Empleado;
+use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -20,6 +24,8 @@ use Throwable;
 
 class DeclaracionAplicabilidadController extends Controller
 {
+    use ObtenerOrganizacion;
+
     /**
      * Display a listing of the resource.
      *
@@ -27,45 +33,47 @@ class DeclaracionAplicabilidadController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('declaracion_aplicabilidad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gapa5 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-uno', '=', 'A5');
-        $gapa6 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A6.1');
-        $gapa62 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A6.2');
-        $gapa71 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A7.1');
-        $gapa72 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A7.2');
-        $gapa73 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A7.3');
-        $gapa81 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A8.1');
-        $gapa82 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A8.2');
-        $gapa83 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A8.3');
-        $gapa91 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A9.1');
-        $gapa92 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A9.2');
-        $gapa93 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A9.3');
-        $gapa94 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A9.4');
-        $gapa101 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A10.1');
-        $gapa111 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A11.1');
-        $gapa112 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A11.2');
-        $gapa121 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.1');
-        $gapa122 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.2');
-        $gapa123 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.3');
-        $gapa124 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.4');
-        $gapa125 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.5');
-        $gapa126 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.6');
-        $gapa127 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.7');
-        $gapa131 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A13.1');
-        $gapa132 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A13.2');
-        $gapa141 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A14.1');
-        $gapa142 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A14.2');
-        $gapa143 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A14.3');
-        $gapa151 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A15.1');
-        $gapa152 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A15.2');
-        $gapa161 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A16.1');
-        $gapa171 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A17.1');
-        $gapa172 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A17.2');
-        $gapa181 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A18.1');
-        $gapa182 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A18.2');
+        abort_if(Gate::denies('declaracion_de_aplicabilidad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $declaracion_aplicabilidad = DeclaracionAplicabilidad::getAllOrderByAsc();
 
-        $conteoAplica = DeclaracionAplicabilidad::get()->where('aplica', '=', '1')->count();
-        $conteoNoaplica = DeclaracionAplicabilidad::get()->where('aplica', '=', '2')->count();
+        $gapa5 = $declaracion_aplicabilidad->where('control-uno', '=', 'A5');
+        $gapa6 = $declaracion_aplicabilidad->where('control-dos', '=', 'A6.1');
+        $gapa62 = $declaracion_aplicabilidad->where('control-dos', '=', 'A6.2');
+        $gapa71 = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.1');
+        $gapa72 = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.2');
+        $gapa73 = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.3');
+        $gapa81 = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.1');
+        $gapa82 = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.2');
+        $gapa83 = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.3');
+        $gapa91 = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.1');
+        $gapa92 = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.2');
+        $gapa93 = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.3');
+        $gapa94 = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.4');
+        $gapa101 = $declaracion_aplicabilidad->where('control-dos', '=', 'A10.1');
+        $gapa111 = $declaracion_aplicabilidad->where('control-dos', '=', 'A11.1');
+        $gapa112 = $declaracion_aplicabilidad->where('control-dos', '=', 'A11.2');
+        $gapa121 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.1');
+        $gapa122 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.2');
+        $gapa123 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.3');
+        $gapa124 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.4');
+        $gapa125 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.5');
+        $gapa126 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.6');
+        $gapa127 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.7');
+        $gapa131 = $declaracion_aplicabilidad->where('control-dos', '=', 'A13.1');
+        $gapa132 = $declaracion_aplicabilidad->where('control-dos', '=', 'A13.2');
+        $gapa141 = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.1');
+        $gapa142 = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.2');
+        $gapa143 = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.3');
+        $gapa151 = $declaracion_aplicabilidad->where('control-dos', '=', 'A15.1');
+        $gapa152 = $declaracion_aplicabilidad->where('control-dos', '=', 'A15.2');
+        $gapa161 = $declaracion_aplicabilidad->where('control-dos', '=', 'A16.1');
+        $gapa171 = $declaracion_aplicabilidad->where('control-dos', '=', 'A17.1');
+        $gapa172 = $declaracion_aplicabilidad->where('control-dos', '=', 'A17.2');
+        $gapa181 = $declaracion_aplicabilidad->where('control-dos', '=', 'A18.1');
+        $gapa182 = $declaracion_aplicabilidad->where('control-dos', '=', 'A18.2');
+
+        $conteoAplica = $declaracion_aplicabilidad->where('aplica', '=', '1')->count();
+        $conteoNoaplica = $declaracion_aplicabilidad->where('aplica', '=', '2')->count();
         $gap182total = $gapa182->count();
         $A5 = $gapa5->where('aplica', '=', 1)->count();
         $A5No = $gapa5->where('aplica', '=', 2)->count();
@@ -102,13 +110,19 @@ class DeclaracionAplicabilidadController extends Controller
         $ISO27001_SoA_PATH = 'storage/Normas/ISO27001/Analísis Inicial/';
         $path = public_path($ISO27001_SoA_PATH);
         $lista_archivos_declaracion = glob($path . 'Analisis Inicial*.pdf');
-        $empleados = Empleado::select('id', 'name', 'genero', 'foto')->get();
-        $responsables = DeclaracionAplicabilidadResponsable::get();
-        $aprobadores = DeclaracionAplicabilidadAprobadores::get();
-        // $empleados=Empleado::select('id','name','genero','foto')->get();
+        $empleados = Empleado::select('id', 'name', 'genero', 'foto')->alta()->get();
+        $responsables = DeclaracionAplicabilidadResponsable::with(['empleado' => function ($q) {
+            $q->select('id', 'name', 'foto', 'estatus')->where('estatus', 'alta');
+        }])->orderBy('id')->get();
+        // dd($responsables);
+        $aprobadores = DeclaracionAplicabilidadAprobadores::with(['empleado' => function ($q) {
+            $q->select('id', 'name', 'foto', 'estatus')->where('estatus', 'alta');
+        }])->get();
 
+        // $empleados=Empleado::select('id','name','genero','foto')->get();
         // dd(DB::getQueryLog());
         // dd($lista_archivos_declaracion);
+
         return view('admin.declaracionaplicabilidad.index', compact('conteoAplica', 'conteoNoaplica', 'A5', 'A5No', 'A6', 'A6No', 'A7', 'A7No', 'A8', 'A8No', 'A9', 'A9No', 'A10', 'A10No', 'A11', 'A11No', 'A12', 'A12No', 'A13', 'A13No', 'A14', 'A14No', 'A15', 'A15No', 'A16', 'A16No', 'A17', 'A17No', 'A18', 'A18No'))
             ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
             ->with('gapda62s', $gapa62)->with('gapda71s', $gapa71)->with('gapda72s', $gapa72)
@@ -125,68 +139,138 @@ class DeclaracionAplicabilidadController extends Controller
             ->with('responsables', $responsables);
     }
 
+    public function tabla(Request $request)
+    {
+        if ($request->ajax()) {
+            $controles = DeclaracionAplicabilidad::getAll();
+
+            return datatables()->of($controles)->toJson();
+        }
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.declaracionaplicabilidad.tabla', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
+    }
+
+    public function edit(Request $request, $control)
+    {
+        $control = DeclaracionAplicabilidad::find($control);
+
+        return view('admin.declaracionaplicabilidad.tabla-edit', compact('control'));
+    }
+
+    public function updateTabla(Request $request, $control)
+    {
+        $request->validate([
+            'anexo_politica' => 'required',
+            'anexo_descripcion' => 'required',
+        ]);
+
+        $control = DeclaracionAplicabilidad::find($control);
+        $control->update([
+            'anexo_politica' => $request->anexo_politica,
+            'anexo_descripcion' => $request->anexo_descripcion,
+        ]);
+
+        return redirect()->route('admin.declaracion-aplicabilidad.tabla')->with('success', 'Declaración de aplicabilidad actualizada con éxito');
+    }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\DeclaracionAplicabilidad  $declaracionAplicabilidad
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         if ($request->ajax()) {
+            $usuario = User::getCurrentUser();
             switch ($request->name) {
-
                 case 'justificacion':
-                    try {
-                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['justificacion'=>$request->value]);
-                        // $gapun->justificacion = $request->value;
 
-                        return response()->json(['success' => true, 'id'=>$id]);
-                    } catch (Throwable $e) {
-                        return response()->json(['success' => false]);
+                    $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['justificacion' => $request->value]);
+                    $control = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->first();
+                    $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
+                    if ($control->aplica != null) {
+                        $aprobadorDeclaracion = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $id)->orderBy('created_at')->first();
+                        $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->aprobadores_id);
+                        $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
+                        Mail::to(removeUnicodeCharacters($aprobador->email))->send(new NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
                     }
+
+                    return response()->json(['success' => true, 'id' => $id]);
 
                     break;
                 case 'aplica':
+
+                    $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['aplica' => $request->value]);
+                    $control = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->first();
+
+                    $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
+                    if ($control->justificacion != null) {
+                        $aprobadorDeclaracion = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $id)->orderBy('created_at')->first();
+                        $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->aprobadores_id);
+                        $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
+                        Mail::to(removeUnicodeCharacters($aprobador->email))->send(new NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
+                    }
+
+                    return response()->json(['success' => true, 'id' => $id]);
+
+                    break;
+                case 'aplica2':
                     try {
-                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica'=>$request->value]);
+                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['aplica' => $request->value]);
+
                         // $gapun->aplica = $request->value;
-                        return response()->json(['success' => true, 'id'=>$id]);
+                        return response()->json(['success' => true, 'id' => $id]);
                     } catch (Throwable $e) {
                         return response()->json(['success' => false]);
                     }
 
                     break;
                 case 'estatus':
-                    try {
-                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['estatus'=>$request->value]);
-                        $declaracionEstatus = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();
-                        // $gapun->estatus = $request->value;
-                        return response()->json(['success' => true, 'id'=>$id, 'value'=> $request->value, 'fecha'=>Carbon::parse($declaracionEstatus->updated_at)->format('d-m-Y')]);
-                    } catch (Throwable $e) {
-                        return response()->json(['success' => false, 'error'=>$e->getMessage()]);
+
+                    $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->update(['estatus' => $request->value]);
+                    $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->first();
+
+                    $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
+                    if ($control->comentarios != null) {
+                        $responsableDeclaracion = DeclaracionAplicabilidadResponsable::where('declaracion_id', $id)->orderBy('created_at')->first();
+                        $responsable = Empleado::select('id', 'name', 'email')->find($responsableDeclaracion->empleado_id);
+                        $aprobador = Empleado::select('id', 'name', 'email')->find($control->aprobadores_id);
+                        Mail::to(removeUnicodeCharacters($responsable->email))->send(new NotificacionDeclaracionAplicabilidadResponsables($aprobador, $responsable, $aplicabilidad, $control));
                     }
+
+                    return response()->json(['success' => true, 'id' => $id, 'value' => $request->value, 'fecha' => Carbon::parse($control->updated_at)->format('d-m-Y')]);
 
                     break;
 
                 case 'comentarios':
-                    try {
-                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['comentarios'=>$request->value]);
-                        $gapun->comentarios = $request->value;
+                    $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->update(['comentarios' => $request->value]);
 
-                        return response()->json(['success' => true, 'id'=>$id]);
-                    } catch (Throwable $e) {
-                        return response()->json(['success' => false]);
+                    // $gapun->comentarios = $request->value;
+                    $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->first();
+
+                    $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
+                    if ($control->estatus != null) {
+                        $responsableDeclaracion = DeclaracionAplicabilidadResponsable::where('declaracion_id', $id)->orderBy('created_at')->first();
+                        $responsable = Empleado::select('id', 'name', 'email')->find($responsableDeclaracion->empleado_id);
+                        $aprobador = Empleado::select('id', 'name', 'email')->find($control->aprobadores_id);
+                        Mail::to(removeUnicodeCharacters($responsable->email))->send(new NotificacionDeclaracionAplicabilidadResponsables($aprobador, $responsable, $aplicabilidad, $control));
                     }
+
+                    return response()->json(['success' => true, 'id' => $id]);
+
                     break;
 
                 case 'fecha_aprobacion':
                     try {
-                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['fecha_aprobacion'=>$request->value]);
+                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->update(['fecha_aprobacion' => $request->value]);
                         $gapun->fecha_aprobacion = $request->value;
 
-                        return response()->json(['success' => true, 'id'=>$id]);
+                        return response()->json(['success' => true, 'id' => $id]);
                     } catch (Throwable $e) {
                         return response()->json(['success' => false]);
                     }
@@ -205,48 +289,49 @@ class DeclaracionAplicabilidadController extends Controller
 
                     return response()->json(['success' => true]);
                     break;
-
             }
         }
     }
 
     public function download(DeclaracionAplicabilidad $declaracionAplicabilidad)
     {
-        $gapda5s = DeclaracionAplicabilidad::get()->where('control-uno', '=', 'A5');
-        $gapda6s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A6.1');
-        $gapda62s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A6.2');
-        $gapda71s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A7.1');
-        $gapda72s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A7.2');
-        $gapda73s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A7.3');
-        $gapda81s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A8.1');
-        $gapda82s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A8.2');
-        $gapda83s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A8.3');
-        $gapda91s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A9.1');
-        $gapda92s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A9.2');
-        $gapda93s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A9.3');
-        $gapda94s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A9.4');
-        $gapda101s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A10.1');
-        $gapda111s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A11.1');
-        $gapda112s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A11.2');
-        $gapda121s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.1');
-        $gapda122s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.2');
-        $gapda123s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.3');
-        $gapda124s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.4');
-        $gapda125s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.5');
-        $gapda126s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.6');
-        $gapda127s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.7');
-        $gapda131s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A13.1');
-        $gapda132s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A13.2');
-        $gapda141s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A14.1');
-        $gapda142s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A14.2');
-        $gapda143s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A14.3');
-        $gapda151s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A15.1');
-        $gapda152s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A15.2');
-        $gapda161s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A16.1');
-        $gapda171s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A17.1');
-        $gapda172s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A17.2');
-        $gapda181s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A18.1');
-        $gapda182s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A18.2');
+        $declaracion_aplicabilidad = DeclaracionAplicabilidad::getAll();
+
+        $gapda5s = $declaracion_aplicabilidad->where('control-uno', '=', 'A5');
+        $gapda6s = $declaracion_aplicabilidad->where('control-dos', '=', 'A6.1');
+        $gapda62s = $declaracion_aplicabilidad->where('control-dos', '=', 'A6.2');
+        $gapda71s = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.1');
+        $gapda72s = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.2');
+        $gapda73s = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.3');
+        $gapda81s = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.1');
+        $gapda82s = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.2');
+        $gapda83s = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.3');
+        $gapda91s = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.1');
+        $gapda92s = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.2');
+        $gapda93s = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.3');
+        $gapda94s = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.4');
+        $gapda101s = $declaracion_aplicabilidad->where('control-dos', '=', 'A10.1');
+        $gapda111s = $declaracion_aplicabilidad->where('control-dos', '=', 'A11.1');
+        $gapda112s = $declaracion_aplicabilidad->where('control-dos', '=', 'A11.2');
+        $gapda121s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.1');
+        $gapda122s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.2');
+        $gapda123s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.3');
+        $gapda124s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.4');
+        $gapda125s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.5');
+        $gapda126s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.6');
+        $gapda127s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.7');
+        $gapda131s = $declaracion_aplicabilidad->where('control-dos', '=', 'A13.1');
+        $gapda132s = $declaracion_aplicabilidad->where('control-dos', '=', 'A13.2');
+        $gapda141s = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.1');
+        $gapda142s = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.2');
+        $gapda143s = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.3');
+        $gapda151s = $declaracion_aplicabilidad->where('control-dos', '=', 'A15.1');
+        $gapda152s = $declaracion_aplicabilidad->where('control-dos', '=', 'A15.2');
+        $gapda161s = $declaracion_aplicabilidad->where('control-dos', '=', 'A16.1');
+        $gapda171s = $declaracion_aplicabilidad->where('control-dos', '=', 'A17.1');
+        $gapda172s = $declaracion_aplicabilidad->where('control-dos', '=', 'A17.2');
+        $gapda181s = $declaracion_aplicabilidad->where('control-dos', '=', 'A18.1');
+        $gapda182s = $declaracion_aplicabilidad->where('control-dos', '=', 'A18.2');
         $logo = DB::table('organizacions')
             ->select('logotipo')
             ->first();
@@ -304,47 +389,48 @@ class DeclaracionAplicabilidadController extends Controller
         $nombre_pdf = 'Analisis Inicial ' . Carbon::now()->format('d-m-Y') . '.pdf';
         $content = $pdf->download()->getOriginalContent();
         Storage::put('public/Normas/ISO27001/Analísis Inicial/' . $nombre_pdf, $content);
+
         //$pdf->download(storage_path('Normas/ISO27001/Analísis Inicial/' . $nombre_pdf));
         return $pdf->setPaper('a4', 'landscape')->stream();
 
         /*return view('admin.declaracionaplicabilidad.plantilla', compact(
-            'gapda6s',
-            'gapda5s',
-            'gapda62s',
-            'gapda71s',
-            'gapda72s',
-            'gapda73s',
-            'gapda81s',
-            'gapda82s',
-            'gapda83s',
-            'gapda91s',
-            'gapda92s',
-            'gapda93s',
-            'gapda94s',
-            'gapda101s',
-            'gapda111s',
-            'gapda112s',
-            'gapda121s',
-            'gapda122s',
-            'gapda123s',
-            'gapda124s',
-            'gapda125s',
-            'gapda126s',
-            'gapda127s',
-            'gapda131s',
-            'gapda132s',
-            'gapda141s',
-            'gapda142s',
-            'gapda143s',
-            'gapda151s',
-            'gapda152s',
-            'gapda161s',
-            'gapda171s',
-            'gapda172s',
-            'gapda181s',
-            'gapda182s',
-            'logotipo'
-        ));*/
+    'gapda6s',
+    'gapda5s',
+    'gapda62s',
+    'gapda71s',
+    'gapda72s',
+    'gapda73s',
+    'gapda81s',
+    'gapda82s',
+    'gapda83s',
+    'gapda91s',
+    'gapda92s',
+    'gapda93s',
+    'gapda94s',
+    'gapda101s',
+    'gapda111s',
+    'gapda112s',
+    'gapda121s',
+    'gapda122s',
+    'gapda123s',
+    'gapda124s',
+    'gapda125s',
+    'gapda126s',
+    'gapda127s',
+    'gapda131s',
+    'gapda132s',
+    'gapda141s',
+    'gapda142s',
+    'gapda143s',
+    'gapda151s',
+    'gapda152s',
+    'gapda161s',
+    'gapda171s',
+    'gapda172s',
+    'gapda181s',
+    'gapda182s',
+    'logotipo'
+    ));*/
     }
 
     public function enviarCorreo(Request $request)
@@ -359,13 +445,14 @@ class DeclaracionAplicabilidadController extends Controller
         // dd($destinatarios);
         $tipo = $request->tipo;
         foreach ($destinatarios as $destinatario) {
+            //TODO:FALTA ENVIAR CONTROLES A MailDeclaracionAplicabilidad
             $empleado = Empleado::select('id', 'name', 'email')->find(intval($destinatario));
-            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidadAprobadores($empleado->name, $tipo));
+            Mail::to(removeUnicodeCharacters($empleado->email))->send(new MailDeclaracionAplicabilidadAprobadores($empleado->name, $tipo, []));
             $responsable = DeclaracionAplicabilidadAprobadores::where('empleado_id', $destinatario)->each(function ($item) {
                 $item->notificado = true;
             });
         }
 
-        return response()->json(['message'=>'Correo enviado'], 200);
+        return response()->json(['message' => 'Correo enviado'], 200);
     }
 }

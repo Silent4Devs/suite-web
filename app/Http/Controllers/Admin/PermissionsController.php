@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\Permission;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -19,7 +20,7 @@ class PermissionsController extends Controller
         abort_if(Gate::denies('permission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Permission::query()->select(sprintf('%s.*', (new Permission)->table));
+            $query = Permission::query()->select(sprintf('%s.*', (new Permission)->table))->orderBy('id', 'asc');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -46,8 +47,9 @@ class PermissionsController extends Controller
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : '';
             });
-
-            $table->rawColumns(['actions', 'placeholder']);
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
 
             return $table->make(true);
         }
@@ -104,5 +106,13 @@ class PermissionsController extends Controller
         Permission::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function actualizarLista()
+    {
+        Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder', '--force' => true]);
+        Artisan::call('db:seed', ['--class' => 'PermissionRoleTableSeeder', '--force' => true]);
+
+        return response()->json(['success' => 'Permisos actualizados correctamente.']);
     }
 }

@@ -15,11 +15,11 @@ class StoreAuditoriaInternaRequest extends FormRequest
     public function rules()
     {
         return [
-            'alcance'                 => [
+            'alcance' => [
                 'string',
                 'required',
             ],
-            'fechaauditoria'          => [
+            'fechaauditoria' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
@@ -33,12 +33,12 @@ class StoreAuditoriaInternaRequest extends FormRequest
                 'min:0',
                 'max:99',
             ],
-            'totalobservacion'        => [
+            'totalobservacion' => [
                 'numeric',
                 'min:0',
                 'max:99',
             ],
-            'totalmejora'             => [
+            'totalmejora' => [
                 'numeric',
                 'min:0',
                 'max:99',

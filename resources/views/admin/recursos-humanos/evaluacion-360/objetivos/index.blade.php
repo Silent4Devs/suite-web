@@ -3,17 +3,15 @@
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Objetivos') }}
     </div>
+    <h5 class="col-12 titulo_general_funcion">Asignar Objetivos Estratégicos</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Asignar Objetivos Estratégicos</strong></h3>
-        </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+            <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                 <div class="row w-100">
                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                         <div class="w-100">
-                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                         </div>
                     </div>
                     <div class="col-11">
@@ -26,6 +24,16 @@
                                 inmediato de cada
                                 colaborador</small>
                         </p>
+                        {{-- <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                            Definir Nuevos Objetivos</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Para definir nuevos objetivos para
+                            una siguiente evaluación presione el botón "Definir nuevos objetivos" y de clic en "Aceptar"
+                            seguidamente
+                            <br>
+                            <small class="text-muted">Importante: Una vez que establezca nuevos objetivos tendrá que
+                                realizar la carga de objetivos nuevamente</small>
+                        </p>
+                        <button class="btn btn-success" id="btnNuevosObjetivos">Definir nuevos objetivos</button> --}}
                     </div>
                 </div>
             </div>
@@ -41,7 +49,8 @@
                             <option value="">Todas</option>
                         </select>
                     </div>
-                    <div class="col-4">
+                    {{-- {{$puestos}} --}}
+                    <div class="col-4" id="puesto">
                         <label for=""><i class="fas fa-filter"></i> Filtrar por puesto</label>
                         <select class="form-control" id="lista_puestos">
                             <option value="" disabled selected>-- Selecciona un puesto --</option>
@@ -62,7 +71,7 @@
                         </select>
                     </div>
                 </div>
-                <thead class="thead-dark">
+                <thead class="thead-dark" id="max">
                     <tr>
                         <th style="vertical-align: top">
                             N° Empleado
@@ -124,6 +133,56 @@
 
     <script>
         $(function() {
+            // document.getElementById('btnNuevosObjetivos').addEventListener('click', () => {
+            //     Swal.fire({
+            //         title: '¿Quieres registrar nuevos objetivos?',
+            //         text: "Registrar nuevos objetivos te permitirá evaluarlos en una nueva evaluación, los objetivos anteriores no se eliminaran pero no serán visibles para nuevas evaluaciones",
+            //         icon: 'warning',
+            //         showCancelButton: true,
+            //         confirmButtonColor: '#3085d6',
+            //         cancelButtonColor: '#d33',
+            //         confirmButtonText: 'Aceptar',
+            //         cancelButtonText: 'Cancelar',
+            //     }).then((result) => {
+            //         if (result.isConfirmed) {
+            //             $.ajax({
+            //                 type: "POST",
+            //                 headers: {
+            //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //                 },
+            //                 url: "{{ route('admin.ev360-objetivos-empleado.definir-nuevos') }}",
+            //                 beforeSend: function() {
+            //                     Swal.fire(
+            //                         'En proceso',
+            //                         'Estamos preparando todo para que puedas definir nuevos objetivos',
+            //                         'info'
+            //                     );
+            //                 },
+            //                 success: function(response) {
+            //                     if (response.estatus == 200) {
+            //                         Swal.fire(
+            //                             'Bien Hecho',
+            //                             'Ahora puedes definir nuevos objetivos para los colaboradores',
+            //                             'success'
+            //                         );
+            //                         setTimeout(() => {
+            //                             window.location.reload();
+            //                         }, 1000);
+            //                     }
+            //                 },
+            //                 error: function(request, status, error) {
+            //                     Swal.fire(
+            //                         'Error',
+            //                         error,
+            //                         'error'
+            //                     )
+            //                 }
+            //             });
+            //         }
+            //     })
+
+            // })
+
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Objetivos ${new Date().toLocaleDateString().trim()}`,
@@ -205,7 +264,6 @@
                         data: 'name',
                         width: '25%',
                         render: function(data, type, row, meta) {
-                            console.log(row);
                             let html = `<img src="{{ asset('storage/empleados/imagenes') }}/${row.avatar}" style="clip-path:circle(20px at 50% 50%);height:40px;">
                             <span>${data}</span>`;
                             return html;
@@ -217,12 +275,18 @@
                         data: 'area.area',
                     }, {
                         data: 'perfil.nombre',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return data;
+                            }
+                            return "Sin perfil vinculado";
+                        },
                         width: '10%'
                     },
                     {
                         data: 'objetivos',
                         render: function(data, type, row, meta) {
-                            if (data.length > 0) {
+                            if (data) {
                                 if (data.length == 1) {
                                     return `<span class="badge badge-success">${data.length} objetivo asignado</span>`;
                                 } else {
@@ -247,14 +311,21 @@
                                 `/admin/recursos-humanos/evaluacion-360/objetivos/${data}/copiar`;
                             let html = `
                             <div class="d-flex">
+                            @can('objetivos_estrategicos_agregar')
                                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm btn-primary">
-                                <i class="fas fa-user-tag"></i> Agregar    
+                                    <i class="fas fa-user-tag"></i> Agregar
                                 </a>
-                                <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos" class="ml-2 text-white btn btn-sm" style="background:#11bb55">
-                                <i class="fas fa-copy"></i>Copiar</button>
+                            @endcan
+                            @can('objetivos_estrategicos_copiar')
+                                <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos"
+                                    class="ml-2 text-white btn btn-sm" style="background:#11bb55">
+                                    <i class="fas fa-copy"></i>Copiar</button>
+                            @endcan
+                            @can('objetivos_estrategicos_ver')
                                 <a href="${urlShow}" title="Visualizar" class="ml-2 text-white btn btn-sm" style="background:#1da79f">
-                                <i class="fas fa-eye"></i> Ver    
+                                    <i class="fas fa-eye"></i> Ver
                                 </a>
+                            @endcan
                             </div>
                             `;
                             return html;
@@ -326,11 +397,11 @@
                             } = response;
                             let modalContent = document.getElementById('contenidoModal');
                             let contenidoHTMLGenerado = `
-                        <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                        <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                             <div class="row w-100">
                                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                     <div class="w-100">
-                                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                     </div>
                                 </div>
                                 <div class="col-11">
@@ -352,14 +423,14 @@
                                 <div class="col-12">
                                     <input type="hidden" value="${empleado_id}" name="empleado_destinatario">
                                     <label><i class="mr-2 fas fa-user"></i>Selecciona al empleado</label>
-                                    <select class="form-control empleados-select" name="empleado_destino">
+                                    <select class="empleados-select" name="empleado_destino">
                                         <option value="">-- Selecciona un empleado --</option>
                                         ${empleados.map(empleado => {
-                                            return `<option data-avatar="${empleado.avatar}" value="${empleado.id}">${empleado.name}</option>`;
+                                            return `<option data-avatar="${empleado.avatar_ruta}" value="${empleado.id}">${empleado.name}</option>`;
                                         }).join(',')}
                                     </select>
                                 </div>
-                            </div>    
+                            </div>
                         </form>
                         `;
                             modalContent.innerHTML = contenidoHTMLGenerado;
@@ -369,7 +440,8 @@
                             $('.empleados-select').select2({
                                 theme: 'bootstrap4',
                                 templateResult: stateSelection,
-                                templateSelection: stateSelection
+                                templateSelection: stateSelection,
+
                             });
 
                             function stateSelection(opt) {
@@ -379,7 +451,7 @@
 
                                 var optimage = $(opt.element).attr('data-avatar');
                                 var $opt = $(
-                                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
+                                    '<span><img src="' +
                                     optimage +
                                     '" class="img-fluid rounded-circle" width="30" height="30"/>' +
                                     opt.text + '</span>'
@@ -430,5 +502,15 @@
         function ocultarValidando() {
             document.getElementById('displayAlmacenandoUniversal').style.display = 'none';
         }
+
+
+        let areas = document.querySelector("#puesto");
+        areas.addEventListener('change', function(event) {
+            if ($("#puesto option:selected").attr("id") != "ver_todos_option") {
+                let area_id = event.target.value;
+                orientacion = localStorage.getItem('orientationOrgChart');
+                renderOrganigrama(OrgChart, orientacion, null, true, area_id);
+            }
+        });
     </script>
 @endsection

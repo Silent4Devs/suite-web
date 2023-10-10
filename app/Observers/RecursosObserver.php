@@ -21,7 +21,6 @@ class RecursosObserver
     /**
      * Handle the Recurso "created" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function created(Recurso $recurso)
@@ -29,33 +28,48 @@ class RecursosObserver
         // $recurso->participantes()->sync($this->request->input('participantes', []));
         $recurso->empleados()->sync($this->request->input('participantes', []));
         $empleados = Empleado::find($this->request->input('participantes', []));
-        if ($this->request->has('enviarInvitacionParticipantes')) {
-            foreach ($empleados as $empleado) {
-                Mail::to($empleado->email)->send(new InvitacionCapacitacionMail($empleado->name));
+        if ($this->request->estatus == 'Draft') {
+            // Code..
+        } elseif ($recurso->estatus == 'Enviado') {
+            if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
+                foreach ($empleados as $empleado) {
+                    Mail::to(removeUnicodeCharacters($empleado->email))->send(new InvitacionCapacitacionMail($empleado, $recurso));
+                }
             }
         }
+
         event(new RecursosEvent($recurso, 'create', 'recurso', 'Curso y Capacitación'));
     }
 
     /**
      * Handle the Recurso "updated" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function updated(Recurso $recurso)
     {
-        // $recurso->participantes()->sync($this->request->input('participantes', []));
+        $empleados = Empleado::find($this->request->input('participantes', []));
 
-        $recurso->empleados()->detach();
-        $recurso->empleados()->sync($this->request->input('participantes', []));
+        if (count($this->request->input('participantes', [])) > 0) {
+            // $recurso->empleados()->detach();
+            $recurso->empleados()->sync($this->request->input('participantes', []));
+        }
+        if ($this->request->estatus == 'Draft') {
+            // Code..
+        } elseif ($recurso->estatus == 'Enviado') {
+            if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
+                foreach ($empleados as $empleado) {
+                    Mail::to(removeUnicodeCharacters($empleado->email))->send(new InvitacionCapacitacionMail($empleado, $recurso));
+                }
+            }
+        }
+
         event(new RecursosEvent($recurso, 'update', 'recurso', 'Curso y Capacitación'));
     }
 
     /**
      * Handle the Recurso "deleted" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function deleted(Recurso $recurso)
@@ -66,7 +80,6 @@ class RecursosObserver
     /**
      * Handle the Recurso "restored" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function restored(Recurso $recurso)
@@ -77,7 +90,6 @@ class RecursosObserver
     /**
      * Handle the Recurso "force deleted" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function forceDeleted(Recurso $recurso)

@@ -5,15 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Denuncias extends Model
+class Denuncias extends Model implements Auditable
 {
     use HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'denuncias';
 
     protected $guarded = [
@@ -22,14 +21,23 @@ class Denuncias extends Model
 
     protected $appends = ['folio', 'fecha_creacion', 'fecha_reporte', 'fecha_de_cierre'];
 
+    //Redis methods
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('denuncias_all', 3600, function () {
+            return self::get();
+        });
+    }
+
     public function getFolioAttribute()
     {
-        return  sprintf('DEN-%04d', $this->id);
+        return sprintf('DEN-%04d', $this->id);
     }
 
     public function denuncio()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_denuncio_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_denuncio_id', 'id')->alta()->with('area');
     }
 
     public function evidencias_denuncias()
@@ -39,7 +47,7 @@ class Denuncias extends Model
 
     public function denunciado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_denunciado_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_denunciado_id', 'id')->alta()->with('area');
     }
 
     public function planes()
@@ -65,5 +73,10 @@ class Denuncias extends Model
     public function getFechaReporteAttribute()
     {
         return Carbon::parse($this->created_at)->format('d-m-Y');
+    }
+
+    public function accionCorrectivaAprobacional()
+    {
+        return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null, 'acciones_correctivas_id');
     }
 }

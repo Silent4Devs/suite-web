@@ -9,21 +9,21 @@ class StoreRevisionDireccionRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('revision_direccion_create');
+        return Gate::allows('revision_por_direccion_agregar');
     }
 
     public function rules()
     {
         return [
-            'estadorevisionesprevias'            => [
+            'estadorevisionesprevias' => [
                 'string',
                 'nullable',
             ],
-            'cambiosinternosexternos'            => [
+            'cambiosinternosexternos' => [
                 'string',
                 'nullable',
             ],
-            'retroalimentaciondesempeno'         => [
+            'retroalimentaciondesempeno' => [
                 'string',
                 'nullable',
             ],
@@ -31,11 +31,11 @@ class StoreRevisionDireccionRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'resultadosriesgos'                  => [
+            'resultadosriesgos' => [
                 'string',
                 'nullable',
             ],
-            'oportunidadesmejoracontinua'        => [
+            'oportunidadesmejoracontinua' => [
                 'string',
                 'nullable',
             ],

@@ -5,7 +5,8 @@ namespace App\Functions;
 class CountriesFunction
 {
     /**
-     * @param string $language
+     * @param  string  $language
+     *
      * @options 'ES', 'EN'
      */
     public function getCountries($language = 'ES')
@@ -31,8 +32,8 @@ class CountriesFunction
 
     public function getCountriesSpanish()
     {
-        $countries = collect(json_decode(file_get_contents(asset('world-countries/data/es/world.json'))));
-        $flagsCountries = collect(json_decode(file_get_contents(asset('world-countries/flags/64x64/flags-64x64.json'))));
+        $countries = collect(json_decode(file_get_contents(public_path('world-countries/data/es/world.json'))));
+        $flagsCountries = collect(json_decode(file_get_contents(public_path('world-countries/flags/64x64/flags-64x64.json'))));
 
         for ($i = 0; $i < count($countries); $i++) {
             $code = $countries[$i]->alpha2;
@@ -47,8 +48,8 @@ class CountriesFunction
 
     public function getCountriesEnglish()
     {
-        $countries = collect(json_decode(file_get_contents(asset('world-countries/data/en/world.json'))));
-        $flagsCountries = collect(json_decode(file_get_contents(asset('world-countries/flags/64x64/flags-64x64.json'))));
+        $countries = collect(json_decode(file_get_contents(public_path('world-countries/data/en/world.json'))));
+        $flagsCountries = collect(json_decode(file_get_contents(public_path('world-countries/flags/64x64/flags-64x64.json'))));
 
         for ($i = 0; $i < count($countries); $i++) {
             $code = $countries[$i]->alpha2;

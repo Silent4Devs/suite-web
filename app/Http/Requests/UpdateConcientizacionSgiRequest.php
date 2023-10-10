@@ -9,7 +9,7 @@ class UpdateConcientizacionSgiRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('concientizacion_sgi_edit');
+        return Gate::allows('concientizacion_sgsi_editar');
     }
 
     public function rules()
@@ -19,9 +19,19 @@ class UpdateConcientizacionSgiRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'fecha_publicacion'  => [
+            'fecha_publicacion' => [
                 'date',
-                'nullable',
+                'required',
+            ],
+            'personalobjetivo' => [
+                'string',
+                'required',
+            ],
+            'arearesponsable_id' => [
+                'required',
+            ],
+            'medio_envio' => [
+                'required',
             ],
         ];
     }

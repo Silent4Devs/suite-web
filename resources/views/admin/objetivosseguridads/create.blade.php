@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .dotverde {
             height: 15px;
@@ -102,23 +101,37 @@
             box-shadow: 0 6px 0 #a1a1a1, 0 8px 10px rgba(0, 0, 0, .75);
 
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.objetivosseguridads.create') }}
-
+    <h5 class="col-12 titulo_general_funcion">Registrar: Objetivos</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Objetivos de Seguridad </h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" action="{{ route('admin.objetivosseguridads.store') }}" enctype="multipart/form-data"
                 class="row">
                 @csrf
-                <div class="mt-4 card">
+                <div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label class="required" for="tipo"><i
+                                        class="fas fa-file-signature iconos-crear"></i></i>Tipo</label>
+                                <div style="float: right;">
+                                    <button id="btnAgregarTipo" onclick="event.preventDefault();"
+                                        class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                                        data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo"
+                                        data-whatever="@mdo" title="Agregar Tipo Impacto"><i
+                                            class="fas fa-plus"></i></button>
+                                </div>
+                                @livewire('tipo-component')
+                                @livewire('tipo-select-component')
+                                @error('tipo_objetivo_sistema_id')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
+                            </div>
                             <div class="form-group col-sm-6">
                                 <label class="required" for="indicador"><i
                                         class="fas fa-file-signature iconos-crear"></i></i>Nombre del
@@ -127,41 +140,81 @@
                                     type="text" name="indicador" id="indicador" value="{{ old('indicador', '') }}"
                                     required>
                                 @if ($errors->has('indicador'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         {{ $errors->first('indicador') }}
                                     </div>
                                 @endif
                                 <span class="help-block"></span>
                             </div>
+                        </div>
 
-                            <div class="form-group col-sm-6">
+                        <div class="row">
+                            <div class="form-group col-sm-4">
                                 <div class="form-group">
-                                    <label for='responsable_id'><i
+                                    <label for='responsable_id' class="required"><i
                                             class="fas fa-user-tie iconos-crear"></i>Responsable</label>
                                     <select
                                         class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
-                                        name='responsable_id' id='responsable_id'>
+                                        name='responsable_id' id='responsable_id' required>
                                         <option value="">Seleccione un responsable</option>
                                         @foreach ($responsables as $responsable)
-                                            <option value="{{ $responsable->id }}">
-                                                {{ $responsable->name }} </option>
+                                            <option value="{{ $responsable->id }}"
+                                                data-area="{{ $responsable->area->area }}"
+                                                data-puesto="{{ $responsable->puesto }}">
+                                                {{ $responsable->name }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('responsable_id'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('responsable_id') }}
                                         </div>
                                     @endif
                                 </div>
                             </div>
 
+                            <div class="form-group col-md-4">
+                                <label class="required"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                                <div class="form-control" id="responsable_puesto" readonly></div>
+                            </div>
+
+
+                            <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                                <label class="required"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                                <div class="form-control" id="responsable_area" readonly></div>
+                            </div>
                         </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="normas" class="required"><i
+                                        class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
+                                <select required
+                                    class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
+                                    name="normas[]" id="controles" multiple="multiple">
+                                    <option value disabled>
+                                        Selecciona una opción</option>
+                                    @foreach ($normas as $norma)
+                                        <option value="{{ $norma->id }}" data-area="{{ $norma->norma }}"
+                                            {{ old('norma') == $norma->id ? ' selected="selected"' : '' }}>
+                                            {{ $norma->norma }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('norma'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('normas') }}
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label for="objetivoseguridad"><i class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
-                            <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}"
-                                name="objetivoseguridad" id="objetivoseguridad">{{ old('objetivoseguridad') }}</textarea>
+                            <label for="objetivoseguridad" class="required"><i
+                                    class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
+                            <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}" name="objetivoseguridad"
+                                id="objetivoseguridad" required>{{ old('objetivoseguridad') }}</textarea>
                             @if ($errors->has('objetivoseguridad'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     {{ $errors->first('objetivoseguridad') }}
                                 </div>
                             @endif
@@ -175,10 +228,10 @@
                                     <label class="required" for="rojo"><span class="dotred"></span> De 0 a
                                         <span id="textorojo"></span></label>
                                     <input class="form-control {{ $errors->has('rojo') ? 'is-invalid' : '' }}"
-                                        type="number" name="rojo" id="rojo" value="{{ old('rojo', '') }}" min="0"
-                                        required>
+                                        type="number" name="rojo" id="rojo" value="{{ old('rojo', '') }}"
+                                        min="0" required>
                                     @if ($errors->has('rojo'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('rojo') }}
                                         </div>
                                     @endif
@@ -194,7 +247,7 @@
                                         type="number" name="amarillo" id="amarillo" value="{{ old('amarillo', '') }}"
                                         min="" required>
                                     @if ($errors->has('amarillo'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('amarillo') }}
                                         </div>
                                     @endif
@@ -206,11 +259,11 @@
                                 <label class="required" for="verde">
                                     <span class="dotverde"></span>
                                     De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
-                                <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
-                                    name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min=""
-                                    required>
+                                <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}"
+                                    type="number" name="verde" id="verde" value="{{ old('verde', '') }}"
+                                    placeholder="" min="" required>
                                 @if ($errors->has('verde'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         {{ $errors->first('verde') }}
                                     </div>
                                 @endif
@@ -226,7 +279,7 @@
                                     type="text" name="unidadmedida" id="unidadmedida"
                                     value="{{ old('unidadmedida', '') }}" required>
                                 @if ($errors->has('unidadmedida'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         {{ $errors->first('unidadmedida') }}
                                     </div>
                                 @endif
@@ -238,9 +291,10 @@
                                     <label class="required" for="meta"><i
                                             class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
                                     <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}"
-                                        type="text" name="meta" id="meta" value="{{ old('meta', '') }}" required>
+                                        type="text" name="meta" id="meta" value="{{ old('meta', '') }}"
+                                        required>
                                     @if ($errors->has('meta'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('meta') }}
                                         </div>
                                     @endif
@@ -253,10 +307,10 @@
                                     <label class="required" for="frecuencia"><i
                                             class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
                                     <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}"
-                                        type="text" name="frecuencia" id="frecuencia" value="{{ old('frecuencia', '') }}"
-                                        required>
+                                        type="text" name="frecuencia" id="frecuencia"
+                                        value="{{ old('frecuencia', '') }}" required>
                                     @if ($errors->has('frecuencia'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('frecuencia') }}
                                         </div>
                                     @endif
@@ -272,7 +326,7 @@
                                         type="number" name="revisiones" id="revisiones" min="0"
                                         value="{{ old('revisiones', '') }}" required>
                                     @if ($errors->has('revisiones'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('revisiones') }}
                                         </div>
                                     @endif
@@ -286,7 +340,7 @@
                                 <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}"
                                     type="text" name="ano" id="ano" value="{{ old('ano', '') }}" required>
                                 @if ($errors->has('ano'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         {{ $errors->first('ano') }}
                                     </div>
                                 @endif
@@ -294,8 +348,8 @@
                             </div>
                         </div>
                         <h4 class="text-primary">Generación de fórmula</h4>
-                        <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"
-                            required><br>
+                        <input id="formula" name="formula" class="form-control" type="text"
+                            placeholder="Formula generada" required><br>
                         {{-- <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp; --}}
                         <hr>
 
@@ -337,7 +391,8 @@
                                             value="Añadir una variable:" disabled>
                                     </div>
                                     <div class="mb-2 form-group mx-sm-3">
-                                        <input id="variable" class="form-control" type="text" placeholder="Variable"><br>
+                                        <input id="variable" class="form-control" type="text"
+                                            placeholder="Variable"><br>
                                     </div>
                                     <button id="añadir" class="btn btn-success" type="button">Añadir</button>
                                 </div>
@@ -357,8 +412,7 @@
 
                     <div class="form-group">
                         <div class="text-right form-group col-12" style="margin-left:15px;">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}"
-                                class="btn_cancelar">Cancelar</a>
+                            <a href="{{ route('admin.objetivosseguridads.index') }}" class="btn_cancelar">Cancelar</a>
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -371,7 +425,32 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        if (document.querySelector('#responsable_id') != null) {
 
+            let responsable = document.querySelector('#responsable_id');
+            let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+            let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('responsable_area').innerHTML = recortarTexto(area_init);
+
+            responsable.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
+                let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+                console.log(e.target.options[e.target.selectedIndex]);
+                document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto)
+                document.getElementById('responsable_area').innerHTML = recortarTexto(area)
+            })
+        }
+
+        function recortarTexto(texto, length = 30) {
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
+    </script>
     <script>
         //script para rangos de valores
         var n = document.getElementById("rojo");
@@ -510,5 +589,69 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#tipo_id').select2({
+                placeholder: "Seleccione un tipo",
+                allowClear: true,
+                theme: "bootstrap4"
+            });
 
+            CKEDITOR.replace('objetivoseguridad', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+
+                ]
+            });
+
+            $('.controles-select').select2({
+                'theme': 'bootstrap4'
+            });
+        });
+    </script>
 @endsection

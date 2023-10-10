@@ -7,12 +7,8 @@
         }
 
     </style>
-
+    <h5 class="col-12 titulo_general_funcion">Cómo llegar a&nbsp;{{$sede->sede}}</h5>
     <div class="py-2 mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Cómo llegar a &nbsp;</strong>{{$sede->sede}} </h3>
-        </div>
-
         <div class="card-body">
                 {{-- <h4 class="mb-1 text-center "><strong> Cómo llegar: </strong>{{ $sede->sede }}</h4> --}}
 

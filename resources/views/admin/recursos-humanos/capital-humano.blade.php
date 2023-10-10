@@ -77,46 +77,28 @@
 
     </style>
 
-    {{ Breadcrumbs::render('capital-humano') }}
-
-    <div class="mt-5 card">
-        <div class="py-3 col-md-12 col-sm-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <div class="row">
-                <div class="col-4"></div>
-                <div class="col-4 justify-content-center text-center">
-                    <h3 class="mb-2 text-center text-white d-inline-block">
-                        <strong>
-                            Capital Humano
-                        </strong>
-                    </h3>
-                </div>
-                <div class="col-4 justify-content-end pr-0" style="text-align:end">
-                    <span style="font-size:15px">
-                        <a href="{{ route('admin.home') }}" class="btn btn-success">
-                            <i class="fas fa-chart-pie mr-2"></i>
-                            Dashboard
-                        </a>
-                    </span>
-                </div>
-            </div>
-        </div>
+    {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
+    <div style="display:flex; justify-content:space-between;">
+        <h5 class="titulo_general_funcion">Capital Humano </h5>
+    </div>
+    <div class="card">
         <div class="card-body">
-            <nav>
+            <nav >
                 <div class="nav nav-tabs" id="tabsCapitalHumano" role="tablist">
-                    <a class="nav-link active" id="nav-empleados-tab" data-type="empleados" data-toggle="tab"
+                    <a class="nav-link active" style="border-top: 2px solid #ffffff;" id="nav-empleados-tab" data-type="empleados" data-toggle="tab"
                         href="#nav-empleados" role="tab" aria-controls="nav-empleados" aria-selected="true">
-                        <i class="mr-2 fas fa-users" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-people" style="font-size:20px;" style="text-decoration:none;"></i>
                         Empleados
                     </a>
                     <a class="nav-link" id="nav-calendario-comunicacion-tab" data-type="calendario-comunicacion"
                         data-toggle="tab" href="#nav-calendario-comunicacion" role="tab"
                         aria-controls="nav-calendario-comunicacion" aria-selected="false">
-                        <i class="mr-2 fas fa-newspaper" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-calendar3" style="font-size:20px;" style="text-decoration:none;"></i>
                         Calendario y Comunicación
                     </a>
                     <a class="nav-link" id="nav-ev360-tab" data-type="ev360" data-toggle="tab" href="#nav-ev360"
                         role="tab" aria-controls="nav-ev360" aria-selected="false">
-                        <i class="mr-2 fas fa-tasks" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-card-checklist" style="font-size:20px;" style="text-decoration:none;"></i>
                         Evaluación 360
                     </a>
                 </div>
@@ -124,14 +106,14 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"
                     aria-labelledby="nav-empleados-tab">
-                    @include('admin.recursos-humanos.capital-humano.components.empleados')
+                        @include('admin.recursos-humanos.capital-humano.components.empleados')
                 </div>
                 <div class="tab-pane mb-4 fade" id="nav-calendario-comunicacion" role="tabpanel"
                     aria-labelledby="nav-calendario-comunicacion-tab">
-                    @include('admin.recursos-humanos.capital-humano.components.calendario-comunicacion')
+                        @include('admin.recursos-humanos.capital-humano.components.calendario-comunicacion')
                 </div>
                 <div class="tab-pane mb-4 fade" id="nav-ev360" role="tabpanel" aria-labelledby="nav-ev360-tab">
-                    @include('admin.recursos-humanos.capital-humano.components.ev360')
+                        @include('admin.recursos-humanos.capital-humano.components.ev360')
                 </div>
 
             </div>

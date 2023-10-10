@@ -8,20 +8,17 @@
         }
 
     </style>
+    <h5 class="col-12 titulo_general_funcion">Competencias para: {{ $puesto->puesto }}</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong>Competencias para: {{ $puesto->puesto }}</strong>
-            </h3>
-        </div>
         <div class="card-body">
-            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-                Asignar Competencias
-            </div>
-            <form id="formCompetenciaCreate" method="POST"
-                action="{{ route('admin.ev360-competencias-por-puesto.store', $puesto) }}" class="mt-3 row">
-                @csrf
-                @include('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.competencias.form')
-            </form>
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                    Asignar Competencias
+                </div>
+                <form id="formCompetenciaCreate" method="POST"
+                    action="{{ route('admin.ev360-competencias-por-puesto.store', $puesto) }}" class="mt-3 row">
+                    @csrf
+                    @include('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.competencias.form')
+                </form>
             {{-- <div class="d-flex justify-content-end">
                 <button id="asignarBtn" class="mb-2 btn btn-sm btn-outline-success"><i
                         class="mr-2 fas fa-sync"></i>Asignar</button>
@@ -117,8 +114,15 @@
                             `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}`;
                         let botones = `
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlActualizar}','${urlEditar}','${row.competencia.id}','${row.competencia.nombre}','${row.nivel_esperado}')"><i class="fas fa-edit"></i></button>
-                                <button class="text-danger btn btn-sm btn-eliminar" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                            @can('competencias_por_puesto_editar')
+                                <button class="btn btn-sm btn-editar" title="Editar"
+                                    onclick="event.preventDefault();Editar('${urlActualizar}','${urlEditar}','${row.competencia.id}','${row.competencia.nombre}','${row.nivel_esperado}')"><i
+                                        class="fas fa-edit"></i></button>
+                            @endcan
+                            @can('competencias_por_puesto_eliminar')
+                                <button class="text-danger btn btn-sm btn-eliminar" title="Eliminar"
+                                    onclick="event.preventDefault();Eliminar('${urlEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                            @endcan
                             </div>
                         `;
                         return botones;
@@ -162,6 +166,7 @@
                         console.log(response);
                         document.getElementById("modalEditarCompetenciaLabel").innerHTML =
                             competencia_nombre;
+
                         let modalBody = document.getElementById("modalBody");
                         let formHTML = `<form id="formCambioNivel${competencia_id}" action="${urlActualizar}" method='post'>
                             <label>Cambiar Nivel Esperado</label>
@@ -266,6 +271,7 @@
 
             $('#competencia_id').on('select2:select', function(e) {
                 let competencia_id = e.params.data.id;
+                let competencia_descripcion = $(e.params.data.element).data('description');
                 let competencia_nombre = e.params.data.text;
                 $.ajax({
                     type: "POST",
@@ -300,15 +306,17 @@
                                 <div class="text-center col-sm-1 col-lg-1 d-flex justify-content-center align-items-center" style="font-weight:bold;
                                 font-size:12px;">
                                 <p>${opcion.ponderacion}</p>
-                                </div>    
+                                </div>
                                 <div class="px-0 py-2 col-sm-11 col-lg-11" style="font-size: 11px;">
                                     ${opcion.definicion}
-                                    </div>    
+                                    </div>
                             </div>
                             `;
                         });
                         document.getElementById('titulo_competencia').innerHTML =
                             competencia_nombre;
+                        document.getElementById('descripcion_competencia').innerHTML =
+                            competencia_descripcion;
                         document.getElementById('competenciaInformacion').innerHTML = html;
 
                     }

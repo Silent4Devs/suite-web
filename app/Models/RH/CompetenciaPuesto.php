@@ -4,15 +4,15 @@ namespace App\Models\RH;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CompetenciaPuesto extends Model
+class CompetenciaPuesto extends Model implements Auditable
 {
-    use HasFactory, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'ev360_competencias_por_puesto';
+
     protected $fillable = [
         'competencia_id',
         'puesto_id',
@@ -26,6 +26,6 @@ class CompetenciaPuesto extends Model
 
     public function puesto()
     {
-        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id');
+        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id')->with('area');
     }
 }

@@ -1,12 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-
+    <h5 class="col-12 titulo_general_funcion">Registrar: Matríz de Riesgos</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Matríz de Riesgos</h3>
-        </div>
-
-        <div class="card-body">
+         <div class="card-body">
             <form method="POST" action="{{ route('admin.analisis-riesgos.store') }}" enctype="multipart/form-data">
                 @csrf
 
@@ -18,9 +14,9 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="nombre"><i class="fas fa-table iconos-crear"></i>Nombre</label>
+                        <label for="nombre" class="required"><i class="fas fa-table iconos-crear"></i>Nombre</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                            name="nombre" id="nombre" value="{{ old('nombre', '') }}">
+                            name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
@@ -29,8 +25,8 @@
                     </div>
 
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="tipo"><i class="fab fa-elementor iconos-crear"></i>Tipo </label>
-                        <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo">
+                        <label for="tipo" class="required"><i class="fab fa-elementor iconos-crear"></i>Tipo </label>
+                        <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo" required>
                             <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::TipoSelect as $key => $label)
@@ -61,13 +57,15 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
+                        <label for="id_elaboro" class="required"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
                         <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
-                            name="id_elaboro" id="id_elaboro">
-                            <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
+                            name="id_elaboro" id="id_elaboro" required>
+                            <option value="" {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
-                                <option value="{{ $label->id }}">{{ $label->name }}
+                                <option data-puesto="{{ $label->puesto }}" value="{{ $label->id }}"
+                                data-area="{{$label->area->area}}"
+                                >{{ $label->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -78,36 +76,26 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto </label>
-                        <input class="form-control {{ $errors->has('id_puesto') ? 'is-invalid' : '' }}" type="text"
-                            id="id_puesto" value="" disabled>
-                        @if ($errors->has('id_puesto'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_puesto') }}
-                            </div>
-                        @endif
+                    <div class="form-group col-md-4 col-sm-12 col-lg-4">
+                        <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="id_puesto" readonly></div>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-12 col-lg-4">
+                        <label for="id_area"><i class="fas fa-street-viewa iconos-crear"></i>Área</label>
+                        <div class="form-control" id="id_area" readonly></div>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área </label>
-                        <input class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" type="text"
-                            id="id_area" value="" disabled>
-                        @if ($errors->has('id_area'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_area') }}
-                            </div>
-                        @endif
-                    </div>
+
+
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
-                            Implementacion</label>
+                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>
+                            Implementación</label>
                         <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
-                            type="text" name="porcentaje_implementacion" id="porcentaje_implementacion"
-                            value="{{ old('porcentaje_implementacion', '') }}">
+                            type="number" step="1" value="0" name="porcentaje_implementacion" id="porcentaje_implementacion"
+                            value="{{ old('porcentaje_implementacion', '') }}" required>
                         @if ($errors->has('porcentaje_implementacion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('porcentaje_implementacion') }}
@@ -116,9 +104,9 @@
                     </div>
 
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                        <label for="estatus" class="required"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                         <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
-                            id="estatus">
+                            id="estatus" required>
                             <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
@@ -172,4 +160,31 @@
             }
         });
     </script>
+
+         <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let elaboro = document.querySelector('#id_elaboro');
+            let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
+            let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('id_puesto').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('id_area').innerHTML = recortarTexto(area_init);
+            elaboro.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('id_puesto').innerHTML = recortarTexto(puesto);
+                document.getElementById('id_area').innerHTML = recortarTexto(area);
+            })
+
+            function recortarTexto(texto, length = 30) {
+                let trimmedString = texto?.length > length ?
+                    texto.substring(0, length - 3) + "..." :
+                    texto;
+                return trimmedString;
+            }
+        });
+    </script>
+
+
 @endsection

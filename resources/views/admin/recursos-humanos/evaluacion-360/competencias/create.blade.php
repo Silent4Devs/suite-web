@@ -2,11 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('EV360-Competencias-Create') }}
-
+    <h5 class="col-12 titulo_general_funcion">Registrar: Competencia</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Competencia </h3>
-        </div>
         <div class="card-body">
             <form id="formCompetenciaCreate" method="POST" action="{{ route('admin.ev360-competencias.store') }}"
                 class="mt-3" enctype="multipart/form-data">

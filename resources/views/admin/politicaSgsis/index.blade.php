@@ -2,126 +2,149 @@
 @section('content')
 
 
-<style>
+    <style>
+         .table tr td:nth-child(2) {
+            text-align: justify !important;
+        }
 
-.table tr td:nth-child(2){
-    text-align: justify !important;
-}
+        .table tr th:nth-child(2) {
+            min-width: 150px !important;
+            text-align: center !important;
 
-.table tr th:nth-child(2){
-    min-width:900px !important;
-    text-align: center !important;
+        }
+        .table tr td:nth-child(3) {
+            text-align: justify !important;
+        }
 
-}
+        .table tr th:nth-child(3) {
+            min-width: 900px !important;
+            text-align: center !important;
 
-.table tr th:nth-child(3){
-    text-align: center !important;
-}
+        }
 
-.table tr th:nth-child(4){
-    min-width:70px !important;
-    text-align: center !important;
-}
+        .table tr th:nth-child(4) {
+            text-align: center !important;
+        }
 
-.table tr td:nth-child(4){
-    text-align: center !important;
-}
+        .table tr th:nth-child(5) {
+            min-width: 70px !important;
+            text-align: center !important;
+        }
 
-.table tr td:nth-child(5){
-    text-align: center !important;
-}
+        .table tr td:nth-child(5) {
+            text-align: center !important;
+        }
 
-.table tr th:nth-child(6){
-    text-align: center !important;
-    min-width:130px !important;
-}
+        .table tr td:nth-child(6) {
+            text-align: center !important;
+        }
 
-.table tr th:nth-child(8){
-    text-align: center !important;
-    min-width:70px !important;
-}
+        .table tr th:nth-child(7) {
+            text-align: center !important;
+            min-width: 130px !important;
+        }
 
-.btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #00abb2;
-        color: #00abb2;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#00abb2 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        .table tr th:nth-child(9) {
+            text-align: center !important;
+            min-width: 70px !important;
+        }
 
-</style>
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+
+        .agregar {
+            margin-right: 15px;
+        }
+
+    </style>
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
-    @can('politica_sgsi_create')
+    @can('politica_sistema_gestion_agregar')
 
+        <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Política SGSI</strong></h3>
-            </div>
+            </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modelpoliticasgsi', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modelpoliticasgsi', ['model' => 'Vulnerabilidad', 'route' =>
+                    'admin.vulnerabilidads.parseCsvImport'])
                 </div>
             </div>
         @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-                <table class="table table-bordered w-100 datatable-PoliticaSgsi" id="datatable-PoliticaSgsi">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th style="text-transform: capitalize">
-                                {{ trans('cruds.politicaSgsi.fields.id') }}
-                            </th>
-                            <th>
-                                Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión&nbsp;de&nbsp;Seguridad&nbsp;de&nbsp;la&nbsp;Información&nbsp;(SGSI)
-                            </th>
-                            <th>
-                                Fecha de publicación
-                            </th>
-                            <th>
-                                Fecha&nbsp;de&nbsp;entrada en vigor
-                            </th>
-                            <th>
-                                Revisó
-                            </th>
-                            <th>
-                               Puesto
-                            </th>
-                            <th>
-                                Área
-                             </th>
-                             <th>
-                                Fecha de revisión
-                             </th>
-                            <th>
-                                Opciones
-                            </th>
-                        </tr>
-                        {{-- <tr>
+            <table class="table table-bordered w-100 datatable-PoliticaSgsi" id="datatable-PoliticaSgsi">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-transform: capitalize">
+                            {{ trans('cruds.politicaSgsi.fields.id') }}
+                        </th>
+                        <th>
+                            Nombre de la política
+                        </th>
+                        <th>
+                            Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión
+                        </th>
+                        <th>
+                            Fecha de publicación
+                        </th>
+                        <th>
+                            Fecha&nbsp;de&nbsp;entrada en vigor
+                        </th>
+                        <th>
+                            Revisó
+                        </th>
+                        <th>
+                            Puesto
+                        </th>
+                        <th>
+                            Área
+                        </th>
+                        <th>
+                            Fecha de revisión
+                        </th>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                    {{-- <tr>
                             <td>
                             </td>
                             <td>
@@ -133,10 +156,10 @@
                             <td>
                             </td>
                         </tr> --}}
-                    </thead>
-                </table>
-            </div>
+                </thead>
+            </table>
         </div>
+    </div>
 
 @endsection
 @section('scripts')
@@ -163,28 +186,60 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Política SGSI ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        doc.styles.tableHeader.fontSize = 7.5;
-                        doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
+                // {
+                //     extend: 'pdfHtml5',
+                //     title: `Política SGSI ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar PDF',
+                //     orientation: 'landscape',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible']
+                //     },
+                //     customize: function(doc) {
+                //         doc.pageMargins = [20, 60, 20, 30];
+                //         doc.styles.tableHeader.fontSize = 7.5;
+                //         doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                //     }
+                // },
                 {
                     extend: 'print',
                     title: `Política SGSI ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">POLÍTICA DEL SISTEMA DE GESTIÓN</strong>
+                                </div>
+                                <div class="col-3 p-2">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -210,7 +265,7 @@
                 }
 
             ];
-            @can('politica_sgsi_create')
+            @can('politica_sistema_gestion_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva política SGSI',
@@ -222,27 +277,31 @@
                 }
                 };
                 let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
+                text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-politica_sgi') }}",
                 action: function(e, dt, node, config) {
-                    $('#').modal('show');
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
+                };
+                let btnImport = {
+                text: '<i class="fas fa-file-upload"></i>',
                 titleAttr: 'Importar datos',
                 className: "btn btn_cargar",
                 action: function(e, dt, node, config) {
-                    $('#xlsxImportModal').modal('show');
+                $('#xlsxImportModal').modal('show');
                 }
-            };
+                };
 
-            dtButtons.push(btnAgregar);
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+                dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
             @endcan
-            @can('politica_sgsi_delete')
+            @can('politica_sistema_gestion_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -283,19 +342,38 @@
                 ajax: "{{ route('admin.politica-sgsis.index') }}",
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
+                    },
+                    {
+                        data: 'nombre_politica',
+                        name: 'nombre_politica',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'politicasgsi',
-                        name: 'politicasgsi'
+                        name: 'politicasgsi',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'fecha_publicacion',
-                        name: 'fecha_publicacion'
+                        name: 'fecha_publicacion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'fecha_entrada',
-                        name: 'fecha_entrada'
+                        name: 'fecha_entrada',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'reviso_politica',
@@ -312,15 +390,24 @@
                     },
                     {
                         data: 'puesto_reviso',
-                        name: 'puesto_reviso'
+                        name: 'puesto_reviso',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'area_reviso',
-                        name: 'area_reviso'
+                        name: 'area_reviso',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'fecha_revision',
-                        name: 'fecha_revision'
+                        name: 'fecha_revision',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'actions',
@@ -334,9 +421,9 @@
             };
 
             // let table = $('.datatable-PoliticaSgsi:not(.ajaxTable)').DataTable({
-                let table = $('#datatable-PoliticaSgsi').DataTable(dtOverrideGlobals);
+            let table = $('#datatable-PoliticaSgsi').DataTable(dtOverrideGlobals);
 
-                // buttons: dtButtons
+            // buttons: dtButtons
             // })
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
@@ -351,6 +438,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

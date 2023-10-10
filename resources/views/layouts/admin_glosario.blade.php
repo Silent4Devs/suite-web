@@ -11,6 +11,8 @@
     <title>{{ trans('panel.site_title') }}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {{-- boostrap icons --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 
@@ -45,8 +47,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- PWA  -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
     <style type="text/css">
+        .material-modulos {
+            font-size: 50px;
+            margin-bottom: 3px;
+            display: block;
+        }
+
         .select2-selection--multiple {
             overflow: hidden !important;
             height: auto !important;
@@ -71,19 +83,19 @@
         .datatable-fix table.dataTable thead .sorting:after {
             opacity: 0.5;
             content: "\f0dc";
-            font-family: "Font Awesome 5 Free";
+            font-family: "FontAwesome";
         }
 
         .datatable-fix table.dataTable thead .sorting_asc:after {
             opacity: 0.5;
             content: "\f0de";
-            font-family: "Font Awesome 5 Free";
+            font-family: "FontAwesome";
         }
 
         .datatable-fix table.dataTable thead .sorting_desc:after {
             opacity: 0.5;
             content: "\f0dd";
-            font-family: "Font Awesome 5 Free";
+            font-family: "FontAwesome";
         }
 
         table.dataTable {
@@ -122,7 +134,7 @@
 
         .iconos-crear {
             font-size: 15pt;
-            color: #00a57e;
+            color: #3086AF;
             margin-right: 10px;
         }
 
@@ -146,7 +158,7 @@
         }
 
         body {
-            background-color: #F2F4F6;
+            background-color: #F5F7FA !important;
         }
 
         #btnDark {
@@ -190,7 +202,7 @@
 
         .card {
             border: none !important;
-            box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.12);
+            box-shadow: 0px 3px 6px 1px #00000029;
         }
 
         .card-body.align-self-center {
@@ -213,7 +225,7 @@
             height: 35px;
             background-color: #345183 !important;
             color: #fff !important;
-            border-radius: 100px;
+            border-radius: 2px;
             border: none !important;
         }
 
@@ -234,7 +246,7 @@
             height: 35px;
             background-color: #aaa !important;
             color: #fff !important;
-            border-radius: 100px;
+            border-radius: 2px;
             border: none !important;
             transition: 0.2s;
             display: inline-block;
@@ -274,15 +286,19 @@
         }
 
         .buscador-global {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            border-radius: 20px;
+            border: none;
+            background-color: rgba(0, 0, 0, 0);
+            border-bottom: 1px solid #fff;
+            color: #fff !important;
         }
 
-        .buscador-global:focus {
-            border: 2px solid rgb(0 171 178);
-            box-shadow: none;
+        .buscador-global::placeholder {
+            color: #fff;
+        }
+
+        .buscador-global:focus-visible {
+            all: unset;
+            border-bottom: 2px solid #fff;
         }
 
 
@@ -293,7 +309,7 @@
         }
 
         .img_empleado {
-            clip-path: circle(20px at 50% 40%);
+            clip-path: circle(20px at 50% 50%);
             height: 40px;
         }
 
@@ -306,11 +322,39 @@
             color: #000000;
         }
 
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: none;
+        }
+
+        label input.form-control {
+            border: none;
+            border-bottom: 1px solid #b4b4b4;
+            border-radius: unset;
+        }
+
+        label input.form-control:focus,
+        label input.form-control:active,
+        label input.form-control:focus-within {
+            outline: none;
+            border-bottom: 1px solid #7fabfd;
+        }
+
+        table.dataTable thead {
+            background: #788BAC !important;
+            color: #fff !important;
+        }
+
+        table.dataTable tr th {
+            font-weight: normal;
+            border: none !important;
+        }
     </style>
     {{-- menu tabs --}}
     <style type="text/css">
         .caja_botones_menu {
             display: flex;
+            justify-content: center;
         }
 
         .caja_botones_menu a {
@@ -318,21 +362,17 @@
             display: inline-block;
             color: #345183;
             padding: 5px 20px;
-            border-top: 1px solid #ccc !important;
-            border-right: 1px solid #ccc;
-            background-color: #f9f9f9;
+            font-weight: bold;
             margin: 0;
             text-align: center;
             align-items: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
         }
 
-        .caja_botones_menu a:first-child {
-            border-left: 1px solid #ccc;
-        }
+        .caja_botones_menu a:first-child {}
 
-        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {
-            border-bottom: 1px solid #ccc;
-        }
+        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {}
 
         .caja_botones_menu a i {
             margin-right: 7px;
@@ -341,8 +381,9 @@
 
         .caja_botones_menu a.btn_activo,
         .caja_botones_menu a.btn_activo:hover {
-            background-color: #fff;
+            background-color: #345183;
             box-shadow: 0px -2px 0px 0px;
+            color: #fff;
         }
 
         .caja_botones_menu a:hover {
@@ -406,7 +447,6 @@
         .scroll_estilo::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
-
     </style>
     {{-- Estilos Select 2 --}}
     <style>
@@ -879,6 +919,39 @@
             text-align: justify !important;
         }
 
+        .titulo_general_funcion {
+            color: #788BAC;
+            margin-bottom: 65px;
+        }
+
+        .form-group label {
+            color: #3086AF;
+        }
+
+        .titulo-formulario {
+            /*background-color: #fff; */
+            font-size: 20px;
+        }
+
+        .card_formulario {
+            background-color: #FCFCFC;
+        }
+
+        /*iconos de alertas azules*/
+        .w-100 .bi.bi-info.mr-3 {
+            margin-right: 0px !important;
+            margin-left: 20px !important;
+            font-size: 20px;
+        }
+
+        .nav.nav-tabs {
+            margin-bottom: 30px !important;
+        }
+
+        .nav.nav-tabs .nav-link.active {
+            background-color: #345183 !important;
+            color: #fff !important;
+        }
     </style>
 
     @yield('styles')
@@ -891,20 +964,39 @@
         <header class="px-3 c-header c-header-fixed" style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
-                <i class="fas fa-fw fa-bars iconos_cabecera"></i>
+                <i class="fas fa-fw fa-bars iconos_cabecera" style="color:#fff;"></i>
             </button>
 
 
-            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
-                data-class="c-sidebar-lg-show" responsive="true">
-                <i id="btnMenu" class="fas fa-fw fa-bars" style=""></i>
+            <button id="btnMenu" style="all:unset; color: #fff; cursor:pointer;" class="d-md-down-none">
+                <i class="fas fa-fw fa-bars" style=""></i>
             </button>
+
+            <script>
+                const btnMenu = document.querySelector('#btnMenu');
+
+                btnMenu.addEventListener('click', () => {
+                    document.body.classList.toggle('c-sidebar-lg-show');
+
+                    if (document.body.classList.contains('c-sidebar-lg-show')) {
+                        localStorage.setItem('menu-mode', 'true');
+                    } else {
+                        localStorage.setItem('menu-mode', 'false');
+                    }
+                });
+
+                if (localStorage.getItem('menu-mode') === 'true') {
+                    document.body.classList.add('c-sidebar-lg-show');
+                } else {
+                    document.body.classList.remove('c-sidebar-lg-show');
+                }
+            </script>
 
 
             <form class="form-inline col-sm-3" style="position: relative;">
 
                 {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
-                <input class="form-control buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
+                <input class="buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
                     autocomplete="off" />
                 <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
                 <div id="resultados_sugeridos"
@@ -915,21 +1007,22 @@
             <ul class="ml-auto c-header-nav">
                 @if (count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                            aria-expanded="false">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
                             {{ strtoupper(app()->getLocale()) }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             @foreach (config('panel.available_languages') as $langLocale => $langName)
                                 <a class="dropdown-item"
                                     href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                    ({{ $langName }})</a>
+                                    ({{ $langName }})
+                                </a>
                             @endforeach
                         </div>
                     </li>
                 @endif
 
-                {{-- @livewire('campana-notificaciones-component')
+                @livewire('campana-notificaciones-component')
                 @livewire('tareas-notificaciones-component')
                 <ul class="ml-auto c-header-nav">
                     <li class="px-2 c-header-nav-item c-d-legacy-none">
@@ -958,16 +1051,20 @@
                     } else {
                         document.body.classList.remove('c-dark-theme');
                     }
-                </script> --}}
+                </script>
 
 
                 <ul class="ml-auto c-header-nav">
 
-                    <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown"
-                            href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="c-avatar">
+                    <li class="c-header-nav-item dropdown show">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
-                                    <img class="rounded-circle" style="height: 37px;clip-path: circle(18px at 50% 50%);"
+                                    <span class="mr-2" style="font-weight: bold;">
+                                        {!! auth()->user()->empleado->saludo !!}
+                                    </span>
+                                    <img class="img_empleado" style=""
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="{{ auth()->user()->empleado->name }}">
                                 @else
@@ -975,54 +1072,35 @@
                                 @endif
                             </div>
                         </a>
-                        <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
+                        <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                            style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                             <div class="p-2">
                                 @if (auth()->user()->empleado)
-                                    <img class="shadow rounded-circle"
-                                        style="height: 90px;clip-path: circle(43px at 50% 50%);"
+                                    {{-- <img class="shadow rounded-circle"
+                                        style="max-width: 65px;clip-path: circle(50% at 50% 50%);"
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                        alt="" srcset="">
+                                        alt="" srcset=""> --}}
+                                    <p class="m-0 mt-2 text-muted" style="font-size:14px">
+                                        Hola, <strong>{{ auth()->user()->empleado->name }}</strong></p>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
                             </div>
-                            <div>
-                                {{-- @if (auth()->user()->empleado)
-                                    <p class="m-0" style="font-weight: 600">
-                                        {{ auth()->user()->empleado->name }}
-                                    </p>
-                                    @foreach (auth()->user()->roles as $rol)
-                                        <span class="badge badge-dark"
-                                            style="font-size:13px;">{{ $rol->title }}</span>
-                                    @endforeach
-
-                                @else
-                                    {{ auth()->user()->name }}
-                                    <span>{{ auth()->user()->empleado->name }}</span>
-                                @endif --}}
-                            </div>
-                            {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
-                            <div class="px-3 mt-3 d-flex justify-content-center">
+                            <div class="px-3 mt-1 d-flex justify-content-center">
                                 @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                                     @can('profile_password_edit')
-
-                                        <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                        <a style="all: unset; color: #747474; cursor: pointer;"
+                                            class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
                                             href="{{ route('profile.password.edit') }}">
-                                            <i class="mr-1 fas fa-user-cog">
-                                            </i>
-                                            Conf. Perfil
+                                            <i class="bi bi-gear"></i>
+                                            Configurar Perfil
                                         </a>
-
                                     @endcan
                                 @endif
-                                {{-- <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
-                                <i class="mr-1 fas fa-fw fa-lock">
-                                </i> Bloquear
-                            </a> --}}
-                                <a class="p-2 border rounded shadow-xs btn btn-sm"
+                                &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a style="all: unset; color: #747474; cursor: pointer;"
                                     onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                    <i class="mr-1 fas fa-sign-out-alt">
-                                    </i> Salir
+                                    <i class="bi bi-box-arrow-right"></i> Salir
                                 </a>
                             </div>
                         </div>
@@ -1041,7 +1119,7 @@
                                 <div class="alert alert-success" role="alert">{{ session('message') }}</div>
                             </div>
                         </div>
-                    </div>
+                </div>
                 @endif
                 <div id="errores_generales_admin_quitar_recursos">
                     @if ($errors->count() > 0)
@@ -1059,16 +1137,19 @@
         </div>
 
 
-            </main>
-            <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-        </div>
-        <!-- incluir de footer -->
-        {{-- @include('partials.footer') --}}
+        </main>
+        <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
+    </div>
+    <!-- incluir de footer -->
+    {{-- @include('partials.footer') --}}
     </div>
     {{-- daterangepicker --}}
 
+    {{-- Librerías para visualizar en campo el dolar --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script>
 
 
     <script src="{{ asset('js/app.js') }}"></script>
@@ -1094,7 +1175,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+    <script src="{{ asset('js/buttons.print.js') }}"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
     {{-- <script
         src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
@@ -1114,10 +1195,15 @@
     <script src="https://cdn.datatables.net/fixedcolumns/4.0.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+
     <script>
         window.Laravel.user = {!! json_encode([
-    'user' => auth()->check() ? auth()->user()->id : null,
-]) !!};
+            'user' => auth()->check() ? auth()->user()->id : null,
+        ]) !!};
     </script>
     <script src="//unpkg.com/alpinejs" defer></script>
 
@@ -1129,26 +1215,24 @@
     <script>
         $(document).ready(function() {
             $('.c-sidebar-nav').animate({
-                scrollTop: $(".c-active").offset().top - 350
+                scrollTop: $(".c-active").offset()?.top - 350
             }, 0);
         });
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         })
 
-        $(".btn_bajar_scroll").click(function(){
+        $(".btn_bajar_scroll").click(function() {
             $("lemnt_row_menu").fadeIn(0);
-            $('.c-sidebar-nav').delay(1000).scrollTop( 900);
+            $('.c-sidebar-nav').delay(1000).scrollTop(900);
         });
     </script>
-
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
     @livewireScripts
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <x-livewire-alert::scripts />
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
@@ -1501,8 +1585,6 @@
 
 
     @yield('scripts')
-
-
 
 </body>
 

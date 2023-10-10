@@ -9,18 +9,18 @@ class StoreMaterialSgsiRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('material_sgsi_create');
+        return Gate::allows('material_sgsi_agregar');
     }
 
     public function rules()
     {
         return [
-            'objetivo'                    => [
+            'objetivo' => [
                 'string',
                 'required',
             ],
             'fechacreacion_actualizacion' => [
-                'date_format:' . 'd-m-Y',
+                'date',
                 'nullable',
             ],
         ];

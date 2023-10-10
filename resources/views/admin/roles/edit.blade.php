@@ -2,10 +2,9 @@
 @section('content')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">
+    <h5 class="col-12 titulo_general_funcion">Editar: Rol</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Rol </h3>
-        </div>
+
 
         <div class="card-body">
             <form method="POST" action="{{ route('admin.roles.update', [$role->id]) }}" enctype="multipart/form-data">
@@ -20,6 +19,7 @@
                             {{ $errors->first('title') }}
                         </div>
                     @endif
+                    <span class="nombre_rol_error text-danger errors"></span>
                     <span class="help-block">{{ trans('cruds.role.fields.title_helper') }}</span>
                 </div>
                 {{-- <div class="form-group">
@@ -58,6 +58,12 @@
                                 <th>Slug</th>
                             </thead>
                             <tbody>
+                                    <tr style="display:none">
+                                        <td></td>
+                                        <td>ID del permiso</td>
+                                        <td>Descripcion del permiso</td>
+                                        <td>Slug o Codigo del permiso</td>
+                                    </tr>
                                 @foreach ($permissions as $idx => $permission)
                                     <tr>
                                         <td></td>
@@ -74,13 +80,13 @@
                     <input type="hidden" id="role_id" value="{{ $role->id }}">
                 @endif
                 <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
+        </div>
+        <div class="form-group">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+            <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
+                {{ trans('global.save') }}
+            </button>
+        </div>
         </form>
     </div>
 @endsection
@@ -138,8 +144,15 @@
                             window.location.href = '/admin/roles';
                         }, 1500);
                     },
-                    error: function(err) {
-                        console.log(err);
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span.${indexInArray}_error`).text(
+                                valueOfElement[0]);
+
+                        });
                     }
                 });
             });
@@ -154,9 +167,10 @@
                     },
                     success: function(response) {
                         response.forEach(permission => {
-                            tblPermissions.row(`:eq(${permission-1})`, {
+                            tblPermissions.row(`:eq(${permission})`, {
                                 page: 'all'
                             }).select();
+                            console.log(permission);
                         });
                         console.log('cargado');
                     }

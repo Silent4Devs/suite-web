@@ -12,7 +12,7 @@ class ExportExcel extends Controller
 {
     public function Amenaza()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/Amenaza.xlsx');
 
         return response()->download($path);
         // return Excel::download(new ExportsAmenazaExport, 'Amenaza.xlsx');
@@ -20,7 +20,7 @@ class ExportExcel extends Controller
 
     public function Vulnerabilidad()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/Vulnerabilidad.xlsx');
 
         return response()->download($path);
     }
@@ -34,17 +34,17 @@ class ExportExcel extends Controller
 
     public function PartesInteresadas()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/partes_interesadas.xlsx');
 
         return response()->download($path);
     }
 
-    public function MatrizRequisitosLegales()
-    {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+    // public function MatrizRequisitosLegales()
+    // {
+    //     $path = storage_path('app/public/exportExcel/users.xlsx');
 
-        return response()->download($path);
-    }
+    //     return response()->download($path);
+    // }
 
     public function Foda()
     {
@@ -76,7 +76,7 @@ class ExportExcel extends Controller
 
     public function AltaDireccion()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/minutas_alta_direccion.xlsx');
 
         return response()->download($path);
     }
@@ -111,19 +111,26 @@ class ExportExcel extends Controller
 
     public function GrupoArea()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/grupo_areas.xlsx');
 
         return response()->download($path);
     }
 
     public function Empleado()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/empleado.xlsx');
 
         return response()->download($path);
     }
 
     public function Activos()
+    {
+        $path = storage_path('app/public/exportExcel/Activos.xlsx');
+
+        return response()->download($path);
+    }
+
+    public function Roles()
     {
         $path = storage_path('app/public/exportExcel/users.xlsx');
 

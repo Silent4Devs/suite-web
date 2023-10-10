@@ -1,38 +1,44 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.area.title') }}
-    </div>
+
+
+       <h5 class="col-12 titulo_general_funcion">Área</h5>
+
 
     <div class="card-body">
         <div class="form-group">
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.areas.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                        {{ $area->area }}</div>
+                    <div class="row col-12 mt-3">
+                        <div class="col-6">
+                            @if(is_null($area->foto_area))
+                                No hay foto
+                            @else
+                            <img class="card justify-content-center" style="width:300px;"
+                            src="{{asset("storage/areas/".$area->foto_area)}}" alt=""
+                            class="img-fluid">
+                            @endif
+                        </div>
+                        <div class="col-6">
+                            <span><strong>Grupo:</strong> {{$area->grupo->nombre}}</span>
+                            <br>
+                            <span><strong>Reportará a:</strong> {{$area->supervisor->name}}</span>
+                            <br>
+                            <strong>Descripción: </strong>
+                            <span>{{$area->descripcion}}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.area.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $area->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.area.fields.area') }}
-                        </th>
-                        <td>
-                            {{ $area->area }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+
+
+
+            </card>
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.areas.index') }}">
                     {{ trans('global.back_to_list') }}
@@ -40,7 +46,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 
 

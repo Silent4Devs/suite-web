@@ -2,8 +2,9 @@
     <thead>
         <tr>
             <th scope="col">Nombre</th>
+            <th scope="col">Edad</th>
             <th scope="col">Parentesco</th>
-            <th scope="col">Porcentaje</th>
+            <th scope="col">Porcentaje %</th>
             <th scope="col">Opción</th>
         </tr>
     </thead>
@@ -18,7 +19,11 @@
                     <input class="form-control" type="hidden" name="beneficiarios[${position}][id]">
                     <input class="form-control" type="text" name="beneficiarios[${position}][nombre]">
                     <small class="text-danger" id="error_beneficiarios_${position}_nombre"></small>
-                </td>    
+                </td>
+                <td>
+                    <input class="form-control" type="text" name="beneficiarios[${position}][edad]">
+                    <small class="text-danger" id="error_beneficiarios_${position}_edad"></small>
+                </td>
                 <td>
                     <input class="form-control" type="text" name="beneficiarios[${position}][parentesco]">
                     <small class="text-danger" id="error_beneficiarios_${position}_parentesco"></small>
@@ -65,6 +70,10 @@
                             <small class="text-danger" id="error_beneficiarios_${index}_nombre"></small>
                         </td>
                         <td>
+                            <input class="form-control" data-model-id="${element.id}" data-type-input="edad" value="${element.edad}" type="text" name="beneficiarios[${index}][edad]">
+                            <small class="text-danger" id="error_beneficiarios_${index}_edad"></small>
+                        </td>
+                        <td>
                             <input class="form-control" data-model-id="${element.id}" data-type-input="parentesco" value="${element.parentesco}" type="text" name="beneficiarios[${index}][parentesco]">
                             <small class="text-danger" id="error_beneficiarios_${index}_parentesco"></small>
                         </td>
@@ -84,6 +93,10 @@
                             <input class="form-control" type="hidden" value="${element.id}" name="beneficiarios[${index}][id]">
                             <input class="form-control" data-model-id="${element.id}" data-type-input="nombre" type="text" value="${element.nombre}" name="beneficiarios[${index}][nombre]">
                             <small class="text-danger" id="error_beneficiarios_${index}_nombre"></small>
+                        </td>
+                        <td>
+                            <input class="form-control" data-model-id="${element.id}" data-type-input="edad" value="${element.edad}" type="text" name="beneficiarios[${index}][edad]">
+                            <small class="text-danger" id="error_beneficiarios_${index}_parentesco"></small>
                         </td>
                         <td>
                             <input class="form-control" data-model-id="${element.id}" data-type-input="parentesco" value="${element.parentesco}" type="text" name="beneficiarios[${index}][parentesco]">

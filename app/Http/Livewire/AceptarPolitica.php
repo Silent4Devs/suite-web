@@ -2,31 +2,38 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\AceptoPolitica;
-use App\Models\PoliticaSgsi;
+use App\Models\User;
+use Livewire\Component;
 
 class AceptarPolitica extends Component
 {
     public $id_politica;
+
     public $acepto_politica;
 
-    public function mount($id_politica){
+    public function mount($id_politica)
+    {
         $this->id_politica = $id_politica;
     }
 
     public function render()
     {
-        $this->acepto_politica = AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('acepto', true)->count();
+        $usuario = User::getCurrentUser();
+        if (AceptoPolitica::where('id_empleado', $usuario->empleado->id)->where('id_politica', $this->id_politica)->first()) {
+            $this->acepto_politica = AceptoPolitica::where('id_empleado', $usuario->empleado->id)->where('id_politica', $this->id_politica)->first()->acepto;
+        } else {
+            $this->acepto_politica = false;
+        }
 
         return view('livewire.aceptar-politica');
     }
 
-    public function aceptar($id_politica){
-
-        $aceptar = AceptoPolitica::create([
+    public function aceptar($id_politica)
+    {
+        $aceptar = AceptoPolitica::updateOrCreate([
             'id_politica' => $id_politica,
-            'id_empleado' => auth()->user()->empleado->id,
-        ]);
+            'id_empleado' => User::getCurrentUser()->empleado->id,
+        ], ['aceptado' => true]);
     }
 }

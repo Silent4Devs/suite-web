@@ -14,100 +14,50 @@ use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use App\Rules\EmpleadoNoVinculado;
+use Flash;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if ($request->ajax()) {
-            $query = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
-                $q->with('area');
-            }])->select(sprintf('%s.*', (new User)->table));
-            // $table = Datatables::of($query);
-
-            // $table->addColumn('placeholder', '&nbsp;');
-            // $table->addColumn('actions', '&nbsp;');
-
-            // $table->editColumn('actions', function ($row) {
-            //     $viewGate      = 'user_show';
-            //     $editGate      = 'user_edit';
-            //     $deleteGate    = 'user_delete';
-            //     $crudRoutePart = 'users';
-            //     $empleados = Empleado::get();
-            //     return view('partials.datatablesActionsFontend', compact(
-            //         'crudRoutePart',
-            //         'row',
-            //         'empleados'
-            //     ));
-            // });
-
-            // $table->editColumn('id', function ($row) {
-            //     return $row->id ? $row->id : "";
-            // });
-            // $table->editColumn('name', function ($row) {
-            //     return $row->name ? $row->name : "";
-            // });
-            // $table->editColumn('email', function ($row) {
-            //     return $row->email ? $row->email : "";
-            // });
-
-            // $table->editColumn('two_factor', function ($row) {
-            //     return '<input type="checkbox" disabled ' . ($row->two_factor ? 'checked' : null) . '>';
-            // });
-            // $table->editColumn('approved', function ($row) {
-            //     return '<input type="checkbox" disabled ' . ($row->approved ? 'checked' : null) . '>';
-            // });
-            // $table->editColumn('verified', function ($row) {
-            //     return '<input type="checkbox" disabled ' . ($row->verified ? 'checked' : null) . '>';
-            // });
-            // $table->editColumn('roles', function ($row) {
-            //     $labels = [];
-
-            //     foreach ($row->roles as $role) {
-            //         $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $role->title);
-            //     }
-
-            //     return implode(' ', $labels);
-            // });
-            // $table->addColumn('organizacion_organizacion', function ($row) {
-            //     return $row->organizacion ? $row->organizacion->organizacion : '';
-            // });
-
-            // $table->addColumn('area_area', function ($row) {
-            //     return $row->area ? $row->area->area : '';
-            // });
-
-            // $table->addColumn('puesto_puesto', function ($row) {
-            //     return $row->puesto ? $row->puesto->puesto : '';
-            // });
-
-            // $table->rawColumns(['actions', 'placeholder', 'two_factor', 'approved', 'verified', 'roles', 'organizacion', 'area', 'puesto']);
-
-            // return $table->make(true);
-            return datatables()->of($query)->toJson();
-        }
+        abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::get();
         $organizaciones = Organizacione::get();
-        $areas = Area::get();
-        $puestos = Puesto::get();
+        $areas = Area::getAll();
+        $puestos = Puesto::getAll();
         $teams = Team::get();
-        $empleadosNoAsignados = Empleado::get();
-        $empleados = $empleadosNoAsignados->filter(function ($item) {
-            return !User::where('n_empleado', $item->n_empleado)->exists();
-        })->values();
+        // $empleadosNoAsignados = Empleado::getaltaAll();
+        // $empleados = $empleadosNoAsignados->filter(function ($item) {
+        //     return !User::where('n_empleado', $item->n_empleado)->exists();
+        // })->values();
+        $empleados = Empleado::getaltaAll();
+        $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
 
-        return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados'));
+        return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados', 'existsVinculoEmpleadoAdmin'));
+    }
+
+    public function getUsersIndex(Request $request)
+    {
+        $key = 'Users:users_index_data';
+
+        // Try to retrieve the data from the cache
+        $query = Cache::remember($key, now()->addMinutes(120), function () {
+            return User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
+                $q->with('area');
+            }])->get();
+        });
+
+        return datatables()->of($query)->toJson();
     }
 
     public function create()
     {
-        //abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all()->pluck('title', 'id');
 
@@ -124,6 +74,8 @@ class UsersController extends Controller
 
     public function store(StoreUserRequest $request)
     {
+        abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
@@ -132,7 +84,7 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-        //abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all()->pluck('title', 'id');
 
@@ -151,15 +103,16 @@ class UsersController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
+        abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $user->update($request->all());
-        $user->roles()->sync($request->input('roles', []));
+        $user->roles()->sync($request->roles);
 
         return redirect()->route('admin.users.index');
     }
 
     public function show(User $user)
     {
-        //abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
 
@@ -168,7 +121,7 @@ class UsersController extends Controller
 
     public function destroy(User $user)
     {
-        //abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $delete = $user->delete();
         if ($delete) {
@@ -189,7 +142,7 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
-            $usuarios = User::select('id', 'name', 'email')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
+            $usuarios = User::getAll()->where('name', 'LIKE', '%' . $nombre . '%')->take(5);
             $lista = "<ul class='list-group' id='empleados-lista'>";
             foreach ($usuarios as $usuario) {
                 $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
@@ -204,12 +157,23 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $request->validate([
-                'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado'],
+                // 'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado'],
+                'n_empleado' => ['required'],
             ]);
             $usuario = User::find(intval($request->user_id));
-            $usuario->update([
-                'n_empleado' => $request->n_empleado,
-            ]);
+            $identificador = explode('-', $request->n_empleado);
+            $tipo = $identificador[0];
+            $numero = $identificador[1];
+
+            if ($tipo == 'NEMPLEADO') {
+                $usuario->update([
+                    'n_empleado' => $numero,
+                ]);
+            } else {
+                $usuario->update([
+                    'empleado_id' => $numero,
+                ]);
+            }
 
             return response()->json(['success' => true]);
         }
@@ -243,5 +207,29 @@ class UsersController extends Controller
         $user->save();
 
         return redirect()->route('admin.users.index')->with('success', $message);
+    }
+
+    // Funcion para restablecer usuario eliminado
+    public function restablecerUsuario($id)
+    {
+        $usuario = User::withTrashed()->find($id);
+
+        if ($usuario != null) {
+            $usuario = User::withTrashed()->find($id)->restore();
+            Flash::success('Usuario restablecido satisfactoriamente.');
+
+            return redirect()->route('admin.users.index');
+        } else {
+            Flash::error('Usuario no encontrado');
+
+            return redirect(route('admin.users.index'));
+        }
+    }
+
+    public function vistaEliminados()
+    {
+        $usuarios = User::withTrashed()->where('deleted_at', '<>', null)->get();
+
+        return view('admin.users.eliminados', compact('usuarios'));
     }
 }

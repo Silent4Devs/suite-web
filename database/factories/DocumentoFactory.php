@@ -36,10 +36,10 @@ class DocumentoFactory extends Factory
             'fecha' => $this->faker->dateTime('now', null),
             // 'archivo' => $this->faker->file('public/storage/tmp/', 'public/storage/Documentos publicados/procesos', false),
             'archivo' => '',
-            'elaboro_id' => Empleado::all()->random()->id,
-            'reviso_id' => Empleado::all()->random()->id,
-            'aprobo_id' => Empleado::all()->random()->id,
-            'responsable_id' => Empleado::all()->random()->id,
+            'elaboro_id' => Empleado::alta()->get()->random()->id,
+            'reviso_id' => Empleado::alta()->get()->random()->id,
+            'aprobo_id' => Empleado::alta()->get()->random()->id,
+            'responsable_id' => Empleado::alta()->get()->random()->id,
         ];
     }
 }

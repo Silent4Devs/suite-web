@@ -6,16 +6,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class RevisionDocumento extends Model
+class RevisionDocumento extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     const ARCHIVADO = '1';
+
     const NO_ARCHIVADO = '0';
 
     protected $fillable = [
@@ -111,6 +110,6 @@ class RevisionDocumento extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(Empleado::class)->alta();
     }
 }

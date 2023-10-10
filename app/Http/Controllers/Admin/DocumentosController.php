@@ -10,8 +10,10 @@ use App\Models\Empleado;
 use App\Models\HistorialRevisionDocumento;
 use App\Models\HistorialVersionesDocumento;
 use App\Models\Macroproceso;
+use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\RevisionDocumento;
+use App\Models\User;
 use App\Models\VistaDocumento;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -25,25 +27,31 @@ class DocumentosController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('documentos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_documentar_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones', 'proceso', 'macroproceso')->orderByDesc('id')->get();
 
-        return view('admin.documentos.index', compact('documentos'));
+        $macroprocesos = Macroproceso::pluck('nombre')->toArray();
+        $procesos = Proceso::pluck('nombre')->toArray();
+        $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
+
+        return view('admin.documentos.index', compact('documentos', 'macroprocesosAndProcesos'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('documentos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_documentar_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
-        $procesos = Proceso::get();
-        $empleados = Empleado::get();
+        $procesos = Proceso::getAll();
+        $empleados = Empleado::getaltaAll();
         $documentoActual = new Documento;
+        $newversdoc = '1';
 
-        return view('admin.documentos.create', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
+        return view('admin.documentos.create', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual', 'newversdoc'));
     }
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('control_documentar_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $this->validateRequestStore($request);
 
@@ -66,23 +74,43 @@ class DocumentosController extends Controller
 
     public function validateRequestStore(Request $request)
     {
-        $request->validate([
-            'codigo' => 'required|string|unique:documentos',
-            'nombre' => 'required|string',
-            'tipo' => 'required|string',
-            'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
-            'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
-            'fecha' => 'required|date',
-            'archivo' => 'required|mimetypes:application/pdf|max:10000',
-            'elaboro_id' => 'required|exists:empleados,id',
-            'aprobo_id' => 'required|exists:empleados,id',
-            'reviso_id' => 'required|exists:empleados,id',
-            'responsable_id' => 'required|exists:empleados,id',
-            'version'=>'required|numeric',
-        ], [
-            'codigo.unique' => 'El código de documento ya ha sido tomado',
-            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
-        ]);
+        if ($request->tipo == 'formato') {
+            $request->validate([
+                'codigo' => 'required|string|unique:documentos,codigo,NULL,id,deleted_at,NULL',
+                'nombre' => 'required|string',
+                'tipo' => 'required|string',
+                'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
+                'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
+                'fecha' => 'required|date',
+                'archivo' => 'required|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
+                'elaboro_id' => 'required|exists:empleados,id',
+                'aprobo_id' => 'required|exists:empleados,id',
+                'reviso_id' => 'required|exists:empleados,id',
+                'responsable_id' => 'required|exists:empleados,id',
+                'version' => 'required|numeric',
+            ], [
+                'codigo.unique' => 'El código de documento ya ha sido tomado',
+                'archivo.mimetypes' => 'El archivo debe ser de tipo PDF o Word',
+            ]);
+        } else {
+            $request->validate([
+                'codigo' => 'required|string|unique:documentos,codigo,NULL,id,deleted_at,NULL',
+                'nombre' => 'required|string',
+                'tipo' => 'required|string',
+                'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
+                'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
+                'fecha' => 'required|date',
+                'archivo' => 'required|mimetypes:application/pdf|max:10000',
+                'elaboro_id' => 'required|exists:empleados,id',
+                'aprobo_id' => 'required|exists:empleados,id',
+                'reviso_id' => 'required|exists:empleados,id',
+                'responsable_id' => 'required|exists:empleados,id',
+                'version' => 'required|numeric',
+            ], [
+                'codigo.unique' => 'El código de documento ya ha sido tomado',
+                'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
+            ]);
+        }
     }
 
     public function storeDocument(Request $request, $estatus)
@@ -114,6 +142,9 @@ class DocumentosController extends Controller
                 break;
             case 'proceso':
                 $path_documentos_aprobacion .= '/procesos';
+                break;
+            case 'formato':
+                $path_documentos_aprobacion .= '/formatos';
                 break;
             default:
                 $path_documentos_aprobacion .= '/procesos';
@@ -165,17 +196,19 @@ class DocumentosController extends Controller
 
     public function edit(Documento $documento)
     {
-        abort_if(Gate::denies('documentos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_documentar_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
-        $procesos = Proceso::get();
-        $empleados = Empleado::get();
+        $procesos = Proceso::getAll();
+        $empleados = Empleado::getaltaAll();
         $documentoActual = $documento;
+        $newversdoc = (intval($documentoActual->version) + 1);
 
-        return view('admin.documentos.edit', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
+        return view('admin.documentos.edit', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual', 'newversdoc'));
     }
 
     public function update(Request $request, Documento $documento)
     {
+        abort_if(Gate::denies('control_documentar_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $this->validateRequestUpdate($request, $documento);
 
@@ -204,22 +237,49 @@ class DocumentosController extends Controller
 
     public function validateRequestUpdate(Request $request, Documento $documento)
     {
-        $request->validate([
-            'codigo' => 'required_if:codigo,null|string|unique:documentos,codigo,' . $documento->id,
-            'nombre' => 'required|string',
-            'tipo' => 'required|string',
-            'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
-            'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
-            'fecha' => 'required|date',
-            'archivo' => 'required|mimetypes:application/pdf|max:10000',
-            'elaboro_id' => 'required_if:elaboro_id,null|exists:empleados,id',
-            'aprobo_id' => 'required_if:aprobo_id,null|exists:empleados,id',
-            'reviso_id' => 'required_if:reviso_id,null|exists:empleados,id',
-            'responsable_id' => 'required_if:responsable_id,null|exists:empleados,id',
-        ], [
-            'codigo.unique' => 'El código de documento ya ha sido tomado',
-            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
-        ]);
+        $validateDocumento = $documento->archivo != null ? 'nullable' : 'required';
+        $elaboroId = $documento->elaboro_id != null ? 'nullable' : 'required';
+        $revisoId = $documento->reviso_id != null ? 'nullable' : 'required';
+        $aproboId = $documento->aprobo_id != null ? 'nullable' : 'required';
+        $responsableId = $documento->responsable_id != null ? 'nullable' : 'required';
+        $codigoDoc = $documento->codigo != null ? 'nullable' : 'required';
+        if ($request->tipo == 'formato') {
+            $request->validate([
+                'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
+                'nombre' => 'required|string',
+                'tipo' => 'required|string',
+                'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
+                'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
+                'fecha' => 'required|date',
+                'archivo' => $validateDocumento . '|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
+                'elaboro_id' => $elaboroId . '|exists:empleados,id',
+                'aprobo_id' => $revisoId . '|exists:empleados,id',
+                'reviso_id' => $aproboId . '|exists:empleados,id',
+                'responsable_id' => $responsableId . '|exists:empleados,id',
+                'version' => 'required|numeric',
+            ], [
+                'codigo.unique' => 'El código de documento ya ha sido tomado',
+                'archivo.mimetypes' => 'El archivo debe ser de tipo PDF o Word',
+            ]);
+        } else {
+            $request->validate([
+                'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
+                'nombre' => 'required|string',
+                'tipo' => 'required|string',
+                'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
+                'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
+                'fecha' => 'required|date',
+                'archivo' => $validateDocumento . '|mimetypes:application/pdf|max:10000',
+                'elaboro_id' => $elaboroId . '|exists:empleados,id',
+                'aprobo_id' => $revisoId . '|exists:empleados,id',
+                'reviso_id' => $aproboId . '|exists:empleados,id',
+                'responsable_id' => $responsableId . '|exists:empleados,id',
+                'version' => 'required|numeric',
+            ], [
+                'codigo.unique' => 'El código de documento ya ha sido tomado',
+                'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
+            ]);
+        }
     }
 
     public function updateDocument(Request $request, Documento $documento, $estatus)
@@ -228,9 +288,9 @@ class DocumentosController extends Controller
         $this->createDocumentosEnAprobacionIfNotExists();
         $path_documentos_aprobacion = $this->pathDocumentsWhenUpdate($request->tipo);
         $nombre_compuesto = $documento->archivo;
-        $version = $documento->version;
+        $version = $request->version;
         if ($estatus != Documento::EN_ELABORACION) {
-            $version = $documento->version;
+            $version = $request->version;
         }
         if ($request->file('archivo')) {
             // $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -322,6 +382,9 @@ class DocumentosController extends Controller
             case 'proceso':
                 $path_documentos_aprobacion .= '/procesos';
                 break;
+            case 'formato':
+                $path_documentos_aprobacion .= '/formatos';
+                break;
             default:
                 $path_documentos_aprobacion .= '/procesos';
                 break;
@@ -332,11 +395,12 @@ class DocumentosController extends Controller
 
     public function destroy(Request $request, Documento $documento)
     {
-        abort_if(Gate::denies('documentos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_documentar_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             if ($documento->tipo == 'proceso') {
                 // logica para eliminar el proceso vinculado al documento
                 $proceso = Proceso::where('documento_id', intval($documento->id))->first();
+                $revision = RevisionDocumento::where('documento_id', intval($documento->id))->first();
                 if ($request->delete_documents == 'true') {
                     if ($proceso) {
                         $dependencias = Documento::where('proceso_id', '=', $proceso->id)->get();
@@ -350,6 +414,10 @@ class DocumentosController extends Controller
                 if ($proceso) {
                     $proceso->delete();
                 }
+                $revision->delete();
+            } else {
+                $revision = RevisionDocumento::where('documento_id', intval($documento->id))->first();
+                $revision->delete();
             }
             $path_documento = $this->getPathDocumento($documento, 'public');
             $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
@@ -359,6 +427,9 @@ class DocumentosController extends Controller
             $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento) . '/' . $nombre_documento;
 
             if (Storage::exists($ruta_documento)) {
+                if (Storage::exists($ruta_obsoleto)) {
+                    Storage::delete($ruta_obsoleto);
+                }
                 Storage::move($ruta_documento, $ruta_obsoleto);
             }
             $eliminar = $documento->delete();
@@ -399,13 +470,13 @@ class DocumentosController extends Controller
             $revisores1 = [];
             $documento = Documento::find($documento_id);
             $documento->load('elaborador', 'macroproceso');
-            Mail::to($documento->elaborador->email)->send(new ConfirmacionSolicitudAprobacionMail($documento));
+            Mail::to(removeUnicodeCharacters($documento->elaborador->email))->send(new ConfirmacionSolicitudAprobacionMail($documento));
             $numero_revision = RevisionDocumento::where('documento_id', $documento_id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $documento_id)->max('no_revision')) + 1 : 1;
 
             $historialRevisionDocumento = HistorialRevisionDocumento::create([
                 'documento_id' => $documento_id,
-                'descripcion' =>  $datos['descripcion'],
-                'comentarios' =>  $datos['comentarios'],
+                'descripcion' => $datos['descripcion'],
+                'comentarios' => $datos['comentarios'],
                 'version' => $documento->version,
                 'fecha' => Carbon::now(),
             ]);
@@ -420,7 +491,7 @@ class DocumentosController extends Controller
                         'documento_id' => $documento_id,
                         'version' => $documento->version,
                     ]);
-                    Mail::to($revisor->empleado->email)->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
+                    Mail::to(removeUnicodeCharacters($revisor->empleado->email))->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
                 }
             }
 
@@ -455,7 +526,6 @@ class DocumentosController extends Controller
 
     public function renderHistoryReview(Documento $documento)
     {
-        abort_if(Gate::denies('documentos_history_reviews'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.history-reviews', compact('documento', 'revisiones'));
@@ -463,13 +533,12 @@ class DocumentosController extends Controller
 
     public function renderViewDocument(Documento $documento)
     {
-        abort_if(Gate::denies('documentos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $path_documento = $this->getPathDocumento($documento, 'storage');
-
-        if (auth()->user()->empleado) {
-            if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists()) {
+        $usuario = User::getCurrentUser();
+        if ($usuario->empleado) {
+            if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', $usuario->empleado->id)->exists()) {
                 VistaDocumento::create([
-                    'empleado_id' => auth()->user()->empleado->id,
+                    'empleado_id' => $usuario->empleado->id,
                     'documento_id' => $documento->id,
                 ]);
             }
@@ -508,6 +577,9 @@ class DocumentosController extends Controller
                 break;
             case 'proceso':
                 $path_documento .= '/procesos';
+                break;
+            case 'formato':
+                $path_documento .= '/formatos';
                 break;
             default:
                 $path_documento .= '/procesos';
@@ -550,11 +622,15 @@ class DocumentosController extends Controller
             case 'proceso':
                 $path_documento .= '/procesos';
                 break;
+            case 'formato':
+                $path_documento .= '/formatos';
+                break;
             default:
                 $path_documento .= '/procesos';
                 break;
         }
 
+        // dd($path_documento);
         return $path_documento;
     }
 
@@ -587,6 +663,9 @@ class DocumentosController extends Controller
         if (!Storage::exists('/public/Documentos en aprobacion/procesos')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/procesos', 0775, true);
         }
+        if (!Storage::exists('/public/Documentos en aprobacion/formatos')) {
+            Storage::makeDirectory('/public/Documentos en aprobacion/formatos', 0775, true);
+        }
     }
 
     public function createDocumentosObsoletosIfNotExists()
@@ -618,6 +697,9 @@ class DocumentosController extends Controller
         if (!Storage::exists('/public/Documentos obsoletos/procesos')) {
             Storage::makeDirectory('/public/Documentos obsoletos/procesos', 0775, true);
         }
+        if (!Storage::exists('/public/Documentos obsoletos/formatos')) {
+            Storage::makeDirectory('/public/Documentos obsoletos/formatos', 0775, true);
+        }
     }
 
     public function getDocumentDependencies(Request $request)
@@ -634,16 +716,37 @@ class DocumentosController extends Controller
 
     public function renderHistoryVersions(Documento $documento)
     {
-        abort_if(Gate::denies('documentos_versiones'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
+        if (empty($versiones[0]['id'])) {
+            $versiones = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('id', $documento->id)->get();
+            // dd($versiones);
+            $path_documento = $this->getPathDocumento($documento, 'storage');
+            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
+
+            return view('admin.documentos.versions-document', compact('documento', 'versiones', 'path_documento'));
+        }
+
+        // dd($versiones);
         return view('admin.documentos.versions-document', compact('documento', 'versiones'));
     }
 
     public function publicados()
     {
-        $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
+        $existsOrganizacion = Organizacion::getFirst()->exists();
 
-        return view('admin.documentos.list-published', compact('documentos'));
+        if ($existsOrganizacion) {
+            $organizacion = Organizacion::getFirst()->empresa;
+        } else {
+            $organizacion = 'La Organización';
+        }
+        $macroprocesos = Macroproceso::pluck('nombre')->toArray();
+        $procesos = Proceso::pluck('nombre')->toArray();
+        $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
+
+        $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
+        // $documentos = Documento::get();
+
+        return view('admin.documentos.list-published', compact('documentos', 'organizacion', 'macroprocesosAndProcesos'));
     }
 }

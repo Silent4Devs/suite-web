@@ -9,7 +9,7 @@ class UpdatePlanAuditoriumRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('plan_auditorium_edit');
+        return Gate::allows('plan_de_auditoria_editar');
     }
 
     public function rules()
@@ -19,10 +19,10 @@ class UpdatePlanAuditoriumRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'auditados.*'   => [
+            'auditados.*' => [
                 'integer',
             ],
-            'auditados'     => [
+            'auditados' => [
                 'array',
             ],
         ];

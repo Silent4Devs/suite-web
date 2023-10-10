@@ -1,1 +1,1 @@
-[{"STATUS_ACTIVE":"En proceso"},{"STATUS_UNDEFINED":"Sin iniciar"},{"STATUS_SUSPENDED":"Suspendida"},{"STATUS_FAILED":"Retraso"},{"STATUS_DONE":"Completado"}]
+[{"STATUS_UNDEFINED":"Sin iniciar"},{"STATUS_SUSPENDED":"Suspendida"},{"STATUS_ACTIVE":"En proceso"},{"STATUS_FAILED":"Retraso"},{"STATUS_DONE":"Completado"}]

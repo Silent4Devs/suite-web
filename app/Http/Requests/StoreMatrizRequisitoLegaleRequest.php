@@ -2,36 +2,30 @@
 
 namespace App\Http\Requests;
 
-use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreMatrizRequisitoLegaleRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('matriz_requisito_legale_create');
-    }
-
     public function rules()
     {
         return [
-            'nombrerequisito'           => [
+            'nombrerequisito' => [
                 'string',
                 'required',
             ],
-            'fechaexpedicion'           => [
+            'fechaexpedicion' => [
                 'date',
                 'nullable',
             ],
-            'fechavigor'                => [
+            'fechavigor' => [
                 'date',
                 'nullable',
             ],
-            'requisitoacumplir'         => [
+            'requisitoacumplir' => [
                 'string',
                 'nullable',
             ],
-            'formacumple'               => [
+            'formacumple' => [
                 'string',
                 'nullable',
             ],
@@ -39,7 +33,7 @@ class StoreMatrizRequisitoLegaleRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'fechaverificacion'         => [
+            'fechaverificacion' => [
                 'date',
                 'nullable',
             ],

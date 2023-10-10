@@ -1,7 +1,10 @@
 <div class="row">
+    @if ($esPlanTrabajoBase)
+        <input type="hidden" name="es_plan_trabajo_base" value="true">
+    @endif
     <div class="col-sm-12 col-lg-6">
         <div class="form-group">
-            <label for="parent">Nombre:</label>
+            <label for="parent" class="required">Nombre:</label>
             <input type="text" class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}" id="parent"
                 aria-describedby="parent" name="parent"
                 value="{{ $referencia ? $referencia : old('parent', $planImplementacion->parent) }}"
@@ -14,12 +17,15 @@
     </div>
     <div class="col-sm-12 col-lg-6">
         <div class="form-group">
-            <label for="norma">Norma:</label>
+            <label for="norma" class="required">Norma:</label>
             <select class="custom-select {{ $errors->has('norma') ? 'is-invalid' : '' }}" id="norma" name="norma"
                 required>
-                <option selected>-Selecciona una Norma--</option>
-                <option value="ISO 27001"
-                    {{ old('norma', $planImplementacion->norma) == 'ISO 27001' ? 'selected' : '' }}>ISO 27001</option>
+                <option selected disabled value="">-- Selecciona una Norma --</option>
+                @foreach (\App\Models\PlanImplementacion::NORMAS as $norma)
+                    <option value="{{ $norma }}" {{ $norma == $planImplementacion->norma ? 'selected' : '' }}>
+                        {{ $norma }}
+                    </option>
+                @endforeach
             </select>
             @if ($errors->has('norma'))
                 <div class="invalid-feedback">{{ $errors->first('norma') }}</div>
@@ -44,9 +50,9 @@
     </div>
     <div class="col-sm-12 col-lg-6">
         <div class="form-group">
-            <label for="objetivo">Objetivo:</label>
-            <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" id="objetivo"
-                name="objetivo" required>{{ old('objetivo', $planImplementacion->objetivo) }}</textarea>
+            <label for="objetivo" class="required">Objetivo:</label>
+            <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" id="objetivo" name="objetivo"
+                required>{{ old('objetivo', $planImplementacion->objetivo) }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback">{{ $errors->first('objetivo') }}</div>
             @endif

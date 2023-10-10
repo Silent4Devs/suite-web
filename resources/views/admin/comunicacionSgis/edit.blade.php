@@ -2,12 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.comunicacion-sgis.create') }}
-
+    <h5 class="col-12 titulo_general_funcion">Editar: Comunicado General </h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Comunicado General </h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" class="row"
                 action="{{ route('admin.comunicacion-sgis.update', [$comunicacionSgi->id]) }}"
@@ -30,9 +26,8 @@
                 <div class="form-group col-12">
                     <label class="required" for="descripcion"><i class="fas fa-pencil-ruler iconos-crear"></i></i>
                         Contenido</label>
-                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
-                        name="descripcion"
-                        id="descripcion">{{ old('descripcion', $comunicacionSgi->descripcion) }}</textarea>
+                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion"
+                        id="descripcion" required>{{ old('descripcion', $comunicacionSgi->descripcion) }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -46,15 +41,22 @@
                     <div class="custom-file">
                         <input type="file" name="files[]" multiple class="form-control" id="documento"
                             accept="application/pdf">
-                        <small>Documento actual:{{ $comunicacionSgi->documentos_comunicacion[0]->documento }} </small><br>
+                        @if (count($comunicacionSgi->documentos_comunicacion) > 0)
+                            <small>Documento actual:{{ $comunicacionSgi->documentos_comunicacion[0]->documento }}
+                            </small><br>
+                        @endif
+
                     </div>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
-                    <input type="file" name="imagen" class="form-control" accept="image/*" value="{{ old('imagen') }}">
-                    <small>Imagen actual:{{ $comunicacionSgi->imagenes_comunicacion[0]->imagen }} </small><br>
-                    <small>Tamaño recomendado de la imagen 500px por 300px</small>
+                    <input type="file" name="imagen" class="form-control" accept="image/*, .mp4, .mov, .webm, .wmv, .avi"
+                    value="{{ old('imagen') }}" required>
+                    @if (count($comunicacionSgi->imagenes_comunicacion) > 0)
+                        <small>Imagen actual:{{ $comunicacionSgi->imagenes_comunicacion[0]->imagen }} </small><br>
+                        <small>Tamaño recomendado de la imagen 500px por 300px</small>
+                    @endif
                     @if ($errors->has('imagen'))
                         <div class="invalid-feedback">
                             {{ $errors->first('imagen') }}
@@ -69,15 +71,15 @@
                 </div>
                 <div class="mb-3 col-md-6">
                     <span type="button" data-toggle="modal" data-target="#imagenes_Modal">
-                        <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Imagen
+                        <i class="mr-2 fas fa-eye text-primary" style="font-size:14pt"></i>Visualizar Imagen
                     </span>
                 </div>
 
 
                 <div class="form-group col-md-6 col-sm-12">
-                    <label for="tipo"><i class="fab fa-elementor iconos-crear"></i>Publicar en </label>
-                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="publicar_en"
-                        id="publicar_en">
+                    <label class="required" for="publicar_en"><i class="fab fa-elementor iconos-crear"></i>Publicar en </label>
+                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
+                        name="publicar_en" id="publicar_en" required>
                         <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                             Selecciona una opción
                         </option>
@@ -103,8 +105,7 @@
                     <div class="form-control">{{ $comunicacionSgi->created_at }}</div>
                 </div>
 
-
-                <div class="col-sm-12 col-md-6">
+                {{-- <div class="col-sm-12 col-md-6">
                     <label for="publico"><i class="fas fa-people-arrows iconos-crear"></i>Público Objetivo</label>
                     <select name="empleados[]" class="select2" multiple>
                         @foreach ($empleados as $empleado)
@@ -114,12 +115,13 @@
                             @endforeach
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
+                @livewire("grupos-comunicacion")
 
                 <div class="col-sm-12 col-md-6">
-                    <label class="required" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>
-                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link"
-                        id="link" value="{{ old('link', $comunicacionSgi->link) }}" required>
+                    <label class="" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>
+                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="link" name="link"
+                        placeholder="http://" id="link" value="{{ old('link', $comunicacionSgi->link) }}">
                     @if ($errors->has('link'))
                         <div class="invalid-feedback">
                             {{ $errors->first('link') }}
@@ -131,7 +133,8 @@
                     <label class="required"><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de inicio
                         de publicación</label>
                     <input class="form-control date {{ $errors->has('fecha_programable') ? 'is-invalid' : '' }}"
-                        type="date" name="fecha_programable" value="{{ $comunicacionSgi->fecha_programable }}" required>
+                        type="date" id="fecha_programable" name="fecha_programable"
+                        value="{{ $comunicacionSgi->fecha_programable }}" min="1945-01-01" required>
                     @if ($errors->has('fecha_programable'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_programable') }}
@@ -143,8 +146,8 @@
                 <div class="col-sm-12 col-md-6 form-group">
                     <label><i class="far fa-calendar-alt iconos-crear"></i>Programar fecha de fin de publicación</label>
                     <input class="form-control date {{ $errors->has('fecha_programable_fin') ? 'is-invalid' : '' }}"
-                        type="date" name="fecha_programable_fin" value="{{ $comunicacionSgi->fecha_programable_fin }}"
-                        required>
+                        type="date" id="fecha_programable_fin" name="fecha_programable_fin"
+                        value="{{ $comunicacionSgi->fecha_programable_fin }}" min="1945-01-01">
                     @if ($errors->has('fecha_programable_fin'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_programable_fin') }}
@@ -153,7 +156,7 @@
                 </div>
 
                 <div class="text-right form-group col-12"><br>
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.comunicacion-sgis.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -165,24 +168,33 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 @if (count($comunicacionSgi->documentos_comunicacion))
-
                                     <!-- carousel -->
                                     <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
                                         <ol class='carousel-indicators'>
                                             @foreach ($comunicacionSgi->documentos_comunicacion as $idx => $documento)
                                                 <li data-target=#carouselExampleIndicators
-                                                    data-slide-to={{ $idx }}>
+                                                    data-slide-to= '{{ $idx  == 0 ? 'active' : '' }}''>
                                                 </li>
-
                                             @endforeach
 
                                         </ol>
+
                                         <div class='carousel-inner'>
                                             @foreach ($comunicacionSgi->documentos_comunicacion as $idx => $documento)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                        src="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}"></iframe>
-                                                </div>
+                                                @if (pathinfo($documento->documento, PATHINFO_EXTENSION) == 'pdf')
+                                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                            src="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}"></iframe>
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <a
+                                                            href="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}">
+                                                            <i class="fas fa-file-download mr-2"
+                                                                style="font-size:18px"></i>{{ $documento->documento }}</a>
+                                                    </div>
+                                                @endif
                                             @endforeach
 
 
@@ -208,7 +220,7 @@
                                 @endif
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                             </div>
 
                         </div>
@@ -227,7 +239,6 @@
                                             @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
                                                 <li data-target=#carouselExampleIndicators
                                                     data-slide-to={{ $idx }}></li>
-
                                             @endforeach
 
                                         </ol>
@@ -263,7 +274,7 @@
                                 @endif
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>

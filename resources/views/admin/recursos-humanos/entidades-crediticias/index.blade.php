@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-    @can('control_documento_create')
+
+        <div class="mt-3">
+            {{ Breadcrumbs::render('EV360-EntidadesCrediticeas') }}
+        </div>
+        <h5 class="col-12 titulo_general_funcion">Entidades crediticias</h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Entidades crediticias</strong></h3>
-            </div>
-        @endcan
         <div class="card-body datatable-fix">
             @include('partials.flashMessages')
             <table id="tblEntidadesCrediticias" class="table table-bordered w-100 datatable-ControlDocumento">
@@ -69,7 +69,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -117,7 +117,9 @@
                 }
             };
 
-            dtButtons.push(btnAgregar);
+            @can('entidades_crediticeas_agregar')
+                dtButtons.push(btnAgregar);
+            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -154,19 +156,18 @@
                             const urlShowDelete =
                                 `/admin/recursos-humanos/entidades-crediticias/${data}`;
                             const html = `
-                            <a class="btn btn-sm " title="Editar"
-                                    href="${urlEdit}">
+                            @can('entidades_crediticeas_editar')
+                                <a class="btn btn-sm " title="Editar" href="${urlEdit}">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a class="btn btn-sm " title="Visualizar"
-                                    href="${urlShowDelete}">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <button title="Eliminar"
-                                    onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.entidad}');return false;"
+                            @endcan
+
+                            @can('entidades_crediticeas_eliminar')
+                                <button title="Eliminar" onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.entidad}');return false;"
                                     class="btn btn-sm text-danger">
                                     <i class="fas fa-trash-alt"></i>
-                                </button>`;
+                                </button>
+                            @endcan`;
                             return html;
                         }
                     }

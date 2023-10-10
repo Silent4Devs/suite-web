@@ -2,12 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.material-sgsis.create') }}
-
+    <h5 class="col-12 titulo_general_funcion">Editar: Material SGSI</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Material SGSI</h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" class="row"
                 action="{{ route('admin.material-sgsis.update', [$materialSgsi->id]) }}" enctype="multipart/form-data">
@@ -38,9 +34,9 @@
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label><i
+                    <label class="required"><i
                             class="fas fa-users iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.personalobjetivo') }}</label>
-                    <select class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}"
                         name="personalobjetivo" id="personalobjetivo">
                         <option value disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
@@ -58,9 +54,9 @@
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.personalobjetivo_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="arearesponsable_id"><i
+                    <label class="required" for="arearesponsable_id"><i
                             class="fas fa-users iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.arearesponsable') }}</label>
-                    <select class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}"
+                    <select required class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}"
                         name="arearesponsable_id" id="arearesponsable_id">
                         @foreach ($arearesponsables as $id => $arearesponsable)
                             <option value="{{ $id }}"
@@ -76,9 +72,9 @@
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.arearesponsable_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label><i
+                    <label class="required"><i
                             class="fas fa-clipboard-check iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.tipoimparticion') }}</label>
-                    <select class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}"
                         name="tipoimparticion" id="tipoimparticion">
                         <option value disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
@@ -107,11 +103,11 @@
             </div> --}}
 
                 <div class="form-group col-sm-6">
-                    <label for="fechacreacion_actualizacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+                    <label class="required" for="fechacreacion_actualizacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                         creación</label>
-                    <input
+                    <input required
                         class="form-control date  {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}"
-                        type="date" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion"
+                        type="date" min="1945-01-01" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion"
                         value="{{ old('fechacreacion_actualizacion', \Carbon\Carbon::parse($materialSgsi->fechacreacion_actualizacion))->format('Y-m-d') }}">
                     @if ($errors->has('fechacreacion_actualizacion'))
                         <div class="invalid-feedback">
@@ -155,7 +151,7 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.material-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -179,10 +175,20 @@
                                         </ol>
                                         <div class='carousel-inner'>
                                             @foreach ($materialSgsi->documentos_material as $idx => $material_id)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                        src="{{ asset('storage/documentos_material_sgsi') }}/{{ $material_id->documento }}"></iframe>
-                                                </div>
+                                                @if (pathinfo($material_id->documento, PATHINFO_EXTENSION) == 'pdf')
+                                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                            src="{{ asset('storage/documentos_material_sgsi') }}/{{ $material_id->documento }}"></iframe>
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <a
+                                                            href="{{ asset('storage/documentos_material_sgsi') }}/{{ $material_id->documento }}">
+                                                            <i class="fas fa-file-download mr-2"
+                                                                style="font-size:18px"></i>{{ $material_id->documento }}</a>
+                                                    </div>
+                                                @endif
                                             @endforeach
 
 

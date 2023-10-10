@@ -127,8 +127,8 @@
                 <div class="caja_img_perfil">
                     <img src="{{  asset('storage/empleados/imagenes') }}/{{ $documento->elaborador ? $documento->elaborador->avatar : 'user.png'}}">
                 </div>
-                <h6><strong style="color:#345183; font-size:12pt;">{{$documento->elaborador->name}}</strong></h6>
-                <p >{{$documento->elaborador->puesto}}</p>
+                <h6><strong style="color:#345183; font-size:12pt;">{{$documento->elaborador ? $documento->elaborador->name:'Sin registro'}}</strong></h6>
+                <p >{{$documento->elaborador ? $documento->elaborador->puesto:'Sin registro'}}</p>
 
             </div>
 
@@ -141,8 +141,8 @@
                 <div class="caja_img_perfil">
                     <img src="{{  asset('storage/empleados/imagenes') }}/{{ $documento->revisor ? $documento->revisor->avatar : 'user.png'}}">
                 </div>
-                <h6><strong style="color:#345183; font-size:12pt;">{{$documento->revisor->name}}</strong></h6>
-                <p>{{$documento->revisor->puesto}}</p>
+                <h6><strong style="color:#345183; font-size:12pt;">{{$documento->revisor ? $documento->revisor->name: 'Sin registro'}}</strong></h6>
+                <p>{{$documento->revisor ? $documento->revisor->puesto : 'Sin registro'}}</p>
 
             </div>
 
@@ -155,8 +155,8 @@
                 <div class="caja_img_perfil">
                     <img src="{{  asset('storage/empleados/imagenes') }}/{{ $documento->aprobador ? $documento->aprobador->avatar : 'user.png'}}">
                 </div>
-                <h6><strong style="color:#345183;font-size:12pt;"  >{{$documento->aprobador->name}}</strong></h6>
-                <p>{{$documento->aprobador->puesto}}</p>
+                <h6><strong style="color:#345183;font-size:12pt;"  >{{$documento->aprobador ? $documento->aprobador->name : 'Sin registro'}}</strong></h6>
+                <p>{{$documento->aprobador ? $documento->aprobador->puesto : 'Sin registro'}}</p>
 
             </div>
 
@@ -169,8 +169,8 @@
                 <div class="caja_img_perfil">
                     <img src="{{  asset('storage/empleados/imagenes') }}/{{ $documento->responsable ? $documento->responsable->avatar : 'user.png'}}">
                 </div>
-                <h6><strong style="color:#345183; font-size:12pt;"  >{{$documento->responsable->name}}</strong></h6>
-                <p>{{$documento->responsable->puesto}}</p>
+                <h6><strong style="color:#345183; font-size:12pt;"  >{{$documento->responsable ? $documento->responsable->name : 'Sin registro'}}</strong></h6>
+                <p>{{$documento->responsable ? $documento->responsable->puesto : 'Sin registro'}}</p>
 
             </div>
 

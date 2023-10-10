@@ -65,7 +65,7 @@ class UserAlertsController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.userAlerts.index', compact('users', 'teams'));
@@ -75,7 +75,7 @@ class UserAlertsController extends Controller
     {
         abort_if(Gate::denies('user_alert_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::all()->pluck('name', 'id');
+        $users = User::getAll()->pluck('name', 'id');
 
         return view('admin.userAlerts.create', compact('users'));
     }

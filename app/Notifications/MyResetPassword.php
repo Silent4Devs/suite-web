@@ -43,7 +43,7 @@ class MyResetPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('TABANTAJ: Restablecimiento de contraseña.')
+            ->subject('Restablecimiento de contraseña.')
             ->line([
                 'Recibimos una solicitud de restablecimiento de contraseña para su cuenta.',
             ])

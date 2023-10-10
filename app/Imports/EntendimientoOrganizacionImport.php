@@ -9,8 +9,6 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class EntendimientoOrganizacionImport implements ToModel
 {
     /**
-     * @param array $row
-     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
@@ -18,11 +16,11 @@ class EntendimientoOrganizacionImport implements ToModel
         return new EntendimientoOrganizacion([
             'analisis' => $row[0],
             'fecha' => $row[1],
-            'id_elabora'=> $this->obtenerEmpleadoPorNombre($row[2]),
-            'fortalezas'=> $row[3],
-            'oportunidades'=> $row[4],
-            'debilidades'=> $row[5],
-            'amenazas'=> $row[6],
+            'id_elabora' => $this->obtenerEmpleadoPorNombre($row[2]),
+            'fortalezas' => $row[3],
+            'oportunidades' => $row[4],
+            'debilidades' => $row[5],
+            'amenazas' => $row[6],
         ]);
     }
 
@@ -41,7 +39,7 @@ class EntendimientoOrganizacionImport implements ToModel
     public function obtenerEmpleadoPorNombre($nombre)
     {
         // dd($nombre);
-        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('name', $nombre)->first();
         dd($empleado_bd);
 
         return $empleado_bd->id;

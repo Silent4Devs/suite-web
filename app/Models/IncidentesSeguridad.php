@@ -6,20 +6,20 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class IncidentesSeguridad extends Model implements HasMedia
+class IncidentesSeguridad extends Model implements HasMedia, Auditable
 {
     use InteractsWithMedia;
     use HasFactory;
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     const ARCHIVADO = '1';
+
     const NO_ARCHIVADO = '0';
 
     protected $table = 'incidentes_seguridad';
@@ -39,19 +39,28 @@ class IncidentesSeguridad extends Model implements HasMedia
     //     return $this->fecha ? Carbon::parse($this->fecha)->format('d-m-Y'):'';
     // }
 
+    //Redis methods
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('incidentes_seguridad_all', 3600 * 4, function () {
+            return self::orderBy('id')->get();
+        });
+    }
+
     public function getFolioAttribute()
     {
-        return  sprintf('INC-%04d', $this->id);
+        return sprintf('INC-%04d', $this->id);
     }
 
     public function reporto()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id')->alta();
     }
 
     public function asignado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_asignado_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_asignado_id', 'id')->alta();
     }
 
     public function evidencias_seguridad()
@@ -82,5 +91,20 @@ class IncidentesSeguridad extends Model implements HasMedia
     public function getFechaCerradoAttribute()
     {
         return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y') : '';
+    }
+
+    public function accionCorrectivaAprobacional()
+    {
+        return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null, 'acciones_correctivas_id');
+    }
+
+    public function categorias()
+    {
+        return $this->belongsTo(CategoriaIncidente::class, 'categoria_id', 'id')->alta();
+    }
+
+    public function subcategorias()
+    {
+        return $this->belongsTo(SubcategoriaIncidente::class, 'subcategoria_id', 'id')->alta();
     }
 }

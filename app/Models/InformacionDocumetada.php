@@ -7,18 +7,16 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class InformacionDocumetada extends Model implements HasMedia
+class InformacionDocumetada extends Model implements HasMedia, Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $appends = [
         'logotipo',
     ];
@@ -32,12 +30,12 @@ class InformacionDocumetada extends Model implements HasMedia
     ];
 
     const TIPODOCUMENTO_SELECT = [
-        'M'  => 'Manual',
+        'M' => 'Manual',
         'PL' => 'Plan',
-        'P'  => 'Proceso',
+        'P' => 'Proceso',
         'PR' => 'Procedimiento',
-        'I'  => 'Instructivo',
-        'F'  => 'Formato',
+        'I' => 'Instructivo',
+        'F' => 'Formato',
     ];
 
     protected $fillable = [

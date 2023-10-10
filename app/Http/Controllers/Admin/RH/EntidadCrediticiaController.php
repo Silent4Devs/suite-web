@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\RH;
 use App\Http\Controllers\Controller;
 use App\Models\RH\EntidadCrediticia;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class EntidadCrediticiaController extends Controller
 {
@@ -15,6 +17,7 @@ class EntidadCrediticiaController extends Controller
      */
     public function index(Request $request)
     {
+        abort_if(Gate::denies('entidades_crediticeas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad', 'descripcion')->get();
         if ($request->ajax()) {
             return datatables()->of($entidadesCrediticias)->toJson();
@@ -30,6 +33,7 @@ class EntidadCrediticiaController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('entidades_crediticeas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entidadCrediticia = new EntidadCrediticia;
 
         return view('admin.recursos-humanos.entidades-crediticias.create', compact('entidadCrediticia'));
@@ -38,11 +42,11 @@ class EntidadCrediticiaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('entidades_crediticeas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'entidad' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:4000',
@@ -61,6 +65,7 @@ class EntidadCrediticiaController extends Controller
      */
     public function show($entidadCrediticia)
     {
+        abort_if(Gate::denies('entidades_crediticeas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
         //
     }
@@ -73,6 +78,7 @@ class EntidadCrediticiaController extends Controller
      */
     public function edit($entidadCrediticia)
     {
+        abort_if(Gate::denies('entidades_crediticeas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
 
         return view('admin.recursos-humanos.entidades-crediticias.edit', compact('entidadCrediticia'));
@@ -81,12 +87,12 @@ class EntidadCrediticiaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $entidadCrediticia)
     {
+        abort_if(Gate::denies('entidades_crediticeas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
         $request->validate([
             'entidad' => 'required|string|max:255',
@@ -106,6 +112,7 @@ class EntidadCrediticiaController extends Controller
      */
     public function destroy($entidadCrediticia)
     {
+        abort_if(Gate::denies('entidades_crediticeas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
         $entidadCrediticia->delete();
 

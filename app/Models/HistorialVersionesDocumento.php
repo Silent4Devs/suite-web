@@ -6,17 +6,17 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class HistorialVersionesDocumento extends Model
+class HistorialVersionesDocumento extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $dates = ['fecha'];
+
     protected $appends = ['estatus_formateado', 'path_document', 'cambios', 'fecha_dmy', 'day_localized'];
+
     protected $fillable = [
         'documento_id',
         'codigo',
@@ -121,12 +121,12 @@ class HistorialVersionesDocumento extends Model
 
     public function documento()
     {
-        return $this->belongsTo(Empleado::class, 'documento_id', 'id');
+        return $this->belongsTo(Empleado::class, 'documento_id', 'id')->alta();
     }
 
     public function revisor()
     {
-        return $this->belongsTo(Empleado::class, 'reviso_id', 'id');
+        return $this->belongsTo(Empleado::class, 'reviso_id', 'id')->alta();
     }
 
     public function macroproceso()
@@ -136,16 +136,16 @@ class HistorialVersionesDocumento extends Model
 
     public function elaborador()
     {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id');
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta();
     }
 
     public function aprobador()
     {
-        return $this->belongsTo(Empleado::class, 'aprobo_id', 'id');
+        return $this->belongsTo(Empleado::class, 'aprobo_id', 'id')->alta();
     }
 
     public function responsable()
     {
-        return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
+        return $this->belongsTo(Empleado::class, 'responsable_id', 'id')->alta();
     }
 }

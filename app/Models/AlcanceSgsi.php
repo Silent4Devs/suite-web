@@ -2,52 +2,61 @@
 
 namespace App\Models;
 
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class AlcanceSgsi extends Model
+/**
+ * Class AlcanceSgsi.
+ *
+ * @property int $id
+ * @property string|null $alcancesgsi
+ * @property timestamp without time zone|null $created_at
+ * @property timestamp without time zone|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $team_id
+ * @property Carbon|null $fecha_publicacion
+ * @property Carbon|null $fecha_entrada
+ * @property Carbon|null $fecha_revision
+ * @property int|null $id_reviso_alcance
+ * @property int|null $norma_id
+ * @property Team|null $team
+ * @property Empleado|null $empleado
+ * @property Norma|null $norma
+ */
+class AlcanceSgsi extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use SoftDeletes, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'alcance_sgsis';
 
     public static $searchable = [
         'alcancesgsi',
     ];
 
+    protected $casts = [
+        'id_reviso_alcance' => 'int',
+    ];
+
     protected $dates = [
         'fecha_publicacion',
         'fecha_entrada',
         'fecha_revision',
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
     protected $fillable = [
+        'nombre',
         'alcancesgsi',
+        'team_id',
         'fecha_publicacion',
         'fecha_entrada',
         'fecha_revision',
         'id_reviso_alcance',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'team_id',
+        'norma_id',
     ];
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 
     public function getFechaPublicacionAttribute($value)
     {
@@ -66,11 +75,21 @@ class AlcanceSgsi extends Model
 
     public function team()
     {
-        return $this->belongsTo(Team::class, 'team_id');
+        return $this->belongsTo(Team::class);
     }
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso_alcance', 'id');
+        return $this->belongsTo(Empleado::class, 'id_reviso_alcance')->alta()->with('area');
+    }
+
+    public function norma()
+    {
+        return $this->belongsTo(Norma::class);
+    }
+
+    public function normas()
+    {
+        return $this->belongsToMany(Norma::class, 'normas_alcance_sgsi', 'alcance_id', 'norma_id');
     }
 }

@@ -22,7 +22,7 @@ class SedeController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //dd( Sede::with(['organizacion', 'team'])->get());
         if ($request->ajax()) {
             $query = Sede::with(['organizacion', 'team'])->orderByDesc('id')->get();
@@ -32,9 +32,9 @@ class SedeController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'configuracion_sede_show';
-                $editGate = 'configuracion_sede_edit';
-                $deleteGate = 'configuracion_sede_delete';
+                $viewGate = 'sedes_ver';
+                $editGate = 'sedes_editar';
+                $deleteGate = 'sedes_eliminar';
                 $crudRoutePart = 'sedes';
 
                 return view('partials.datatablesActions', compact(
@@ -74,11 +74,11 @@ class SedeController extends Controller
             return $table->make(true);
         }
 
-        $organizacions = Organizacion::all();
+        $organizacions = Organizacion::getAll();
         //$org = $organizacions->organizacion;
         //dd($organizacions->organizacion, $organizacions);
         $teams = Team::get();
-        $numero_sedes = Sede::count();
+        $numero_sedes = Sede::getAll()->count();
 
         //$sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
 
@@ -87,15 +87,16 @@ class SedeController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_sede_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sedes_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacions = Organizacion::all()->pluck('empresa', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $organizacions = Organizacion::getAll()->pluck('empresa', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.sedes.create', compact('organizacions'));
     }
 
     public function store(StoreSedeRequest $request)
     {
+        abort_if(Gate::denies('sedes_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $client = new \GuzzleHttp\Client();
         $geocoder = new \Spatie\Geocoder\Geocoder($client);
         $geocoder->setApiKey(config('geocoder.key'));
@@ -127,9 +128,9 @@ class SedeController extends Controller
 
     public function edit(Sede $sede)
     {
-        abort_if(Gate::denies('configuracion_sede_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sedes_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacions = Organizacion::all()->pluck('empresa', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $organizacions = Organizacion::getAll()->pluck('empresa', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $sede->load('organizacion', 'team');
 
@@ -138,12 +139,12 @@ class SedeController extends Controller
 
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('sedes_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $sede->update($request->all());
 
-        $sede = Sede::find($id);
+        $sede = Sede::getbyId($id);
         $image = $sede->foto_sedes;
         if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
-
             //Si existe la imagen entonces se elimina al editarla
 
             $isExists = Storage::disk('public')->exists('sedes/imagenes/' . $sede->foto_sedes);
@@ -166,10 +167,10 @@ class SedeController extends Controller
 
         $sede->update([
 
-            'sede' =>  $request->sede,
-            'foto_sedes' =>  $request->foto_sede,
-            'direccion' =>  $request->direccion,
-            'descripcion' =>  $request->descripcion,
+            'sede' => $request->sede,
+            'foto_sedes' => $request->foto_sede,
+            'direccion' => $request->direccion,
+            'descripcion' => $request->descripcion,
             'foto_sedes' => $image,
         ]);
 
@@ -178,7 +179,7 @@ class SedeController extends Controller
 
     public function show(Sede $sede)
     {
-        abort_if(Gate::denies('configuracion_sede_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sedes_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sede->load('organizacion', 'team');
 
@@ -187,7 +188,7 @@ class SedeController extends Controller
 
     public function destroy(Sede $sede)
     {
-        abort_if(Gate::denies('configuracion_sede_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sedes_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sede->delete();
 
@@ -203,19 +204,19 @@ class SedeController extends Controller
 
     public function obtenerListaSedes(Sede $sedes)
     {
-        abort_if(Gate::denies('organizacion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //$sede = Sede::get();
-        $sede = Sede::paginate(3);
-        $organizacions = Organizacion::all();
+        abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //$sede = Sede::getAll();
+        $sede = Sede::fastPaginate();
+        $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $numero_sedes = Sede::count();
+        $numero_sedes = Sede::getAll()->count();
 
         return view('admin.sedes.sedes-organizacion', compact('sede', 'organizacions', 'teams', 'numero_sedes'));
     }
 
     public function ubicacion($request)
     {
-        abort_if(Gate::denies('organizacion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sede = Sede::find($request);
 
         return view('admin.sedes.ubicacion', compact('sede'));
@@ -223,8 +224,9 @@ class SedeController extends Controller
 
     public function ubicacionorg($request)
     {
-        abort_if(Gate::denies('organizacion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sede = Sede::find($request);
+
         //dd($sede);
         return view('admin.sedes.ubicacion', compact('sede'));
     }

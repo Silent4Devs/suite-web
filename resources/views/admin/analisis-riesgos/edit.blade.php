@@ -7,11 +7,8 @@
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
+    <h5 class="col-12 titulo_general_funcion">Editar: Análisis de Riesgo</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Análisis de Riesgo</h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" action="{{ route('admin.analisis-riesgos.update', [$analisis->id]) }}"
                 enctype="multipart/form-data">
@@ -110,10 +107,10 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
+                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>
                             Implementacion</label>
                         <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
-                            type="text" name="porcentaje_implementacion" id="porcentaje_implementacion"
+                        type="number" step=".1" name="porcentaje_implementacion" id="porcentaje_implementacion"
                             value="{{ old('porcentaje_implementacion', $analisis->porcentaje_implementacion) }}">
                         @if ($errors->has('porcentaje_implementacion'))
                             <div class="invalid-feedback">
@@ -181,20 +178,27 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
             let elaboro = document.querySelector('#id_elaboro');
             let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
             let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('id_puesto').innerHTML = puesto_init;
-            document.getElementById('id_area').innerHTML = area_init;
+            document.getElementById('id_puesto').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('id_area').innerHTML = recortarTexto(area_init);
             elaboro.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('id_puesto').innerHTML = puesto;
-                document.getElementById('id_area').innerHTML = area;
+                document.getElementById('id_puesto').innerHTML = recortarTexto(puesto);
+                document.getElementById('id_area').innerHTML = recortarTexto(area);
             })
+
+            function recortarTexto(texto, length = 30) {
+                let trimmedString = texto?.length > length ?
+                    texto.substring(0, length - 3) + "..." :
+                    texto;
+                return trimmedString;
+            }
         });
     </script>
 @endsection

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\LockedPlanTrabajo;
+use App\Models\Iso9001\LockedPlanTrabajo;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,12 +13,13 @@ class LockedPlanTrabajoController extends Controller
     public function getLockedToPlanTrabajo(Request $request)
     {
         if ($request->ajax()) {
+            $usuario = User::getCurrentUser();
             // $numero_bloqueo = LockedPlanTrabajo::count();
             // $hora_actual = Carbon::now();
             // if ($numero_bloqueo == 0) {
             //     LockedPlanTrabajo::create([
             //         'locked_to' => Carbon::now(),
-            //         'locked_by' => auth()->user()->id,
+            //         'locked_by' => $usuario->id,
             //     ]);
             //     $bloqueo = LockedPlanTrabajo::first();
             //     return response()->json(['success' => true, 'datos' => $bloqueo, 'hora_actual' => $hora_actual]);
@@ -36,7 +37,7 @@ class LockedPlanTrabajoController extends Controller
                 LockedPlanTrabajo::create([
                     'locked_to' => Carbon::now(),
                     'blocked' => '0',
-                    'locked_by' => auth()->user()->id,
+                    'locked_by' => $usuario->id,
                 ]);
             }
             $bloqueo = LockedPlanTrabajo::first();
@@ -45,10 +46,10 @@ class LockedPlanTrabajoController extends Controller
                     'locked_by' => intval($request->user_id),
                 ]);
             }
-            if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
+            if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == $usuario->id) {
                 return response()->json(['success' => true]);
             } else {
-                if (intval($bloqueo->blocked) == 0 && intval($bloqueo->locked_by) == auth()->user()->id) {
+                if (intval($bloqueo->blocked) == 0 && intval($bloqueo->locked_by) == $usuario->id) {
                     return response()->json(['success' => true]);
                 } else {
                     return response()->json(['error' => true, 'locked_by' => User::select('name', 'email')->where('id', '=', intval($bloqueo->locked_by))->first()]);
@@ -66,7 +67,7 @@ class LockedPlanTrabajoController extends Controller
                 $bloqueo->update([
                     'locked_to' => Carbon::now(),
                     'blocked' => '1',
-                    'locked_by' => auth()->user()->id,
+                    'locked_by' => User::getCurrentUser()->id,
                 ]);
             }
 
@@ -79,10 +80,11 @@ class LockedPlanTrabajoController extends Controller
         if ($request->ajax()) {
             $numero_bloqueo = LockedPlanTrabajo::count();
             if ($numero_bloqueo == 1) {
+                $usuario = User::getCurrentUser();
                 $bloqueo = LockedPlanTrabajo::first();
-                if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
+                if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == $usuario->id) {
                     return response()->json(['blocked_by_self' => true]);
-                } elseif (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) != auth()->user()->id) {
+                } elseif (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) != $usuario->id) {
                     return response()->json(['blocked' => true]);
                 } else {
                     return response()->json(['blocked' => false]);

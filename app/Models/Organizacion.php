@@ -6,7 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 // use App\Models\Schedule;
 
@@ -30,18 +31,17 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property int|null $team_id
  * @property string|null $antecedentes
  * @property string|null $logotipo
- *
  * @property Team|null $team
  * @property Collection|Sede[] $sedes
  */
-class Organizacion extends Model
+class Organizacion extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'organizacions';
+
+    protected $appends = ['logotipo', 'fecha_min_timesheet'];
 
     protected $casts = [
         'telefono' => 'int',
@@ -72,8 +72,38 @@ class Organizacion extends Model
         'youtube',
         'facebook',
         'twitter',
-
+        'dia_timesheet',
+        'inicio_timesheet',
+        'fin_timesheet',
+        'fecha_registro_timesheet',
+        'semanas_min_timesheet',
+        'semanas_faltantes',
+        'semanas_adicionales',
     ];
+
+    //Redis methods
+    public static function getLogo()
+    {
+        return Cache::remember('getLogo_organizacion', 3600 * 24, function () {
+            return self::select('id', 'logotipo', 'empresa')->first();
+        });
+    }
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('organizacion_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
+
+    //Redis methods
+    public static function getFirst()
+    {
+        return Cache::remember('organizacion_first', 3600 * 24, function () {
+            return self::get()->first();
+        });
+    }
 
     public function getLogotipoAttribute($value)
     {
@@ -83,6 +113,17 @@ class Organizacion extends Model
         }
 
         return $logotipo;
+    }
+
+    public function getFechaMinTimesheetAttribute($value)
+    {
+        if ($this->semanas_min_timesheet) {
+            $fecha = Carbon::now()->startOfWeek()->subWeeks($this->semanas_min_timesheet)->format('Y-m-d');
+        } else {
+            $fecha = Carbon::now()->startOfWeek()->subWeeks(1000)->format('Y-m-d');
+        }
+
+        return $fecha;
     }
 
     public function team()

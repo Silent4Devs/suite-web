@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('content')
-    @can('recurso_create')
-
+    @can('procesos_agregar')
+        <h5 class="col-12 titulo_general_funcion">Procesos</h5>
+        @include('flash::message')
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Procesos</strong></h3>
                 @include('flash::message')
-            </div>
-
+            </div> --}}
         @endcan
         <div class="card-body datatable-fix">
             <table class="table table-bordered tbl-categorias w-100">
@@ -16,20 +16,20 @@
                         <th></th>
                         <th>
                         </th>
-                        <th class="estilotd contratos-table">Codigo&nbsp;<?php for($i = 0; $i < 20; $i++): ?>&nbsp;<?php endfor; ?>
+                        <th class="estilotd contratos-table">Codigo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </th>
                         <th>
-                            Nombre del proceso
+                            Nombre&nbsp;del&nbsp;proceso
                         </th>
 
-                        <th class="estilotd contratos-table">Macroproceso&nbsp;<?php for($i = 0; $i < 60; $i++): ?>&nbsp;<?php endfor; ?>
+                        <th class="estilotd contratos-table">Macroproceso&nbsp;
                         </th>
-                        {{-- <th>
+                        <th>
                             Descripción
-                        </th> --}}
-                        {{-- <th>
+                        </th>
+                        <th>
                             Opciones
-                        </th> --}}
+                        </th>
                     </tr>
 
                 </thead>
@@ -109,11 +109,11 @@
 
             ];
 
-            @can('recurso_create')
+            @can('procesos_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar proceso',
-                url: "{{ route('admin.documentos.create') }}",
+                url: "{{ route('admin.procesos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -145,20 +145,56 @@
                     },
                     {
                         data: 'nombre',
-                        name: 'nombre'
+                        name: 'nombre',
+                        render: function(data, type, row) {
+                            // return data with justify left
+                            return `<div style="text-align:left">${data}</div>`;
+
+                        }
                     },
                     {
                         data: 'macroproceso',
-                        name: 'macroproceso'
+                        name: 'macroproceso',
+                        render: function(data, type, row) {
+                            // return data with justify left
+                            return `<div style="text-align:left">${data}</div>`;
+
+                        }
                     },
-                    // {
-                    //     data: 'descripcion',
-                    //     name: 'descripcion'
-                    // },
-                    // {
-                    //     data: 'actions',
-                    //     name: '{{ trans('global.actions') }}'
-                    // }
+                    {
+                        data: 'descripcion',
+                        name: 'descripcion',
+                        render: function(data, type, row) {
+                            // return data with justify left
+                            let descripcion = `${data.substring(0, 100)}...`;
+                            if (data.length <= 100) {
+                                descripcion = data;
+                            }
+                            return `<div style="text-align:justify">${descripcion}</div>`;
+
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            //create buttons for show, edit, delete
+                            let buttons = `
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    @can('procesos_ver')
+                                    <a href="{{ route('admin.procesos.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
+                                    @endcan
+                                    @can('procesos_editar')
+                                    <a href="{{ route('admin.procesos.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    @can('procesos_eliminar')
+                                   ${row.documento_id==null?` <button onclick="Eliminar(this)" data-url="{{ route('admin.procesos.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Ver"><i class="fas fa-trash-alt"></i></button>`:''}
+                                   @endcan
+                                </div>
+                            `;
+                            buttons = buttons.replaceAll(':id', data);
+                            return buttons;
+                        }
+                    }
                 ],
                 orderCellsTop: true,
                 order: [
@@ -166,9 +202,40 @@
                 ]
             };
             let table = $('.tbl-categorias').DataTable(dtOverrideGlobals);
-
+            window.Eliminar = (e) => {
+                let url = $(e).data('url');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(data) {
+                                if (data.success) {
+                                    Swal.fire(
+                                        'Eliminado!',
+                                        'El proceso ha sido eliminado.',
+                                        'success'
+                                    ).then().then(() => {
+                                        table.ajax.reload();
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
         });
     </script>
-
-
 @endsection

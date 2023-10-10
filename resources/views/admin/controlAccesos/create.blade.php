@@ -2,18 +2,112 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.control-accesos.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Registrar: Control de Acceso</h5>
 <div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Control de Acceso </h3>
-    </div>
-
     <div class="card-body">
         <form method="POST" action="{{ route("admin.control-accesos.store") }}" enctype="multipart/form-data" class="row">
             @csrf
+
+                <div class="form-group col-sm-12">
+                    <label class="required" for="tipo"><i
+                            class="fas fa-file-signature iconos-crear"></i></i>Tipo</label>
+                    <div style="float: right;">
+                        <button id="btnAgregarTipo" onclick="event.preventDefault();"
+                            class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                            data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo"
+                            data-whatever="@mdo" title="Agregar tipo de permiso"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                    @livewire('permiso-component')
+                    @livewire('tipo-permiso-select-component')
+
+                </div>
+
+                <div class="form-group col-sm-4 mt-3">
+                    <div class="form-group">
+                        <label class="required" for='responsable_id'><i
+                                class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                        <select
+                            class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
+                            name='responsable_id' id='responsable_id' required>
+                            <option value="">Seleccione un responsable</option>
+                            @foreach ($responsables as $responsable)
+                                <option value="{{ $responsable->id }}"
+                                    data-area="{{ $responsable->area->area }}"
+                                    data-puesto="{{ $responsable->puesto }}"
+                                    {{ old('responsable_id') == $responsable->id ? 'selected' : '' }}>
+                                    {{ $responsable->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('responsable_id'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('responsable_id') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4 mt-3">
+                    <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
+                    <div class="form-control" id="responsable_puesto" readonly></div>
+                </div>
+
+
+                <div class="form-group col-sm-12 col-md-4 col-lg-4 mt-3">
+                    <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
+                    <div class="form-control" id="responsable_area" readonly></div>
+                </div>
+
+            <div class=" mb-4 ml-3 w-100" style="border-bottom: solid 2px #345183;">
+                <span style="font-size: 17px; font-weight: bold;">
+                    Periodo</span>
+            </div>
+
+            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                <label class="required" for="fecha_inicio">
+                    <i class="fas fa-calendar-alt iconos-crear"></i>
+                    Fecha Inicio
+                </label>
+                <input required class="form-control" type="date" min="1945-01-01"
+                id="fecha_inicio" name="fecha_inicio" value="{{ old('fecha_inicio')}}">
+                <span class="fecha_inicio_error text-danger errores"></span>
+                @if ($errors->has('fecha_inicio'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_inicio') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                <label class="required" for="fecha_fin">
+                    <i class="fas fa-calendar-alt iconos-crear"></i>
+                    Fecha Fin
+                </label>
+                <input required class="form-control" type="date" min="1945-01-01"
+                id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}">
+                <span class="fecha_fin_error text-danger errores"></span>
+                @if ($errors->has('fecha_fin'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_fin') }}
+                    </div>
+                @endif
+            </div>
             <div class="form-group col-md-12">
-                <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
-                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+                <label class="required"><i class="fas fa-align-left iconos-crear"></i>Justificación</label>
+                <textarea required class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}"
+                    name="justificacion" id="justificacion">{{ old('justificacion') }}</textarea>
+                @if($errors->has('justificacion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('justificacion') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.controlAcceso.fields.descripcion_helper') }}</span>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label class="required" for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
+                <textarea required class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
+                    name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('descripcion') }}
@@ -42,7 +136,7 @@
 
 
             <div class="form-group col-12 text-right">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route("admin.control-accesos.index") }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -105,5 +199,32 @@
          return _results
      }
 }
+</script>
+
+<script>
+    if (document.querySelector('#responsable_id') != null) {
+
+        let responsable = document.querySelector('#responsable_id');
+        let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+        let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+        document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto_init);
+        document.getElementById('responsable_area').innerHTML = recortarTexto(area_init);
+
+        responsable.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
+            let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+            console.log(e.target.options[e.target.selectedIndex]);
+            document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto)
+            document.getElementById('responsable_area').innerHTML = recortarTexto(area)
+        })
+    }
+
+    function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
 </script>
 @endsection

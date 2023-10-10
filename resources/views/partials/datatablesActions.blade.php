@@ -80,12 +80,40 @@
         @endif
 
     @endif
+    
+    @if (Request::route()->getName() == 'admin.auditoria-anuals.index')
+        <button  class="btn btn-sm" data-toggle="modal" data-auditoria-id="{{ $row->id }}"
+            data-target="#largeModal">
+            <i class="fas fa-file-alt" title="Abrir programa"></i>
+        </button>
+    @endif
+
+    @if (Request::route()->getName() == 'admin.entendimiento-organizacions.index')
+    @can('analisis_foda_duplicar')
+    <button class="mr-2 rounded btn btn-sm">
+        <i class="fas fa-copy" title="Duplicar FODA" data-action="copiaFoda" data-id="{{ $row->id }}"></i>
+    </button>
+    @endcan
+    @endif
 
     @can($viewGate)
         <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.' . $crudRoutePart . '.show', $row->id) }}">
             {{-- {{ trans('global.view') }} --}} <i class="fas fa-eye" data-toggle="tooltip" data-placement="top" title="Ver"></i>
         </a>
     @endcan
+    @if (Request::route()->getName() == 'admin.puestos.index')
+        @can('puestos_asignar_competencias')
+            <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.ev360-competencias-por-puesto.create', $row->id) }}">
+                {{-- {{ trans('global.view') }} --}} <i class="bi bi-bookmark-star" title="Asignar Competencias"></i>
+            </a>
+        @endcan
+    @endif
+    @if (Request::route()->getName() == 'admin.carta-aceptacion.index')
+        <a class="mr-2 rounded btn btn-sm" href="">
+            {{-- {{ trans('global.view') }} --}} <i class="fas fa-envelope" title="Enviar Correo"></i>
+        </a>
+    @endif
+
     @can($editGate)
         <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
             {{-- {{ trans('global.edit') }} --}} <i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i>
@@ -93,15 +121,24 @@
     @endcan
     @can($deleteGate)
 
+
         <form action="{{ route('admin.' . $crudRoutePart . '.destroy', $row->id) }}" method="POST"
             class="{{ $row->id }}">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="btn btn-sm text-danger {{ $row->id }} rounded">
-                {{-- {{ trans('global.delete') }} --}} <i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
-                    title="Eliminar"></i>
-            </div>
-
+            @if (Request::route()->getName() == 'admin.roles.index')
+                @if ($row->id != 1 && $row->id != 4)
+                    <div class="btn btn-sm text-danger {{ $row->id }} rounded">
+                        {{-- {{ trans('global.delete') }} --}} <i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
+                            title="Eliminar"></i>
+                    </div>
+                @endif
+            @else
+                <div class="btn btn-sm text-danger {{ $row->id }} rounded">
+                    {{-- {{ trans('global.delete') }} --}} <i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
+                        title="Eliminar"></i>
+                </div>
+            @endif
 
             <style type="text/css">
                 .fondo_delete {
@@ -136,12 +173,14 @@
                     opacity: 0.7;
                     font-size: 70pt;
                 }
-                .eliminar{
+
+                .eliminar {
                     background-color: red;
                     opacity: 0.7;
                     border: none;
                 }
-                .eliminar:hover{
+
+                .eliminar:hover {
                     background-color: red;
                     opacity: 1;
                 }
@@ -182,20 +221,20 @@
 
 
         <!--
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                var btn_delete = document.querySelector('.btn_delete');
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                btn_delete.addEventListener('click', () => {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        var btn_delete = document.querySelector('.btn_delete');
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        btn_delete.addEventListener('click', () => {
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    document.getElementById('fondo_delete').classList.add('ver');
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            document.getElementById('fondo_delete').classList.add('ver');
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    var btn_cancelar = document.querySelector('#cancelar');
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    btn_cancelar.addEventListener('click', () => {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('fondo_delete').classList.remove('ver');
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            var btn_cancelar = document.querySelector('#cancelar');
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            btn_cancelar.addEventListener('click', () => {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                document.getElementById('fondo_delete').classList.remove('ver');
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            </script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    -->
 
 
     @endcan

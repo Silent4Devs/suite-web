@@ -2,18 +2,15 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.evidencias-sgsis.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Registrar: Evidencias de Asignación de Recursos al SGSI</h5>
 <div class="mt-4 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-          <h3 class="mb-1 text-center text-white"> <strong>Registrar:</strong> Evidencias de Asignación de Recursos al SGSI</h3>
-    </div>
-
     <div class="card-body">
         <form method="POST" action="{{ route("admin.evidencias-sgsis.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-md-12">
                 <label class="required" for="nombredocumento"><i class="fas fa-file iconos-crear"></i>Nombre del documento</label>
-                <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}" type="text" name="nombredocumento" id="nombredocumento" value="{{ old('nombredocumento', '') }}" required>
+                <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}" type="text"
+                name="nombredocumento" id="nombredocumento" value="{{ old('nombredocumento', '') }}" required>
                 @if($errors->has('nombredocumento'))
                     <div class="invalid-feedback">
                         {{ $errors->first('nombredocumento') }}
@@ -23,7 +20,8 @@
             </div>
             <div class="form-group col-md-12">
                 <label class="required" for="objetivodocumento"><i class="fas fa-file-alt iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}</label>
-                <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" type="text" name="objetivodocumento" id="objetivodocumento" value="{{ old('objetivodocumento', '') }}" required></textarea>
+                <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" type="text"
+                    name="objetivodocumento" id="objetivodocumento" value="{{ old('objetivodocumento', '') }}" required></textarea>
                 @if($errors->has('objetivodocumento'))
                     <div class="invalid-feedback">
                         {{ $errors->first('objetivodocumento') }}
@@ -32,7 +30,7 @@
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
             </div>
             <div class="form-group col-md-4">
-                <label for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
+                <label class="required" for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
                 <select class="form-control {{ $errors->has('empleados') ? 'is-invalid' : '' }}" name="responsable_evidencia_id" id="responsable_evidencia_id">
                     <option value="">Seleccione una opción</option>
                     @foreach ($empleados as $empleado)
@@ -42,7 +40,7 @@
 
                     @endforeach
                 </select>
-                @if ($errors->has('empleados'))
+                @if ($errors->has('responsable_evidencia_id'))
                 <div class="invalid-feedback">
                     {{ $errors->first('responsable_evidencia_id') }}
                 </div>
@@ -71,8 +69,9 @@
 
 
             <div class="form-group col-md-12 col-sm-12 col-lg-6">
-                <label for="area_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
-                <select class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}" name="area_id" id="area_id">
+                <label class="required" for="area_id"><i class="fas fa-user-tie iconos-crear"></i>Área reponsable del documento</label>
+                <select required class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}"
+                    name="area_id" id="area_id">
                     @foreach ($areas as $area)
                     <option value="{{ $area->id }}">
                         {{ $area->area}}
@@ -88,8 +87,10 @@
             </div>
 
             <div class="form-group col-md-6">
-                <label for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del documento</label>
-                <input class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento') }}">
+                <label class="required" for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del documento</label>
+                <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date"
+                name="fechadocumento" id="fechadocumento" min="1945-01-01"
+                value="{{ old('fechadocumento') }}">
                 @if($errors->has('fechadocumento'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechadocumento') }}
@@ -116,7 +117,7 @@
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
             </div> --}}
             <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route("admin.evidencias-sgsis.index") }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -197,16 +198,24 @@ document.addEventListener('DOMContentLoaded', function() {
         let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
         let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
 
-        document.getElementById('puesto_reviso').innerHTML = puesto_init;
-        document.getElementById('area_reviso').innerHTML = area_init;
+        document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
+        document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
         responsable.addEventListener('change', function(e) {
             e.preventDefault();
             let area = this.options[this.selectedIndex].getAttribute('data-area');
             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('puesto_reviso').innerHTML = puesto;
-            document.getElementById('area_reviso').innerHTML = area;
+            document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
+            document.getElementById('area_reviso').innerHTML = recortarTexto(area);
         })
     });
+
+
+    function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
 
 </script>
 

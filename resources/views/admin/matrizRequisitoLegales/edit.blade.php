@@ -2,12 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
-
+    <h5 class="col-12 titulo_general_funcion">Editar: Matriz de Requisitos Legales</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px">
-            <h3 class="mb-1 text-center text-white"><strong>Editar:</strong> Matriz de Requisitos Legales </h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" class="row"
                 action="{{ route('admin.matriz-requisito-legales.update', [$matrizRequisitoLegale->id]) }}"
@@ -46,10 +42,10 @@
                 </div>
 
                 <div class="form-group col-sm-4">
-                    <label> <i class="fas fa-question-circle iconos-crear"></i>Tipo</label><i class="fas fa-info-circle"
+                    <label class="required"> <i class="fas fa-question-circle iconos-crear"></i>Tipo</label><i class="fas fa-info-circle"
                         style="font-size:12pt; float: right;"
                         title="Seleccionar el tipo de requisito según el origen de la obligación"></i>
-                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo">
+                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo" required>
                         <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
                         @foreach (App\Models\MatrizRequisitoLegale::TIPO_SELECT as $key => $label)
@@ -82,8 +78,8 @@
                     <label for="fechaexpedicion"><i
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion') }}</label>
                     <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}"
-                        type="date" name="fechaexpedicion" id="fechaexpedicion"
-                        value="{{ old('fechaexpedicion', \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion))->format('Y-m-d') }}">
+                        type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
+                        value="{{ old('fechaexpedicion', $matrizRequisitoLegale->fechaexpedicion ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion)->format('Y-m-d'): null) }}">
                     @if ($errors->has('fechaexpedicion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechaexpedicion') }}
@@ -97,8 +93,8 @@
                     <label for="fechavigor"> <i
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
                     <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
-                        name="fechavigor" id="fechavigor"
-                        value="{{ old('fechavigor', \Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor))->format('Y-m-d') }}">
+                        name="fechavigor" id="fechavigor" min="1945-01-01"
+                        value="{{ old('fechavigor', $matrizRequisitoLegale->fechavigor ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor)->format('Y-m-d'):null) }}">
                     @if ($errors->has('fechavigor'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechavigor') }}
@@ -109,11 +105,18 @@
                 </div>
 
                 <div class="form-group col-sm-4">
-                    <label for="periodicidad_cumplimiento"><i class="far fa-clock iconos-crear"></i> Periodicidad de
+                    <label class="required" for="periodicidad_cumplimiento"><i class="far fa-clock iconos-crear"></i> Periodicidad de
                         verificación</label>
-                    <input class="form-control {{ $errors->has('periodicidad_cumplimiento') ? 'is-invalid' : '' }}"
-                        type="text" name="periodicidad_cumplimiento" id="periodicidad_cumplimiento"
-                        value="{{ old('periodicidad_cumplimiento', $matrizRequisitoLegale->periodicidad_cumplimiento) }}">
+                    <select   class="form-control {{ $errors->has('periodicidad_cumplimiento') ? 'is-invalid' : '' }}"
+                        type="text" name="periodicidad_cumplimiento" id="periodicidad_cumplimiento" required>
+                    <option disabled value="{{ old('periodicidad_cumplimiento', $matrizRequisitoLegale->periodicidad_cumplimiento) }}">
+                    </option>
+                    @foreach (App\Models\MatrizRequisitoLegale::PERIODICIDAD_SELECT as $key => $label)
+                        <option value="{{ $key }}"
+                            {{ old('periodicidad_cumplimiento', '') === (string) $key ? 'selected' : '' }}>
+                            {{ $label }}</option>
+                    @endforeach
+                    </select>
                     @if ($errors->has('periodicidad_cumplimiento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('periodicidad_cumplimiento') }}
@@ -124,11 +127,11 @@
                 </div>
 
                 <div class="form-group col-sm-12">
-                    <label for="requisitoacumplir"> <i class="fas fa-clipboard-list iconos-crear"></i>Requisito(s) a
+                    <label class="required" for="requisitoacumplir"> <i class="fas fa-clipboard-list iconos-crear"></i>Requisito(s) a
                         cumplir</label>
                     <textarea class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }}"
                         type="text" name="requisitoacumplir"
-                        id="requisitoacumplir">{{ old('requisitoacumplir', $matrizRequisitoLegale->requisitoacumplir) }}</textarea>
+                        id="requisitoacumplir" required>{{ old('requisitoacumplir', $matrizRequisitoLegale->requisitoacumplir) }}</textarea>
                     @if ($errors->has('requisitoacumplir'))
                         <div class="invalid-feedback">
                             {{ $errors->first('requisitoacumplir') }}
@@ -150,8 +153,20 @@
                         </div>
                     @endif
                 </div>
+                <div class="form-group col-sm-12">
+                    <label for="cumplimiento_organizacion"><i class="fas fa-clipboard-check iconos-crear"></i> Forma en que la
+                        organización cumple con el requisito</label><i class="fas fa-info-circle"
+                        style="font-size:12pt; float: right;" title="Especificar"></i>
+                    <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" type="text"
+                        name="cumplimiento_organizacion" id="cumplimiento_organizacion">{{ old('cumplimiento_organizacion', $matrizRequisitoLegale->cumplimiento_organizacion) }}</textarea>
+                    @if ($errors->has('alcance'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('cumplimiento_organizacion') }}
+                        </div>
+                    @endif
+                </div>
 
-
+{{--
                 <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#345183">
                     <p class="text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
                         Verificación del Requisito</p>
@@ -221,7 +236,7 @@
                 </div>
 
 
-                {{-- INICIO PLAN ACCIÓN --}}
+
                 <div class="row w-100 align-items-center" style="margin-left: 1px;">
                     @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
                     <div class="pl-0 ml-0 col-2">
@@ -233,7 +248,7 @@
                     @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de Requisitos
                     Legales'])
                 </div>
-                {{-- FIN PLAN ACCIÓN --}}
+
 
 
                 <div class="mb-3 col-sm-12">
@@ -306,11 +321,11 @@
                             {{ $errors->first('comentarios') }}
                         </div>
                     @endif
-                </div>
+                </div> --}}
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

@@ -8,23 +8,25 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Minutasaltadireccion extends Model implements HasMedia
+class Minutasaltadireccion extends Model implements HasMedia, Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     // ESTATUS MINUTAS
     const EN_ELABORACION = 1;
+
     const EN_REVISION = 2;
+
     const PUBLICADO = 3;
+
     const DOCUMENTO_RECHAZADO = 4;
+
     const DOCUMENTO_OBSOLETO = 5;
 
     protected $appends = [
@@ -75,7 +77,7 @@ class Minutasaltadireccion extends Model implements HasMedia
 
     public function responsable()
     {
-        return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
+        return $this->belongsTo(Empleado::class, 'responsable_id', 'id')->alta();
     }
 
     // public function getFechareunionAttribute($value)
@@ -152,6 +154,21 @@ class Minutasaltadireccion extends Model implements HasMedia
 
     public function participantes()
     {
-        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->with('area');
+        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->alta()->with('area');
     }
+
+    public function documentos()
+    {
+        return $this->hasMany(FilesRevisonDireccion::class, 'revision_id', 'id');
+    }
+
+    public function externos()
+    {
+        return $this->hasMany(ExternosMinutaDireccion::class, 'minuta_id', 'id');
+    }
+
+    // public function documentoss()
+    // {
+    //     return $this->belongsToMany(FilesRevisonDireccion::class, 'activos_contenedores', 'activo_id', 'contenedor_id');
+    // }
 }

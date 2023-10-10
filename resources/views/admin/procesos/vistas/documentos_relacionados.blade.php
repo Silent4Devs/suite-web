@@ -24,26 +24,26 @@
 
                     <div class="text-center row">
                         <div class="col-sm-6 col-lg-6">
-                            <img class="rounded-circle" title="{{ $documento_relacionado->elaborador->name }}"
-                                src="{{ asset('storage/empleados/imagenes') . '/' . $documento_relacionado->elaborador->avatar }}"
+                            <img class="rounded-circle" title="{{ $documento_relacionado->elaborador ? $documento_relacionado->elaborador->name : 'Sin registro' }}"
+                                src="{{ asset('storage/empleados/imagenes')}}/{{ $documento_relacionado->elaborador ?  $documento_relacionado->elaborador->avatar : 'user.png' }}"
                                 style="width:35px;">
                             <p style="font-size:12px">Elaboró</p>
                         </div>
                         <div class="col-sm-6 col-lg-6">
-                            <img class="rounded-circle" title="{{ $documento_relacionado->revisor->name }}"
-                                src="{{ asset('storage/empleados/imagenes') . '/' . $documento_relacionado->revisor->avatar }}"
+                            <img class="rounded-circle" title="{{ $documento_relacionado->revisor ?  $documento_relacionado->revisor->name : 'Sin registro'}}"
+                                src="{{ asset('storage/empleados/imagenes')}} {{$documento_relacionado->revisor ? $documento_relacionado->revisor->avatar : 'user.png' }}"
                                 style="width:35px;">
                             <p style="font-size:12px">Revisó</p>
                         </div>
                         <div class="col-sm-6 col-lg-6">
-                            <img class="rounded-circle" title="{{ $documento_relacionado->aprobador->name }}"
-                                src="{{ asset('storage/empleados/imagenes') . '/' . $documento_relacionado->aprobador->avatar }}"
+                            <img class="rounded-circle" title="{{ $documento_relacionado->aprobador ? $documento_relacionado->aprobador->name : 'Sin registro' }}"
+                                src="{{ asset('storage/empleados/imagenes')}}/{{$documento_relacionado->aprobador ? $documento_relacionado->aprobador->avatar : 'user.png'}}"
                                 style="width:35px;">
                             <p style="font-size:12px">Aprobó</p>
                         </div>
                         <div class="col-sm-6 col-lg-6">
-                            <img class="rounded-circle" title="{{ $documento_relacionado->responsable->name }}"
-                                src="{{ asset('storage/empleados/imagenes') . '/' . $documento_relacionado->responsable->avatar }}"
+                            <img class="rounded-circle" title="{{ $documento_relacionado->responsable ? $documento_relacionado->responsable->name : 'Sin registro'}}"
+                                src="{{ asset('storage/empleados/imagenes')}} {{$documento_relacionado->responsable ? $documento_relacionado->responsable->avatar : 'user.png' }}"
                                 style="width:35px;">
                             <p style="font-size:12px">Responsable</p>
                         </div>
@@ -55,12 +55,12 @@
         </div>
 
     @empty
-        {{-- <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        {{-- <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
 
                             <div class="row w-100">
                                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                     <div class="w-100">
-                                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                     </div>
                                 </div>
                                 <div class="col-11">
