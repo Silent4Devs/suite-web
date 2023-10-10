@@ -201,12 +201,12 @@ class RequisicionesCreateComponent extends Component
                         $this->emit('cambiarTab', 'contact');
 
                         $this->dataFirma();
+
                         $this->disabled = 'disabled';
                     } else {
                         $this->provedores_indistinto_catalogo = collect();
                         $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
                             'requisicion_id' =>   $this->nueva_requisicion->id,
-                            //  'proveedor_indistinto_id' =>  $data['proveedor_otro'.$i],
                             'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
                             'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                         ]);
