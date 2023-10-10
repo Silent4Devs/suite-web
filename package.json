@@ -53,5 +53,10 @@
         "sweetalert2": "^10.16.9",
         "vue-loader": "^15.9.8",
         "vuex": "^3.6.2"
+    },
+    "husky": {
+        "hooks": {
+            "pre-push": "vendor/bin/php-cs-fixer fix --config php-cs-fixer.php && php ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --config php-cs-fixer.php"
+        }
     }
 }
