@@ -212,7 +212,7 @@
                             } else {
                                 html += `
                                     <a class="dropdown-item disabled" href="#">
-                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (No permitido)</a>
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (En uso)</a>
                                 `;
                             }
 
