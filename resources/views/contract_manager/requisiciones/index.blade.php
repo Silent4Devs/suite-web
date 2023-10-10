@@ -49,7 +49,10 @@
                         <td>{{$requisicion->user}}</td>
                         <td>
                             <form action="{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}" method="DELETE">
+                                @if ($requisicion->estado === "rechazado")
                                 <a href="{{ route('contract_manager.requisiciones.edit',$requisicion->id )}}"><i class="fas fa-edit"></i></a>
+                                @endif
+
                                 <a href="{{ route('contract_manager.requisiciones.show',$requisicion->id )}}"><i class="fa-solid fa-print"></i></a>
                                 @method('DELETE')
                                 <button type="submit" title="delete" style="border: none; background-color:transparent;">
