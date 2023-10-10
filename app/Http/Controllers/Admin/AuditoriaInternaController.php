@@ -122,9 +122,10 @@ class AuditoriaInternaController extends Controller
             'alcance' => 'required',
             'objetivo' => 'required',
             'id_auditoria' => 'required',
-            'nombre_auditoria' => 'required',
+            'nombre_auditoria' => 'required|max:250',
             'criterios_auditoria' => 'required',
             'fecha_inicio' => 'nullable|date',
+            'auditor_externo' => 'max:250',
         ]);
 
         $auditoriaInterna = AuditoriaInterna::create($request->all());
@@ -160,9 +161,10 @@ class AuditoriaInternaController extends Controller
             'alcance' => 'required',
             'objetivo' => 'required',
             'id_auditoria' => 'required',
-            'nombre_auditoria' => 'required',
+            'nombre_auditoria' => 'required|max:250',
             'criterios_auditoria' => 'required',
             'fecha_inicio' => 'nullable|date',
+            'auditor_externo' => 'max:250',
         ]);
 
         $auditoriaInterna->update($request->all());
