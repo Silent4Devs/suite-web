@@ -454,6 +454,18 @@
                 isReadOnly: true,
             },
            @endforeach
+           @foreach ($audits as $audit)
+            {
+                id: 'revisiones{{ $audit->id }}',
+                calendarId: '12',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revision de entregables: {{ $audit->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{ \Carbon\Carbon::parse($audit->fechainicio)->format('Y-m-d') }}',
+                end: '{{ \Carbon\Carbon::parse($audit->fechafin)->format('Y-m-d') }}',
+                isReadOnly: true,
+            },
+           @endforeach
         ];
     </script>
 
