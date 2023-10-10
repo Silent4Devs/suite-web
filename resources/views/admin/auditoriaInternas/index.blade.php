@@ -5,16 +5,32 @@
     @can('auditoria_interna_create')
     @endcan
     <h5 class="col-12 titulo_general_funcion">Informe de Auditoría </h5>
-    <div class="mt-5 card">
-        {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="ml-4 row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.auditoria-internas.create') }}">
-                    Agregar <strong>+</strong>
-            </a>
+    <div class="card card-body" style="background-color: #7587D0; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <h4>¿Qué es Informe de auditoría?</h4>
+                <p>
+                    Es un documento que describe los resultados de una auditoría.
+                </p>
+                <p>
+                    Los informes de auditoría son una herramienta importante para mejorar la eficacia y eficiencia de los
+                    sistemas y procesos. Los informes de auditoría ayudan a las organizaciones a identificar y corregir las
+                    deficiencias, lo que puede conducir a una mejora del rendimiento y la reducción de los riesgos.
+                </p>
+            </div>
         </div>
-    </div> --}}
+    </div>
+    <div class="mt-5 card card-body">
+        <div class="text-right mb-5">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route('admin.auditoria-internas.create') }}">
+                    Agregar <strong>+</strong>
+                </a>
+            </div>
+        </div>
 
-        <div class="card-body datatable-fix">
+        <div class="datatable-fix">
             <table class="table table-bordered w-100 datatable-AuditoriaInterna">
                 <thead class="thead-dark">
                     <tr>
