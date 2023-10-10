@@ -30,12 +30,11 @@ Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@Aj
 
 Auth::routes();
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
-    //Multitenat
-    Route::post('tenant','TenantController@store')->name("tenant.store");
-    Route::resource('tenant', 'TenantController')->except(["store"]);
-    // Route::get('tenant/create', 'TenantController@create')->name('tenant.create');
-    Route::delete('tenant/destroy', 'TenantController@massDestroy')->name('tenant.massDestroy');
+//Multitenat
+Route::post('tenant', 'TenantController@store')->name("tenant.store");
+Route::resource('tenant', 'TenantController')->except(["store"]);
+// Route::get('tenant/create', 'TenantController@create')->name('tenant.create');
+Route::delete('tenant/destroy', 'TenantController@massDestroy')->name('tenant.massDestroy');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
     Route::get('/', 'InicioUsuarioController@index')->name('inicio-Usuario.index');

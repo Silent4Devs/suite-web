@@ -13,10 +13,8 @@ use App\Models\ContractManager\ProveedorOC as ContractManagerProveedorOC;
 use App\Models\ContractManager\ProveedorRequisicion as ContractManagerProveedorRequisicion;
 use App\Models\ContractManager\Requsicion as ContractManagerRequsicion;
 use App\Models\ContractManager\Sucursal as ContractManagerSucursal;
-use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\User;
-use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -75,7 +73,6 @@ class RequisicionesEditComponent extends Component
     public $provedores_colllection_catalogo;
 
     public $requi_firmar;
-
 
     public function mount($requisiciondata)
     {

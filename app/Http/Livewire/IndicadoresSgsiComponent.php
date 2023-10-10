@@ -13,7 +13,7 @@ use Livewire\Component;
 class IndicadoresSgsiComponent extends Component
 {
     use LivewireAlert;
-    
+
     public $nombre;
 
     public $description;

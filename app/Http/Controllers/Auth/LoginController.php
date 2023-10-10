@@ -9,7 +9,6 @@ use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Svg\Tag\Path;
 
 class LoginController extends Controller
 {
@@ -61,7 +60,6 @@ class LoginController extends Controller
             // }
 
             return '/admin/inicioUsuario#datos';
-
         }
 
         return '/admin/inicioUsuario#datos';

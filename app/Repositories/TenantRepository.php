@@ -8,7 +8,7 @@ use App\Models\Tenant;
  * Class AmenazaRepository.
  * @version August 5, 2021, 6:19 pm UTC
  */
-class tenantRepository extends BaseRepository
+class TenantRepository extends BaseRepository
 {
     /**
      * @var array

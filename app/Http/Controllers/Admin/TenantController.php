@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Tenant;
-use Illuminate\Support\Facades\File;
-use Yajra\DataTables\Facades\DataTables;
-use Flash;
-use App\Repositories\TenantRepository;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Models\Tenant;
+use App\Repositories\TenantRepository;
+use Flash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class TenantController extends Controller
 {
@@ -18,11 +18,13 @@ class TenantController extends Controller
     /** @var TenantRepository */
     private $tenantRepository;
 
-    public function __construct(TenantRepository $tenantRepo){
+    public function __construct(TenantRepository $tenantRepo)
+    {
         $this->tenantRepository = $tenantRepo;
     }
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         if ($request->ajax()) {
             $query = Tenant::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -56,52 +58,59 @@ class TenantController extends Controller
         return view('admin.tenant.index');
     }
 
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         $tenant = Tenant::create([
-        "id" => $request->id,
+        'id' => $request->id,
         'plan' => 'free',
         ]);
         $tenant->domains()->create([
-            "domain"=>$request->id.".localhost"
+            'domain'=>$request->id . '.localhost',
         ]);
-        $tenantDirectory="tenant".$request->id;
-        Storage::disk("tenant")->makeDirectory($tenantDirectory."/app/public");
+        $tenantDirectory = 'tenant' . $request->id;
+        Storage::disk('tenant')->makeDirectory($tenantDirectory . '/app/public');
+
         //File::makeDirectory("storage/".$tenantDirectory);
         return redirect()->route('admin.tenant.index');
-        }
-
-
-    public function create(){
-            return view('admin.tenant.create');
     }
 
-    public function edit($id){
-    $tenant = $this->tenantRepository->find($id);
-    if (empty($tenant))
-        {
-        Flash::error('Tenant not found');
-        return redirect(route('admin.tenant.index'));
-        }
-    return view('admin.tenant.edit')->with('tenant', $tenant);
+    public function create()
+    {
+        return view('admin.tenant.create');
     }
 
-    public function update(Request $request, $id){
+    public function edit($id)
+    {
         $tenant = $this->tenantRepository->find($id);
-        if (empty($tenant))
-        {
+        if (empty($tenant)) {
             Flash::error('Tenant not found');
+
+            return redirect(route('admin.tenant.index'));
+        }
+
+        return view('admin.tenant.edit')->with('tenant', $tenant);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $tenant = $this->tenantRepository->find($id);
+        if (empty($tenant)) {
+            Flash::error('Tenant not found');
+
             return redirect(route('admin.tenant.index'));
         }
         $tenant = $this->tenantRepository->update($request->all(), $id);
         // $tenant->domains()->edit([
         //     "domain"=>$request->id.".localhost"]);
         Flash::success('Tenant actualizado.');
+
         return redirect(route('admin.tenant.index'));
     }
 
-    public function destroy(Tenant $tenant){
+    public function destroy(Tenant $tenant)
+    {
         $tenant->delete();
+
         return redirect(route('admin.tenant.index'));
     }
 }

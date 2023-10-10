@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers\Admin;
 
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
@@ -72,21 +72,21 @@ class EmpleadoController extends Controller
         return view('admin.empleados.index', compact('ceo_exists', 'logo_actual', 'empresa_actual'));
     }
 
-    public function getAvatarAttribute()
+    public function getCertificaciones($empleado)
     {
         $certificaciones = CertificacionesEmpleados::where('empleado_id', intval($empleado))->orderBy('id')->get();
 
-        return $this->foto;
+        return datatables()->of($certificaciones)->toJson();
     }
 
-    public function area()
+    public function getEducacion($empleado)
     {
         $educacions = EducacionEmpleados::where('empleado_id', intval($empleado))->orderBy('id')->get();
 
         return datatables()->of($educacions)->toJson();
     }
 
-    public function sede()
+    public function getExperiencia($empleado)
     {
         $experiencias = ExperienciaEmpleados::where('empleado_id', intval($empleado))->orderByDesc('inicio_mes')->get();
 
@@ -94,12 +94,14 @@ class EmpleadoController extends Controller
         return datatables()->of($experiencias)->toJson();
     }
 
-    public function empleado()
+    public function getCursos($empleado)
     {
-        return $this->belongsTo(self::class, 'supervisor_id');
+        $cursos = CursosDiplomasEmpleados::where('empleado_id', intval($empleado))->get();
+
+        return datatables()->of($cursos)->toJson();
     }
 
-    public function analisis_de_riesgos()
+    public function create()
     {
         abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::getaltaAll();
@@ -127,7 +129,7 @@ class EmpleadoController extends Controller
         return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
     }
 
-    /*public function documentos()
+    public function onlyStore($request)
     {
         $experiencias = json_decode($request->experiencia);
         $educacions = json_decode($request->educacion);
@@ -438,18 +440,16 @@ class EmpleadoController extends Controller
 
     public function store(Request $request)
     {
-        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id');
-    }
+        $empleado = $this->onlyStore($request);
 
         return response()->json(['status' => 'success', 'message' => 'Empleado agregado'], 200);
 
         // return redirect()->route('admin.empleados.index')->with('success', 'Guardado con éxito');
     }
 
-    public function entendimiento_organizacions()
+    public function storeWithCompetencia(Request $request)
     {
-        return $this->hasMany(EntendimientoOrganizacion::class, 'id_elabora');
-    }
+        $empleado = $this->onlyStore($request);
 
         return redirect()->route('admin.empleados.edit', $empleado)->with('success', 'Guardado con éxito');
 
@@ -497,7 +497,7 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function matriz_riesgos()
+    public function storeCertificaciones(Request $request, $empleado)
     {
         if ($request->esVigente == 'true') {
             $request->validate([
@@ -908,7 +908,13 @@ class EmpleadoController extends Controller
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
 
-    public function tasks()
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
         abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
@@ -1045,8 +1051,9 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $this->hasMany(ExperienciaEmpleados::class);
-    }
+        $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
+        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $validateSupervisor = 'nullable|exists:empleados,id';
 
         if ($ceo_exists) {
             if ($ceo->id == intval($id)) {
@@ -1220,7 +1227,13 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Curriculum Actualizado', 'from' => 'curriculum'], 200, $request->all());
     }
 
-    public function empleado_cursos()
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Empleado $empleado)
     {
         abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $empleado->delete();
@@ -1229,27 +1242,59 @@ class EmpleadoController extends Controller
         return response()->json(['success' => true, 'empleado' => $empleado->name, 'message' => 'Empleado dado de baja', 'from' => 'rh'], 200);
     }
 
-    public function empleado_documentos()
+    public function deleteCertificaciones(Request $request, $certificacion)
     {
-        return $this->hasMany(EvidenciasDocumentosEmpleados::class);
+        if ($request->ajax()) {
+            $certificacion = CertificacionesEmpleados::find(intval($certificacion));
+            $u_certificacion = $certificacion->delete();
+            if ($u_certificacion) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
     }
 
-    public function empleado_documentos_certificados()
+    public function deleteCursos(Request $request, $curso)
     {
-        return $this->hasMany(EvidenciasDocumentosEmpleados::class);
+        if ($request->ajax()) {
+            $curso = CursosDiplomasEmpleados::find(intval($curso));
+            $u_curso = $curso->delete();
+            if ($u_curso) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
     }
 
-    public function foto_organizacion()
+    public function deleteEducacion(Request $request, $educacion)
     {
-        return $this->hasMany(Organizacion::class);
+        if ($request->ajax()) {
+            $educacion = EducacionEmpleados::find(intval($educacion));
+            $u_educacion = $educacion->delete();
+            if ($u_educacion) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
     }
 
-    public function objetivos()
+    public function deleteExperiencia(Request $request, $experiencia)
     {
-        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id');
+        if ($request->ajax()) {
+            $experiencia = ExperienciaEmpleados::find(intval($experiencia));
+            $u_experiencia = $experiencia->delete();
+            if ($u_experiencia) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
     }
 
-    public function perfil()
+    public function getEmpleados(Request $request)
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
@@ -1276,23 +1321,19 @@ class EmpleadoController extends Controller
         */
     }
 
-    // public function getJefeInmediatoAttribute()
-    // {
-    //     return $this->supervisor ? $this->supervisor->id : $this->id;
-    // }
-
-    public function getEmpleadosMismaAreaAttribute()
+    public function getListaEmpleados(Request $request)
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
                 $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
 
-        return $by_area;
+                return json_encode($usuarios);
+            }
+        }
     }
-    //declaraciones
 
-    public function getDeclaracionesResponsableAttribute()
+    public function getAllEmpleados(Request $request)
     {
         $empleados = Empleado::select('id', 'name')->alta()->get();
 
@@ -1306,7 +1347,7 @@ class EmpleadoController extends Controller
 
     public function updateImageProfile(Request $request)
     {
-        $empleado = User::getCurrentUser()->empleado;
+        $empleado = auth()->user()->empleado;
         if (preg_match('/^data:image\/(\w+);base64,/', $request->image)) {
             $value = substr($request->image, strpos($request->image, ',') + 1);
             $value = base64_decode($value);
@@ -1344,7 +1385,7 @@ class EmpleadoController extends Controller
 
     public function updateInformationProfile(Request $request)
     {
-        $empleadoID = User::getCurrentUser()->empleado->id;
+        $empleadoID = auth()->user()->empleado->id;
         $empleado = Empleado::find($empleadoID);
         $request->validate([
             // 'name' => 'required|string|max:255',
@@ -1365,7 +1406,7 @@ class EmpleadoController extends Controller
 
     public function updateInformacionRelacionadaProfile(Request $request)
     {
-        $empleadoID = User::getCurrentUser()->empleado->id;
+        $empleadoID = auth()->user()->empleado->id;
         $empleado = Empleado::find($empleadoID);
         $this->validateDynamicForms($request);
         $this->assignDependenciesModel($request, $empleado);

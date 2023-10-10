@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\AnalisisDeRiesgo;
 use App\Models\Area;
 use App\Models\MatrizRiesgo;
 use App\Models\Proceso;
@@ -13,7 +12,7 @@ use Livewire\Component;
 class MatrizHeatmap extends Component
 {
     use LivewireAlert;
-    
+
     public $id_analisis;
 
     public $control;
