@@ -201,6 +201,7 @@ class RequisicionesCreateComponent extends Component
                         $this->emit('cambiarTab', 'contact');
 
                         $this->dataFirma();
+
                         $this->disabled = 'disabled';
                     } else {
                         $this->provedores_indistinto_catalogo = collect();

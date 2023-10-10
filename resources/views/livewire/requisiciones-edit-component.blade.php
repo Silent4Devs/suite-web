@@ -25,7 +25,7 @@
                 Productos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link disable {{ $disabled }}" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+            <a class="nav-link disable" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                 aria-controls="profile" aria-selected="false" style="pointer-events: none"><i class="number-icon">2</i>
                 Proveedores</a>
         </li>
