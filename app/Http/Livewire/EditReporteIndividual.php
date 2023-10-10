@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\AuditoriaInterna;
 use App\Models\AuditoriaInternasHallazgos;
 use App\Models\AuditoriaInternasReportes;
+use App\Models\ClasificacionesAuditorias;
 use App\Models\Proceso;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -74,15 +75,19 @@ class EditReporteIndividual extends Component
 
         $clasificacionIds = $this->clasificaciones->pluck('id');
 
-        $cuentas = AuditoriaInternasHallazgos::with('clasificacion')->whereIn('clasificacion_id', $clasificacionIds)
-            ->where('auditoria_internas_id', $this->id_auditoria);
-
-        if ($this->reporte && $this->reporte->id) {
-            $cuentas->orWhere("reporte_id", "=", $this->reporte->id);
-        }
-
-        $cuentas = $cuentas->select('clasificacion_id', DB::raw('COUNT(*) as count'))
-            ->groupBy('clasificacion_id')
+        $cuentas = ClasificacionesAuditorias::leftJoin('auditoria_internas_hallazgos', function ($join) use ($clasificacionIds) {
+            $join->on('clasificaciones_auditorias.id', '=', 'auditoria_internas_hallazgos.clasificacion_id')
+                ->whereIn('auditoria_internas_hallazgos.clasificacion_id', $clasificacionIds)
+                ->where('auditoria_internas_hallazgos.auditoria_internas_id', $this->id_auditoria)
+                ->where('auditoria_internas_hallazgos.reporte_id', $this->reporte->id)
+                ->where('auditoria_internas_hallazgos.deleted_at', null);
+        })
+            ->select(
+                'clasificaciones_auditorias.id as clasificacion_id',
+                DB::raw('COUNT(auditoria_internas_hallazgos.id) as count'),
+                'clasificaciones_auditorias.nombre_clasificaciones as nombre'
+            )
+            ->groupBy('clasificaciones_auditorias.id')
             ->get();
 
         // dd($cuentas);

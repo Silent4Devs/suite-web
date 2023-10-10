@@ -2,26 +2,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
     <div class="container-fluid mb-4">
-        <div class="row justify-content-center row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            @if ($cuentas->isEmpty())
-                @foreach ($clasificaciones as $claf)
-                    <div class="col mt-4">
-                        <div class="card card-body" style="background-color: #a8e0fa">
-                            <h5>{{ $claf->nombre_clasificaciones }}</h5><br>
-                            <h6>0</h6>
+        <div class="row">
+            @foreach ($cuentas as $cuenta)
+                <div class="col-3 mt-4">
+                    <div class="card card-body justify-content-center"
+                        style="background-color: #a8e0fa; min-height:100px;">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-8 ">
+                                <h6>{{ $cuenta->nombre }}</h6>
+                            </div>
+                            <div class="col-4 ">
+                                <h6 class="d-inline mr-2">{{ $cuenta->count }}
+                                </h6> <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
+                            </div>
                         </div>
                     </div>
-                @endforeach
-            @else
-                @foreach ($cuentas as $cuenta)
-                    <div class="col mt-4">
-                        <div class="card card-body" style="background-color: #a8e0fa">
-                            <h5>{{ $cuenta->clasificacion->nombre_clasificaciones }}</h5><br>
-                            <h6>{{ $cuenta->count }}</h6>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+                </div>
+            @endforeach
         </div>
     </div>
 
@@ -185,7 +182,8 @@
                             <div class="row">
                                 <div class="form-group col-sm-6 col-md-12 col-lg-12">
                                     <label for="area">Área</label>
-                                    <div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
+                                    <input type="text" class="form-control"
+                                        value="{{ auth()->user()->empleado->area->area }}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -264,7 +262,7 @@
                             </tr>
                             <tr>
                                 <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
-                                <td style="min-width:100px;">
+                                <td colspan="2">
                                     {{ $data->clasificacion->nombre_clasificaciones ?? $data->clasificacion_hallazgo }}
                                 </td>
                             </tr>
@@ -313,39 +311,49 @@
     <div class="card card-body">
         <div class="row">
             <div class="col-md-6">
-                <div class="row" style="justify-content: center; display: flex;">
-                    <h3>Firma de Auditor Lider</h3>
-                </div>
-                <div class="row" style="justify-content: center; display: flex;">
-                    <button id="clear" class="btn btn-link">Limpiar Firma</button>
-                </div>
-                <div class="row" style="justify-content: center; display: flex;">
-                    <canvas id="signature-pad" class="signature-pad" width="450" height="250"
-                        style="border: 1px solid black;"></canvas>
-                </div>
+                @if ($this->reporte->estado != 'aprobado')
+                    <div class="row" style="justify-content: center; display: flex;">
+                        <h3>Firma de Auditor Lider</h3>
+                    </div>
+                    <div class="row" style="justify-content: center; display: flex;">
+                        <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                    </div>
+                    <div class="row" style="justify-content: center; display: flex;">
+                        <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                            style="border: 1px solid black;"></canvas>
+                    </div>
+                @else
+                    <div class="row" style="justify-content: center; display: flex;">
+                        <h3>Firma de Auditor Lider</h3>
+                    </div>
+                    <div class="row" style="justify-content: center; display: flex;">
+                        <img width="450" height="250"
+                            src="{{ asset('storage/auditorias-internas/auditoria/' . $this->reporte->id_auditoria . '/reporte/' . $this->reporte->id . '/' . $this->reporte->lider->name . $this->reporte->firma_lider) }}">
+                    </div>
+                @endif
             </div>
             <div class="col-md-6">
                 <div class="row" style="justify-content: center; display: flex;">
                     <h3>Firma de Auditor Interno</h3>
                 </div>
                 <div class="row" style="justify-content: center; display: flex;">
-                    {{-- <canvas id="signature-pad" class="signature-pad" width="600" height="250"
-                style="border: 1px solid black;"></canvas> --}}
                     <img width="450" height="250"
                         src="{{ asset('storage/auditorias-internas/auditoria/' . $this->reporte->id_auditoria . '/reporte/' . $this->reporte->id . '/' . $this->reporte->empleado->name . $this->reporte->firma_empleado) }}">
                 </div>
             </div>
         </div>
-        <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-            <button id="save" type="submit" class="btn btn-outline-primary"
-                data-reporte="{{ $this->reporte->id }}">Confirmar Acuerdo</button>
-        </div>
-        <div class="row" style="justify-content: center; display: flex;">
-            <div class="row" style="justify-content: center; display: flex;">
-                <a href="{{ route('admin.auditoria-internas.rechazoReporteIndividual', $this->reporte->id) }}"
-                    id="rechazo-link" class="btn btn-link">Rechazar</a>
+        @if ($this->reporte->estado != 'aprobado')
+            <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                <button id="save" type="submit" class="btn btn-outline-primary"
+                    data-reporte="{{ $this->reporte->id }}">Confirmar Acuerdo</button>
             </div>
-        </div>
+            <div class="row" style="justify-content: center; display: flex;">
+                <div class="row" style="justify-content: center; display: flex;">
+                    <a href="{{ route('admin.auditoria-internas.rechazoReporteIndividual', $this->reporte->id) }}"
+                        id="rechazo-link" class="btn btn-link">Rechazar</a>
+                </div>
+            </div>
+        @endif
     </div>
 </div>
 

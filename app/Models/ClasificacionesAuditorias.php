@@ -17,9 +17,4 @@ class ClasificacionesAuditorias extends Model
         'nombre_clasificaciones',
         'descripcion',
     ];
-
-    public function existencia()
-    {
-        return $this->hasOne(AuditoriaInternasHallazgos::class, 'clasificacion_id');
-    }
 }

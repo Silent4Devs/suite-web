@@ -187,8 +187,8 @@
                             <div class="row">
                                 <div class="form-group col-sm-6 col-md-12 col-lg-12">
                                     <label for="area">Área</label>
-                                    <div class="form-control disabled">{{ auth()->user()->empleado->area->area }}
-                                    </div>
+                                    <input type="text" class="form-control"
+                                        value="{{ auth()->user()->empleado->area->area }}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -261,10 +261,8 @@
                                     {{ $data->procesos ? $data->procesos->nombre : 'n/a' }}
                                 </td>
                                 <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
-                                <td style="min-width:100px;">
+                                <td colspan="2">
                                     {{ $data->clasificacion->nombre_clasificaciones ?? $data->clasificacion_hallazgo }}
-                                </td>
-                                <td style="min-width:40px;">
                                 </td>
                             </tr>
                         @endforeach

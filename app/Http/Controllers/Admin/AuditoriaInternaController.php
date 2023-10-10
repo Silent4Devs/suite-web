@@ -313,7 +313,7 @@ class AuditoriaInternaController extends Controller
         // dd($reporte);
         $reporte->update([
             // "comentarios",
-            "estado" => "aceptado",
+            "estado" => "aprobado",
             "firma_lider" => $filename,
             // "firma_lider",
         ]);

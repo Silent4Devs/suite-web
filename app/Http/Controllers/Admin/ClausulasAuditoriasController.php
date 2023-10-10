@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\ClausulasAuditorias;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\AuditoriaInternasHallazgos;
 use App\Models\AuditoriaInternasReportes;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -106,6 +107,12 @@ class ClausulasAuditoriasController extends Controller
     {
         if ($request->ajax()) {
             $query = ClausulasAuditorias::orderByDesc('id')->get();
+
+            foreach ($query as $cl) {
+                $borrado = AuditoriaInternasHallazgos::where('clausula_id', '=', $cl->id)->exists();
+                $cl->borrado = $borrado;
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

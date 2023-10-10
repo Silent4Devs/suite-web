@@ -193,8 +193,7 @@
                     {
                         data: null,
                         render: function(data, type, row, meta) {
-                            let html =
-                                `
+                            let html = `
                                 <div class="dropdown">
                                     <button class="btn btn-outline-dark dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-expanded="false">
@@ -203,10 +202,21 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/edit/${row.id}') }}">
                                             <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                            <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${row.id}') }}">
-                                                <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
-                                    </div>
-                                </div>`;
+                                        `;
+
+                            if (row.borrado === false) {
+                                html += `
+                                    <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${row.id}') }}">
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                                `;
+                            } else {
+                                html += `
+                                    <a class="dropdown-item disabled" href="#">
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (No permitido)</a>
+                                `;
+                            }
+
+                            html += `</div></div>`;
 
                             return html;
                         }
