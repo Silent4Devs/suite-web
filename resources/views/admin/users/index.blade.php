@@ -13,19 +13,14 @@
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
     <div class="mt-5 card">
-
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
-
             <div class="p-2">
                 <a href={{ route('admin.users.eliminados') }} class="btn btn-danger" role="button" aria-pressed="true">
                     <i class="fas fa-user-slash"></i>&nbsp &nbsp Usuarios eliminados</a>
             </div>
-
         </div>
 
         <div class="card-body datatable-fix">
-
-
             @if (!$existsVinculoEmpleadoAdmin)
                 <h5>Por favor da clic en el icono <small class="p-1 border border-primary rounded"><i
                             class="fas fa-user-tag"></i></small> de la fila del usuario Admin</h5>
