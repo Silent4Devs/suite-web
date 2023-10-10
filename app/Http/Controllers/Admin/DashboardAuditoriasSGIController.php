@@ -17,6 +17,9 @@ use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use App\Models\Mejoras;
 use App\Models\AccionCorrectiva;
+use App\Models\AuditoriaInternasHallazgos;
+use App\Models\ClasificacionesAuditorias;
+use GuzzleHttp\Psr7\Request;
 
 
 class DashboardAuditoriasSGIController extends Controller
@@ -28,6 +31,80 @@ class DashboardAuditoriasSGIController extends Controller
      */
     public function index()
     {
+        //DASHBOARD AUDITORIAS
+        //Tarjetas en general
+        $clashallazgos = AuditoriaInternasHallazgos::select('clasificacion_hallazgo')->get();
+        // dd($clashallazgos);
+        $clashallazgosaudit = AuditoriaInternasHallazgos::distinct()->pluck('incumplimiento_requisito')->map(function ($item) {
+            return ($item);
+        })->unique()->values()->toArray();
+        // dd($clashallazgosaudit);
+        $clashallazgosnames = AuditoriaInternasHallazgos::distinct()->pluck('clasificacion_hallazgo')->map(function ($item) {
+            $lowerCaseItem = strtolower($item);
+
+            if ($lowerCaseItem === 'nc menor' || $lowerCaseItem === 'no conformidad menor') {
+                return 'No Conformidad Menor';
+            } elseif ($lowerCaseItem === 'nc mayor' || $lowerCaseItem === 'no conformidad mayor') {
+                return 'No Conformidad Mayor';
+            } else {
+                return ucfirst($item); // Capitalizar la primera letra de otras categorías
+            }
+        })->unique()->values()->toArray();
+        // dd($clashallazgosnames);
+        $observacion = $clashallazgos->Where('clasificacion_hallazgo', 'Observación')->count();
+        $noconformayor = $clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Mayor')->count();
+        $oportunidadmejora = $clashallazgos->Where('clasificacion_hallazgo', 'Oportunidad de Mejora')->count();
+        //tarjetas de no conformidad menor
+        $nc1 = $clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Menor')->count();
+        $nc2 = $clashallazgos->Where('clasificacion_hallazgo', 'NC Menor')->count();
+        $nc3 = $clashallazgos->Where('clasificacion_hallazgo', 'NO CONFORMIDAD MENOR')->count();
+        $noconformenor = $nc1+$nc2+$nc3;
+        //GRAFICA DE BARRAS DE AUDITORIA
+        $clausid = AuditoriaInternasHallazgos::select('clausula_id')->get();
+        $contexto = $clausid->Where('clausula_id', '1')->count();
+        $liderazgo = $clausid->Where('clausula_id', '2')->count();
+        $planificacion = $clausid->Where('clausula_id', '3')->count();
+        $soporte = $clausid->Where('clausula_id', '4')->count();
+        $operacion = $clausid->Where('clausula_id', '5')->count();
+        $evaluacion = $clausid->Where('clausula_id', '6')->count();
+        $mejora = $clausid->Where('clausula_id', '7')->count();
+
+        $totalclasificaciones = ClasificacionesAuditorias::select()->get();
+        // dd($totalclasificaciones);
+        // dd($totalclasificaciones);
+        // dd($totalclasificaciones);
+        foreach($totalclasificaciones as $totalclasificacion){
+            $total = AuditoriaInternasHallazgos::Where('clasificacion_id',$totalclasificacion->id)->count();
+            $totalclasificacion['total'] = $total;
+            // dump($totalclasificacion->id);
+        }
+
+
+        //CLASIFICACIONES DE AUDITORIAS
+
+
+        // Obtener los nombres de las clasificaciones para los identificadores 1, 2, 3 y 4
+        $clasid = ClasificacionesAuditorias::select('id')->get();
+        // dd($clasid);
+        $nombreClasificacion = ClasificacionesAuditorias::where('identificador')->value('nombre_clasificaciones');
+        // dd($nombreClasificacion);
+        $nombreClasificacion1 = ClasificacionesAuditorias::where('identificador', 1)->value('nombre_clasificaciones');
+        $nombreClasificacion2 = ClasificacionesAuditorias::where('identificador', 2)->value('nombre_clasificaciones');
+        $nombreClasificacion3 = ClasificacionesAuditorias::where('identificador', 3)->value('nombre_clasificaciones');
+        $nombreClasificacion4 = ClasificacionesAuditorias::where('identificador', 4)->value('nombre_clasificaciones');
+
+
+        $nombreauditorias = AuditoriaInterna::select('nombre_auditoria')->get();
+        $nombreaudits = AuditoriaInterna::distinct()->pluck('nombre_auditoria')->map(function ($item) {
+            return ($item);
+        })->unique()->values()->toArray();
+        $tclasificaciones = ClasificacionesAuditorias::select('nombre_clasificaciones')->get();
+        $clasificaciones = ClasificacionesAuditorias::distinct()->pluck('nombre_clasificaciones')->map(function ($item) {
+            return ($item);
+        })->unique()->values()->toArray();
+
+        // dd($nombreauditorias);
+        // dd($nombreClasificacion1,$nombreClasificacion2,$nombreClasificacion3,$nombreClasificacion4);
         // DASHBOARD MEJORAS Y ACCIONES
 
         // Mejoras
@@ -93,6 +170,7 @@ class DashboardAuditoriasSGIController extends Controller
             })->get();
         }
 
+        $audits= AuditoriaAnual::select("fechainicio","fechafin","nombre")->get();
         $eventos = Calendario::getAll();
         $oficiales = CalendarioOficial::get();
         $contratos = Contrato::select('nombre_servicio', 'fecha_inicio', 'fecha_fin')->get();
@@ -127,6 +205,40 @@ class DashboardAuditoriasSGIController extends Controller
             'encursoCountAC',
             'enesperaCountAC',
             'sinatenderCountAC',
+            'observacion',
+            'noconformayor',
+            'oportunidadmejora',
+            'noconformenor',
+            'empleado',
+            'clausid',
+            'contexto',
+            'liderazgo',
+            'planificacion',
+            'soporte',
+            'operacion',
+            'evaluacion',
+            'mejora',
+            'clashallazgosnames',
+            'clashallazgosaudit',
+            'audits',
+            'nombreClasificacion1',
+            'nombreClasificacion2',
+            'nombreClasificacion3',
+            'nombreClasificacion4',
+            'totalclasificaciones',
+            'nombreauditorias',
+            'nombreaudits',
+            'clasificaciones'
         ));
     }
+    public function obtenerClausulaId($incumplimiento)
+    {
+        // Utiliza el modelo para buscar el valor de clausula_id en función de incumplimiento_requisito
+        $clausulaId = AuditoriaInternasHallazgos::where('incumplimiento_requisito', $incumplimiento)->value('clausula_id');
+
+        // Devuelve el valor de clausula_id en formato JSON
+        return response()->json(['clausula_id' => $clausulaId]);
+    }
+
+    // Otros métodos de tu controlador...
 }
