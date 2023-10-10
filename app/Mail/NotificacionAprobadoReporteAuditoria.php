@@ -7,9 +7,10 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NotificacionReporteAuditoria extends Mailable
+class NotificacionAprobadoReporteAuditoria extends Mailable
 {
     use Queueable, SerializesModels;
+
 
     /**
      * Create a new message instance.
@@ -28,7 +29,7 @@ class NotificacionReporteAuditoria extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.auditorias.notificacion-auditoria-lider')
-            ->subject('Aprobación Reporte de auditoria: ');
+        return $this->view('mails.auditorias.notificacion-auditoria-aprobada')
+            ->subject('Aprobacion Reporte de auditoria');
     }
 }

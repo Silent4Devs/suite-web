@@ -13,7 +13,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class ReporteIndividual extends Component
+class EditReporteIndividual extends Component
 {
     use LivewireAlert;
 
@@ -33,6 +33,8 @@ class ReporteIndividual extends Component
     public $incumplimiento_requisito;
     public $no_tipo;
     public $titulo;
+
+    public $comentarios;
 
     public $reporte;
 
@@ -71,10 +73,6 @@ class ReporteIndividual extends Component
             ->where("reporte_id", "=", $this->reporte->id)
             ->paginate($this->pagination);
 
-        // Assuming $this->clasificaciones is a collection of clasificaciones
-
-        // Assuming $this->clasificaciones is a collection of clasificaciones
-
         $clasificacionIds = $this->clasificaciones->pluck('id');
 
         $cuentas = ClasificacionesAuditorias::leftJoin('auditoria_internas_hallazgos', function ($join) use ($clasificacionIds) {
@@ -91,9 +89,10 @@ class ReporteIndividual extends Component
             )
             ->groupBy('clasificaciones_auditorias.id')
             ->get();
+
         // dd($cuentas);
 
-        return view('livewire.reporte-individual', compact('procesos', 'datas', 'cuentas'))
+        return view('livewire.edit-reporte-individual', compact('procesos', 'datas', 'cuentas'))
             ->with('clasificaciones', $this->clasificaciones)
             ->with('clausulas', $this->clausulas)
             ->with('id_auditoria', $this->id_auditoria);

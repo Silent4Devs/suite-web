@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\ClasificacionesAuditorias;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\AuditoriaInternasHallazgos;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClasificacionesAuditoriasController extends Controller
@@ -104,6 +105,12 @@ class ClasificacionesAuditoriasController extends Controller
     {
         if ($request->ajax()) {
             $query = ClasificacionesAuditorias::orderByDesc('id')->get();
+
+            foreach ($query as $cf) {
+                $borrado = AuditoriaInternasHallazgos::where('clasificacion_id', '=', $cf->id)->exists();
+                $cf->borrado = $borrado;
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
