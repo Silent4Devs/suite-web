@@ -37,7 +37,7 @@
                 class="row">
                 @csrf
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                    <label class="required">Id</label>
+                    <label class="required">ID</label>
                     <input class="form-control {{ $errors->has('id_auditoria') ? 'is-invalid' : '' }}" type="text"
                         name="id_auditoria" id="id_auditoria" maxlength="255" value="{{ old('id_auditoria', '') }}"
                         required>
@@ -51,7 +51,7 @@
                 <div class="form-group col-sm-12 col-md-8 col-lg-8">
                     <label class="required">Nombre de auditoría</label>
                     <input class="form-control {{ $errors->has('nombre_auditoria') ? 'is-invalid' : '' }}" type="text"
-                        name="nombre_auditoria" id="nombre_auditoria" maxlength="255"
+                        name="nombre_auditoria" id="nombre_auditoria" maxlength="220"
                         value="{{ old('nombre_auditoria', '') }}" required>
                     @if ($errors->has('nombre_auditoria'))
                         <div class="text-danger">
@@ -130,7 +130,7 @@
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label for="auditor_externo">Auditor externo</label>
-                    <input class="form-control mt-2" id="auditor_externo" name="auditor_externo"
+                    <input class="form-control mt-2" id="auditor_externo" name="auditor_externo" maxlength="220"
                         value="{{ old('auditor_externo') }}">
                     @if ($errors->has('auditor_externo'))
                         <div class="text-danger">
