@@ -31,8 +31,8 @@ Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@Aj
 Auth::routes();
 
 //Multitenat
-Route::post('tenant', 'TenantController@store')->name("tenant.store");
-Route::resource('tenant', 'TenantController')->except(["store"]);
+Route::post('tenant', 'TenantController@store')->name('tenant.store');
+Route::resource('tenant', 'TenantController')->except(['store']);
 // Route::get('tenant/create', 'TenantController@create')->name('tenant.create');
 Route::delete('tenant/destroy', 'TenantController@massDestroy')->name('tenant.massDestroy');
 
