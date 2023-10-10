@@ -455,15 +455,14 @@
         background: transparent; /* Color de las líneas de cuadrícula */
     }
 </style>
-                    {{-- HTML DASHBOARD --}}
-
+{{-- HTML DASHBOARD --}}
 <div class="container">
     <h1 class="titulo-dashboard">Dashboard</h1>
     <div class="Tarjetap">Selecciona la Norma que desees monitorear
 
         <div class="">
             <select class="form-control filtro" style="margin-left: 570px;margin-bottom: 24px;">
-                <option>ISO 270001</option>
+                <option>ISO 27001</option>
             </select>
         </div>
     </div>
@@ -476,7 +475,7 @@
                 <li class="active ojo-botones-o">
                     <i class="fa-regular fa-eye fa-xl" style="margin-top: 30px; color:#FFFFFF;"></i>
                 </li>
-                <a class="botones" href="#mi-plan-iso" data-toggle="tab">
+                <a class="botones" href="#mi-plan-iso" data-toggle="tab" data-target="#mi-plan-iso"> <!-- Agrega data-target -->
                     <h3 class="letra-tarjeta">Mi plan ISO</h3>
                 </a>
             </ul>
@@ -517,7 +516,7 @@
     </div>
 </div>
 <div class="tab-content">
-    {{-- MI PLAN ISO (TAB CONTENT)--}}
+    {{-- MI PLAN ISO (TAB CONTENT) --}}
     <div class="tab-pane fade text-center" id="mi-plan-iso">
         <img src="{{asset('img/escuela/home/technical-issues-1.jpg')}}" alt="jpg" style="width:50%; max-width:400px;">
         <p></p>
@@ -527,8 +526,8 @@
         <img src="{{asset('img/escuela/home/technical-issues-2.jpg')}}" alt="jpg" style="width:50%; max-width:1000px;">
         <p></p>
     </div>
-    {{-- AUDITORIAS (TAB CONTENT) --}}
-    <div class="tab-pane fade" id="auditorias">
+   {{-- AUDITORIAS (TAB CONTENT) --}}
+   <div class="tab-pane fade" id="auditorias">
         <div class="Tarjetap2">Selecciona el informe que desees consultar
             <select class="form-control filtro" style="margin-left: 570px;margin-bottom: 24px;">
                 @foreach($nombreaudits as $nombreaudit)
@@ -675,7 +674,6 @@
     </div>
     {{-- MEJORAS Y ACCIONES (TAB CONTENT) --}}
     <div class="tab-pane fade" id="mejorasyacciones">
-
         <p></p>
         <h1 class="subtitulo">Mejoras</h1>
         <div>
@@ -774,7 +772,10 @@
                     </div>
                 </div>
             </div>
-        @endsection
+        </div>
+    </div>
+</div>
+@endsection
 
         @section('scripts')
         @parent
@@ -790,6 +791,23 @@
         <!-- Agrega la referencia a la librería Select2 CSS y JS -->
         <link href="ruta-a-select2.min.css" rel="stylesheet">
         <script src="ruta-a-select2.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                // Activa la pestaña "Mi plan ISO" al cargar la página
+                $('#mi-plan-iso').tab('show');
+
+                // Asigna un evento click a los enlaces de los tabs
+                $('.botones').click(function(e) {
+                    e.preventDefault(); // Evita el comportamiento predeterminado del enlace
+                    // Oculta todos los tab-pane excepto el que se va a mostrar
+                    $('.tab-pane').not($(this).attr('href')).removeClass('active');
+                    // Activa el tab correspondiente
+                    $($(this).attr('href')).tab('show');
+                });
+            });
+        </script>
+
 
 
 
