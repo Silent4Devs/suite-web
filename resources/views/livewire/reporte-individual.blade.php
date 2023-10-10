@@ -2,26 +2,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
     <div class="container-fluid mb-4">
-        <div class="row justify-content-center row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            @if ($cuentas->isEmpty())
-                @foreach ($clasificaciones as $claf)
-                    <div class="col mt-4">
-                        <div class="card card-body" style="background-color: #a8e0fa">
-                            <h5>{{ $claf->nombre_clasificaciones }}</h5><br>
-                            <h6>0</h6>
+        <div class="row">
+            @foreach ($cuentas as $cuenta)
+                <div class="col-3 mt-4">
+                    <div class="card card-body justify-content-center"
+                        style="background-color: #a8e0fa; min-height:100px;">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-8 ">
+                                <h6>{{ $cuenta->nombre }}</h6>
+                            </div>
+                            <div class="col-4 ">
+                                <h6 class="d-inline mr-2">{{ $cuenta->count }}
+                                </h6> <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
+                            </div>
                         </div>
                     </div>
-                @endforeach
-            @else
-                @foreach ($cuentas as $cuenta)
-                    <div class="col mt-4">
-                        <div class="card card-body" style="background-color: #a8e0fa">
-                            <h5>{{ $cuenta->clasificacion->nombre_clasificaciones }}</h5><br>
-                            <h6>{{ $cuenta->count }}</h6>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+                </div>
+            @endforeach
         </div>
     </div>
 
@@ -45,7 +42,7 @@
     </div>
 
     <div class="col-12 mt-4 " style="text-align: end">
-        <button type="button" wire:click.prevent="modal('crear')" class="btn btn-success">Documentar
+        <button type="button" wire:click.prevent="modal('crear')" class="btn btn-outline-primary">Documentar
             Hallazgo</button>
     </div>
     <div class="row">
@@ -121,7 +118,7 @@
                             <div class="row">
                                 <div class="form-group col-sm-12">
                                     <label class="required" for="no_tipo">
-                                        No. de Tipo</label>
+                                        No.</label>
                                     <input type="number" min="1" max="100000"
                                         class="form-control {{ $errors->has('no_tipo') ? 'is-invalid' : '' }}"
                                         name="no_tipo" id="no_tipo" wire:model.defer="no_tipo"></input>
@@ -190,7 +187,8 @@
                             <div class="row">
                                 <div class="form-group col-sm-6 col-md-12 col-lg-12">
                                     <label for="area">Área</label>
-                                    <div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
+                                    <input type="text" class="form-control"
+                                        value="{{ auth()->user()->empleado->area->area }}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -263,14 +261,11 @@
                                     {{ $data->procesos ? $data->procesos->nombre : 'n/a' }}
                                 </td>
                                 <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
-                                <td style="min-width:100px;">
+                                <td colspan="2">
                                     {{ $data->clasificacion->nombre_clasificaciones ?? $data->clasificacion_hallazgo }}
-                                </td>
-                                <td style="min-width:40px;">
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
@@ -310,7 +305,7 @@
         </div>
         <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
             <button id="save" type="submit" class="btn btn-outline-primary"
-                data-auditoria="{{ $id_auditoria }}">Confirmar</button>
+                data-reporte="{{ $this->reporte->id }}">Confirmar</button>
         </div>
     </div>
 </div>

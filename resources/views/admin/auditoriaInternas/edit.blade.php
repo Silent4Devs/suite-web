@@ -22,7 +22,7 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                    <label class="required">Id</label>
+                    <label class="required">ID</label>
                     <input class="form-control {{ $errors->has('id_auditoria') ? 'is-invalid' : '' }}" type="text"
                         maxlength="255" name="id_auditoria" id="id_auditoria"
                         value="{{ old('id_auditoria', $auditoriaInterna->id_auditoria) }}" required>
@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label class="required">Criterios de auditoría</label>
+                    <label class="required">Criterios de la auditoría</label>
                     <textarea class="form-control {{ $errors->has('criterios_auditoria') ? 'is-invalid' : '' }}" type="text"
                         name="criterios_auditoria" id="criterios_auditoria" required>{{ old('criterios_auditoria', $auditoriaInterna->criterios_auditoria) }}</textarea>
                     @if ($errors->has('criterios_auditoria'))
@@ -83,7 +83,7 @@
                     <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
                 </div>
 
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="fecha_inicio"> Fecha
                         inicio</label>
                     <input class="form-control mt-2" type="date" id="fecha_inicio" min="1945-01-01" name="fecha_inicio"
@@ -96,7 +96,7 @@
                     @endif
                 </div>
 
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group col-sm-12 col-md-8 col-lg-8">
                     <label for="equipoauditoria_id">Equipo auditoría</label>
                     <select multiple class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}"
                         name="equipo[]" id="equipoauditoria_id">
@@ -650,14 +650,14 @@
 
             document.getElementById('save').addEventListener('click', function() {
                 if (signaturePad.isEmpty()) {
-                    alert('Please provide a signature first.');
+                    alert('Por favor firme el area designada.');
                 } else {
                     var dataURL = signaturePad.toDataURL();
-                    var audId = this.getAttribute('data-auditoria');
+                    var repId = this.getAttribute('data-reporte');
 
-                    fetch('{{ route('admin.auditoria-internas.storeReporteIndividual', ['auditoriaInterna' => ':auditoriaInterna']) }}'
-                            .replace(':auditoriaInterna',
-                                audId), {
+                    fetch('{{ route('admin.auditoria-internas.storeFirmaReporteLider', ['reporteid' => ':reporteauditoria']) }}'
+                            .replace(':reporteauditoria',
+                                repId), {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -670,7 +670,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                alert('El lider ha sido notificado!');
+                                alert('Se ha aprobado el reporte!');
                                 window.location.href = '{{ route('admin.auditoria-internas.index') }}';
                             } else {
                                 alert(

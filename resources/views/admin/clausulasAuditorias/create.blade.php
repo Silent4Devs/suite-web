@@ -23,7 +23,7 @@
                         @endif
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="nombre" class="required">Nombre de la Clausula</label>
+                        <label for="nombre" class="required">Cláusula</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre', '') }}" required maxlength="220">
                         @if ($errors->has('nombre'))
@@ -35,7 +35,7 @@
                 </div>
                 <div class="row">
                     <div class="distancia form-group col-md-12">
-                        <label for="nombre">Descripcion</label>
+                        <label for="nombre">Descripción</label>
                         <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="10"></textarea>
                     </div>
                 </div>
