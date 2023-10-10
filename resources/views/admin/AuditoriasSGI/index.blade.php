@@ -796,6 +796,9 @@
 
         {{-- DASHBOARD DE AUDITORIAS --}}
 
+                                {{-- GRAFICA DE BARRAS AUDITORIAS--}}
+
+
         <script>
             // Define los datos iniciales para la gráfica
             let datosGrafica = {
@@ -815,8 +818,8 @@
 
             // Define el diseño de la gráfica
             let layoutsssss = {
-                height: 400,
-                width: 1090,
+                height: 390,
+                width: 1070,
                 bargap: 0.35,
                 xaxis: {
                     showgrid: false
@@ -999,7 +1002,7 @@ ScheduleList = [
             {
                 id: 'revisiones{{ $audit->id }}',
                 calendarId: '12',
-                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revision de entregables: {{ $audit->nombre }}',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revisión de entregables: {{ $audit->nombre }}',
                 category: 'allday',
                 dueDateClass: '',
                 start: '{{ \Carbon\Carbon::parse($audit->fechainicio)->format('Y-m-d') }}',
