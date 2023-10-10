@@ -39,17 +39,17 @@ class DashboardAuditoriasSGIController extends Controller
             return ($item);
         })->unique()->values()->toArray();
         // dd($clashallazgosaudit);
-        $clashallazgosnames = AuditoriaInternasHallazgos::distinct()->pluck('clasificacion_hallazgo')->map(function ($item) {
-            $lowerCaseItem = strtolower($item);
+        // $clashallazgosnames = AuditoriaInternasHallazgos::distinct()->pluck('clasificacion_hallazgo')->map(function ($item) {
+        //     $lowerCaseItem = strtolower($item);
 
-            if ($lowerCaseItem === 'nc menor' || $lowerCaseItem === 'no conformidad menor') {
-                return 'No Conformidad Menor';
-            } elseif ($lowerCaseItem === 'nc mayor' || $lowerCaseItem === 'no conformidad mayor') {
-                return 'No Conformidad Mayor';
-            } else {
-                return ucfirst($item); // Capitalizar la primera letra de otras categorías
-            }
-        })->unique()->values()->toArray();
+        //     if ($lowerCaseItem === 'nc menor' || $lowerCaseItem === 'no conformidad menor') {
+        //         return 'No Conformidad Menor';
+        //     } elseif ($lowerCaseItem === 'nc mayor' || $lowerCaseItem === 'no conformidad mayor') {
+        //         return 'No Conformidad Mayor';
+        //     } else {
+        //         return ucfirst($item); // Capitalizar la primera letra de otras categorías
+        //     }
+        // })->unique()->values()->toArray();
         // dd($clashallazgosnames);
         $observacion = $clashallazgos->Where('clasificacion_hallazgo', 'Observación')->count();
         $noconformayor = $clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Mayor')->count();
@@ -218,7 +218,6 @@ class DashboardAuditoriasSGIController extends Controller
             'operacion',
             'evaluacion',
             'mejora',
-            'clashallazgosnames',
             'clashallazgosaudit',
             'audits',
             'nombreClasificacion1',

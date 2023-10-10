@@ -271,7 +271,7 @@
                 GUÍA GENERAL
             </a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{{ route('admin.home') }}" class="btn btn-success">
+            <a href="{{ route('admin.dashboard_auditorias') }}" class="btn btn-success">
                 <i class="fas fa-chart-pie mr-2"></i>
                 DASHBOARD
             </a>
