@@ -104,6 +104,12 @@ class ClasificacionesAuditoriasController extends Controller
     {
         if ($request->ajax()) {
             $query = ClasificacionesAuditorias::orderByDesc('id')->get();
+
+            foreach ($query as $cf) {
+                $borrado = $cf->existencia() ? 'false' : 'true';
+                $cf->borrado = $borrado;
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

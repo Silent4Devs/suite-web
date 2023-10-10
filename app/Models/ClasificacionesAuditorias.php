@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\AuditoriaInternaHallazgos;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,4 +17,9 @@ class ClasificacionesAuditorias extends Model
         'nombre_clasificaciones',
         'descripcion',
     ];
+
+    public function existencia()
+    {
+        return $this->hasOne(AuditoriaInternasHallazgos::class, 'clasificacion_id');
+    }
 }

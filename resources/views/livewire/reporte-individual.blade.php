@@ -3,41 +3,22 @@
 
     <div class="container-fluid mb-4">
         <div class="row">
-            @if ($cuentas->isEmpty())
-                @foreach ($clasificaciones as $claf)
-                    <div class="col-3 mt-4">
-                        <div class="card card-body justify-content-center"
-                            style="background-color: #a8e0fa; min-height:100px;">
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col-8 ">
-                                    <h6>{{ $claf->nombre_clasificaciones }}</h6>
-                                </div>
-                                <div class="col-4 ">
-                                    <h6 class="d-inline mr-2">{{ 0 }}
-                                    </h6> <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
-                                </div>
+            @foreach ($cuentas as $cuenta)
+                <div class="col-3 mt-4">
+                    <div class="card card-body justify-content-center"
+                        style="background-color: #a8e0fa; min-height:100px;">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-8 ">
+                                <h6>{{ $cuenta->nombre }}</h6>
+                            </div>
+                            <div class="col-4 ">
+                                <h6 class="d-inline mr-2">{{ $cuenta->count }}
+                                </h6> <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
                             </div>
                         </div>
                     </div>
-                @endforeach
-            @else
-                @foreach ($cuentas as $cuenta)
-                    <div class="col-3 mt-4">
-                        <div class="card card-body justify-content-center"
-                            style="background-color: #a8e0fa; min-height:100px;">
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col-8 ">
-                                    <h6>{{ $cuenta->clasificacion->nombre_clasificaciones }}</h6>
-                                </div>
-                                <div class="col-4 ">
-                                    <h6 class="d-inline mr-2">{{ $cuenta->count }}
-                                    </h6> <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+                </div>
+            @endforeach
         </div>
     </div>
 

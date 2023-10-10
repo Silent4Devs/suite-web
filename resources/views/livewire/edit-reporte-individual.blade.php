@@ -51,7 +51,21 @@
                         </div>
                         <div class="modal-body">
 
-                            @if ($view == 'edit')
+                            @if ($view == 'create')
+                                <div class="row">
+                                    <div class="form-group col-sm-12">
+                                        <label class="form-label select-label">Clausulas</label>
+                                        <select name="c_id" id="c_id"
+                                            class="form-control select {{ $errors->has('c_id') ? 'is-invalid' : '' }}"
+                                            wire:model.defer="c_id" required>
+                                            @foreach ($clausulas as $claus)
+                                                <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @elseif ($view == 'edit')
                                 <div class="row">
                                     <div class="form-group col-sm-12">
                                         <label class="form-label select-label">Clausulas</label>
