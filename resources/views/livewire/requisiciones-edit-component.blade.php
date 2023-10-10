@@ -18,19 +18,19 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+            <a class="nav-link active disable" id="home-tab" data-toggle="tab" href="#home" role="tab"
                 aria-controls="home" aria-selected="true"><i class="number-icon active-number"
                     style="pointer-events: none">1</i> Servicios
                 y
                 Productos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+            <a class="nav-link disable" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                 aria-controls="profile" aria-selected="false" style="pointer-events: none"><i class="number-icon">2</i>
                 Proveedores</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+            <a class="nav-link disable" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                 aria-controls="contact" aria-selected="false" style="pointer-events: none"><i class="number-icon">3</i>
                 Firma</a>
         </li>
@@ -38,8 +38,8 @@
 
     <div class="tab-content" id="myTabContent">
 
-        <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div id="home" class="tab-content" wire:ignore>
+        <div class="tab-pane fade show  {{ $active }}" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div id="home" class="tab-content">
                 <form method="PUT"
                     wire:submit.prevent="servicioUpdate(Object.fromEntries(new FormData($event.target)), {{ $editrequisicion->id }})"
                     enctype="multipart/form-data">
@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div id="profile" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
                 <form id="form-proveedores"
                     wire:submit.prevent="proveedoresUpdate(Object.fromEntries(new FormData($event.target)), {{ $editrequisicion->id }})"
@@ -889,8 +889,10 @@
                                             <select class="model-producto browser-default not-select2"
                                                 wire:model='selectedInput.{{ $count }}'
                                                 name="proveedor_{{ $count }}" required>
+                                                @isset($edtprov->provedores)
                                                 <option value="{{ $edtprov->provedores->id }}" selected> Actual:
                                                     {{ $edtprov->provedores->nombre }}</option>
+                                                @endisset
                                                 @foreach ($proveedores as $proveedor)
                                                     <option value="{{ $proveedor->id }}"> {{ $proveedor->nombre }}
                                                         - {{ $proveedor->rfc }}</option>
@@ -1239,10 +1241,6 @@
                         @endif
 
                     </div>
-
-                    {{-- <div>
-                <div class="btn btn-add-card" onclick="addCard('proveedor')"><i class="fa-regular fa-square-plus icon-prior"></i> AGREGAR PROVEEDOR</div>
-            </div> --}}
 
                     <div class="d-flex my-4" style="justify-content:flex-end;">
                         <button class="btn btn-primary" type="submit">
@@ -1806,16 +1804,12 @@
             });
         </script>
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
+             document.addEventListener("DOMContentLoaded", () => {
                 @this.set('products_servs_count', 1);
-
                 Livewire.on('cambiarTab', (id_tab) => {
                     // Activa la pestaña con ID 'profile'
                     $('#myTab a[href="#' + id_tab + '"]').tab('show');
                 });
-
-                var fecha = new Date();
-                document.getElementById("fecha-solicitud-input").value = fecha.toJSON().slice(0, 10);
             });
 
             function printArea() {
@@ -1823,38 +1817,102 @@
                 document.querySelector('#area_print').value = area;
             }
 
-            function addCard(tipo_card) {
-                if (tipo_card === 'servicio') {
-                    let card = document.querySelector('.card-product');
-                    let nueva_card = document.createElement("div");
-                    nueva_card.classList.add("card");
-                    nueva_card.classList.add("card-body");
-                    nueva_card.classList.add("card-product");
-                    let cards_count = document.querySelectorAll('.card-product').length + 1;
-                    nueva_card.setAttribute("data-count", cards_count);
-                    let id_nueva_card = 'product-serv-' + cards_count;
-                    nueva_card.setAttribute('id', id_nueva_card);
+            function addCardProductos(tipo_card) {
 
-                    let caja_cards = document.querySelector('.caja-card-product');
-                    caja_cards.appendChild(nueva_card);
-                    document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
+                Swal.fire({
+                    title: 'Agregar un producto?',
+                    text: "Estas seguro de agregar un nuevo producto, no podras eliminar los campos!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Seguro!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (tipo_card === 'servicio') {
+                            let card = document.querySelector('.card-product');
+                            let nueva_card = document.createElement("div");
+                            nueva_card.classList.add("card");
+                            nueva_card.classList.add("card-body");
+                            nueva_card.classList.add("card-product");
+                            let cards_count = document.querySelectorAll('.card-product').length + 1;
+                            nueva_card.setAttribute("data-count", cards_count);
+                            let id_nueva_card = 'product-serv-' + cards_count;
+                            nueva_card.setAttribute('id', id_nueva_card);
 
-                    document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name', 'cantidad_' +
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name', 'producto_' +
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute('name',
-                        'especificaciones_' + cards_count);
-                    @this.set('products_servs_count', cards_count);
-                }
+                            let caja_cards = document.querySelector('.caja-card-product');
+                            caja_cards.appendChild(nueva_card);
+                            document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
 
-                if (tipo_card === 'proveedor') {
+                            document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name',
+                                'cantidad_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name',
+                                'producto_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute(
+                                'name', 'especificaciones_' + cards_count);
+                            @this.set('products_servs_count', cards_count);
+                        }
 
-                    //@this.set('proveedores_count', {{ $proveedores_count + 1 }});
-
-                    Livewire.emit('actualizarCountProveedores');
-                }
+                        if (tipo_card === 'proveedor') {
+                            Livewire.emit('actualizarCountProveedores');
+                        }
+                        Swal.fire(
+                            'Agregado!',
+                            'Tu registro ha sido agregado.',
+                            'success'
+                        )
+                    }
+                })
             }
+
+            function addCardProveedores(tipo_card) {
+
+                Swal.fire({
+                    title: 'Agregar un proveedor?',
+                    text: "Estas seguro de agregar un nuevo proveedor, no podras eliminar los campos!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Seguro!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (tipo_card === 'servicio') {
+                            let card = document.querySelector('.card-product');
+                            let nueva_card = document.createElement("div");
+                            nueva_card.classList.add("card");
+                            nueva_card.classList.add("card-body");
+                            nueva_card.classList.add("card-product");
+                            let cards_count = document.querySelectorAll('.card-product').length + 1;
+                            nueva_card.setAttribute("data-count", cards_count);
+                            let id_nueva_card = 'product-serv-' + cards_count;
+                            nueva_card.setAttribute('id', id_nueva_card);
+
+                            let caja_cards = document.querySelector('.caja-card-product');
+                            caja_cards.appendChild(nueva_card);
+                            document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
+
+                            document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name',
+                                'cantidad_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name',
+                                'producto_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute(
+                                'name', 'especificaciones_' + cards_count);
+                            @this.set('products_servs_count', cards_count);
+                        }
+
+                        if (tipo_card === 'proveedor') {
+                            Livewire.emit('actualizarCountProveedores');
+                        }
+                        Swal.fire(
+                            'Agregado!',
+                            'Tu registro ha sido agregado.',
+                            'success'
+                        )
+                    }
+                })
+            }
+
 
             function deleteProduct() {
                 document.querySelector('.card-product:hover').remove();

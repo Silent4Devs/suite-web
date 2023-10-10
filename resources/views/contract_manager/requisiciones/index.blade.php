@@ -15,6 +15,12 @@
     <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
+            <form style="position: relative;  left:800px;" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
+                @method('GET')
+                <button class="btn btn-primary" type="submit" title="Aprobadores" >
+                    Aprobadores
+                </button>
+            </form>
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
@@ -43,7 +49,10 @@
                         <td>{{$requisicion->user}}</td>
                         <td>
                             <form action="{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}" method="DELETE">
+                                @if ($requisicion->estado === "rechazado")
                                 <a href="{{ route('contract_manager.requisiciones.edit',$requisicion->id )}}"><i class="fas fa-edit"></i></a>
+                                @endif
+
                                 <a href="{{ route('contract_manager.requisiciones.show',$requisicion->id )}}"><i class="fa-solid fa-print"></i></a>
                                 @method('DELETE')
                                 <button type="submit" title="delete" style="border: none; background-color:transparent;">
@@ -289,22 +298,8 @@
                     window.location.href = url;
                 }
             };
-            let btnAprobacion = {
-                text: '<i class="fa-solid fa-envelope"></i> Aprobadores',
-                titleAttr: 'Aprobadores requisicion',
-                url: "{{ route('contract_manager.requisiciones.indexAprobadores') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                    console.log(url);
-                },
-            };
 
-
-            dtButtons.push(btnAgregar, btnAprobacion);
+            dtButtons.push(btnAgregar);
 
             var table = $('#dom').DataTable({
                 buttons: dtButtons,
