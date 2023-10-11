@@ -26,10 +26,28 @@
         <button type="button" wire:click.prevent="modal('crear')" class="btn btn-outline-primary">Documentar
             Hallazgo</button>
     </div>
+
+    <div class="row">
+        <br>
+    </div>
+
+    <div class="card card-body">
+        <div class="row">
+            <div class="form-group col-sm-4 col-md-4 col-lg-3">
+                <button wire:click="movePreviousReport" class="btn btn-link">
+                    < Reporte Anterior</button>
+            </div>
+            <div class="form-group col-sm-4 col-md-4 col-lg-6" style="text-align: center">
+                {{ $this->findPosition($this->reporte->id) }}/{{ $reportes_audit->count() }}
+            </div>
+            <div class="form-group col-sm-4 col-md-4 col-lg-3" style="text-align: end">
+                <button wire:click="moveNextReport" class="btn btn-link">Reporte Siguiente ></button>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="form-group col-md-12">
-
-
             <!-- Modal -->
             <div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">

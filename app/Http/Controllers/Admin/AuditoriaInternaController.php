@@ -150,7 +150,8 @@ class AuditoriaInternaController extends Controller
 
         $equipoauditorias = Empleado::getaltaAll();
 
-        return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'))->with('clasificacionesauditorias', $clasificacionesauditorias)
+        return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'))
+            ->with('clasificacionesauditorias', $clasificacionesauditorias)
             ->with('clausulasauditorias', $clausulasauditorias);
     }
 

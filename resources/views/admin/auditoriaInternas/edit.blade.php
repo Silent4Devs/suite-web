@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('content')
     <style type="text/css">
+        label {
+            background-color: white;
+            transform: translate(15px, 18px);
+            padding: 0px 10px;
+        }
+
         .select2-selection--multiple {
             overflow: hidden !important;
             height: auto !important;
@@ -166,134 +172,9 @@
             </button>
         </div>
     </div>
+    </form>
 
     @livewire('edit-reporte-individual', ['clasificaciones' => $clasificacionesauditorias, 'clausulas' => $clausulasauditorias, 'id_auditoria' => $auditoriaInterna->id_auditoria])
-    {{-- <div class="card card-body">
-        <div class="form-group col-md-3 ">
-            <div class="form-check {{ $errors->has('cheknoconformidadmenor') ? 'is-invalid' : '' }}">
-                <input type="hidden" name="cheknoconformidadmenor" value="0">
-                <input class="form-check-input" type="checkbox" name="cheknoconformidadmenor" id="cheknoconformidadmenor"
-                    value="1"
-                    {{ old('cheknoconformidadmenor', $auditoriaInterna->cheknoconformidadmenor) == 1 ? 'checked' : '' }}>
-                <label class="form-check-label"
-                    for="cheknoconformidadmenor">{{ trans('cruds.auditoriaInterna.fields.cheknoconformidadmenor') }}</label>
-            </div>
-            @if ($errors->has('cheknoconformidadmenor'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('cheknoconformidadmenor') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.cheknoconformidadmenor_helper') }}</span>
-        </div>
-        <div class="form-group col-md-9">
-            <label
-                for="totalnoconformidadmenor">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmenor') }}</label>
-            <input class="form-control {{ $errors->has('totalnoconformidadmenor') ? 'is-invalid' : '' }}" type="number"
-                name="totalnoconformidadmenor" id="totalnoconformidadmenor"
-                value="{{ old('totalnoconformidadmenor', $auditoriaInterna->totalnoconformidadmenor) }}" min="0">
-            @if ($errors->has('totalnoconformidadmenor'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('totalnoconformidadmenor') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmenor_helper') }}</span>
-        </div>
-        <div class="form-group col-md-3">
-            <div class="form-check {{ $errors->has('checknoconformidadmayor') ? 'is-invalid' : '' }}">
-                <input type="hidden" name="checknoconformidadmayor" value="0">
-                <input class="form-check-input" type="checkbox" name="checknoconformidadmayor"
-                    id="checknoconformidadmayor" value="1"
-                    {{ old('checknoconformidadmayor', $auditoriaInterna->checknoconformidadmayor) == 1 ? 'checked' : '' }}>
-                <label class="form-check-label"
-                    for="checknoconformidadmayor">{{ trans('cruds.auditoriaInterna.fields.checknoconformidadmayor') }}</label>
-            </div>
-            @if ($errors->has('checknoconformidadmayor'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('checknoconformidadmayor') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.checknoconformidadmayor_helper') }}</span>
-        </div>
-        <div class="form-group col-md-9">
-            <label
-                for="totalnoconformidadmayor">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmayor') }}</label>
-            <input class="form-control {{ $errors->has('totalnoconformidadmayor') ? 'is-invalid' : '' }}" type="number"
-                name="totalnoconformidadmayor" id="totalnoconformidadmayor"
-                value="{{ old('totalnoconformidadmayor', $auditoriaInterna->totalnoconformidadmayor) }}" step="0.01"
-                min="0" max="99">
-            @if ($errors->has('totalnoconformidadmayor'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('totalnoconformidadmayor') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmayor_helper') }}</span>
-        </div>
-        <div class="form-group col-md-3">
-            <div class="form-check {{ $errors->has('checkobservacion') ? 'is-invalid' : '' }}">
-                <input type="hidden" name="checkobservacion" value="0">
-                <input class="form-check-input" type="checkbox" name="checkobservacion" id="checkobservacion"
-                    value="1"
-                    {{ old('checkobservacion', $auditoriaInterna->checkobservacion) == 1 ? 'checked' : '' }}>
-                <label class="form-check-label"
-                    for="checkobservacion">{{ trans('cruds.auditoriaInterna.fields.checkobservacion') }}</label>
-            </div>
-            @if ($errors->has('checkobservacion'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('checkobservacion') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.checkobservacion_helper') }}</span>
-        </div>
-        <div class="form-group col-md-9">
-            <label for="totalobservacion">{{ trans('cruds.auditoriaInterna.fields.totalobservacion') }}</label>
-            <input class="form-control {{ $errors->has('totalobservacion') ? 'is-invalid' : '' }}" type="number"
-                name="totalobservacion" id="totalobservacion"
-                value="{{ old('totalobservacion', $auditoriaInterna->totalobservacion) }}" step="0.01" min="0"
-                max="99">
-            @if ($errors->has('totalobservacion'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('totalobservacion') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalobservacion_helper') }}</span>
-        </div>
-        <div class="form-group col-md-3">
-            <div class="form-check {{ $errors->has('checkmejora') ? 'is-invalid' : '' }}">
-                <input type="hidden" name="checkmejora" value="0">
-                <input class="form-check-input" type="checkbox" name="checkmejora" id="checkmejora" value="1"
-                    {{ old('checkmejora', $auditoriaInterna->checkmejora) == 1 ? 'checked' : '' }}>
-                <label class="form-check-label"
-                    for="checkmejora">{{ trans('cruds.auditoriaInterna.fields.checkmejora') }}</label>
-            </div>
-            @if ($errors->has('checkmejora'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('checkmejora') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.checkmejora_helper') }}</span>
-        </div>
-        <div class="form-group col-md-9">
-            <label for="totalmejora">{{ trans('cruds.auditoriaInterna.fields.totalmejora') }}</label>
-            <input class="form-control {{ $errors->has('totalmejora') ? 'is-invalid' : '' }}" type="number"
-                name="totalmejora" id="totalmejora" value="{{ old('totalmejora', $auditoriaInterna->totalmejora) }}"
-                step="0.01" min="0" max="99">
-            @if ($errors->has('totalmejora'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('totalmejora') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalmejora_helper') }}</span>
-        </div>
-
-        <div class="row col-12 ml-2">
-            <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
-                <span style="font-size: 17px; font-weight: bold;">
-                    Hallazgos</span>
-            </div>
-        </div>
-        @livewire('table-auditoria-interna-hallazgos', ['auditoria_internas_id' => $auditoriaInterna->id]) --}}
-    </form>
-    {{-- </div> --}}
 @endsection
 
 @section('scripts')
