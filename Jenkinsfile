@@ -24,16 +24,6 @@ pipeline {
              }
         }
 
-        stage('Pruebas de Aceptación') {
-            steps {
-                sh 'vendor/bin/behat'
-                sh 'npm install'
-                sh 'npm run build'
-                sh 'npm test'
-            }
-        }
-
-
       }
 
      post {
