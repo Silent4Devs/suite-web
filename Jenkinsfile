@@ -14,7 +14,6 @@ pipeline {
                 sh 'docker-compose up --build -d'
                 sh 'docker-compose exec php composer install'
                 sh 'docker-compose exec php php artisan key:generate'
-                //sh 'php artisan test'
             }
         }
 
