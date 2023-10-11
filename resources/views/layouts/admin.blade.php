@@ -1101,6 +1101,28 @@
             }
         }
     </style>
+
+    <style>
+        .table-acordeon {}
+
+        .datatable-fix {
+            max-width: 100% !important;
+            overflow: auto !important;
+        }
+
+        .table-striped.table-acordeon tbody tr:nth-of-type(odd),
+        table.table.table-acordeon tbody tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0);
+        }
+
+        .btn-arrow-menu-table-rotate {
+            transform: rotate(180deg);
+        }
+
+        .tr-sec-menu td {
+            border-top: none !important;
+        }
+    </style>
     @yield('styles')
     @livewireStyles
 </head>

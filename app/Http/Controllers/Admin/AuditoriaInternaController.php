@@ -26,71 +26,71 @@ class AuditoriaInternaController extends Controller
     {
         abort_if(Gate::denies('auditoria_interna_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = AuditoriaInterna::with(['clausulas', 'lider', 'equipo', 'team'])->orderByDesc('id')->get();
-            $table = Datatables::of($query);
+        // if ($request->ajax()) {
+        $query = AuditoriaInterna::with(['clausulas', 'lider', 'equipo', 'team'])->orderByDesc('id')->get();
+        //     $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        //     $table->addColumn('placeholder', '&nbsp;');
+        //     $table->addColumn('actions', '&nbsp;');
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'auditoria_interna_ver';
-                $editGate = 'auditoria_interna_editar';
-                $deleteGate = 'auditoria_interna_eliminar';
-                $crudRoutePart = 'auditoria-internas';
+        //     $table->editColumn('actions', function ($row) {
+        //         $viewGate = 'auditoria_interna_ver';
+        //         $editGate = 'auditoria_interna_editar';
+        //         $deleteGate = 'auditoria_interna_eliminar';
+        //         $crudRoutePart = 'auditoria-internas';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        //         return view('partials.datatablesActions', compact(
+        //             'viewGate',
+        //             'editGate',
+        //             'deleteGate',
+        //             'crudRoutePart',
+        //             'row'
+        //         ));
+        //     });
 
-            $table->addColumn('id_auditoria', function ($row) {
-                return $row->id_auditoria ? $row->id_auditoria : '';
-            });
-            $table->addColumn('nombre_auditoria', function ($row) {
-                return $row->nombre_auditoria ? $row->nombre_auditoria : '';
-            });
-            $table->editColumn('objetivo', function ($row) {
-                return $row->objetivo ? html_entity_decode(strip_tags($row->objetivo), ENT_QUOTES, 'UTF-8') : 'n/a';
-            });
-            $table->editColumn('alcance', function ($row) {
-                return $row->alcance ? html_entity_decode(strip_tags($row->alcance), ENT_QUOTES, 'UTF-8') : 'n/a';
-            });
-            $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? \Carbon\Carbon::parse($row->fechainicio)->format('d-m-Y') : '';
-            });
-            $table->addColumn('criterios_auditoria', function ($row) {
-                return $row->criterios_auditoria ? html_entity_decode(strip_tags($row->criterios_auditoria), ENT_QUOTES, 'UTF-8') : 'n/a';
-            });
-            $table->addColumn('lider', function ($row) {
-                return $row->lider ? $row->lider : '';
-            });
-            $table->addColumn('auditor_externo', function ($row) {
-                return $row->auditor_externo ? $row->auditor_externo : '';
-            });
+        //     $table->addColumn('id_auditoria', function ($row) {
+        //         return $row->id_auditoria ? $row->id_auditoria : '';
+        //     });
+        //     $table->addColumn('nombre_auditoria', function ($row) {
+        //         return $row->nombre_auditoria ? $row->nombre_auditoria : '';
+        //     });
+        //     $table->editColumn('objetivo', function ($row) {
+        //         return $row->objetivo ? html_entity_decode(strip_tags($row->objetivo), ENT_QUOTES, 'UTF-8') : 'n/a';
+        //     });
+        //     $table->editColumn('alcance', function ($row) {
+        //         return $row->alcance ? html_entity_decode(strip_tags($row->alcance), ENT_QUOTES, 'UTF-8') : 'n/a';
+        //     });
+        //     $table->editColumn('fecha_inicio', function ($row) {
+        //         return $row->fecha_inicio ? \Carbon\Carbon::parse($row->fechainicio)->format('d-m-Y') : '';
+        //     });
+        //     $table->addColumn('criterios_auditoria', function ($row) {
+        //         return $row->criterios_auditoria ? html_entity_decode(strip_tags($row->criterios_auditoria), ENT_QUOTES, 'UTF-8') : 'n/a';
+        //     });
+        //     $table->addColumn('lider', function ($row) {
+        //         return $row->lider ? $row->lider : '';
+        //     });
+        //     $table->addColumn('auditor_externo', function ($row) {
+        //         return $row->auditor_externo ? $row->auditor_externo : '';
+        //     });
 
-            $table->addColumn('equipo', function ($row) {
-                return $row->equipo ? $row->equipo : '';
-            });
+        //     $table->addColumn('equipo', function ($row) {
+        //         return $row->equipo ? $row->equipo : '';
+        //     });
 
-            $table->addColumn('id_audit', function ($row) {
-                return $row->id_auditoria ? $row->id_auditoria : '';
-            });
+        //     $table->addColumn('id_audit', function ($row) {
+        //         return $row->id_auditoria ? $row->id_auditoria : '';
+        //     });
 
-            $table->rawColumns(['actions', 'placeholder', 'cheknoconformidadmenor', 'checknoconformidadmayor', 'checkobservacion', 'checkmejora']);
+        //     $table->rawColumns(['actions', 'placeholder', 'cheknoconformidadmenor', 'checknoconformidadmayor', 'checkobservacion', 'checkmejora']);
 
-            return $table->make(true);
-        }
+        //     return $table->make(true);
+        // }
 
         $controles = Controle::get();
         $users = User::getAll();
         $teams = Team::get();
 
-        return view('admin.auditoriaInternas.index', compact('controles', 'users', 'users', 'teams'));
+        return view('admin.auditoriaInternas.index', compact('controles', 'users', 'users', 'teams', 'query'));
     }
 
     public function create()
