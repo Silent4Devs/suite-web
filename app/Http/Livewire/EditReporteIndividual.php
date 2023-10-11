@@ -40,6 +40,10 @@ class EditReporteIndividual extends Component
 
     public $hallazgoAuditoriaID;
 
+    public $reportes_audit;
+
+    public $currentReportIndex;
+
     public $view = "create";
 
     public function mount($clasificaciones, $clausulas, $id_auditoria)
@@ -50,14 +54,11 @@ class EditReporteIndividual extends Component
 
         $audit = AuditoriaInterna::find($this->id_auditoria);
         $this->reporte = AuditoriaInternasReportes::where("id_auditoria", "=", $audit->id)
-            ->where("empleado_id", "=", auth()->user()->empleado->id)
             ->where("lider_id", "=", $audit->lider->id);
 
         if ($this->reporte->exists()) {
             $this->reporte = $this->reporte->first();
-            // dd($this->reporte);
         } else {
-            // dd("Crea uno nuevo");
             $this->createReporte($audit);
         }
     }
@@ -65,10 +66,9 @@ class EditReporteIndividual extends Component
 
     public function render()
     {
-        // $clasificaciones = $this->clasificaciones;
-        // $id_auditoria = $this->id_auditoria;
-        // $areas = Area::getAll();
         $procesos = Proceso::getAll();
+        $this->reportes_audit = AuditoriaInternasReportes::select('id')->where("id_auditoria", "=", $this->id_auditoria)->get();
+        // dd($reportes_audit->count());
         $datas = AuditoriaInternasHallazgos::where('auditoria_internas_id', '=', $this->id_auditoria)
             ->where("reporte_id", "=", $this->reporte->id)
             ->paginate($this->pagination);
@@ -96,6 +96,30 @@ class EditReporteIndividual extends Component
             ->with('clasificaciones', $this->clasificaciones)
             ->with('clausulas', $this->clausulas)
             ->with('id_auditoria', $this->id_auditoria);
+    }
+
+    public function findPosition($searchId)
+    {
+        $ids = $this->reportes_audit->pluck('id');
+        $position = $ids->search($searchId);
+        $position++;
+        return $position !== false ? $position : 'Value not found';
+    }
+
+    public function moveNextReport()
+    {
+        if ($this->currentReportIndex < count($this->reportes_audit) - 1) {
+            $this->currentReportIndex++;
+            $this->reporte = $this->reportes_audit[$this->currentReportIndex];
+        }
+    }
+
+    public function movePreviousReport()
+    {
+        if ($this->currentReportIndex > 0) {
+            $this->currentReportIndex--;
+            $this->reporte = $this->reportes_audit[$this->currentReportIndex];
+        }
     }
 
     public function validarHallazgosCreate()
