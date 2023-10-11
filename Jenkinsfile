@@ -18,10 +18,10 @@ pipeline {
             }
         }
 
-        stage('Desplegar en Desarrollo') {
-            steps {
-                  sh "cd var/www/tabantaj && git fetch origin develop:develop && git checkout develop && git pull develop"
-            }
+        stage('Desplegar en Stagging') {
+             steps {
+                sh 'ssh desarrollo@192.168.9.78 "cd  var/contenedor/tabantaj && git pull"'
+             }
         }
 
         stage('Pruebas de Aceptación') {
@@ -33,11 +33,6 @@ pipeline {
             }
         }
 
-        stage('Desplegar en Stagging') {
-            steps {
-                sh 'ssh desarrollo@192.168.9.111 "cd  var/contenedores/tabantaj && git pull"'
-            }
-        }
 
       }
 
