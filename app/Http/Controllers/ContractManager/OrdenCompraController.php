@@ -58,6 +58,7 @@ class OrdenCompraController extends Controller
                 return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
             } elseif ($rol->title === 'Compras') {
                 //compras
+                dd($user->empleado_id);
                 $comprador = KatbolComprador::where('id_user', $user->empleado_id)->first();
                 $id = 0;
                 if ($comprador) {
@@ -313,7 +314,6 @@ class OrdenCompraController extends Controller
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_orden = $fecha;
             $requisicion->save();
-
             $user = 'lourdes.abadia@silent4business.com';
             $userEmail = $user;
         }
