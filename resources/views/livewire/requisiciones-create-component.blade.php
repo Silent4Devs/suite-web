@@ -24,7 +24,7 @@
                 Productos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link disable eliminar {{ $disabled }}" id="profile-tab" onclick="eliminar();"
+            <a class="nav-link disable" id="profile-tab"
                 data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"
                 style="pointer-events: none"><i class="number-icon">2</i> Proveedores</a>
         </li>
@@ -180,13 +180,12 @@
                         </div>
                     </div>
 
-                    <div>
-                        <div class="btn btn-add-card" onclick="addCardProductos('servicio')"><i
-                                class="fa-regular fa-square-plus"></i>
-                            AGREGAR SERVICIOS Y PRODUCTOS</div>
-                    </div>
+                    <div class="my-4" style="display:flex; justify-content: space-between;">
+                        <div class="btn btn-add-card" onclick="addCardProductos('servicio')">
+                            <i class="fa-regular fa-square-plus"></i>
+                            AGREGAR SERVICIOS Y PRODUCTOS
+                        </div>
 
-                    <div style="position: relative; top: -2rem; left: 55rem;">
                         <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
@@ -394,12 +393,12 @@
                         @endfor
                     </div>
 
-                    <div>
-                        <div class="btn btn-add-card" onclick="addCardProveedores('proveedor')"><i
-                                class="fa-regular fa-square-plus icon-prior"></i>
-                            AGREGAR PROVEEDOR</div>
-                    </div>
-                    <div style="position: relative; top: -2rem; left: 55rem;">
+                    <div class="my-4" style="display:flex; justify-content: space-between;">
+                        <div class="btn btn-add-card" onclick="addCardProveedores('proveedor')">
+                            <i class="fa-regular fa-square-plus icon-prior"></i>
+                            AGREGAR PROVEEDOR
+                        </div>
+
                         <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
@@ -679,8 +678,9 @@
                             </div>
                             <div class="flex caja-firmar" wire:ignore>
                                 <div class="flex-item" style="display:flex; justify-content: center;">
-                                    <div id="firma_content" class="caja-space-firma">
-                                        <canvas id="firma_requi" style="width:100%;">
+                                    <div id="firma_content" class="caja-space-firma"
+                                        style="display: flex; justify-content: center; align-items: center;">
+                                        <canvas id="firma_requi" width="500px" height="300px">
                                             Navegador no compatible
                                         </canvas>
                                         <input type="hidden" name="firma" id="firma">
@@ -693,7 +693,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex" style="position: relative; top: -1rem; justify-content: end; ">
+                            <div class="flex my-4" style="justify-content: end;">
                                 <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
                             </div>
                         </div>
@@ -742,22 +742,6 @@
                     'error')
             }
         }
-
-        function eliminar() {
-            $.ajax({
-                type: "DELETE",
-                url: "eliminar-registro",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    // Realizar acciones después de eliminar el registro (por ejemplo, actualizar la vista)
-                },
-                error: function(err) {
-                    console.log(err);
-                }
-            });
-        }
     </script>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -796,58 +780,6 @@
                     var dataUrl = canvas.toDataURL();
                     $('#firma').val(dataUrl);
                 });
-
-                if (document.getElementById('firma_content')) {
-                    document.getElementById('firma_content').addEventListener('click', (e) => {
-                        if (e.target.getAttribute('data-action') == 'firmar') {
-
-                            e.preventDefault();
-                            let btnId = e.target.getAttribute('id');
-                            let canvasId = btnId.replaceAll('guardar', 'canvas');
-                            let controlCambios = '';
-                            let url = "{{ route('admin.planificacion-controls.firma-aprobacion') }}";
-                            var canvas = document.getElementById(canvasId);
-                            var dataUrl = canvas.toDataURL();
-                            let tipo = e.target.getAttribute('data-tipo');
-                            var data = {
-                                id: controlCambios.id,
-                                tipo,
-                                firma: '',
-                            };
-                            var isCanvasEmptySigned = isCanvasEmpty(canvas);
-                            if (isCanvasEmptySigned) {
-                                toastr.info('Firma(s) no dibujadas');
-                            } else {
-                                data['firma'] = dataUrl;
-
-                            }
-                            console.log(data);
-                            if (!isCanvasEmptySigned) {
-                                $.ajax({
-                                    headers: {
-                                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                                    },
-                                    type: "POST",
-                                    data: data,
-                                    url: url,
-
-                                    success: function(response) {
-                                        if (response.success) {
-                                            toastr.success('Firmado con éxito');
-                                            setTimeout(() => {
-                                                window.location.reload();
-                                            }, 1500);
-                                        }
-                                    },
-                                    error: function(request, status, error) {
-                                        toastr.error(
-                                            'Ocurrió un error: ' + error);
-                                    }
-                                });
-                            }
-                        }
-                    })
-                }
 
                 function renderCanvas(contenedor, clearBtnCanvas) {
 
@@ -1161,7 +1093,7 @@
                 const fechaFin = new Date(fechaFinInput.value);
 
                 // Verifica si la fecha de finalización es mayor que la fecha de inicio
-                if (fechaFin < fechaInicio) {
+                if (fechaFin < fechaInicio && fechaFin.getFullYear() > 1111) {
                     alert('La fecha de finalización no puede ser mayor que la fecha de inicio');
                     fechaFinInput.value = ''; // Limpia el campo de fecha de finalización
                 }

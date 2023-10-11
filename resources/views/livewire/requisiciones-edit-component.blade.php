@@ -18,19 +18,19 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+            <a class="nav-link active disable" id="home-tab" data-toggle="tab" href="#home" role="tab"
                 aria-controls="home" aria-selected="true"><i class="number-icon active-number"
                     style="pointer-events: none">1</i> Servicios
                 y
                 Productos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+            <a class="nav-link disable" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                 aria-controls="profile" aria-selected="false" style="pointer-events: none"><i class="number-icon">2</i>
                 Proveedores</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+            <a class="nav-link disable" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                 aria-controls="contact" aria-selected="false" style="pointer-events: none"><i class="number-icon">3</i>
                 Firma</a>
         </li>
@@ -38,8 +38,8 @@
 
     <div class="tab-content" id="myTabContent">
 
-        <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div id="home" class="tab-content" wire:ignore>
+        <div class="tab-pane fade show  {{ $active }}" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div id="home" class="tab-content">
                 <form method="PUT"
                     wire:submit.prevent="servicioUpdate(Object.fromEntries(new FormData($event.target)), {{ $editrequisicion->id }})"
                     enctype="multipart/form-data">
@@ -110,7 +110,7 @@
                             </div>
                             <div class="col s12 l3 ">
                                 <label for="" class="txt-tamaño">
-                                    Contratos (Proyectos) <font class="asterisco">*</font>
+                                    Proyectos <font class="asterisco">*</font>
                                 </label>
                                 <select required class="browser-default" name="contrato_id">
                                     @foreach ($contratos as $contrato)
@@ -179,12 +179,11 @@
                             </div>
                         @endforeach
                     </div>
-                    <div>
-                        <div class="btn btn-add-card" onclick="addCard('servicio')"><i
-                                class="fa-regular fa-square-plus"></i> AGREGAR SERVICIOS Y PRODUCTOS</div>
-                    </div>
+                    <div class="my-4" style="display:flex; justify-content: space-between;">
+                        <div class="btn btn-add-card" onclick="addCard('servicio')">
+                            <i class="fa-regular fa-square-plus"></i> AGREGAR SERVICIOS Y PRODUCTOS
+                        </div>
 
-                    <div style="position: relative; top: -2rem; left: 55rem;">
                         <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
@@ -193,7 +192,7 @@
             </div>
         </div>
 
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div id="profile" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
                 <form id="form-proveedores"
                     wire:submit.prevent="proveedoresUpdate(Object.fromEntries(new FormData($event.target)), {{ $editrequisicion->id }})"
@@ -890,8 +889,10 @@
                                             <select class="model-producto browser-default not-select2"
                                                 wire:model='selectedInput.{{ $count }}'
                                                 name="proveedor_{{ $count }}" required>
+                                                @isset($edtprov->provedores)
                                                 <option value="{{ $edtprov->provedores->id }}" selected> Actual:
                                                     {{ $edtprov->provedores->nombre }}</option>
+                                                @endisset
                                                 @foreach ($proveedores as $proveedor)
                                                     <option value="{{ $proveedor->id }}"> {{ $proveedor->nombre }}
                                                         - {{ $proveedor->rfc }}</option>
@@ -1241,11 +1242,7 @@
 
                     </div>
 
-                    {{-- <div>
-                <div class="btn btn-add-card" onclick="addCard('proveedor')"><i class="fa-regular fa-square-plus icon-prior"></i> AGREGAR PROVEEDOR</div>
-            </div> --}}
-
-                    <div style="position: relative; top: -1rem; left: 55rem;">
+                    <div class="d-flex my-4" style="justify-content:flex-end;">
                         <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
@@ -1548,7 +1545,11 @@
                             </div>
                             <div class="flex caja-firmar" wire:ignore>
                                 <div class="flex-item" style="display:flex; justify-content: center;">
-                                    <div id="firma_content" class="caja-space-firma">
+                                    <div id="firma_content" class="caja-space-firma"
+                                        style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                        <canvas id="firma_requi" width="500px" height="300px">
+                                            Navegador no compatible
+                                        </canvas>
                                         <input type="hidden" name="firma" id="firma">
                                     </div>
                                 </div>
@@ -1559,7 +1560,7 @@
                                         Limpiar</div>
                                 </div>
                             </div>
-                            <div class="flex" style="justify-content: end; gap:10px;">
+                            <div class="flex my-4" style="justify-content: end; gap:10px;">
                                 <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
                             </div>
                         </div>
@@ -1620,41 +1621,195 @@
         <script>
             //termino
             Livewire.on('render_firma', (id_tab) => {
-                var signaturePad = $('#firma_content').signature({
-                    syncField: '#firma',
-                    syncFormat: 'PNG',
-                    change: function(event, ui) {
-                        if (signaturePad.signature().length > 0) {
-                            // La firma está presente, lo que indica que se ha terminado de firmar
-                            console.log("Firma completada");
-                            // Ejecutar código adicional aquí
-                            // ...
-                            console.log('ferras');
-                        } else {
-                            // La firma está vacía, lo que indica que aún no se ha firmado
-                            console.log("No se ha firmado");
-                        }
+                (function() {
+
+
+                    window.requestAnimFrame = (function(callback) {
+                        return window.requestAnimationFrame ||
+                            window.webkitRequestAnimationFrame ||
+                            window.mozRequestAnimationFrame ||
+                            window.oRequestAnimationFrame ||
+                            window.msRequestAnimaitonFrame ||
+                            function(callback) {
+                                window.setTimeout(callback, 1000 / 60);
+                            };
+                    })();
+
+                    if (document.getElementById('firma_requi')) {
+                        renderCanvas("firma_requi", "clear");
                     }
+
+                })();
+
+                $('#firma_requi').mouseleave(function() {
+                    var canvas = document.getElementById('firma_requi');
+                    var dataUrl = canvas.toDataURL();
+                    $('#firma').val(dataUrl);
                 });
 
-                $('#clear').click(function(e) {
-                    e.preventDefault();
-                    signaturePad.signature('clear');
-                    $("#firma").val('');
-                });
+                function renderCanvas(contenedor, clearBtnCanvas) {
+
+                    var canvas = document.getElementById(contenedor);
+                    console.log(canvas);
+                    var ctx = canvas.getContext("2d");
+                    ctx.strokeStyle = "#222222";
+                    ctx.lineWidth = 1;
+
+                    var drawing = false;
+                    var mousePos = {
+                        x: 0,
+                        y: 0
+                    };
+                    var lastPos = mousePos;
+
+                    canvas.addEventListener("mousedown", function(e) {
+                        drawing = true;
+                        lastPos = getMousePos(canvas, e);
+                    }, false);
+
+                    canvas.addEventListener("mouseup", function(e) {
+                        drawing = false;
+                    }, false);
+
+                    canvas.addEventListener("mousemove", function(e) {
+                        mousePos = getMousePos(canvas, e);
+                    }, false);
+
+                    // Add touch event support for mobile
+                    canvas.addEventListener("touchstart", function(e) {
+
+                    }, false);
+
+                    canvas.addEventListener("touchmove", function(e) {
+                        var touch = e.touches[0];
+                        var me = new MouseEvent("mousemove", {
+                            clientX: touch.clientX,
+                            clientY: touch.clientY
+                        });
+                        canvas.dispatchEvent(me);
+                    }, false);
+
+                    canvas.addEventListener("touchstart", function(e) {
+                        mousePos = getTouchPos(canvas, e);
+                        var touch = e.touches[0];
+                        var me = new MouseEvent("mousedown", {
+                            clientX: touch.clientX,
+                            clientY: touch.clientY
+                        });
+                        canvas.dispatchEvent(me);
+                    }, false);
+
+                    canvas.addEventListener("touchend", function(e) {
+                        var me = new MouseEvent("mouseup", {});
+                        canvas.dispatchEvent(me);
+                    }, false);
+
+                    function getMousePos(canvasDom, mouseEvent) {
+                        var rect = canvasDom.getBoundingClientRect();
+                        return {
+                            x: mouseEvent.clientX - rect.left,
+                            y: mouseEvent.clientY - rect.top
+                        }
+                    }
+
+                    function getTouchPos(canvasDom, touchEvent) {
+                        var rect = canvasDom.getBoundingClientRect();
+                        return {
+                            x: touchEvent.touches[0].clientX - rect.left,
+                            y: touchEvent.touches[0].clientY - rect.top
+                        }
+                    }
+
+                    function renderCanvas() {
+                        if (drawing) {
+                            ctx.moveTo(lastPos.x, lastPos.y);
+                            ctx.lineTo(mousePos.x, mousePos.y);
+                            ctx.stroke();
+                            lastPos = mousePos;
+                        }
+                    }
+
+                    // Prevent scrolling when touching the canvas
+                    document.body.addEventListener("touchstart", function(e) {
+                        if (e.target == canvas) {
+                            e.preventDefault();
+                        }
+                    }, false);
+                    document.body.addEventListener("touchend", function(e) {
+                        if (e.target == canvas) {
+                            e.preventDefault();
+                        }
+                    }, false);
+                    document.body.addEventListener("touchmove", function(e) {
+                        if (e.target == canvas) {
+                            e.preventDefault();
+                        }
+                    }, false);
+
+                    (function drawLoop() {
+                        requestAnimFrame(drawLoop);
+                        renderCanvas();
+                    })();
+
+                    function clearCanvas() {
+                        canvas.width = canvas.width;
+                    }
+
+                    function isCanvasBlank() {
+                        const context = canvas.getContext('2d');
+
+                        const pixelBuffer = new Uint32Array(
+                            context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                        );
+
+                        return !pixelBuffer.some(color => color !== 0);
+                    }
+
+                    // Set up the UI
+                    // var sigText = document.getElementById(dataBaseCanvas);
+                    // var sigImage = document.getElementById(imageCanvas);
+                    var clearBtn = document.getElementById(clearBtnCanvas);
+                    // var submitBtn = document.getElementById(submitBtnCanvas);
+                    clearBtn.addEventListener("click", function(e) {
+                        clearCanvas();
+                        // sigText.innerHTML = "Data URL for your signature will go here!";
+                        // sigImage.setAttribute("src", "");
+                    }, false);
+                    // submitBtn.addEventListener("click", function(e) {
+                    //     const blank = isCanvasBlank();
+                    //     if (!blank) {
+                    //         // var dataUrl = canvas.toDataURL();
+                    //         // sigText.innerHTML = dataUrl;
+                    //         // sigImage.setAttribute("src", dataUrl);
+                    //     } else {
+                    //         if (toastr) {
+                    //             toastr.info('No has firmado en el canvas');
+                    //         } else {
+                    //             alert('No has firmado en el canvas');
+                    //         }
+                    //     }
+                    // }, false);
+
+                }
+
+                function isCanvasEmpty(canvas) {
+                    const context = canvas.getContext('2d');
+
+                    const pixelBuffer = new Uint32Array(
+                        context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                    );
+
+                    return !pixelBuffer.some(color => color !== 0);
+                }
             });
         </script>
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
+             document.addEventListener("DOMContentLoaded", () => {
                 @this.set('products_servs_count', 1);
-
                 Livewire.on('cambiarTab', (id_tab) => {
                     // Activa la pestaña con ID 'profile'
                     $('#myTab a[href="#' + id_tab + '"]').tab('show');
                 });
-
-                var fecha = new Date();
-                document.getElementById("fecha-solicitud-input").value = fecha.toJSON().slice(0, 10);
             });
 
             function printArea() {
@@ -1662,38 +1817,102 @@
                 document.querySelector('#area_print').value = area;
             }
 
-            function addCard(tipo_card) {
-                if (tipo_card === 'servicio') {
-                    let card = document.querySelector('.card-product');
-                    let nueva_card = document.createElement("div");
-                    nueva_card.classList.add("card");
-                    nueva_card.classList.add("card-body");
-                    nueva_card.classList.add("card-product");
-                    let cards_count = document.querySelectorAll('.card-product').length + 1;
-                    nueva_card.setAttribute("data-count", cards_count);
-                    let id_nueva_card = 'product-serv-' + cards_count;
-                    nueva_card.setAttribute('id', id_nueva_card);
+            function addCardProductos(tipo_card) {
 
-                    let caja_cards = document.querySelector('.caja-card-product');
-                    caja_cards.appendChild(nueva_card);
-                    document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
+                Swal.fire({
+                    title: 'Agregar un producto?',
+                    text: "Estas seguro de agregar un nuevo producto, no podras eliminar los campos!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Seguro!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (tipo_card === 'servicio') {
+                            let card = document.querySelector('.card-product');
+                            let nueva_card = document.createElement("div");
+                            nueva_card.classList.add("card");
+                            nueva_card.classList.add("card-body");
+                            nueva_card.classList.add("card-product");
+                            let cards_count = document.querySelectorAll('.card-product').length + 1;
+                            nueva_card.setAttribute("data-count", cards_count);
+                            let id_nueva_card = 'product-serv-' + cards_count;
+                            nueva_card.setAttribute('id', id_nueva_card);
 
-                    document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name', 'cantidad_' +
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name', 'producto_' +
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute('name',
-                        'especificaciones_' + cards_count);
-                    @this.set('products_servs_count', cards_count);
-                }
+                            let caja_cards = document.querySelector('.caja-card-product');
+                            caja_cards.appendChild(nueva_card);
+                            document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
 
-                if (tipo_card === 'proveedor') {
+                            document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name',
+                                'cantidad_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name',
+                                'producto_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute(
+                                'name', 'especificaciones_' + cards_count);
+                            @this.set('products_servs_count', cards_count);
+                        }
 
-                    //@this.set('proveedores_count', {{ $proveedores_count + 1 }});
-
-                    Livewire.emit('actualizarCountProveedores');
-                }
+                        if (tipo_card === 'proveedor') {
+                            Livewire.emit('actualizarCountProveedores');
+                        }
+                        Swal.fire(
+                            'Agregado!',
+                            'Tu registro ha sido agregado.',
+                            'success'
+                        )
+                    }
+                })
             }
+
+            function addCardProveedores(tipo_card) {
+
+                Swal.fire({
+                    title: 'Agregar un proveedor?',
+                    text: "Estas seguro de agregar un nuevo proveedor, no podras eliminar los campos!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Seguro!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (tipo_card === 'servicio') {
+                            let card = document.querySelector('.card-product');
+                            let nueva_card = document.createElement("div");
+                            nueva_card.classList.add("card");
+                            nueva_card.classList.add("card-body");
+                            nueva_card.classList.add("card-product");
+                            let cards_count = document.querySelectorAll('.card-product').length + 1;
+                            nueva_card.setAttribute("data-count", cards_count);
+                            let id_nueva_card = 'product-serv-' + cards_count;
+                            nueva_card.setAttribute('id', id_nueva_card);
+
+                            let caja_cards = document.querySelector('.caja-card-product');
+                            caja_cards.appendChild(nueva_card);
+                            document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
+
+                            document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name',
+                                'cantidad_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name',
+                                'producto_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute(
+                                'name', 'especificaciones_' + cards_count);
+                            @this.set('products_servs_count', cards_count);
+                        }
+
+                        if (tipo_card === 'proveedor') {
+                            Livewire.emit('actualizarCountProveedores');
+                        }
+                        Swal.fire(
+                            'Agregado!',
+                            'Tu registro ha sido agregado.',
+                            'success'
+                        )
+                    }
+                })
+            }
+
 
             function deleteProduct() {
                 document.querySelector('.card-product:hover').remove();
@@ -1740,7 +1959,7 @@
                 const fechaFin = new Date(fechaFinInput.value);
 
                 // Verifica si la fecha de finalización es mayor que la fecha de inicio
-                if (fechaFin < fechaInicio) {
+                if (fechaFin < fechaInicio && fechaFin.getFullYear() > 1111) {
                     alert('La fecha de finalización no puede ser mayor que la fecha de inicio');
                     fechaFinInput.value = ''; // Limpia el campo de fecha de finalización
                 }
