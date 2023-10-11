@@ -240,10 +240,13 @@
                                 </td>
                                 <td style="min-width:40">
                                     <div class="dropdown">
-                                        <button class="btn btn-outline-dark dropdown-toggle" type="button"
-                                            data-toggle="dropdown" aria-expanded="false">
+                                        <div class="btn" type="button" data-toggle="dropdown"
+                                            aria-expanded="false">
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
-                                        </button>
+                                        </div>
+                                        <div class="btn" onclick="viewAudit({{ $data->id }})">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
                                                 wire:click.prevent="modal('editar', {{ $data->id }})">
@@ -256,7 +259,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="d-none tr-sec-menu tr-second{{ $data->id }}">
                                 <td style="min-width:100px;">
                                     {{ $data->procesos ? $data->procesos->nombre : 'n/a' }}
                                 </td>

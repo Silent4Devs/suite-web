@@ -297,6 +297,12 @@
 @endsection
 
 @section('scripts')
+    <script>
+        function viewAudit(id) {
+            $('.tr-second' + id).toggleClass('d-none');
+            $('.btn:hover i').toggleClass('btn-arrow-menu-table-rotate');
+        }
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             $("#clausulas").select2({

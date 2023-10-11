@@ -84,18 +84,31 @@
                                 {!! $aud->objetivo !!}
                             </td>
                             <td style="text-align: center;">
-                                <a href="{{ route('admin.auditoria-internas.reporteIndividual', ':$aud->id_auditoria') }}">
+                                <a href="{{ route('admin.auditoria-internas.reporteIndividual', $aud->id_auditoria) }}">
                                     <i class="fa-solid fa-user-check" style="color:#5A5A5A;"></i>
                                 </a>
                             </td>
                             <td>
                                 {{ trans('global.actions') }}
-                                <button class="btn">
+                                <div class="btn">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <button class="btn" onclick="viewAudit({{ $aud->id }})">
+                                </div>
+                                <div class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+                                    onclick="viewAudit({{ $aud->id }})">
                                     <i class="fa-solid fa-chevron-down"></i>
-                                </button>
+                                </div>
+
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item">
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Ver
+                                    </a>
+                                    <a class="dropdown-item">
+                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar
+                                    </a>
+                                    <a class="dropdown-item">
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
+                                    </a>
+                                </div>
                             </td>
                         </tr>
 
@@ -150,7 +163,7 @@
     <script>
         function viewAudit(id) {
             $('.tr-second' + id).toggleClass('d-none');
-            $('.btn:hover').toggleClass('btn-arrow-menu-table-rotate');
+            $('.btn:hover i').toggleClass('btn-arrow-menu-table-rotate');
         }
     </script>
     <script>

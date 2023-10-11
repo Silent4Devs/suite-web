@@ -10,6 +10,12 @@
 
 @section('scripts')
     <script>
+        function viewAudit(id) {
+            $('.tr-second' + id).toggleClass('d-none');
+            $('.btn:hover i').toggleClass('btn-arrow-menu-table-rotate');
+        }
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuActive = localStorage.getItem('menu-iso27001-active');
             $(`#tabsIso27001 [data-type="${menuActive}"]`).tab('show');
