@@ -34,6 +34,7 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
     Route::get('/', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('/home', 'InicioUsuarioController@index')->name('home');
     //log-viewer
     Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
