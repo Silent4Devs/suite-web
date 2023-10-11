@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
+use App\Http\Controllers\DashboardAuditoriasSGIController;
 use App\Http\Livewire\Escuela\CourseStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,8 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    Route::post('/obtenerauditoria', 'DashboardAuditoriasSGIController@obtenerauditoria')->name('obtener-auditoria');
+
     Route::get('/', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
     //log-viewer
     Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
@@ -601,8 +604,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('planTrabajoBase/check/changes', 'PlanTrabajoBaseController@checkChanges')->name('planTrabajoBase.checkChanges');
         Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
         Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
-
-        Route::get('/dashboard-contratos-katbol', 'DashboardAuditoriasSGIController@index')->name('home');
+        Route::get('obtener-clausula-id/{incumplimiento}', [DashboardAuditoriasSGIController::class, 'obtenerClausulaId'])->name('obtener-clausula-id');
+        Route::get('/dashboard-auditorias-sgi', 'DashboardAuditoriasSGIController@index')->name('dashboard_auditorias');
         // Permissions
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');
@@ -1019,7 +1022,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('auditoria-internas', 'AuditoriaInternaController')->except('edit');
         Route::get('auditoria-internas/{auditoriaInterna}/reporteIndividual', 'AuditoriaInternaController@indexReporteIndividual')->name('auditoria-internas.reporteIndividual');
         Route::get('auditoria-internas/{auditoriaInterna}/createReporteIndividual', 'AuditoriaInternaController@createReporte')->name('auditoria-internas.createReporteIndividual');
-        Route::post('auditoria-internas/{auditoriaInterna}/storeReporteIndividual', 'AuditoriaInternaController@storeReporte')->name('auditoria-internas.storeReporteIndividual');
+        Route::post('auditoria-internas/{reporteid}/storeReporteIndividual', 'AuditoriaInternaController@storeReporte')->name('auditoria-internas.storeReporteIndividual');
+        Route::get('auditoria-internas/reporte-rechazado/{id_reporte}', 'AuditoriaInternaController@rechazoReporteIndividual')->name('auditoria-internas.rechazoReporteIndividual');
+        Route::post('auditoria-internas/{reporteid}/storeFirmaReporteLider', 'AuditoriaInternaController@storeFirmaReporteLider')->name('auditoria-internas.storeFirmaReporteLider');
 
         Route::get('auditoria-internas/reportes-crd', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
 

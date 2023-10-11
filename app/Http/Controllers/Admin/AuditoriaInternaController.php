@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAuditoriaInternaRequest;
+use App\Mail\NotificacionAprobadoReporteAuditoria;
+use App\Mail\NotificacionRechazoReporteAuditoria;
+use App\Mail\NotificacionReporteAuditoria;
 use App\Models\AuditoriaInterna;
+use App\Models\AuditoriaInternasReportes;
 use App\Models\ClasificacionesAuditorias;
 use App\Models\Clausula;
 use App\Models\ClausulasAuditorias;
@@ -15,8 +19,11 @@ use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
+use Throwable;
 
 class AuditoriaInternaController extends Controller
 {
@@ -115,9 +122,10 @@ class AuditoriaInternaController extends Controller
             'alcance' => 'required',
             'objetivo' => 'required',
             'id_auditoria' => 'required',
-            'nombre_auditoria' => 'required',
+            'nombre_auditoria' => 'required|max:250',
             'criterios_auditoria' => 'required',
             'fecha_inicio' => 'nullable|date',
+            'auditor_externo' => 'max:250',
         ]);
 
         $auditoriaInterna = AuditoriaInterna::create($request->all());
@@ -133,13 +141,17 @@ class AuditoriaInternaController extends Controller
 
         $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team');
 
+        $clasificacionesauditorias = ClasificacionesAuditorias::all();
+        $clausulasauditorias = ClausulasAuditorias::all();
+
         $clausulas = Clausula::all();
 
         $auditorliders = Empleado::getaltaAll();
 
         $equipoauditorias = Empleado::getaltaAll();
 
-        return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
+        return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'))->with('clasificacionesauditorias', $clasificacionesauditorias)
+            ->with('clausulasauditorias', $clausulasauditorias);
     }
 
     public function update(Request $request, AuditoriaInterna $auditoriaInterna)
@@ -149,9 +161,10 @@ class AuditoriaInternaController extends Controller
             'alcance' => 'required',
             'objetivo' => 'required',
             'id_auditoria' => 'required',
-            'nombre_auditoria' => 'required',
+            'nombre_auditoria' => 'required|max:250',
             'criterios_auditoria' => 'required',
             'fecha_inicio' => 'nullable|date',
+            'auditor_externo' => 'max:250',
         ]);
 
         $auditoriaInterna->update($request->all());
@@ -216,9 +229,103 @@ class AuditoriaInternaController extends Controller
         return view('admin.auditoriaInternas.createReporte');
     }
 
-    public function storeReporte($id)
+    public function storeReporte($reporteid, Request $request)
     {
-        dd($id);
-        return view('admin.auditoriaInternas.createReporte');
+        $reporte = AuditoriaInternasReportes::find($reporteid);
+        $nombre_colaborador = auth()->user()->empleado->name;
+
+        $signature = $request->input('signature');
+
+        $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
+
+        if (!Storage::exists('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte')) {
+            Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $reporte->id . '/' . $nombre_colaborador, 0755, true);
+        }
+
+        $filename = '/audit' . $reporte->id_auditoria . 'firmaempleado' . $nombre_colaborador . '.png';
+
+        Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . "/reporte" . '/' . $reporte->id . '/' . $nombre_colaborador . $filename, $image);
+
+        $reporte = AuditoriaInternasReportes::where("id_auditoria", "=", $reporte->id_auditoria)
+            ->where("empleado_id", "=", auth()->user()->empleado->id)
+            ->where("lider_id", "=", $reporte->lider->id)->first();
+        // dd($reporte);
+        $reporte->update([
+            // "comentarios",
+            "estado" => "enviado",
+            "firma_empleado" => $filename,
+            // "firma_lider",
+        ]);
+
+        try {
+            $email = new NotificacionReporteAuditoria($nombre_colaborador);
+            Mail::to(removeUnicodeCharacters($reporte->lider->email))->send($email);
+            return response()->json(['success' => true]);
+        } catch (Throwable $e) {
+            return response()->json(['success' => false]);
+        }
+    }
+
+    public function rechazoReporteIndividual($reporteid)
+    {
+
+        $comentarios = request('comentarios');
+        $reporte = AuditoriaInternasReportes::find($reporteid);
+
+        $reporte->update([
+            "comentarios" => $comentarios,
+            "estado" => "rechazado",
+            // "firma_empleado" => $filename,
+            // "firma_lider",
+        ]);
+        // dd($reporteid, $reporte, $comentarios);
+
+        try {
+            $email = new NotificacionRechazoReporteAuditoria();
+            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+            dd("Se envio el correo");
+            // return response()->json(['success' => true]);
+        } catch (Throwable $e) {
+            dd("No se envio el correo");
+            // return response()->json(['success' => false]);
+        }
+    }
+
+    public function storeFirmaReporteLider($reporteid, Request $request)
+    {
+        // dd($reporteid);
+
+        $reporte = AuditoriaInternasReportes::find($reporteid);
+        $nombre_lider = $reporte->lider->name;
+
+        $signature = $request->input('signature');
+
+        $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
+
+        if (!Storage::exists('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte')) {
+            Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $nombre_lider, 0755, true);
+        }
+
+        $filename = '/audit' . $reporte->id_auditoria . 'firmaempleado' . $nombre_lider . '.png';
+
+        Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . "/reporte" . '/' . $reporte->id . '/' . $nombre_lider . $filename, $image);
+
+        $reporte = AuditoriaInternasReportes::where("id_auditoria", "=",  $reporte->id_auditoria)
+            ->where("lider_id", "=", $reporte->lider->id)->first();
+        // dd($reporte);
+        $reporte->update([
+            // "comentarios",
+            "estado" => "aprobado",
+            "firma_lider" => $filename,
+            // "firma_lider",
+        ]);
+
+        try {
+            $email = new NotificacionAprobadoReporteAuditoria();
+            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+            return response()->json(['success' => true]);
+        } catch (Throwable $e) {
+            return response()->json(['success' => false]);
+        }
     }
 }

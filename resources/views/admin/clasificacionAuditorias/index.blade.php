@@ -21,7 +21,7 @@
                             ID
                         </th>
                         <th style="min-width: 200px;">
-                            Nombre de la Clasificación
+                            Clasificación
                         </th>
                         <th style="min-width: 700px;">
                             Descripción
@@ -191,22 +191,32 @@
                         name: 'descripcion'
                     },
                     {
-                        data: 'id',
+                        data: null,
                         render: function(data, type, row, meta) {
-                            let html =
-                                `
+                            let html = `
                                 <div class="dropdown">
                                     <button class="btn btn-outline-dark dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/edit/${data}') }}">
+                                        <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/edit/${row.id}') }}">
                                             <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                        <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${data}') }}">
-                                            <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
-                                    </div>
-                                </div>`;
+                                        `;
+
+                            if (row.borrado === false) {
+                                html += `
+                                    <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${row.id}') }}">
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                                `;
+                            } else {
+                                html += `
+                                    <a class="dropdown-item disabled" href="#">
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (En uso)</a>
+                                `;
+                            }
+
+                            html += `</div></div>`;
 
                             return html;
                         }
