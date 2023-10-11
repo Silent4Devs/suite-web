@@ -18,25 +18,10 @@ pipeline {
             }
         }
 
-        stage('Desplegar en Desarrollo') {
-            steps {
-                  sh "cd var/www/tabantaj && git fetch origin develop:develop && git checkout develop && git pull develop"
-            }
-        }
-
-        stage('Pruebas de Aceptación') {
-            steps {
-                sh 'vendor/bin/behat'
-                sh 'npm install'
-                sh 'npm run build'
-                sh 'npm test'
-            }
-        }
-
         stage('Desplegar en Stagging') {
-            steps {
-                sh 'ssh desarrollo@192.168.9.111 "cd  var/contenedores/tabantaj && git pull"'
-            }
+             steps {
+                sh 'ssh desarrollo@192.168.9.78 "cd  var/contenedor/tabantaj && git pull"'
+             }
         }
 
       }
