@@ -17,28 +17,28 @@ class EstadoincidentesTableSeeder extends Seeder
         //
         $estadoincide = [
             [
-                'id'                 => 1,
-                'estado'               => 'Cerrado',
+                'id' => 1,
+                'estado' => 'Cerrado',
 
             ],
             [
-                'id'                 => 2,
-                'estado'               => 'En curso',
+                'id' => 2,
+                'estado' => 'En curso',
 
             ],
             [
-                'id'                 => 3,
-                'estado'               => 'Pendiente',
+                'id' => 3,
+                'estado' => 'Pendiente',
 
             ],
             [
-                'id'                 => 4,
-                'estado'               => 'Asignado',
+                'id' => 4,
+                'estado' => 'Asignado',
 
             ],
             [
-                'id'                 => 5,
-                'estado'               => 'Cancelado',
+                'id' => 5,
+                'estado' => 'Cancelado',
 
             ],
         ];
