@@ -24,7 +24,6 @@
                         <th style="vertical-align: top">Folio</th>
                         <th style="vertical-align: top">Fecha De Solicitud</th>
                         <th style="vertical-align: top">Referencia</th>
-                        <th style="vertical-align: top">Producto</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
                         <th style="vertical-align: top">Proyecto</th>
@@ -170,13 +169,6 @@
                     {
                         data: 'referencia',
                         name: 'referencia'
-                    },
-                    {
-                        data: 'productos_requisiciones',
-                        render: function(data, type, row) {
-                        return data[0].producto.descripcion;
-                        }
-
                     },
                     {
                         data: 'proveedor_catalogo',
