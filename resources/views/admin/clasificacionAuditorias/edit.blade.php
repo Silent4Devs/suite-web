@@ -1,5 +1,13 @@
 @extends('layouts.admin')
 @section('content')
+    <style type="text/css">
+        label {
+            background-color: white;
+            transform: translate(15px, 15px);
+            padding: 0px 10px;
+        }
+    </style>
+
     <h5 class="col-12 titulo_general_funcion">Catálogo Clasificación</h5>
     <div class="mt-4 card">
         <div class="card-body">

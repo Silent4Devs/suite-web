@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('content')
     <style type="text/css">
+        label {
+            background-color: white;
+            transform: translate(15px, 18px);
+            padding: 0px 10px;
+        }
+
         .select2-selection--multiple {
             overflow: hidden !important;
             height: auto !important;
