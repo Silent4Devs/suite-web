@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Limpieza de Espacio de Trabajo') {
             steps {
-                checkout scm
+                deleteDir()
             }
         }
 
@@ -14,26 +14,39 @@ pipeline {
                 sh 'docker-compose up --build -d'
                 sh 'docker-compose exec php composer install'
                 sh 'docker-compose exec php php artisan key:generate'
-            }
-        }
-
-        stage('Docker Compose Build and Publish') {
-            steps {
-                sh 'docker-compose up --build -d'
                 sh 'docker-compose exec php php artisan migrate'
             }
         }
 
-        stage('Deploy') {
+        stage('Desplegar en Desarrollo') {
             steps {
-                sh 'echo aqui deploya'
+                  sh "cd var/www/tabantaj && git fetch origin develop:develop && git checkout develop && git pull develop"
             }
         }
-    }
 
-    post {
-        always {
-            sh 'docker-compose down'
+        stage('Pruebas de Aceptación') {
+            steps {
+                sh 'vendor/bin/behat'
+                sh 'npm install'
+                sh 'npm run build'
+                sh 'npm test'
+            }
+        }
+
+        stage('Desplegar en Stagging') {
+            steps {
+                sh 'ssh desarrollo@192.168.9.111 "cd  var/contenedores/tabantaj && git pull"'
+            }
+        }
+
+      }
+
+     post {
+        success {
+            echo 'Pipeline exitoso, se ha desplegado en stagging.'
+        }
+        failure {
+            echo 'Pipeline fallido, no se ha desplegado en stagging.'
         }
     }
 }
