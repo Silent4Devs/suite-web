@@ -138,20 +138,24 @@ class AuditoriaInternaController extends Controller
     public function edit(AuditoriaInterna $auditoriaInterna)
     {
         abort_if(Gate::denies('auditoria_interna_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if (auth()->user()->empleado->id == $auditoriaInterna->lider_id) {
+            $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team');
 
-        $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team');
+            $clasificacionesauditorias = ClasificacionesAuditorias::all();
+            $clausulasauditorias = ClausulasAuditorias::all();
 
-        $clasificacionesauditorias = ClasificacionesAuditorias::all();
-        $clausulasauditorias = ClausulasAuditorias::all();
+            $clausulas = Clausula::all();
 
-        $clausulas = Clausula::all();
+            $auditorliders = Empleado::getaltaAll();
 
-        $auditorliders = Empleado::getaltaAll();
+            $equipoauditorias = Empleado::getaltaAll();
 
-        $equipoauditorias = Empleado::getaltaAll();
-
-        return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'))->with('clasificacionesauditorias', $clasificacionesauditorias)
-            ->with('clausulasauditorias', $clausulasauditorias);
+            return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'))
+                ->with('clasificacionesauditorias', $clasificacionesauditorias)
+                ->with('clausulasauditorias', $clausulasauditorias);
+        } else {
+            return redirect(route('admin.auditoria-internas.index'));
+        }
     }
 
     public function update(Request $request, AuditoriaInterna $auditoriaInterna)
@@ -214,13 +218,23 @@ class AuditoriaInternaController extends Controller
 
     public function indexReporteIndividual($id)
     {
-        $clasificaciones = ClasificacionesAuditorias::all();
-        $clausulas = ClausulasAuditorias::all();
-        // dd($id, $clasificaciones);
-        return view('admin.auditoriaInternas.reporteIndividual')
-            ->with('clasificaciones', $clasificaciones)
-            ->with('clausulas', $clausulas)
-            ->with('id', $id);
+        $miembrosaudit = AuditoriaInterna::find($id);
+        // dd();
+        $ids_equipo = $miembrosaudit->equipo()->get()->pluck('id');
+        // dd($ids_equipo);
+        foreach ($ids_equipo as $idmiembro) {
+            if ($idmiembro == auth()->user()->empleado->id) {
+                $clasificaciones = ClasificacionesAuditorias::all();
+                $clausulas = ClausulasAuditorias::all();
+                // dd($id, $clasificaciones);
+                return view('admin.auditoriaInternas.reporteIndividual')
+                    ->with('clasificaciones', $clasificaciones)
+                    ->with('clausulas', $clausulas)
+                    ->with('id', $id);
+            }
+        }
+
+        return redirect()->route('admin.auditoria-internas.index');
     }
 
     public function createReporte($id)
@@ -257,8 +271,10 @@ class AuditoriaInternaController extends Controller
             // "firma_lider",
         ]);
 
+        $url = $reporte->id_auditoria;
+
         try {
-            $email = new NotificacionReporteAuditoria($nombre_colaborador);
+            $email = new NotificacionReporteAuditoria($nombre_colaborador, $url);
             Mail::to(removeUnicodeCharacters($reporte->lider->email))->send($email);
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
@@ -266,28 +282,25 @@ class AuditoriaInternaController extends Controller
         }
     }
 
-    public function rechazoReporteIndividual($reporteid)
+    public function rechazoReporteIndividual($reporteid, Request $request)
     {
 
-        $comentarios = request('comentarios');
+        $comentarios = $request->comentarios;
         $reporte = AuditoriaInternasReportes::find($reporteid);
 
         $reporte->update([
             "comentarios" => $comentarios,
             "estado" => "rechazado",
-            // "firma_empleado" => $filename,
-            // "firma_lider",
         ]);
-        // dd($reporteid, $reporte, $comentarios);
+
+        $auditoria = $reporte->id_auditoria;
 
         try {
-            $email = new NotificacionRechazoReporteAuditoria();
+            $email = new NotificacionRechazoReporteAuditoria($auditoria);
             Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
-            dd("Se envio el correo");
-            // return response()->json(['success' => true]);
+            return response()->json(['success' => true]);
         } catch (Throwable $e) {
-            dd("No se envio el correo");
-            // return response()->json(['success' => false]);
+            return response()->json(['success' => false]);
         }
     }
 
@@ -317,7 +330,6 @@ class AuditoriaInternaController extends Controller
             // "comentarios",
             "estado" => "aprobado",
             "firma_lider" => $filename,
-            // "firma_lider",
         ]);
 
         try {

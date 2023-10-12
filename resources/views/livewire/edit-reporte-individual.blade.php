@@ -26,10 +26,28 @@
         <button type="button" wire:click.prevent="modal('crear')" class="btn btn-outline-primary">Documentar
             Hallazgo</button>
     </div>
+
+    <div class="row">
+        <br>
+    </div>
+
+    <div class="card card-body">
+        <div class="row">
+            <div class="form-group col-sm-4 col-md-4 col-lg-3">
+                <button wire:click="movePreviousReport" class="btn btn-link">
+                    < Reporte Anterior</button>
+            </div>
+            <div class="form-group col-sm-4 col-md-4 col-lg-6" style="text-align: center">
+                {{ $this->findPosition($this->reporte->id) }}/{{ $reportes_audit->count() }}
+            </div>
+            <div class="form-group col-sm-4 col-md-4 col-lg-3" style="text-align: end">
+                <button wire:click="moveNextReport" class="btn btn-link">Reporte Siguiente ></button>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="form-group col-md-12">
-
-
             <!-- Modal -->
             <div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -301,7 +319,7 @@
                 <label class="required" for="comentarios">
                     Comentarios</label>
                 <textarea class="form-control {{ $errors->has('comentarios') ? 'is-invalid' : '' }}" name="comentarios"
-                    id="comentarios" wire:model.defer="comentarios">{{ $this->reporte->comentarios }}</textarea>
+                    id="comentarios" wire:model.defer="comentarios"></textarea>
                 @if ($errors->has('comentarios'))
                     <div class="invalid-feedback">
                         {{ $errors->first('comentarios') }}
@@ -352,21 +370,10 @@
             </div>
             <div class="row" style="justify-content: center; display: flex;">
                 <div class="row" style="justify-content: center; display: flex;">
-                    <a href="{{ route('admin.auditoria-internas.rechazoReporteIndividual', $this->reporte->id) }}"
-                        id="rechazo-link" class="btn btn-link">Rechazar</a>
+                    <button type="submit" id="rechazo-link" class="btn btn-link"
+                        data-reporte="{{ $this->reporte->id }}">Rechazar</button>
                 </div>
             </div>
         @endif
     </div>
 </div>
-
-<script>
-    // Add an event listener to the "Rechazar" button
-    document.getElementById('rechazo-link').addEventListener('click', function() {
-        // Get the value of the comentarios textarea
-        var comentariosValue = document.getElementById('comentarios').value;
-
-        // Append the comentarios value to the href attribute
-        this.href = this.href + '?comentarios=' + encodeURIComponent(comentariosValue);
-    });
-</script>

@@ -101,6 +101,7 @@ class DatabaseSeeder extends Seeder
                 //Clausulas y Clasificacion de auditorias
                 ClasificacionesAuditoriasSeeder::class,
                 ClausulasAuditoriasSeeder::class,
+                PermisosCatalogosSG::class,
             ]
         );
     }
