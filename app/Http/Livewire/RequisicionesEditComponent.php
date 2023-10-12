@@ -79,14 +79,13 @@ class RequisicionesEditComponent extends Component
 
     public function mount($requisiciondata)
     {
-        $this->sucursales = ContractManagerSucursal::select('id', 'descripcion')->where('archivo', false)->get();
+        $this->sucursales = ContractManagerSucursal::where('archivo', false)->get();
         $this->compradores = ContractManagerComprador::with('user')->where('archivo', false)->get();
-        $this->contratos = ContractManagerContrato::select('id', 'no_contrato')->get();
-        $this->productos = ContractManagerProducto::select('id', 'descripcion')->where('archivo', false)->get();
+        $this->contratos = ContractManagerContrato::get();
+        $this->productos = ContractManagerProducto::where('archivo', false)->get();
         $this->organizacion = Organizacion::first();
-        $this->proveedores = ContractManagerProveedorOC::select('id', 'nombre', 'rfc')->where('estado', false)->get();
-        $this->editrequisicion =
-            ContractManagerRequsicion::select('id', 'contrato_id', 'comprador_id', 'sucursal_id', 'producto_id', 'area', 'user', 'fecha', 'referencia')->with('sucursal', 'comprador', 'contrato', 'productos_requisiciones', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'productos_requisiciones.producto')->where('archivo', false)
+        $this->proveedores = ContractManagerProveedorOC::where('estado', false)->get();
+        $this->editrequisicion = ContractManagerRequsicion::with('sucursal', 'comprador', 'contrato', 'productos_requisiciones', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'productos_requisiciones.producto')->where('archivo', false)
             ->find($requisiciondata->id);
 
         $this->proveedores_indistintos_count = $this->editrequisicion->provedores_indistintos_requisiciones->count();

@@ -54,6 +54,8 @@
 
                             <a href="{{ route('contract_manager.requisiciones.show',$requisicion->id )}}"><i class="fa-solid fa-print"></i></a>
 
+                            <a onclick="mostrarAlerta2('{{ route('contract_manager.requisiciones.estado', $requisicion->id) }}')"><i class="fa-solid fa-box-archive"></i></a>
+
                             <a onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"><i class="fas fa-trash text-danger"></i></a>
                         </td>
                     </tr>
@@ -86,6 +88,25 @@
                      // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
                      // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                      Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
+                     window.location.href = url;
+                 }
+             });
+     }
+
+     function mostrarAlerta2(url) {
+         Swal.fire({
+                 title: '¿Estás seguro?',
+                 text: 'No podrás deshacer esta acción',
+                 icon: 'warning',
+                 showCancelButton: true,
+                 confirmButtonText: 'Sí, archivar',
+                 cancelButtonText: 'Cancelar'
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     // Coloca aquí la lógica para eliminar el elemento
+                     // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
+                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
+                     Swal.fire('Archivado!', 'El elemento ha sido archivado.', 'success');
                      window.location.href = url;
                  }
              });
