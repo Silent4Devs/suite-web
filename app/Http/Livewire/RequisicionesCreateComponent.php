@@ -293,9 +293,7 @@ class RequisicionesCreateComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $empleado = User::find($this->nueva_requisicion->id_user);
-
-            $supervisor = isset($empleado->empleado_id) ? User::find($this->nueva_requisicion->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
+            $supervisor = User::find($this->nueva_requisicion->id_user)->empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 

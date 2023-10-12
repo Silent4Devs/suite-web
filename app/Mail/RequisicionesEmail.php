@@ -31,7 +31,7 @@ class RequisicionesEmail extends Mailable
         $this->organizacion = $organizacion;
         $this->tipo_firma = $tipo_firma;
 
-        $this->supervisor = User::getCurrentUser()->empleado->supervisor->name;
+        $this->supervisor =  User::find($this->requisicion->id_user)->empleado->supervisor->name;
 
         // requisiciones
         if ($tipo_firma === 'firma_solicitante') {
