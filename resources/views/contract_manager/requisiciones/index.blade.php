@@ -48,17 +48,13 @@
                         <td>{{$requisicion->area}}</td>
                         <td>{{$requisicion->user}}</td>
                         <td>
-                            <form action="{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}" method="DELETE">
                                 @if ($requisicion->estado === "rechazado")
                                 <a href="{{ route('contract_manager.requisiciones.edit',$requisicion->id )}}"><i class="fas fa-edit"></i></a>
                                 @endif
 
                                 <a href="{{ route('contract_manager.requisiciones.show',$requisicion->id )}}"><i class="fa-solid fa-print"></i></a>
-                                @method('DELETE')
-                                <button type="submit" title="delete" style="border: none; background-color:transparent;">
-                                <i class="fas fa-trash text-danger"></i>
-                                </button>
-                            </form>
+
+                                <a href="{{ route('contract_manager.requisiciones.destroy',$requisicion->id )}}"  id="delete-link"> <i class="fas fa-trash text-danger"></i></a>
                         </td>
                     </tr>
                     @endforeach
@@ -67,15 +63,33 @@
         </div>
     </div>
 
-
 @endsection
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 @section('scripts')
     @parent
 
-    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
-    <!--Abecedario-->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script> --}}
+    <script>
+        // Agregar un evento clic al enlace de eliminación
+        document.getElementById('delete-link').addEventListener('click', function (e) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'No podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Coloca aquí la lógica para eliminar el elemento
+                    // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
+                    // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
+                    Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
+                }
+            });
+        });
+        </script>
 
     <script type="text/javascript">
         (function() {
