@@ -587,6 +587,7 @@
                     alert('Por favor firme el area designada.');
                 } else {
                     var dataURL = signaturePad.toDataURL();
+                    var comentariosValue = document.getElementById('comentarios').value;
                     var repId = this.getAttribute('data-reporte');
 
                     fetch('{{ route('admin.auditoria-internas.storeFirmaReporteLider', ['reporteid' => ':reporteauditoria']) }}'
@@ -598,7 +599,8 @@
                                     'X-CSRF-Token': '{{ csrf_token() }}',
                                 },
                                 body: JSON.stringify({
-                                    signature: dataURL
+                                    signature: dataURL,
+                                    comentarios: comentariosValue
                                 }),
                             })
                         .then(response => response.json())

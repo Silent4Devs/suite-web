@@ -307,7 +307,6 @@ class AuditoriaInternaController extends Controller
     public function storeFirmaReporteLider($reporteid, Request $request)
     {
         // dd($reporteid);
-
         $reporte = AuditoriaInternasReportes::find($reporteid);
         $nombre_lider = $reporte->lider->name;
 
@@ -327,7 +326,7 @@ class AuditoriaInternaController extends Controller
             ->where("lider_id", "=", $reporte->lider->id)->first();
         // dd($reporte);
         $reporte->update([
-            // "comentarios",
+            "comentarios" => $request->comentarios,
             "estado" => "aprobado",
             "firma_lider" => $filename,
         ]);
