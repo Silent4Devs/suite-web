@@ -26,11 +26,11 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles = Role::get();
-        $organizaciones = Organizacione::get();
-        $areas = Area::getAll();
-        $puestos = Puesto::getAll();
-        $teams = Team::get();
+        // $roles = Role::get();
+        // $organizaciones = Organizacione::get();
+        // $areas = Area::getAll();
+        // $puestos = Puesto::getAll();
+        // $teams = Team::get();
         // $empleadosNoAsignados = Empleado::getaltaAll();
         // $empleados = $empleadosNoAsignados->filter(function ($item) {
         //     return !User::where('n_empleado', $item->n_empleado)->exists();
@@ -38,7 +38,7 @@ class UsersController extends Controller
         $empleados = Empleado::getaltaAll();
         $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
 
-        return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados', 'existsVinculoEmpleadoAdmin'));
+        return view('admin.users.index', compact('empleados', 'existsVinculoEmpleadoAdmin'));
     }
 
     public function getUsersIndex(Request $request)
