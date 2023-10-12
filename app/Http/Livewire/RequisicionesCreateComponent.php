@@ -277,13 +277,13 @@ class RequisicionesCreateComponent extends Component
     {
         $this->habilitar_proveedores = false;
 
-        $userr = Auth::user();
+        $user = User::find($this->nueva_requisicion->id_user);
 
         if ($data['firma']) {
             $this->nueva_requisicion->update([
                 'firma_solicitante' => $data['firma'],
                 'estado' => 'curso',
-                'email' => $userr->email,
+                'email' => $user->email,
             ]);
 
             $fecha = date('d-m-Y');
@@ -293,7 +293,7 @@ class RequisicionesCreateComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $supervisor = User::getCurrentUser()->empleado->supervisor->email;
+            $supervisor = User::find($user->id)->empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 
