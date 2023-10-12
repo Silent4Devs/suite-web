@@ -48,13 +48,16 @@
                         <td>{{$requisicion->area}}</td>
                         <td>{{$requisicion->user}}</td>
                         <td>
+
                                 @if ($requisicion->estado === "rechazado")
                                 <a href="{{ route('contract_manager.requisiciones.edit',$requisicion->id )}}"><i class="fas fa-edit"></i></a>
                                 @endif
 
                                 <a href="{{ route('contract_manager.requisiciones.show',$requisicion->id )}}"><i class="fa-solid fa-print"></i></a>
 
-                                <a href="{{ route('contract_manager.requisiciones.destroy',$requisicion->id )}}"  id="delete-link"> <i class="fas fa-trash text-danger"></i></a>
+                                <a onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"><i class="fas fa-trash text-danger"></i></a>
+
+
                         </td>
                     </tr>
                     @endforeach
@@ -62,6 +65,7 @@
             </table>
         </div>
     </div>
+
 
 @endsection
 
@@ -71,9 +75,8 @@
     @parent
 
     <script>
-        // Agregar un evento clic al enlace de eliminación
-        document.getElementById('delete-link').addEventListener('click', function (e) {
-            Swal.fire({
+       function mostrarAlerta(url) {
+        Swal.fire({
                 title: '¿Estás seguro?',
                 text: 'No podrás deshacer esta acción',
                 icon: 'warning',
@@ -86,10 +89,12 @@
                     // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                     Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
+                    window.location.href = url;
                 }
             });
-        });
-        </script>
+    }
+    </script>
+
 
     <script type="text/javascript">
         (function() {
