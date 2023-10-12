@@ -304,11 +304,7 @@ class RequisicionesEditComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $user = User::where('id',  $this->editrequisicion->id_user)->first();
-
-            $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
-
-            $supervisor = $empleado->supervisor->email;
+            $supervisor = User::find($this->editrequisicion->id_user)->empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->editrequisicion, $organizacion, $tipo_firma));
 
