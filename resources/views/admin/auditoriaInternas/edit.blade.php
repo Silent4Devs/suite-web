@@ -520,6 +520,59 @@
         })
     </script>
 
+    {{-- <script>
+        document.getElementById('rechazo-link').addEventListener('click', function() {
+
+            var comentariosValue = document.getElementById('comentarios').value;
+            this.href = this.href + '?comentarios=' + encodeURIComponent(comentariosValue);
+        });
+    </script> --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.getElementById('rechazo-link').addEventListener('click', function() {
+
+                var comentariosValue = document.getElementById('comentarios').value;
+                var repId = this.getAttribute('data-reporte');
+
+                fetch('{{ route('admin.auditoria-internas.rechazoReporteIndividual', ['reporteid' => ':reporteauditoria']) }}'
+                        .replace(':reporteauditoria',
+                            repId), {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': '{{ csrf_token() }}',
+                            },
+                            body: JSON.stringify({
+                                comentarios: comentariosValue
+                            }),
+                        })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire(
+                                'El participante ha sido notificado',
+                                'success'
+                            ).then(() => {
+                                window.location.href =
+                                    '{{ route('admin.auditoria-internas.index') }}';
+                            });
+                        } else {
+                            Swal.fire(
+                                'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador',
+                                'success'
+                            ).then(() => {
+                                window.location.href =
+                                    '{{ route('admin.auditoria-internas.index') }}';
+                            });
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var canvas = document.getElementById('signature-pad');
@@ -551,13 +604,21 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                alert('Se ha aprobado el reporte!');
-                                window.location.href = '{{ route('admin.auditoria-internas.index') }}';
+                                Swal.fire(
+                                    'El participante ha sido notificado',
+                                    'success'
+                                ).then(() => {
+                                    window.location.href =
+                                        '{{ route('admin.auditoria-internas.index') }}';
+                                });
                             } else {
-                                alert(
-                                    'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador'
-                                );
-                                window.location.href = '{{ route('admin.auditoria-internas.index') }}';
+                                Swal.fire(
+                                    'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador',
+                                    'success'
+                                ).then(() => {
+                                    window.location.href =
+                                        '{{ route('admin.auditoria-internas.index') }}';
+                                });
                             }
                         })
                         .catch(error => console.error('Error:', error));
