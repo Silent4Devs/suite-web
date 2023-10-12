@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group col-md-12 col-sm-12">
                     <label class="required" for="estado">&nbsp;&nbsp;Descripción</label>
-                    <input value="{{ old("estado", $compradores->estado) }}"  class="form-control {{ $errors->has('estado') ? 'is-invalid' : '' }}" type="text" pattern="[A-z]{4,100}" name="estado" id="estado" required>
+                    <input value="{{ old("estado", $compradores->estado) }}"  class="form-control {{ $errors->has('estado') ? 'is-invalid' : '' }}" type="text"  name="estado" id="estado" required>
                     @if($errors->has('estado'))
                         <div class="invalid-feedback">
                             {{ $errors->first('estado') }}
