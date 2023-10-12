@@ -34,7 +34,7 @@ class RequisicionesEmail extends Mailable
 
         $user = User::where('id',   $this->requisicion->id_user)->first();
 
-        $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+        $empleado = $user->empleado;
 
         $this->supervisor =   $empleado->supervisor->name;
 
