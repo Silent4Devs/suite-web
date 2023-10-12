@@ -15,10 +15,13 @@
     <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
-            <form style="position: relative;  left:800px;" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
+            <form style="position: relative;  left:700px;" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
                 @method('GET')
                 <button class="btn btn-primary" type="submit" title="Aprobadores" >
                     Aprobadores
+                </button>
+                <button class="btn btn-primary" type="submit" title="Aprobadores" >
+                    <a style="color: white;" href="{{ route('contract_manager.requisiciones.archivo' )}}">Archivados</a>
                 </button>
             </form>
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
@@ -54,6 +57,9 @@
                                 @endif
 
                                 <a href="{{ route('contract_manager.requisiciones.show',$requisicion->id )}}"><i class="fa-solid fa-print"></i></a>
+
+
+                                <a onclick="mostrarAlerta2('{{ route('contract_manager.requisiciones.estado', $requisicion->id) }}')"><i class="fa-solid fa-box-archive"></i></a>
 
                                 <a onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"><i class="fas fa-trash text-danger"></i></a>
 
@@ -93,6 +99,25 @@
                 }
             });
     }
+
+    function mostrarAlerta2(url) {
+         Swal.fire({
+                 title: '¿Estás seguro?',
+                 text: 'No podrás deshacer esta acción',
+                 icon: 'warning',
+                 showCancelButton: true,
+                 confirmButtonText: 'Sí, archivar',
+                 cancelButtonText: 'Cancelar'
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     // Coloca aquí la lógica para eliminar el elemento
+                     // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
+                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
+                     Swal.fire('Archivado!', 'El elemento ha sido archivado.', 'success');
+                     window.location.href = url;
+                 }
+             });
+     }
     </script>
 
 
