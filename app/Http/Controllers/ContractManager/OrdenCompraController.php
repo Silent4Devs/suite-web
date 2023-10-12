@@ -108,14 +108,11 @@ class OrdenCompraController extends Controller
      */
     public function show($id)
     {
-        try {
-            $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-            $organizacion = Organizacion::select('empresa', 'logotipo')->first();
 
-            return view('contract_manager.ordenes-compra.show', compact('requisicion', 'organizacion'));
-        } catch (\Exception $e) {
-            return view('contract_manager.ordenes-compra.error');
-        }
+        $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+        $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+
+        return view('contract_manager.ordenes-compra.show', compact('requisicion', 'organizacion'));
     }
 
     /**
