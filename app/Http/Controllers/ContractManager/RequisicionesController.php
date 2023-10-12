@@ -101,9 +101,7 @@ class RequisicionesController extends Controller
         $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
         $organizacion = $this->obtenerOrganizacion();
 
-        $empleado = User::find($requisicion->id_user);
-
-        $supervisor = isset($empleado->empleado_id) ? User::find($requisicion->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
+        $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
 
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
@@ -187,9 +185,7 @@ class RequisicionesController extends Controller
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
 
-            $empleado = User::find($requisicion->id_user);
-
-            $supervisor = isset($empleado->empleado_id) ? User::find($requisicion->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
+            $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
 
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
@@ -305,9 +301,7 @@ class RequisicionesController extends Controller
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
 
-        $empleado = User::find($requisicion->id_user);
-
-        $supervisor = isset($empleado->empleado_id) ? User::find($requisicion->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
+        $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
 
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
@@ -383,9 +377,7 @@ class RequisicionesController extends Controller
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-        $empleado = User::find($requisiciones->id_user);
-
-        $supervisor = isset($empleado->empleado_id) ? User::find($requisiciones->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
+        $supervisor = User::find($requisiciones->id_user)->empleado->supervisor->name;
 
         $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisiciones->id)->first();
 
