@@ -65,44 +65,13 @@ class OrdenCompraController extends Controller
         $id = Auth::user()->id;
         $roles = User::find($id)->roles()->get();
         foreach ($roles as $rol) {
-            if ($rol->title === 'Admin') {
+            if ($rol->title === 'Admin' || $rol->title === 'Compras') {
                 $requisiciones = KatbolRequsicion::with('contrato')->where([
                     ['firma_solicitante', '!=', null],
                     ['firma_jefe', '!=', null],
                     ['firma_finanzas', '!=', null],
                     ['firma_compras', '!=', null],
                 ])->where('archivo', false)->orderByDesc('id')
-                    ->get();
-
-                return datatables()->of($requisiciones)->toJson();
-            } elseif ($rol->title === 'Compras') {
-                $user = Auth::user();
-                $comprador = KatbolComprador::where('id_user', $user->empleado_id)->first();
-                $id = 0;
-                if ($comprador) {
-                    $id = $comprador->id;
-                }
-                $requisiciones = KatbolRequsicion::with('contrato')->where([
-                    ['firma_solicitante', '!=', null],
-                    ['firma_jefe', '!=', null],
-                    ['firma_finanzas', '!=', null],
-                    ['firma_compras', '!=', null],
-                ])->where('archivo', false)
-                    ->where('comprador_id', $id)
-                    ->orderByDesc('id')
-                    ->get();
-
-                return datatables()->of($requisiciones)->toJson();
-            } else {
-                $user = Auth::user();
-                $requisiciones = KatbolRequsicion::with('contrato')->where([
-                    ['firma_solicitante', '!=', null],
-                    ['firma_jefe', '!=', null],
-                    ['firma_finanzas', '!=', null],
-                    ['firma_compras', '!=', null],
-                ])->where('archivo', false)
-                    ->where('id_user', $user->id)
-                    ->orderByDesc('id')
                     ->get();
 
                 return datatables()->of($requisiciones)->toJson();
