@@ -44,9 +44,7 @@
                         <td>
                             <form action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}" method="GET">
                                 @method('GET')
-                                <button type="submit" title="aprobar" >
-                                    <i class="fas fa-edit"></i>
-                                </button>
+                                <a href="{{ route('contract_manager.requisiciones.firmarAprobadores',$requisicion->id )}}"><i class="fas fa-edit"></i></a>
                             </form>
                         </td>
                     </tr>
@@ -60,12 +58,6 @@
 @endsection
 @section('scripts')
     @parent
-
-    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
-    <!--Abecedario-->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script> --}}
-
     <script type="text/javascript">
         (function() {
 

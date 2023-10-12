@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group col-md-12 col-sm-12">
                     <label class="required" for="descripcion">&nbsp;&nbsp;Descripción</label>
-                    <input class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" pattern="[A-z]{4,100}" value="{{ old("descripcion", $productos->descripcion) }}"  type="text" name="descripcion" id="descripcion" required>
+                    <input class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"  value="{{ old("descripcion", $productos->descripcion) }}"  type="text" name="descripcion" id="descripcion" required>
                     @if($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
