@@ -150,7 +150,7 @@
                         <label for="" class="txt-tamaño">
                             Proveedor <font class="asterisco">*</font>
                         </label>
-                        <select name="proveedor_id" id="proveedor_id" class="browser-default">
+                        <select name="proveedor_id" id="proveedor_id" class="browser-default" required>
                             @if ($requisicion->proveedor_id)
                                 <option value="{{ $requisicion->proveedor_id }}" selected
                                     data-nombre="{{ $requisicion->proveedor->nombre }}"
@@ -488,7 +488,7 @@
     </div>
 </div>
 <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
-    <a  href="{{ route('contract_manager.orden-compra') }}" class="btn"
+    <a href="{{ route('contract_manager.orden-compra') }}" class="btn"
         style="background: #959595 !important">Regresar</a>
     <button class="btn btn-primary" onclick="mensaje()">Guardar</button>
 </div>

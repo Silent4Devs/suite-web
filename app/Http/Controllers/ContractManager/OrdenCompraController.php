@@ -152,7 +152,7 @@ class OrdenCompraController extends Controller
             'dias_credito' => $request->dias_credito,
             'moneda' => $request->moneda,
             'cambio' => $request->cambio,
-            // 'proveedor_id' => $request->proveedor_id,
+            'proveedor_id' => $request->proveedor_id,
             'direccion_envio_proveedor' => $request->direccion_envio,
             'credito_proveedor' => $request->credito_proveedor,
 
