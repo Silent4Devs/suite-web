@@ -10,16 +10,20 @@ use Illuminate\Queue\SerializesModels;
 class NotificacionReporteAuditoria extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $nombre_colaborador;
+    public $url;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($nombre_colaborador)
+    public function __construct($nombre_colaborador, $url)
     {
         //
         $this->nombre_colaborador = $nombre_colaborador;
+        $this->url = $url;
     }
 
     /**

@@ -11,15 +11,17 @@ class NotificacionRechazoReporteAuditoria extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $auditoria;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($auditoria)
     {
         //
+        $this->auditoria = $auditoria;
     }
 
     /**

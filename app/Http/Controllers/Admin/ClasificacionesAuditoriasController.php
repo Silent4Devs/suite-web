@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AuditoriaInternasHallazgos;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Response;
 
 class ClasificacionesAuditoriasController extends Controller
 {
@@ -16,6 +18,7 @@ class ClasificacionesAuditoriasController extends Controller
     public function index()
     {
         //
+        abort_if(Gate::denies('clasificaciones_auditorias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clasifaudit = ClasificacionesAuditorias::all();
         // dd($clasifaudit);
         return view('admin.clasificacionAuditorias.index', compact('clasifaudit'));
@@ -24,9 +27,47 @@ class ClasificacionesAuditoriasController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    public function datatable(Request $request)
+    {
+        abort_if(Gate::denies('clasificaciones_auditorias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($request->ajax()) {
+            $query = ClasificacionesAuditorias::orderByDesc('id')->get();
+
+            foreach ($query as $cf) {
+                $borrado = AuditoriaInternasHallazgos::where('clasificacion_id', '=', $cf->id)->exists();
+                $cf->borrado = $borrado;
+            }
+
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->addColumn('id_clasificacion', function ($row) {
+                return $row->identificador ? $row->identificador : '';
+            });
+            $table->addColumn('nombre', function ($row) {
+                return $row->nombre_clasificaciones ? $row->nombre_clasificaciones : '';
+            });
+            $table->addColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+            $table->addColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+    }
+
     public function create()
     {
         //
+        abort_if(Gate::denies('clasificaciones_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.clasificacionAuditorias.create');
     }
 
@@ -35,7 +76,7 @@ class ClasificacionesAuditoriasController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->nombre);
+        abort_if(Gate::denies('clasificaciones_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             "nombre" => "required",
         ]);
@@ -63,6 +104,7 @@ class ClasificacionesAuditoriasController extends Controller
     public function edit($id)
     {
         //
+        abort_if(Gate::denies('clasificaciones_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clasif = ClasificacionesAuditorias::find($id);
         // dd($clasif);
         return view('admin.clasificacionAuditorias.edit', compact('clasif'));
@@ -73,7 +115,7 @@ class ClasificacionesAuditoriasController extends Controller
      */
     public function update($id, Request $request)
     {
-        // dd($id, $request->all());
+        abort_if(Gate::denies('clasificaciones_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             "nombre" => "required",
         ]);
@@ -94,59 +136,10 @@ class ClasificacionesAuditoriasController extends Controller
      */
     public function destroy($id)
     {
-        // dd($id);
+        abort_if(Gate::denies('clasificaciones_auditorias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $deleteClasificacion = ClasificacionesAuditorias::find($id);
-        // dd($deleteClasificacion);
+
         $deleteClasificacion->delete();
         return redirect(route('admin.auditoria-clasificacion'));
-    }
-
-    public function datatable(Request $request)
-    {
-        if ($request->ajax()) {
-            $query = ClasificacionesAuditorias::orderByDesc('id')->get();
-
-            foreach ($query as $cf) {
-                $borrado = AuditoriaInternasHallazgos::where('clasificacion_id', '=', $cf->id)->exists();
-                $cf->borrado = $borrado;
-            }
-
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            // $table->editColumn('actions', function ($row) {
-            //     $viewGate = 'auditoria_interna_ver';
-            //     $editGate = 'auditoria_interna_editar';
-            //     $deleteGate = 'auditoria_interna_eliminar';
-            //     $crudRoutePart = 'auditoria-internas';
-
-            // return view('partials.datatablesActions', compact(
-            // 'viewGate',
-            // 'editGate',
-            // 'deleteGate',
-            // 'crudRoutePart',
-            //         'row'
-            //     ));
-            // });
-
-            $table->addColumn('id_clasificacion', function ($row) {
-                return $row->identificador ? $row->identificador : '';
-            });
-            $table->addColumn('nombre', function ($row) {
-                return $row->nombre_clasificaciones ? $row->nombre_clasificaciones : '';
-            });
-            $table->addColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
-            $table->addColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
     }
 }

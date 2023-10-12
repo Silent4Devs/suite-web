@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Models\AuditoriaInternasHallazgos;
 use App\Models\AuditoriaInternasReportes;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Response;
 
 class ClausulasAuditoriasController extends Controller
 {
@@ -16,10 +18,45 @@ class ClausulasAuditoriasController extends Controller
      */
     public function index()
     {
-        //
+        abort_if(Gate::denies('clausulas_auditorias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clausaudit = ClausulasAuditorias::all();
-        // dd($clasifaudit);
+
         return view('admin.clausulasAuditorias.index', compact('clausaudit'));
+    }
+
+    public function datatable(Request $request)
+    {
+        abort_if(Gate::denies('clausulas_auditorias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($request->ajax()) {
+            $query = ClausulasAuditorias::orderByDesc('id')->get();
+
+            foreach ($query as $cl) {
+                $borrado = AuditoriaInternasHallazgos::where('clausula_id', '=', $cl->id)->exists();
+                $cl->borrado = $borrado;
+            }
+
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->addColumn('id_clausula', function ($row) {
+                return $row->identificador ? $row->identificador : '';
+            });
+            $table->addColumn('nombre', function ($row) {
+                return $row->nombre_clausulas ? $row->nombre_clausulas : '';
+            });
+            $table->addColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+            $table->addColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
     }
 
     /**
@@ -28,6 +65,8 @@ class ClausulasAuditoriasController extends Controller
     public function create()
     {
         //
+        abort_if(Gate::denies('clausulas_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.clausulasAuditorias.create');
     }
 
@@ -37,6 +76,7 @@ class ClausulasAuditoriasController extends Controller
     public function store(Request $request)
     {
         //
+        abort_if(Gate::denies('clausulas_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             "nombre" => "required",
         ]);
@@ -65,6 +105,7 @@ class ClausulasAuditoriasController extends Controller
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('clausulas_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $claus = ClausulasAuditorias::find($id);
         // dd($clasif);
         return view('admin.clausulasAuditorias.edit', compact('claus'));
@@ -76,7 +117,7 @@ class ClausulasAuditoriasController extends Controller
     public function update($id, Request $request)
     {
         //
-        // dd($id, $request->all());
+        abort_if(Gate::denies('clausulas_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             "nombre" => "required",
         ]);
@@ -97,58 +138,10 @@ class ClausulasAuditoriasController extends Controller
      */
     public function destroy($id)
     {
+        abort_if(Gate::denies('clausulas_auditorias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $deleteClausula = ClausulasAuditorias::find($id);
         // dd($deleteClausula);
         $deleteClausula->delete();
         return redirect(route('admin.auditoria-clausula'));
-    }
-
-    public function datatable(Request $request)
-    {
-        if ($request->ajax()) {
-            $query = ClausulasAuditorias::orderByDesc('id')->get();
-
-            foreach ($query as $cl) {
-                $borrado = AuditoriaInternasHallazgos::where('clausula_id', '=', $cl->id)->exists();
-                $cl->borrado = $borrado;
-            }
-
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            // $table->editColumn('actions', function ($row) {
-            //     $viewGate = 'auditoria_interna_ver';
-            //     $editGate = 'auditoria_interna_editar';
-            //     $deleteGate = 'auditoria_interna_eliminar';
-            //     $crudRoutePart = 'auditoria-internas';
-
-            // return view('partials.datatablesActions', compact(
-            // 'viewGate',
-            // 'editGate',
-            // 'deleteGate',
-            // 'crudRoutePart',
-            //         'row'
-            //     ));
-            // });
-
-            $table->addColumn('id_clausula', function ($row) {
-                return $row->identificador ? $row->identificador : '';
-            });
-            $table->addColumn('nombre', function ($row) {
-                return $row->nombre_clausulas ? $row->nombre_clausulas : '';
-            });
-            $table->addColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
-            $table->addColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
     }
 }
