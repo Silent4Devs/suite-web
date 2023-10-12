@@ -197,13 +197,21 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                alert('El lider ha sido notificado!');
-                                window.location.href = '{{ route('admin.auditoria-internas.index') }}';
+                                Swal.fire(
+                                    'El lider ha sido notificado',
+                                    'success'
+                                ).then(() => {
+                                    window.location.href =
+                                        '{{ route('admin.auditoria-internas.index') }}';
+                                });
                             } else {
-                                alert(
-                                    'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador'
-                                );
-                                window.location.href = '{{ route('admin.auditoria-internas.index') }}';
+                                Swal.fire(
+                                    'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador',
+                                    'success'
+                                ).then(() => {
+                                    window.location.href =
+                                        '{{ route('admin.auditoria-internas.index') }}';
+                                });
                             }
                         })
                         .catch(error => console.error('Error:', error));

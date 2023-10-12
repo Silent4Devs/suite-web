@@ -267,28 +267,24 @@ class AuditoriaInternaController extends Controller
         }
     }
 
-    public function rechazoReporteIndividual($reporteid)
+    public function rechazoReporteIndividual($reporteid, Request $request)
     {
 
-        $comentarios = request('comentarios');
+        $comentarios = $request->comentarios;
         $reporte = AuditoriaInternasReportes::find($reporteid);
 
         $reporte->update([
             "comentarios" => $comentarios,
             "estado" => "rechazado",
-            // "firma_empleado" => $filename,
-            // "firma_lider",
         ]);
         // dd($reporteid, $reporte, $comentarios);
 
         try {
             $email = new NotificacionRechazoReporteAuditoria();
             Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
-            dd("Se envio el correo");
-            // return response()->json(['success' => true]);
+            return response()->json(['success' => true]);
         } catch (Throwable $e) {
-            dd("No se envio el correo");
-            // return response()->json(['success' => false]);
+            return response()->json(['success' => false]);
         }
     }
 
@@ -318,7 +314,6 @@ class AuditoriaInternaController extends Controller
             // "comentarios",
             "estado" => "aprobado",
             "firma_lider" => $filename,
-            // "firma_lider",
         ]);
 
         try {

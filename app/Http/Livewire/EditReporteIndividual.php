@@ -90,7 +90,8 @@ class EditReporteIndividual extends Component
             ->groupBy('clasificaciones_auditorias.id')
             ->get();
 
-        // dd($cuentas);
+        $this->comentarios = $this->reporte->comentarios;
+
 
         return view('livewire.edit-reporte-individual', compact('procesos', 'datas', 'cuentas'))
             ->with('clasificaciones', $this->clasificaciones)

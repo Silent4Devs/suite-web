@@ -316,7 +316,7 @@
                 <label class="required" for="comentarios">
                     Comentarios</label>
                 <textarea class="form-control {{ $errors->has('comentarios') ? 'is-invalid' : '' }}" name="comentarios"
-                    id="comentarios" wire:model.defer="comentarios">{{ $this->reporte->comentarios }}</textarea>
+                    id="comentarios" wire:model.defer="comentarios"></textarea>
                 @if ($errors->has('comentarios'))
                     <div class="invalid-feedback">
                         {{ $errors->first('comentarios') }}
@@ -367,21 +367,10 @@
             </div>
             <div class="row" style="justify-content: center; display: flex;">
                 <div class="row" style="justify-content: center; display: flex;">
-                    <a href="{{ route('admin.auditoria-internas.rechazoReporteIndividual', $this->reporte->id) }}"
-                        id="rechazo-link" class="btn btn-link">Rechazar</a>
+                    <button type="submit" id="rechazo-link" class="btn btn-link"
+                        data-reporte="{{ $this->reporte->id }}">Rechazar</button>
                 </div>
             </div>
         @endif
     </div>
 </div>
-
-<script>
-    // Add an event listener to the "Rechazar" button
-    document.getElementById('rechazo-link').addEventListener('click', function() {
-        // Get the value of the comentarios textarea
-        var comentariosValue = document.getElementById('comentarios').value;
-
-        // Append the comentarios value to the href attribute
-        this.href = this.href + '?comentarios=' + encodeURIComponent(comentariosValue);
-    });
-</script>
