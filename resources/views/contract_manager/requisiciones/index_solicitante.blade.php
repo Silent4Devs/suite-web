@@ -54,7 +54,7 @@
 
                             <a href="{{ route('contract_manager.requisiciones.show',$requisicion->id )}}"><i class="fa-solid fa-print"></i></a>
 
-                            <a href="{{ route('contract_manager.requisiciones.destroy',$requisicion->id )}}"  id="delete-link"> <i class="fas fa-trash text-danger"></i></a>
+                            <a onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"><i class="fas fa-trash text-danger"></i></a>
                         </td>
                     </tr>
                     @endforeach
@@ -72,25 +72,25 @@
     @parent
 
     <script>
-        // Agregar un evento clic al enlace de eliminación
-        document.getElementById('delete-link').addEventListener('click', function (e) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: 'No podrás deshacer esta acción',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Coloca aquí la lógica para eliminar el elemento
-                    // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
-                    // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
-                    Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
-                }
-            });
-        });
-        </script>
+        function mostrarAlerta(url) {
+         Swal.fire({
+                 title: '¿Estás seguro?',
+                 text: 'No podrás deshacer esta acción',
+                 icon: 'warning',
+                 showCancelButton: true,
+                 confirmButtonText: 'Sí, eliminar',
+                 cancelButtonText: 'Cancelar'
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     // Coloca aquí la lógica para eliminar el elemento
+                     // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
+                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
+                     Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
+                     window.location.href = url;
+                 }
+             });
+     }
+     </script>
 
     <script type="text/javascript">
         (function() {
