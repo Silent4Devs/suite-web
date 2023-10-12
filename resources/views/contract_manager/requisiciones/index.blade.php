@@ -20,7 +20,7 @@
                 <button class="btn btn-primary" type="submit" title="Aprobadores" >
                     Aprobadores
                 </button>
-                <button class="btn btn-primary" type="submit" title="Aprobadores" >
+                <button class="btn btn-primary" type="submit" title="Archivados" >
                     <a style="color: white;" href="{{ route('contract_manager.requisiciones.archivo' )}}">Archivados</a>
                 </button>
             </form>
