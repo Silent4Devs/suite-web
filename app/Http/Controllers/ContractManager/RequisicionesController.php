@@ -11,9 +11,10 @@ use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\Empleado;
 use App\Models\Organizacion;
+use App\Models\User;
 use App\Models\User as ModelsUser;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RequisicionesController extends Controller
 {
+    use ObtenerOrganizacion;
     public $bandera = true;
 
     /**
@@ -33,21 +35,9 @@ class RequisicionesController extends Controller
     public function index()
     {
         abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo_katbol.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
-
-        $requisiciones_solicitante = null;
-        $id = Auth::user()->id;
-
-        $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
@@ -60,29 +50,19 @@ class RequisicionesController extends Controller
 
         $id = Auth::user()->id;
         $roles = ModelsUser::find($id)->roles()->get();
+
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
+                $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
                 return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'proveedor_indistinto', 'empresa_actual', 'logo_actual'));
             } else {
+                $requisiciones_solicitante = null;
+                $id = User::getCurrentUser()->id;
+
+                $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
                 return view('contract_manager.requisiciones.index_solicitante', compact('ids', 'requisiciones_solicitante', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
             }
         }
-    }
-
-    public function getRequisicionIndex(Request $request)
-    {
-        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
-
-        return datatables()->of($requisiciones)->toJson();
-    }
-
-
-    public function getRequisicionIndexSolicitante(Request $request)
-    {
-        $id = Auth::user()->id;
-        $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
-
-        return datatables()->of($requisiciones_solicitante)->toJson();
     }
 
     /**
@@ -101,6 +81,16 @@ class RequisicionesController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function eliminarProveedores()
+    {
+        //codigo
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -108,25 +98,20 @@ class RequisicionesController extends Controller
      */
     public function show($id)
     {
-        try {
-            $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
-            $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+        $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
+        $organizacion = $this->obtenerOrganizacion();
 
-            $user = ModelsUser::where('id', $requisicion->id_user)->first();
+        $empleado = User::find($requisicion->id_user);
 
-            $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
+        $supervisor = isset($empleado->empleado_id) ? User::find($requisicion->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
 
-            $supervisor = $empleado->supervisor->name;
-            $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
+        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
-            $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
+        $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-            $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
+        $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
 
-            return view('contract_manager.requisiciones.show', compact('requisicion', 'organizacion', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
-        } catch (\Exception $e) {
-            return view('contract_manager.requisiciones.error');
-        }
+        return view('contract_manager.requisiciones.show', compact('requisicion', 'organizacion', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
     }
 
     /**
@@ -139,7 +124,7 @@ class RequisicionesController extends Controller
     {
         abort_if(Gate::denies('katbol_requisiciones_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $requisiciondata = KatbolRequsicion::with('sucursal', 'comprador', 'contrato')->find($id);
-        $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+        $organizacion = $this->obtenerOrganizacion();
 
         return view('contract_manager.requisiciones.edit', compact('requisiciondata', 'organizacion'));
     }
@@ -201,11 +186,10 @@ class RequisicionesController extends Controller
             $organizacion = Organizacion::first();
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-            $user = ModelsUser::where('id', $requisicion->id_user)->first();
 
-            $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
+            $empleado = User::find($requisicion->id_user);
 
-            $supervisor = $empleado->supervisor->name;
+            $supervisor = isset($empleado->empleado_id) ? User::find($requisicion->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
 
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
@@ -287,11 +271,17 @@ class RequisicionesController extends Controller
 
     public function indexAprobadores()
     {
-        $id = Auth::user()->id;
-        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto'));
+    }
+
+    public function getRequisicionIndexAprobador()
+    {
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
+
+        return datatables()->of($requisiciones)->toJson();
     }
 
     public function firmarAprobadores($id)
@@ -314,11 +304,10 @@ class RequisicionesController extends Controller
         $organizacion = Organizacion::first();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-        $user = ModelsUser::where('id', $requisicion->id_user)->first();
 
-        $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
+        $empleado = User::find($requisicion->id_user);
 
-        $supervisor = $empleado->supervisor->name;
+        $supervisor = isset($empleado->empleado_id) ? User::find($requisicion->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
 
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
@@ -394,11 +383,9 @@ class RequisicionesController extends Controller
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-        $user = ModelsUser::where('id', $requisiciones->id_user)->first();
+        $empleado = User::find($requisiciones->id_user);
 
-        $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
-
-        $supervisor = $empleado->supervisor->name;
+        $supervisor = isset($empleado->empleado_id) ? User::find($requisiciones->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
 
         $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisiciones->id)->first();
 

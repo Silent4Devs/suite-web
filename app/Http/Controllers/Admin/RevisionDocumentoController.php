@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Documento;
 use App\Models\RevisionDocumento;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RevisionDocumentoController extends Controller
 {
     public function archivo()
     {
-        $revisiones = RevisionDocumento::with('documento')->where('empleado_id', auth()->user()->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
+        $revisiones = RevisionDocumento::with('documento')->where('empleado_id', User::getCurrentUser()->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
 
         return view('admin.revisiones.archivo', compact('revisiones'));
     }
@@ -48,10 +49,11 @@ class RevisionDocumentoController extends Controller
 
     public function obtenerDocumentosDeboAprobar()
     {
-        if (auth()->user()->empleado) {
+        $usuario = User::getCurrentUser();
+        if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with(['documento' => function ($query) {
                 $query->with('revisor', 'macroproceso', 'elaborador', 'aprobador', 'responsable', 'proceso');
-            }])->where('empleado_id', auth()->user()->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
+            }])->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
 
             return $revisiones;
         } else {
@@ -61,10 +63,11 @@ class RevisionDocumentoController extends Controller
 
     public function obtenerDocumentosDeboAprobarArchivo()
     {
-        if (auth()->user()->empleado) {
+        $usuario = User::getCurrentUser();
+        if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with(['documento' => function ($query) {
                 $query->with('revisor', 'macroproceso', 'elaborador', 'aprobador', 'responsable', 'proceso');
-            }])->where('empleado_id', auth()->user()->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
+            }])->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
 
             return $revisiones;
         } else {
@@ -74,8 +77,9 @@ class RevisionDocumentoController extends Controller
 
     public function obtenerDocumentosMeDebenAprobar()
     {
-        if (auth()->user()->empleado) {
-            $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', auth()->user()->empleado->id)->get();
+        $usuario = User::getCurrentUser();
+        if ($usuario->empleado) {
+            $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $usuario->empleado->id)->get();
 
             return $mis_documentos;
         } else {
@@ -85,10 +89,11 @@ class RevisionDocumentoController extends Controller
 
     // public function obtenerDocumentosMeDebenAprobarArchivo()
     // {
-    //     if (auth()->user()->empleado) {
+    //$usuario = User::getCurrentUser();
+    //     if ($usuario->empleado) {
     //         $revisiones = RevisionDocumento::with(['documento' => function ($query) {
     //             $query->with('revisor', 'macroproceso', 'elaborador', 'aprobador', 'responsable', 'proceso');
-    //         }])->where('empleado_id', auth()->user()->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
+    //         }])->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
 
     //         return $revisiones;
     //     } else {

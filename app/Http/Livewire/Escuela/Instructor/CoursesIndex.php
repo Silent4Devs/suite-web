@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\Escuela\Instructor;
 
+use App\Models\Escuela\Course;
+use App\Models\User;
 use Livewire\Component;
-use App\Models\Escuela\Course ;
 use Livewire\WithPagination;
 
 class CoursesIndex extends Component
@@ -14,14 +15,13 @@ class CoursesIndex extends Component
 
     public function render()
     {
-        $courses = Course::where('title', 'LIKE', "%{$this->search}%")->where('user_id', auth()->user()->id)->latest('id')->paginate(10);
+        $courses = Course::where('title', 'LIKE', "%{$this->search}%")->where('user_id', User::getCurrentUser()->id)->latest('id')->paginate(10);
 
-        return view('livewire.escuela.instructor.courses-index',compact('courses'));
+        return view('livewire.escuela.instructor.courses-index', compact('courses'));
     }
 
     public function limpiar_page()
     {
         $this->reset('page');
     }
-
 }

@@ -28,16 +28,13 @@
                     @foreach ($students as $student)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 w-10 h-10">
-                                        <img class="w-10 h-10 rounded-full" src="{{ $student->profile_photo_url }}"
+                                <div class="d-flex align-items-center d-inline">
+                                    <div class="circulo-kaans">
+                                        <img src="{{ $student->profile_photo_url }}"
                                             alt="{{ $student->name }}">
-
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            {{ $student->name }}
-                                        </div>
+                                        {{ $student->name }}
                                     </div>
                                 </div>
                             </td>

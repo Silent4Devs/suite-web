@@ -13,7 +13,7 @@ class TeamMembersController extends Controller
 {
     public function index()
     {
-        $team = Team::where('owner_id', auth()->user()->id)->first();
+        $team = Team::where('owner_id', User::getCurrentUser()->id)->first();
         $users = User::getAll()->where('team_id', $team->id);
 
         return view('admin.team-members.index', compact('team', 'users'));
@@ -22,7 +22,7 @@ class TeamMembersController extends Controller
     public function invite(Request $request)
     {
         $request->validate(['email' => 'email']);
-        $team = Team::where('owner_id', auth()->user()->id)->first();
+        $team = Team::where('owner_id', User::getCurrentUser()->id)->first();
         $url = URL::signedRoute('register', ['team' => $team->id]);
         $message = new \App\Notifications\TeamMemberInvite($url);
         Notification::route('mail', $request->input('email'))->notify($message);

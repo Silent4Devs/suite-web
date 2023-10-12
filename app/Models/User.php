@@ -62,9 +62,27 @@ class User extends Authenticatable implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('users_all', 3600 * 24, function () {
-            return self::get();
+        return Cache::remember('Users:users_all', 3600 * 13, function () {
+            return self::select('name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')->get();
         });
+    }
+
+    public static function getCurrentUser()
+    {
+        $cacheKey = 'Auth_user:user' . auth()->user()->id;
+
+        return Cache::remember($cacheKey, now()->addMinutes(60), function () {
+            return auth()->user();
+        });
+    }
+
+    public function empleado()
+    {
+        if ($this->empleado_id != null) {
+            return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
+        } else {
+            return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
+        }
     }
 
     //empleadoId attribute
@@ -196,15 +214,6 @@ class User extends Authenticatable implements Auditable
     public function nEmpleado()
     {
         return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
-    }
-
-    public function empleado()
-    {
-        if ($this->empleado_id != null) {
-            return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
-        } else {
-            return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
-        }
     }
 
     public function reviews()

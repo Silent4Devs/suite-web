@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ActividadMejora;
 use App\Models\Mejoras;
 use App\Models\PlanImplementacion;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -196,7 +197,7 @@ class ActividadesMejorasController extends Controller
                 $planImplementacion->norma = 'ISO 27001';
                 $planImplementacion->modulo_origen = 'Mejoras';
                 $planImplementacion->objetivo = null;
-                $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+                $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
                 $modelo->planes()->save($planImplementacion);
             }

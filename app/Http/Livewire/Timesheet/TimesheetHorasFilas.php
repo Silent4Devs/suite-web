@@ -8,6 +8,7 @@ use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
+use App\Models\User;
 use Livewire\Component;
 
 class TimesheetHorasFilas extends Component
@@ -35,7 +36,7 @@ class TimesheetHorasFilas extends Component
 
     public function mount($origen, $timesheet_id)
     {
-        $empleado = auth()->user()->empleado;
+        $empleado = User::getCurrentUser()->empleado;
         $proyectos = $empleado->TimesheetProyectoEmpleado;
         // dd($proyectos);
         $proyectoempleado = TimesheetProyectoEmpleado::getAllByEmpleadoIdNoBloqueado($empleado->id);

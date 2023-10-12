@@ -1954,14 +1954,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js"
         integrity="sha512-hh4Bnn1GtJOoCXufO1cvrBF6BzRWBp7rFiQCEdSRwwxJVdCIlrp6AWeD8GJVbnLO9V1XovnJSylI5/tZGOzVAg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    {{--  <script src="{{ asset('/sw.js') }}"></script>
-    <script>
-        if (!navigator.serviceWorker?.controller) {
-            navigator.serviceWorker?.register("/sw.js").then(function(reg) {
-                console.log("Service worker has been registered for scope: " + reg.scope);
-            });
-        }
-    </script>  --}}
+
     {{-- <script>
         $(function() {
             let idleTime = Number(@json(env('SESSION_LIFETIME')))*60*1000; // in milliseconds

@@ -102,7 +102,7 @@
         }
     </style>
 
-    <div class="caja-blue-curso">
+    <div class="caja-blue-curso mb-4 rounded">
         <h2 style="font-size: 24px;">Bienvenido al Centro de Capacitación</h2>
         <p style="font-size: 17px;">
             Aprender te mantiene a la vanguardia. Consigue las habilidades más <br>

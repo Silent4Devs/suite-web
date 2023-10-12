@@ -65,10 +65,12 @@
                         </div>
 
                         @php
+                            use App\Models\User;
+                            $usuario = User::getCurrentUser();
                             $permisoResponsable = false;
                             $permisoAprobador = false;
                             foreach ($responsables as $responsable) {
-                                if (auth()->user()->empleado->id == $responsable->empleado_id) {
+                                if ($usuario->empleado->id == $responsable->empleado_id) {
                                     $permisoResponsable = true;
                                     break;
                                 } else {
@@ -77,7 +79,7 @@
                             }
                             
                             foreach ($aprobadores as $aprobador) {
-                                if (auth()->user()->empleado->id == $aprobador->aprobadores_id) {
+                                if ($usuario->empleado->id == $aprobador->aprobadores_id) {
                                     $permisoAprobador = true;
                                     break;
                                 } else {
@@ -107,7 +109,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                     <tr class="negras">
                                         <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.5
@@ -138,7 +140,6 @@
                                                                 <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                     class="img_empleado"
                                                                     title="{{ $responsable->empleado->name }}">
-                                                                
                                                             @endif
                                                         @endif
                                                     @endif
@@ -148,9 +149,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g5s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -167,7 +168,7 @@
                                             @endphp
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -185,14 +186,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g5s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $responsable->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $responsable->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -208,7 +209,7 @@
                                             @endphp
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -226,7 +227,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a data-type="textarea" data-pk="{{ $g5s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
@@ -249,7 +250,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -272,7 +273,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g5s->id }}"
@@ -299,7 +300,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g5s->id }}"
@@ -315,7 +316,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -340,12 +341,12 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
-                                                             @elseif($estatusy == 2)
-                                                                {{$fecha}}
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -355,7 +356,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g5s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g5s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -420,7 +421,7 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g6s->id)
-                                                         @if (!is_null($responsable->empleado))
+                                                        @if (!is_null($responsable->empleado))
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
@@ -433,9 +434,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g6s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -452,7 +453,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -468,7 +469,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g6s->id }}"
@@ -492,7 +493,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (is_null($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -508,7 +509,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g6s->id }}"
@@ -532,7 +533,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -555,7 +556,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g6s->id }}"
@@ -580,7 +581,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariosx))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -596,7 +597,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g6s->id }}"
@@ -621,13 +622,13 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g6s->id }}">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
-                                                             @elseif($estatusy == 2)
-                                                                {{$fecha}}
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -636,7 +637,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g6s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g6s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -691,7 +692,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -700,9 +700,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g62s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -719,7 +719,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -735,7 +735,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g62s->id }}"
@@ -759,7 +759,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -775,7 +775,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g62s->id }}"
@@ -800,7 +800,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -822,7 +822,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g62s->id }}"
@@ -848,7 +848,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -865,7 +865,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g62s->id }}"
@@ -889,12 +889,12 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
-                                                             @elseif($estatusy == 2)
-                                                                {{$fecha}}
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -904,7 +904,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g62s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g62s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -967,8 +967,8 @@
                                             </td>
                                             <td>
                                                 @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g71s->id)
-                                                    @if (!is_null($responsable->empleado))
+                                                    @if ($responsable->declaracion_id == $g71s->id)
+                                                        @if (!is_null($responsable->empleado))
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
@@ -980,9 +980,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g71s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -999,7 +999,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1015,7 +1015,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g71s->id }}"
@@ -1039,7 +1039,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1055,7 +1055,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g71s->id }}"
@@ -1078,7 +1078,7 @@
                                             @endphp
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g71s->id }}"
@@ -1094,7 +1094,7 @@
                                             @endforeach
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1124,7 +1124,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1140,7 +1140,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g71s->id }}"
@@ -1167,12 +1167,12 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
-                                                             @elseif($estatusy == 2)
-                                                                {{$fecha}}
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -1181,7 +1181,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g71s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g71s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -1242,7 +1242,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -1251,9 +1250,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g72s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -1270,7 +1269,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1287,7 +1286,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g72s->id }}"
@@ -1311,7 +1310,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (is_null($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1329,7 +1328,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g72s->id }}"
@@ -1352,7 +1351,7 @@
                                             @endphp
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1375,7 +1374,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g72s->id }}"
@@ -1399,7 +1398,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariosx))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1414,7 +1413,7 @@
                                             @endforeach
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g72s->id }}"
@@ -1438,12 +1437,12 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
-                                                             @elseif($estatusy == 2)
-                                                                {{$fecha}}
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -1453,7 +1452,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g72s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -1513,7 +1512,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -1522,9 +1520,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g73s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -1541,7 +1539,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1558,7 +1556,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g73s->id }}"
@@ -1582,7 +1580,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1600,7 +1598,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g73s->id }}"
@@ -1625,7 +1623,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td>
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1649,7 +1647,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g73s->id }}"
@@ -1674,7 +1672,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g73s->id }}"
@@ -1690,7 +1688,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1715,12 +1713,12 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
-                                                             @elseif($estatusy == 2)
-                                                                {{$fecha}}
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -1730,7 +1728,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g73s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -1799,7 +1797,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -1808,9 +1805,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g81s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -1827,7 +1824,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1844,7 +1841,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g81s->id }}"
@@ -1869,7 +1866,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1886,7 +1883,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g81s->id }}"
@@ -1910,7 +1907,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g81s->id }}"
@@ -1927,7 +1924,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1958,7 +1955,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariosx))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1974,7 +1971,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g81s->id }}"
@@ -1998,7 +1995,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -2011,7 +2008,7 @@
                                             @endforeach
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g81s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -2081,7 +2078,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -2090,9 +2086,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g82s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -2109,7 +2105,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2126,7 +2122,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g82s->id }}"
@@ -2150,7 +2146,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2167,7 +2163,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g82s->id }}"
@@ -2191,7 +2187,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g82s->id }}"
@@ -2208,7 +2204,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2239,7 +2235,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2255,7 +2251,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g82s->id }}"
@@ -2279,7 +2275,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -2294,7 +2290,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g82s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -2355,7 +2351,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -2365,9 +2360,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g83s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -2382,7 +2377,7 @@
                                             @endphp
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2399,7 +2394,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g83s->id }}"
@@ -2423,7 +2418,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2440,7 +2435,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g83s->id }}"
@@ -2464,7 +2459,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g83s->id }}"
@@ -2481,7 +2476,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2512,7 +2507,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariosx))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2528,7 +2523,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g83s->id }}"
@@ -2552,7 +2547,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -2567,7 +2562,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g83s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -2651,14 +2646,14 @@
 
                                         @foreach ($responsables as $responsable)
                                             @if ($responsable->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                @if ($usuario->empleado->id == $responsable->empleado_id)
                                                     <td style="width:5%">
                                                         <a href="#" data-type="select"
                                                             data-pk="{{ $g91s->id }}"
                                                             data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
                                                             data-title="Seleccionar aplica"
-                                                            data-value="{{ $responsable->aplica }}"
-                                                            class="aplica2" data-name="aplica">
+                                                            data-value="{{ $responsable->aplica }}" class="aplica2"
+                                                            data-name="aplica">
                                                         </a>
                                                     </td>
                                                 @endif
@@ -2667,7 +2662,7 @@
 
                                         @foreach ($aprobadores as $aprobador)
                                             @if ($aprobador->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                     <td style="width:5%">
                                                         @if (!isset($aplica))
                                                             <div class="text-center"><i style="font-size:12pt"
@@ -2690,7 +2685,7 @@
                                         @endphp
                                         @foreach ($aprobadores as $aprobador)
                                             @if ($aprobador->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                     <td class="text-justify">
                                                         @if (is_null($justificacion))
                                                             <div class="text-center"><i style="font-size:12pt"
@@ -2707,7 +2702,7 @@
 
                                         @foreach ($responsables as $responsable)
                                             @if ($responsable->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                @if ($usuario->empleado->id == $responsable->empleado_id)
                                                     <td class="text-justify">
                                                         <a href="#" data-type="textarea"
                                                             data-pk="{{ $g91s->id }}"
@@ -2731,7 +2726,7 @@
 
                                         @foreach ($aprobadores as $aprobador)
                                             @if ($aprobador->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                     <td style="width:15%">
                                                         <a href="#" data-type="select"
                                                             data-pk="{{ $g91s->id }}"
@@ -2748,7 +2743,7 @@
 
                                         @foreach ($responsables as $responsable)
                                             @if ($responsable->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                @if ($usuario->empleado->id == $responsable->empleado_id)
                                                     <td style="width:15%">
                                                         @if (is_null($estatusy))
                                                             <div class="text-center"><i style="font-size:12pt"
@@ -2778,7 +2773,7 @@
 
                                         @foreach ($responsables as $responsable)
                                             @if ($responsable->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                @if ($usuario->empleado->id == $responsable->empleado_id)
                                                     <td class="text-justify">
                                                         @if (!isset($comentariox))
                                                             <div class="text-center"><i style="font-size:12pt"
@@ -2794,7 +2789,7 @@
 
                                         @foreach ($aprobadores as $aprobador)
                                             @if ($aprobador->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                     <td class="text-justify">
                                                         <a href="#" data-type="textarea"
                                                             data-pk="{{ $g91s->id }}"
@@ -2818,7 +2813,7 @@
 
                                         @foreach ($responsables as $responsable)
                                             @if ($responsable->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                @if ($usuario->empleado->id == $responsable->empleado_id)
                                                     <td style="width:15%">
                                                         @if ($estatusy == 1)
                                                             <p>Pendiente de aprobar</p>
@@ -2833,7 +2828,7 @@
 
                                         @foreach ($aprobadores as $aprobador)
                                             @if ($aprobador->declaracion_id == $g91s->id)
-                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                     <td style="width:15%"
                                                         id="actualizacion_fecha_{{ $g91s->id }}">
                                                         @if ($g91s->estatus == 2)
@@ -2898,7 +2893,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -2907,9 +2901,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g92s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -2926,7 +2920,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2942,7 +2936,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g92s->id }}"
@@ -2966,7 +2960,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -2982,7 +2976,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g92s->id }}"
@@ -3006,7 +3000,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g92s->id }}"
@@ -3023,7 +3017,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3053,7 +3047,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3069,7 +3063,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g92s->id }}"
@@ -3093,7 +3087,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -3108,7 +3102,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g92s->id }}">
                                                             @if ($g92s->estatus == 2)
@@ -3170,7 +3164,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -3179,9 +3172,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g93s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -3197,7 +3190,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3214,7 +3207,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g93s->id }}"
@@ -3238,7 +3231,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (is_null($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3255,7 +3248,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g93s->id }}"
@@ -3278,7 +3271,7 @@
                                             @endphp
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g93s->id }}"
@@ -3295,7 +3288,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3325,7 +3318,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3341,7 +3334,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g93s->id }}"
@@ -3365,7 +3358,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -3381,7 +3374,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g93s->id }}">
                                                             @if ($g93s->estatus == 2)
@@ -3444,7 +3437,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -3453,9 +3445,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g94s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -3472,7 +3464,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3489,7 +3481,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g94s->id }}"
@@ -3513,7 +3505,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3529,7 +3521,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g94s->id }}"
@@ -3553,7 +3545,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3575,7 +3567,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g94s->id }}"
@@ -3600,7 +3592,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3616,7 +3608,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g94s->id }}"
@@ -3640,7 +3632,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -3655,7 +3647,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g94s->id }}">
                                                             @if ($g94s->estatus == 2)
@@ -3721,7 +3713,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -3730,9 +3721,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g101s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -3749,7 +3740,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3765,14 +3756,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g101s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g101s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g101s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g101s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -3789,7 +3780,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3805,7 +3796,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g101s->id }}"
@@ -3829,7 +3820,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3851,7 +3842,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g101s->id }}"
@@ -3876,7 +3867,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariosx))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -3892,7 +3883,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g101s->id }}"
@@ -3916,7 +3907,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -3931,7 +3922,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g101s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -3998,7 +3989,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -4027,7 +4017,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4043,14 +4033,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g111s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g111s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g111s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g111s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -4067,7 +4057,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4083,7 +4073,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g111s->id }}"
@@ -4108,7 +4098,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4131,7 +4121,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g111s->id }}"
@@ -4156,7 +4146,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariosx))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4172,7 +4162,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g111s->id }}"
@@ -4196,7 +4186,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -4211,7 +4201,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g111s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -4273,7 +4263,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -4282,9 +4271,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g112s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -4301,7 +4290,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4318,14 +4307,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g112s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g112s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g112s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g112s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -4342,7 +4331,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4359,7 +4348,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g112s->id }}"
@@ -4383,7 +4372,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4406,7 +4395,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g112s->id }}"
@@ -4431,7 +4420,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4447,7 +4436,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g112s->id }}"
@@ -4471,7 +4460,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -4487,7 +4476,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g112s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -4553,7 +4542,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -4562,9 +4550,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g121s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -4581,7 +4569,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g121s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4598,14 +4586,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g121s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g121s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g121s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g121s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -4622,7 +4610,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g121s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4639,7 +4627,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g121s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g121s->id }}"
@@ -4663,7 +4651,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g121s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (is_null($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4686,7 +4674,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g121s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g121s->id }}"
@@ -4711,7 +4699,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g121s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g121s->id }}"
@@ -4727,7 +4715,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g121s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4753,7 +4741,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g121s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -4768,7 +4756,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g121s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g121s->id }}">
                                                             @if ($g121s->estatus == 2)
@@ -4827,7 +4815,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -4836,9 +4823,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g122s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -4855,7 +4842,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4872,14 +4859,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g122s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g122s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g122s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g122s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -4896,7 +4883,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4913,7 +4900,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g122s->id }}"
@@ -4938,7 +4925,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -4961,7 +4948,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g122s->id }}"
@@ -4986,7 +4973,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5003,7 +4990,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g122s->id }}"
@@ -5027,7 +5014,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -5042,7 +5029,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g122s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -5103,7 +5090,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -5112,9 +5098,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g123s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -5131,7 +5117,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5148,14 +5134,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g123s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g123s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g123s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g123s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -5172,7 +5158,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5189,7 +5175,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g123s->id }}"
@@ -5205,15 +5191,15 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g123s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g123s->id) }}"
                                                                 data-title="Seleccionar estatus"
-                                                                data-value="{{ $g123s->estatus }}"
-                                                                class="estatus" data-name="estatus"
-                                                                onchange='cambioOpciones();' id="opciones">
+                                                                data-value="{{ $g123s->estatus }}" class="estatus"
+                                                                data-name="estatus" onchange='cambioOpciones();'
+                                                                id="opciones">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -5222,7 +5208,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (is_null($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5253,7 +5239,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5270,7 +5256,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g123s->id }}"
@@ -5294,7 +5280,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -5309,7 +5295,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g123s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -5370,7 +5356,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -5380,9 +5365,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g124s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -5399,7 +5384,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5416,14 +5401,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g124s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g124s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g124s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g124s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -5440,7 +5425,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5457,7 +5442,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g124s->id }}"
@@ -5481,7 +5466,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5504,7 +5489,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g124s->id }}"
@@ -5529,7 +5514,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5545,7 +5530,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g124s->id }}"
@@ -5569,7 +5554,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -5583,7 +5568,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g124s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -5645,7 +5630,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -5654,9 +5638,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g125s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -5673,7 +5657,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5691,14 +5675,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g125s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g125s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g125s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g125s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -5715,7 +5699,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5732,7 +5716,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g125s->id }}"
@@ -5756,7 +5740,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5779,7 +5763,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g125s->id }}"
@@ -5804,7 +5788,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5821,7 +5805,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g125s->id }}"
@@ -5845,7 +5829,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -5860,7 +5844,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g125s->id }}">
                                                             @if ($g125s->estatus == 2)
@@ -5921,7 +5905,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -5930,9 +5913,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g126s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -5949,7 +5932,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -5966,14 +5949,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g126s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g126s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g126s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g126s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -5991,7 +5974,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (is_null($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6008,7 +5991,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g126s->id }}"
@@ -6032,7 +6015,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6055,7 +6038,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g126s->id }}"
@@ -6080,7 +6063,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6097,7 +6080,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g126s->id }}"
@@ -6121,7 +6104,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -6136,7 +6119,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g126s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -6198,7 +6181,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -6207,9 +6189,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g127s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -6226,7 +6208,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6243,14 +6225,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g127s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g127s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g127s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g127s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -6267,7 +6249,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6284,7 +6266,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g127s->id }}"
@@ -6308,7 +6290,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6332,7 +6314,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g127s->id }}"
@@ -6357,7 +6339,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6373,7 +6355,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g127s->id }}"
@@ -6397,7 +6379,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -6412,7 +6394,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g127s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g127s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -6476,7 +6458,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -6485,9 +6466,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g131s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -6504,7 +6485,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6521,14 +6502,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g131s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g131s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g131s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g131s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -6545,7 +6526,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6562,7 +6543,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g131s->id }}"
@@ -6586,7 +6567,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6608,7 +6589,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g131s->id }}"
@@ -6634,7 +6615,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6650,7 +6631,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g131s->id }}"
@@ -6674,7 +6655,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -6689,7 +6670,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g131s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g131s->id }}">
                                                             @if ($g131s->estatus == 2)
@@ -6748,7 +6729,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -6757,9 +6737,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g132s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -6776,7 +6756,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6792,7 +6772,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g132s->id }}"
@@ -6816,7 +6796,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6832,7 +6812,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g132s->id }}"
@@ -6856,7 +6836,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6878,7 +6858,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g132s->id }}"
@@ -6903,7 +6883,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -6919,7 +6899,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g132s->id }}"
@@ -6943,7 +6923,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -6957,7 +6937,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g132s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g132s->id }}">
                                                             @if ($g132s->estatus == 2)
@@ -7023,7 +7003,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -7032,9 +7011,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g141s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -7051,7 +7030,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7067,14 +7046,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g141s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g141s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g141s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g141s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -7092,7 +7071,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7108,7 +7087,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g141s->id }}"
@@ -7131,7 +7110,7 @@
                                             @endphp
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7153,7 +7132,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g141s->id }}"
@@ -7178,7 +7157,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7194,7 +7173,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g141s->id }}"
@@ -7218,7 +7197,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -7233,7 +7212,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g141s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g141s->id }}">
                                                             @if ($g141s->estatus == 2)
@@ -7294,7 +7273,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -7303,9 +7281,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g142s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -7314,7 +7292,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7330,7 +7308,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g142s->id }}"
@@ -7354,7 +7332,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7370,7 +7348,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g142s->id }}"
@@ -7393,7 +7371,7 @@
                                             @endphp
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7415,7 +7393,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g142s->id }}"
@@ -7440,7 +7418,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7457,7 +7435,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g142s->id }}"
@@ -7481,7 +7459,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -7496,7 +7474,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g142s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g142s->id }}">
                                                             @if ($g142s->estatus == 2)
@@ -7555,7 +7533,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -7565,9 +7542,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g143s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -7584,7 +7561,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7600,14 +7577,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g143s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g143s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g143s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g143s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -7624,7 +7601,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7640,7 +7617,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g143s->id }}"
@@ -7664,7 +7641,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7686,7 +7663,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g143s->id }}"
@@ -7711,7 +7688,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7727,7 +7704,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g143s->id }}"
@@ -7752,7 +7729,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -7767,7 +7744,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g143s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g143s->id }}">
                                                             @if ($g143s->estatus == 2)
@@ -7831,7 +7808,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -7840,9 +7816,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g151s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -7859,7 +7835,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7875,7 +7851,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g151s->id }}"
@@ -7899,7 +7875,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7916,7 +7892,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g151s->id }}"
@@ -7941,7 +7917,7 @@
                                             @endphp
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -7965,7 +7941,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g151s->id }}"
@@ -7990,7 +7966,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8006,7 +7982,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g151s->id }}"
@@ -8030,7 +8006,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -8045,7 +8021,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g151s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g151s->id }}">
                                                             @if ($g151s->estatus == 2)
@@ -8105,7 +8081,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -8114,9 +8089,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g152s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -8133,7 +8108,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8149,14 +8124,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g152s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g152s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g152s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g152s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -8173,7 +8148,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8189,7 +8164,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g152s->id }}"
@@ -8212,7 +8187,7 @@
                                             @endphp
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8234,7 +8209,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g152s->id }}"
@@ -8259,7 +8234,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariosx))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8275,7 +8250,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g152s->id }}"
@@ -8299,7 +8274,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -8314,7 +8289,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g152s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g152s->id }}">
                                                             @if ($g152s->estatus == 2)
@@ -8380,7 +8355,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -8390,9 +8364,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g161s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -8408,7 +8382,7 @@
                                             @endphp
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8424,14 +8398,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g161s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g161s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g161s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g161s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -8449,7 +8423,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8466,7 +8440,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g161s->id }}"
@@ -8490,7 +8464,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8513,7 +8487,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g161s->id }}"
@@ -8539,7 +8513,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8555,7 +8529,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g161s->id }}"
@@ -8579,7 +8553,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -8594,7 +8568,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g161s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g161s->id }}">
                                                             @if ($g161s->estatus == 2)
@@ -8659,7 +8633,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -8669,9 +8642,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g171s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -8688,7 +8661,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8705,7 +8678,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g171s->id }}"
@@ -8730,7 +8703,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (is_null($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8747,7 +8720,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g171s->id }}"
@@ -8771,7 +8744,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8793,7 +8766,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g171s->id }}"
@@ -8818,7 +8791,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8834,7 +8807,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g171s->id }}"
@@ -8858,7 +8831,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
@@ -8873,7 +8846,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g171s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g171s->id }}">
                                                             @if ($g171s->estatus == 2)
@@ -8934,7 +8907,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -8944,9 +8916,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g172s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -8963,7 +8935,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -8979,14 +8951,14 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g172s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g172s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $g172s->aplica }}"
-                                                                class="aplica2" data-name="aplica">
+                                                                data-value="{{ $g172s->aplica }}" class="aplica2"
+                                                                data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -9004,7 +8976,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9021,7 +8993,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g172s->id }}"
@@ -9045,7 +9017,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9067,7 +9039,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g172s->id }}"
@@ -9092,7 +9064,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9109,7 +9081,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g172s->id }}"
@@ -9133,12 +9105,12 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
-                                                             @elseif($estatusy == 2)
-                                                                {{$fecha}}
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -9147,7 +9119,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g172s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g172s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -9211,7 +9183,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -9221,9 +9192,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g181s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -9240,7 +9211,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9257,7 +9228,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g181s->id }}"
@@ -9281,7 +9252,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9297,7 +9268,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g181s->id }}"
@@ -9321,7 +9292,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9343,7 +9314,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g181s->id }}"
@@ -9368,7 +9339,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9384,7 +9355,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g181s->id }}"
@@ -9408,12 +9379,12 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
-                                                            <p>Pendiente de aprobar</p>
+                                                                <p>Pendiente de aprobar</p>
                                                             @elseif($estatusy == 2)
-                                                                {{$fecha}}
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -9423,7 +9394,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g181s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g181s->id }}">
                                                             @if ($g181s->estatus == 2)
@@ -9482,7 +9453,6 @@
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
-                                                            
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -9492,9 +9462,9 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g182s->id)
                                                         @if (!is_null($aprobador->empleado))
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $aprobador->empleado->name }}">
                                                         @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
@@ -9511,7 +9481,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9528,7 +9498,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g182s->id }}"
@@ -9552,7 +9522,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (is_null($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9568,7 +9538,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g182s->id }}"
@@ -9592,7 +9562,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9614,7 +9584,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
                                                             <a href="#" data-type="select"
                                                                 data-pk="{{ $g182s->id }}"
@@ -9639,7 +9609,7 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
                                                             @if (!isset($comentariox))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -9655,7 +9625,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g182s->id }}"
@@ -9679,12 +9649,12 @@
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    @if ($usuario->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if ($estatusy == 1)
                                                                 <p>Pendiente de aprobar</p>
-                                                             @elseif($estatusy == 2)
-                                                                {{$fecha}}
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -9694,7 +9664,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g182s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    @if ($usuario->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g182s->id }}">
                                                             @if ($g182s->estatus == 2)

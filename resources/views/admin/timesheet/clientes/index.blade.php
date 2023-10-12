@@ -1,33 +1,39 @@
 @extends('layouts.admin')
 @section('content')
-    
     <style type="text/css">
-        .td-cj-1{
+        .td-cj-1 {
             background-color: rgba(0, 0, 0, 0.1) !important;
         }
-        .td-cj-2{
+
+        .td-cj-2 {
             background-color: rgba(0, 0, 0, 0.2) !important;
         }
-        #datatable_clientes th{
-            min-width: 100px;
+
+        .td-cj-3 {
+            background-color: rgba(0, 0, 0, 0.2) !important;
         }
 
-        @page { 
-            size: landscape; 
+        #datatable_clientes th {
+            min-width: 150px;
+        }
+
+        @page {
+            size: landscape;
         }
     </style>
 
 
-     {{ Breadcrumbs::render('timesheet-clientes') }}
-	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Clientes</font> </h5>
+    {{ Breadcrumbs::render('timesheet-clientes') }}
 
-	<div class="card card-body">
-		<div class="row">
-			@include('partials.flashMessages')
-	        <div class="datatable-fix w-100">
-	            <table id="datatable_clientes" class="table w-100">
-	                <thead>
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Clientes</font>
+    </h5>
+
+    <div class="card card-body">
+        <div class="row">
+            @include('partials.flashMessages')
+            <div class="datatable-fix w-100">
+                <table id="datatable_clientes" class="table w-100">
+                    <thead>
                         <tr id="dt-header">
                             <th rowspan="2">ID</th>
                             <th rowspan="2">Razón social</th>
@@ -35,9 +41,11 @@
                             <th rowspan="2">RFC persona moral o persona física</th>
                             <th colspan="6" class="td-cj-1" style="text-align: center;">DOMICILIO FISCAL</th>
                             <th colspan="4" class="td-cj-2" style="text-align: center;">DATOS DEL CONTACTO</th>
+                            <th colspan="2" class="td-cj-3" style="text-align: center;">PRODUCTOS Y/O SERVICIOS</th>
                             <th rowspan="2" class="th_opciones">Opciones</th>
                         </tr>
                         <tr>
+
                             <th class="td-cj-1">Calle y Número</th>
                             <th class="td-cj-1">Colonia</th>
                             <th class="td-cj-1">Ciudad o Municipio/ País</th>
@@ -49,41 +57,52 @@
                             <th class="td-cj-2">Puesto</th>
                             <th class="td-cj-2">Correo electrónico</th>
                             <th class="td-cj-2">Celular</th>
+
+                            <th class="td-cj-3">Objeto social / Descripción
+                                del servicio o producto</th>
+                            <th class="td-cj-3">Cobertura, Rango geográfico
+                                en el cual presta los servicios</th>
                         </tr>
                     </thead>
 
-	                <tbody>
-                        @foreach($clientes as $cliente)
-    	                	<tr>
-                               <td>{{ $cliente->identificador }}</td>
-                               <td>{{ $cliente->razon_social }}</td>
-                               <td>{{ $cliente->nombre }}</td>
-                               <td>{{ $cliente->rfc }}</td>
-                               <td>{{ $cliente->calle }}</td>
-                               <td>{{ $cliente->colonia }}</td>
-                               <td>{{ $cliente->ciudad }}</td>
-                               <td>{{ $cliente->codigo_postal }}</td>
-                               <td>{{ $cliente->telefono }}</td>
-                               <td>{{ $cliente->pagina_web }}</td>
-                               <td>{{ $cliente->nombre_contacto }}</td>
-                               <td>{{ $cliente->puesto_contacto }}</td>
-                               <td>{{ $cliente->correo_contacto }}</td>
-                               <td>{{ $cliente->celular_contacto }}</td>
-                               <td class="d-flex">
-                                   <a href="{{ asset('admin/timesheet/clientes/edit') }}/{{ $cliente->id }}" class="btn" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
-                                   <button class="btn" title="Eliminar" data-toggle="modal" data-target="#modal_cliente_eliminar_{{ $cliente->id}}" style="color:red;"><i class="fa-solid fa-trash-can"></i></button>
-                               </td>
-    						</tr>
+                    <tbody>
+                        @foreach ($clientes as $cliente)
+                            <tr>
+                                <td>{{ $cliente->identificador }}</td>
+                                <td>{{ $cliente->razon_social }}</td>
+                                <td>{{ $cliente->nombre }}</td>
+                                <td>{{ $cliente->rfc }}</td>
+                                <td>{{ $cliente->calle }}</td>
+                                <td>{{ $cliente->colonia }}</td>
+                                <td>{{ $cliente->ciudad }}</td>
+                                <td>{{ $cliente->codigo_postal }}</td>
+                                <td>{{ $cliente->telefono }}</td>
+                                <td>{{ $cliente->pagina_web }}</td>
+                                <td>{{ $cliente->nombre_contacto }}</td>
+                                <td>{{ $cliente->puesto_contacto }}</td>
+                                <td>{{ $cliente->correo_contacto }}</td>
+                                <td>{{ $cliente->celular_contacto }}</td>
+                                <td>{{ $cliente->objeto_descripcion }}</td>
+                                <td>{{ $cliente->cobertura }}</td>
+                                <td class="d-flex">
+                                    <a href="{{ asset('admin/timesheet/clientes/edit') }}/{{ $cliente->id }}"
+                                        class="btn" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <button class="btn" title="Eliminar" data-toggle="modal"
+                                        data-target="#modal_cliente_eliminar_{{ $cliente->id }}" style="color:red;"><i
+                                            class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
                         @endforeach
-	                </tbody>
-	            </table>
-	        </div>
+                    </tbody>
+                </table>
+            </div>
 
-		</div>
-	</div>
+        </div>
+    </div>
 
-    @foreach($clientes as $cliente)
-        <div class="modal fade" id="modal_cliente_eliminar_{{ $cliente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @foreach ($clientes as $cliente)
+        <div class="modal fade" id="modal_cliente_eliminar_{{ $cliente->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -91,10 +110,12 @@
                         <div class="delete">
                             <div class="text-center">
                                 <i class="fa-solid fa-trash-can" style="color: #E34F4F; font-size:60pt;"></i>
-                                <h1 class="my-4" style="font-size:14pt;">Eliminar Cliente: <small>{{ $cliente->nombre }}</small></h1>
+                                <h1 class="my-4" style="font-size:14pt;">Eliminar Cliente:
+                                    <small>{{ $cliente->nombre }}</small>
+                                </h1>
                                 <p class="parrafo">¿Desea eliminar al cliente {{ $cliente->nombre }}?</p>
                             </div>
-                            
+
                             <div class="mt-4 d-flex justify-content-between">
                                 <button class="btn btn_cancelar" data-dismiss="modal">
                                     Cancelar
@@ -147,8 +168,20 @@
                     // set custom header when print
                     customize: function(doc) {
 
-                    var css = '@page { size: landscape; } @media print {.header-print {display: table-header-group;}}', head = doc.document.head || doc.document.getElementsByTagName('head')[0], style = doc.document.createElement('style'); style.type = 'text/css'; style.media = 'print'; if (style.styleSheet) { style.styleSheet.cssText = css; } else { style.appendChild(doc.document.createTextNode(css)); } head.appendChild(style);
-                        $(doc.document.body).find( 'thead' ).prepend('<tr class="header-print">' + $('#dt-header').html() + '</tr>');
+                        var css =
+                            '@page { size: landscape; } @media print {.header-print {display: table-header-group;}}',
+                            head = doc.document.head || doc.document.getElementsByTagName('head')[0],
+                            style = doc.document.createElement('style');
+                        style.type = 'text/css';
+                        style.media = 'print';
+                        if (style.styleSheet) {
+                            style.styleSheet.cssText = css;
+                        } else {
+                            style.appendChild(doc.document.createTextNode(css));
+                        }
+                        head.appendChild(style);
+                        $(doc.document.body).find('thead').prepend('<tr class="header-print">' + $(
+                            '#dt-header').html() + '</tr>');
 
                         let logo_actual = @json($logo_actual);
                         let empresa_actual = @json($empresa_actual);
@@ -211,9 +244,11 @@
                 titleAttr: 'Agregar sede',
                 url: "{{ route('admin.timesheet-clientes-create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
             dtButtons.push(btnAgregar);
@@ -225,7 +260,7 @@
             };
             let table = $('#datatable_clientes').DataTable(dtOverrideGlobals);
             console.log(table.selector);
-            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                     <h5>
                         <strong>

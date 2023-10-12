@@ -6,6 +6,7 @@ use App\Functions\EvaluacionServiciosData;
 use App\Functions\FormatearFecha;
 use App\Models\ContractManager\EvaluacionServicio;
 use App\Models\ContractManager\NivelesServicio;
+use App\Models\User;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -82,14 +83,14 @@ class NivelesComponent extends Component
     public function store()
     {
         $this->validate([
-            'nombre' => 'required',
-            'metrica' => 'required',
-            'meta' => 'required',
-            'unidad' => 'required',
+            'nombre' => 'required|max:255',
+            'metrica' => 'required|max:255',
+            'meta' => 'required|max:100000000000',
+            'unidad' => 'required|max:255',
             'info_consulta' => 'required',
             'periodo_evaluacion' => 'required',
-            'revisiones' => 'required',
-            'area' => 'required',
+            'revisiones' => 'required|numeric|max:100000000000',
+            'area' => 'required|max:255',
             'descripcion' => 'required',
         ]);
         //dd(request()->all());
@@ -97,6 +98,7 @@ class NivelesComponent extends Component
         // $fecha_compromiso_formateada = $formatoFecha->formatearFecha($this->fecha_compromiso, 'd-m-Y', 'Y-m-d');
         // $fecha_real_formateada = $formatoFecha->formatearFecha($this->fecha_real, 'd-m-Y', 'Y-m-d');
 
+        $usuario = User::getCurrentUser();
         $nivelesservicio = NivelesServicio::create([
             'contrato_id' => $this->contrato_id,
             'nombre' => $this->nombre,
@@ -108,8 +110,8 @@ class NivelesComponent extends Component
             'revisiones' => $this->revisiones,
             'area' => $this->area,
             'descripcion' => $this->descripcion,
-            'created_by' => auth()->user()->empleado->id,
-            'updated_by' => auth()->user()->empleado->id,
+            'created_by' => $usuario->empleado->id,
+            'updated_by' => $usuario->empleado->id,
         ]);
 
         $this->evaluacion($nivelesservicio->id, $nivelesservicio->periodo_evaluacion, $nivelesservicio->revisiones, $nivelesservicio->nombre, $nivelesservicio->metrica, $nivelesservicio->unidad);

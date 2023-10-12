@@ -13,6 +13,7 @@ class Comprador extends Model
     public $table = 'compradores';
 
     public $fillable = [
+        'id',
         'clave',
         'nombre',
         'estado',

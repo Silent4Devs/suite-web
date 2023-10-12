@@ -5,7 +5,7 @@
         </div>
     </div>
     <br /><br /> --}}
-<div style="display:none">
+<div>
     <h4 class="sub-titulo-form col s12">AGREGAR CÉDULA DE CUMPLIMIENTO</h4>
     <form wire:submit.prevent="store">
         @include('livewire.cedula-cumplimiento.form')

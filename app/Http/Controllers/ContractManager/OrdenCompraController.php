@@ -12,7 +12,6 @@ use App\Models\ContractManager\ProductoRequisicion as KatbolProductoRequisicion;
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\User;
 use Gate;
@@ -44,49 +43,16 @@ class OrdenCompraController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
-
         $id = Auth::user()->id;
         $roles = User::find($id)->roles()->get();
         foreach ($roles as $rol) {
-            if ($rol->title === 'Admin') {
+            if ($rol->title === 'Admin' || $rol->title === 'Compras') {
                 $requisiciones = KatbolRequsicion::where([
                     ['firma_solicitante', '!=', null],
                     ['firma_jefe', '!=', null],
                     ['firma_finanzas', '!=', null],
                     ['firma_compras', '!=', null],
                 ])->where('archivo', false)->orderByDesc('id')
-                    ->get();
-
-
-                return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
-            } elseif ($rol->title === 'Compras') {
-                //compras
-                $comprador = KatbolComprador::where('id_user', $user->empleado_id)->first();
-                $id = 0;
-                if ($comprador) {
-                    $id = $comprador->id;
-                }
-                $requisiciones = KatbolRequsicion::where([
-                    ['firma_solicitante', '!=', null],
-                    ['firma_jefe', '!=', null],
-                    ['firma_finanzas', '!=', null],
-                    ['firma_compras', '!=', null],
-                ])->where('archivo', false)
-                    ->where('comprador_id', $id)
-                    ->orderByDesc('id')
-                    ->get();
-
-
-                return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
-            } else {
-                $requisiciones = KatbolRequsicion::where([
-                    ['firma_solicitante', '!=', null],
-                    ['firma_jefe', '!=', null],
-                    ['firma_finanzas', '!=', null],
-                    ['firma_compras', '!=', null],
-                ])->where('archivo', false)
-                    ->where('id_user', $user->id)
-                    ->orderByDesc('id')
                     ->get();
 
                 return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
@@ -96,9 +62,21 @@ class OrdenCompraController extends Controller
 
     public function getRequisicionIndex(Request $request)
     {
-        $requisiciones = KatbolRequsicion::with('productos_requisiciones.producto', 'contrato')->where('estado', 'firmada')->Orwhere('estado_orden', 'rechazado_oc')->Orwhere('estado_orden', 'curso')->Orwhere('estado_orden', 'fin')->orderByDesc('id')->get();
+        $id = Auth::user()->id;
+        $roles = User::find($id)->roles()->get();
+        foreach ($roles as $rol) {
+            if ($rol->title === 'Admin' || $rol->title === 'Compras') {
+                $requisiciones = KatbolRequsicion::with('contrato')->where([
+                    ['firma_solicitante', '!=', null],
+                    ['firma_jefe', '!=', null],
+                    ['firma_finanzas', '!=', null],
+                    ['firma_compras', '!=', null],
+                ])->where('archivo', false)->orderByDesc('id')
+                    ->get();
 
-        return datatables()->of($requisiciones)->toJson();
+                return datatables()->of($requisiciones)->toJson();
+            }
+        }
     }
 
     /**
@@ -130,14 +108,11 @@ class OrdenCompraController extends Controller
      */
     public function show($id)
     {
-        try {
-            $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-            $organizacion = Organizacion::select('empresa', 'logotipo')->first();
 
-            return view('contract_manager.ordenes-compra.show', compact('requisicion', 'organizacion'));
-        } catch (\Exception $e) {
-            return view('contract_manager.ordenes-compra.error');
-        }
+        $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+        $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+
+        return view('contract_manager.ordenes-compra.show', compact('requisicion', 'organizacion'));
     }
 
     /**
@@ -274,7 +249,6 @@ class OrdenCompraController extends Controller
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_orden = $fecha;
             $requisicion->save();
-
             $user = 'lourdes.abadia@silent4business.com';
             $userEmail = $user;
         }

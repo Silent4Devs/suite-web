@@ -12,6 +12,7 @@ use App\Models\EvidenciaMatrizRequisitoLegale;
 use App\Models\MatrizRequisitoLegale;
 use App\Models\PlanImplementacion;
 use App\Models\Team;
+use App\Models\User;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -232,7 +233,7 @@ class MatrizRequisitoLegalesController extends Controller
         $planImplementacion->norma = $request->norma;
         $planImplementacion->modulo_origen = $request->modulo_origen;
         $planImplementacion->objetivo = $request->objetivo;
-        $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+        $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 

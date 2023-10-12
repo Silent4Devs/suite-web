@@ -3,27 +3,32 @@
 namespace App\Http\Livewire\Escuela\Instructor;
 
 use App\Models\Escuela\Audience;
-use Livewire\Component;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Escuela\Course;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class CourseAudiences extends Component
 {
     use LivewireAlert, AuthorizesRequests;
 
     public Audience $audience;
-    public $course, $name;
+    public $course;
+    public $name;
 
     protected $rules = [
-        'audience.name' => 'required',
+        'audience.name' => 'required|max:255',
+    ];
+
+    protected $messages = [
+        'audience.name.required' => 'El campo nombre es obligatorio',
+        'audience.name.max' => 'El campo nombre es obligatorio',
     ];
 
     public function mount($course)
     {
         $this->course = $course;
         $this->audience = new Audience();
-
     }
 
     public function render()
@@ -34,7 +39,10 @@ class CourseAudiences extends Component
     public function store()
     {
         $this->validate([
-            'name' => 'required',
+            'name' => 'required|max:255',
+        ], [
+            'name.required' => 'El campo nombre es obligatorio',
+            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
         ]);
 
         $this->course->audiences()->create([

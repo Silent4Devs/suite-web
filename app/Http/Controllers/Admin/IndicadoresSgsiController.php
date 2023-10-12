@@ -24,8 +24,9 @@ class IndicadoresSgsiController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('indicadores_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $area_empleado = auth()->user()->empleado->area->id;
-        $isAdmin = in_array('Admin', auth()->user()->roles->pluck('title')->toArray());
+        $usuario = User::getCurrentUser();
+        $area_empleado = $usuario->empleado->area->id;
+        $isAdmin = in_array('Admin', $usuario->roles->pluck('title')->toArray());
         if ($request->ajax()) {
             if ($isAdmin) {
                 $query = IndicadoresSgsi::orderBy('id')->get();

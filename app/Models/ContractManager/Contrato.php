@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Models\TimesheetCliente;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -95,23 +96,23 @@ class Contrato extends Model implements Auditable
     const Otro = 'Otro';
 
     //fases
-    const renovacion = 'renovacion';
+    const renovacion = 'Renovación';
 
-    const solicituCont = 'solicitud de contrato';
+    const solicituCont = 'Solicitud de contrato';
 
-    const autorizacion = 'autorización';
+    const autorizacion = 'Autorización';
 
-    const negociacion = 'negociacion';
+    const negociacion = 'Negociación';
 
-    const aprobacion = 'aprobacion';
+    const aprobacion = 'Aprobacíon';
 
-    const ejecucion = 'ejecucion';
+    const ejecucion = 'Ejecución';
 
-    const gestionOb = 'gestión de obligaciones';
+    const gestionOb = 'Gestión de obligaciónes';
 
-    const modifCont = 'modificación de contrato';
+    const modifCont = 'Modificación de contrato';
 
-    const auditRep = 'auditoria y reportes';
+    const auditRep = 'Auditoría y reportes';
 
     //tipo cambio
     const MXN = 'MXN';
@@ -235,8 +236,7 @@ class Contrato extends Model implements Auditable
        * 'administrador' => 'none',
        * 'fase' => 'none',
        * 'vigencia_contrato' => 'none',
-       * 'pmp_asignado' => 'none' */
-    ];
+       * 'pmp_asignado' => 'none' */];
 
     protected $appends = [
         'nameproveedor',
@@ -260,7 +260,7 @@ class Contrato extends Model implements Auditable
 
     public function proveedor()
     {
-        return $this->belongsTo(Proveedores::class);
+        return $this->belongsTo(TimesheetCliente::class);
     }
 
     public function area()
@@ -275,7 +275,7 @@ class Contrato extends Model implements Auditable
 
     public function getArchivoAttribute()
     {
-        $archivo = Contratos::where('contrato_id', $this->id)->first();
+        $archivo = self::where('contrato_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
         // dd($archivo);
         $ruta = asset('storage/contratos/');

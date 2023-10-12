@@ -59,7 +59,7 @@ class InicioUsuarioController extends Controller
         $hoy->toDateString();
         abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $usuario = auth()->user();
+        $usuario = User::getCurrentUser();
         $usuarioVinculadoConEmpleado = false;
         if ($usuario->empleado) {
             $usuarioVinculadoConEmpleado = true;
@@ -129,7 +129,7 @@ class InicioUsuarioController extends Controller
 
         $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = new AuditoriaInterna;
-        $empleado = auth()->user()->empleado;
+        $empleado = $usuario->empleado;
         $recursos = collect();
         $eventos = Calendario::getAll();
         $oficiales = CalendarioOficial::get();
@@ -149,8 +149,8 @@ class InicioUsuarioController extends Controller
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);
-            })->orWhere('lider_id', auth()->user()->empleado->id)->get();
-            $auditoria_internas_lider = AuditoriaInterna::where('lider_id', auth()->user()->empleado->id)->get();
+            })->orWhere('lider_id', $usuario->empleado->id)->get();
+            $auditoria_internas_lider = AuditoriaInterna::where('lider_id', $usuario->empleado->id)->get();
             $auditoria_internas = collect();
             foreach ($auditoria_internas_lider as $auditoria) {
                 $auditoria_internas->push($auditoria);
@@ -196,8 +196,8 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
-                    ->where('evaluado_id', '!=', auth()->user()->empleado->id)
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $usuario->empleado->id)
+                    ->where('evaluado_id', '!=', $usuario->empleado->id)
                     ->where('evaluado', false)
                     ->get();
                 $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
@@ -205,11 +205,11 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
-                    ->where('evaluado_id', auth()->user()->empleado->id)
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $usuario->empleado->id)
+                    ->where('evaluado_id', $usuario->empleado->id)
                     ->first();
             }
-            $mis_objetivos = auth()->user()->empleado->objetivos;
+            $mis_objetivos = $usuario->empleado->objetivos;
 
             // SECCION MIS DATOS
             if ($usuario->empleado->children->count()) {
@@ -225,8 +225,8 @@ class InicioUsuarioController extends Controller
 
         $panel_rules = PanelInicioRule::select('nombre', 'n_empleado', 'area', 'jefe_inmediato', 'puesto', 'perfil', 'fecha_ingreso', 'genero', 'estatus', 'email', 'telefono', 'sede', 'direccion', 'cumpleaños')->get()->first();
 
-        if (!is_null(auth()->user()->empleado)) {
-            $activos = Activo::select('*')->where('id_responsable', '=', auth()->user()->empleado->id)->get();
+        if (!is_null($usuario->empleado)) {
+            $activos = Activo::select('*')->where('id_responsable', '=', $usuario->empleado->id)->get();
             if ($usuario->empleado->cumpleaños) {
                 $cumpleaños_usuario = Carbon::parse($usuario->empleado->cumpleaños)->format('d-m');
             } else {
@@ -249,14 +249,14 @@ class InicioUsuarioController extends Controller
         $organizacion = Organizacion::getFirst();
         $competencias = collect();
 
-        if (auth()->user()->empleado) {
+        if ($usuario->empleado) {
             $competencias = Empleado::with(
                 ['puestoRelacionado' => function ($q) {
                     $q->with(['competencias' => function ($q) {
                         $q->with('competencia');
                     }]);
                 }]
-            )->find(auth()->user()->empleado->id)->puestoRelacionado;
+            )->find($usuario->empleado->id)->puestoRelacionado;
             $competencias = !is_null($competencias) ? $competencias->competencias : collect();
 
             $quejas = Quejas::getAll();
@@ -264,18 +264,18 @@ class InicioUsuarioController extends Controller
             $mejoras = Mejoras::getAll();
             $sugerencias = Sugerencias::getAll();
 
-            $mis_quejas = $quejas->where('empleado_quejo_id', auth()->user()->empleado->id);
-            $mis_quejas_count = $quejas->where('empleado_quejo_id', auth()->user()->empleado->id)->count();
-            $mis_denuncias = $denuncias->where('empleado_denuncio_id', auth()->user()->empleado->id);
-            $mis_denuncias_count = $denuncias->where('empleado_denuncio_id', auth()->user()->empleado->id)->count();
-            $mis_propuestas = $mejoras->where('empleado_mejoro_id', auth()->user()->empleado->id);
-            $mis_propuestas_count = $mejoras->where('empleado_mejoro_id', auth()->user()->empleado->id)->count();
-            $mis_sugerencias = $sugerencias->where('empleado_sugirio_id', auth()->user()->empleado->id);
-            $mis_sugerencias_count = $sugerencias->where('empleado_sugirio_id', auth()->user()->empleado->id)->count();
+            $mis_quejas = $quejas->where('empleado_quejo_id', $usuario->empleado->id);
+            $mis_quejas_count = $quejas->where('empleado_quejo_id', $usuario->empleado->id)->count();
+            $mis_denuncias = $denuncias->where('empleado_denuncio_id', $usuario->empleado->id);
+            $mis_denuncias_count = $denuncias->where('empleado_denuncio_id', $usuario->empleado->id)->count();
+            $mis_propuestas = $mejoras->where('empleado_mejoro_id', $usuario->empleado->id);
+            $mis_propuestas_count = $mejoras->where('empleado_mejoro_id', $usuario->empleado->id)->count();
+            $mis_sugerencias = $sugerencias->where('empleado_sugirio_id', $usuario->empleado->id);
+            $mis_sugerencias_count = $sugerencias->where('empleado_sugirio_id', $usuario->empleado->id)->count();
 
-            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
-            $solicitud_dayoff = SolicitudDayOff::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
-            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_dayoff = SolicitudDayOff::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
             $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
             // $solicitudes_pendientes = 1;
         }
@@ -609,7 +609,7 @@ class InicioUsuarioController extends Controller
     {
         $assigs = $tarea['assigs'];
         foreach ($assigs as $assig) {
-            if ($assig == auth()->user()) {
+            if ($assig == User::getCurrentUser()) {
                 return $tarea;
             }
         }
@@ -638,7 +638,7 @@ class InicioUsuarioController extends Controller
 
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
-            'empleado_quejo_id' => auth()->user()->empleado->id,
+            'empleado_quejo_id' => User::getCurrentUser()->empleado->id,
 
             'area_quejado' => $request->area_quejado,
             'colaborador_quejado' => $request->colaborador_quejado,
@@ -701,7 +701,7 @@ class InicioUsuarioController extends Controller
 
         $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
-            'empleado_denuncio_id' => auth()->user()->empleado->id,
+            'empleado_denuncio_id' => User::getCurrentUser()->empleado->id,
             'descripcion' => $request->descripcion,
             'empleado_denunciado_id' => $request->empleado_denunciado_id,
             'tipo' => $request->tipo,
@@ -767,7 +767,7 @@ class InicioUsuarioController extends Controller
         ]);
 
         $mejoras = Mejoras::create([
-            'empleado_mejoro_id' => auth()->user()->empleado->id,
+            'empleado_mejoro_id' => User::getCurrentUser()->empleado->id,
             'descripcion' => $request->descripcion,
             'beneficios' => $request->beneficios,
             'titulo' => $request->titulo,
@@ -804,7 +804,7 @@ class InicioUsuarioController extends Controller
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sugerencias = Sugerencias::create([
-            'empleado_sugirio_id' => auth()->user()->empleado->id,
+            'empleado_sugirio_id' => User::getCurrentUser()->empleado->id,
 
             'area_sugerencias' => $request->area_sugerencias,
             'proceso_sugerencias' => $request->proceso_sugerencias,
@@ -866,7 +866,7 @@ class InicioUsuarioController extends Controller
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
-            'empleado_reporto_id' => auth()->user()->empleado->id,
+            'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'procedente' => $incidente_procedente,
             'justificacion' => $request->justificacion,
         ]);
@@ -948,7 +948,7 @@ class InicioUsuarioController extends Controller
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
-            'empleado_reporto_id' => auth()->user()->empleado->id,
+            'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
         ]);
 
         AnalisisSeguridad::create([
@@ -1042,7 +1042,7 @@ class InicioUsuarioController extends Controller
 
     public function archivoActividades()
     {
-        $usuario = auth()->user();
+        $usuario = User::getCurrentUser();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
         $implementaciones = PlanImplementacion::getAll();
@@ -1191,7 +1191,7 @@ class InicioUsuarioController extends Controller
     public function perfilPuesto()
     {
         abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_de_puesto'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $puesto_id = auth()->user()->empleado->puesto_id;
+        $puesto_id = User::getCurrentUser()->empleado->puesto_id;
         $puesto = Puesto::find($puesto_id);
 
         $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
@@ -1283,7 +1283,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        $ver = VersionesIso::first();
+        $ver = VersionesIso::getFirst();
         $ver->update([
             'version_historico' => $valor,
         ]);

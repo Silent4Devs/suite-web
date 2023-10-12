@@ -154,7 +154,7 @@
                                 @endisset
                                 <div class="ml-3">
                                     <h1>
-                                        <a class="mb-3 font-bold text-gray-500"
+                                        <a class="mb-3" style="color:#1E94A8;"
                                             href="{{ route('admin.courses.show', $similar) }}">{{ Str::limit($similar->title, 40) }}</a>
                                     </h1>
                                     <div class="flex items-center mb-2">

@@ -13,14 +13,11 @@ use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\Empleado;
 use App\Models\Organizacion;
-use App\Models\User as ModelsUser;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Livewire\Livewire;
 use Livewire\WithFileUploads;
 
 class RequisicionesCreateComponent extends Component
@@ -51,15 +48,13 @@ class RequisicionesCreateComponent extends Component
     // tabs
     public $habilitar_firma = false;
 
-    public $user_actual;
-
     public $habilitar_alerta = false;
     public $habilitar_proveedores = false;
 
     public $habilitar_url = false;
 
-    public $active = "active";
-    public $disabled = "";
+    public $active = 'active';
+    public $disabled = '';
 
     public $requisicion;
     public $area;
@@ -73,7 +68,6 @@ class RequisicionesCreateComponent extends Component
 
     protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores'];
 
-
     public function actualizarCountProveedores()
     {
         $this->proveedores_count = $this->proveedores_count + 1;
@@ -86,8 +80,6 @@ class RequisicionesCreateComponent extends Component
         $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
         $this->contratos = KatbolContrato::get();
         $this->productos = KatbolProducto::where('archivo', false)->get();
-        $this->user_actual = Auth::user();
-        $this->area = Empleado::where('id', $this->user_actual->empleado_id)->first();
         $this->organizacion = Organizacion::first();
     }
 
@@ -103,12 +95,13 @@ class RequisicionesCreateComponent extends Component
 
     public function servicioStore($data)
     {
+        $usuario = User::getCurrentUser();
         if ($this->nueva_requisicion) {
             $this->nueva_requisicion->update([
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $this->area->area->area,
+                'area' => $usuario->empleado->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -118,7 +111,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $this->area->area->area,
+                'area' => $usuario->empleado->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -144,44 +137,23 @@ class RequisicionesCreateComponent extends Component
         }
 
         $this->requisicion_id = $this->nueva_requisicion->id;
-        $id = Auth::user()->id;
+        $id = $usuario->id;
         $this->nueva_requisicion->update([
             'id_user' =>  $id,
         ]);
 
         $this->habilitar_proveedores = true;
         $this->emit('cambiarTab', 'profile');
-        $this->active = "desActive";
+        $this->active = 'desActive';
     }
 
     public function proveedoresStore($data)
     {
         $this->habilitar_firma = false;
-
-        $proveedores_exitentes = KatbolProveedorRequisicion::where('requisiciones_id', $this->requisicion_id)->get();
-        if ($proveedores_exitentes->count() > 0) {
-            foreach ($proveedores_exitentes as $proveedor) {
-                $proveedor->delete();
-            }
-        }
-
-        $provedores_catalogos_existentes = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->requisicion_id)->get();
-        if ($provedores_catalogos_existentes->count() > 0) {
-            foreach ($provedores_catalogos_existentes as $proveedor_catalogo) {
-                $proveedor_catalogo->delete();
-            }
-        }
-
-        $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $this->requisicion_id)->get();
-        if ($proveedor_indistinto->count() > 0) {
-            foreach ($proveedor_indistinto as $proveedor_indistinto) {
-                $proveedor_indistinto->delete();
-            }
-        }
-
         $cotizacion_count = 0;
         $prove_count = 0;
         $this->provedores_colllection = collect();
+
         for ($i = 0; $i <= $this->proveedores_count; $i++) {
             if (isset($data['proveedor_' . $i])) {
                 if ($this->selectedInput[$prove_count] === 'otro') {
@@ -229,12 +201,12 @@ class RequisicionesCreateComponent extends Component
                         $this->emit('cambiarTab', 'contact');
 
                         $this->dataFirma();
-                        $this->disabled = "disabled";
+
+                        $this->disabled = 'disabled';
                     } else {
                         $this->provedores_indistinto_catalogo = collect();
                         $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
                             'requisicion_id' =>   $this->nueva_requisicion->id,
-                            //  'proveedor_indistinto_id' =>  $data['proveedor_otro'.$i],
                             'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
                             'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                         ]);
@@ -243,7 +215,7 @@ class RequisicionesCreateComponent extends Component
 
                         $this->dataFirma();
 
-                        $this->disabled = "disabled";
+                        $this->disabled = 'disabled';
                     }
                 } else {
                     $this->proveedores_catalogo = KatbolProveedorOC::where('id', $this->selectedInput[$prove_count])->first();
@@ -272,7 +244,7 @@ class RequisicionesCreateComponent extends Component
                     $this->emit('cambiarTab', 'contact');
 
                     $this->dataFirma();
-                    $this->disabled = "disabled";
+                    $this->disabled = 'disabled';
                 }
                 $prove_count = $prove_count + 1;
                 $cotizacion_count = $cotizacion_count + 1;
@@ -280,6 +252,7 @@ class RequisicionesCreateComponent extends Component
         }
 
         $this->provedores_colllection->push($this->proveedores_catalogo);
+        $this->habilitar_proveedores = true;
     }
 
     public function dataFirma()
@@ -304,13 +277,13 @@ class RequisicionesCreateComponent extends Component
     {
         $this->habilitar_proveedores = false;
 
-        $userr = Auth::user();
+        $user = User::find($this->nueva_requisicion->id_user);
 
         if ($data['firma']) {
             $this->nueva_requisicion->update([
                 'firma_solicitante' => $data['firma'],
                 'estado' => 'curso',
-                'email' => $userr->email,
+                'email' => $user->email,
             ]);
 
             $fecha = date('d-m-Y');
@@ -320,11 +293,9 @@ class RequisicionesCreateComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $user = ModelsUser::where('id', $this->nueva_requisicion->id_user)->first();
+            $empleado = User::find($this->nueva_requisicion->id_user);
 
-            $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
-
-            $supervisor = $empleado->supervisor->email;
+            $supervisor = isset($empleado->empleado_id) ? User::find($this->nueva_requisicion->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 

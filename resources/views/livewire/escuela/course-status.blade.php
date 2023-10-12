@@ -11,7 +11,18 @@
             background-color: #006DDB;
             border-radius: 100px;
             height: 100%;
-        }</style>
+        }
+
+        .circulo{
+            width: 60px;
+            height: 60px;
+        }
+        .circulo img {
+            width: 60px; /* Ajusta la imagen al tamaño del div circular */
+            height: 60px;
+            border-radius: 50%;
+        }
+        </style>
     <div style="width: 100%;">
         <div>
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
@@ -73,16 +84,16 @@
 
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h6>
-        <div class="flex items-center">
-            <figure>
-                <img class="object-cover w-12 h-12 mr-4 rounded-full" src="{{ $course->teacher->profile_photo_url }}">
-            </figure>
-            <div>
-                <p>{{ $course->teacher->name }}</p>
-                {{-- <a class="text-sm text-blue-500" href="">{{ '@' . Str::slug($course->teacher->name, '') }}</a> --}}
-                <p class="text-primary">{{$course->category->name}}</p>
+            <div class="d-flex align-items-start">
+                <div class="circulo">
+                    <img src="{{asset('img/avatars/escuela-instructor.png')}}">
+                </div>
+                <div>
+                    <p class="ml-2">{{ $course->teacher->name }}</p>
+                    <p class="ml-2" style="color: #E3A008;">{{strtoupper($course->category->name)}}</p>
+
+                </div>
             </div>
-        </div>
 
         <div class="caja-info-card-mc">
             <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
@@ -145,16 +156,16 @@
                                     @php
                                         $completed = in_array($evaluation->id, $evaluationsUser);
                                     @endphp
-                                    <li class="flex">
-                                        <div>
-                                            <span
-                                                class="inline-block w-4 h-4 mt-1 mr-2 rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
-                                            <a class="cursor:pointer"
-                                                href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
-                                                wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
-                                            </a>
-                                        </div>
-                                    </li>
+                                        <li style="list-style-type: disc;">
+                                            <div>
+                                                <span
+                                                    class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                                <a class="cursor:pointer"
+                                                    href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                                </a>
+                                            </div>
+                                        </li>
                                 @endif
                             @endforeach
                         </ul>

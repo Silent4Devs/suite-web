@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\AceptoPolitica;
+use App\Models\User;
 use Livewire\Component;
 
 class AceptarPolitica extends Component
@@ -18,8 +19,9 @@ class AceptarPolitica extends Component
 
     public function render()
     {
-        if (AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('id_politica', $this->id_politica)->first()) {
-            $this->acepto_politica = AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('id_politica', $this->id_politica)->first()->acepto;
+        $usuario = User::getCurrentUser();
+        if (AceptoPolitica::where('id_empleado', $usuario->empleado->id)->where('id_politica', $this->id_politica)->first()) {
+            $this->acepto_politica = AceptoPolitica::where('id_empleado', $usuario->empleado->id)->where('id_politica', $this->id_politica)->first()->acepto;
         } else {
             $this->acepto_politica = false;
         }
@@ -31,7 +33,7 @@ class AceptarPolitica extends Component
     {
         $aceptar = AceptoPolitica::updateOrCreate([
             'id_politica' => $id_politica,
-            'id_empleado' => auth()->user()->empleado->id,
+            'id_empleado' => User::getCurrentUser()->empleado->id,
         ], ['aceptado' => true]);
     }
 }

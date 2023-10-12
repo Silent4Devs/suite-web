@@ -54,9 +54,9 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @livewire('escuela.instructor.questions', ['evaluation_id' => $evaluation->id, 'questionModel' => $question, 'edit' => true], key($question->id))
-                                    <i style="font-size:10px;" class="ml-2 fa-regular fa-trash-can" data-toggle="tooltip"
-                                    data-placement="top" title="Eliminar"
-                                    wire:click.prevent="destroy({{ $question->id }})"></i>
+                                <i style="font-size:10px;" class="ml-2 fa-regular fa-trash-can"
+                                    wire:click.prevent="destroy({{ $question->id }})">
+                                </i>
                             </td>
                         </tr>
                     @endforeach

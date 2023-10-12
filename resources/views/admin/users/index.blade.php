@@ -13,19 +13,18 @@
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
     <div class="mt-5 card">
-
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
-
             <div class="p-2">
                 <a href={{ route('admin.users.eliminados') }} class="btn btn-danger" role="button" aria-pressed="true">
                     <i class="fas fa-user-slash"></i>&nbsp &nbsp Usuarios eliminados</a>
             </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
         </div>
 
         <div class="card-body datatable-fix">
-
-
             @if (!$existsVinculoEmpleadoAdmin)
                 <h5>Por favor da clic en el icono <small class="p-1 border border-primary rounded"><i
                             class="fas fa-user-tag"></i></small> de la fila del usuario Admin</h5>
@@ -58,6 +57,7 @@
                     </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                     @foreach ($query as $user)
                         <tr>
                             <td>{{ $user->name }}</td>
@@ -77,6 +77,11 @@
                             </td>
                         </tr>
                     @endforeach
+=======
+                    <tr>
+                        <td></td>
+                    </tr>
+>>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
                 </tbody>
             </table>
         </div>
@@ -316,6 +321,7 @@
             //                 </div>
 
 
+<<<<<<< HEAD
             //                 <div data-user-id="${data}" class="modal fade" id="vincularEmpleado${data}" data-backdrop="static"
             //                     data-keyboard="false" tabindex="-1" aria-labelledby="vincularEmpleado${data}Label" aria-hidden="true">
             //                     <div class="modal-dialog">
@@ -351,6 +357,43 @@
                 //         }
                 //     }
                 // ],
+=======
+                                <div data-user-id="${data}" class="modal fade" id="vincularEmpleado${data}" data-backdrop="static"
+                                    data-keyboard="false" tabindex="-1" aria-labelledby="vincularEmpleado${data}Label" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="vincularEmpleado${data}Label">Vinculación de Empleados
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</p>
+                                                <select name="n_empleado" id="n_empleado${data}" class="select2">
+                                                    <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`;
+                            empleados.forEach(empleado => {
+                                htmlBotones += `
+                                                            <option value="${empleado.n_empleado != null ? `NEMPLEADO-${empleado.n_empleado}`:`IDEMPLEADO-${empleado.id}`}">${empleado.name}</option>
+                                                        `;
+                            });
+                            htmlBotones += `</select>
+                                                <span class="text-sm n_empleado_error errores text-danger"></span>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary" onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            return htmlBotones;
+                        }
+                    }
+                ],
+>>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']

@@ -33,11 +33,11 @@ class AnswerEvaluationUser extends Component
     public $percentageEvaluationUser;
 
     protected $rules = [
-        'answer' => 'required'
+        'answer' => 'required',
     ];
 
     protected $messages = [
-        'answer.required' => 'La respuesta es obligatoria'
+        'answer.required' => 'La respuesta es obligatoria',
     ];
 
     public function mount($course_id, $evaluacion_id)
@@ -72,11 +72,13 @@ class AnswerEvaluationUser extends Component
             $this->userEvaluationId->quiz_size = $this->count - 1;
             $this->userEvaluationId->completed = true;
             $this->userEvaluationId->save();
+
             return $this->showResults();
         }
         //Update the questions taken array so that we don't repeat same question again in the quiz
         //We feed this array into whereNotIn chain in getNextquestion() function.
         array_push($this->answeredQuestions, $question->id);
+
         return $question;
     }
 
@@ -112,7 +114,6 @@ class AnswerEvaluationUser extends Component
 
     public function showResults()
     {
-
         $this->showResults = true;
         $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct', true)->count();
         $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
@@ -125,8 +126,8 @@ class AnswerEvaluationUser extends Component
         // Push all the question ids to quiz_header table to retreve them while displaying the quiz details
         $this->questionsTaken = UserAnswer::Questions($this->evaluation->id)->get();
         $choicesCorrect = Answer::where('question_id', $this->currentQuestion->id)->where('is_correct', true)->pluck('id')->toArray();
-
         $isChoiceCorrect = in_array($this->answer, $choicesCorrect);
+        // dd($isChoiceCorrect);
         // Insert the current question_id, answer_id and whether it is correnct or wrong to quiz table.
         UserAnswer::create([
             'user_id' => auth()->id(),
@@ -136,7 +137,6 @@ class AnswerEvaluationUser extends Component
             'evaluation_id' => $this->evaluation->id,
             'question_id' => $this->currentQuestion->id,
         ]);
-
 
         // Increment the quiz counter so we terminate the quiz on the number of question user has selected during quiz creation.
         $this->count++;
@@ -164,8 +164,6 @@ class AnswerEvaluationUser extends Component
 
     public function render()
     {
-
-
         return view('livewire.escuela.answer-evaluation-user');
     }
 }

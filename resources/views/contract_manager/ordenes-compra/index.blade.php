@@ -24,7 +24,6 @@
                         <th style="vertical-align: top">Folio</th>
                         <th style="vertical-align: top">Fecha De Solicitud</th>
                         <th style="vertical-align: top">Referencia</th>
-                        <th style="vertical-align: top">Producto</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
                         <th style="vertical-align: top">Proyecto</th>
@@ -172,15 +171,17 @@
                         name: 'referencia'
                     },
                     {
-                        data: 'productos_requisiciones',
+                        data: 'proveedor_catalogo',
                         render: function(data, type, row) {
-                        return data[0].producto.descripcion;
+                        // Verifica si 'data' es null
+                        if (data === null) {
+                            return 'Indistinto'; // Puedes personalizar el mensaje
+                        } else {
+                            return data; // Valor no es null
                         }
 
-                    },
-                    {
-                        data: 'proveedor_catalogo',
-                        name: 'proveedor_catalogo'
+                        }
+
                     },
                     {
                         data: 'estado',

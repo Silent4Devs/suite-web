@@ -72,10 +72,10 @@ class PuestosController extends Controller
             return $table->make(true);
         }
 
-        $teams = Team::get();
+        //$teams = Team::get();
         $areas = Area::getAll();
 
-        return view('admin.puestos.index', compact('teams', 'areas'));
+        return view('admin.puestos.index', compact('areas'));
     }
 
     public function create()

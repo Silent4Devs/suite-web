@@ -78,6 +78,7 @@ class DatabaseSeeder extends Seeder
                 // PermisosTimesheetAdministrador::class,
 
                 //Katbol
+<<<<<<< HEAD
                 // CentroCostosTableSeeder::class,
                 // CompradoresTableSeeder::class,
                 // ProductosTableSeeder::class,
@@ -93,15 +94,46 @@ class DatabaseSeeder extends Seeder
                 // PermisosKatbol::class,
 
                 // //kaans
+=======
+                // AreasSeeder::class,
+                // ProveedoresTableSeeder::class,
+                // ContratosTableSeeder::class,
+                // CedulaCumplimientoTableSeeder::class,
+                // CierreContratosTableSeeder::class,
+                // ConveniosModificatoriosTableSeeder::class,
+                // ConveniosModificatoriosFilesTableSeeder::class,
+                // FacturacionTableSeeder::class,
+                // EntregasMensualesTableSeeder::class,
+                // FacturasFilesTableSeeder::class,
+                // NivelesServicioTableSeeder::class,
+                // CentroCostosTableSeeder::class,
+                // ProductosTableSeeder::class,
+                // SucursalesTableSeeder::class,
+                // MonedasTableSeeder::class,
+                // ProveedorOCSTableSeeder::class,
+                // CompradoresSeeder::class,
+                RequsicionesTableSeeder::class,
+                ProductosRequisicionTableSeeder::class,
+                ProveedoresRequisicionesCatalogosTableSeeder::class,
+                ProveedorIndistintosTableSeeder::class,
+                ProveedorRequisicionsTableSeeder::class,
+                // PermisosKatbol::class,
+                // DashboardGestionContratosSeeder::class,
+
+                //kaans
+>>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
                 // PermisosEscuelaInstructorSeeder::class,
                 // PlatformSeeder::class,
                 // PermisosEscuelaAdminSeeder::class,
                 // PermisosEscuelaEstudianteSeeder::class
+<<<<<<< HEAD
 
                 //Clausulas y Clasificacion de auditorias
                 ClasificacionesAuditoriasSeeder::class,
                 ClausulasAuditoriasSeeder::class,
                 PermisosCatalogosSG::class,
+=======
+>>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
             ]
         );
     }

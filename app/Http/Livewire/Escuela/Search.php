@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire\Escuela;
 
-use Livewire\Component;
-
 use App\Models\Escuela\Course;
+use Livewire\Component;
 
 class Search extends Component
 {
@@ -15,10 +14,8 @@ class Search extends Component
         return view('livewire.escuela.search');
     }
 
-
     public function getResultsProperty()
     {
-
         // Concatenar los % le indico que puede haber texto antes o despues
         return Course::where('title', 'LIKE', '%' . $this->search . '%')->where('status', 3)->take(8)->get();
     }

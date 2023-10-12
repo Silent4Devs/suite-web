@@ -90,11 +90,10 @@
                             </td>
                             <td>
                                 {{ trans('global.actions') }}
-                                <div class="btn">
+                                <div class="btn" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                 </div>
-                                <div class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
-                                    onclick="viewAudit({{ $aud->id }})">
+                                <div class="btn" onclick="viewAudit({{ $aud->id }})">
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </div>
 
@@ -155,6 +154,14 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+
+
+    <hr>
+    <div class="">
+        <div class="card card-body">
+
         </div>
     </div>
 @endsection

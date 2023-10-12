@@ -6,23 +6,28 @@ use App\Models\Escuela\Course;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\Platform;
 use App\Models\Escuela\Section;
-use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
 
 class CoursesLesson extends Component
 {
     use LivewireAlert;
     use WithFileUploads;
 
-    public $section, $lesson, $platforms, $name, $platform_id = 1, $url, $description, $file;
+    public $section;
+    public $lesson;
+    public $platforms;
+    public $name;
+    public $platform_id = 1;
+    public $url;
+    public $description;
+    public $file;
 
     protected $rules = [
         'lesson.name' => 'required',
         'lesson.platform_id' => 'required',
-        'lesson.url' => ['required', 'regex:%^ (?:https?://)? (?:www\.)? (?: youtu\.be/ | youtube\.com (?: /embed/ | /v/ | /watch\?v= ) ) ([\w-]{10,12}) $%x'],
+        'lesson.url' => ['regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
     ];
 
     public function mount(Section $section)
@@ -42,7 +47,7 @@ class CoursesLesson extends Component
         $rules = [
             'name' => 'required',
             'platform_id' => 'required',
-            'url' => ['required', 'regex:%^ (?:https?://)? (?:www\.)? (?: youtu\.be/ | youtube\.com (?: /embed/ | /v/ | /watch\?v= ) ) ([\w-]{10,12}) $%x'],
+            'url' => ['required', 'regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
             'file' => 'required',
         ];
 
@@ -61,7 +66,7 @@ class CoursesLesson extends Component
             'description' => $this->description,
         ]);
         $resource->resource()->create([
-            'url' => $urlresorce
+            'url' => $urlresorce,
         ]);
         $this->reset('name', 'platform_id', 'url', 'description', 'file');
 

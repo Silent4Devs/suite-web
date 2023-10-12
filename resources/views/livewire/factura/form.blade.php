@@ -16,7 +16,7 @@
                 <div class="distancia form-group col-md-6">
                     <label for="no_contrato" class="txt-tamaño">No.
                         factura<font class="asterisco">*</font></label>
-                    <input type="text" maxlength="255" wire:model.defer="no_factura" class="form-control" required>
+                    <input type="text" maxlength="50" wire:model.defer="no_factura" class="form-control" required>
                     @error('no_factura')
                         <span class="red-text">{{ $message }}</span>
                     @enderror
@@ -77,7 +77,7 @@
         </div>
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
             {{-- <div class="col s12 m4">
-                        <div wire:ignore class="input-field col s12">
+                        <div  class="input-field col s12">
                             <small>
                                 <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                         class="fas fa-file-invoice iconos-crear"></i>Estatus<font class="asterisco">*
@@ -96,12 +96,11 @@
                         @enderror
                     </div> --}}
             <!-- Estatus Field -->
-            <div class="input-field form-group col-md-6">
+            <div class="input-field form-group col-md-6" wire:ignore>
                 <div class="custom-file">
                     {{-- <div class="btn"> --}}
                     <span>PDF</span>
-                    <input class="form-control" type="file" wire:model.defer="pdf"
-                        accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                    <input class="form-control" type="file" wire:model.defer="pdf" accept=".pdf"
                         id="upload{{ $iteration }}" readonly>
                     {{-- </div> --}}
                     {{-- <div class="file-path-wrapper">
@@ -124,11 +123,11 @@
                 </div>
             </div>
 
-            <div class="input-field form-group col-md-6">
+            <div class="input-field form-group col-md-6" wire:ignore>
                 <div class="custom-file">
                     {{-- <div class="btn"> --}}
                     <span>XML</span>
-                    <input type="file" class="form-control" wire:model.defer="xml" accept="text/xml"
+                    <input type="file" class="form-control" wire:model.defer="xml" accept=".xml, text"
                         id="upload{{ $iteration1 }}" readonly>
                     {{-- </div> --}}
                     {{-- <div class="file-path-wrapper">
@@ -151,7 +150,7 @@
             </div>
         </div>
         {{-- <div class="row">
-                    <div wire:ignore class="input-field col s12 m4">
+                    <div  class="input-field col s12 m4">
                         <small>
                             <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                     class="fas fa-thumbs-down iconos-crear"></i>
@@ -191,7 +190,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div wire:ignore class="input-field col s12 m6">
+                    <div  class="input-field col s12 m6">
                             <small>
                                 <p class="grey-text" style="font-size:17px;font-weight:bold;">
                                     Posee la leyenda de conformidad al final de la factura
@@ -208,7 +207,7 @@
                                 </label>
                             </div>
                     </div>
-                    <div wire:ignore class="input-field col s12 m6">
+                    <div  class="input-field col s12 m6">
                             <small>
                                 <p class="grey-text" style="font-size:17px;font-weight:bold;">
                                     Posee la firma autógrafa del Supervisor y/o Administrador del contrato
