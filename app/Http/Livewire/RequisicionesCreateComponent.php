@@ -13,6 +13,7 @@ use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -293,7 +294,11 @@ class RequisicionesCreateComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $supervisor = User::find($this->nueva_requisicion->id_user)->empleado->supervisor->email;
+            $user = User::where('id', $this->nueva_requisicion->id_user)->first();
+
+            $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+
+            $supervisor = $empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 
