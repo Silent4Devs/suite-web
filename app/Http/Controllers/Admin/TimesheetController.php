@@ -578,7 +578,7 @@ class TimesheetController extends Controller
                 'identificador.unique' => 'El ID ya esta en uso',
             ],
         );
-        if ($request->fecha_inicio && $request->fecha_fin) {
+        if ($request->fecha_fin) {
             $request->validate(
                 [
                     'fecha_inicio' => 'before:fecha_fin',
