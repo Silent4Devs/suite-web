@@ -14,7 +14,7 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
     <div class="mt-5 card">
-        <form style="position: relative;  left:700px;" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
+        <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
             @method('GET')
             <button class="btn btn-primary" type="submit" title="Aprobadores" >
                 Aprobadores
