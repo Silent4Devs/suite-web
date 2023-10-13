@@ -6,14 +6,15 @@
             @foreach ($cuentas as $cuenta)
                 <div class="col-3 mt-4">
                     <div class="card card-body justify-content-center"
-                        style="background-color: #a8e0fa; min-height:100px;">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-8 ">
+                        style="background-color: #b9f3fd; min-height:100px;">
+                        <div class="row align-items-center">
+                            <div class="col-8">
                                 <h6>{{ $cuenta->nombre }}</h6>
                             </div>
-                            <div class="col-4 ">
+                            <div class="col-4 d-flex align-items-center">
                                 <h6 class="d-inline mr-2">{{ $cuenta->count }}
-                                </h6> <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
+                                </h6>
+                                <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
                             </div>
                         </div>
                     </div>
@@ -69,7 +70,7 @@
                             @if ($view == 'create')
                                 <div class="row">
                                     <div class="form-group col-sm-12">
-                                        <label class="form-label select-label">Clausulas</label>
+                                        <label class="form-label select-label">Cláusulas</label>
                                         <select name="c_id" id="c_id"
                                             class="form-control select {{ $errors->has('c_id') ? 'is-invalid' : '' }}"
                                             wire:model.defer="c_id" required>
@@ -83,7 +84,7 @@
                             @elseif ($view == 'edit')
                                 <div class="row">
                                     <div class="form-group col-sm-12">
-                                        <label class="form-label select-label">Clausulas</label>
+                                        <label class="form-label select-label">Cláusulas</label>
                                         <select name="c_edit_id" id="c_edit_id"
                                             class="form-control select {{ $errors->has('c_edit_id') ? 'is-invalid' : '' }}"
                                             wire:model.defer="c_edit_id" required>
@@ -129,9 +130,9 @@
                             <h5>Subtema</h5>
 
                             <div class="row">
-                                <div class="form-group col-sm-12">
+                                <div class="form-group col-sm-4">
                                     <label class="required" for="no_tipo">
-                                        No. de Tipo</label>
+                                        No.</label>
                                     <input type="number" min="1" max="100000"
                                         class="form-control {{ $errors->has('no_tipo') ? 'is-invalid' : '' }}"
                                         name="no_tipo" id="no_tipo" wire:model.defer="no_tipo"></input>
@@ -141,12 +142,10 @@
                                         </div>
                                     @endif
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="form-group col-sm-12">
+                                <div class="form-group col-sm-8">
                                     <label class="required" for="titulo">
-                                        Titulo</label>
+                                        Título</label>
                                     <input type="text"
                                         class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}"
                                         name="titulo" id="titulo" wire:model.defer="titulo" />
@@ -201,7 +200,7 @@
                                 <div class="form-group col-sm-6 col-md-12 col-lg-12">
                                     <label for="area">Área</label>
                                     <input type="text" class="form-control"
-                                        value="{{ auth()->user()->empleado->area->area }}" disabled>
+                                        value="{{ $this->reporte->empleado->area->area }}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -217,16 +216,18 @@
         </div>
     </div>
     <div class="card card-body">
-        <div class="form-group col-md-12">
-            <h5 style="color: orange">Hallazgos {{ $this->reporte->empleado->name }}</h5>
+        <div class="form-group col-md-12 row">
+            <h5>Hallazgos</h5>&nbsp;&nbsp;
+            <h5 style="color: orange"> {{ $this->reporte->empleado->name }}</h5>
+            <hr style="width: 98%; margin:auto;">
         </div>
-        <div class="form-group col-md-12">
 
+        <div class="form-group col-md-12">
             <div class="table-responsive">
                 <table class="table">
                     <thead class="head-light">
                         <tr>
-                            <th>Clausula</th>
+                            <th>Cláusula</th>
                             <th scope="col-6">Subtema</th>
                             <th scope="col-6"></th>
                             {{-- <th scope="col-6">Requisito</th>
@@ -236,24 +237,24 @@
                     <tbody>
                         @foreach ($datas as $data)
                             <tr>
-                                <td style="min-width:130px;">{{ $data->clausula->nombre_clausulas }}</td>
-                                <td style="min-width:100px;">
+                                <td style="min-width:120px;">{{ $data->clausula->nombre_clausulas }}</td>
+                                <td style="min-width:600px;">
                                     <div class="row">
-                                        <div class="form-group col-sm-6">
+                                        <div class="form-group col-sm-3">
                                             <label for="no_tipo">
-                                                No. de Tipo</label><br>
-                                            <input id="no_tipo" type="number" value="{{ $data->no_tipo }}"
+                                                No.</label><br>
+                                            <input type="number" class="form-control" value="{{ $data->no_tipo }}"
                                                 disabled>
                                         </div>
-                                        <div class="form-group col-sm-6">
+                                        <div class="form-group col-sm-9">
                                             <label for="titulo">
-                                                Titulo</label><br>
-                                            <input id="titulo" type="text" value="{{ $data->titulo }}"
+                                                Título</label><br>
+                                            <input type="text" class="form-control" value="{{ $data->titulo }}"
                                                 disabled>
                                         </div>
                                     </div>
                                 </td>
-                                <td style="min-width:40">
+                                <td style="min-width:40; text-align:right">
                                     <div class="dropdown">
                                         <button class="btn btn-outline-dark dropdown-toggle" type="button"
                                             data-toggle="dropdown" aria-expanded="false">
@@ -310,21 +311,33 @@
         </div>
     </div>
 
-    <div class="card card-body" wire:ignore>
-        <div class="row">
-            <div class="form-group col-sm-12">
-                <label class="required" for="comentarios">
-                    Comentarios</label>
-                <textarea class="form-control {{ $errors->has('comentarios') ? 'is-invalid' : '' }}" name="comentarios"
-                    id="comentarios" wire:model.defer="comentarios"></textarea>
-                @if ($errors->has('comentarios'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('comentarios') }}
-                    </div>
-                @endif
+    @if ($this->reporte->estado == 'enviado')
+        <div class="card card-body" wire:ignore>
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <label class="required" for="comentarios">
+                        Comentarios</label>
+                    <textarea class="form-control {{ $errors->has('comentarios') ? 'is-invalid' : '' }}" name="comentarios"
+                        id="comentarios" wire:model.defer="comentarios"></textarea>
+                    @if ($errors->has('comentarios'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('comentarios') }}
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
-    </div>
+    @elseif ($this->reporte->estado == 'aprobado' || $this->reporte->estado == 'rechazado')
+        <div class="card card-body" wire:ignore>
+            <div class="row col-md-12"></div>
+            <div>
+                <h5>Comentarios:</h5>
+            </div>
+            <div>
+                <p>{{ $this->reporte->comentarios }}</p>
+            </div>
+        </div>
+    @endif
 
     <div class="card card-body">
         <div class="row">
@@ -344,8 +357,11 @@
                     <div class="row" style="justify-content: center; display: flex;">
                         <h3>Firma de Auditor Lider</h3>
                     </div>
+                    <div class="row">
+                        <span style="height: 36px;"></span>
+                    </div>
                     <div class="row" style="justify-content: center; display: flex;">
-                        <img width="450" height="250"
+                        <img width="450" height="250" style="border: 1px solid black;"
                             src="{{ asset('storage/auditorias-internas/auditoria/' . $this->reporte->id_auditoria . '/reporte/' . $this->reporte->id . '/' . $this->reporte->lider->name . $this->reporte->firma_lider) }}">
                     </div>
                 @endif
@@ -354,8 +370,12 @@
                 <div class="row" style="justify-content: center; display: flex;">
                     <h3>Firma de Auditor Interno</h3>
                 </div>
+                <div class="row">
+                    <span style="height: 36px;"></span>
+                </div>
                 <div class="row" style="justify-content: center; display: flex;">
-                    <img width="450" height="250"
+                    <img width="450" height="250" style="border: 1px solid black;"
+                        alt="No se ha Firmado el reporte"
                         src="{{ asset('storage/auditorias-internas/auditoria/' . $this->reporte->id_auditoria . '/reporte/' . $this->reporte->id . '/' . $this->reporte->empleado->name . $this->reporte->firma_empleado) }}">
                 </div>
             </div>

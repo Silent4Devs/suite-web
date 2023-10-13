@@ -318,7 +318,7 @@ class AuditoriaInternaController extends Controller
             Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $nombre_lider, 0755, true);
         }
 
-        $filename = '/audit' . $reporte->id_auditoria . 'firmaempleado' . $nombre_lider . '.png';
+        $filename = '/audit' . $reporte->id_auditoria . 'firmalider' . $nombre_lider . '.png';
 
         Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . "/reporte" . '/' . $reporte->id . '/' . $nombre_lider . $filename, $image);
 
