@@ -19,9 +19,7 @@
             <button class="btn btn-primary" type="submit" title="Aprobadores" >
                 Aprobadores
             </button>
-            <button class="btn btn-primary" type="submit" title="Archivados" >
-                <a style="color: white;" href="{{ route('contract_manager.requisiciones.archivo' )}}">Archivados</a>
-            </button>
+            <a style="color: white;" class="btn btn-primary" href="{{ route('contract_manager.requisiciones.archivo' )}}">Archivados</a>
         </form>
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
