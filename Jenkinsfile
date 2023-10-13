@@ -8,13 +8,6 @@ pipeline {
             }
         }
 
-
-        stage('prueba saul') {
-             steps {
-                sh 'ssh desarrollo@192.168.9.78 "cd  var/contenedor/tabantaj && git pull"'
-             }
-        }
-
         stage('Build') {
             steps {
                 git 'https://gitlab.com/silent4business/tabantaj.git'
