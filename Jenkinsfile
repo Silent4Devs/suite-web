@@ -11,7 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 // git 'https://gitlab.com/silent4business/tabantaj.git'
-                sh 'docker-compose up --build -d'
+                // sh 'docker-compose up --build -d'
                 sh 'docker-compose exec php composer install'
                 sh 'docker-compose exec php php artisan key:generate'
                 sh 'docker-compose exec php php artisan migrate'
