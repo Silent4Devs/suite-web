@@ -306,21 +306,18 @@ class OrdenCompraController extends Controller
 
     public function pdf($id)
     {
-        try {
-            $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-            $organizacion = Organizacion::select('empresa', 'logotipo')->first();
 
-            $f = new NumberFormatter('es', NumberFormatter::SPELLOUT);
-            $numero = $requisiciones->total;
-            $letras = $f->format($numero);
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+        $organizacion = Organizacion::select('empresa', 'logotipo')->first();
 
-            $proveedores = KatbolProveedorOC::where('id', $requisiciones->proveedor_id)->first();
-            $pdf = PDF::loadView('orden_compra_pdf', compact('requisiciones', 'organizacion', 'proveedores', 'letras'));
-            $pdf->setPaper('A4', 'portrait');
+        $f = new NumberFormatter('es', NumberFormatter::SPELLOUT);
+        $numero = $requisiciones->total;
+        $letras = $f->format($numero);
 
-            return $pdf->download('orden_compra.pdf');
-        } catch (\Exception $e) {
-            return view('contract_manager.ordenes-compra.error');
-        }
+        $proveedores = KatbolProveedorOC::where('id', $requisiciones->proveedor_id)->first();
+        $pdf = PDF::loadView('orden_compra_pdf', compact('requisiciones', 'organizacion', 'proveedores', 'letras'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('orden_compra.pdf');
     }
 }
