@@ -1,22 +1,36 @@
-<div class="tab-pane fade" id="auditorias">
+<div>
     <div class="Tarjetap2">Selecciona el informe que desees consultar
-        <select class="form-control filtro" style="margin-left: 450px;margin-bottom: 24px;">
-            @foreach($nombreaudits as $nombreaudit)
-                <option>{{$nombreaudit}}</option>
-            @endforeach
-        </select>
+
+        @if(!empty($nombreaudits))
+            <select class="form-control filtro" style="margin-left: 450px; margin-bottom: 24px;">
+                @foreach($nombreaudits as $nombreaudit)
+                    <option>{{$nombreaudit}}</option>
+                @endforeach
+            </select>
+        @else
+            <p class="form-control filtro" style="margin-left: 350px; margin-bottom: 24px; width:280px;">No se encontraron informes disponibles.</p>
+        @endif
+
     </div>
+
     <div class="row" style="margin: 0px 0px 0px 54px;">
-       @foreach ($totalclasificaciones as $totalclasificacion )
-        <div class="d-flex inline m-3">
-            <div class="datosconformidades">
-                <h6 class="datos-letra-tarjeta-A">{{$totalclasificacion->total}}</h6>
-            </div>
-            <div class="botones2">
-                <h3 class="letra-tarjeta2">{{$totalclasificacion->nombre_clasificaciones}}</h3>
-            </div>
-        </div>
-       @endforeach
+        @if(!empty($totalclasificaciones))
+            @foreach ($totalclasificaciones as $totalclasificacion)
+                <div class="d-flex inline m-3">
+                    <div class="datosconformidades">
+                        <h6 class="datos-letra-tarjeta-A">{{$totalclasificacion->total}}</h6>
+                    </div>
+                    <div class="botones2">
+                        <h3 class="letra-tarjeta2">{{$totalclasificacion->nombre_clasificaciones}}</h3>
+                    </div>
+                </div>
+            @endforeach
+        @else
+
+
+
+        @endif
+    </div>
         <div class="row" style="margin: 0px 0px 0px 8px;">
             <div class="d-flex inline m-3">
             </div>
@@ -29,10 +43,14 @@
                     <h1 class="titulo-graficas">Auditorias</h1>
                     <hr style="margin: 0px 32px 0px 32px;">
                     <!-- Reemplaza el select existente con la lista desplegable personalizada de Select2 -->
-                    <select id="filtroClasificacion" class="form-control filtro" style="margin-left: 780px;">
-                        @foreach($clasificaciones as $clasificacion)
-                            <option>{{$clasificacion}}</option>
-                        @endforeach
+                    <select id="filtroClasificacion" class="form-control filtro" style="margin-left: 750px;">
+                        @if(!empty($clasificaciones))
+                            @foreach($clasificaciones as $clasificacion)
+                                <option>{{$clasificacion}}</option>
+                            @endforeach
+                        @else
+                        <p>No se encontraron clasificaciones disponibles.</p>
+                        @endif
                     </select>
                     <div id="A"></div>
                 </div>
@@ -144,7 +162,7 @@
     </div>
 </div>
 
-@section('scripts')
+{{-- @section('scripts')
 @parent
 <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
 <script src="https://uicdn.toast.com/tui.time-picker/v2.0.3/tui-time-picker.min.js"></script>
@@ -155,9 +173,9 @@
 <script src="{{ asset('../js/calendar_tui/calendar_auditoria.js') }}"></script>
 <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
 <link href="ruta-a-select2.min.css" rel="stylesheet">
-<script src="ruta-a-select2.min.js"></script>
+<script src="ruta-a-select2.min.js"></script> --}}
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 
     ScheduleList = [
                @foreach ($audits as $audit)
@@ -207,4 +225,4 @@
             });
 
             }
-        </script>
+</script> --}}

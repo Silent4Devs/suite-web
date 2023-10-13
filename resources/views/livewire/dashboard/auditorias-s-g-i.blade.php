@@ -110,7 +110,7 @@
         /* Layout Properties */
         top: 140px;
         left: 286px;
-        width: 1115px;
+        width: 985px;
         height: 57px;
         display: flex;
         align-items: center;
@@ -126,7 +126,7 @@
     .Tarjetap2 {
         top: 287px;
         left: 285px;
-        width: 1112px;
+        width: 985px;
         height: 57px;
         display: flex;
         align-items: center;
@@ -266,9 +266,9 @@
         /* Layout Properties */
         top: 474px;
         left: 285px;
-        width: 1090px;
+        width: 990px;
         height: 524px;
-        margin: 20px 15px 50px 15px;
+        margin: 0px 15px 50px 0px;
         /* UI Properties */
         background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
         background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -280,9 +280,9 @@
         /* Layout Properties */
         top: 474px;
         left: 285px;
-        width: 1090px;
+        width: 990px;
         height: 900px;
-        margin: 50px 15px 50px 15px;
+        margin: 25px 15px 50px 0px;
         /* UI Properties */
         background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
         background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -306,7 +306,7 @@
 
     .subtitulo {
         /* Layout Properties */
-        margin: 6px 12px 20px 16px;
+        margin: 6px 12px 20px 20px;
         top: 303px;
         left: 286px;
         height: 22px;
@@ -322,12 +322,11 @@
     }
 
     .tarjetas {
-        margin: 6px 0px 0px 0px;
+        margin: 6px 15px 0px 0px;
         top: 344px;
         left: 287px;
-        width: 230px;
+        width: 235px;
         height: 80px;
-        margin-left: 1px;
         opacity: 1;
         border-radius: 8px
     }
@@ -359,7 +358,7 @@
     .display-grafica {
         top: 438px;
         left: 287px;
-        width: 520px;
+        width: 485px;
         height: 477px;
         margin: 20px 0px 40px 0px;
         background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
@@ -452,24 +451,26 @@
 {{-- HTML DASHBOARD --}}
 <div class="container">
     <h1 class="titulo-dashboard">Dashboard</h1>
-    <div class="Tarjetap">Selecciona la Norma que desees monitorear
-
-        <div class="">
-            {{-- <select class="form-control filtro" style="margin-left: 570px;margin-bottom: 24px;">
-                <option>ISO 27001</option>
-            </select> --}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="Tarjetap">
+                Selecciona la Norma que desees monitorear
+                <select class="form-control filtro" style="margin-left: 420px; margin-bottom: 24px;">
+                    <option>ISO 27001</option>
+                </select>
+            </div>
         </div>
     </div>
 </div>
 <div>
-    <div class="row" style="margin-left: 6px;">
+    <div class="row" style="margin-left: 0px;">
         {{-- MI PLAN ISO --}}
         <div class="col-md-3">
             <ul class="nav nav-tabs d-flex inline">
                 <li class="active ojo-botones-o">
                     <i class="fa-regular fa-eye fa-xl" style="margin-top: 30px; color:#FFFFFF;"></i>
                 </li>
-                <a class="botones" href="#mi-plan-iso" data-toggle="tab" data-target="#mi-plan-iso"> <!-- Agrega data-target -->
+                <a class="botones" href="#mi-plan-iso" data-toggle="tab" data-target="#mi-plan-iso" wire:click='updateData(1)'> <!-- Agrega data-target -->
                     <h3 class="letra-tarjeta">Mi plan ISO</h3>
                 </a>
             </ul>
@@ -480,7 +481,7 @@
                 <li class="ojo-botones-o">
                     <i class="fa-regular fa-eye fa-xl" style="margin-top: 30px; color:#FFFFFF;"></i>
                 </li>
-                <a class="botones" href="#riesgos" data-toggle="tab">
+                <a class="botones" href="#riesgos" data-toggle="tab" wire:click='updateData(2)'>
                     <h3 class="letra-tarjeta">Riesgos</h3>
                 </a>
             </ul>
@@ -491,7 +492,7 @@
                 <li class="ojo-botones-o">
                     <i class="fa-regular fa-eye fa-xl" style="margin-top: 30px; color:#FFFFFF;"></i>
                 </li>
-                <a class="botones" href="#auditorias" data-toggle="tab">
+                <a class="botones" href="#auditorias" data-toggle="tab" wire:click='updateData(3)'>
                     <h3 class="letra-tarjeta">Auditorias</h3>
                 </a>
             </ul>
@@ -502,146 +503,44 @@
                 <li class="ojo-botones-o">
                     <i class="fa-regular fa-eye fa-xl" style="margin-top: 30px; color:#FFFFFF;"></i>
                 </li>
-                <a class="botones" href="#mejorasyacciones" data-toggle="tab">
+                <a class="botones" href="#mejorasyacciones" data-toggle="tab" wire:click='updateData(4)'>
                     <h3 class="letra-tarjeta">Mejoras y Acciones</h3>
                 </a>
             </ul>
         </div>
     </div>
 </div>
-<div class="tab-content">
-    {{-- MI PLAN ISO (TAB CONTENT) --}}
-    <div class="tab-pane fade text-center" id="mi-plan-iso">
-        <img src="{{asset('img/escuela/home/technical-issues-1.jpg')}}" alt="jpg" style="width:50%; max-width:400px;">
-        <p></p>
-    </div>
-    {{-- RIESGOS (TAB CONTENT) --}}
-    <div class="tab-pane fade text-center" id="riesgos">
-        <img src="{{asset('img/escuela/home/technical-issues-2.jpg')}}" alt="jpg" style="width:50%; max-width:1000px;">
-        <p></p>
-    </div>
-   {{-- AUDITORIAS (TAB CONTENT) --}}
+@switch($tabOption)
+    @case(1)
+    @include('admin.AuditoriasSGI.miplaniso')
 
-    {{-- MEJORAS Y ACCIONES (TAB CONTENT) --}}
-    <div class="tab-pane fade" id="mejorasyacciones">
-        <p></p>
-        <h1 class="subtitulo">Mejoras</h1>
-        <div>
-            <div class="row" style="margin-left:3px">
-                <div class="d-flex inline col-md-3">
-                    <div class="tarjetas" style="background: #28C2A3;">
-                        <h3 class="letra-tarjeta-MYA" >En curso</h3>
-                        <h6 class="datos-letra-tarjeta-MYA">{{ str_pad($encursoCount, 2, '0', STR_PAD_LEFT) }}</h6>
-                    </div>
-                </div>
-                <div class="d-flex inline col-md-3">
-                    <div class="tarjetas" style="background: #FF9B65;">
-                        <h3 class="letra-tarjeta-MYA" >En espera</h3>
-                        <h6 class="datos-letra-tarjeta-MYA">{{ str_pad($enesperaCount, 2, '0', STR_PAD_LEFT) }}</h6>
-                    </div>
-                </div>
-                <div class="d-flex inline col-md-3">
-                    <div class="tarjetas" style="background: #6C6C6C;">
-                        <h3 class="letra-tarjeta-MYA" >Cerrados</h3>
-                        <h6 class="datos-letra-tarjeta-MYA">{{ str_pad($cerradoCount, 2, '0', STR_PAD_LEFT) }}</h6>
-                    </div>
-                </div>
-                <div class="d-flex inline col-md-3">
-                    <div class="tarjetas" style="background: #E66060;">
-                        <h3 class="letra-tarjeta-MYA" >Sin atender</h3>
-                        <h6 class="datos-letra-tarjeta-MYA">{{ str_pad($sinatenderCount, 2, '0', STR_PAD_LEFT) }}</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="display-grafica" style="margin-left: 6px;">
-                            <h3 class="titulo-graficas">Total de las mejoras</h3>
-                            <hr style="margin: 0px 32px 0px 32px;">
-                            <div id="TM"></div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-left:3px">
-                        <div class="col-md-6">
-                            <div class="display-grafica">
-                                <h3 class="titulo-graficas">Porcentaje de mejora</h3>
-                                <hr style="margin: 0px 32px 0px 32px;">
-                                <div id="PM"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h1 class="subtitulo">Acciones Correctivas</h1>
-            <div>
-                <div class="row">
-                    <div class="d-flex inline col-md-3">
-                        <div class="tarjetas" style="background: #28C2A3;">
-                            <h3 class="letra-tarjeta-MYA">En curso</h3>
-                            <h6 class="datos-letra-tarjeta-MYA">{{ str_pad($encursoCountAC, 2, '0', STR_PAD_LEFT) }}</h6>
-                        </div>
-                    </div>
-                    <div class="d-flex inline col-md-3">
-                        <div class="tarjetas" style="background: #FF9B65;">
-                            <h3 class="letra-tarjeta-MYA" >En espera </h3>
-                            <h6 class="datos-letra-tarjeta-MYA" >{{ str_pad($enesperaCountAC, 2, '0', STR_PAD_LEFT) }}</h6>
-                        </div>
-                    </div>
-                    <div class="d-flex inline col-md-3">
-                        <div class="tarjetas" style="background: #6C6C6C;">
-                            <h3 class="letra-tarjeta-MYA" >Cerrados</h3>
-                            <h6 class="datos-letra-tarjeta-MYA">{{ str_pad($cerradoCountAC, 2, '0', STR_PAD_LEFT) }}</h6>
-                        </div>
-                    </div>
-                    <div class="d-flex inline col-md-3">
-                        <div class="tarjetas" style="background: #E66060;">
-                            <h3 class="letra-tarjeta-MYA" >Sin atender </h3>
-                            <h6 class="datos-letra-tarjeta-MYA">{{ str_pad($sinatenderCountAC, 2, '0', STR_PAD_LEFT) }}</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="display-grafica">
-                                <h3 class="titulo-graficas">Total de las Acciones Correctivas</h3>
-                                <hr style="margin: 0px 32px 0px 32px;">
-                                <div id="TAC"></div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-left:3px">
-                            <div class="d-flex inline col-md-6">
-                                <div class="display-grafica">
-                                    <h3 class="titulo-graficas">Porcentaje de Acciones Correctivas</h3>
-                                    <hr style="margin: 0px 32px 0px 32px;">
-                                    <div id="PAC"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+        @break
+    @case(2)
+    @include('admin.AuditoriasSGI.riesgos')
 
-        @section('scripts')
+        @break
+    @case(3
+    @dd($clashallazgosaudit);
+    @include('admin.AuditoriasSGI.auditorias')
+
+        @break
+    @case(4)
+    @include('admin.AuditoriasSGI.mejorasyacciones')
+
+        @break
+
+    @default
+    @include('admin.AuditoriasSGI.miplaniso')
+
+@endswitch
+
+
+
+    @section('scripts')
         @parent
-        <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
-        <script src="https://uicdn.toast.com/tui.time-picker/v2.0.3/tui-time-picker.min.js"></script>
-        <script src="https://uicdn.toast.com/tui.date-picker/v4.0.3/tui-date-picker.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
         <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" charset="utf-8"></script>
-        <script src="{{ asset('../js/calendar_tui/tui-calendar.js') }}"></script>
-        <script src="{{ asset('../js/calendar_tui/calendar_auditoria.js') }}"></script>
-        <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
-        <!-- Agrega la referencia a la librería Select2 CSS y JS -->
-        <link href="ruta-a-select2.min.css" rel="stylesheet">
-        <script src="ruta-a-select2.min.js"></script>
 
+        <!-- Agrega la referencia a la librería Select2 CSS y JS -->
 
         <script>
             $(document).ready(function() {
@@ -770,7 +669,7 @@
         }];
             let layout = {
                 height: 400,
-                width: 520,
+                width: 480,
                 bargap: 0.05, // Ajusta este valor para controlar el espacio entre las barras
                 xaxis: {
                     showgrid: false // Desactiva las líneas de la cuadrícula vertical
@@ -803,7 +702,7 @@
 
             let layoutss = {
                 height: 400,
-                width: 500,
+                width: 470,
             };
 
             Plotly.newPlot('PM', datass, layoutss);
@@ -829,7 +728,7 @@
 
             let layoutsss = {
                 height: 400,
-                width: 520,
+                width: 480,
                 bargap: 0.05, // Ajusta este valor para controlar el espacio entre las barras
                 xaxis: {
                     showgrid: false // Desactiva las líneas de la cuadrícula vertical
@@ -862,7 +761,7 @@
 
             let layouts = {
                 height: 400,
-                width: 500
+                width: 470
                 // width: 480px;
                 // height: 477px;
             };
@@ -870,57 +769,5 @@
             Plotly.newPlot('PAC', datas, layouts);
         </script>
 
-        <script type="text/javascript">
-
-ScheduleList = [
-           @foreach ($audits as $audit)
-            {
-                id: 'revisiones{{ $audit->id }}',
-                calendarId: '12',
-                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revisión de entregables: {{ $audit->nombre }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::parse($audit->fechainicio)->format('Y-m-d') }}',
-                end: '{{ \Carbon\Carbon::parse($audit->fechafin)->format('Y-m-d') }}',
-                isReadOnly: true,
-            },
-           @endforeach
-        ];
-    </script>
-
-    <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-
-
-
-            }, 5000);
-        })
-    </script>
-
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            $(".tui-full-calendar-weekday-schedule-title").attr("title", "");
-        });
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        function dato(){
-            var select = document.getElementById('filtroAudit');
-            var valorSeleccionado = select.value;
-            console.log(valorSeleccionado);
-            axios.post('obtenerauditoria', { valorSeleccionado })
-            .then(function (response) {
-            console.log(response.data.message); // Mensaje de respuesta del servidor
-        })
-        .catch(function (error) {
-            console.error('Error:', error);
-        });
-
-        }
-    </script>
-
-        @endsection
+    @endsection
 </div>
