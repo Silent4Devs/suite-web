@@ -169,6 +169,7 @@
             text-align: center;
             position: relative;
             width: 250px;
+            border-radius: 8px;
         }
 
         .title-card-audit {
@@ -187,11 +188,18 @@
             font-size: 16px;
         }
 
+        .card-audit-report p {
+            margin-bottom: 3px;
+            width: 100px;
+            margin: auto;
+        }
+
         .estatus-audit {
-            padding: 5px;
+            padding: 0px 8px;
             margin-top: 7px;
             border-radius: 100px;
         }
+
 
         .estatus-aceptado {
             color: #039C55;
@@ -209,12 +217,23 @@
         }
     </style>
 
-    <div class="d-flex" style="gap: 30px;">
+    <div class="d-flex mb-4" style="gap: 30px; flex-wrap: wrap;">
         <div class="card-audit-report">
             <span class="title-card-audit">Contexto</span>
-            <button class="btn">
+            <button class="btn" data-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
             </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item">
+                    <i class="fa-solid fa-trash"></i>&nbsp;Ver
+                </a>
+                <a class="dropdown-item">
+                    <i class="fa-solid fa-pencil"></i>&nbsp;Editar
+                </a>
+                <a class="dropdown-item">
+                    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
+                </a>
+            </div>
             <hr>
             <p class="title-info">
                 <strong> Informe auditoria 2023 V3 </strong>
@@ -224,7 +243,7 @@
                     Marco Luna
                 </small>
             </p>
-            <span class="estatus-audit">
+            <span class="estatus-audit estatus-aceptado">
                 <small>Aceptado</small>
             </span>
         </div>
