@@ -598,7 +598,7 @@ class TimesheetController extends Controller
             'fecha_fin' => $request->fecha_fin  == '' ? null : $request->fecha_fin,
             'sede_id' => $request->sede_id,
             'tipo' => $request->tipo,
-            'horas_proyecto' => $request->horas_proyecto,
+            'horas_proyecto' => $request->horas_proyecto == '' ? null : $request->horas_proyecto,
         ]);
 
         foreach ($request->areas_seleccionadas as $key => $area_id) {
