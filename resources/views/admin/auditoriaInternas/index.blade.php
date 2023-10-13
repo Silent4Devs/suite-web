@@ -7,6 +7,60 @@
             font-weight: bolder;
         }
     </style>
+    <style type="text/css">
+        .fondo_delete {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99999999999;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .delete {
+            width: 400px;
+            height: 410px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .icono_delete {
+            margin: 40px 0px;
+            color: red;
+            opacity: 0.7;
+            font-size: 70pt;
+        }
+
+        .eliminar {
+            background-color: red;
+            opacity: 0.7;
+            border: none;
+        }
+
+        .eliminar:hover {
+            background-color: red;
+            opacity: 1;
+        }
+
+        body.c-dark-theme .delete {
+            background: #2a2b36;
+        }
+
+        body.c-dark-theme .btn-outline-secondary {
+            border: 1px solid #ccc;
+            color: #ccc;
+        }
+    </style>
     {{ Breadcrumbs::render('admin.auditoria-internas.index') }}
 
     @can('auditoria_interna_create')
@@ -89,7 +143,6 @@
                                 </a>
                             </td>
                             <td>
-                                {{ trans('global.actions') }}
                                 <div class="btn" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                 </div>
@@ -98,16 +151,77 @@
                                 </div>
 
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item">
-                                        <i class="fa-solid fa-trash"></i>&nbsp;Ver
-                                    </a>
-                                    <a class="dropdown-item">
-                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar
-                                    </a>
-                                    <a class="dropdown-item">
-                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
-                                    </a>
-                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+
+
+
+
+                                        <a class="mr-2 rounded btn btn-sm"
+                                            href="{{ asset('admin/auditoria-internas/' . $aud->id) }}">
+                                            <i class="fas fa-eye" data-toggle="tooltip" data-placement="top"
+                                                title="Ver"></i>
+                                        </a>
+
+                                        <a class="mr-2 rounded btn btn-sm"
+                                            href="{{ asset('admin/auditoria-internas/' . $aud->id . '/edit') }}">
+                                            <i class="fas fa-edit" data-toggle="tooltip" data-placement="top"
+                                                title="Editar"></i>
+                                        </a>
+
+
+                                        <form action="{{ asset('admin/auditoria-internas/destroy/' . $aud->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button class="btn" type="submit">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+
+                                        </form>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             </td>
                         </tr>
 
