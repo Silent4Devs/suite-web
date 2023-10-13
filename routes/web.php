@@ -32,7 +32,7 @@ Auth::routes();
 
 // Tabla-Calendario
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active', 'XssSanitization']], function () {
     Route::get('/', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
     Route::get('/home', 'InicioUsuarioController@index')->name('home');
     //log-viewer
