@@ -179,78 +179,66 @@
                 <tr>
                     <td>
                         <strong> Cantidad: </strong> <br>
-                        @if( $producto->cantidad )
+                        @isset($producto->cantidad)
                         {{ $producto->cantidad }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     </td>
                     <td>
                         <strong> Producto: </strong> <br>
+                        @isset($producto->cantidad)
                         {{ $producto->producto->descripcion }}
+                        @endisset
                     </td>
                     <td colspan="2">
                         <strong> Descripción: </strong> <br>
-                        @if( $producto->espesificaciones )
+                        @isset($producto->espesificaciones)
                         {{ $producto->espesificaciones }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <strong> Centro de costo: </strong> <br>
-                        @if( $producto->centro_costo->descripcion )
+                        @isset($producto->centro_costo)
                         {{ $producto->centro_costo->descripcion }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     </td>
                     <td>
                         <strong> Proyecto: </strong> <br>
+                        @isset( $producto->contrato)
                         {{ $producto->contrato->no_proyecto }} / {{ $producto->contrato->no_contrato }} - {{ $producto->contrato->nombre_servicio }}
+                        @endisset
                     </td>
                     <td>
                         <strong> No. de Personas: </strong> <br>
-                        @if( $producto->no_personas )
+                        @isset( $producto->no_personas)
                         {{ $producto->no_personas }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     </td>
                     <td>
                         <strong> Porcentaje de involucramiento: </strong> <br>
-                        @if( $producto->porcentaje_involucramiento )
+                        @isset( $producto->porcentaje_involucramiento)
                         {{ $producto->porcentaje_involucramiento }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     </td>
                 </tr>
                 <tr style="background-color: #F5F5F5;">
                     <td>
                         <strong> SubTotal:  </strong> <br>
-                        @if( $producto->sub_total )
-                        {{ $producto->sub_total }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @isset(  $producto->sub_total)
+                        {{  $producto->sub_total }}
+                        @endisset
                     </td>
                     <td>
                         <strong> IVA: </strong> <br>
-                        @if( $producto->iva )
+                        @isset( $producto->iva)
                         {{ $producto->iva }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     <td>
                         <strong> IVA retenido: </strong> <br>
-                        @if( $producto->iva_retenido )
+                        @isset( $producto->iva_retenido)
                         {{ $producto->iva_retenido }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     </td>
                     <td>
 
@@ -259,27 +247,21 @@
                 <tr style="background-color: #F5F5F5;">
                     <td>
                         <strong> Descuento: </strong> <br>
-                        @if( $producto->descuento )
+                        @isset( $producto->descuento)
                         {{ $producto->descuento }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     </td>
                     <td>
                         <strong> Otro impuesto: </strong> <br>
-                        @if( $producto->otro_impuesto )
+                        @isset( $producto->otro_impuesto)
                         {{ $producto->otro_impuesto }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     </td>
                     <td>
                         <strong> ISR retenido: </strong> <br>
-                        @if( $producto->isr_retenido )
+                        @isset( $producto->isr_retenido)
                         {{ $producto->isr_retenido }}
-                        @else
-                            <small class="not-register">Sin registro</small>
-                        @endif
+                        @endisset
                     </td>
                     <td>
                         <strong> Total: </strong> <br>
