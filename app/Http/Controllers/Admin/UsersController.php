@@ -43,11 +43,7 @@ class UsersController extends Controller
         $empleados = Empleado::getaltaAll();
         $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
 
-<<<<<<< HEAD
-        return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados', 'existsVinculoEmpleadoAdmin', 'query'));
-=======
         return view('admin.users.index', compact('empleados', 'existsVinculoEmpleadoAdmin'));
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
     }
 
     public function getUsersIndex(Request $request)

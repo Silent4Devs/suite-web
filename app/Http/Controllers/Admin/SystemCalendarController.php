@@ -64,7 +64,7 @@ class SystemCalendarController extends Controller
         $plan_base = PlanBaseActividade::get();
         $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = AuditoriaInterna::get();
-        $audits= AuditoriaAnual::select("fechainicio","fechafin","nombre")->get();
+        $audits = AuditoriaAnual::select("fechainicio", "fechafin", "nombre")->get();
         // dd($auditoria_internas);
 
         $recursos = collect();
@@ -86,9 +86,6 @@ class SystemCalendarController extends Controller
         $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
 
-<<<<<<< HEAD
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas', 'eventos', 'oficiales', 'cumples_aniversarios', 'nombre_organizacion', 'contratos', 'facturas', 'niveles_servicio','audits'));
-=======
         return view('admin.calendar.calendar', compact(
             'plan_base',
             'auditorias_anual',
@@ -103,6 +100,5 @@ class SystemCalendarController extends Controller
             'facturas',
             'niveles_servicio'
         ));
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
     }
 }

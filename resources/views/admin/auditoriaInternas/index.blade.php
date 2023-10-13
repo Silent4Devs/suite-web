@@ -159,9 +159,74 @@
 
 
     <hr>
-    <div class="">
-        <div class="card card-body">
 
+
+    <style>
+        .card-audit-report {
+            box-shadow: 0px 1px 4px #00000024;
+            background-color: #fff;
+            padding: 20px 0px;
+            text-align: center;
+            position: relative;
+            width: 250px;
+        }
+
+        .title-card-audit {
+            color: #0489FE;
+            font-size: 14px;
+        }
+
+        .card-audit-report .btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .card-audit-report .title-info {
+            color: #606060;
+            font-size: 16px;
+        }
+
+        .estatus-audit {
+            padding: 5px;
+            margin-top: 7px;
+            border-radius: 100px;
+        }
+
+        .estatus-aceptado {
+            color: #039C55;
+            background-color: #E9FFE8;
+        }
+
+        .estatus-pendiente {
+            color: #F19D0E;
+            background-color: #FFF8E8;
+        }
+
+        .estatus-rechazado {
+            color: #FF0000;
+            background-color: #FFE8E8;
+        }
+    </style>
+
+    <div class="d-flex" style="gap: 30px;">
+        <div class="card-audit-report">
+            <span class="title-card-audit">Contexto</span>
+            <button class="btn">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <hr>
+            <p class="title-info">
+                <strong> Informe auditoria 2023 V3 </strong>
+            </p>
+            <p>
+                <small>
+                    Marco Luna
+                </small>
+            </p>
+            <span class="estatus-audit">
+                <small>Aceptado</small>
+            </span>
         </div>
     </div>
 @endsection

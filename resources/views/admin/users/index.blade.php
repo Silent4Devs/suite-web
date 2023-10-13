@@ -13,18 +13,19 @@
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
     <div class="mt-5 card">
+
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
+
             <div class="p-2">
                 <a href={{ route('admin.users.eliminados') }} class="btn btn-danger" role="button" aria-pressed="true">
                     <i class="fas fa-user-slash"></i>&nbsp &nbsp Usuarios eliminados</a>
             </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
         </div>
 
         <div class="card-body datatable-fix">
+
+
             @if (!$existsVinculoEmpleadoAdmin)
                 <h5>Por favor da clic en el icono <small class="p-1 border border-primary rounded"><i
                             class="fas fa-user-tag"></i></small> de la fila del usuario Admin</h5>
@@ -56,33 +57,6 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-<<<<<<< HEAD
-                    @foreach ($query as $user)
-                        <tr>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                @foreach ($user->roles as $rol)
-                                    <span class="badge badge-primary">{{ $rol->title }}</span>, <br>
-                                @endforeach
-                            </td>
-                            <td>{{ $user->empleado->name }}</td>
-                            <td>{{ $user->empleado->area }}</td>
-                            <td>{{ $user->empleado->puesto }}</td>
-                            <td>
-
-                                op
-
-                            </td>
-                        </tr>
-                    @endforeach
-=======
-                    <tr>
-                        <td></td>
-                    </tr>
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
-                </tbody>
             </table>
         </div>
     </div>
@@ -215,149 +189,112 @@
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                // processing: true,
-                // serverSide: true,
+                processing: true,
+                serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                // ajax: {
-                //     url: "{{ route('admin.users.getUsersIndex') }}",
-                //     type: 'POST',
-                //     data: {
-                //         _token: _token
-                //     }
-                // },
-                // columns: [{
-                //         data: 'name',
-                //         name: 'name'
-                //     },
-                //     {
-                //         data: 'email',
-                //         name: 'email'
-                //     },
-                //     {
-                //         data: 'roles',
-                //         name: 'roles.title',
-                //         render: function(data, type, row, meta) {
-                //             let roles = data.map(rol => {
-                //                 return `
-            //                     <span class="badge badge-primary">${rol.title}</span>
-            //                 `;
-                //             })
-                //             return roles;
-                //         }
-                //     },
-                //     {
-                //         data: 'id',
-                //         render: function(data, type, row, meta) {
-                //             if (row.n_empleado != null || row.empleado_id != null) {
-                //                 if (row.empleado) {
-                //                     return row.empleado?.name;
-                //                 }
-                //             }
-                //             return 'Sin vincular a empleado';
+                ajax: {
+                    url: "{{ route('admin.users.getUsersIndex') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token
+                    }
+                },
+                columns: [{
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'roles',
+                        name: 'roles.title',
+                        render: function(data, type, row, meta) {
+                            let roles = data.map(rol => {
+                                return `
+                                    <span class="badge badge-primary">${rol.title}</span>
+                                `;
+                            })
+                            return roles;
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.n_empleado != null || row.empleado_id != null) {
+                                if (row.empleado) {
+                                    return row.empleado?.name;
+                                }
+                            }
+                            return 'Sin vincular a empleado';
 
-                //         }
-                //     },
-                //     {
-                //         data: 'id',
-                //         render: function(data, type, row, meta) {
-                //             if (row.n_empleado != null || row.empleado_id != null) {
-                //                 if (row.empleado) {
-                //                     return row.empleado?.area?.area;
-                //                 }
-                //             }
-                //             return 'Sin vincular a empleado';
-                //         }
-                //     },
-                //     {
-                //         data: 'id',
-                //         render: function(data, type, row, meta) {
-                //             if (row.n_empleado != null || row.empleado_id != null) {
-                //                 if (row.empleado) {
-                //                     return row.empleado?.puesto;
-                //                 }
-                //             }
-                //             return 'Sin vincular a empleado';
-                //         }
-                //     },
-                //     {
-                //         data: 'id',
-                //         name: 'actions',
-                //         render: function(data, type, row, meta) {
-                //             let empleados = @json($empleados);
-                //             let urlButtonShow = `/admin/users/${data}`;
-                //             let urlButtonDelete = `/admin/users/${data}`;
-                //             let urlButtonEdit = `/admin/users/${data}/edit`;
-                //             let urlButtonTwoFactor = `/admin/users/two-factor/${data}/change`;
-                //             let urlButtonBloquearUsuario = `/admin/users/bloqueo/${data}/change`;
-                //             let existsVinculoEmpleadoAdmin = @json($existsVinculoEmpleadoAdmin);
-                //             let htmlBotones =
-                //                 `
-            //                 <div class="btn-group">
-            //                     @can('usuarios_editar')
-            //                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-            //                     @endcan
-            //                     @can('usuarios_ver')
-            //                     <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
-            //                     @endcan
-            //                     @can('usuarios_vincular_empleados')
-            //                     <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm ${row.n_empleado?'':'border border-primary rounded'}" onclick="AbrirModal('${data}');">
-            //                         <i class="fas fa-user-tag"></i>
-            //                     </button>
-            //                     @endcan
-            //                     @can('usuarios_verificacion_dos_factores')
-            //                     <a href="${urlButtonTwoFactor}" title="${row.two_factor?'Quitar Verificación por dos factores':'Activar verificación por dos factores'}" class="btn btn-sm">
-            //                         ${row.two_factor?' <i class="fas fa-key"></i>':' <i class="fas fa-key"></i>'}
-            //                     </a>
-            //                     @endcan
-            //                     @can('usuarios_bloquear_usuario')
-            //                     <a href="${urlButtonBloquearUsuario}" title="${row.is_active?'Bloquear usuario':'Desbloquear usuario'}" class="btn btn-sm">
-            //                         ${row.is_active?' <i class="fas fa-unlock"></i>':' <i class="fas fa-lock"></i>'}
-            //                     </a>
-            //                     @endcan
-            //                     @can('usuarios_eliminar')
-            //                     <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>
-            //                     @endcan
-            //                 </div>
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.n_empleado != null || row.empleado_id != null) {
+                                if (row.empleado) {
+                                    return row.empleado?.area?.area;
+                                }
+                            }
+                            return 'Sin vincular a empleado';
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.n_empleado != null || row.empleado_id != null) {
+                                if (row.empleado) {
+                                    return row.empleado?.puesto;
+                                }
+                            }
+                            return 'Sin vincular a empleado';
+                        }
+                    },
+                    {
+                        data: 'id',
+                        name: 'actions',
+                        render: function(data, type, row, meta) {
+                            let empleados = @json($empleados);
+                            let urlButtonShow = `/admin/users/${data}`;
+                            let urlButtonDelete = `/admin/users/${data}`;
+                            let urlButtonEdit = `/admin/users/${data}/edit`;
+                            let urlButtonTwoFactor = `/admin/users/two-factor/${data}/change`;
+                            let urlButtonBloquearUsuario = `/admin/users/bloqueo/${data}/change`;
+                            let existsVinculoEmpleadoAdmin = @json($existsVinculoEmpleadoAdmin);
+                            let htmlBotones =
+                                `
+                                <div class="btn-group">
+                                    @can('usuarios_editar')
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    @can('usuarios_ver')
+                                    <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
+                                    @endcan
+                                    @can('usuarios_vincular_empleados')
+                                    <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm ${row.n_empleado?'':'border border-primary rounded'}" onclick="AbrirModal('${data}');">
+                                        <i class="fas fa-user-tag"></i>
+                                    </button>
+                                    @endcan
+                                    @can('usuarios_verificacion_dos_factores')
+                                    <a href="${urlButtonTwoFactor}" title="${row.two_factor?'Quitar Verificación por dos factores':'Activar verificación por dos factores'}" class="btn btn-sm">
+                                        ${row.two_factor?' <i class="fas fa-key"></i>':' <i class="fas fa-key"></i>'}
+                                    </a>
+                                    @endcan
+                                    @can('usuarios_bloquear_usuario')
+                                    <a href="${urlButtonBloquearUsuario}" title="${row.is_active?'Bloquear usuario':'Desbloquear usuario'}" class="btn btn-sm">
+                                        ${row.is_active?' <i class="fas fa-unlock"></i>':' <i class="fas fa-lock"></i>'}
+                                    </a>
+                                    @endcan
+                                    @can('usuarios_eliminar')
+                                    <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>
+                                    @endcan
+                                </div>
 
 
-<<<<<<< HEAD
-            //                 <div data-user-id="${data}" class="modal fade" id="vincularEmpleado${data}" data-backdrop="static"
-            //                     data-keyboard="false" tabindex="-1" aria-labelledby="vincularEmpleado${data}Label" aria-hidden="true">
-            //                     <div class="modal-dialog">
-            //                         <div class="modal-content">
-            //                             <div class="modal-header">
-            //                                 <h5 class="modal-title" id="vincularEmpleado${data}Label">Vinculación de Empleados
-            //                                 </h5>
-            //                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            //                                     <span aria-hidden="true">&times;</span>
-            //                                 </button>
-            //                             </div>
-            //                             <div class="modal-body">
-            //                                 <p><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</p>
-            //                                 <select name="n_empleado" id="n_empleado${data}" class="select2">
-            //                                     <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`;
-                //             empleados.forEach(empleado => {
-                //                 htmlBotones += `
-            //                                             <option value="${empleado.n_empleado != null ? `NEMPLEADO-${empleado.n_empleado}`:`IDEMPLEADO-${empleado.id}`}">${empleado.name}</option>
-            //                                         `;
-                //             });
-                //             htmlBotones += `</select>
-            //                                 <span class="text-sm n_empleado_error errores text-danger"></span>
-            //                             </div>
-            //                             <div class="modal-footer">
-            //                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            //                                 <button type="button" class="btn btn-primary" onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //             `;
-                //             return htmlBotones;
-                //         }
-                //     }
-                // ],
-=======
                                 <div data-user-id="${data}" class="modal fade" id="vincularEmpleado${data}" data-backdrop="static"
                                     data-keyboard="false" tabindex="-1" aria-labelledby="vincularEmpleado${data}Label" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -393,7 +330,6 @@
                         }
                     }
                 ],
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']

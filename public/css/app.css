@@ -41643,14 +41643,14 @@ a.text-dark:focus {
 }
 
 /*Escuela  ***************************/
-.cancel{
+.cancel {
     background: #FFFFFF;
     color: #006DDB;
     border: 1px solid #006DDB;
 }
 
-.cancel:hover{
-    color:#006DDB;
+.cancel:hover {
+    color: #006DDB;
 }
 
 /* footer -------------------------- */
@@ -41672,16 +41672,14 @@ a.text-dark:focus {
     font-size: 14px !important;
   }
 } */
-<<<<<<< HEAD
-=======
 
-.circulo-kaans{
-            width: 75px;
-            height: 75px;
-        }
-        .circulo-kaans img {
-            width: 75px; 
-            height: 75px;
-            border-radius: 50%;
-        }
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
+.circulo-kaans {
+    width: 75px;
+    height: 75px;
+}
+
+.circulo-kaans img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+}

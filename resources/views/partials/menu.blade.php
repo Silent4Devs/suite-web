@@ -506,13 +506,13 @@
             </li>
         @endif
         @can('dashboard_gestion_contratos_acceder')
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('contract_manager.dashboard.katbol')}}"
-                class="c-sidebar-nav-link {{ request()->is('contract_manager/dashboard/katbol') ? 'active' : '' }}">
-                <i class="fas fa-chart-column iconos_menu letra_blanca"></i>
-                <font class="letra_blanca">Dashboard</font>
-            </a>
-        </li>
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('contract_manager.dashboard.katbol') }}"
+                    class="c-sidebar-nav-link {{ request()->is('contract_manager/dashboard/katbol') ? 'active' : '' }}">
+                    <i class="fas fa-chart-column iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Dashboard</font>
+                </a>
+            </li>
         @endcan
         @can('sistema_gestion_contratos_acceder')
             <li class="c-sidebar-nav-item">
@@ -540,18 +540,6 @@
                     <font class="letra_blanca">Requisiciones</font>
                 </a>
             </li>
-<<<<<<< HEAD
-        @endcan
-        @can('katbol_proveedores_acceso')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route('contract_manager.proveedor.index') }}"
-                    class="c-sidebar-nav-link {{ request()->is('contract_manager/proveedor') || request()->is('contract_manager/proveedor/*') ? 'active' : '' }}">
-                    <i class="bi bi-person-workspace iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca">Proveedores-Clientes</font>
-                </a>
-            </li>
-=======
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
         @endcan
         {{-- @can('katbol_proveedores_acceso')
             <li class="c-sidebar-nav-item">
@@ -1088,17 +1076,10 @@
                     <ul class="c-sidebar-nav-dropdown-items">
                         @can('escuela_admin_dashboar')
                             <li class="c-sidebar-nav-item">
-<<<<<<< HEAD
-                                {{-- <a href="{{ route('admin.courses.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
-                                <font class="letra_blanca"> Instructor </font>
-                            </a> --}}
-=======
                                 <a href="{{ route('admin.courses.index') }}"
                                     class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
                                     <font class="letra_blanca"> Instructor </font>
                                 </a>
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
                             </li>
                         @endcan
                         @can('escuela_admin_categorias')

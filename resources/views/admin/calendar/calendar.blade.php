@@ -418,56 +418,6 @@
                 },
             @endforeach
             @foreach ($contratos as $contrato)
-<<<<<<< HEAD
-            {
-                id: 'contrato{{ $contrato->id }}',
-                calendarId: '8',
-                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Contrato: {{ $contrato->nombre_servicio }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::parse($contrato->fecha_inicio)->format('Y-m-d') }}',
-                end: '{{ \Carbon\Carbon::parse($contrato->fecha_fin)->format('Y-m-d') }}',
-                isReadOnly: true,
-            },
-           @endforeach
-           @foreach ($facturas as $facturas_iterado)
-            {
-                id: 'facturas_iterado{{ $facturas_iterado->id }}',
-                calendarId: '9',
-                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Factura: {{ $facturas_iterado->concepto }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::parse($facturas_iterado->fecha_recepcion)->format('Y-m-d') }}',
-                end: '{{ \Carbon\Carbon::parse($facturas_iterado->fecha_liberacion)->format('Y-m-d') }}',
-                isReadOnly: true,
-            },
-           @endforeach
-           @foreach ($niveles_servicio as $revisiones)
-            {
-
-                id: 'revisiones{{ $revisiones->id }}',
-                calendarId: '11',
-                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revision de entregables: {{ $revisiones->nombre_entregable }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::parse($revisiones->plazo_entrega_inicio)->format('Y-m-d') }}',
-                end: '{{ \Carbon\Carbon::parse($revisiones->plazo_entrega_termina)->format('Y-m-d') }}',
-                isReadOnly: true,
-            },
-           @endforeach
-           @foreach ($audits as $audit)
-            {
-                id: 'revisiones{{ $audit->id }}',
-                calendarId: '12',
-                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revision de entregables: {{ $audit->nombre }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::parse($audit->fechainicio)->format('Y-m-d') }}',
-                end: '{{ \Carbon\Carbon::parse($audit->fechafin)->format('Y-m-d') }}',
-                isReadOnly: true,
-            },
-           @endforeach
-=======
                 {
                     id: 'contrato{{ $contrato->id }}',
                     calendarId: '8',
@@ -503,7 +453,6 @@
                     isReadOnly: true,
                 },
             @endforeach
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
         ];
     </script>
 

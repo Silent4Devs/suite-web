@@ -78,23 +78,6 @@ class DatabaseSeeder extends Seeder
                 // PermisosTimesheetAdministrador::class,
 
                 //Katbol
-<<<<<<< HEAD
-                // CentroCostosTableSeeder::class,
-                // CompradoresTableSeeder::class,
-                // ProductosTableSeeder::class,
-                // ProveedorOCSTableSeeder::class,
-                // SucursalesTableSeeder::class,
-                // // FacturacionTableSeeder::class,
-                // ProveedoresTableSeeder::class,
-                // ContratosTableSeeder::class,
-                // MonedaSeedder::class,
-                // // ConveniosModificatoriosTableSeeder::class,
-                // // EntregasMensualesTableSeeder::class,
-                // // CierreContratosTableSeeder::class,
-                // PermisosKatbol::class,
-
-                // //kaans
-=======
                 // AreasSeeder::class,
                 // ProveedoresTableSeeder::class,
                 // ContratosTableSeeder::class,
@@ -121,19 +104,10 @@ class DatabaseSeeder extends Seeder
                 // DashboardGestionContratosSeeder::class,
 
                 //kaans
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
                 // PermisosEscuelaInstructorSeeder::class,
                 // PlatformSeeder::class,
                 // PermisosEscuelaAdminSeeder::class,
                 // PermisosEscuelaEstudianteSeeder::class
-<<<<<<< HEAD
-
-                //Clausulas y Clasificacion de auditorias
-                ClasificacionesAuditoriasSeeder::class,
-                ClausulasAuditoriasSeeder::class,
-                PermisosCatalogosSG::class,
-=======
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
             ]
         );
     }

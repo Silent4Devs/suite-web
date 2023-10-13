@@ -3,11 +3,6 @@
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
-<<<<<<< HEAD
-use App\Http\Controllers\DashboardAuditoriasSGIController;
-use App\Http\Livewire\Escuela\CourseStatus;
-=======
->>>>>>> 7d3054779ed685c1662d7460c04b62d8346dc66b
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
