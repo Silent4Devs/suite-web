@@ -581,7 +581,7 @@
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route('admin.auditoria-clausula') }}"
                                     class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
-                                    <font class="letra_blanca">Clausula</font>
+                                    <font class="letra_blanca">Cláusula</font>
                                 </a>
                             </li>
                         @endcan

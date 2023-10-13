@@ -307,7 +307,6 @@ class AuditoriaInternaController extends Controller
     public function storeFirmaReporteLider($reporteid, Request $request)
     {
         // dd($reporteid);
-
         $reporte = AuditoriaInternasReportes::find($reporteid);
         $nombre_lider = $reporte->lider->name;
 
@@ -319,7 +318,7 @@ class AuditoriaInternaController extends Controller
             Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $nombre_lider, 0755, true);
         }
 
-        $filename = '/audit' . $reporte->id_auditoria . 'firmaempleado' . $nombre_lider . '.png';
+        $filename = '/audit' . $reporte->id_auditoria . 'firmalider' . $nombre_lider . '.png';
 
         Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . "/reporte" . '/' . $reporte->id . '/' . $nombre_lider . $filename, $image);
 
@@ -327,7 +326,7 @@ class AuditoriaInternaController extends Controller
             ->where("lider_id", "=", $reporte->lider->id)->first();
         // dd($reporte);
         $reporte->update([
-            // "comentarios",
+            "comentarios" => $request->comentarios,
             "estado" => "aprobado",
             "firma_lider" => $filename,
         ]);

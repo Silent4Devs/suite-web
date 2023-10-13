@@ -199,7 +199,6 @@
                             if (data.success) {
                                 Swal.fire(
                                     'El lider ha sido notificado',
-                                    'success'
                                 ).then(() => {
                                     window.location.href =
                                         '{{ route('admin.auditoria-internas.index') }}';
@@ -207,7 +206,6 @@
                             } else {
                                 Swal.fire(
                                     'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador',
-                                    'success'
                                 ).then(() => {
                                     window.location.href =
                                         '{{ route('admin.auditoria-internas.index') }}';

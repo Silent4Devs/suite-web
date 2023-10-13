@@ -185,7 +185,7 @@ class EditReporteIndividual extends Component
         $this->proceso = $this->proceso == '' ? null : $this->proceso;
         $model = AuditoriaInternasHallazgos::create([
             'proceso_id' => $this->proceso,
-            'area_id' => auth()->user()->empleado->area_id,
+            'area_id' => $this->reporte->empleado->area_id,
             'incumplimiento_requisito' => $this->incumplimiento_requisito,
             'clasificacion_id' => $this->clasificacion_id,
             'clausula_id' => $this->c_id,
