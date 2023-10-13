@@ -12,9 +12,9 @@ pipeline {
             steps {
                 // git 'https://gitlab.com/silent4business/tabantaj.git'
                 // sh 'docker-compose up --build -d'
-                sh 'docker-compose exec php composer install'
-                sh 'docker-compose exec php php artisan key:generate'
-                sh 'docker-compose exec php php artisan migrate'
+                sh 'php composer install'
+                sh 'php php artisan key:generate'
+                sh 'php php artisan migrate'
             }
         }
 
