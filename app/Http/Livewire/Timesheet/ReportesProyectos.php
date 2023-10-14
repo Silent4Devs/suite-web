@@ -262,13 +262,13 @@ class ReportesProyectos extends Component
                             $fecha_dia_domingo = Carbon::parse($fecha_dia_domingo)->format('Y-m-d');
 
                             if ($fecha_dia_domingo == $domingo_semana) {
-                                $horas_proyecto_times += $registro_horas->horas_lunes;
-                                $horas_proyecto_times += $registro_horas->horas_martes;
-                                $horas_proyecto_times += $registro_horas->horas_miercoles;
-                                $horas_proyecto_times += $registro_horas->horas_jueves;
-                                $horas_proyecto_times += $registro_horas->horas_viernes;
-                                $horas_proyecto_times += $registro_horas->horas_sabado;
-                                $horas_proyecto_times += $registro_horas->horas_domingo;
+                                $horas_proyecto_times += floatval($registro_horas->horas_lunes);
+                                $horas_proyecto_times += floatval($registro_horas->horas_martes);
+                                $horas_proyecto_times += floatval($registro_horas->horas_miercoles);
+                                $horas_proyecto_times += floatval($registro_horas->horas_jueves);
+                                $horas_proyecto_times += floatval($registro_horas->horas_viernes);
+                                $horas_proyecto_times += floatval($registro_horas->horas_sabado);
+                                $horas_proyecto_times += floatval($registro_horas->horas_domingo);
                             }
                         }
 
@@ -345,13 +345,13 @@ class ReportesProyectos extends Component
             foreach ($horas as $hora) {
                 $h_total_tarea = 0;
 
-                $h_total_tarea += $hora->horas_lunes;
-                $h_total_tarea += $hora->horas_martes;
-                $h_total_tarea += $hora->horas_miercoles;
-                $h_total_tarea += $hora->horas_jueves;
-                $h_total_tarea += $hora->horas_viernes;
-                $h_total_tarea += $hora->horas_sabado;
-                $h_total_tarea += $hora->horas_domingo;
+                $h_total_tarea += floatval($hora->horas_lunes);
+                $h_total_tarea += floatval($hora->horas_martes);
+                $h_total_tarea += floatval($hora->horas_miercoles);
+                $h_total_tarea += floatval($hora->horas_jueves);
+                $h_total_tarea += floatval($hora->horas_viernes);
+                $h_total_tarea += floatval($hora->horas_sabado);
+                $h_total_tarea += floatval($hora->horas_domingo);
 
                 $h_total_tarea_total += $h_total_tarea;
 

@@ -210,13 +210,13 @@ class Timesheet extends Model implements Auditable
         $total_horas = 0;
         $horas_time = TimesheetHoras::where('timesheet_id', $this->id)->get();
         foreach ($horas_time as $key => $horas) {
-            $total_horas += intval($horas->horas_lunes);
-            $total_horas += intval($horas->horas_martes);
-            $total_horas += intval($horas->horas_miercoles);
-            $total_horas += intval($horas->horas_jueves);
-            $total_horas += intval($horas->horas_viernes);
-            $total_horas += intval($horas->horas_sabado);
-            $total_horas += intval($horas->horas_domingo);
+            $total_horas += floatval($horas->horas_lunes);
+            $total_horas += floatval($horas->horas_martes);
+            $total_horas += floatval($horas->horas_miercoles);
+            $total_horas += floatval($horas->horas_jueves);
+            $total_horas += floatval($horas->horas_viernes);
+            $total_horas += floatval($horas->horas_sabado);
+            $total_horas += floatval($horas->horas_domingo);
         }
 
         return $total_horas;
