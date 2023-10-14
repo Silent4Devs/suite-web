@@ -8,20 +8,13 @@ pipeline {
             }
         }
 
-
-        stage('prueba saul') {
-             steps {
-                sh 'ssh desarrollo@192.168.9.78 "cd  var/contenedor/tabantaj && git pull"'
-             }
-        }
-
         stage('Build') {
             steps {
-                git 'https://gitlab.com/silent4business/tabantaj.git'
-                sh 'docker-compose up --build -d'
-                sh 'docker-compose exec php composer install'
-                sh 'docker-compose exec php php artisan key:generate'
-                sh 'docker-compose exec php php artisan migrate'
+                // git 'https://gitlab.com/silent4business/tabantaj.git'
+                // sh 'docker-compose up --build -d'
+                sh 'php composer install'
+                sh 'php php artisan key:generate'
+                sh 'php php artisan migrate'
             }
         }
 
