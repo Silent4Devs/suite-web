@@ -28,6 +28,7 @@ pipeline {
               echo 'Exception occurred: ' + e.toString()
             }
           }
+
         //   sh 'docker build -t ${image_name}:${tag_image} .'
         }
       }
