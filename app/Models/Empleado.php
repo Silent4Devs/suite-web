@@ -174,10 +174,9 @@ class Empleado extends Model implements Auditable
     public static function getIdNameAll(array $options = [])
     {
         // Generate a unique cache key based on the options provided
-        $cacheKey = 'empleados_all_' . md5(serialize($options));
 
         return Cache::remember('Empleados:empleados_id_name_all', 3600 * 12, function () use ($options) {
-            $query = self::select('id', 'name')->query();
+            $query = self::select('id', 'name');
 
             if (isset($options['orderBy'])) {
                 $orderBy = $options['orderBy'];
