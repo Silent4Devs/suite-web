@@ -15,7 +15,7 @@ pipeline {
       }
     }
 
-    //build
+    //buildv2
     stage('build') {
       steps {
         dir('tabantaj') {
