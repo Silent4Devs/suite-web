@@ -1096,13 +1096,13 @@ class TimesheetController extends Controller
 
             $tot_horas_proyecto = 0;
 
-            $sumalun = $times->sum('horas_lunes');
-            $sumamar = $times->sum('horas_martes');
-            $sumamie = $times->sum('horas_miercoles');
-            $sumajue = $times->sum('horas_jueves');
-            $sumavie = $times->sum('horas_viernes');
-            $sumasab = $times->sum('horas_sabado');
-            $sumadom = $times->sum('horas_domingo');
+            $sumalun = floatval($times->sum('horas_lunes'));
+            $sumamar = floatval($times->sum('horas_martes'));
+            $sumamie = floatval($times->sum('horas_miercoles'));
+            $sumajue = floatval($times->sum('horas_jueves'));
+            $sumavie = floatval($times->sum('horas_viernes'));
+            $sumasab = floatval($times->sum('horas_sabado'));
+            $sumadom = floatval($times->sum('horas_domingo'));
 
             $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
 
