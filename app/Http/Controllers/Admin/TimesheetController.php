@@ -262,6 +262,13 @@ class TimesheetController extends Controller
 
         foreach ($request->timesheet as $index => $hora) {
             if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
+
+                foreach ($hora as $key => $value) {
+                    if ($value === '') {
+                        $hora[$key] = null;
+                    }
+                }
+
                 $horas_nuevas = TimesheetHoras::create([
                     'timesheet_id' => $timesheet_nuevo->id,
                     'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
@@ -295,7 +302,7 @@ class TimesheetController extends Controller
             }
         }
 
-        //$this->notificacionhorassobrepasadas($usuario->empleado->id);
+        $this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
