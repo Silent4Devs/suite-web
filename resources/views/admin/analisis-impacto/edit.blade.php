@@ -123,7 +123,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -136,7 +136,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -151,7 +151,7 @@
                         //                        'maxlength' => 255,
                         'min=0',
                         'max=9999',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                     ]) !!}
                 </div>
                 <hr>
@@ -187,7 +187,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -200,7 +200,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -212,7 +212,7 @@
                         //                        'maxlength' => 255,
                         'min=0',
                         'max=9999',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                     ]) !!}
                 </div>
                 <div class="input-group col-12">
@@ -247,7 +247,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -260,7 +260,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -270,7 +270,7 @@
                         'class' => 'form-control extencion2',
                         'maxlength' => 4,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=9999',
                     ]) !!}
@@ -300,7 +300,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -317,7 +317,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -338,7 +338,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -394,7 +394,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -409,7 +409,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -426,7 +426,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -448,7 +448,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -462,7 +462,7 @@
                     @enderror
                     {!! Form::number('flujo_años', null, [
                         'class' => 'form-control',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=50',
                         'required',
@@ -476,7 +476,7 @@
                     @enderror
                     {!! Form::number('flujo_meses', null, [
                         'class' => 'form-control',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=12',
                         'required',
@@ -489,7 +489,7 @@
                     @enderror
                     {!! Form::number('flujo_semanas', null, [
                         'class' => 'form-control',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
@@ -502,7 +502,7 @@
                     @enderror
                     {!! Form::number('flujo_dias', null, [
                         'class' => 'form-control',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
@@ -1323,7 +1323,7 @@
                     @enderror
                     {!! Form::number('rpo_mes', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1336,7 +1336,7 @@
                     @enderror
                     {!! Form::number('rpo_semana', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
@@ -1349,7 +1349,7 @@
                     @enderror
                     {!! Form::number('rpo_dia', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
@@ -1362,7 +1362,7 @@
                     @enderror
                     {!! Form::number('rpo_hora', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1383,7 +1383,7 @@
                     @enderror
                     {!! Form::number('rto_mes', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1396,7 +1396,7 @@
                     @enderror
                     {!! Form::number('rto_semana', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
@@ -1409,7 +1409,7 @@
                     @enderror
                     {!! Form::number('rto_dia', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
@@ -1422,7 +1422,7 @@
                     @enderror
                     {!! Form::number('rto_hora', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1443,7 +1443,7 @@
                     @enderror
                     {!! Form::number('wrt_mes', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1456,7 +1456,7 @@
                     @enderror
                     {!! Form::number('wrt_semana', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
@@ -1469,7 +1469,7 @@
                     @enderror
                     {!! Form::number('wrt_dia', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
@@ -1482,7 +1482,7 @@
                     @enderror
                     {!! Form::number('wrt_hora', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1504,7 +1504,7 @@
                     @enderror
                     {!! Form::number('mtpd_mes', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1517,7 +1517,7 @@
                     @enderror
                     {!! Form::number('mtpd_semana', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
@@ -1530,7 +1530,7 @@
                     @enderror
                     {!! Form::number('mtpd_dia', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
@@ -1543,7 +1543,7 @@
                     @enderror
                     {!! Form::number('mtpd_hora', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1575,7 +1575,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -1592,7 +1592,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -1605,7 +1605,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -1622,7 +1622,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -1901,17 +1901,17 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_1" min="1" max="5" placeholder="..." required
+                        name="operacion_q_1" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_2" min="1" max="5" placeholder="..." required
+                        name="operacion_q_2" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" min="1" max="5" placeholder="..." required
+                        name="operacion_q_3" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->operacion_q_3) }}">
                 </div>
                 <hr>
@@ -1934,17 +1934,17 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_1" min="1" max="5" placeholder="..." required
+                        name="regulatorio_q_1" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->regulatorio_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_2" min="1" max="5" placeholder="..." required
+                        name="regulatorio_q_2" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->regulatorio_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_3" min="1" max="5" placeholder="..." required
+                        name="regulatorio_q_3" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->regulatorio_q_3) }}">
                 </div>
                 <hr>
@@ -1968,17 +1968,17 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_1" min="1" max="5" placeholder="..." required
+                        name="reputacion_q_1" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->reputacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_2" min="1" max="5" placeholder="..." required
+                        name="reputacion_q_2" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->reputacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_3" min="1" max="5" placeholder="..." required
+                        name="reputacion_q_3" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->reputacion_q_3) }}">
                 </div>
                 <hr>
@@ -2001,17 +2001,17 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_1" min="1" max="5" placeholder="..." required
+                        name="social_q_1" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->social_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_2" min="1" max="5" placeholder="..." required
+                        name="social_q_2" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->social_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_3" min="1" max="5" placeholder="..." required
+                        name="social_q_3" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->social_q_3) }}">
                 </div>
                 <hr>
@@ -2029,7 +2029,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -2047,7 +2047,7 @@
                         'class' => 'form-control',
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
