@@ -1326,7 +1326,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=120',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1339,7 +1338,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=52',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1352,7 +1350,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=365',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1365,7 +1362,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=120',
-                        'required',
                     ]) !!}
                 </div>
 
@@ -1386,7 +1382,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=120',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1399,7 +1394,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=52',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1412,7 +1406,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=365',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1425,7 +1418,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=120',
-                        'required',
                     ]) !!}
                 </div>
             </div>
@@ -1446,7 +1438,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=120',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1459,7 +1450,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=52',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1472,7 +1462,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=365',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1485,7 +1474,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=120',
-                        'required',
                     ]) !!}
                 </div>
 
@@ -1507,7 +1495,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=120',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1520,7 +1507,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=52',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1533,7 +1519,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=365',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
@@ -1546,7 +1531,6 @@
                         'placeholder' => '0',
                         'min=0',
                         'max=120',
-                        'required',
                     ]) !!}
                 </div>
 
@@ -1576,7 +1560,6 @@
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
                         'placeholder' => '0',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
@@ -1593,7 +1576,6 @@
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
                         'placeholder' => '0',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
@@ -1606,7 +1588,6 @@
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
                         'placeholder' => '0',
-                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
@@ -1623,7 +1604,6 @@
                         'maxlength' => 255,
                         //                        'maxlength' => 255,
                         'placeholder' => '0',
-                        'required',
                     ]) !!}
                 </div>
             </div>
