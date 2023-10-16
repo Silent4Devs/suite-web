@@ -51,7 +51,7 @@ class ContratosController extends AppBaseController
     {
         abort_if(Gate::denies('katbol_contratos_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $usuario_actual = Empleado::find(User::getCurrentUser()->empleado->id);
-        $areas = Area::get();
+        $areas = Area::getIdNameAll();
 
         $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'timesheet_clientes.nombre')
             ->join('timesheet_clientes', 'contratos.proveedor_id', '=', 'timesheet_clientes.id')
@@ -368,7 +368,7 @@ class ContratosController extends AppBaseController
         $contrato = $this->contratoRepository->find($id);
         $formatoFecha = new FormatearFecha;
         $organizacion = Organizacion::first();
-        $areas = Area::get();
+        $areas = Area::getIdNameAll();
         if (empty($contrato)) {
             // notify()->error('¡El registro no fue encontrado!');
 
@@ -555,7 +555,7 @@ class ContratosController extends AppBaseController
         $no_contrato_sin_slashes = preg_replace('[/]', '-', $request->no_contrato);
         //### RESTRUCTURACION DE CARPETAS UPDATE #############
 
-        $areas = Area::get();
+        $areas = Area::getIdNameAll();
 
         $contrato = $this->contratoRepository->update([
             'tipo_contrato' => $request->tipo_contrato,

@@ -97,62 +97,61 @@
                         <span class="input-group-text"><strong>Titular *</strong></span>
                     </div>
                     <input type="text" name="titular_nombre" aria-label="First name" class="form-control"
-                        placeholder="Nombre(s)" required
-                        value="{{ old('titular_nombre', $cuestionario->titular_nombre) }}">
-                        <input type="text" name="titular_a_paterno" aria-label="Last name" class="form-control"
+                        placeholder="Nombre(s)" required value="{{ old('titular_nombre', $cuestionario->titular_nombre) }}">
+                    <input type="text" name="titular_a_paterno" aria-label="Last name" class="form-control"
                         placeholder="A. Paterno" required
                         value="{{ old('titular_a_paterno', $cuestionario->titular_a_paterno) }}">
-                        <input type="text" name="titular_a_materno" aria-label="Last name" class="form-control"
+                    <input type="text" name="titular_a_materno" aria-label="Last name" class="form-control"
                         placeholder="A. Materno" required
                         value="{{ old('titular_a_materno', $cuestionario->titular_a_materno) }}"><br>
                     @error('titular_nombre')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     @error('titular_a_paterno')
-                    <small style="color: red">{{$message}}</small>
-                        @enderror
-                    @error('titular_a_materno')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
-                    </div>
+                    @error('titular_a_materno')
+                        <small style="color: red">{{ $message }}</small>
+                    @enderror
+                </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('titular_puesto', 'Puesto', ['class' => 'required']) !!}
                     @error('titular_puesto')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('titular_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_correo', 'Correo electrónico:', ['class' => 'required']) !!}
                     @error('titular_correo')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('titular_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_extencion', 'Extensión') !!}
                     @error('titular_extencion')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('titular_extencion', null, [
                         'class' => 'form-control extencion',
                         'maxlength' => 4,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'min=0',
                         'max=9999',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                     ]) !!}
                 </div>
                 <hr>
@@ -163,45 +162,45 @@
                     <input type="text" name="suplente_nombre" aria-label="First name" class="form-control"
                         placeholder="Nombre(s)" required
                         value="{{ old('suplente_nombre', $cuestionario->suplente_nombre) }}">
-                        <input type="text" name="suplente_a_paterno" aria-label="Last name" class="form-control"
+                    <input type="text" name="suplente_a_paterno" aria-label="Last name" class="form-control"
                         placeholder="A. Paterno" required
                         value="{{ old('suplente_a_paterno', $cuestionario->suplente_a_paterno) }}">
-                        <input type="text" name="suplente_a_materno" aria-label="Last name" class="form-control"
+                    <input type="text" name="suplente_a_materno" aria-label="Last name" class="form-control"
                         placeholder="A. Materno" required
                         value="{{ old('suplente_a_materno', $cuestionario->suplente_a_materno) }}"><br>
-                        @error('suplente_nombre')
-                            <small style="color: red">{{$message}}</small>
-                        @enderror
-                        @error('suplente_a_paterno')
-                            <small style="color: red">{{$message}}</small>
-                        @enderror
-                        @error('suplente_a_materno')
-                            <small style="color: red">{{$message}}</small>
-                        @enderror
-                    </div>
+                    @error('suplente_nombre')
+                        <small style="color: red">{{ $message }}</small>
+                    @enderror
+                    @error('suplente_a_paterno')
+                        <small style="color: red">{{ $message }}</small>
+                    @enderror
+                    @error('suplente_a_materno')
+                        <small style="color: red">{{ $message }}</small>
+                    @enderror
+                </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('suplente_puesto', 'Puesto', ['class' => 'required']) !!}
                     @error('suplente_puesto')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('suplente_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('suplente_correo', 'Correo electrónico:', ['class' => 'required']) !!}
                     @error('suplente_correo')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('suplente_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -210,10 +209,10 @@
                     {!! Form::number('suplente_extencion', null, [
                         'class' => 'form-control extencion1',
                         'maxlength' => 4,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'min=0',
                         'max=9999',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                     ]) !!}
                 </div>
                 <div class="input-group col-12">
@@ -230,38 +229,38 @@
                         placeholder="A. Materno" required
                         value="{{ old('supervisor_a_materno', $cuestionario->supervisor_a_materno) }}"><br>
                     @error('supervisor_nombre')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     @error('supervisor_a_paterno')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     @error('supervisor_a_materno')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('supervisor_puesto', 'Puesto', ['class' => 'required']) !!}
                     @error('supervisor_puesto')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('supervisor_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('supervisor_correo', 'Correo electrónico:', ['class' => 'required']) !!}
                     @error('supervisor_correo')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('supervisor_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -270,8 +269,8 @@
                     {!! Form::number('supervisor_extencion', null, [
                         'class' => 'form-control extencion2',
                         'maxlength' => 4,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'min=0',
                         'max=9999',
                     ]) !!}
@@ -295,13 +294,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('flujo_q_1')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_1', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -312,13 +311,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('flujo_q_2')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_2', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -333,13 +332,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('flujo_q_4')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_4', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -389,13 +388,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('flujo_q_6')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_6', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -404,13 +403,13 @@
                         'class' => 'required',
                     ]) !!}
                     @error('flujo_q_7')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_7', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -421,13 +420,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('flujo_q_8')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_8', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -443,13 +442,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('flujo_q_10')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_10', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -459,11 +458,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('flujo_años', 'Año(s)') !!}
                     @error('flujo_años')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('flujo_años', null, [
                         'class' => 'form-control',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=50',
                         'required',
@@ -473,11 +472,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('flujo_meses', 'Mes(es)') !!}
                     @error('flujo_meses')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('flujo_meses', null, [
                         'class' => 'form-control',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=12',
                         'required',
@@ -486,11 +485,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('flujo_semanas', 'Semana(s)') !!}
                     @error('flujo_semanas')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('flujo_semanas', null, [
                         'class' => 'form-control',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
@@ -499,11 +498,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('flujo_dias', 'Día(s)') !!}
                     @error('flujo_dias')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('flujo_dias', null, [
                         'class' => 'form-control',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
@@ -1320,11 +1319,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_mes', 'Mes(es)') !!}
                     @error('rpo_mes')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rpo_mes', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1333,41 +1332,41 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_semana', 'Semana(s)') !!}
                     @error('rpo_semana')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rpo_semana', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
-                        ]) !!}
+                    ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_dia', 'Día(s)') !!}
                     @error('rpo_dia')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rpo_dia', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
-                        ]) !!}
+                    ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_hora', 'Horas(s)') !!}
                     @error('rpo_hora')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rpo_hora', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
-                        ]) !!}
+                    ]) !!}
                 </div>
 
             </div>
@@ -1380,11 +1379,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_mes', 'Mes(es)') !!}
                     @error('rto_mes')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rto_mes', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1393,11 +1392,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_semana', 'Semana(s)') !!}
                     @error('rto_semana')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rto_semana', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
@@ -1406,11 +1405,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_dia', 'Día(s)') !!}
                     @error('rto_dia')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rto_dia', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
@@ -1419,11 +1418,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_hora', 'Horas(s)') !!}
                     @error('rto_hora')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rto_hora', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1440,11 +1439,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_mes', 'Mes(es)') !!}
                     @error('wrt_mes')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('wrt_mes', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1453,11 +1452,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_semana', 'Semana(s)') !!}
                     @error('wrt_semana')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('wrt_semana', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
@@ -1466,11 +1465,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_dia', 'Día(s)') !!}
                     @error('wrt_dia')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('wrt_dia', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
@@ -1479,11 +1478,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_hora', 'Horas(s)') !!}
                     @error('wrt_hora')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('wrt_hora', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1501,11 +1500,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_mes', 'Mes(es)') !!}
                     @error('mtpd_mes')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('mtpd_mes', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1514,11 +1513,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_semana', 'Semana(s)') !!}
                     @error('mtpd_semana')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('mtpd_semana', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=52',
                         'required',
@@ -1527,11 +1526,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_dia', 'Día(s)') !!}
                     @error('mtpd_dia')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('mtpd_dia', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=365',
                         'required',
@@ -1540,11 +1539,11 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_hora', 'Horas(s)') !!}
                     @error('mtpd_hora')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('mtpd_hora', null, [
                         'class' => 'form-control form-control-sm',
-                        'placeholder' => '...',
+                        'placeholder' => '0',
                         'min=0',
                         'max=120',
                         'required',
@@ -1570,13 +1569,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('respaldo_q_20')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('respaldo_q_20', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -1587,27 +1586,26 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('respaldo_q_21')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('respaldo_q_21', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
-                    {!! Form::label('respaldo_q_22', '22. ¿Alguien más tiene acceso a este respaldo?',
-                    ['class' => 'required']) !!}
+                    {!! Form::label('respaldo_q_22', '22. ¿Alguien más tiene acceso a este respaldo?', ['class' => 'required']) !!}
                     @error('respaldo_q_22')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('respaldo_q_22', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -1618,13 +1616,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('respaldo_q_23')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('respaldo_q_23', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -1644,7 +1642,8 @@
                         data-target="#probabilidad_incidentes_disruptivos" data-whatever="@mdo" data-whatever="@mdo"
                         title="Dar click"><i class="fas fa-info-circle"></i></a>
                     </a>
-                    <label class="required">24. Por favor, indique los tipos de incidentes en los que el proceso se ha visto interrumpido y
+                    <label class="required">24. Por favor, indique los tipos de incidentes en los que el proceso se ha
+                        visto interrumpido y
                         aproximadamente cada cuando ha ocurrido.</label>
                 </div>
                 <hr>
@@ -1652,7 +1651,7 @@
                 <label class="col-sm-8 col-form-label">Indisponibilidad de las instalaciones
                     (oficinas), por bloqueo de acceso, manifestaciones.</label>
                 @error('disruptivos_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_1" required>
@@ -1671,7 +1670,7 @@
                 <label class="col-sm-8 col-form-label">Ataques cibernéticos o a la actividad
                     informática.</label>
                 @error('disruptivos_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_2" required>
@@ -1689,7 +1688,7 @@
 
                 <label class="col-sm-8 col-form-label">Desastres naturales y ambientales.</label>
                 @error('disruptivos_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_3" required>
@@ -1707,7 +1706,7 @@
 
                 <label class="col-sm-8 col-form-label">Enfermedades infecciosas.</label>
                 @error('disruptivos_q_4')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_4" required>
@@ -1725,7 +1724,7 @@
 
                 <label class="col-sm-8 col-form-label">Error Humano.</label>
                 @error('disruptivos_q_5')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_5" required>
@@ -1744,7 +1743,7 @@
                 <label class="col-sm-8 col-form-label">Fallas o indisponibilidad en la infraestructura
                     tecnológica (telecomunicaciones, procesamiento de información y redes).</label>
                 @error('disruptivos_q_6')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_6" required>
@@ -1763,7 +1762,7 @@
                 <label class="col-sm-8 col-form-label">Indisponibilidad de recursos humanos,
                     materiales o técnicos.</label>
                 @error('disruptivos_q_7')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_7" required>
@@ -1782,7 +1781,7 @@
                 <label class="col-sm-8 col-form-label">Interrupciones en el suministro de
                     energía.</label>
                 @error('disruptivos_q_8')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_8" required>
@@ -1801,7 +1800,7 @@
                 <label class="col-sm-8 col-form-label">Interrupciones ocurridas en servicios prestados
                     por terceros.</label>
                 @error('disruptivos_q_9')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_9" required>
@@ -1819,7 +1818,7 @@
 
                 <label class="col-sm-8 col-form-label">Sabotaje.</label>
                 @error('disruptivos_q_10')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_10" required>
@@ -1837,7 +1836,7 @@
 
                 <label class="col-sm-8 col-form-label">Terrorismo.</label>
                 @error('disruptivos_q_11')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_11" required>
@@ -1863,7 +1862,8 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-12">
-                    <label class="required">25. Por favor, indique el nivel de impacto en los que el proceso se ha visto involucrado.</label>
+                    <label class="required">25. Por favor, indique el nivel de impacto en los que el proceso se ha visto
+                        involucrado.</label>
                 </div>
 
                 <label class="col-sm-6 col-form-label offset-6"><strong>NIVELES</strong></label>
@@ -1890,28 +1890,28 @@
                             class="fas fa-info-circle"></i></a>
                     Afectación operacional (IO) </label>
                 @error('operacion_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('operacion_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('operacion_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_1" min="1" max="5" placeholder="..." required
+                        name="operacion_q_1" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_2" min="1" max="5" placeholder="..." required
+                        name="operacion_q_2" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" min="1" max="5" placeholder="..." required
+                        name="operacion_q_3" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->operacion_q_3) }}">
                 </div>
                 <hr>
@@ -1923,28 +1923,28 @@
                             class="fas fa-info-circle"></i></a>
                     Impacto Regulatorio (IR)</label>
                 @error('regulatorio_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('regulatorio_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('regulatorio_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_1" min="1" max="5" placeholder="..." required
+                        name="regulatorio_q_1" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->regulatorio_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_2" min="1" max="5" placeholder="..." required
+                        name="regulatorio_q_2" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->regulatorio_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_3" min="1" max="5" placeholder="..." required
+                        name="regulatorio_q_3" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->regulatorio_q_3) }}">
                 </div>
                 <hr>
@@ -1957,28 +1957,28 @@
                     Afectación en la Reputación / Imagen Pública o Política
                     (IIR)</label>
                 @error('reputacion_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('reputacion_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('reputacion_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_1" min="1" max="5" placeholder="..." required
+                        name="reputacion_q_1" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->reputacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_2" min="1" max="5" placeholder="..." required
+                        name="reputacion_q_2" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->reputacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_3" min="1" max="5" placeholder="..." required
+                        name="reputacion_q_3" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->reputacion_q_3) }}">
                 </div>
                 <hr>
@@ -1990,28 +1990,28 @@
                             class="fas fa-info-circle"></i></a>
                     Impacto Social (IS)</label>
                 @error('social_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('social_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('social_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_1" min="1" max="5" placeholder="..." required
+                        name="social_q_1" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->social_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_2" min="1" max="5" placeholder="..." required
+                        name="social_q_2" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->social_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_3" min="1" max="5" placeholder="..." required
+                        name="social_q_3" min="1" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->social_q_3) }}">
                 </div>
                 <hr>
@@ -2023,13 +2023,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('incidentes_q_26')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('incidentes_q_26', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
@@ -2041,13 +2041,13 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('incidentes_q_27')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('incidentes_q_27', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
-                        'placeholder' => '...',
+                        //                        'maxlength' => 255,
+                        'placeholder' => '0',
                         'required',
                     ]) !!}
                 </div>
