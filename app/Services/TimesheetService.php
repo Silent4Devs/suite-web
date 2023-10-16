@@ -239,13 +239,13 @@ class TimesheetService
         foreach ($tareas as $tarea) {
             if (!$tarea->horas->isEmpty()) {
                 foreach ($tarea->horas as $horas) {
-                    $total += $horas->horas_lunes;
-                    $total += $horas->horas_martes;
-                    $total += $horas->horas_miercoles;
-                    $total += $horas->horas_jueves;
-                    $total += $horas->horas_viernes;
-                    $total += $horas->horas_sabado;
-                    $total += $horas->horas_domingo;
+                    $total += floatval($horas->horas_lunes);
+                    $total += floatval($horas->horas_martes);
+                    $total += floatval($horas->horas_miercoles);
+                    $total += floatval($horas->horas_jueves);
+                    $total += floatval($horas->horas_viernes);
+                    $total += floatval($horas->horas_sabado);
+                    $total += floatval($horas->horas_domingo);
                 }
             }
         }
