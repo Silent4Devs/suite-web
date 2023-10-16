@@ -6,14 +6,15 @@
             @foreach ($cuentas as $cuenta)
                 <div class="col-3 mt-4">
                     <div class="card card-body justify-content-center"
-                        style="background-color: #a8e0fa; min-height:100px;">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-8 ">
+                        style="background-color: #b9f3fd; min-height:100px;">
+                        <div class="row align-items-center">
+                            <div class="col-8">
                                 <h6>{{ $cuenta->nombre }}</h6>
                             </div>
-                            <div class="col-4 ">
-                                <h6 class="d-inline mr-2">{{ $cuenta->count }}
-                                </h6> <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
+                            <div class="col-4 d-flex align-items-center">
+                                <h3 class="d-inline mr-2">{{ $cuenta->count }}
+                                </h3>
+                                <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
                             </div>
                         </div>
                     </div>
@@ -27,11 +28,11 @@
             <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-4">
                     <h6>Datos Generales*</h6>
-                    <label class="form-label select-label">Clausulas</label>
+                    <label class="form-label select-label">Cláusulas</label>
                     <select name="c_id" id="c_id"
                         class="form-control select {{ $errors->has('c_id') ? 'is-invalid' : '' }}"
-                        wire:model.defer="c_id">
-                        <option value="">Seleccione una Clausula</option>
+                        wire:model.defer="c_id" style="background-color: rgba(243, 243, 243, 0.826)">
+                        <option value="">Seleccione una Cláusula</option>
                         @foreach ($clausulas as $claus)
                             <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}</option>
                         @endforeach
@@ -70,7 +71,7 @@
                             @if ($view == 'edit')
                                 <div class="row">
                                     <div class="form-group col-sm-12">
-                                        <label class="form-label select-label">Clausulas</label>
+                                        <label class="form-label select-label">Cláusulas</label>
                                         <select name="c_edit_id" id="c_edit_id"
                                             class="form-control select {{ $errors->has('c_edit_id') ? 'is-invalid' : '' }}"
                                             wire:model.defer="c_edit_id" required>
@@ -116,7 +117,7 @@
                             <h5>Subtema</h5>
 
                             <div class="row">
-                                <div class="form-group col-sm-12">
+                                <div class="form-group col-sm-4">
                                     <label class="required" for="no_tipo">
                                         No.</label>
                                     <input type="number" min="1" max="100000"
@@ -128,12 +129,9 @@
                                         </div>
                                     @endif
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-sm-12">
+                                <div class="form-group col-sm-8">
                                     <label class="required" for="titulo">
-                                        Titulo</label>
+                                        Título</label>
                                     <input type="text"
                                         class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}"
                                         name="titulo" id="titulo" wire:model.defer="titulo" />
@@ -220,25 +218,25 @@
                     <tbody>
                         @foreach ($datas as $data)
                             <tr>
-                                <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
-                                <td style="min-width:100px;">{{ $data->descripcion }}</td>
-                                <td style="min-width:100px;">
+                                <td style="min-width:120px;">{{ $data->incumplimiento_requisito }}</td>
+                                <td style="min-width:320px;">{{ $data->descripcion }}</td>
+                                <td style="min-width:300px;">
                                     <div class="row">
-                                        <div class="form-group col-sm-6">
+                                        <div class="form-group col-sm-3">
                                             <label for="no_tipo">
-                                                No. de Tipo</label><br>
-                                            <input id="no_tipo" type="number" value="{{ $data->no_tipo }}"
+                                                No.</label><br>
+                                            <input class="form-control" type="number" value="{{ $data->no_tipo }}"
                                                 disabled>
                                         </div>
-                                        <div class="form-group col-sm-6">
+                                        <div class="form-group col-sm-9">
                                             <label for="titulo">
-                                                Titulo</label><br>
-                                            <input id="titulo" type="text" value="{{ $data->titulo }}"
-                                                disabled>
+                                                Título</label><br>
+                                            <input class="form-control" type="text" value="{{ $data->titulo }}"
+                                                disabled style="max-width: 200px">
                                         </div>
                                     </div>
                                 </td>
-                                <td style="min-width:40">
+                                <td style="min-width:40; text-align:right">
                                     <div class="dropdown">
                                         <div class="btn" type="button" data-toggle="dropdown"
                                             aria-expanded="false">

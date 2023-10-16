@@ -22,6 +22,14 @@
     <h5 class="col-12 titulo_general_funcion">Editar: Informe de Auditoría</h5>
     <div class="card mt-4">
         <div class="card-body">
+
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                    Datos Generales <sup>*</sup>
+                </div>
+                <hr style="width: 98%; margin:auto;">
+            </div>
+
             <form method="POST" class="row"
                 action="{{ route('admin.auditoria-internas.update', [$auditoriaInterna->id]) }}"
                 enctype="multipart/form-data">
@@ -120,19 +128,6 @@
                     <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.equipoauditoria_helper') }}</span>
                 </div>
 
-                {{-- <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="clausulas"> Criterios de auditoría</label>
-                <select class="form-control {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas[]"
-                    id="clausulas" multiple>
-                    <!-- <option value disabled >Selecciona una opción</option> -->
-                    @foreach ($clausulas as $clausula)
-                        <option value="{{ $clausula->id }}" {{ in_array(old('clausulas',$clausula->id),$auditoriaInterna->clausulas->pluck('id')->toArray()) ? 'selected' : '' }}>
-                            {{ $clausula->nombre }}
-                        </option>
-                    @endforeach
-                </select>
-                <span class="errors tipo_error"></span>
-            </div> --}}
                 <div class="form-group col-md-6 mb-5">
                     <label for="auditorlider_id">Auditor líder</label>
                     <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}"
@@ -166,7 +161,7 @@
     </div>
     <div class="row">
         <div class="form-group col-12 text-right">
-            <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Cancelar</a>
+            <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Regresar</a>
             <button class="btn btn-danger" type="submit">
                 {{ trans('global.save') }}
             </button>
@@ -593,6 +588,7 @@
                     alert('Por favor firme el area designada.');
                 } else {
                     var dataURL = signaturePad.toDataURL();
+                    var comentariosValue = document.getElementById('comentarios').value;
                     var repId = this.getAttribute('data-reporte');
 
                     fetch('{{ route('admin.auditoria-internas.storeFirmaReporteLider', ['reporteid' => ':reporteauditoria']) }}'
@@ -604,7 +600,8 @@
                                     'X-CSRF-Token': '{{ csrf_token() }}',
                                 },
                                 body: JSON.stringify({
-                                    signature: dataURL
+                                    signature: dataURL,
+                                    comentarios: comentariosValue
                                 }),
                             })
                         .then(response => response.json())
@@ -612,7 +609,6 @@
                             if (data.success) {
                                 Swal.fire(
                                     'El participante ha sido notificado',
-                                    'success'
                                 ).then(() => {
                                     window.location.href =
                                         '{{ route('admin.auditoria-internas.index') }}';
@@ -620,7 +616,6 @@
                             } else {
                                 Swal.fire(
                                     'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador',
-                                    'success'
                                 ).then(() => {
                                     window.location.href =
                                         '{{ route('admin.auditoria-internas.index') }}';
