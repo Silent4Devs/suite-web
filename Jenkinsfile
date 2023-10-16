@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-  tools {
-    nodejs "node"
-  }
-
   parameters {
     string(name: 'container_name', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
     string(name: 'image_name', defaultValue: 'pagina_img', description: 'Nombre de la imagene docker.')
