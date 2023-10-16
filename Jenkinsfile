@@ -2,10 +2,10 @@ pipeline {
   agent any
 
   parameters {
-    string(name: 'container_name', defaultValue: 'nginx-tabantaj', description: 'Nombre del contenedor de dockers.')
-    string(name: 'image_name', defaultValue: 'nginx:stable-alpine', description: 'Nombre de la imagene dockers.')
+    string(name: 'container_name', defaultValue: 'php-tabantaj', description: 'Nombre del contenedor de dockers.')
+    string(name: 'image_name', defaultValue: 'php-tabantaj', description: 'Nombre de la imagene dockers.')
     string(name: 'tag_image', defaultValue: 'stagging', description: 'Tag de la imagen de la página.')
-    string(name: 'container_port', defaultValue: '80', description: 'Puerto que usa el contenedor')
+    string(name: 'container_port', defaultValue: '90', description: 'Puerto que usa el contenedor')
   }
 
   stages {
@@ -14,6 +14,7 @@ pipeline {
         git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
       }
     }
+
 
     stage('build') {
       steps {
@@ -34,7 +35,7 @@ pipeline {
 
     stage('deploy') {
       steps {
-        sh 'docker run -d -p ${container_port}:80 --name ${container_name} ${image_name}:${tag_image}'
+        sh 'docker run -d -p ${container_port}:00 --name ${container_name} ${image_name}:${tag_image}'
       }
     }
   }
