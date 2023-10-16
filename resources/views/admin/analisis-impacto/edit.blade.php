@@ -1901,17 +1901,17 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_1" min="1" max="5" placeholder="0" required
+                        name="operacion_q_1" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_2" min="1" max="5" placeholder="0" required
+                        name="operacion_q_2" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" min="1" max="5" placeholder="0" required
+                        name="operacion_q_3" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->operacion_q_3) }}">
                 </div>
                 <hr>
@@ -1934,17 +1934,17 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_1" min="1" max="5" placeholder="0" required
+                        name="regulatorio_q_1" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->regulatorio_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_2" min="1" max="5" placeholder="0" required
+                        name="regulatorio_q_2" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->regulatorio_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_3" min="1" max="5" placeholder="0" required
+                        name="regulatorio_q_3" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->regulatorio_q_3) }}">
                 </div>
                 <hr>
@@ -1968,17 +1968,17 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_1" min="1" max="5" placeholder="0" required
+                        name="reputacion_q_1" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->reputacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_2" min="1" max="5" placeholder="0" required
+                        name="reputacion_q_2" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->reputacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_3" min="1" max="5" placeholder="0" required
+                        name="reputacion_q_3" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->reputacion_q_3) }}">
                 </div>
                 <hr>
@@ -2001,17 +2001,17 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_1" min="1" max="5" placeholder="0" required
+                        name="social_q_1" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->social_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_2" min="1" max="5" placeholder="0" required
+                        name="social_q_2" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->social_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_3" min="1" max="5" placeholder="0" required
+                        name="social_q_3" min="0" max="5" placeholder="0" required
                         value="{{ old('meta', $cuestionario->social_q_3) }}">
                 </div>
                 <hr>
