@@ -1,37 +1,48 @@
 pipeline {
-    agent any
+  agent any
 
-    stages {
-        stage('Limpieza de Espacio de Trabajo') {
-            steps {
-                deleteDir()
-            }
-        }
+  tools {
+    nodejs "node"
+  }
 
-        stage('Build') {
-            steps {
-                // git 'https://gitlab.com/silent4business/tabantaj.git'
-                // sh 'docker-compose up --build -d'
-                sh 'php composer install'
-                sh 'php php artisan key:generate'
-                sh 'php php artisan migrate'
-            }
-        }
+  parameters {
+    string(name: 'container_name', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
+    string(name: 'image_name', defaultValue: 'pagina_img', description: 'Nombre de la imagene docker.')
+    string(name: 'tag_image', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
+    string(name: 'container_port', defaultValue: '80', description: 'Puerto que usa el contenedor')
+  }
 
-        stage('Desplegar en Stagging') {
-             steps {
-                sh 'ssh desarrollo@192.168.9.78 "cd  var/contenedor/tabantaj && git pull"'
-             }
-        }
-
+  stages {
+    stage('install') {
+      steps {
+        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
       }
-
-     post {
-        success {
-            echo 'Pipeline exitoso, se ha desplegado en stagging.'
-        }
-        failure {
-            echo 'Pipeline fallido, no se ha desplegado en stagging.'
-        }
     }
+
+
+    stage('build') {
+      steps {
+        dir('tabantaj') {
+          script {
+            try {
+              sh 'docker stop ${container_name}'
+              sh 'docker rm ${container_name}'
+              sh 'docker rmi ${image_name}:${tag_image}'
+            } catch (Exception e) {
+              echo 'Exception occurred: ' + e.toString()
+            }
+          }
+          sh 'npm run build'
+          sh 'docker build -t ${image_name}:${tag_image} .'
+        }
+      }
+    }
+
+    stage('deploy') {
+      steps {
+        sh 'docker run -d -p ${container_port}:80 --name ${container_name} ${image_name}:${tag_image}'
+      }
+    }
+  }
+
 }
