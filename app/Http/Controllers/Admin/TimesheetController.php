@@ -262,6 +262,13 @@ class TimesheetController extends Controller
 
         foreach ($request->timesheet as $index => $hora) {
             if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
+
+                foreach ($hora as $key => $value) {
+                    if ($value === '') {
+                        $hora[$key] = null;
+                    }
+                }
+
                 $horas_nuevas = TimesheetHoras::create([
                     'timesheet_id' => $timesheet_nuevo->id,
                     'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
@@ -518,7 +525,7 @@ class TimesheetController extends Controller
             }
         }
 
-        $this->notificacionhorassobrepasadas($usuario->empleado->id);
+        //$this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
     }
@@ -1081,7 +1088,7 @@ class TimesheetController extends Controller
     public function notificacionhorassobrepasadas($id)
     {
         // dd("Si llega a la funcion");
-        $verificacion_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
+        $verificacion_proyectos = TimesheetProyectoEmpleado::select('id', 'empleado_id')->where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
         // dd($emp_proyectos);
         if ($verificacion_proyectos) {
             $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
