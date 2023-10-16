@@ -15,7 +15,7 @@ pipeline {
       }
     }
 
-
+    //build
     stage('build') {
       steps {
           script {
