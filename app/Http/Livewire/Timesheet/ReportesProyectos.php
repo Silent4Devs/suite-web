@@ -73,7 +73,7 @@ class ReportesProyectos extends Component
 
     public function mount()
     {
-        $this->areas = Area::getAll();
+        $this->areas = Area::getIdNameAll();
         $this->organizacion = Organizacion::getFirst();
     }
 
@@ -146,14 +146,14 @@ class ReportesProyectos extends Component
 
         $this->emit('scriptTabla');
 
-        $this->areas = Area::getAll();
+        $this->areas = Area::getIdNameAll();
 
         $this->horas_totales_todos_proyectos = 0;
 
         //calendario tabla
         $calendario_array = [];
 
-        $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+        $fecha_registro_timesheet = Organizacion::getFirst()->fecha_registro_timesheet;
 
         if ($this->fecha_inicio) {
             $fecha_inicio_complit_timesheet = Carbon::parse($fecha_registro_timesheet)->lt($this->fecha_inicio) ? $this->fecha_inicio : $fecha_registro_timesheet;
@@ -236,8 +236,8 @@ class ReportesProyectos extends Component
 
         $proyectos_array = collect();
         if ($this->area_id) {
-            $this->proyectos = TimesheetProyecto::get()->filter(function ($item) {
-                return $item->areas->contains(Area::select('id', 'area')->find($this->area_id));
+            $this->proyectos = TimesheetProyecto::getAll()->filter(function ($item) {
+                return $item->areas->contains(Area::getIdNameAll()->find($this->area_id));
             });
         } else {
             $this->proyectos = TimesheetProyecto::getAll();
