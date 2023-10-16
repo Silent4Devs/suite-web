@@ -295,7 +295,7 @@ class TimesheetController extends Controller
             }
         }
 
-        $this->notificacionhorassobrepasadas($usuario->empleado->id);
+        //$this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
@@ -518,7 +518,7 @@ class TimesheetController extends Controller
             }
         }
 
-        $this->notificacionhorassobrepasadas($usuario->empleado->id);
+        //$this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
     }
@@ -1081,7 +1081,7 @@ class TimesheetController extends Controller
     public function notificacionhorassobrepasadas($id)
     {
         // dd("Si llega a la funcion");
-        $verificacion_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
+        $verificacion_proyectos = TimesheetProyectoEmpleado::select('id', 'empleado_id')->where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
         // dd($emp_proyectos);
         if ($verificacion_proyectos) {
             $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
