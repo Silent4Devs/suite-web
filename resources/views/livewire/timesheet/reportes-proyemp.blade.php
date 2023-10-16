@@ -148,7 +148,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <table class="table w-100 datatable_timesheet_registros_reportes" id="proyemp" hidden>
+                {{--  <table class="table w-100 datatable_timesheet_registros_reportes" id="proyemp" hidden>
                     <thead class="w-100">
                         <tr>
                             <th>Fecha Inicio </th>
@@ -159,41 +159,41 @@
                             <th>Tarea</th>
                             <th>Descripcion</th>
                             <th>Horas Totales de la Tarea</th>
-                            {{-- <th>Opciones</th> --}}
-                        </tr>
-                    </thead>
+                            {{-- <th>Opciones</th>
+                </tr>
+                </thead>
 
-                    <tbody>
-                        @foreach ($times as $time)
-                            <tr class="tr_{{ $time->estatus }}">
-                                <td>
-                                    {!! $time->timesheet->inicioLetras !!}
-                                </td>
-                                <td>
-                                    {!! $time->timesheet->finLetras !!}
-                                </td>
-                                <td>
-                                    {{ $time->timesheet->empleado->name }}
-                                </td>
-                                <td>
-                                    {{ $time->timesheet->aprobador->name }}
-                                </td>
-                                <td>
-                                    {{ $time->proyecto->proyecto }}
-                                </td>
-                                <td>
-                                    {{ $time->tarea->tarea }}
-                                </td>
-                                <td>
-                                    {{ $time->descripcion }}
-                                </td>
-                                <td>
-                                    {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <tbody>
+                    @foreach ($times as $time)
+                        <tr class="tr_{{ $time->estatus }}">
+                            <td>
+                                {!! $time->timesheet->inicioLetras !!}
+                            </td>
+                            <td>
+                                {!! $time->timesheet->finLetras !!}
+                            </td>
+                            <td>
+                                {{ $time->timesheet->empleado->name }}
+                            </td>
+                            <td>
+                                {{ $time->timesheet->aprobador->name }}
+                            </td>
+                            <td>
+                                {{ $time->proyecto->proyecto }}
+                            </td>
+                            <td>
+                                {{ $time->tarea->tarea }}
+                            </td>
+                            <td>
+                                {{ $time->descripcion }}
+                            </td>
+                            <td>
+                                {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+                </table> --}}
 
                 <div class="row">
                     <div class="col-6 p-0">
