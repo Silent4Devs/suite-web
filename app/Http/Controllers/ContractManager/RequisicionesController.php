@@ -372,6 +372,7 @@ class RequisicionesController extends Controller
      */
     public function pdf($id)
     {
+        //prueba jenkis
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
         $organizacion = Organizacion::select('empresa', 'logotipo')->first();
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisiciones->id)->pluck('proveedor_id')->toArray();
