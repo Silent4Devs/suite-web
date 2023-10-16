@@ -302,7 +302,7 @@ class TimesheetController extends Controller
             }
         }
 
-        $this->notificacionhorassobrepasadas($usuario->empleado->id);
+        //$this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
