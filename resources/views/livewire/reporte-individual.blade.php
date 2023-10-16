@@ -12,8 +12,8 @@
                                 <h6>{{ $cuenta->nombre }}</h6>
                             </div>
                             <div class="col-4 d-flex align-items-center">
-                                <h6 class="d-inline mr-2">{{ $cuenta->count }}
-                                </h6>
+                                <h3 class="d-inline mr-2">{{ $cuenta->count }}
+                                </h3>
                                 <i class="fa-solid fa-file-circle-check iconos-crear d-inline"></i>
                             </div>
                         </div>

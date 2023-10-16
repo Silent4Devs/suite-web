@@ -1026,7 +1026,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('auditoria-internas/reporte-rechazado/{reporteid}', 'AuditoriaInternaController@rechazoReporteIndividual')->name('auditoria-internas.rechazoReporteIndividual');
         Route::post('auditoria-internas/{reporteid}/storeFirmaReporteLider', 'AuditoriaInternaController@storeFirmaReporteLider')->name('auditoria-internas.storeFirmaReporteLider');
 
-        Route::get('auditoria-internas/reportes-crd', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
+        Route::get('auditoria-reportes/cards', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
 
         //Clasificacion Auditorias
         Route::get("auditorias/clasificacion-auditorias", "ClasificacionesAuditoriasController@index")->name("auditoria-clasificacion");
