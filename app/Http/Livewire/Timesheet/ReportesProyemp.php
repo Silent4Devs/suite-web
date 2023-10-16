@@ -64,8 +64,8 @@ class ReportesProyemp extends Component
     public function mount()
     {
         $this->estatus = null;
-        $this->areas = Area::getAll();
-        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']])->where('estatus', 'alta');
+        $this->areas = Area::getIdNameAll();
+        $this->emp = Empleado::getIdNameAll(['orderBy' => ['name', 'ASC']])->where('estatus', 'alta');
         $this->proy = TimesheetProyecto::getAll();
     }
 

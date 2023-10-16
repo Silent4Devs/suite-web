@@ -171,6 +171,22 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getIdNameAll(array $options = [])
+    {
+        // Generate a unique cache key based on the options provided
+
+        return Cache::remember('Empleados:empleados_id_name_all', 3600 * 12, function () use ($options) {
+            $query = self::select('id', 'name');
+
+            if (isset($options['orderBy'])) {
+                $orderBy = $options['orderBy'];
+                $query->orderBy($orderBy[0], $orderBy[1]);
+            }
+
+            return $query->get();
+        });
+    }
+
     public static function getEmpleadoCurriculum($id)
     {
         return
