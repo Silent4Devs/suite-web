@@ -15,28 +15,34 @@ pipeline {
       }
     }
 
-    stage('build') {
-      steps {
-        dir('tabantaj') {
-          script {
-            try {
-              sh 'docker stop ${container_name}'
-              sh 'docker rm ${container_name}'
-              sh 'docker rmi ${image_name}:${tag_image}'
-            } catch (Exception e) {
-              echo 'Exception occurred: ' + e.toString()
+    stage('Desplegar en Producción') {
+            steps {
+                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull"'
             }
-          }
-          sh 'docker build -t ${image_name}:${tag_image} .'
-        }
-      }
     }
 
-    stage('deploy') {
-      steps {
-        sh 'docker run -d -p ${container_port}:80 --name ${container_name} ${image_name}:${tag_image}'
-      }
-    }
-  }
+//     stage('build') {
+//       steps {
+//         dir('tabantaj') {
+//           script {
+//             try {
+//               sh 'docker stop ${container_name}'
+//               sh 'docker rm ${container_name}'
+//               sh 'docker rmi ${image_name}:${tag_image}'
+//             } catch (Exception e) {
+//               echo 'Exception occurred: ' + e.toString()
+//             }
+//           }
+//           sh 'docker build -t ${image_name}:${tag_image} .'
+//         }
+//       }
+//     }
+
+//     stage('deploy') {
+//       steps {
+//         sh 'docker run -d -p ${container_port}:80 --name ${container_name} ${image_name}:${tag_image}'
+//       }
+//     }
+//   }
 
 }
