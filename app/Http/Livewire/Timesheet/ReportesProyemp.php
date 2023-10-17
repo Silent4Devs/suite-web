@@ -246,15 +246,27 @@ class ReportesProyemp extends Component
             // Get the XLS content from the response
             $xlsContent = $response->getBody()->getContents();
 
-            $this->alert('success', $xlsContent);
+            $this->flash('success', $xlsContent, [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+                'text' => 'Revise su bandeja de correo',
+                'timerProgressBar' => true,
+            ]);
         } else {
             // Handle the error if the request is not successful
+            $this->flash('error', $response->status(), [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+                'text' => 'Failed to get data from the API',
+                'timerProgressBar' => true,
+            ]);
+
             return response()->json([
                 'message' => 'Failed to get data from the API',
             ], $response->status());
         }
-
-        redirect()->url('timesheet/proyectos/reporte/proyemp');
     }
 
     // public function todos()
