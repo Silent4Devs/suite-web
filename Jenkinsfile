@@ -10,7 +10,7 @@ pipeline {
     stage('build') {
       steps {
          script {
-            docker.build('tabantaj:v1')
+            docker.build('php-tabantaj:latest')
          }
       }
     }
