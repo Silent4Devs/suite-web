@@ -231,6 +231,7 @@ class MatrizHeatmap extends Component
         }
 
         //$matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
+        dd($matriz_query->get());
 
         foreach ($matriz_query->get() as $key => $value) {
             switch ($value->probabilidad) {
