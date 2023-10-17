@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use EloquentFilter\Filterable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TimesheetHoras extends Model implements Auditable
 {
@@ -29,6 +30,14 @@ class TimesheetHoras extends Model implements Auditable
         'descripcion',
         'empleado_id',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Timesheet:timesheet_horas_all', 3600, function () {
+            return self::select('id', 'timesheet_id', 'horas_lunes', 'horas_martes', 'horas_miercoles', 'horas_jueves', 'horas_viernes', 'horas_sabado', 'horas_domingo')->orderBy('id', 'asc')->get();
+        });
+    }
 
     public function timesheet()
     {

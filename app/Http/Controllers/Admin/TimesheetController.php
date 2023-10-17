@@ -317,8 +317,8 @@ class TimesheetController extends Controller
     public function show($id)
     {
         $timesheet = Timesheet::find($id);
-        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas = TimesheetHoras::getAll()->where('timesheet_id', $id);
+        $horas_count = $horas->count();
 
         $hoy = Carbon::now();
         $hoy_format = $hoy->format('d/m/Y');
@@ -1073,7 +1073,7 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::getAll()->find($id);
         $clientes = TimesheetCliente::getAll();
-        $areas = Area::getAll();
+        $areas = Area::getIdNameAll();
         $sedes = Sede::getAll();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
