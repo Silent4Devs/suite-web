@@ -17,21 +17,8 @@ pipeline {
 
     stage('build') {
       steps {
-        dir('tabantaj') {
-          script {
-            try {
-              sh 'docker stop ${container_name}'
-              sh 'docker rm ${container_name}'
-              sh 'docker rmi ${image_name}:${tag_image}'
-            } catch (Exception e) {
-              echo 'Exception occurred: ' + e.toString()
-            }
-          }
-
-          sh 'docker build -t php-tabantaj ./web-app'
-          sh 'docker build -t postgres-tabantaj ./database'
-          sh 'docker push php-tabantaj'
-          sh 'docker push postgres-tabantaj'
+         script {
+          dockerImage = docker.build("php-tabantaj", "./infra/php/")
         }
       }
     }
