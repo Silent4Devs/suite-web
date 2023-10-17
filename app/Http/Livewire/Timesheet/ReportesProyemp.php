@@ -9,14 +9,17 @@ use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ReportesProyemp extends Component
 {
     use WithPagination;
+    use LivewireAlert;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -237,24 +240,18 @@ class ReportesProyemp extends Component
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,
             'proy_id' => $this->proy_id,
+            'solicitante' => Auth::user()->email,
         ]);
 
         if ($response->successful()) {
             // Get the XLS content from the response
             $xlsContent = $response->getBody()->getContents();
 
-            $headers = [
-                'Content-Type' => 'application/octet-stream',
-                'Content-Disposition' => 'attachment; filename=timesheet_report.xlsx',
-            ];
-
-            return response()->streamDownload(function () use ($xlsContent) {
-                echo $xlsContent;
-            }, 'timesheet_report.xlsx', $headers);
+            $this->alert('success', $xlsContent);
         } else {
             // Handle the error if the request is not successful
             return response()->json([
-                'message' => 'Failed to retrieve the XLS file from the API',
+                'message' => 'Failed to get data from the API',
             ], $response->status());
         }
     }
