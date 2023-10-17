@@ -38,7 +38,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $this->proyecto = TimesheetProyecto::getAll()->find($proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
-        $this->empleados = Empleado::getaltaAll();
+        $this->empleados = Empleado::getAltaEmpleados();
     }
 
     public function render()
@@ -52,13 +52,23 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
             $tot_horas_proyecto = 0;
 
-            $sumalun = floatval($times->sum('horas_lunes'));
-            $sumamar = floatval($times->sum('horas_martes'));
-            $sumamie = floatval($times->sum('horas_miercoles'));
-            $sumajue = floatval($times->sum('horas_jueves'));
-            $sumavie = floatval($times->sum('horas_viernes'));
-            $sumasab = floatval($times->sum('horas_sabado'));
-            $sumadom = floatval($times->sum('horas_domingo'));
+            $sumalun = 0;
+            $sumamar = 0;
+            $sumamie = 0;
+            $sumajue = 0;
+            $sumavie = 0;
+            $sumasab = 0;
+            $sumadom = 0;
+
+            foreach ($times as $time) {
+                $sumalun += floatval($time->horas_lunes);
+                $sumamar += floatval($time->horas_martes);
+                $sumamie += floatval($time->horas_miercoles);
+                $sumajue += floatval($time->horas_jueves);
+                $sumavie += floatval($time->horas_viernes);
+                $sumasab += floatval($time->horas_sabado);
+                $sumadom += floatval($time->horas_domingo);
+            }
 
             $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
 
@@ -89,15 +99,14 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function addEmpleado()
     {
-        $empleado_add_proyecto = Empleado::find($this->empleado_añadido);
+        $empleado_add_proyecto = Empleado::select('id', 'area_id')->find($this->empleado_añadido);
+
         if ($this->proyecto->tipo === 'Externo') {
             $this->validate([
                 'horas_asignadas' => ['required'],
                 'costo_hora' => ['required'],
             ]);
-        }
 
-        if ($this->proyecto->tipo === 'Externo') {
             $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,
@@ -122,6 +131,8 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
+
+        $this->refresh();
     }
 
     public function editEmpleado($id, $datos)
@@ -169,6 +180,8 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
+
+        $this->refresh();
     }
 
     public function bloquearEmpleado($id)
@@ -195,6 +208,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ]);
         }
         // dd($emp_bloq->usuario_bloqueado);
+        $this->refresh();
     }
 
     public function empleadoProyectoRemove($id)
