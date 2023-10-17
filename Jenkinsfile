@@ -14,7 +14,7 @@ pipeline {
         git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
       }
     }
-    //build
+
     stage('build') {
       steps {
         dir('tabantaj') {
