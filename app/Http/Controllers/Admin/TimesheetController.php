@@ -149,7 +149,7 @@ class TimesheetController extends Controller
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::getFirst();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas_count = TimesheetHoras::getData()->where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.create-copia', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
@@ -358,7 +358,7 @@ class TimesheetController extends Controller
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::getFirst();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas_count = TimesheetHoras::getData()->where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
