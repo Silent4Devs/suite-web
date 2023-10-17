@@ -55,18 +55,18 @@ class TablaTareasTimesheet extends Component
     public function render()
     {
         if ($this->origen == 'tareas') {
-            $this->proyectos = TimesheetProyecto::getAll();
+            $this->proyectos = TimesheetProyecto::getIdNameAll();
 
             if ($this->proyecto_filtro) {
-                $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_filtro);
+                $this->tareas = TimesheetTarea::getIdTareasAll()->where('proyecto_id', $this->proyecto_filtro);
             } else {
-                $this->tareas = TimesheetTarea::getAll();
+                $this->tareas = TimesheetTarea::getIdTareasAll();
             }
         }
 
         if ($this->origen == 'tareas-proyectos') {
-            $this->proyecto_seleccionado = TimesheetProyecto::getAll()->find($this->proyecto_id);
-            $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_id);
+            $this->proyecto_seleccionado = TimesheetProyecto::getIdNameAll()->find($this->proyecto_id);
+            $this->tareas = TimesheetTarea::getIdTareasAll()->where('proyecto_id', $this->proyecto_id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
 
@@ -102,7 +102,7 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarNameTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::find($id);
+        $tarea_actualizada = TimesheetTarea::getIdTareasAll()->find($id);
 
         $tarea_actualizada->update([
             'tarea' => $value,
@@ -112,7 +112,7 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarAreaTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::find($id);
+        $tarea_actualizada = TimesheetTarea::getIdTareasAll()->find($id);
 
         if ($value == 0) {
             $area_id = null;
@@ -132,7 +132,7 @@ class TablaTareasTimesheet extends Component
     public function llenarAreas($id)
     {
         if ($id) {
-            $this->proyecto_seleccionado = TimesheetProyecto::getAll()->find($id);
+            $this->proyecto_seleccionado = TimesheetProyecto::getIdNameAll()->find($id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         } else {
             $this->area_seleccionar = [];

@@ -33,6 +33,13 @@ class TimesheetTarea extends Model implements Auditable
         });
     }
 
+    public static function getIdTareasAll()
+    {
+        return Cache::remember('TimesheetTarea:timesheettarea_all', 3600 * 24, function () {
+            return self::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')->orderByDesc('id')->get();
+        });
+    }
+
     public function proyecto()
     {
         return $this->belongsTo(TimesheetProyecto::class, 'proyecto_id');
