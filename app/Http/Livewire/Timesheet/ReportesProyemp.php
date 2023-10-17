@@ -2,18 +2,19 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use App\Exports\ReporteColaboradorTarea;
+use Carbon\Carbon;
 use App\Models\Area;
+use Livewire\Component;
 use App\Models\Empleado;
 use App\Models\Timesheet;
+use Livewire\WithPagination;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use Livewire\Component;
-use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Cache;
+use App\Exports\ReporteColaboradorTarea;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ReportesProyemp extends Component
@@ -137,27 +138,25 @@ class ReportesProyemp extends Component
     {
         // dd($this->fecha_inicio);
         //Query para obtener los timesheet y filtrarlo
-        $query = TimesheetHoras::with('tarea.areaData')
-            ->withwhereHas('timesheet', function ($query) {
-                if ($this->emp_id == 0) {
-                    return $query;
-                } else {
-                    $query->where('empleado_id', $this->emp_id);
-                }
-            })
-            ->withwhereHas('timesheet', function ($query) {
-                $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia');
-            })
-            ->withwhereHas('proyecto', function ($query) {
-                if ($this->proy_id == 0) {
-                    return $query;
-                } else {
-                    $query->where('id', $this->proy_id);
-                }
-            });
+        $times = Cache::remember('TimesheeHoras:timesheethoras_all', 3600 * 4, function () {
+            return TimesheetHoras::with('tarea.areaData')
+                ->whereHas('timesheet', function ($query) {
+                    if ($this->emp_id != 0) {
+                        $query->where('empleado_id', $this->emp_id);
+                    }
+                    $query->where('fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
+                        ->where('fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'))
+                        ->orderByDesc('fecha_dia');
+                })
+                ->whereHas('proyecto', function ($query) {
+                    if ($this->proy_id != 0) {
+                        $query->where('id', $this->proy_id);
+                    }
+                })
+                ->fastPaginate($this->perPage);
+        });
 
-        $this->totalRegistrosMostrando = $query->count();
-        $times = $query->fastPaginate($this->perPage);
+        $this->totalRegistrosMostrando = $times->total();
 
         // $this->totalRegistrosMostrando = $proyemp->count();
 
