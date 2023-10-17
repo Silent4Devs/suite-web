@@ -89,7 +89,9 @@
                             @foreach ($horas as $index => $hora)
                                 <tr>
                                     <td>
-                                        <div class="form-control" style="height:unset;">{{ $hora->proyecto->identificador }} - {{ $hora->proyecto->proyecto }}
+                                        <div class="form-control" style="height:unset;">{{ $hora->proyecto->identificador }}
+                                            -
+                                            {{ $hora->proyecto->proyecto }}
                                         </div>
                                     </td>
                                     <td>
