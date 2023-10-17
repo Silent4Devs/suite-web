@@ -1101,19 +1101,30 @@ class TimesheetController extends Controller
                 ->where('empleado_id', '=', $ep->empleado_id)
                 ->get();
 
-            $tot_horas_proyecto = 0;
-
-            $sumalun = floatval(empty($times->sum('horas_lunes')) ? 0 : $times->sum('horas_lunes'));
-            $sumamar = floatval(empty($times->sum('horas_martes')) ? 0 : $times->sum('horas_martes'));
-            $sumamie = floatval(empty($times->sum('horas_miercoles')) ? 0 : $times->sum('horas_miercoles'));
-            $sumajue = floatval(empty($times->sum('horas_jueves')) ? 0 : $times->sum('horas_jueves'));
-            $sumavie = floatval(empty($times->sum('horas_viernes')) ? 0 : $times->sum('horas_viernes'));
-            $sumasab = floatval(empty($times->sum('horas_sabado')) ? 0 : $times->sum('horas_sabado'));
-            $sumadom = floatval(empty($times->sum('horas_domingo')) ? 0 : $times->sum('horas_domingo'));
-
-            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
-
             if ($ep->proyecto->tipo === 'Externo') {
+
+                $tot_horas_proyecto = 0;
+
+                $sumalun = 0;
+                $sumamar = 0;
+                $sumamie = 0;
+                $sumajue = 0;
+                $sumavie = 0;
+                $sumasab = 0;
+                $sumadom = 0;
+
+                foreach ($times as $time) {
+                    $sumalun += floatval($time->horas_lunes);
+                    $sumamar += floatval($time->horas_martes);
+                    $sumamie += floatval($time->horas_miercoles);
+                    $sumajue += floatval($time->horas_jueves);
+                    $sumavie += floatval($time->horas_viernes);
+                    $sumasab += floatval($time->horas_sabado);
+                    $sumadom += floatval($time->horas_domingo);
+                }
+
+                $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
+
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
                     $empleado_query = Empleado::select('id', 'name', 'email', 'foto')->get();
