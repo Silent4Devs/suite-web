@@ -38,7 +38,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $this->proyecto = TimesheetProyecto::getAll()->find($proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
-        $this->empleados = Empleado::getaltaAll();
+        $this->empleados = Empleado::getAltaEmpleados();
     }
 
     public function render()
@@ -99,15 +99,14 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function addEmpleado()
     {
-        $empleado_add_proyecto = Empleado::find($this->empleado_añadido);
+        $empleado_add_proyecto = Empleado::select('id', 'area_id')->find($this->empleado_añadido);
+
         if ($this->proyecto->tipo === 'Externo') {
             $this->validate([
                 'horas_asignadas' => ['required'],
                 'costo_hora' => ['required'],
             ]);
-        }
 
-        if ($this->proyecto->tipo === 'Externo') {
             $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,
@@ -132,6 +131,8 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
+
+        $this->refresh();
     }
 
     public function editEmpleado($id, $datos)
@@ -179,6 +180,8 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
+
+        $this->refresh();
     }
 
     public function bloquearEmpleado($id)
@@ -205,6 +208,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ]);
         }
         // dd($emp_bloq->usuario_bloqueado);
+        $this->refresh();
     }
 
     public function empleadoProyectoRemove($id)
