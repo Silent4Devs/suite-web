@@ -302,7 +302,7 @@ class TimesheetController extends Controller
             }
         }
 
-        //$this->notificacionhorassobrepasadas($usuario->empleado->id);
+        $this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
@@ -525,7 +525,7 @@ class TimesheetController extends Controller
             }
         }
 
-        //$this->notificacionhorassobrepasadas($usuario->empleado->id);
+        $this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
     }
@@ -1103,13 +1103,13 @@ class TimesheetController extends Controller
 
             $tot_horas_proyecto = 0;
 
-            $sumalun = floatval($times->sum('horas_lunes'));
-            $sumamar = floatval($times->sum('horas_martes'));
-            $sumamie = floatval($times->sum('horas_miercoles'));
-            $sumajue = floatval($times->sum('horas_jueves'));
-            $sumavie = floatval($times->sum('horas_viernes'));
-            $sumasab = floatval($times->sum('horas_sabado'));
-            $sumadom = floatval($times->sum('horas_domingo'));
+            $sumalun = floatval(empty($times->sum('horas_lunes')) ? 0 : $times->sum('horas_lunes'));
+            $sumamar = floatval(empty($times->sum('horas_martes')) ? 0 : $times->sum('horas_martes'));
+            $sumamie = floatval(empty($times->sum('horas_miercoles')) ? 0 : $times->sum('horas_miercoles'));
+            $sumajue = floatval(empty($times->sum('horas_jueves')) ? 0 : $times->sum('horas_jueves'));
+            $sumavie = floatval(empty($times->sum('horas_viernes')) ? 0 : $times->sum('horas_viernes'));
+            $sumasab = floatval(empty($times->sum('horas_sabado')) ? 0 : $times->sum('horas_sabado'));
+            $sumadom = floatval(empty($times->sum('horas_domingo')) ? 0 : $times->sum('horas_domingo'));
 
             $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
 
