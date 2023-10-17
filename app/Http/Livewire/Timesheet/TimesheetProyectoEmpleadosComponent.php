@@ -131,8 +131,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
-
-        $this->refresh();
     }
 
     public function editEmpleado($id, $datos)
@@ -180,8 +178,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
-
-        $this->refresh();
     }
 
     public function bloquearEmpleado($id)
@@ -208,7 +204,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ]);
         }
         // dd($emp_bloq->usuario_bloqueado);
-        $this->refresh();
+
     }
 
     public function empleadoProyectoRemove($id)

@@ -54,6 +54,7 @@ class RequisicionesEditComponent extends Component
     public $proveedores_show;
 
     // tasbs
+    //jenkis prueba
     public $habilitar_firma = false;
     public $habilitar_proveedores = false;
     public $habilitar_alerta = false;
