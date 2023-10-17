@@ -236,15 +236,15 @@ class ReportesProyectos extends Component
 
         $proyectos_array = collect();
         if ($this->area_id) {
-            $this->proyectos = TimesheetProyecto::getAll()->filter(function ($item) {
+            $this->proyectos = TimesheetProyecto::getIdNameAll()->filter(function ($item) {
                 return $item->areas->contains(Area::getIdNameAll()->find($this->area_id));
             });
         } else {
-            $this->proyectos = TimesheetProyecto::getAll();
+            $this->proyectos = TimesheetProyecto::getIdNameAll();
         }
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
-            $registro_horas_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->get();
+            $registro_horas_proyecto = TimesheetHoras::getAll()->where('proyecto_id', $proyecto->id);
 
             // registro de horas en calendario
             $times_registro_horas_array = collect();
@@ -319,7 +319,7 @@ class ReportesProyectos extends Component
 
     public function genrarReporte($id)
     {
-        $this->proyecto_reporte = TimesheetProyecto::getAll()->find($id);
+        $this->proyecto_reporte = TimesheetProyecto::getIdNameAll()->find($id);
 
         // $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
         $this->cliente_proyecto = TimesheetCliente::getAll()->find($this->proyecto_reporte->cliente_id);
