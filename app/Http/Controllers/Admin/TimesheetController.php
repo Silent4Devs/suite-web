@@ -302,7 +302,7 @@ class TimesheetController extends Controller
             }
         }
 
-        //$this->notificacionhorassobrepasadas($usuario->empleado->id);
+        $this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
@@ -525,7 +525,7 @@ class TimesheetController extends Controller
             }
         }
 
-        //$this->notificacionhorassobrepasadas($usuario->empleado->id);
+        $this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
     }
@@ -1101,19 +1101,30 @@ class TimesheetController extends Controller
                 ->where('empleado_id', '=', $ep->empleado_id)
                 ->get();
 
-            $tot_horas_proyecto = 0;
-
-            $sumalun = floatval($times->sum('horas_lunes'));
-            $sumamar = floatval($times->sum('horas_martes'));
-            $sumamie = floatval($times->sum('horas_miercoles'));
-            $sumajue = floatval($times->sum('horas_jueves'));
-            $sumavie = floatval($times->sum('horas_viernes'));
-            $sumasab = floatval($times->sum('horas_sabado'));
-            $sumadom = floatval($times->sum('horas_domingo'));
-
-            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
-
             if ($ep->proyecto->tipo === 'Externo') {
+
+                $tot_horas_proyecto = 0;
+
+                $sumalun = 0;
+                $sumamar = 0;
+                $sumamie = 0;
+                $sumajue = 0;
+                $sumavie = 0;
+                $sumasab = 0;
+                $sumadom = 0;
+
+                foreach ($times as $time) {
+                    $sumalun += floatval($time->horas_lunes);
+                    $sumamar += floatval($time->horas_martes);
+                    $sumamie += floatval($time->horas_miercoles);
+                    $sumajue += floatval($time->horas_jueves);
+                    $sumavie += floatval($time->horas_viernes);
+                    $sumasab += floatval($time->horas_sabado);
+                    $sumadom += floatval($time->horas_domingo);
+                }
+
+                $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
+
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
                     $empleado_query = Empleado::select('id', 'name', 'email', 'foto')->get();
