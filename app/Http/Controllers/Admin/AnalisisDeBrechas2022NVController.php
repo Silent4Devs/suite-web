@@ -17,12 +17,11 @@ use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
-class TemplateController extends Controller
+class AnalisDeBrecha2022NVController extends Controller
 {
     public function index()
     {
-        return view('admin.analisisdebrecha2022nv.templates.index');
+        return view('admin.analisisdebrecha2022nv.analisisdebrecha.index');
     }
 
 }
-

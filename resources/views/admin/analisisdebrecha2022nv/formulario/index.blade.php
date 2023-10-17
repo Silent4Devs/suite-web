@@ -14,8 +14,8 @@
         }
     </style>
 
-     {{ Breadcrumbs::render('admin.templates.index') }}
-
     @include('partials.flashMessages')
 
-    <h5 class="titulo">Templates</h5>
+    <h5 class="titulo">Formulario</h5>
+
+@endsection

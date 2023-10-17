@@ -606,7 +606,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');
 
-
         //Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
             //Route::resource('analisis-brechas', 'AnalisisBController');
@@ -621,7 +620,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::group(['middleware' => ['version_iso_2022']], function () {
             //Analisis brechas 2022
+
+            Route::get('/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
             Route::get('/templates', 'TemplateController@index')->name('templates');
+            Route::get('/templates1', 'TemplateController@index')->name('templates');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
             Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');

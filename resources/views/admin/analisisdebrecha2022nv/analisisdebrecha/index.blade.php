@@ -48,7 +48,6 @@
 
         }
 
-
         .iconos-top {
 
             margin-right: 5px;
@@ -63,11 +62,168 @@
         .table tr td:nth-child(4) {
             text-align: center !important;
         }
+                .card-main{
+            top: 135px;
+            left: 286px;
+            width: 1146px;
+            height: 138px;
+            /* UI Properties */
+            background: #3B7EB2;
+            border-radius: 8px;
+            opacity: 1;
+            display: flex;
+            align-items: center; /* Centra verticalmente los elementos en el contenedor */
+        }
+        .titulo-card{
+            /* UI Properties */
+            font: var(--unnamed-font-style-normal) normal 600 var(--unnamed-font-size-20)/27px Segoe UI;
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-ffffff);
+            text-align: left;
+            font: normal normal 600 20px/27px Segoe UI;
+            letter-spacing: 0px;
+            color: #FFFFFF;
+            opacity: 1;
+        }
+        .texto-card{
+            font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 12px/16px Segoe UI;
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-ffffff);
+            text-align: left;
+            font: normal normal normal 12px/16px Segoe UI;
+            letter-spacing: 0px;
+            color: #FFFFFF;
+            opacity: 1;
+            margin-right: 60px;
+            margin-left: 20px:
+        }
+        .container {
+            display: flex;
+            align-items: center; /* Centra verticalmente los elementos en el contenedor */
+        }
+
+        .left-image {
+            flex: 0.25; /* El 50% del ancho disponible para la imagen */
+        }
+
+        .right-content {
+            flex: 3; /* El 50% del ancho disponible para el contenido */
+        }
+        .titulo{
+            text-align: left;
+            font: normal normal 600 24px Segoe UI;
+            letter-spacing: 0px;
+            color: #2567AE;
+            opacity: 1;
+            margin-left: 5px;
+            margin-bottom: 12px;
+        }
+        .display-analisis{
+            /* Layout Properties */
+            width: 410px;
+            height: 402px;
+            /* UI Properties */
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 1px 4px #00000024;
+            border-radius: 14px;
+            opacity: 1;
+            margin-top: 30px;
+            margin-bottom: 100px;
+        }
+        .titulo-display-analisis{
+            /* UI Properties */
+            font: var(--unnamed-font-style-normal) normal medium 13px/16px var(--unnamed-font-family-roboto);
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-606060);
+            text-align: center;
+            font: normal normal medium 13px/16px Roboto;
+            letter-spacing: 0px;
+            color: #606060;
+            opacity: 1;
+        }
+        .boton-display{
+            /* Layout Properties */
+            top: 595px;
+            left: 541px;
+            width: 100px;
+            height: 35px;
+            /* UI Properties */
+            background: #0489FE 0% 0% no-repeat padding-box;
+            box-shadow: 0px 1px 4px #00000029;
+            opacity: 1;
+            font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-14)/17px var(--unnamed-font-family-roboto);
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-ffffff);
+            text-align: center;
+            font: normal normal normal 17px Roboto;
+            letter-spacing: 0px;
+            color: #FFFFFF;
+            border-radius: 4px;
+            margin: 15px 155px 0px 155px;
+            padding-top: 6px;
+        }
+        .letra-boton-display{
+            font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-14)/17px var(--unnamed-font-family-roboto);
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-ffffff);
+            text-align: center;
+            font: normal normal normal 17px Roboto;
+            letter-spacing: 0px;
+            color: #FFFFFF;
+        }
 
     </style>
-     {{ Breadcrumbs::render('admin.analisisdebrechas.index') }}
+     {{ Breadcrumbs::render('admin.analisisdebrechas-2022.index') }}
+
 
     @include('partials.flashMessages')
+
+    <h5 class="titulo">Análisis de Brechas </h5>
+
+    <div class="card-main">
+        <div class="left-image">
+            <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" style="margin: 9px 10px 10px 10px; width: 128px; height: 119px;">
+        </div>
+        <div class="right-content">
+            <div class="">
+                <div class="titulo-card" style="margin-left:15px;">¿Qué es? Dashboard Análisis de Brechas
+                    <div class="texto-card" style="">Es una herramienta visual que ayuda a las organizaciones a visualizar las brechas entre el estado actual y el estado deseado. Este dashboard suele incluir indicadores clave de rendimiento (KPI) que miden el desempeño de la organización en las áreas que se están analizando. El dashboard puede ser una herramienta valiosa para la gestión de las brechas. Al proporcionar una visión general de las brechas, el dashboard puede ayudar a las organizaciones a priorizar las áreas de mejora y a tomar medidas para cerrar las brechas.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5" style="margin: 0px 0px 0px 100px">
+            <div class="display-analisis">
+                <img src="{{ asset('assets/Imagen 18@2x.png') }}" alt="png"style="width: 311px; height: 233px;
+                margin: 32px 50px 0px 50px;">
+                <div class="titulo-display-analisis">Templates</div>
+                <div class="boton-display">
+                    <a href="{{ route('admin.templates') }}"
+                    style="text-align: center;font: normal normal normal 17px Roboto;color: #FFFFFF;">
+                    Generar
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="display-analisis" style="">
+                <img src="{{ asset('assets/Imagen 22@2x.png') }}" alt="png"style="width: 311px; height: 233px;
+                margin: 32px 50px 0px 50px;">
+                <div class="titulo-display-analisis">Análisis de brechas</div>
+                <div class="boton-display">
+                    <a href="{{ route('admin.templates') }}"
+                    style="text-align: center;font: normal normal normal 17px Roboto;color: #FFFFFF;">
+                    Generar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- <h5 class="col-12 titulo_general_funcion">Análisis de Brechas 2022 </h5>
 
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
@@ -217,7 +373,7 @@
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.analisisdebrechas.massDestroy') }}",
+                url: "{{ route('admin.analisisdebrechas-2022.massDestroy') }}",
                 className: 'btn-danger',
                 action: function(e, dt, node, config) {
                     var ids = $.map(dt.rows({
@@ -257,7 +413,7 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nuevo analisis de brecha',
-                url: "{{ route('admin.analisisdebrechas.create') }}",
+                url: "{{ route('admin.analisisdebrechas-2022.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     let {
@@ -279,7 +435,7 @@
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-                ajax: "{{ route('admin.analisisdebrechas.index') }}",
+                ajax: "{{ route('admin.analisisdebrechas-2022.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -310,7 +466,7 @@
                         render: function(data, type, row, meta) {
                             return `  @can('analisis_de_brechas_vinculo')
                                 <div class="text-center w-100"></div>
-                                <a href="analisis-brechas/?id=${data}" target="_blank"><i class="fas fa-file-alt fa-2x text-info"></i></a>
+                                <a href="analisis-brechas-2022/?id=${data}" target="_blank"><i class="fas fa-file-alt fa-2x text-info"></i></a>
                                 </div
                                 @endcan`;
                         }
@@ -339,5 +495,5 @@
             //         .draw()
             // });
         });
-    </script>
+    </script> --}}
 @endsection
