@@ -131,7 +131,7 @@
                         <label for="" class="txt-tamaño">
                             Tipo de cambio: <font class="asterisco"></font>
                         </label>
-                        <input type="number" min="0" name="cambio" class="browser-default"
+                        <input type="text" name="cambio" class="browser-default"
                             value="{{ $requisicion->cambio }}">
                     </div>
                 </div>
