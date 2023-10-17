@@ -246,7 +246,7 @@ class ReportesProyemp extends Component
             // Get the XLS content from the response
             $xlsContent = $response->getBody()->getContents();
 
-            $this->flash('success', $xlsContent, [
+            $this->alert('success', $xlsContent, [
                 'position' => 'top-end',
                 'timer' => 3000,
                 'toast' => true,
@@ -255,14 +255,6 @@ class ReportesProyemp extends Component
             ]);
         } else {
             // Handle the error if the request is not successful
-            $this->flash('error', $response->status(), [
-                'position' => 'top-end',
-                'timer' => 3000,
-                'toast' => true,
-                'text' => 'Failed to get data from the API',
-                'timerProgressBar' => true,
-            ]);
-
             return response()->json([
                 'message' => 'Failed to get data from the API',
             ], $response->status());
