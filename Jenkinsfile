@@ -28,14 +28,17 @@ pipeline {
             }
           }
 
-        //   sh 'docker build -t ${image_name}:${tag_image} .'
+          sh 'docker build -t php-tabantaj ./web-app'
+          sh 'docker build -t postgres-tabantaj ./database'
+          sh 'docker push php-tabantaj'
+          sh 'docker push postgres-tabantaj'
         }
       }
     }
 
     stage('deploy') {
       steps {
-        sh 'docker-compose up -d'
+        sh 'docker-compose -f docker-compose.yml up -d'
       }
     }
   }
