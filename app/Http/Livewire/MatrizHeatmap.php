@@ -159,7 +159,7 @@ class MatrizHeatmap extends Component
         $sedes = Sede::getAll(['id', 'sede']);
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $matriz_riesgo = MatrizRiesgo::getAll();
+        $matriz_riesgo = MatrizRiesgo::query();
 
         $muy_alto = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['54', '81']);
         $alto = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['27', '36']);
