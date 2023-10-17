@@ -1,7 +1,5 @@
 pipeline {
   agent any
-
-
   stages {
     stage('install') {
       steps {
@@ -12,8 +10,8 @@ pipeline {
     stage('build') {
       steps {
          script {
-          dockerImage = docker.build("nginx:stable-alpine", "./infra/php/")
-        }
+            docker.build('php-tabantaj:latest')
+         }
       }
     }
 
