@@ -108,7 +108,7 @@
                         <label for="" class="txt-tamaño">
                             Días de crédito proveedor
                         </label>
-                        <input type="number" required name="dias_credito" min="0" max="1000000000"
+                        <input type="number" required name="dias_credito" min="0"
                             class="browser-default" value="{{ $requisicion->dias_credito }}">
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                         <label for="" class="txt-tamaño">
                             Moneda: <font class="asterisco">*</font>
                         </label>
-                        <select name="moneda" id="" class="browser-default" required>
+                        <select name="moneda"  class="browser-default" required>
                             <option disabled selected></option>
                             @foreach ($monedas as $moneda)
                                 <option value="{{ $moneda->nombre }}"
@@ -131,7 +131,7 @@
                         <label for="" class="txt-tamaño">
                             Tipo de cambio: <font class="asterisco"></font>
                         </label>
-                        <input type="number" min="0" max="1000000000" name="cambio" class="browser-default"
+                        <input type="number" min="0" name="cambio" class="browser-default"
                             value="{{ $requisicion->cambio }}">
                     </div>
                 </div>
@@ -225,7 +225,7 @@
                         <label for="" class="txt-tamaño">
                             Crédito disponible
                         </label>
-                        <input type="number" min="0" max="1000000000" step="any"
+                        <input type="number" min="0"
                             value="{{ $proveedor->credito }}" name="credito_proveedor" class="browser-default">
                     </div>
                 </div>
@@ -319,7 +319,7 @@
             <label for="" class="txt-tamaño">
                 No. de Personas
             </label>
-            <input type="number" name="no_personas{{ $count }}" min="0" max="100000000"
+            <input type="number" name="no_personas{{ $count }}" min="0"
                 class="browser-default mod-no_personas" value="{{ $producto->no_personas }}">
         </div>
 </div>
@@ -328,7 +328,7 @@
         <label for="" class="txt-tamaño">
             Porcentaje de involucramiento
         </label>
-        <input type="number" name="porcentaje_involucramiento{{ $count }}" min="0" max="100000000"
+        <input type="number" name="porcentaje_involucramiento{{ $count }}" min="0"
             class="browser-default mod-porcentaje_involucramiento"
             value="{{ $producto->porcentaje_involucramiento }}">
     </div>
@@ -346,7 +346,7 @@
         </label>
         <div class="caja-input-dinero">
             <input type="number" name="sub_total{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-sub_total browser-default" required
+                min="0" class="mod-sub_total browser-default" required
                 value="{{ $producto->sub_total }}">
         </div>
     </div>
@@ -355,7 +355,7 @@
             IVA <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="iva{{ $count }}" data-count="{{ $count }}" step="any"
+            <input type="number" name="iva{{ $count }}" data-count="{{ $count }}"
                 min="0" class="mod-iva browser-default" required value="{{ $producto->iva }}">
         </div>
     </div>
@@ -365,7 +365,7 @@
         </label>
         <div class="caja-input-dinero">
             <input type="number" name="iva_retenido{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-iva_retenido browser-default"
+                min="0" class="mod-iva_retenido browser-default"
                 value="{{ $producto->iva_retenido }}">
         </div>
     </div>
@@ -377,7 +377,7 @@
         </label>
         <div class="caja-input-dinero">
             <input type="number" name="descuento{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-descuento browser-default"
+                min="0" class="mod-descuento browser-default"
                 value="{{ $producto->descuento }}">
         </div>
     </div>
@@ -387,7 +387,7 @@
         </label>
         <div class="caja-input-dinero">
             <input type="number" name="otro_impuesto{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-otro_impuesto browser-default"
+                min="0" class="mod-otro_impuesto browser-default"
                 value="{{ $producto->otro_impuesto }}">
         </div>
     </div>
@@ -397,7 +397,7 @@
         </label>
         <div class="caja-input-dinero">
             <input type="number" name="isr_retenido{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-isr_retenido browser-default"
+                min="0" class="mod-isr_retenido browser-default"
                 value="{{ $producto->isr_retenido }}">
         </div>
     </div>
@@ -407,7 +407,7 @@
         </label>
         <div class="caja-input-dinero">
             <input id="input-total-serv{{ $count }}" type="number" name="total{{ $count }}"
-                data-count="{{ $count }}" step="any" min="0" class="mod-total browser-default"
+                data-count="{{ $count }}" min="0" class="mod-total browser-default"
                 required value="{{ $producto->total }}" readonly>
         </div>
     </div>
@@ -431,7 +431,7 @@
                     Sub total
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="sub_total_calculado" name="sub_total" step="any" min="0"
+                    <input type="number" id="sub_total_calculado" name="sub_total" min="0"
                         class="browser-default" required value="{{ $requisicion->sub_total }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
@@ -443,7 +443,7 @@
                     IVA
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="iva_calculado" name="iva" step="any" min="0"
+                    <input type="number" id="iva_calculado" name="iva" min="0"
                         class="browser-default" required value="{{ $requisicion->iva }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
@@ -455,7 +455,7 @@
                     IVA retenido
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="iva_retenido_calculado" name="iva_retenido" step="any"
+                    <input type="number" id="iva_retenido_calculado" name="iva_retenido"
                         min="0" class="browser-default" required value="{{ $requisicion->iva_retenido }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
@@ -467,7 +467,7 @@
                     ISR retenido
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="isr_retenido_calculado" name="isr_retenido" step="any"
+                    <input type="number" id="isr_retenido_calculado" name="isr_retenido"
                         min="0" class="browser-default" required value="{{ $requisicion->isr_retenido }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
@@ -479,7 +479,7 @@
                     Total
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="total_calculado" name="total" step="any" min="1"
+                    <input type="number" id="total_calculado" name="total" min="1"
                         class="browser-default" required value="{{ $requisicion->total }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
