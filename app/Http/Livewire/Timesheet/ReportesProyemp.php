@@ -254,7 +254,7 @@ class ReportesProyemp extends Component
             ], $response->status());
         }
 
-        redirect()->route('timesheet-reportes-proyemp');
+        redirect()->url('timesheet/proyectos/reporte/proyemp');
     }
 
     // public function todos()
