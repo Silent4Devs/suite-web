@@ -176,7 +176,7 @@ class Empleado extends Model implements Auditable
         // Generate a unique cache key based on the options provided
 
         return Cache::remember('Empleados:empleados_id_name_all', 3600 * 12, function () use ($options) {
-            $query = self::select('id', 'name')->where('estatus', 'alta')->orderBy('DESC')->get();
+            $query = self::select('id', 'name')->where('estatus', 'alta')->orderBy('id', 'desc')->get();
 
             return $query;
         });
