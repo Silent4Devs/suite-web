@@ -10,7 +10,7 @@ pipeline {
     stage('build') {
       steps {
          script {
-          dockerImage = docker.build("nginx:stable-alpine", "./infra/php/")
+          dockerImage = docker.build("nginx:php-tabantaj", "./infra/php/")
         }
       }
     }
