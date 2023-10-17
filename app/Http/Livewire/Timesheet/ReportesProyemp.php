@@ -253,6 +253,8 @@ class ReportesProyemp extends Component
                 'message' => 'Failed to get data from the API',
             ], $response->status());
         }
+
+        redirect()->route('timesheet-reportes-proyemp');
     }
 
     // public function todos()
