@@ -606,6 +606,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');
 
+
         //Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
             //Route::resource('analisis-brechas', 'AnalisisBController');

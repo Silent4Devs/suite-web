@@ -13,6 +13,7 @@
             margin-bottom: 12px;
         }
     </style>
+
      {{ Breadcrumbs::render('admin.templates.index') }}
 
     @include('partials.flashMessages')
