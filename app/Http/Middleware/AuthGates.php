@@ -14,7 +14,7 @@ class AuthGates
         $user = \Auth::user();
 
         if ($user) {
-            $roles = Role::getAll();
+            $roles = Role::with('permissions')->get();
             $permissionsArray = [];
 
             foreach ($roles as $role) {
