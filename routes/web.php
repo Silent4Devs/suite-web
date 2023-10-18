@@ -33,7 +33,8 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
-    Route::get('/', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('/', 'InicioUsuarioController@index');
     Route::get('/home', 'InicioUsuarioController@index')->name('home');
     //log-viewer
     Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
@@ -106,7 +107,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('organizacions/{schedule}/delete-schedule', 'OrganizacionController@deleteSchedule')->name('organizacions.delete-schedule');
     Route::resource('organizacions', 'OrganizacionController');
     // Inicio usuario
-    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
 
     // Areas
     Route::get('areas/exportar', 'AreasController@exportTo')->name('areas.exportar');
