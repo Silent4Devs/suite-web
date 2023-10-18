@@ -55,7 +55,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     excimer
 
 # Enable phpredis extension
-RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
 # Copy custom php.ini
 COPY php.ini /usr/local/etc/php/php.ini
