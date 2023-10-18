@@ -12,7 +12,7 @@ pipeline {
       steps {
         script{
           try {
-                sh 'docker-compose build'
+                // sh 'docker-compose build'
                 sh 'docker-compose up -d'
                 sh 'docker-compose exec php cp .env.example .env'
                 sh 'docker-compose exec php composer install --ignore-platform-reqs'
