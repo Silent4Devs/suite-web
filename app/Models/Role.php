@@ -31,7 +31,7 @@ class Role extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('Roles:roles_all', 3600 * 13, function () {
+        return Cache::remember('Roles:roles_all', 3600 * 12, function () {
             return self::with('permissions')->orderBy('id')->get();
         });
     }

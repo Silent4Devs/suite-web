@@ -64,14 +64,14 @@ class Puesto extends Model implements Auditable
     //Redis methods
     public static function getExists()
     {
-        return Cache::remember('Puestos:Puestos_exists', 3600 * 24, function () {
+        return Cache::remember('Puestos:Puestos_exists', 3600 * 12, function () {
             return DB::table('puestos')->exists();
         });
     }
 
     public static function getAll()
     {
-        return Cache::remember('Puestos_all', 3600 * 24, function () {
+        return Cache::remember('Puestos_all', 3600 * 12, function () {
             return self::get();
         });
     }

@@ -63,7 +63,7 @@ class User extends Authenticatable implements Auditable
     //Redis methods
     public static function getExists()
     {
-        return Cache::remember('Users:users_exists', 3600 * 24, function () {
+        return Cache::remember('Users:users_exists', 3600 * 12, function () {
             return DB::table('users')->orderBy('id')->first()->empleado_id != null ? true : false;
         });
     }
