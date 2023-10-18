@@ -32,6 +32,11 @@ class IncidentesSeguridad extends Model implements HasMedia, Auditable
         'id',
     ];
 
+    protected $fillable = [
+        'empleado_reporto_id',
+        'empleado_asignado_id',
+    ];
+
     protected $appends = ['folio', 'archivo', 'fecha_creacion', 'fecha_cerrado'];
 
     // public function getFechaAttribute()
@@ -55,12 +60,12 @@ class IncidentesSeguridad extends Model implements HasMedia, Auditable
 
     public function reporto()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id')->alta();
+        return $this->belongsTo(Empleado::class, 'empleado_reporto_id');
     }
 
     public function asignado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_asignado_id', 'id')->alta();
+        return $this->belongsTo(Empleado::class, 'empleado_asignado_id');
     }
 
     public function evidencias_seguridad()
