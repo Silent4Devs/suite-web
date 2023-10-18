@@ -64,7 +64,6 @@
         .caja_secciones section {
             overflow: unset !important;
         }
-
     </style>
 
 
@@ -92,9 +91,9 @@
                     </a>
                 @endcan
                 @can('centro_atencion_quejas_clientes_acceder')
-                <a href="#" data-tabs="quejasClientes">
-                    <i class="fas fa-thumbs-down"></i> Quejas Clientes
-                </a>
+                    <a href="#" data-tabs="quejasClientes">
+                        <i class="fas fa-thumbs-down"></i> Quejas Clientes
+                    </a>
                 @endcan
                 @can('centro_atencion_denuncias_acceder')
                     <a href="#" data-tabs="denuncias">
@@ -306,8 +305,8 @@
             }
             document.querySelector('.caja_botones_menu').addEventListener('click', function(e) {
                 let elemento = e.target;
-                if(elemento.tagName == 'I'){
-                elemento=elemento.closest('a');
+                if (elemento.tagName == 'I') {
+                    elemento = elemento.closest('a');
                 }
                 if (elemento.getAttribute('data-tabs')) {
                     localStorage.setItem('menu-desk', elemento.getAttribute('data-tabs'))
