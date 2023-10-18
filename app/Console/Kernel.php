@@ -42,7 +42,6 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
-        $schedule->command('backup:run')->dailyAt('02:00')->sendOutputTo(storage_path('logs/scheduled.log'))->sentryMonitor();
     }
 
     /**
