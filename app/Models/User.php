@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use App\Notifications\MyResetPassword;
+use Hash;
 use Carbon\Carbon;
 use DateTimeInterface;
-use Hash;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use App\Notifications\MyResetPassword;
+use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Auditable
 {
@@ -60,6 +61,13 @@ class User extends Authenticatable implements Auditable
     ];
 
     //Redis methods
+    public static function getExists()
+    {
+        return Cache::remember('Users:users_exists', 3600 * 24, function () {
+            return DB::table('users')->orderBy('id')->first()->empleado_id != null ? true : false;
+        });
+    }
+
     public static function getAll()
     {
         return Cache::remember('Users:users_all', 3600 * 13, function () {
