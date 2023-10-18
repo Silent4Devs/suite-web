@@ -11,7 +11,7 @@ class AuthGates
 {
     public function handle($request, Closure $next)
     {
-        $user = User::getCurrentUser();
+        $user = \Auth::user();
 
         if ($user) {
             $roles = Role::getAll();
