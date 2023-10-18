@@ -43,6 +43,7 @@ class TimesheetHorasFilas extends Component
         $proyectoempleadoexists = TimesheetProyectoEmpleado::getAllByEmpleadoIdExistsNoBloqueado($empleado->id);
         $comodines = TimesheetProyecto::select('id', 'identificador', 'proyecto')->where('proyecto', 'LIKE', 'S4B-' . '%')->get();
         $proyectos_totales = TimesheetProyecto::getAll();
+        dd($proyectoempleadoexists);
         // areas proyectos
         //to do Cambiar a array
         // dd($comodines);

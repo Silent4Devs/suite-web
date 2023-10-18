@@ -43,12 +43,11 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function render()
     {
-        $emp_proy = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
+        $emp_proy = TimesheetProyectoEmpleado::getIdAreaTimeProy($this->proyecto->id)->where('proyecto_id', $this->proyecto->id);
 
         foreach ($emp_proy as $ep) {
-            $times = TimesheetHoras::where('proyecto_id', '=', $ep->proyecto_id)
-                ->where('empleado_id', '=', $ep->empleado_id)
-                ->get();
+            $times = TimesheetHoras::getData()->where('proyecto_id', '=', $ep->proyecto_id)
+                ->where('empleado_id', '=', $ep->empleado_id);
 
             $tot_horas_proyecto = 0;
 
@@ -100,6 +99,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
         $empleado_add_proyecto = Empleado::select('id', 'area_id')->find($this->empleado_añadido);
+        dd($empleado_add_proyecto);
 
         if ($this->proyecto->tipo === 'Externo') {
             $this->validate([
@@ -148,7 +148,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
                 return null;
             } else {
-                $emp_upd_proyecto = Empleado::find($datos['empleado_editado']);
+                $emp_upd_proyecto = Empleado::select('id', 'area_id')->find($datos['empleado_editado']);
                 // dd($emp_upd_proyecto);
                 $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
                 $empleado_edit_proyecto->update([
@@ -159,7 +159,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 ]);
             }
         } else { //Internos
-            $emp_upd_proyecto = Empleado::find($datos['empleado_editado']);
+            $emp_upd_proyecto = Empleado::select('id', 'area_id')->find($datos['empleado_editado']);
             // dd($emp_upd_proyecto);
             $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
             $empleado_edit_proyecto->update([
