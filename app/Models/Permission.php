@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Permission extends Model implements Auditable
 {
@@ -27,6 +28,13 @@ class Permission extends Model implements Auditable
         'updated_at',
         'deleted_at',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('Permissions:permissions_all', 3600 * 13, function () {
+            return self::with('permissions')->orderBy('id')->get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

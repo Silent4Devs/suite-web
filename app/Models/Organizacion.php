@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 // use App\Models\Schedule;
 
@@ -80,6 +81,13 @@ class Organizacion extends Model implements Auditable
         'semanas_faltantes',
         'semanas_adicionales',
     ];
+
+    public static function getExists()
+    {
+        return Cache::remember('Organizacion:Organizacion_exists', 3600 * 24, function () {
+            return DB::table('organizacions')->exists();
+        });
+    }
 
     //Redis methods
     public static function getLogo()
