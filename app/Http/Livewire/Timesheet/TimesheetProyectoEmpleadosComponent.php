@@ -99,7 +99,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
         $empleado_add_proyecto = Empleado::select('id', 'area_id')->find($this->empleado_añadido);
-        dd($empleado_add_proyecto);
+        // dd($empleado_add_proyecto);
 
         if ($this->proyecto->tipo === 'Externo') {
             $this->validate([
