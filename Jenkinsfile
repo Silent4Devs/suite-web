@@ -30,7 +30,7 @@ pipeline {
        steps {
           script{
           try {
-                sh 'docker-compose -f docker-compose.staging.yml up -d'
+                sh 'docker-compose -f docker-compose.stagging.yml up -d'
             } catch (Exception e) {
               echo 'Exception occurred: ' + e.toString()
             }
