@@ -26,8 +26,8 @@ class RoleController extends Controller
     public function index()
     {
         return view('admin.roles.index', [
-            'roles' => Role::all(),
-            'permissions' => Permission::all(),
+            'roles' => Role::getAll(),
+            'permissions' => Permission::getAll(),
         ]);
     }
 
@@ -39,7 +39,7 @@ class RoleController extends Controller
     public function create()
     {
         return view('admin.roles.create', [
-            'permissions' => Permission::all(),
+            'permissions' => Permission::getAll(),
         ]);
     }
 
@@ -89,7 +89,7 @@ class RoleController extends Controller
     {
         return view('admin.roles.edit', [
             'role' => $role,
-            'permissions' => Permission::all(),
+            'permissions' => Permission::getAll(),
         ]);
     }
 
