@@ -50,8 +50,8 @@
                 <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denunciado</th>
             </tr>
             <tr>
-                <th>Folio</th>
-                <th>Anónimo</th>
+                <th style="min-width:200px;">Folio</th>
+                <th style="min-width:200px;">Anónimo</th>
                 <th style="min-width:200px;">Estatus</th>
                 <th style="min-width:200px;">Fecha de identificación</th>
                 <th style="min-width:200px;">Fecha de recepción</th>
@@ -62,8 +62,8 @@
                 <th style="min-width:200px;">Nombre</th>
                 <th style="min-width:200px;">Puesto</th>
                 <th style="min-width:200px;">Área</th>
-                <th style="min-width: 500px;">Descripción</th>
-                <th>Opciones</th>
+                <th style="min-width:200px;">Descripción</th>
+                <th style="min-width:200px;">Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -200,7 +200,6 @@
                     ajax: '/admin/desk/denuncias',
                     buttons: dtButtons,
                     columns: [
-                        // {data: 'id'},
                         {
                             data: 'folio'
                         },
@@ -220,7 +219,7 @@
                             data: 'fecha_de_cierre'
                         },
                         {
-                            data: 'id',
+                            data: 'name',
                             render: function(data, type, row, meta) {
                                 let html = "";
                                 if (row.anonimo == 'no') {
@@ -231,7 +230,7 @@
                             }
                         },
                         {
-                            data: 'id',
+                            data: 'puesto',
                             render: function(data, type, row, meta) {
                                 let html = "";
                                 if (row.anonimo == 'no') {
@@ -241,7 +240,7 @@
                             }
                         },
                         {
-                            data: 'id',
+                            data: 'area',
                             render: function(data, type, row, meta) {
                                 let html = "";
                                 if (row.anonimo == 'no') {
@@ -251,7 +250,7 @@
                             }
                         },
                         {
-                            data: 'id',
+                            data: 'name',
                             render: function(data, type, row, meta) {
                                 let html =
                                     `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.denunciado?.avatar}" title="${row.denunciado?.name}"></img>`;
@@ -260,13 +259,13 @@
                             }
                         },
                         {
-                            data: 'id',
+                            data: 'puesto',
                             render: function(data, type, row, meta) {
                                 return `${row.denunciado.puesto}`;
                             }
                         },
                         {
-                            data: 'id',
+                            data: 'area',
                             render: function(data, type, row, meta) {
                                 return `${row.denunciado?.area?.area}`;
                             }

@@ -90,7 +90,7 @@
         <thead>
             <tr>
                 {{-- <th>ID</th> --}}
-                <th style="min-width: 100px;">Folio</th>
+                <th style="min-width: 250px;">Folio</th>
                 <th style="min-width: 250px;">Título</th>
                 <th style="min-width: 250px;">Sede</th>
                 <th style="min-width: 250px;">Ubicación</th>
@@ -243,7 +243,6 @@
                     ajax: '/admin/desk/seguridad',
                     buttons: dtButtons,
                     columns: [
-                        // {data: 'id'},
                         {
                             data: 'folio'
                         },
@@ -281,7 +280,7 @@
                             data: 'fecha_creacion'
                         },
                         {
-                            data: 'id',
+                            data: 'name',
                             render: function(data, type, row, meta) {
                                 let html =
                                     `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto?.avatar}" title="${row.reporto?.name}"></img>`;
@@ -290,13 +289,13 @@
                             }
                         },
                         {
-                            data: 'id',
+                            data: 'email',
                             render: function(data, type, row, meta) {
                                 return `${row.reporto?.email}`;
                             }
                         },
                         {
-                            data: 'id',
+                            data: 'telefono',
                             render: function(data, type, row, meta) {
                                 return `${row.reporto?.telefono}`;
                             }
@@ -311,7 +310,7 @@
                             data: 'fecha_cerrado'
                         },
                         {
-                            data: 'id',
+                            data: 'name',
                             render: function(data, type, row, meta) {
 
 

@@ -21,6 +21,19 @@ class Denuncias extends Model implements Auditable
 
     protected $appends = ['folio', 'fecha_creacion', 'fecha_reporte', 'fecha_de_cierre'];
 
+
+    protected $fillable = [
+        'anonimo',
+        'estatus',
+        'empleado_denuncio_id',
+        'empleado_denunciado_id',
+        'tipo',
+        'fecha',
+        'fecha_cierre',
+        'sede',
+        'ubicacion',
+    ];
+
     //Redis methods
     public static function getAll()
     {
@@ -37,7 +50,7 @@ class Denuncias extends Model implements Auditable
 
     public function denuncio()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_denuncio_id', 'id')->alta()->with('area');
+        return $this->belongsTo(Empleado::class, 'empleado_denuncio_id');
     }
 
     public function evidencias_denuncias()
@@ -47,7 +60,7 @@ class Denuncias extends Model implements Auditable
 
     public function denunciado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_denunciado_id', 'id')->alta()->with('area');
+        return $this->belongsTo(Empleado::class, 'empleado_denunciado_id');
     }
 
     public function planes()
