@@ -21,8 +21,6 @@ class TemplateController extends Controller
 {
     public function index()
     {
-        return view('admin.analisisdebrecha2022nv.templates.index');
+        return view('admin.analisisdebrecha2022nv.templatess.index');
     }
-
 }
-
