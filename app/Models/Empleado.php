@@ -157,7 +157,7 @@ class Empleado extends Model implements Auditable
     //Redis methods
     public static function getExists()
     {
-        return Cache::remember('Empleados:empleados_exists', 3600 * 24, function () {
+        return Cache::remember('Empleados:empleados_exists', 3600 * 12, function () {
             return DB::table('empleados')->exists();
         });
     }

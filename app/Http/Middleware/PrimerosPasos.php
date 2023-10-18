@@ -25,11 +25,11 @@ class PrimerosPasos
      */
     public function handle(Request $request, Closure $next)
     {
-        $existsEmpleado = DB::table('empleados')->exists();
-        $existsOrganizacion = DB::table('organizacions')->exists();
-        $existsAreas = DB::table('areas')->exists();
-        $existsPuesto = DB::table('puestos')->exists();
-        $existsVinculoEmpleadoAdmin = DB::table('users')->orderBy('id')->first()->empleado_id != null ? true : false;
+        $existsEmpleado = Empleado::getExists();
+        $existsOrganizacion = Organizacion::getExists();
+        $existsAreas = Area::getExists();
+        $existsPuesto = Puesto::getExists();
+        $existsVinculoEmpleadoAdmin = User::getExists();
         if (
             !$existsEmpleado ||
             !$existsOrganizacion ||
