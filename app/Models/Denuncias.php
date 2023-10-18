@@ -24,7 +24,7 @@ class Denuncias extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        //retrieve all data or can pass columns to retrieve
+        //retrieve all data or can pass columns to retrieve resolve
         return Cache::remember('denuncias_all', 3600, function () {
             return self::get();
         });

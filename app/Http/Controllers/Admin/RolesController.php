@@ -19,7 +19,7 @@ class RolesController extends Controller
         abort_if(Gate::denies('roles_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Role::with(['permissions'])->orderBy('id')->get();
+            $query = Role::getAll();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -61,7 +61,7 @@ class RolesController extends Controller
             return $table->make(true);
         }
 
-        $permissions = Permission::get();
+        $permissions = Permission::getAll();
 
         return view('admin.roles.index', compact('permissions'));
     }
@@ -70,8 +70,8 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('roles_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $permissions = Permission::all()->sortBy('id');
-        $role = Role::all();
+        $permissions = Permission::getAll();
+        $role = Role::getAll();
 
         return view('admin.roles.create', compact('permissions', 'role'));
     }
@@ -110,7 +110,7 @@ class RolesController extends Controller
     public function edit(Role $role)
     {
         abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $permissions = Permission::all()->sortBy('id');
+        $permissions = Permission::getAll();
         $role->load('permissions');
 
         return view('admin.roles.edit', compact('permissions', 'role'));

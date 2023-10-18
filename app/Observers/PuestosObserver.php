@@ -60,5 +60,6 @@ class PuestosObserver
     private function forgetCache()
     {
         Cache::forget('Puestos_all');
+        Cache::forget('Puestos:Puestos_exists');
     }
 }

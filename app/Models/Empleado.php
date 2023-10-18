@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Empleado.
@@ -154,6 +155,13 @@ class Empleado extends Model implements Auditable
     ];
 
     //Redis methods
+    public static function getExists()
+    {
+        return Cache::remember('Empleados:empleados_exists', 3600 * 24, function () {
+            return DB::table('empleados')->exists();
+        });
+    }
+
     public static function getAll(array $options = [])
     {
         // Generate a unique cache key based on the options provided
