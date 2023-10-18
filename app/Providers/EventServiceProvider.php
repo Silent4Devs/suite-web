@@ -14,95 +14,6 @@ use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
 use App\Listeners\TaskRecursosListener;
-use App\Models\AccionCorrectiva;
-use App\Models\Activo;
-use App\Models\activoConfidencialidad;
-use App\Models\Area;
-use App\Models\AuditoriaAnual;
-use App\Models\Calendario;
-use App\Models\DeclaracionAplicabilidad;
-use App\Models\Denuncias;
-use App\Models\Escuela\Lesson;
-use App\Models\Escuela\Section;
-use App\Models\ExperienciaEmpleados;
-use App\Models\IncidentesDeSeguridad;
-use App\Models\IncidentesSeguridad;
-use App\Models\Marca;
-use App\Models\MatrizRiesgo;
-use App\Models\MatrizRiesgosSistemaGestion;
-use App\Models\Mejoras;
-use App\Models\Modelo;
-use App\Models\Organizacion;
-use App\Models\PlanImplementacion;
-use App\Models\PoliticaSgsi;
-use App\Models\Proceso;
-use App\Models\Puesto;
-use App\Models\Quejas;
-use App\Models\QuejasCliente;
-use App\Models\Recurso;
-use App\Models\Registromejora;
-use App\Models\RH\Competencia;
-use App\Models\RH\Evaluacion;
-use App\Models\RH\MetricasObjetivo;
-use App\Models\RH\TipoCompetencia;
-use App\Models\RH\TipoObjetivo;
-use App\Models\RiesgoIdentificado;
-use App\Models\Sede;
-use App\Models\SubcategoriaActivo;
-use App\Models\Sugerencias;
-use App\Models\Timesheet;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetProyectoEmpleado;
-use App\Models\TimesheetTarea;
-use App\Models\Tipoactivo;
-use App\Models\User;
-use App\Models\VersionesIso;
-use App\Observers\AccionCorrectivaObserver;
-use App\Observers\ActivoConfidencialObserver;
-use App\Observers\ActivosObserver;
-use App\Observers\AreasObserver;
-use App\Observers\AuditoriaAnualObserver;
-use App\Observers\CalendarioObserver;
-use App\Observers\CompetenciaObserver;
-use App\Observers\DeclaracionAplicabilidadObserver;
-use App\Observers\DenunciasObserver;
-use App\Observers\EvaluacionObserver;
-use App\Observers\ExperienciaEmpleadosObserver;
-use App\Observers\IncidentesDeSeguridadObserver;
-use App\Observers\IncidentesSeguridadObserver;
-use App\Observers\LessonObserver;
-use App\Observers\MarcasObserver;
-use App\Observers\MatrizRiesgoObserver;
-use App\Observers\MatrizRiesgosSistemaGestionObserver;
-use App\Observers\MejorasObserver;
-use App\Observers\MetricasObjetivoObserver;
-use App\Observers\ModelosObserver;
-use App\Observers\OrganizacionObserver;
-use App\Observers\PlanImplementacionObserver;
-use App\Observers\PoliticaSgsiObserver;
-use App\Observers\ProcesosObserver;
-use App\Observers\PuestosObserver;
-use App\Observers\QuejasClienteObserver;
-use App\Observers\QuejasObserver;
-use App\Observers\RecursoObserver;
-use App\Observers\RecursosObserver;
-use App\Observers\RegistroMejoraObserver;
-use App\Observers\RiesgoIdentificadoObserver;
-use App\Observers\SectionObserver;
-use App\Observers\SedesObserver;
-use App\Observers\SubCategoriaActivoObserver;
-use App\Observers\SugerenciasObserver;
-use App\Observers\TimeSheetClienteObserver;
-use App\Observers\TimesheetObserver;
-use App\Observers\TimesheetProyectoEmpleadoObserver;
-use App\Observers\TimeSheetProyectoObserver;
-use App\Observers\TimeSheetTareaObserver;
-use App\Observers\TipoActivoObserver;
-use App\Observers\TipoCompetenciaObserver;
-use App\Observers\tipoObjetivoObserver;
-use App\Observers\UsersObserver;
-use App\Observers\VersionesIsoObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -146,53 +57,60 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        IncidentesDeSeguridad::observe(IncidentesDeSeguridadObserver::class);
-        AuditoriaAnual::observe(AuditoriaAnualObserver::class);
-        AccionCorrectiva::observe(AccionCorrectivaObserver::class);
-        Registromejora::observe(RegistroMejoraObserver::class);
-        Recurso::observe(RecursosObserver::class);
-        //Redis
-        PlanImplementacion::observe(PlanImplementacionObserver::class);
-        Organizacion::observe(OrganizacionObserver::class);
-        Sede::observe(SedesObserver::class);
-        User::observe(UsersObserver::class);
-        Calendario::observe(CalendarioObserver::class);
-        AuditoriaAnual::observe(AuditoriaAnualObserver::class);
-        Area::observe(AreasObserver::class);
-        Proceso::observe(ProcesosObserver::class);
-        Activo::observe(ActivosObserver::class);
-        Recurso::observe(RecursoObserver::class);
-        TimesheetProyecto::observe(TimeSheetProyectoObserver::class);
-        TimesheetTarea::observe(TimeSheetTareaObserver::class);
-        TimesheetCliente::observe(TimeSheetClienteObserver::class);
-        ExperienciaEmpleados::observe(ExperienciaEmpleadosObserver::class);
-        DeclaracionAplicabilidad::observe(DeclaracionAplicabilidadObserver::class);
-        Tipoactivo::observe(TipoActivoObserver::class);
-        Marca::observe(MarcasObserver::class);
-        Modelo::observe(ModelosObserver::class);
-        Evaluacion::observe(EvaluacionObserver::class);
-        Competencia::observe(CompetenciaObserver::class);
-        SubcategoriaActivo::observe(SubCategoriaActivoObserver::class);
-        TipoObjetivo::observe(tipoObjetivoObserver::class);
-        Evaluacion::observe(EvaluacionObserver::class);
-        MetricasObjetivo::observe(MetricasObjetivoObserver::class);
-        TipoCompetencia::observe(TipoCompetenciaObserver::class);
-        Puesto::observe(PuestosObserver::class);
-        activoConfidencialidad::observe(ActivoConfidencialObserver::class);
-        Timesheet::observe(TimesheetObserver::class);
-        Quejas::observe(QuejasObserver::class);
-        Denuncias::observe(DenunciasObserver::class);
-        Mejoras::observe(MejorasObserver::class);
-        Sugerencias::observe(SugerenciasObserver::class);
-        IncidentesSeguridad::observe(IncidentesSeguridadObserver::class);
-        RiesgoIdentificado::observe(RiesgoIdentificadoObserver::class);
-        QuejasCliente::observe(QuejasClienteObserver::class);
-        MatrizRiesgosSistemaGestion::observe(MatrizRiesgosSistemaGestionObserver::class);
-        PoliticaSgsi::observe(PoliticaSgsiObserver::class);
-        MatrizRiesgo::observe(MatrizRiesgoObserver::class);
-        TimesheetProyectoEmpleado::observe(TimesheetProyectoEmpleadoObserver::class);
-        Lesson::observe(LessonObserver::class);
-        Section::observe(SectionObserver::class);
-        VersionesIso::observe(VersionesIsoObserver::class);
+        // Automatically register events and observers
+        $models = [
+            \App\Models\IncidentesDeSeguridad::class => \App\Observers\IncidentesDeSeguridadObserver::class,
+            \App\Models\AuditoriaAnual::class => \App\Observers\AuditoriaAnualObserver::class,
+            \App\Models\AccionCorrectiva::class => \App\Observers\AccionCorrectivaObserver::class,
+            \App\Models\Registromejora::class => \App\Observers\RegistroMejoraObserver::class,
+            \App\Models\Recurso::class => \App\Observers\RecursosObserver::class,
+            \App\Models\PlanImplementacion::class => \App\Observers\PlanImplementacionObserver::class,
+            \App\Models\Organizacion::class => \App\Observers\OrganizacionObserver::class,
+            \App\Models\Sede::class => \App\Observers\SedesObserver::class,
+            \App\Models\User::class => \App\Observers\UsersObserver::class,
+            \App\Models\Calendario::class => \App\Observers\CalendarioObserver::class,
+            \App\Models\AuditoriaAnual::class => \App\Observers\AuditoriaAnualObserver::class,
+            \App\Models\Area::class => \App\Observers\AreasObserver::class,
+            \App\Models\Proceso::class => \App\Observers\ProcesosObserver::class,
+            \App\Models\Activo::class => \App\Observers\ActivosObserver::class,
+            \App\Models\Recurso::class => \App\Observers\RecursoObserver::class,
+            \App\Models\TimesheetProyecto::class => \App\Observers\TimeSheetProyectoObserver::class,
+            \App\Models\TimesheetTarea::class => \App\Observers\TimeSheetTareaObserver::class,
+            \App\Models\TimesheetCliente::class => \App\Observers\TimeSheetClienteObserver::class,
+            \App\Models\ExperienciaEmpleados::class => \App\Observers\ExperienciaEmpleadosObserver::class,
+            \App\Models\DeclaracionAplicabilidad::class => \App\Observers\DeclaracionAplicabilidadObserver::class,
+            \App\Models\Tipoactivo::class => \App\Observers\TipoActivoObserver::class,
+            \App\Models\Marca::class => \App\Observers\MarcasObserver::class,
+            \App\Models\Modelo::class => \App\Observers\ModelosObserver::class,
+            \App\Models\Escuela\Evaluation::class => \App\Observers\EvaluacionObserver::class,
+            \App\Models\RH\Competencia::class => \App\Observers\CompetenciaObserver::class,
+            \App\Models\SubcategoriaActivo::class => \App\Observers\SubCategoriaActivoObserver::class,
+            \App\Models\RH\TipoObjetivo::class => \App\Observers\tipoObjetivoObserver::class,
+            \App\Models\RH\Evaluacion::class => \App\Observers\EvaluacionObserver::class,
+            \App\Models\RH\MetricasObjetivo::class => \App\Observers\MetricasObjetivoObserver::class,
+            \App\Models\RH\TipoCompetencia::class => \App\Observers\TipoCompetenciaObserver::class,
+            \App\Models\Puesto::class => \App\Observers\PuestosObserver::class,
+            \App\Models\activoConfidencialidad::class => \App\Observers\ActivoConfidencialObserver::class,
+            \App\Models\Timesheet::class => \App\Observers\TimesheetObserver::class,
+            \App\Models\Quejas::class => \App\Observers\QuejasObserver::class,
+            \App\Models\Denuncias::class => \App\Observers\DenunciasObserver::class,
+            \App\Models\Mejoras::class => \App\Observers\MejorasObserver::class,
+            \App\Models\Sugerencias::class => \App\Observers\SugerenciasObserver::class,
+            \App\Models\IncidentesSeguridad::class => \App\Observers\IncidentesSeguridadObserver::class,
+            \App\Models\RiesgoIdentificado::class => \App\Observers\RiesgoIdentificadoObserver::class,
+            \App\Models\QuejasCliente::class => \App\Observers\QuejasClienteObserver::class,
+            \App\Models\MatrizRiesgosSistemaGestion::class => \App\Observers\MatrizRiesgosSistemaGestionObserver::class,
+            \App\Models\PoliticaSgsi::class => \App\Observers\PoliticaSgsiObserver::class,
+            \App\Models\MatrizRiesgo::class => \App\Observers\MatrizRiesgoObserver::class,
+            \App\Models\TimesheetProyectoEmpleado::class => \App\Observers\TimesheetProyectoEmpleadoObserver::class,
+            \App\Models\Escuela\Lesson::class => \App\Observers\LessonObserver::class,
+            \App\Models\Escuela\Section::class => \App\Observers\SectionObserver::class,
+            \App\Models\VersionesIso::class => \App\Observers\VersionesIsoObserver::class,
+            // Add more models and observers here
+        ];
+
+        foreach ($models as $model => $observer) {
+            $model::observe($observer);
+        }
     }
 }
