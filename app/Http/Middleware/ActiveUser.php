@@ -15,7 +15,7 @@ class ActiveUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!User::getCurrentUser()->is_active) {
+        if (!auth()->user()->is_active) {
             return redirect()->route('users.usuario-bloqueado');
         }
 
