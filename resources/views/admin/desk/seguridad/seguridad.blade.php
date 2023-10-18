@@ -39,7 +39,6 @@
         width: 100%;
         display: flex;
     }
-
 </style>
 
 
@@ -84,7 +83,7 @@
 
 <div class="datatable-fix" style="width: 100%;">
     <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/seguridad')}}">Crear reporte</a>
+        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
     </div>
 
     <table class="table tabla_incidentes_seguridad">
@@ -229,7 +228,7 @@
             // let btnAgregar = {
             //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
             //     titleAttr: 'Agregar empleado',
-            //     url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
+            //     url: "{{ asset('admin/inicioUsuario/reportes/seguridad') }}",
             //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
             //     action: function(e, dt, node, config) {
             //     let {
@@ -284,7 +283,8 @@
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto?.avatar}" title="${row.reporto?.name}"></img>`;
+                                let html =
+                                    `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto?.avatar}" title="${row.reporto?.name}"></img>`;
 
                                 return html;
                             }
@@ -315,7 +315,8 @@
                             render: function(data, type, row, meta) {
 
 
-                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.asignado?.avatar}" title="${row.asignado?.name}"></img>`;
+                                let html =
+                                    `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.asignado?.avatar}" title="${row.asignado?.name}"></img>`;
 
                                 return `${row.asignado ? html: 'sin asignar'}`;
                             }
@@ -348,7 +349,7 @@
                                 return html;
                             }
                         },
-                    ],  
+                    ],
                     createdRow: (row, data, dataIndex, cells) => {
                         let fondo = "green";
                         let letras = "white";
@@ -372,15 +373,15 @@
                             fondo = "#FF417B";
                             letras = "white";
                         }
-                        if(data.estatus !=null){
+                        if (data.estatus != null) {
                             $(cells[12]).css('background-color', fondo)
                             $(cells[12]).css('color', letras)
                         }
-                      
+
                     },
-                        order:[
-                            [0,'desc']
-                        ]
+                    order: [
+                        [0, 'desc']
+                    ]
                 });
             }
 
