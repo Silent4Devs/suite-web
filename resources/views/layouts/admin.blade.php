@@ -8,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
 
     <title>{{ trans('panel.site_title') }}</title>
     @yield('css')
@@ -1973,6 +1975,16 @@
             });
         });
     </script> --}}
+    <script>
+        $(".animated-over .form-control").change(function(e){
+            console.log(e.target);
+            if(e.target.value == ""){
+                $(e.target).removeClass("input-content-animated");
+            }else{
+                $(e.target).addClass("input-content-animated");
+            }
+        });
+    </script>
 
 </body>
 
