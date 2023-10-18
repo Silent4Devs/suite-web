@@ -26,7 +26,7 @@ class Denuncias extends Model implements Auditable
     {
         //retrieve all data or can pass columns to retrieve
         return Cache::remember('denuncias_all', 3600, function () {
-            return self::get();
+            return self::with('Empleado')->get();
         });
     }
 
