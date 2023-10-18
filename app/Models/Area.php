@@ -69,21 +69,21 @@ class Area extends Model implements Auditable
     //Redis methods
     public static function getExists()
     {
-        return Cache::remember('Areas:Areas_exists', 3600 * 24, function () {
+        return Cache::remember('Areas:Areas_exists', 3600 * 12, function () {
             return DB::table('areas')->exists();
         });
     }
 
     public static function getAll()
     {
-        return Cache::remember('areas_all', 3600 * 24, function () {
+        return Cache::remember('areas_all', 3600 * 12, function () {
             return self::orderByDesc('id')->get();
         });
     }
 
     public static function getIdNameAll()
     {
-        return Cache::remember('Areas:area_id_name_all', 3600 * 24, function () {
+        return Cache::remember('Areas:area_id_name_all', 3600 * 12, function () {
             return self::select('id', 'area')->orderByDesc('id')->get();
         });
     }
