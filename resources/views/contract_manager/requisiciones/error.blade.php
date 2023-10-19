@@ -17,9 +17,9 @@
         <div>
             <h3 style="font-size: 22px; font-weight: bolder;">Las causas por las que no puedes acceder a la siguiente requisición son las siguientes </h3>
             <ul>
-                <li>El registros  ha sido eliminado</li>
-                <li>Tu conexión de internet es inestable</li>
+                <li>No tienes permisos para firmar</li>
             </ul>
+            <a href="{{route('contract_manager.requisiciones.indexAprobadores')}}" style="color: white" class="btn btn-primary" >Regresar</a>
         </div>
     </div>
 

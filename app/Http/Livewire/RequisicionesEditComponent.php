@@ -120,12 +120,7 @@ class RequisicionesEditComponent extends Component
             'sucursal_id' => $data['sucursal_id'],
         ]);
 
-        $productos_existentes = ContractManagerProductoRequisicion::where('requisiciones_id', $this->editar_requisicion->id)->get();
-        if ($productos_existentes->count() > 0) {
-            foreach ($productos_existentes as $product) {
-                $product->delete();
-            }
-        }
+        ContractManagerProductoRequisicion::where('requisiciones_id', $this->editar_requisicion->id)->delete();
 
         for ($i = 1; $i <= $this->products_servs_count; $i++) {
             if (isset($data['cantidad_' . $i])) {
