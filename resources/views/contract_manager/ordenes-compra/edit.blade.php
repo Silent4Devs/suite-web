@@ -252,7 +252,7 @@
                                 <label for="" class="txt-tamaño">
                                     Cantidad <font class="asterisco">*</font>
                                 </label>
-                                <input type="number" name="cantidad{{ $count }}"
+                                <input type="text" name="cantidad{{ $count }}"
                                     class="browser-default mod-cantidad" value="{{ $producto->cantidad }}">
                             </div>
                             <div class="col s12 l8 ">
@@ -319,7 +319,7 @@
             <label for="" class="txt-tamaño">
                 No. de Personas
             </label>
-            <input type="number" name="no_personas{{ $count }}" min="0"
+            <input type="text" name="no_personas{{ $count }}"
                 class="browser-default mod-no_personas" value="{{ $producto->no_personas }}">
         </div>
 </div>
@@ -328,7 +328,7 @@
         <label for="" class="txt-tamaño">
             Porcentaje de involucramiento
         </label>
-        <input type="number" name="porcentaje_involucramiento{{ $count }}" min="0"
+        <input type="text" name="porcentaje_involucramiento{{ $count }}"
             class="browser-default mod-porcentaje_involucramiento"
             value="{{ $producto->porcentaje_involucramiento }}">
     </div>
@@ -345,8 +345,8 @@
             Sub total <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="sub_total{{ $count }}" data-count="{{ $count }}"
-                min="0" class="mod-sub_total browser-default" required
+            <input type="text" name="sub_total{{ $count }}" data-count="{{ $count }}"
+                 class="mod-sub_total browser-default" required
                 value="{{ $producto->sub_total }}">
         </div>
     </div>
@@ -355,8 +355,8 @@
             IVA <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="iva{{ $count }}" data-count="{{ $count }}"
-                min="0" class="mod-iva browser-default" required value="{{ $producto->iva }}">
+            <input type="text" name="iva{{ $count }}" data-count="{{ $count }}"
+                class="mod-iva browser-default" required value="{{ $producto->iva }}">
         </div>
     </div>
     <div class="col s12 l3 ">
@@ -364,8 +364,8 @@
             IVA retenido
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="iva_retenido{{ $count }}" data-count="{{ $count }}"
-                min="0" class="mod-iva_retenido browser-default"
+            <input type="text" name="iva_retenido{{ $count }}" data-count="{{ $count }}"
+               class="mod-iva_retenido browser-default"
                 value="{{ $producto->iva_retenido }}">
         </div>
     </div>
@@ -376,8 +376,8 @@
             Descuento
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="descuento{{ $count }}" data-count="{{ $count }}"
-                min="0" class="mod-descuento browser-default"
+            <input type="text" name="descuento{{ $count }}" data-count="{{ $count }}"
+                class="mod-descuento browser-default"
                 value="{{ $producto->descuento }}">
         </div>
     </div>
@@ -386,8 +386,8 @@
             Otro impuesto
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="otro_impuesto{{ $count }}" data-count="{{ $count }}"
-                min="0" class="mod-otro_impuesto browser-default"
+            <input type="text" name="otro_impuesto{{ $count }}" data-count="{{ $count }}"
+                class="mod-otro_impuesto browser-default"
                 value="{{ $producto->otro_impuesto }}">
         </div>
     </div>
@@ -396,8 +396,8 @@
             ISR retenido
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="isr_retenido{{ $count }}" data-count="{{ $count }}"
-                min="0" class="mod-isr_retenido browser-default"
+            <input type="text" name="isr_retenido{{ $count }}" data-count="{{ $count }}"
+                class="mod-isr_retenido browser-default"
                 value="{{ $producto->isr_retenido }}">
         </div>
     </div>
@@ -406,8 +406,8 @@
             Total <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input id="input-total-serv{{ $count }}" type="number" name="total{{ $count }}"
-                data-count="{{ $count }}" min="0" class="mod-total browser-default"
+            <input id="input-total-serv{{ $count }}" type="text" name="total{{ $count }}"
+                data-count="{{ $count }}" class="mod-total browser-default"
                 required value="{{ $producto->total }}" readonly>
         </div>
     </div>
@@ -431,7 +431,7 @@
                     Sub total
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="sub_total_calculado" name="sub_total" min="0"
+                    <input type="text" id="sub_total_calculado" name="sub_total"
                         class="browser-default" required value="{{ $requisicion->sub_total }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
@@ -443,7 +443,7 @@
                     IVA
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="iva_calculado" name="iva" min="0"
+                    <input type="text" id="iva_calculado" name="iva"
                         class="browser-default" required value="{{ $requisicion->iva }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
@@ -455,8 +455,8 @@
                     IVA retenido
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="iva_retenido_calculado" name="iva_retenido"
-                        min="0" class="browser-default" required value="{{ $requisicion->iva_retenido }}"
+                    <input type="text" id="iva_retenido_calculado" name="iva_retenido"
+                        class="browser-default" required value="{{ $requisicion->iva_retenido }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
             </div>
@@ -467,8 +467,8 @@
                     ISR retenido
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="isr_retenido_calculado" name="isr_retenido"
-                        min="0" class="browser-default" required value="{{ $requisicion->isr_retenido }}"
+                    <input type="text" id="isr_retenido_calculado" name="isr_retenido"
+                        class="browser-default" required value="{{ $requisicion->isr_retenido }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
             </div>
@@ -479,7 +479,7 @@
                     Total
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="total_calculado" name="total" min="1"
+                    <input type="text" id="total_calculado" name="total"
                         class="browser-default" required value="{{ $requisicion->total }}"
                         style="background: rgb(250, 249, 249);" readonly>
                 </div>
