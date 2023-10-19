@@ -49,7 +49,7 @@ class RequisicionesController extends Controller
             $ids = $id;
         }
 
-        $id = Auth::user()->id;
+        $id = User::getCurrentUser()->id;
         $roles = ModelsUser::find($id)->roles()->get();
 
         foreach ($roles as $rol) {
@@ -182,7 +182,7 @@ class RequisicionesController extends Controller
     {
         try {
             $requisicion = KatbolRequsicion::where('id', $id)->first();
-            $organizacion = Organizacion::first();
+            $organizacion = Organizacion::getFirst();
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
 
@@ -246,7 +246,7 @@ class RequisicionesController extends Controller
                 'estado' => 'firmada',
             ]);
         }
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.requisiciones'));
@@ -288,7 +288,7 @@ class RequisicionesController extends Controller
         if ($requisicion->firma_solicitante === null) {
             $tipo_firma = 'firma_solicitante';
         } elseif ($requisicion->firma_jefe === null) {
-            $user =   Auth::user();
+            $user =   User::getCurrentUser();
             $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
             if ($supervisor === $user->name) {
                 $tipo_firma = 'firma_jefe';
@@ -296,14 +296,14 @@ class RequisicionesController extends Controller
                 return view('contract_manager.requisiciones.error');
             }
         } elseif ($requisicion->firma_finanzas === null) {
-            $user =   Auth::user();
+            $user =   User::getCurrentUser();
             if ($user->name === 'Lourdes Del Pilar Abadia Velasco') {
                 $tipo_firma = 'firma_finanzas';
             } else {
                 return view('contract_manager.requisiciones.error');
             }
         } elseif ($requisicion->firma_compras === null) {
-            $user =   Auth::user();
+            $user =   User::getCurrentUser();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
             if ($comprador->user->name === $user->name) {
                 $tipo_firma = 'firma_compras';
@@ -315,7 +315,7 @@ class RequisicionesController extends Controller
             $bandera = $this->bandera = false;
         }
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
 
@@ -373,8 +373,8 @@ class RequisicionesController extends Controller
             'firma_compras' => null,
         ]);
 
-        $userEmail = Auth::user()->email;
-        $organizacion = Organizacion::first();
+        $userEmail = User::getCurrentUser()->email;
+        $organizacion = Organizacion::getFirst();
         $tipo_firma = 'rechazado_requisicion';
         Mail::to($requisicion->email)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
@@ -390,7 +390,7 @@ class RequisicionesController extends Controller
     public function pdf($id)
     {
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-        $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+        $organizacion = Organizacion::getLogo();
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisiciones->id)->pluck('proveedor_id')->toArray();
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();

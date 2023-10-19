@@ -31,19 +31,15 @@ class OrdenCompraController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        $user = User::getCurrentUser();
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo_katbol.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
-        $id = Auth::user()->id;
+        $id = $user->id;
         $roles = User::find($id)->roles()->get();
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin' || $rol->title === 'Compras') {
@@ -62,7 +58,7 @@ class OrdenCompraController extends Controller
 
     public function getRequisicionIndex(Request $request)
     {
-        $id = Auth::user()->id;
+        $id = User::getCurrentUser()->id;
         $roles = User::find($id)->roles()->get();
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin' || $rol->title === 'Compras') {
@@ -110,7 +106,7 @@ class OrdenCompraController extends Controller
     {
 
         $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-        $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+        $organizacion = Organizacion::getLogo();
 
         return view('contract_manager.ordenes-compra.show', compact('requisicion', 'organizacion'));
     }
@@ -126,11 +122,11 @@ class OrdenCompraController extends Controller
         abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
         $proveedores = KatbolProveedorOC::get();
-        $proveedor = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->first();
+        $proveedor = $proveedores->where('id', $requisicion->proveedor_id)->first();
         $contratos = KatbolContrato::get();
         $centro_costos = KatbolCentroCosto::get();
         $monedas = KatbolMoneda::get();
-        $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
+        $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
 
         return view('contract_manager.ordenes-compra.edit', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato'));
     }
@@ -220,7 +216,7 @@ class OrdenCompraController extends Controller
     {
         try {
             $requisicion = KatbolRequsicion::find($id);
-            $organizacion = Organizacion::first();
+            $organizacion = Organizacion::getFirst();
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
             $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->get();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
@@ -272,7 +268,7 @@ class OrdenCompraController extends Controller
 
             $userEmail = $requisicion->email;
         }
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));
@@ -296,8 +292,8 @@ class OrdenCompraController extends Controller
             'estado_orden' => 'rechazado_oc',
         ]);
 
-        $userEmail = Auth::user()->email;
-        $organizacion = Organizacion::first();
+        $userEmail = User::getCurrentUser()->email;
+        $organizacion = Organizacion::getFirst();
         $tipo_firma = 'rechazado';
         Mail::to($requisicion->email)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
@@ -308,7 +304,7 @@ class OrdenCompraController extends Controller
     {
 
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-        $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+        $organizacion = Organizacion::getLogo();
 
         $f = new NumberFormatter('es', NumberFormatter::SPELLOUT);
         $numero = $requisiciones->total;
