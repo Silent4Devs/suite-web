@@ -119,12 +119,12 @@ class RequisicionesCreateComponent extends Component
             ]);
         }
 
-        $productos_existentes = KatbolProductoRequisicion::where('requisiciones_id', $this->nueva_requisicion->id)->get();
-        if ($productos_existentes->count() > 0) {
-            foreach ($productos_existentes as $product) {
-                $product->delete();
-            }
-        }
+        // $productos_existentes = KatbolProductoRequisicion::where('requisiciones_id', $this->nueva_requisicion->id)->get();
+        // if ($productos_existentes->count() > 0) {
+        //     foreach ($productos_existentes as $product) {
+        //         $product->delete();
+        //     }
+        // }
 
         for ($i = 1; $i <= $this->products_servs_count; $i++) {
             if (isset($data['especificaciones_' . $i])) {
