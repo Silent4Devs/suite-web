@@ -288,11 +288,28 @@ class RequisicionesController extends Controller
         if ($requisicion->firma_solicitante === null) {
             $tipo_firma = 'firma_solicitante';
         } elseif ($requisicion->firma_jefe === null) {
-            $tipo_firma = 'firma_jefe';
+            $user =   Auth::user();
+            $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
+            if ($supervisor === $user->name) {
+                $tipo_firma = 'firma_jefe';
+            } else {
+                return view('contract_manager.requisiciones.error');
+            }
         } elseif ($requisicion->firma_finanzas === null) {
-            $tipo_firma = 'firma_finanzas';
+            $user =   Auth::user();
+            if ($user->name === 'Lourdes Del Pilar Abadia Velasco') {
+                $tipo_firma = 'firma_finanzas';
+            } else {
+                return view('contract_manager.requisiciones.error');
+            }
         } elseif ($requisicion->firma_compras === null) {
-            $tipo_firma = 'firma_compras';
+            $user =   Auth::user();
+            $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+            if ($comprador->user->name === $user->name) {
+                $tipo_firma = 'firma_compras';
+            } else {
+                return view('contract_manager.requisiciones.error');
+            }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
             $bandera = $this->bandera = false;
