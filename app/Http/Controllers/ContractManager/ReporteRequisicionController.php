@@ -33,18 +33,18 @@ class ReporteRequisicionController extends Controller
         $proveedores = KatbolProveedores::get();
         $contratos = Contrato::get();
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         $logotipo = DB::table('organizacions')->get('logotipo');
 
         if (empty($organizacion)) {
-            $count = Organizacion::get()->count();
+            $count = Organizacion::getAll()->count();
             $empty = false;
 
             return view('contract_manager.reportes.index', compact('organizacion', 'proveedores', 'contratos'))->with('organizacion', $organizacion)->with('count', $count)->with('empty', $empty);
         } else {
             $empty = true;
-            $count = Organizacion::get()->count();
+            $count = Organizacion::getAll()->count();
 
             return view('contract_manager.reportes.index', compact('organizacion', 'proveedores', 'contratos'))->with('organizacion', $organizacion)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo[0]);
         }
