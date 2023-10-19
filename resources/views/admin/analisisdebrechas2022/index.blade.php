@@ -76,21 +76,15 @@
         }
         .titulo-card{
             /* UI Properties */
-            font: var(--unnamed-font-style-normal) normal 600 var(--unnamed-font-size-20)/27px Segoe UI;
-            letter-spacing: var(--unnamed-character-spacing-0);
-            color: var(--unnamed-color-ffffff);
             text-align: left;
-            font: normal normal 600 20px/27px Segoe UI;
+            font: 27px Segoe UI;
             letter-spacing: 0px;
             color: #FFFFFF;
             opacity: 1;
         }
         .texto-card{
-            font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 12px/16px Segoe UI;
-            letter-spacing: var(--unnamed-character-spacing-0);
-            color: var(--unnamed-color-ffffff);
             text-align: left;
-            font: normal normal normal 12px/16px Segoe UI;
+            font: 16px Segoe UI;
             letter-spacing: 0px;
             color: #FFFFFF;
             opacity: 1;
@@ -172,7 +166,12 @@
             letter-spacing: 0px;
             color: #FFFFFF;
         }
-
+        .card-t.card
+        {
+            background-color: #3B7EB2;
+            box-shadow: 0px 1px 4px #0000000F;
+            border-radius: 8px;
+        }
     </style>
      {{ Breadcrumbs::render('admin.analisisdebrechas-2022.index') }}
 
@@ -181,15 +180,21 @@
 
     <h5 class="titulo">Análisis de Brechas </h5>
 
-    <div class="card-main">
-        <div class="left-image">
-            <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" style="margin: 9px 10px 10px 10px; width: 128px; height: 119px;">
-        </div>
-        <div class="right-content">
-            <div class="">
-                <div class="titulo-card" style="margin-left:15px;">¿Qué es? Dashboard Análisis de Brechas
-                    <div class="texto-card" style="">Es una herramienta visual que ayuda a las organizaciones a visualizar las brechas entre el estado actual y el estado deseado. Este dashboard suele incluir indicadores clave de rendimiento (KPI) que miden el desempeño de la organización en las áreas que se están analizando. El dashboard puede ser una herramienta valiosa para la gestión de las brechas. Al proporcionar una visión general de las brechas, el dashboard puede ayudar a las organizaciones a priorizar las áreas de mejora y a tomar medidas para cerrar las brechas.
-                    </div>
+    <div class="card card-t">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}"
+                    style="margin: 9px 10px 10px 10px; width: 170px; height: 200px;">
+            </div>
+            <div class="col-md-10 ">
+                <div class="pt-2">
+                    <p class="titulo-card">Crea tu template</p>
+                    <p class="texto-card mb-2">Es una herramienta visual que ayuda a las organizaciones a visualizar las
+                        brechas entre el estado actual y el estado deseado. Este dashboard suele incluir indicadores clave de rendimiento
+                        (KPI) que miden el desempeño de la organización en las áreas que se están analizando.El dashboard puede ser una
+                        herramienta valiosa para la gestión de las brechas. Al proporcionar una visión general de las brechas, el dashboard
+                        puede ayudar a las organizaciones a priorizar las áreas de mejora y a tomar medidas para cerrar las brechas.
+                    </p>
                 </div>
             </div>
         </div>

@@ -194,12 +194,7 @@
         }
 
         .linea-seccion {
-            top: 986px;
-            left: 286px;
-            width: 1146px;
-            height: 11px;
-            background: var(--unnamed-color-306ba9) 0% 0% no-repeat padding-box;
-            background: #306BA9 0% 0% no-repeat padding-box;
+            background: white;
             border-radius: 0px 10px 0px 0px;
             opacity: 1;
         }
@@ -231,17 +226,15 @@
             border-radius: 8px;
             opacity: 1;
             margin-bottom: 30px;
-        }
+        }seccion
 
         .titulo-card-template {
             /* UI Properties */
-            color: var(--unnamed-color-306ba9);
             text-align: left;
             font: 20px Roboto;
             letter-spacing: 0px;
             color: #306BA9;
             opacity: 1;
-            padding: 20px 0px 0px 40px;
         }
 
         .data-descripcion-card {
@@ -293,7 +286,6 @@
             letter-spacing: 0px;
             color: #606060;
             opacity: 1;
-            margin: 10px 0px 0px 40px;
         }
         .estatus{
             /* Layout Properties */
@@ -370,32 +362,65 @@
             box-shadow: 0px 1px 4px #0000000F;
             border-radius: 8px;
         }
+        .card-t.card
+        {
+            background-color: #3B7EB2;
+            box-shadow: 0px 1px 4px #0000000F;
+            border-radius: 8px;
+        }
+        .letra-titulo-template
+        {
+            text-align: left;
+            font: 26px Roboto;
+            color: #FFFFFF;
+            opacity: 1;
+        }
+        .letra-subtitulo-template
+        {
+            text-align: left;
+            font: 14px Roboto;
+            color: #FFFFFF;
+            opacity: 1;
+        }
+        .color-picker {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .color-box {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        .color-input {
+            width: 50px;
+            height: 30px;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
     </style>
     <h5 class="titulo">Construir Evaluación para medir el cumplimiento del Análisis de Brechas</h5>
 
-    <div class="card-main">
-        <div class="left-image">
-            <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}"
-                style="margin: 9px 10px 10px 10px; width: 128px; height: 119px;">
-        </div>
-        <div class="right-content">
-            <div class="">
-                <div class="titulo-card" style="margin-left:15px;">Crea tu template
-                    <div class="texto-card" style="margin-top:10px;">Genera tus preguntas y personaliza tus campos según lo
-                        requieras
-                    </div>
-                    <div class="texto-card" style="margin-top:5px;">
-                        Elaboraremos nuestro cuestionario que nos permitirá
-                        evaluar el
-                        cumplimiento de nuestra norma selaccionada.
-                    </div>
+    <div class="card card-t">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}"
+                    style="margin: 9px 10px 10px 10px; width: 128px; height: 119px;">
+            </div>
+            <div class="col-md-10 ">
+                <div class="pt-2">
+                    <p class="letra-titulo-template mt-2">Crea tu template</p>
+                    <p class="letra-subtitulo-template mb-2">Genera tus preguntas y personaliza tus campos según lo requieras</p>
+                    <p class="letra-subtitulo-template mb-2">Elaboraremos nuestro cuestionario que nos permitirá evaluar el cumplimiento de nuestra norma seleccionada.</p>
                 </div>
             </div>
         </div>
     </div>
     <div class="card card-body mt-5">
         <div style="color:#306BA9; font-size:16px;">Datos Generales</div>
-        <hr style="margin: 20px 32px 0px 32px;">
+        <hr style="">
         <form>
             <div class="form-row" style="">
               <div class="col-md-6">
@@ -422,54 +447,88 @@
               </div>
           </form>
     </div>
-    <div class="card-middle-datos">
-        <div class="titulo-card-template">Define el valor de los parámetros con los que se evaluará tu cuestionario
+    <div class="card card-body mt-5">
+        <div class="col-m-12" style="color:#306BA9; font-size:16px;">
+            Define el valor de los parámetros con los que se evaluará tu cuestionario
         </div>
-        <div class="sub-estatus-valor">
+        <div class="col-m-12 mt-3" style="font: italic 14px Roboto;">
             Estatus: Define el nombre de tu parámetro
         </div>
-        <div class="sub-estatus-valor">
+        <div class="col-m-12 mt-3" style="font: italic 14px Roboto;">
             Valor: Agrega el valor de tu parámetro con los que se evaluará tu cuestionario
         </div>
-        <form>
-            <div class="form-row" style="margin:30px 30px 10px 35px;">
-            <div class="col-md-2">
-                <input type="text" class="form-control estatus" placeholder="Estatus">
-            </div>
-            <div class="col-md-1">
-                <input type="text" class="form-control valor-form" placeholder="Valor" style="font: 5px;">
-            </div>
-              <div class="col-md-2">
-                <input type="text" class="form-control estatus" placeholder="Estatus">
+        <div class="row">
+            <form>
+                <div class="form-row mt-4 mr-2 ml-2">
+                <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="Estatus">
+                </div>
+                <div class="col-md-1">
+                    <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
+                </div>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="Estatus">
+                  </div>
+                  <div class="col-md-1">
+                    <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
+                  </div>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="Estatus">
+                  </div>
+                  <div class="col-md-1">
+                    <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
+                  </div>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="Estatus">
+                  </div>
+                  <div class="col-md-1">
+                    <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
+                  </div>
+                </div>
+              </form>
+              <div>
+                <div class="row pl-2">
+                    <div class="col-md-2 color-picker">
+                        <input type="color" class="color-input" value="#563d7c" title="Choose your color">
+                    </div>
+                    <div class="col-md-1" style="">
+                        <label for="">Color</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="exampleColorInput" class="form-label"></label>
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                    </div>
+                    <div class="col-md-1" style="padding: 30px 45px 0px 0px;">
+                        <label for="">Color</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="exampleColorInput" class="form-label"></label>
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                    </div>
+                    <div class="col-md-1" style="padding: 30px 45px 0px 0px;">
+                        <label for="">Color</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="exampleColorInput" class="form-label"></label>
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                    </div>
+                    <div class="col-md-1" style="padding: 30px 45px 0px 0px;">
+                        <label for=""class="">Color</label>
+                    </div>
+                </div>
               </div>
-              <div class="col-md-1">
-                <input type="text" class="form-control valor-form" placeholder="Valor" style="font: 5px;">
-              </div>
-              <div class="col-md-2">
-                <input type="text" class="form-control estatus" placeholder="Estatus">
-              </div>
-              <div class="col-md-1">
-                <input type="text" class="form-control valor-form" placeholder="Valor" style="font: 5px;">
-              </div>
-              <div class="col-md-2">
-                <input type="text" class="form-control estatus" placeholder="Estatus">
-              </div>
-              <div class="col-md-1">
-                <input type="text" class="form-control valor-form" placeholder="Valor" style="font: 5px;">
-              </div>
-            </div>
-          </form>
+        </div>
     </div>
-    <div class="card-small-datos">
-        <div class="form-row" style="margin:30px 30px 10px 35px;">
-            <div class="col-md-8 titulo-card-template" style="padding-top: 20px;">
+    <div class="card card-body">
+        <div class="form-row" style="">
+            <div class="col-md-10 titulo-card-template" style="font:roboto;color:#306BA9; font-size:16px;">
                 Define el valor de los parámetros con los que se evaluará tu cuestionario
             </div>
-            <div class="col-md-2 añadir-seccion" style="padding-top: 20px; padding-left:41px;">
-                Añadir Sección
+            <div class="col-m-1" style="font:roboto;color:#306BA9; font-size:14px; ">
+                <div class="">Añadir Sección</div>
             </div>
-            <div class="col-md-2" style="padding-top: 18px;">
-                <select id="inputState" class="form-control filtro-seccion">
+            <div class="col-m-1 " style="">
+                <select id="inputState" class="form-control">
                     <option selected>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -479,14 +538,46 @@
         </div>
     </div>
     <div>
-        <div class="seccion">Sección 1</div>
-        <div class="linea-seccion"></div>
-        <div class="card-seccion">
-            <div>
-                <div class="data-descripcion-card">Descripcion*
+        <div class="seccion col-m-2">
+            Sección 1
+        </div>
+        <div class="linea-seccion col-md-12">
+        </div>
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-4" style="color:#FF0000; font-size:10px;">La evaluación debe tener un valor total del 100% entre las secciones
                 </div>
             </div>
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <textarea class="form-control">
+                            </textarea>
+                            <label>Descripción</label>
+                          </div>
+                      </div>
+                  </div>
+            </form>
         </div>
-        <div class="card-formulario-seccion"></div>
+        <div class="card card-body mt-5">
+            <div style="color:#306BA9; font-size:16px;">Formulario
+                <hr style="">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea class="form-control">
+                                </textarea>
+                                <label>Pregunta</label>
+                              </div>
+                          </div>
+                      </div>
+                </form>
+            </div>
+            <div></div>
+        </div>
     </div>
 @endsection
