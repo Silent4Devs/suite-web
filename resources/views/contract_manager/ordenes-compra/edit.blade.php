@@ -108,7 +108,7 @@
                         <label for="" class="txt-tamaño">
                             Días de crédito proveedor
                         </label>
-                        <input type="number" required name="dias_credito" min="0"
+                        <input type="text" required   name="dias_credito"
                             class="browser-default" value="{{ $requisicion->dias_credito }}">
                     </div>
                 </div>
@@ -131,7 +131,7 @@
                         <label for="" class="txt-tamaño">
                             Tipo de cambio: <font class="asterisco"></font>
                         </label>
-                        <input type="text" name="cambio" class="browser-default"
+                        <input type="text"  name="cambio" class="browser-default"
                             value="{{ $requisicion->cambio }}">
                     </div>
                 </div>
@@ -225,7 +225,7 @@
                         <label for="" class="txt-tamaño">
                             Crédito disponible
                         </label>
-                        <input type="number" min="0"
+                        <input type="text"
                             value="{{ $proveedor->credito }}" name="credito_proveedor" class="browser-default">
                     </div>
                 </div>
@@ -252,7 +252,7 @@
                                 <label for="" class="txt-tamaño">
                                     Cantidad <font class="asterisco">*</font>
                                 </label>
-                                <input type="number" name="cantidad{{ $count }}" min="0"
+                                <input type="number" name="cantidad{{ $count }}"
                                     class="browser-default mod-cantidad" value="{{ $producto->cantidad }}">
                             </div>
                             <div class="col s12 l8 ">
