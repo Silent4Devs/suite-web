@@ -10,9 +10,12 @@ use App\Models\Organizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Traits\ObtenerOrganizacion;
 
 class ProveedoresController extends Controller
 {
+    use ObtenerOrganizacion;
+
     /**
      * Show the application dashboard.
      *

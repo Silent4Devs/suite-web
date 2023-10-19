@@ -21,9 +21,11 @@ use Illuminate\Support\Facades\Mail;
 use NumberFormatter;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
+use App\Traits\ObtenerOrganizacion;
 
 class OrdenCompraController extends Controller
 {
+    use ObtenerOrganizacion;
     /**
      * Display a listing of the resource.
      *
