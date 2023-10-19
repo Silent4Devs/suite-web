@@ -43,7 +43,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function render()
     {
-        $emp_proy = TimesheetProyectoEmpleado::getIdAreaTimeProy($this->proyecto->id)->where('proyecto_id', $this->proyecto->id);
+        $emp_proy = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
 
         foreach ($emp_proy as $ep) {
             $times = TimesheetHoras::getData()->where('proyecto_id', '=', $ep->proyecto_id)
