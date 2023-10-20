@@ -226,9 +226,9 @@
             border-radius: 8px;
             opacity: 1;
             margin-bottom: 30px;
-        }seccion
+        }
 
-        .titulo-card-template {
+        seccion .titulo-card-template {
             /* UI Properties */
             text-align: left;
             font: 20px Roboto;
@@ -250,7 +250,8 @@
             opacity: 1;
             margin: 0px 20px 20px 20px;
         }
-        .form-name-norm{
+
+        .form-name-norm {
             /* Layout Properties */
             top: 413px;
             left: 316px;
@@ -263,7 +264,8 @@
             border-radius: 4px;
             opacity: 1;
         }
-        .form-descripcion{
+
+        .form-descripcion {
             top: 481px;
             left: 316px;
             width: 1075px;
@@ -276,7 +278,8 @@
             opacity: 1;
             margin: 10px 0px 0px 6px;
         }
-        .sub-estatus-valor{
+
+        .sub-estatus-valor {
             /* UI Properties */
             font: italic normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-14)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
             letter-spacing: var(--unnamed-character-spacing-0);
@@ -287,7 +290,8 @@
             color: #606060;
             opacity: 1;
         }
-        .estatus{
+
+        .estatus {
             /* Layout Properties */
             top: 785px;
             left: 316px;
@@ -299,7 +303,8 @@
             border: 1px solid #057BE2;
             opacity: 1;
         }
-        .valor{
+
+        .valor {
             /* Layout Properties */
             top: 785px;
             left: 484px;
@@ -320,7 +325,8 @@
             letter-spacing: 0px;
             color: #5A5A5A;
         }
-        .valor-form{
+
+        .valor-form {
             /* Layout Properties */
             top: 785px;
             left: 484px;
@@ -341,7 +347,8 @@
             letter-spacing: 0px;
             color: #5A5A5A;
         }
-        .filtro-seccion{
+
+        .filtro-seccion {
             top: 905px;
             left: 1249px;
             width: 51px;
@@ -352,36 +359,39 @@
             border-radius: 4px;
             opacity: 1;
         }
-        .añadir-seccion{
+
+        .añadir-seccion {
             /* UI Properties */
             font: normal normal normal 20px Roboto;
             letter-spacing: 0px;
             color: #057BE2;
         }
+
         .card-body.card {
             box-shadow: 0px 1px 4px #0000000F;
             border-radius: 8px;
         }
-        .card-t.card
-        {
+
+        .card-t.card {
             background-color: #3B7EB2;
             box-shadow: 0px 1px 4px #0000000F;
             border-radius: 8px;
         }
-        .letra-titulo-template
-        {
+
+        .letra-titulo-template {
             text-align: left;
             font: 26px Roboto;
             color: #FFFFFF;
             opacity: 1;
         }
-        .letra-subtitulo-template
-        {
+
+        .letra-subtitulo-template {
             text-align: left;
             font: 14px Roboto;
             color: #FFFFFF;
             opacity: 1;
         }
+
         .color-picker {
             display: inline-flex;
             align-items: center;
@@ -409,11 +419,13 @@
                 <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}"
                     style="margin: 9px 10px 10px 10px; width: 128px; height: 119px;">
             </div>
-            <div class="col-md-10 ">
+            <div class="col-md-10">
                 <div class="pt-2">
                     <p class="letra-titulo-template mt-2">Crea tu template</p>
-                    <p class="letra-subtitulo-template mb-2">Genera tus preguntas y personaliza tus campos según lo requieras</p>
-                    <p class="letra-subtitulo-template mb-2">Elaboraremos nuestro cuestionario que nos permitirá evaluar el cumplimiento de nuestra norma seleccionada.</p>
+                    <p class="letra-subtitulo-template mb-2">Genera tus preguntas y personaliza tus campos según lo requieras
+                    </p>
+                    <p class="letra-subtitulo-template mb-2">Elaboraremos nuestro cuestionario que nos permitirá evaluar el
+                        cumplimiento de nuestra norma seleccionada.</p>
                 </div>
             </div>
         </div>
@@ -423,18 +435,18 @@
         <hr style="">
         <form>
             <div class="form-row" style="">
-              <div class="col-md-6">
-                <div class="form-group ">
-                    <input type="text" class="form-control" value="">
-                    <label>Nombre del Template</label>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <input type="text" class="form-control" value="">
+                        <label>Nombre del Template</label>
+                    </div>
                 </div>
-              </div>
-              <div class="form-group col-md-6 ">
-                <select id="inputState" class="form-control ">
-                  <option selected>Norma</option>
-                  <option>...</option>
-                </select>
-              </div>
+                <div class="form-group col-md-6 ">
+                    <select id="inputState" class="form-control ">
+                        <option selected>Norma</option>
+                        <option>...</option>
+                    </select>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -442,10 +454,10 @@
                         <textarea class="form-control">
                         </textarea>
                         <label>Descripción</label>
-                      </div>
-                  </div>
-              </div>
-          </form>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="card card-body mt-5">
         <div class="col-m-12" style="color:#306BA9; font-size:16px;">
@@ -460,33 +472,33 @@
         <div class="row">
             <form>
                 <div class="form-row mt-4 mr-2 ml-2">
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Estatus">
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" placeholder="Estatus">
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" placeholder="Estatus">
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" placeholder="Estatus">
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" placeholder="Estatus">
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
+                    </div>
                 </div>
-                <div class="col-md-1">
-                    <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
-                </div>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Estatus">
-                  </div>
-                  <div class="col-md-1">
-                    <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
-                  </div>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Estatus">
-                  </div>
-                  <div class="col-md-1">
-                    <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
-                  </div>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Estatus">
-                  </div>
-                  <div class="col-md-1">
-                    <input type="text" class="form-control" placeholder="Valor" style="font: 5px;">
-                  </div>
-                </div>
-              </form>
-              <div>
+            </form>
+            <div>
                 <div class="row pl-2">
                     <div class="col-md-2 color-picker">
                         <input type="color" class="color-input" value="#563d7c" title="Choose your color">
@@ -496,27 +508,30 @@
                     </div>
                     <div class="col-md-2">
                         <label for="exampleColorInput" class="form-label"></label>
-                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c"
+                            title="Choose your color">
                     </div>
                     <div class="col-md-1" style="padding: 30px 45px 0px 0px;">
                         <label for="">Color</label>
                     </div>
                     <div class="col-md-2">
                         <label for="exampleColorInput" class="form-label"></label>
-                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c"
+                            title="Choose your color">
                     </div>
                     <div class="col-md-1" style="padding: 30px 45px 0px 0px;">
                         <label for="">Color</label>
                     </div>
                     <div class="col-md-2">
                         <label for="exampleColorInput" class="form-label"></label>
-                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput"
+                            value="#563d7c" title="Choose your color">
                     </div>
                     <div class="col-md-1" style="padding: 30px 45px 0px 0px;">
                         <label for=""class="">Color</label>
                     </div>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
     <div class="card card-body">
@@ -533,7 +548,7 @@
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
-                  </select>
+                </select>
             </div>
         </div>
     </div>
@@ -547,7 +562,8 @@
             <div class="row">
                 <div class="col-md-8">
                 </div>
-                <div class="col-md-4" style="color:#FF0000; font-size:10px;">La evaluación debe tener un valor total del 100% entre las secciones
+                <div class="col-md-4" style="color:#FF0000; font-size:10px;">La evaluación debe tener un valor total del
+                    100% entre las secciones
                 </div>
             </div>
             <form>
@@ -557,9 +573,9 @@
                             <textarea class="form-control">
                             </textarea>
                             <label>Descripción</label>
-                          </div>
-                      </div>
-                  </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="card card-body mt-5">
@@ -572,9 +588,9 @@
                                 <textarea class="form-control">
                                 </textarea>
                                 <label>Pregunta</label>
-                              </div>
-                          </div>
-                      </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div></div>

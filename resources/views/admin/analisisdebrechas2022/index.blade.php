@@ -1,21 +1,21 @@
 @extends('layouts.admin')
 @section('content')
-
-
     <style>
         .btn-outline-success {
             background: #788bac !important;
             color: white;
-            border:none;
-        }
-        .btn-outline-success:focus{
-            border-color:#345183 !important;
-            box-shadow:none;
+            border: none;
         }
 
-        .btn-outline-success:active{
-            box-shadow:none !important;
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
         }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
         .btn-outline-success:hover {
             background: #788bac;
             color: white;
@@ -36,6 +36,7 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
+
         th {
             background-color: #345183;
             color: #ffff;
@@ -62,7 +63,8 @@
         .table tr td:nth-child(4) {
             text-align: center !important;
         }
-                .card-main{
+
+        .card-main {
             top: 135px;
             left: 286px;
             width: 1146px;
@@ -72,9 +74,11 @@
             border-radius: 8px;
             opacity: 1;
             display: flex;
-            align-items: center; /* Centra verticalmente los elementos en el contenedor */
+            align-items: center;
+            /* Centra verticalmente los elementos en el contenedor */
         }
-        .titulo-card{
+
+        .titulo-card {
             /* UI Properties */
             text-align: left;
             font: 27px Segoe UI;
@@ -82,7 +86,8 @@
             color: #FFFFFF;
             opacity: 1;
         }
-        .texto-card{
+
+        .texto-card {
             text-align: left;
             font: 16px Segoe UI;
             letter-spacing: 0px;
@@ -91,19 +96,24 @@
             margin-right: 60px;
             margin-left: 20px:
         }
+
         .container {
             display: flex;
-            align-items: center; /* Centra verticalmente los elementos en el contenedor */
+            align-items: center;
+            /* Centra verticalmente los elementos en el contenedor */
         }
 
         .left-image {
-            flex: 0.25; /* El 50% del ancho disponible para la imagen */
+            flex: 0.25;
+            /* El 50% del ancho disponible para la imagen */
         }
 
         .right-content {
-            flex: 3; /* El 50% del ancho disponible para el contenido */
+            flex: 3;
+            /* El 50% del ancho disponible para el contenido */
         }
-        .titulo{
+
+        .titulo {
             text-align: left;
             font: normal normal 600 24px Segoe UI;
             letter-spacing: 0px;
@@ -112,7 +122,8 @@
             margin-left: 5px;
             margin-bottom: 12px;
         }
-        .display-analisis{
+
+        .display-analisis {
             /* Layout Properties */
             width: 410px;
             height: 402px;
@@ -125,7 +136,8 @@
             margin-top: 30px;
             margin-bottom: 100px;
         }
-        .titulo-display-analisis{
+
+        .titulo-display-analisis {
             /* UI Properties */
             font: var(--unnamed-font-style-normal) normal medium 13px/16px var(--unnamed-font-family-roboto);
             letter-spacing: var(--unnamed-character-spacing-0);
@@ -136,7 +148,8 @@
             color: #606060;
             opacity: 1;
         }
-        .boton-display{
+
+        .boton-display {
             /* Layout Properties */
             top: 595px;
             left: 541px;
@@ -157,7 +170,8 @@
             margin: 15px 155px 0px 155px;
             padding-top: 6px;
         }
-        .letra-boton-display{
+
+        .letra-boton-display {
             font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-14)/17px var(--unnamed-font-family-roboto);
             letter-spacing: var(--unnamed-character-spacing-0);
             color: var(--unnamed-color-ffffff);
@@ -166,14 +180,19 @@
             letter-spacing: 0px;
             color: #FFFFFF;
         }
-        .card-t.card
-        {
+
+        .card-t.card {
             background-color: #3B7EB2;
             box-shadow: 0px 1px 4px #0000000F;
             border-radius: 8px;
         }
+
+        .card-body.card {
+            box-shadow: 0px 1px 4px #0000000F;
+            border-radius: 14px;
+        }
     </style>
-     {{ Breadcrumbs::render('admin.analisisdebrechas-2022.index') }}
+    {{ Breadcrumbs::render('admin.analisisdebrechas-2022.index') }}
 
 
     @include('partials.flashMessages')
@@ -186,14 +205,18 @@
                 <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}"
                     style="margin: 9px 10px 10px 10px; width: 170px; height: 200px;">
             </div>
-            <div class="col-md-10 ">
+            <div class="col-md-10 pl-5">
                 <div class="pt-2">
                     <p class="titulo-card">Crea tu template</p>
                     <p class="texto-card mb-2">Es una herramienta visual que ayuda a las organizaciones a visualizar las
-                        brechas entre el estado actual y el estado deseado. Este dashboard suele incluir indicadores clave de rendimiento
-                        (KPI) que miden el desempeño de la organización en las áreas que se están analizando.El dashboard puede ser una
-                        herramienta valiosa para la gestión de las brechas. Al proporcionar una visión general de las brechas, el dashboard
-                        puede ayudar a las organizaciones a priorizar las áreas de mejora y a tomar medidas para cerrar las brechas.
+                        brechas entre el estado actual y el estado deseado. Este dashboard suele incluir indicadores clave
+                        de rendimiento
+                        (KPI) que miden el desempeño de la organización en las áreas que se están analizando. El dashboard
+                        puede ser una
+                        herramienta valiosa para la gestión de las brechas. Al proporcionar una visión general de las
+                        brechas, el dashboard
+                        puede ayudar a las organizaciones a priorizar las áreas de mejora y a tomar medidas para cerrar las
+                        brechas.
                     </p>
                 </div>
             </div>
@@ -201,27 +224,23 @@
     </div>
     <div class="row">
         <div class="col-md-5" style="margin: 0px 0px 0px 100px">
-            <div class="display-analisis">
-                <img src="{{ asset('assets/Imagen 18@2x.png') }}" alt="png"style="width: 311px; height: 233px;
-                margin: 32px 50px 0px 50px;">
-                <div class="titulo-display-analisis">Templates</div>
-                <div class="boton-display">
-                    <a href="{{ route('admin.templates') }}"
-                    style="text-align: center;font: normal normal normal 17px Roboto;color: #FFFFFF;">
-                    Generar
+            <div class="card card-body mt-4 text-center">
+                <img src="{{ asset('assets/Imagen 18@2x.png') }}" alt="png"style="width: 311px; height: 233px;">
+                <div class="text-center" style="font:16px Roboto;color:#606060;">Templates</div>
+                <div class="text-center">
+                    <a href="{{ route('admin.templates') }}" style="font:17px Roboto;color: #FFFFFF;">
+                        <button type="button" class="btn btn-primary mt-3 mb-3">Generar</button>
                     </a>
                 </div>
             </div>
         </div>
         <div class="col-md-5">
-            <div class="display-analisis" style="">
-                <img src="{{ asset('assets/Imagen 22@2x.png') }}" alt="png"style="width: 311px; height: 233px;
-                margin: 32px 50px 0px 50px;">
-                <div class="titulo-display-analisis">Análisis de brechas</div>
-                <div class="boton-display">
-                    <a href="{{ route('admin.formulario') }}"
-                    style="text-align: center;font: normal normal normal 17px Roboto;color: #FFFFFF;">
-                    Generar
+            <div class="card card-body mt-4" style="">
+                <img src="{{ asset('assets/Imagen 22@2x.png') }}" alt="png"style="width: 311px; height: 233px;">
+                <div class="text-center" style="font:16px Roboto;color:#606060;">Análisis de brechas</div>
+                <div class="text-center">
+                    <a href="{{ route('admin.formulario') }}"style="font:17px Roboto;color: #FFFFFF;">
+                        <button type="button" class="btn btn-primary mt-3 mb-3">Generar</button>
                     </a>
                 </div>
             </div>
