@@ -84,19 +84,19 @@ class AuditoriasSGI extends Component
         $this->noconformayor = $this->clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Mayor')->count();
         $this->oportunidadmejora = $this->clashallazgos->Where('clasificacion_hallazgo', 'Oportunidad de Mejora')->count();
         //tarjetas de no conformidad menor
-        $nc1 = $this->clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Menor')->count();
-        $nc2 = $this->clashallazgos->Where('clasificacion_hallazgo', 'NC Menor')->count();
-        $nc3 = $this->clashallazgos->Where('clasificacion_hallazgo', 'NO CONFORMIDAD MENOR')->count();
-        $this->noconformenor = $nc1 + $nc2 + $nc3;
+        // $nc1 = $this->clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Menor')->count();
+        // $nc2 = $this->clashallazgos->Where('clasificacion_hallazgo', 'NC Menor')->count();
+        // $nc3 = $this->clashallazgos->Where('clasificacion_hallazgo', 'NO CONFORMIDAD MENOR')->count();
+        // $this->noconformenor = $nc1 + $nc2 + $nc3;
         //GRAFICA DE BARRAS DE AUDITORIA
-        $this->clausid = AuditoriaInternasHallazgos::select('clausula_id')->get();
-        $this->contexto = $this->clausid->Where('clausula_id', '1')->count();
-        $this->liderazgo = $this->clausid->Where('clausula_id', '2')->count();
-        $this->planificacion = $this->clausid->Where('clausula_id', '3')->count();
-        $this->soporte = $this->clausid->Where('clausula_id', '4')->count();
-        $this->operacion = $this->clausid->Where('clausula_id', '5')->count();
-        $this->evaluacion = $this->clausid->Where('clausula_id', '6')->count();
-        $this->mejora = $this->clausid->Where('clausula_id', '7')->count();
+        // $this->clausid = AuditoriaInternasHallazgos::select('clausula_id')->get();
+        // $this->contexto = $this->clausid->Where('clausula_id', '1')->count();
+        // $this->liderazgo = $this->clausid->Where('clausula_id', '2')->count();
+        // $this->planificacion = $this->clausid->Where('clausula_id', '3')->count();
+        // $this->soporte = $this->clausid->Where('clausula_id', '4')->count();
+        // $this->operacion = $this->clausid->Where('clausula_id', '5')->count();
+        // $this->evaluacion = $this->clausid->Where('clausula_id', '6')->count();
+        // $this->mejora = $this->clausid->Where('clausula_id', '7')->count();
 
         $this->totalclasificaciones = ClasificacionesAuditorias::select()->get();
         // dd($totalclasificaciones);
@@ -112,14 +112,14 @@ class AuditoriasSGI extends Component
         //CLASIFICACIONES DE AUDITORIAS
 
         // Obtener los nombres de las clasificaciones para los identificadores 1, 2, 3 y 4
-        $this->nombreauditorias = AuditoriaInterna::select('nombre_auditoria')->get();
-        $this->nombreaudits = AuditoriaInterna::distinct()->pluck('nombre_auditoria')->map(function ($item) {
-            return ($item);
-        })->unique()->values()->toArray();
-        // $tclasificaciones = ClasificacionesAuditorias::select('nombre_clasificaciones')->get();
-        $this->clasificaciones = ClasificacionesAuditorias::distinct()->pluck('nombre_clasificaciones')->map(function ($item) {
-            return ($item);
-        })->unique()->values()->toArray();
+        // $this->nombreauditorias = AuditoriaInterna::select('nombre_auditoria')->get();
+        // $this->nombreaudits = AuditoriaInterna::distinct()->pluck('nombre_auditoria')->map(function ($item) {
+        //     return ($item);
+        // })->unique()->values()->toArray();
+        // // $tclasificaciones = ClasificacionesAuditorias::select('nombre_clasificaciones')->get();
+        // $this->clasificaciones = ClasificacionesAuditorias::distinct()->pluck('nombre_clasificaciones')->map(function ($item) {
+        //     return ($item);
+        // })->unique()->values()->toArray();
 
         // dd($nombreauditorias);
         // dd($nombreClasificacion1,$nombreClasificacion2,$nombreClasificacion3,$nombreClasificacion4);
@@ -197,11 +197,11 @@ class AuditoriasSGI extends Component
         // $sinatenderCount = $mejoras->Where('estatus', 'sin atender')->count();
 
         // ACCIONES CORRECTIVAS
-        $this->accioncorrectiva = AccionCorrectiva::select('estatus')->get();
-        $this->cerradoCountAC = $this->accioncorrectiva->where('estatus', 'Cerrado')->count();
-        $this->encursoCountAC = $this->accioncorrectiva->where('estatus', 'En curso')->count();
-        $this->enesperaCountAC = $this->accioncorrectiva->where('estatus', 'En espera')->count();
-        $this->sinatenderCountAC = $this->accioncorrectiva->where('estatus', 'Sin atender')->count();
+        // $this->accioncorrectiva = AccionCorrectiva::select('estatus')->get();
+        // $this->cerradoCountAC = $this->accioncorrectiva->where('estatus', 'Cerrado')->count();
+        // $this->encursoCountAC = $this->accioncorrectiva->where('estatus', 'En curso')->count();
+        // $this->enesperaCountAC = $this->accioncorrectiva->where('estatus', 'En espera')->count();
+        // $this->sinatenderCountAC = $this->accioncorrectiva->where('estatus', 'Sin atender')->count();
 
 
         return view('livewire.dashboard.auditorias-s-g-i', [
