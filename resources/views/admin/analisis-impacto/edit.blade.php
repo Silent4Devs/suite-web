@@ -1850,7 +1850,7 @@
                 <label class="col-sm-6 col-form-label"><strong>IMPACTOS</strong></label>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        placeholder="< 4 hrs" disabled>
+                        placeholder="<4 hrs" disabled>
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
@@ -2390,8 +2390,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1
-                                        día y hasta 2 días.</span>
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1 día y hasta 2 días.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2399,8 +2398,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 4
-                                        horas y hasta 1 día.</span>
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 4 horas y hasta 1 día.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2408,8 +2406,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1
-                                        hora y hasta 4 horas.</span>
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1 horas y hasta 4 horas.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2417,8 +2414,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos hasta 1
-                                        hora.</span>
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos hasta 1 hora.</span>
                                 </div>
                             </div>
 
@@ -2435,9 +2431,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="impacto_regulatorio" id="exampleModalLabel">Impacto
-                                Regulatorio
-                                (IR)</h5>
+                            <h5 class="modal-title" id="impacto_regulatorio" id="exampleModalLabel">Impacto Regulatorio o Normativo</h5>
                         </div>
                         <div class="modal-body">
                             <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
@@ -2453,8 +2447,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Podrían generarse penalizaciones, y/o investigación
-                                        contra la institución por faltas a normatividad Nacional o Constitucional.</span>
+                                    <span style="justify-content;">Podrían generarse penalizaciones, y/o investigación contra la empresa por faltas a normatividad Nacional o Constitucional.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
@@ -2462,9 +2455,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Podrían generarse penalizaciones y/o investigación
-                                        contra la institución por faltas a los organismos reguladores (ASF y Secretaria de
-                                        la Función Pública).</span>
+                                    <span style="justify-content;">Podrían generarse penalizaciones y/o investigación contra la empresa por faltas a los organismos reguladores (SAT, STPS, PROFECO, LFPDPPP, CONDUSEF, Etc.)</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
@@ -2472,8 +2463,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Podrían generarse penalizaciones por faltas a las
-                                        políticas manuales y/o reglamentos organizacionales.</span>
+                                    <span style="justify-content;">Faltas a los procedimientos, políticas manuales y/o reglamentos organizacionales.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2481,7 +2471,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Faltas a los procedimientos operativos internos.</span>
+                                    <span style="justify-content;">Falta a los procedimientos operativos internos</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2489,7 +2479,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Sin afectación o incumplimientos regulatorios.</span>
+                                    <span style="justify-content;">Sin afectación regulatoria o normativa.</span>
                                 </div>
                             </div>
 
@@ -2523,9 +2513,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Cobertura mediática a escala nacional y limitada a
-                                        nivel internacional, investigación formal de organismos reguladores, implicación de
-                                        directivos del SENASICA.</span>
+                                    <span style="justify-content;">Cobertura mediática nacional y limitada a nivel internacional, pérdida seria de clientes, investigación formal del regulador, implicación de directivos.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
@@ -2533,8 +2521,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Cobertura mediática a escala nacional, incremento en
-                                        reclamaciones de la ciudadanía, solicitud de organismos reguladores.</span>
+                                    <span style="justify-content;">Cobertura mediática a escala nacional, incremento en reclamaciones de clientes, pérdida de clientes, solicitud de información del regulador (informal).</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2542,8 +2529,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Cobertura mediática local, incremento en reclamaciones
-                                        de la ciudadanía.</span>
+                                    <span style="justify-content;">Cobertura mediática local o del sector, reclamaciones de clientes, posible pérdida.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2551,8 +2537,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Sin cobertura mediática, ligero incremento en
-                                        reclamaciones de la ciudadanía.</span>
+                                    <span style="justify-content;">Sin cobertura mediática, ligero incremento en reclamaciones de los clientes.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2560,7 +2545,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Sin efecto externo.</span>
+                                    <span style="justify-content;">Sin cobertura mediática o efecto externo.</span>
                                 </div>
                             </div>
 
@@ -2593,8 +2578,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
-                                        ciudadanía a toda la República Mexicana o incluso a niveles Internacionales.</span>
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la ciudadanía/clientes a toda la República Mexicana o incluso a niveles Internacionales.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
@@ -2602,8 +2586,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
-                                        ciudadanía a más de un estado de la República Mexicana.</span>
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la ciudadanía/clientes a más de un estado de la República Mexicana.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2611,8 +2594,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
-                                        ciudadanía de manera estatal.</span>
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la ciudadanía/clientes de manera local.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2620,8 +2602,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
-                                        ciudadanía de manera local.</span>
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la de manera interna.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2629,7 +2610,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Sin afectación a la población.</span>
+                                    <span style="justify-content;">Sin afectación a la población/clientes.</span>
                                 </div>
                             </div>
 
