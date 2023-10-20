@@ -180,17 +180,8 @@
             <table class="table table-bordered datatable-AlcanceSgsi">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="min-width:75px;">{{ trans('cruds.alcanceSgsi.fields.id') }}</th>
                         <th style="min-width:150px !important;">Nombre del Alcance</th>
-                        <th style="min-width:200px;">Descripción</th>
-                        <th>Norma</th>
-                        <th style="min-width:100px;">Fecha de publicación</th>
-                        <th style="min-width:100px;">Fecha de entrada en vigor</th>
-                        <th style="min-width:100px;">Revisó</th>
-                        <th style="min-width:150px !important;;">Puesto</th>
-                        <th style="min-width:150px;">Área</th>
-                        <th style="min-width:100px;">Fecha de revisión</th>
-                        <th style="min-width:100px;">Opciones</th>
+                        <th style="min-width:200px;">Alcance</th>
                     </tr>
                 </thead>
             </table>
@@ -386,10 +377,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.alcance-sgsis.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id',
-                    },
+                columns: [
                     {
                         data: 'nombre',
                         name: 'nombre',
@@ -398,46 +386,6 @@
                         data: 'alcancesgsi',
                         name: 'alcancesgsi'
                     },
-                    {
-                        data: 'norma',
-                        render: function(data, type, row, meta) {
-                            data = JSON.parse(data);
-                            let HTML = `<ul>`
-                            data.forEach(element => {
-                                HTML += `<li>${element.norma}</li>`
-                            });
-                            HTML += `</ul>`
-                            return HTML;
-                        }
-                    },
-                    {
-                        data: 'fecha_publicacion',
-                        name: 'fecha_publicacion'
-                    },
-                    {
-                        data: 'fecha_entrada',
-                        name: 'fecha_entrada'
-                    },
-                    {
-                        data: 'reviso_alcance',
-                        name: 'reviso_alcance'
-                    },
-                    {
-                        data: 'puesto_reviso',
-                        name: 'puesto_reviso'
-                    },
-                    {
-                        data: 'area_reviso',
-                        name: 'area_reviso'
-                    },
-                    {
-                        data: 'fecha_revision',
-                        name: 'fecha_revision'
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
                 ],
                 orderCellsTop: true,
                 order: [
