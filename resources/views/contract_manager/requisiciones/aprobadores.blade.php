@@ -1,5 +1,6 @@
 @extends('layouts.admin')
-<style>
+@section('content')
+    <style type="text/css">
     table{
     table-layout: fixed;
     width: 500px;
@@ -10,21 +11,16 @@
     width: 130px;
     word-wrap: break-word
     }
-</style>
-@section('content')
-    <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
+    </style>
+    <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
     <div class="mt-5 card">
-
         <div class="card-body datatable-fix">
-
-            <table class="table table-bordered w-100 datatable-Requisiciones">
+            <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
-
                         <th style="vertical-align: top">Folio</th>
                         <th style="vertical-align: top">Fecha De Solicitud</th>
                         <th style="vertical-align: top">Referencia</th>
-                        <th style="vertical-align: top">Producto</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
                         <th style="vertical-align: top">Proyecto</th>
@@ -34,17 +30,179 @@
 
                     </tr>
                 </thead>
+                <tbody>
+                    @foreach ( $requisiciones as $requisicion )
+                    <tr>
+                        <td>RQ-00-00-{{$requisicion->id}}</td>
+                        <td>{{$requisicion->fecha}}</td>
+                        <td>{{$requisicion->referencia}}</td>
+                        <td>{{$requisicion->proveedor_catalogo}}</td>
+                        <td>{{$requisicion->estado}}</td>
+                        <td>{{$requisicion->contrato->nombre_servicio}}</td>
+                        <td>{{$requisicion->area}}</td>
+                        <td>{{$requisicion->user}}</td>
+                        <td>
+                            <form action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}" method="GET">
+                                @method('GET')
+                                <a href="{{ route('contract_manager.requisiciones.firmarAprobadores',$requisicion->id )}}"><i class="fas fa-edit"></i></a>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>
+
+
 @endsection
 @section('scripts')
     @parent
-    <script>
-        $(function() {
+    <script type="text/javascript">
+        (function() {
+
+            // Search function
+            $.fn.dataTable.Api.register('alphabetSearch()', function(searchTerm) {
+                this.iterator('table', function(context) {
+                    context.alphabetSearch = searchTerm;
+                });
+
+                return this;
+            });
+
+            // Recalculate the alphabet display for updated data
+            $.fn.dataTable.Api.register('alphabetSearch.recalc()', function(searchTerm) {
+                this.iterator('table', function(context) {
+                    draw(
+                        new $.fn.dataTable.Api(context),
+                        $('div.alphabet', this.table().container())
+                    );
+                });
+
+                return this;
+            });
+
+
+            // Search plug-in
+            $.fn.dataTable.ext.search.push(function(context, searchData) {
+                // Ensure that there is a search applied to this table before running it
+                if (!context.alphabetSearch) {
+                    return true;
+                }
+
+                if (searchData[1].charAt(0) === context.alphabetSearch) {
+                    return true;
+                }
+
+
+                return false;
+            });
+
+
+            // Private support methods
+            function bin(data) {
+                var letter, bins = {};
+
+                for (var i = 0, ien = data.length; i < ien; i++) {
+                    letter = data[i].charAt(0).toUpperCase();
+
+                    if (bins[letter]) {
+                        bins[letter]++;
+                    } else {
+                        bins[letter] = 1;
+                    }
+                }
+
+                return bins;
+            }
+
+            function draw(table, alphabet) {
+                alphabet.empty();
+
+                var columnData = table.column(1).data();
+                var bins = bin(columnData);
+
+                $('<span class="clear active"/>')
+                    .data('letter', '')
+                    .data('match-count', columnData.length)
+                    .html('Todos')
+                    .appendTo(alphabet);
+
+                for (var i = 0; i < 26; i++) {
+                    var letter = String.fromCharCode(65 + i);
+
+                    $('<span/>')
+                        .data('letter', letter)
+                        .data('match-count', bins[letter] || 0)
+                        .addClass(!bins[letter] ? 'empty' : '')
+                        .html(letter)
+                        .appendTo(alphabet);
+                }
+
+                $('<div class="alphabetInfo"></div>')
+                    .appendTo(alphabet);
+            }
+
+
+            $.fn.dataTable.AlphabetSearch = function(context) {
+                var table = new $.fn.dataTable.Api(context);
+                var alphabet = $('<div class="alphabet"/>');
+
+                draw(table, alphabet);
+
+                // Trigger a search
+                alphabet.on('click', 'span', function() {
+                    alphabet.find('.active').removeClass('active');
+                    $(this).addClass('active');
+
+                    table
+                        .alphabetSearch($(this).data('letter'))
+                        .draw();
+                });
+
+                // Mouse events to show helper information
+                alphabet
+                    .on('mouseenter', 'span', function() {
+                        alphabet
+                            .find('div.alphabetInfo')
+                            .css({
+                                opacity: 1,
+                                left: $(this).position().left,
+                                width: $(this).width()
+                            })
+                            .html($(this).data('match-count'))
+                    })
+                    .on('mouseleave', 'span', function() {
+                        alphabet
+                            .find('div.alphabetInfo')
+                            .css('opacity', 0);
+                    });
+
+                // API method to get the alphabet container node
+                this.node = function() {
+                    return alphabet;
+                };
+            };
+
+            $.fn.DataTable.AlphabetSearch = $.fn.dataTable.AlphabetSearch;
+
+
+            // Register a search plug-in
+            $.fn.dataTable.ext.feature.push({
+                fnInit: function(settings) {
+                    var search = new $.fn.dataTable.AlphabetSearch(settings);
+                    return search.node();
+                },
+                cFeature: 'A'
+            });
+
+        }());
+
+
+        $(document).ready(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
@@ -54,7 +212,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
@@ -64,7 +222,7 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar PDF',
@@ -80,7 +238,7 @@
                 },
                 {
                     extend: 'print',
-                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
@@ -109,217 +267,14 @@
                 }
 
             ];
-
-                let archivarButton = {
-                    @can("katbol_requisiciones_archivar")
-                    text: 'Archivar Registro',
-                    url: "",
-                    className: 'btn-danger',
-                    action: function(e, dt, node, config) {
-                        var ids = $.map(dt.rows({
-                            selected: true
-                        }).data(), function(entry) {
-                            return entry.id
-                        });
-
-                        if (ids.length === 0) {
-                            alert('undefine')
-
-                            return
-                        }
-
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'POST'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
-                    }
-                    @endcan
-                }
-
-            let dtOverrideGlobals = {
+            var table = $('#dom').DataTable({
                 buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                aaSorting: [],
-                ajax: {
-                    url: "{{ route('contract_manager.requisiciones.getRequisicionIndex') }}",
-                    type: 'POST',
-                    data: {
-                        _token: _token
-                    }
-                },
-                columns: [
-                    {
-                        data: 'folio',
-                        name: 'folio'
-                    },
-                    {
-                        data: 'fecha',
-                        name: 'fecha'
-                    },
-                    {
-                        data: 'referencia',
-                        name: 'referencia'
-                    },
-                    {
-                        data: 'productos_requisiciones',
-                        render: function(data, type, row) {
-                        return data[0].producto.descripcion;
-                        }
 
-                    },
-                    {
-                        data: 'proveedor_catalogo',
-                        name: 'proveedor_catalogo'
-                    },
-                    {
-                        data: 'estado',
-                        name: 'estado'
-                    },
-                    {
-                        data: 'contrato.nombre_servicio',
-                        name: 'contrato.nombre_servicio'
-                    },
-                    {
-                        data: 'area',
-                        name: 'area'
-                    },
-                    {
-                        data: 'user',
-                        name: 'user'
-                    },
-                    {
-                        data: 'id',
-                        name: 'actions',
-                        render: function(data, type, row, meta) {
-                            let requisiciones = @json($requisiciones);
-                            let urlButtonEdit = `/contract_manager/requisiciones/aprobados/${data}`;
-                            let htmlBotones =
-                                `
-                                <div class="btn-group">
-                                    @can('katbol_requisiciones_modificar')
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit fa-xl"></i></a>
-                                    @endcan
-                                </div>
-
-
-                            `;
-                            return htmlBotones;
-                        }
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
-            };
-            let table = $('.datatable-Requisiciones').DataTable(dtOverrideGlobals);
-
-            window.Archivar = function(url, nombre) {
-                Swal.fire({
-                    title: `¿Estás seguro de archivar el siguiente registro?`,
-                    html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Sí, archivar!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            headers: {
-                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: url,
-                            beforeSend: function() {
-                                Swal.fire(
-                                    '¡Estamos Archivar!',
-                                    `La requisición: ${nombre} está siendo archivado`,
-                                    'info'
-                                )
-                            },
-                            success: function(response) {
-                                Swal.fire(
-                                    'Archivando!',
-                                    `La requisición: ${nombre} ha sido archivado`,
-                                    'success'
-                                )
-                                table.ajax.reload();
-                            },
-                            error: function(error) {
-                                console.log(error);
-                                Swal.fire(
-                                    'Ocurrió un error',
-                                    `Error: ${error.responseJSON.message}`,
-                                    'error'
-                                )
-                            }
-                        });
-                    }
-                })
-            }
-
-            window.Eliminar = function(url, nombre) {
-                Swal.fire({
-                    title: `¿Estás seguro de eliminar el siguiente registro?`,
-                    html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Sí, eliminar!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            headers: {
-                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: url,
-                            beforeSend: function() {
-                                Swal.fire(
-                                    '¡Estamos eliminar!',
-                                    `La requisición: ${nombre} está siendo eliminado`,
-                                    'info'
-                                )
-                            },
-                            success: function(response) {
-                                Swal.fire(
-                                    'Eliminar!',
-                                    `La requisición: ${nombre} ha sido eliminado`,
-                                    'success'
-                                )
-                                table.ajax.reload();
-                            },
-                            error: function(error) {
-                                console.log(error);
-                                Swal.fire(
-                                    'Ocurrió un error',
-                                    `Error: ${error.responseJSON.message}`,
-                                    'error'
-                                )
-                            }
-                        });
-                    }
-                })
-            }
-
+                // dom: 'AlBfrtip',
+                dom: "<'row align-items-center justify-content-center col-12'<'text-center col-12 col-sm-12 col-md-12 col-lg-12'A><'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>"
+            });
         });
     </script>
 @endsection

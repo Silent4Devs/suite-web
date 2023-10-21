@@ -9,12 +9,13 @@ use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Level;
 use App\Models\Escuela\UsuariosCursos;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CursoEstudiante extends Controller
 {
-
-    public $category_id, $level_id;
+    public $category_id;
+    public $level_id;
 
     /**
      * Display a listing of the resource.
@@ -26,7 +27,7 @@ class CursoEstudiante extends Controller
 
     public function misCursos()
     {
-        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', auth()->user()->id)->get();
+        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', User::getCurrentUser()->id)->get();
         // dd($cursos_usuario);
         // $cursos = Course::get();
         // $categories = Category::all();
@@ -45,15 +46,16 @@ class CursoEstudiante extends Controller
         $curso = Course::where('id', $curso_id)->first();
         // dd($curso_id, $curso);
         $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+
         return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
     }
 
     public function evaluacionEstudiante($curso_id, $evaluacion_id)
     {
-
         // dd("Llega hasta aca", $curso_id, $evaluacion_id);
         return view('admin.escuela.estudiante.curso-evaluacion', compact('curso_id', 'evaluacion_id'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -81,7 +83,6 @@ class CursoEstudiante extends Controller
      */
     public function show(course $course)
     {
-
         // $this->authorize('published', $course);
 
         $similares = Course::where('category_id', $course->category_id)
@@ -92,15 +93,14 @@ class CursoEstudiante extends Controller
             ->take(5)
             ->get();
 
-        $token = CourseUser::where('course_id', $course->id)->where('user_id', auth()->user()->id)->exists();
+        $token = CourseUser::where('course_id', $course->id)->where('user_id', User::getCurrentUser()->id)->exists();
 
         return view('admin.escuela.estudiante.show', compact('course', 'similares', 'token'));
     }
 
     public function enrolled(Course $course)
     {
-
-        $course->students()->attach(auth()->user()->id);
+        $course->students()->attach(User::getCurrentUser()->id);
 
         return redirect()->route('admin.curso-estudiante', $course->id);
     }

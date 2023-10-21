@@ -24,9 +24,9 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             $timeSheets = Timesheet::with('aprobador')->where('empleado_id', $empleado->id)->whereIn('estatus', ['aprobado', 'pendiente'])->get();
             $timeSheetHorasCollection = collect();
             foreach ($timeSheets as $timesheet) {
-                $timeSheetHoras = TimesheetHoras::with('proyecto', 'tarea')->where('timesheet_id', $timesheet->id)->get();
+                $timeSheetHoras = TimesheetHoras::getDataProyTarea()->where('timesheet_id', $timesheet->id);
                 foreach ($timeSheetHoras as $horas) {
-                    $sumatoria = $horas->horas_lunes + $horas->horas_martes + $horas->horas_miercoles + $horas->horas_jueves + $horas->horas_viernes + $horas->horas_sabado + $horas->horas_domingo;
+                    $sumatoria = floatval($horas->horas_lunes) + floatval($horas->horas_martes) + floatval($horas->horas_miercoles) + floatval($horas->horas_jueves) + floatval($horas->horas_viernes) + floatval($horas->horas_sabado) + floatval($horas->horas_domingo);
                     $existe_proyecto = in_array($horas->proyecto_id, array_column($timeSheetHorasCollection->toArray(), 'proyecto_id'));
                     $existe_tarea = $this->existsTask($timeSheetHorasCollection, $timesheet->fecha_dia, $horas->proyecto_id, $horas->tarea_id);
                     $existe_fecha_timesheet = in_array($timesheet->fecha_dia, array_column($timeSheetHorasCollection->toArray(), 'timesheet_fin'));

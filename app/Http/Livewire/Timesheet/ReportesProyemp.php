@@ -2,21 +2,25 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use App\Exports\ReporteColaboradorTarea;
+use Carbon\Carbon;
 use App\Models\Area;
+use Livewire\Component;
 use App\Models\Empleado;
 use App\Models\Timesheet;
+use Livewire\WithPagination;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use Livewire\Component;
-use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Cache;
+use App\Exports\ReporteColaboradorTarea;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ReportesProyemp extends Component
 {
     use WithPagination;
+    use LivewireAlert;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -64,9 +68,9 @@ class ReportesProyemp extends Component
     public function mount()
     {
         $this->estatus = null;
-        $this->areas = Area::getAll();
-        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']])->where('estatus', 'alta');
-        $this->proy = TimesheetProyecto::getAll();
+        $this->areas = Area::getIdNameAll();
+        $this->emp = Empleado::getIdNameAll();
+        $this->proy = TimesheetProyecto::getIdNameAll();
     }
 
     public function updatedFechaInicio($value)
@@ -134,27 +138,25 @@ class ReportesProyemp extends Component
     {
         // dd($this->fecha_inicio);
         //Query para obtener los timesheet y filtrarlo
-        $query = TimesheetHoras::with('tarea.areaData')
-            ->withwhereHas('timesheet', function ($query) {
-                if ($this->emp_id == 0) {
-                    return $query;
-                } else {
-                    $query->where('empleado_id', $this->emp_id);
-                }
-            })
-            ->withwhereHas('timesheet', function ($query) {
-                $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia');
-            })
-            ->withwhereHas('proyecto', function ($query) {
-                if ($this->proy_id == 0) {
-                    return $query;
-                } else {
-                    $query->where('id', $this->proy_id);
-                }
-            });
+        $times = Cache::remember('TimesheeHoras:timesheethoras_all', 3600 * 4, function () {
+            return TimesheetHoras::with('tarea.areaData')
+                ->whereHas('timesheet', function ($query) {
+                    if ($this->emp_id != 0) {
+                        $query->where('empleado_id', $this->emp_id);
+                    }
+                    $query->where('fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
+                        ->where('fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'))
+                        ->orderByDesc('fecha_dia');
+                })
+                ->whereHas('proyecto', function ($query) {
+                    if ($this->proy_id != 0) {
+                        $query->where('id', $this->proy_id);
+                    }
+                })
+                ->fastPaginate($this->perPage);
+        });
 
-        $this->totalRegistrosMostrando = $query->count();
-        $times = $query->fastPaginate($this->perPage);
+        $this->totalRegistrosMostrando = $times->total();
 
         // $this->totalRegistrosMostrando = $proyemp->count();
 
@@ -237,24 +239,24 @@ class ReportesProyemp extends Component
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,
             'proy_id' => $this->proy_id,
+            'solicitante' => Auth::user()->email,
         ]);
 
         if ($response->successful()) {
             // Get the XLS content from the response
             $xlsContent = $response->getBody()->getContents();
 
-            $headers = [
-                'Content-Type' => 'application/octet-stream',
-                'Content-Disposition' => 'attachment; filename=timesheet_report.xlsx',
-            ];
-
-            return response()->streamDownload(function () use ($xlsContent) {
-                echo $xlsContent;
-            }, 'timesheet_report.xlsx', $headers);
+            $this->alert('success', $xlsContent, [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+                'text' => 'Revise su bandeja de correo',
+                'timerProgressBar' => true,
+            ]);
         } else {
             // Handle the error if the request is not successful
             return response()->json([
-                'message' => 'Failed to retrieve the XLS file from the API',
+                'message' => 'Failed to get data from the API',
             ], $response->status());
         }
     }

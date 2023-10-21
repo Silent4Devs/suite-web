@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -15,6 +15,7 @@ class UserController extends Controller
         $this->middleware('can:Leer usuarios')->only('index');
         $this->middleware('can:Editar usuarios')->only('edit', 'update');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,8 +33,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $roles = Role::getAll();
 
-        $roles = Role::get();
         return view('admin.users.create', compact('roles'));
     }
 
@@ -43,7 +44,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,User $user)
+    public function store(Request $request, User $user)
     {
         $request->validate([
             'name' => 'required',
@@ -61,7 +62,6 @@ class UserController extends Controller
         Alert::toast('El usuario se guardo exitosamente', 'success');
 
         return redirect()->route('admin.users.index');
-
     }
 
     /**
@@ -85,7 +85,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::all();
+        $roles = Role::getAll();
 
         return view('admin.users.edit', [
             'user' => $user,
@@ -105,6 +105,7 @@ class UserController extends Controller
         $user->roles()->sync($request->roles);
 
         Alert::toast('El usuario fue actualizado exitosamente', 'success');
+
         return redirect()->route('admin.users.index');
     }
 

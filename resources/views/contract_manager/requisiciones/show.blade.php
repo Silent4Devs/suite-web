@@ -275,20 +275,9 @@
                     <div class="flex">
                         <div class="flex-item">
                             @if ($requisicion->firma_finanzas)
-                                @if (Auth::user()->email === 'ldelgadillo@silent4business.com')
-                                <img src="{{$requisicion->firma_finanzas}}" class="img-firma">
-                                <p>Layla Del Gadillo </p>
-                                <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
-                                <hr>
-                                <p>
-                                <small> FECHA, FIRMA Y NOMBRE  DE APROBADOR</small>
-                                </p>
-                                @else
                                 <img src="{{$requisicion->firma_finanzas}}" class="img-firma">
                                 <p>Lourdes del Pilar Abadía Velasco </p>
                                 <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
-
-                                @endif
                             @else
                                 <div style="height: 137px;"></div>
                             @endif

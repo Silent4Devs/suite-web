@@ -17,6 +17,7 @@ use App\Rules\EmpleadoNoVinculado;
 use Flash;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -25,26 +26,31 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles = Role::get();
-        $organizaciones = Organizacione::get();
-        $areas = Area::getAll();
-        $puestos = Puesto::getAll();
-        $teams = Team::get();
+        // $roles = Role::get();
+        // $organizaciones = Organizacione::get();
+        // $areas = Area::getAll();
+        // $puestos = Puesto::getAll();
+        // $teams = Team::get();
         // $empleadosNoAsignados = Empleado::getaltaAll();
         // $empleados = $empleadosNoAsignados->filter(function ($item) {
         //     return !User::where('n_empleado', $item->n_empleado)->exists();
         // })->values();
-        $empleados = Empleado::getaltaAll();
+        $empleados = Empleado::getIDaltaAll();
         $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
 
-        return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados', 'existsVinculoEmpleadoAdmin'));
+        return view('admin.users.index', compact('empleados', 'existsVinculoEmpleadoAdmin'));
     }
 
     public function getUsersIndex(Request $request)
     {
-        $query = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
-            $q->with('area');
-        }])->get();
+        $key = 'Users:users_index_data';
+
+        // Try to retrieve the data from the cache
+        $query = Cache::remember($key, now()->addMinutes(120), function () {
+            return User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
+                $q->with('area');
+            }])->get();
+        });
 
         return datatables()->of($query)->toJson();
     }

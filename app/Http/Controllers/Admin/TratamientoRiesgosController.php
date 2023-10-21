@@ -175,10 +175,10 @@ class TratamientoRiesgosController extends Controller
             'fechacompromiso' => $request->fechacompromiso,
             'inversion_requerida' => $request->inversion_requerida,
         ]);
-
+        $usuario = User::getCurrentUser();
         if ($tratamientoRiesgo->es_aprobado == 'pendiente') {
             $empleado_email = Empleado::select('name', 'email')->find($request->id_dueno);
-            $empleado_copia = auth()->user()->empleado;
+            $empleado_copia = $usuario->empleado;
             Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($tratamientoRiesgo->registro->email))->send(new SolicitudAceptacionTratamientoRiesgo($tratamientoRiesgo, $empleado_email));
         }
 
@@ -188,7 +188,7 @@ class TratamientoRiesgosController extends Controller
                 'comentarios' => null,
             ]);
             $empleado_email = Empleado::select('name', 'email')->find($request->id_dueno);
-            $empleado_copia = auth()->user()->empleado;
+            $empleado_copia = $usuario->empleado;
             Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($tratamientoRiesgo->registro->email))->send(new SolicitudAceptacionTratamientoRiesgo($tratamientoRiesgo, $empleado_email));
         }
 

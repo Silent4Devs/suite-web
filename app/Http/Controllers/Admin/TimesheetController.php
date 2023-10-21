@@ -9,6 +9,7 @@ use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
+use App\Models\ContractManager\Fiscale;
 use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\Sede;
@@ -19,6 +20,7 @@ use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetTarea;
+use App\Models\User;
 use App\Services\TimesheetService;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
@@ -46,7 +48,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $cacheKey = 'timesheet-' . auth()->user()->empleado->id;
+        $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
 
         $times = Timesheet::getPersonalTimesheet();
 
@@ -78,7 +80,7 @@ class TimesheetController extends Controller
         }
 
         $rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
-        $aprobar_contador = Timesheet::where('aprobador_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
+        $aprobar_contador = Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)->where('estatus', 'pendiente')->count();
 
         return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo', 'time_exist'));
     }
@@ -123,7 +125,7 @@ class TimesheetController extends Controller
 
     public function createCopia($id)
     {
-        $empleado = Empleado::find(auth()->user()->empleado->id);
+        $empleado = Empleado::find(User::getCurrentUser()->empleado->id);
 
         // areas proyectos
         $proyectos_array = collect();
@@ -147,7 +149,7 @@ class TimesheetController extends Controller
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::getFirst();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas_count = TimesheetHoras::getData()->where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.create-copia', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
@@ -247,18 +249,26 @@ class TimesheetController extends Controller
             }
         }
         // dd($organizacion_semana->dia_timesheet);
+        $usuario = User::getCurrentUser();
         $timesheet_nuevo = Timesheet::create([
             'fecha_dia' => $request->fecha_dia,
             'dia_semana' => $organizacion_semana->dia_timesheet,
             'inicio_semana' => $organizacion_semana->inicio_timesheet,
             'fin_semana' => $organizacion_semana->fin_timesheet,
-            'empleado_id' => auth()->user()->empleado->id,
-            'aprobador_id' => auth()->user()->empleado->supervisor_id,
+            'empleado_id' => $usuario->empleado->id,
+            'aprobador_id' => $usuario->empleado->supervisor_id,
             'estatus' => $request->estatus,
         ]);
 
         foreach ($request->timesheet as $index => $hora) {
             if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
+
+                foreach ($hora as $key => $value) {
+                    if ($value === '') {
+                        $hora[$key] = null;
+                    }
+                }
+
                 $horas_nuevas = TimesheetHoras::create([
                     'timesheet_id' => $timesheet_nuevo->id,
                     'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
@@ -272,15 +282,15 @@ class TimesheetController extends Controller
                     'horas_sabado' => $hora['sabado'],
                     'horas_domingo' => $hora['domingo'],
                     'descripcion' => $hora['descripcion'],
-                    'empleado_id' => auth()->user()->empleado->id,
+                    'empleado_id' => $usuario->empleado->id,
                 ]);
             }
         }
 
         if ($timesheet_nuevo->estatus == 'pendiente') {
-            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
+            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->supervisor_id);
 
-            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
+            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->id);
 
             try {
                 // Enviar correo
@@ -292,7 +302,7 @@ class TimesheetController extends Controller
             }
         }
 
-        $this->notificacionhorassobrepasadas(auth()->user()->empleado->id);
+        $this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
@@ -307,8 +317,8 @@ class TimesheetController extends Controller
     public function show($id)
     {
         $timesheet = Timesheet::find($id);
-        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas = TimesheetHoras::getAll()->where('timesheet_id', $id);
+        $horas_count = $horas->count();
 
         $hoy = Carbon::now();
         $hoy_format = $hoy->format('d/m/Y');
@@ -324,7 +334,7 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        $empleado = Empleado::find(auth()->user()->empleado->id);
+        $empleado = Empleado::find(User::getCurrentUser()->empleado->id);
 
         // areas proyectos
         $proyectos_array = collect();
@@ -348,7 +358,7 @@ class TimesheetController extends Controller
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::getFirst();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas_count = TimesheetHoras::getData()->where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
@@ -453,10 +463,10 @@ class TimesheetController extends Controller
         }
 
         $timesheet_edit = Timesheet::find($id);
-
+        $usuario = User::getCurrentUser();
         $timesheet_edit->update([
-            'empleado_id' => auth()->user()->empleado->id,
-            'aprobador_id' => auth()->user()->empleado->supervisor_id,
+            'empleado_id' => $usuario->empleado->id,
+            'aprobador_id' => $usuario->empleado->supervisor_id,
             'estatus' => $request->estatus,
         ]);
 
@@ -478,7 +488,7 @@ class TimesheetController extends Controller
                         'horas_sabado' => $hora['sabado'],
                         'horas_domingo' => $hora['domingo'],
                         'descripcion' => $hora['descripcion'],
-                        'empleado_id' => auth()->user()->empleado->id,
+                        'empleado_id' => $usuario->empleado->id,
                     ]);
                 } else {
                     TimesheetHoras::create([
@@ -494,16 +504,16 @@ class TimesheetController extends Controller
                         'horas_sabado' => $hora['sabado'],
                         'horas_domingo' => $hora['domingo'],
                         'descripcion' => $hora['descripcion'],
-                        'empleado_id' => auth()->user()->empleado->id,
+                        'empleado_id' => $usuario->empleado->id,
                     ]);
                 }
             }
         }
 
         if ($timesheet_edit->estatus == 'pendiente') {
-            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
+            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->supervisor_id);
 
-            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
+            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->id);
 
             try {
                 // Enviar correo
@@ -515,7 +525,7 @@ class TimesheetController extends Controller
             }
         }
 
-        $this->notificacionhorassobrepasadas(auth()->user()->empleado->id);
+        $this->notificacionhorassobrepasadas($usuario->empleado->id);
 
         return response()->json(['status' => 200]);
     }
@@ -575,7 +585,7 @@ class TimesheetController extends Controller
                 'identificador.unique' => 'El ID ya esta en uso',
             ],
         );
-        if ($request->fecha_inicio && $request->fecha_fin) {
+        if ($request->fecha_fin) {
             $request->validate(
                 [
                     'fecha_inicio' => 'before:fecha_fin',
@@ -591,11 +601,11 @@ class TimesheetController extends Controller
             'identificador' => $request->identificador,
             'proyecto' => $request->proyecto_name,
             'cliente_id' => $request->cliente_id,
-            'fecha_inicio' => $request->fecha_inicio,
-            'fecha_fin' => $request->fecha_fin,
+            'fecha_inicio' => $request->fecha_inicio == '' ? null : $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin  == '' ? null : $request->fecha_fin,
             'sede_id' => $request->sede_id,
             'tipo' => $request->tipo,
-            'horas_proyecto' => $request->horas_proyecto,
+            'horas_proyecto' => $request->horas_proyecto == '' ? null : $request->horas_proyecto,
         ]);
 
         foreach ($request->areas_seleccionadas as $key => $area_id) {
@@ -611,7 +621,7 @@ class TimesheetController extends Controller
                 $nuevo_proyecto->proyecto,
                 $nuevo_proyecto->identificador,
                 $nuevo_proyecto->cliente->nombre,
-                auth()->user()->empleado->name,
+                User::getCurrentUser()->empleado->name,
                 $nuevo_proyecto->id
             )
         );
@@ -717,7 +727,7 @@ class TimesheetController extends Controller
     public function papelera()
     {
         abort_if(Gate::denies('mi_timesheet_horas_rechazadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $papelera = Timesheet::where('estatus', 'papelera')->where('empleado_id', auth()->user()->empleado->id)->get();
+        $papelera = Timesheet::where('estatus', 'papelera')->where('empleado_id', User::getCurrentUser()->empleado->id)->get();
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -745,8 +755,9 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $habilitarTodos = $request->habilitarTodos ? true : false;
-        $equipo_a_cargo = $this->obtenerEquipo(auth()->user()->empleado->children);
-        array_push($equipo_a_cargo, auth()->user()->empleado->id);
+        $usuario = User::getCurrentUser();
+        $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
+        array_push($equipo_a_cargo, $usuario->empleado->id);
         if ($habilitarTodos) {
             $aprobaciones = Timesheet::where('estatus', 'pendiente')
                 ->where('estatus', 'pendiente')
@@ -755,7 +766,7 @@ class TimesheetController extends Controller
         } else {
             $aprobaciones = Timesheet::where('estatus', 'pendiente')
                 ->where('estatus', 'pendiente')
-                ->where('aprobador_id', auth()->user()->empleado->id)
+                ->where('aprobador_id', $usuario->empleado->id)
                 ->get();
         }
 
@@ -771,8 +782,9 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $habilitarTodos = $request->habilitarTodos ? true : false;
-        $equipo_a_cargo = $this->obtenerEquipo(auth()->user()->empleado->children);
-        array_push($equipo_a_cargo, auth()->user()->empleado->id);
+        $usuario = User::getCurrentUser();
+        $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
+        array_push($equipo_a_cargo, $usuario->empleado->id);
 
         if ($habilitarTodos) {
             $aprobados = Timesheet::where('estatus', 'aprobado')
@@ -780,7 +792,7 @@ class TimesheetController extends Controller
                 ->get();
         } else {
             $aprobados = Timesheet::where('estatus', 'aprobado')
-                ->where('aprobador_id', auth()->user()->empleado->id)
+                ->where('aprobador_id', $usuario->empleado->id)
                 ->get();
         }
 
@@ -796,8 +808,9 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $habilitarTodos = $request->habilitarTodos ? true : false;
-        $equipo_a_cargo = $this->obtenerEquipo(auth()->user()->empleado->children);
-        array_push($equipo_a_cargo, auth()->user()->empleado->id);
+        $usuario = User::getCurrentUser();
+        $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
+        array_push($equipo_a_cargo, $usuario->empleado->id);
 
         if ($habilitarTodos) {
             $rechazos = Timesheet::where('estatus', 'rechazado')
@@ -805,7 +818,7 @@ class TimesheetController extends Controller
                 ->get();
         } else {
             $rechazos = Timesheet::where('estatus', 'rechazado')
-                ->where('aprobador_id', auth()->user()->empleado->id)
+                ->where('aprobador_id', $usuario->empleado->id)
                 ->get();
         }
 
@@ -880,12 +893,14 @@ class TimesheetController extends Controller
 
     public function clientesCreate()
     {
+        // $personas = Fiscale::get();
         return view('admin.timesheet.clientes.create');
     }
 
     public function clientesEdit($id)
     {
         $cliente = TimesheetCliente::find($id);
+        // $personas = Fiscale::get();
 
         return view('admin.timesheet.clientes.edit', compact('cliente'));
     }
@@ -1008,7 +1023,7 @@ class TimesheetController extends Controller
         $tareas_array = collect();
 
         foreach ($tareas_obtenidas as $key => $tarea) {
-            if (($tarea->todos == true) || ($tarea->area_id == auth()->user()->empleado->area_id)) {
+            if (($tarea->todos == true) || ($tarea->area_id == User::getCurrentUser()->empleado->area_id)) {
                 $tareas_array->push([
                     'id' => $tarea->id,
                     'tarea' => $tarea->tarea,
@@ -1058,7 +1073,7 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::getAll()->find($id);
         $clientes = TimesheetCliente::getAll();
-        $areas = Area::getAll();
+        $areas = Area::getIdNameAll();
         $sedes = Sede::getAll();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
@@ -1073,7 +1088,7 @@ class TimesheetController extends Controller
     public function notificacionhorassobrepasadas($id)
     {
         // dd("Si llega a la funcion");
-        $verificacion_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
+        $verificacion_proyectos = TimesheetProyectoEmpleado::select('id', 'empleado_id')->where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
         // dd($emp_proyectos);
         if ($verificacion_proyectos) {
             $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
@@ -1086,26 +1101,37 @@ class TimesheetController extends Controller
                 ->where('empleado_id', '=', $ep->empleado_id)
                 ->get();
 
-            $tot_horas_proyecto = 0;
-
-            $sumalun = $times->sum('horas_lunes');
-            $sumamar = $times->sum('horas_martes');
-            $sumamie = $times->sum('horas_miercoles');
-            $sumajue = $times->sum('horas_jueves');
-            $sumavie = $times->sum('horas_viernes');
-            $sumasab = $times->sum('horas_sabado');
-            $sumadom = $times->sum('horas_domingo');
-
-            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
-
             if ($ep->proyecto->tipo === 'Externo') {
+
+                $tot_horas_proyecto = 0;
+
+                $sumalun = 0;
+                $sumamar = 0;
+                $sumamie = 0;
+                $sumajue = 0;
+                $sumavie = 0;
+                $sumasab = 0;
+                $sumadom = 0;
+
+                foreach ($times as $time) {
+                    $sumalun += floatval($time->horas_lunes);
+                    $sumamar += floatval($time->horas_martes);
+                    $sumamie += floatval($time->horas_miercoles);
+                    $sumajue += floatval($time->horas_jueves);
+                    $sumavie += floatval($time->horas_viernes);
+                    $sumasab += floatval($time->horas_sabado);
+                    $sumadom += floatval($time->horas_domingo);
+                }
+
+                $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
+
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
                     $empleado_query = Empleado::select('id', 'name', 'email', 'foto')->get();
 
-                    $aprobador = $empleado_query->find(auth()->user()->empleado->supervisor_id);
+                    $aprobador = $empleado_query->find(User::getCurrentUser()->empleado->supervisor_id);
 
-                    $empleado = $empleado_query->find(auth()->user()->empleado->id);
+                    $empleado = $empleado_query->find(User::getCurrentUser()->empleado->id);
                     //Se comentaron los correos a quienes se les enviara al final
                     // Mail::to(['marco.luna@silent4business.com', 'eugenia.gomez@silent4business.com', $aprobador->email, $empleado->email])
                     try {

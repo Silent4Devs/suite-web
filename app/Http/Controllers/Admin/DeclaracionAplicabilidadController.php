@@ -10,6 +10,7 @@ use App\Models\DeclaracionAplicabilidad;
 use App\Models\DeclaracionAplicabilidadAprobadores;
 use App\Models\DeclaracionAplicabilidadResponsable;
 use App\Models\Empleado;
+use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -184,13 +185,13 @@ class DeclaracionAplicabilidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($id);
         if ($request->ajax()) {
+            $usuario = User::getCurrentUser();
             switch ($request->name) {
                 case 'justificacion':
 
-                    $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['justificacion' => $request->value]);
-                    $control = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+                    $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['justificacion' => $request->value]);
+                    $control = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->first();
                     $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
                     if ($control->aplica != null) {
                         $aprobadorDeclaracion = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $id)->orderBy('created_at')->first();
@@ -204,8 +205,8 @@ class DeclaracionAplicabilidadController extends Controller
                     break;
                 case 'aplica':
 
-                    $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
-                    $control = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+                    $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['aplica' => $request->value]);
+                    $control = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->first();
 
                     $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
                     if ($control->justificacion != null) {
@@ -220,7 +221,7 @@ class DeclaracionAplicabilidadController extends Controller
                     break;
                 case 'aplica2':
                     try {
-                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
+                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['aplica' => $request->value]);
 
                         // $gapun->aplica = $request->value;
                         return response()->json(['success' => true, 'id' => $id]);
@@ -231,8 +232,8 @@ class DeclaracionAplicabilidadController extends Controller
                     break;
                 case 'estatus':
 
-                    $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['estatus' => $request->value]);
-                    $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();
+                    $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->update(['estatus' => $request->value]);
+                    $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->first();
 
                     $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
                     if ($control->comentarios != null) {
@@ -247,10 +248,10 @@ class DeclaracionAplicabilidadController extends Controller
                     break;
 
                 case 'comentarios':
-                    $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['comentarios' => $request->value]);
+                    $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->update(['comentarios' => $request->value]);
 
                     // $gapun->comentarios = $request->value;
-                    $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();
+                    $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->first();
 
                     $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
                     if ($control->estatus != null) {
@@ -266,7 +267,7 @@ class DeclaracionAplicabilidadController extends Controller
 
                 case 'fecha_aprobacion':
                     try {
-                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['fecha_aprobacion' => $request->value]);
+                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', $usuario->empleado->id)->update(['fecha_aprobacion' => $request->value]);
                         $gapun->fecha_aprobacion = $request->value;
 
                         return response()->json(['success' => true, 'id' => $id]);

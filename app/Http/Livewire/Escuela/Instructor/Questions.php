@@ -11,17 +11,18 @@ use Livewire\Component;
 
 class Questions extends Component
 {
-
     // use RenderizarAlerta;
     public $open = false;
     public $explanation;
     public $question;
     public $isActive;
     public $evaluation_id;
+    public $test;
     public Collection $answers;
     public $questionModel;
     public $edit = false;
     public $onlyIcon = true;
+    public $answersDelete = [];
     protected $listeners = [
         'renderQuestion' => 'render',
     ];
@@ -43,11 +44,11 @@ class Questions extends Component
             'answers' => collect([[
                 'id' => 0,
                 'is_correct' => false,
-                'answer' => ''
+                'answer' => '',
             ], [
                 'id' => 0,
                 'is_correct' => false,
-                'answer' => ''
+                'answer' => '',
             ]]),
         ]);
         $this->evaluation_id = $evaluation_id;
@@ -76,6 +77,7 @@ class Questions extends Component
 
     public function removeInput($key)
     {
+        $this->answersDelete[] = $this->answers->pull($key);
         $this->answers->pull($key);
     }
 
@@ -84,29 +86,28 @@ class Questions extends Component
         $this->answers->push([
             'id' => 0,
             'is_correct' => false,
-            'answer' => ''
+            'answer' => '',
         ]);
         $this->emit('renderQuestion');
         // dd($this->answers);
     }
 
-
     public function render()
     {
-
         return view('livewire.escuela.instructor.questions');
     }
 
     public function update($question_id)
     {
         $this->validate();
+
         $question = Question::find($question_id);
         $question->update([
             'explanation' => $this->explanation,
             'question' => $this->question,
             'evaluation_id' => $this->evaluation_id,
         ]);
-        //    dd($this->answers);
+
         foreach ($this->answers as $answer) {
             $answerExist = Answer::where('id', $answer['id'])->exists();
             if ($answerExist) {
@@ -124,11 +125,68 @@ class Questions extends Component
             }
         }
 
+        foreach ($this->answersDelete as $answerDelete) {
+            $this->Destroy($answerDelete);
+        }
+
         $this->dispatchBrowserEvent('closeModal');
         $this->emit('questionStore');
-        //    $this->render_alerta('success','Actualizado con éxito');
-        //    $this->default(true);
         $this->open = false;
+    }
+
+    // public function destroy($question_id){
+
+    //     $question=Question::find($question_id);
+    //     dd($question);
+    //     $this->render_alerta('success','El registro fue eliminado exitosamente');
+    //     $this->emit('questionStore');
+
+    // }
+
+    public function default($isEdit = false)
+    {
+        $this->explanation = null;
+        $this->question = null;
+        $this->fill([
+            'answers' => collect([[
+                'is_correct' => false,
+                'answer' => '',
+            ], [
+                'is_correct' => false,
+                'answer' => '',
+            ]]),
+        ]);
+        //cerra el modal
+        $this->open = false;
+        $this->edit = false;
+    }
+
+    public function cancel()
+    {
+        $this->edit = true;
+        $this->explanation = $this->questionModel->explanation;
+        $this->question = $this->questionModel->question;
+        $answers = $this->questionModel->answers;
+        $answersCollect = collect();
+        foreach ($answers as $answer) {
+            $answersCollect->push([
+                'id' => $answer->id,
+                'is_correct' => $answer->is_correct == '1' ? true : false,
+                'answer' => $answer->answer,
+            ]);
+        }
+        $this->fill([
+            'answers' => $answersCollect,
+        ]);
+        $this->answersDelete = [];
+    }
+
+    public function Destroy($answerDelete)
+    {
+        $answer = Answer::find($answerDelete['id']);
+        if ($answer) {
+            $answer->delete();
+        }
     }
 
     public function save()
@@ -151,40 +209,5 @@ class Questions extends Component
         $this->dispatchBrowserEvent('closeModal');
         $this->emit('questionStore');
         $this->default();
-    }
-
-    // public function destroy($question_id){
-
-    //     $question=Question::find($question_id);
-    //     dd($question);
-    //     $this->render_alerta('success','El registro fue eliminado exitosamente');
-    //     $this->emit('questionStore');
-
-    // }
-
-
-
-    public function default($isEdit = false)
-    {
-        $this->explanation = null;
-        $this->question = null;
-        $this->fill([
-            'answers' => collect([[
-                'is_correct' => false,
-                'answer' => ''
-            ], [
-                'is_correct' => false,
-                'answer' => ''
-            ]]),
-        ]);
-        //cerra el modal
-        $this->open = false;
-        $this->edit = false;
-    }
-
-    public function cancel()
-    {
-        $this->default();
-        // $this->edit = false;
     }
 }

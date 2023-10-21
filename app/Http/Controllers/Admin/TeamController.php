@@ -71,7 +71,7 @@ class TeamController extends Controller
     public function store(StoreTeamRequest $request)
     {
         $data = $request->all();
-        $data['owner_id'] = auth()->user()->id;
+        $data['owner_id'] = User::getCurrentUser()->id;
         $team = Team::create($data);
 
         return redirect()->route('admin.teams.index');

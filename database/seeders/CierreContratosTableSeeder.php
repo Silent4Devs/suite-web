@@ -17,8 +17,7 @@ class CierreContratosTableSeeder extends Seeder
 
         \DB::table('cierre_contratos')->insert([
             0 => [
-                'id' => 1,
-                'no' => 1,
+                      'no' => 1,
                 'contrato_id' => 1,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -30,8 +29,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             1 => [
-                'id' => 2,
-                'no' => 2,
+                      'no' => 2,
                 'contrato_id' => 1,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -43,8 +41,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             2 => [
-                'id' => 3,
-                'no' => 3,
+                      'no' => 3,
                 'contrato_id' => 1,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -56,8 +53,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             3 => [
-                'id' => 4,
-                'no' => 4,
+                      'no' => 4,
                 'contrato_id' => 1,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -69,8 +65,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             4 => [
-                'id' => 5,
-                'no' => 5,
+                      'no' => 5,
                 'contrato_id' => 1,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -82,8 +77,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             5 => [
-                'id' => 6,
-                'no' => 6,
+                      'no' => 6,
                 'contrato_id' => 1,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -95,8 +89,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             6 => [
-                'id' => 7,
-                'no' => 7,
+                      'no' => 7,
                 'contrato_id' => 1,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -108,8 +101,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             7 => [
-                'id' => 8,
-                'no' => 8,
+                      'no' => 8,
                 'contrato_id' => 1,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -121,8 +113,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             8 => [
-                'id' => 9,
-                'no' => 9,
+                      'no' => 9,
                 'contrato_id' => 1,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -134,8 +125,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             9 => [
-                'id' => 10,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 2,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -147,8 +137,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             10 => [
-                'id' => 11,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 2,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -160,8 +149,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             11 => [
-                'id' => 12,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 2,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -173,8 +161,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             12 => [
-                'id' => 13,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 2,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -186,8 +173,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             13 => [
-                'id' => 14,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 2,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -199,8 +185,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             14 => [
-                'id' => 15,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 2,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -212,8 +197,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             15 => [
-                'id' => 16,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 2,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -225,8 +209,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             16 => [
-                'id' => 17,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 2,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -238,8 +221,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             17 => [
-                'id' => 18,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 2,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -251,8 +233,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             18 => [
-                'id' => 19,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 3,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -264,8 +245,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             19 => [
-                'id' => 20,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 3,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -277,8 +257,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             20 => [
-                'id' => 21,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 3,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -290,8 +269,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             21 => [
-                'id' => 22,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 3,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -303,8 +281,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             22 => [
-                'id' => 23,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 3,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -316,8 +293,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             23 => [
-                'id' => 24,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 3,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -329,8 +305,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             24 => [
-                'id' => 25,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 3,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -342,8 +317,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             25 => [
-                'id' => 26,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 3,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -355,8 +329,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             26 => [
-                'id' => 27,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 3,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -368,8 +341,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             27 => [
-                'id' => 28,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 4,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -381,8 +353,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             28 => [
-                'id' => 29,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 4,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -394,8 +365,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             29 => [
-                'id' => 30,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 4,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -407,8 +377,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             30 => [
-                'id' => 31,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 4,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -420,8 +389,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             31 => [
-                'id' => 32,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 4,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -433,8 +401,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             32 => [
-                'id' => 33,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 4,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -446,8 +413,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             33 => [
-                'id' => 34,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 4,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -459,8 +425,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             34 => [
-                'id' => 35,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 4,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -472,8 +437,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             35 => [
-                'id' => 36,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 4,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -485,8 +449,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             36 => [
-                'id' => 37,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 8,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -498,8 +461,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             37 => [
-                'id' => 38,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 8,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -511,8 +473,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             38 => [
-                'id' => 39,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 8,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -524,8 +485,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             39 => [
-                'id' => 40,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 8,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -537,8 +497,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             40 => [
-                'id' => 41,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 8,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -550,8 +509,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             41 => [
-                'id' => 42,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 8,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -563,8 +521,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             42 => [
-                'id' => 43,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 8,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -576,8 +533,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             43 => [
-                'id' => 44,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 8,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -589,8 +545,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             44 => [
-                'id' => 45,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 8,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -602,8 +557,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             45 => [
-                'id' => 46,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 9,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -615,8 +569,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             46 => [
-                'id' => 47,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 9,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -628,8 +581,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             47 => [
-                'id' => 48,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 9,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -641,8 +593,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             48 => [
-                'id' => 49,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 9,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -654,8 +605,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             49 => [
-                'id' => 50,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 9,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -667,8 +617,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             50 => [
-                'id' => 51,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 9,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -680,8 +629,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             51 => [
-                'id' => 52,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 9,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -693,8 +641,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             52 => [
-                'id' => 53,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 9,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -706,8 +653,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => 1,
             ],
             53 => [
-                'id' => 54,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 9,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -719,8 +665,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             54 => [
-                'id' => 55,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 10,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -732,8 +677,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             55 => [
-                'id' => 56,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 10,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -745,8 +689,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             56 => [
-                'id' => 57,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 10,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -758,8 +701,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             57 => [
-                'id' => 58,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 10,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -771,8 +713,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             58 => [
-                'id' => 59,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 10,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -784,8 +725,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             59 => [
-                'id' => 60,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 10,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -797,8 +737,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             60 => [
-                'id' => 61,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 10,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -810,8 +749,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             61 => [
-                'id' => 62,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 10,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -823,8 +761,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             62 => [
-                'id' => 63,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 10,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -836,8 +773,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             63 => [
-                'id' => 64,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 11,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -849,8 +785,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             64 => [
-                'id' => 65,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 11,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -862,8 +797,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             65 => [
-                'id' => 66,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 11,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -875,8 +809,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             66 => [
-                'id' => 67,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 11,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -888,8 +821,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             67 => [
-                'id' => 68,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 11,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -901,8 +833,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             68 => [
-                'id' => 69,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 11,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -914,8 +845,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             69 => [
-                'id' => 70,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 11,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -927,8 +857,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             70 => [
-                'id' => 71,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 11,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -940,8 +869,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             71 => [
-                'id' => 72,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 11,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -953,8 +881,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             72 => [
-                'id' => 73,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 12,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -966,8 +893,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             73 => [
-                'id' => 74,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 12,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -979,8 +905,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             74 => [
-                'id' => 75,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 12,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -992,8 +917,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             75 => [
-                'id' => 76,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 12,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -1005,8 +929,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             76 => [
-                'id' => 77,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 12,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -1018,8 +941,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             77 => [
-                'id' => 78,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 12,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -1031,8 +953,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             78 => [
-                'id' => 79,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 12,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -1044,8 +965,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             79 => [
-                'id' => 80,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 12,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -1057,8 +977,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             80 => [
-                'id' => 81,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 12,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -1070,8 +989,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             81 => [
-                'id' => 82,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 13,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -1083,8 +1001,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             82 => [
-                'id' => 83,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 13,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -1096,8 +1013,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             83 => [
-                'id' => 84,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 13,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -1109,8 +1025,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             84 => [
-                'id' => 85,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 13,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -1122,8 +1037,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             85 => [
-                'id' => 86,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 13,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -1135,8 +1049,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             86 => [
-                'id' => 87,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 13,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -1148,8 +1061,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             87 => [
-                'id' => 88,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 13,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -1161,8 +1073,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             88 => [
-                'id' => 89,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 13,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -1174,8 +1085,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             89 => [
-                'id' => 90,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 13,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -1187,8 +1097,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             90 => [
-                'id' => 91,
-                'no' => 1,
+                           'no' => 1,
                 'contrato_id' => 14,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -1200,8 +1109,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             91 => [
-                'id' => 92,
-                'no' => 2,
+                           'no' => 2,
                 'contrato_id' => 14,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -1213,8 +1121,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             92 => [
-                'id' => 93,
-                'no' => 3,
+                           'no' => 3,
                 'contrato_id' => 14,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -1226,8 +1133,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             93 => [
-                'id' => 94,
-                'no' => 4,
+                           'no' => 4,
                 'contrato_id' => 14,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -1239,8 +1145,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             94 => [
-                'id' => 95,
-                'no' => 5,
+                           'no' => 5,
                 'contrato_id' => 14,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -1252,8 +1157,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             95 => [
-                'id' => 96,
-                'no' => 6,
+                           'no' => 6,
                 'contrato_id' => 14,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -1265,8 +1169,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             96 => [
-                'id' => 97,
-                'no' => 7,
+                           'no' => 7,
                 'contrato_id' => 14,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -1278,8 +1181,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             97 => [
-                'id' => 98,
-                'no' => 8,
+                           'no' => 8,
                 'contrato_id' => 14,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -1291,8 +1193,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             98 => [
-                'id' => 99,
-                'no' => 9,
+                           'no' => 9,
                 'contrato_id' => 14,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -1304,8 +1205,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             99 => [
-                'id' => 100,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 15,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -1317,8 +1217,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             100 => [
-                'id' => 101,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 15,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -1330,8 +1229,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             101 => [
-                'id' => 102,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 15,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -1343,8 +1241,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             102 => [
-                'id' => 103,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 15,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -1356,8 +1253,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             103 => [
-                'id' => 104,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 15,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -1369,8 +1265,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             104 => [
-                'id' => 105,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 15,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -1382,8 +1277,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             105 => [
-                'id' => 106,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 15,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -1395,8 +1289,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             106 => [
-                'id' => 107,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 15,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -1408,8 +1301,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             107 => [
-                'id' => 108,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 15,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -1421,8 +1313,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             108 => [
-                'id' => 109,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 16,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -1434,8 +1325,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             109 => [
-                'id' => 110,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 16,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -1447,8 +1337,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             110 => [
-                'id' => 111,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 16,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -1460,8 +1349,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             111 => [
-                'id' => 112,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 16,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -1473,8 +1361,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             112 => [
-                'id' => 113,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 16,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -1486,8 +1373,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             113 => [
-                'id' => 114,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 16,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -1499,8 +1385,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             114 => [
-                'id' => 115,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 16,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -1512,8 +1397,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             115 => [
-                'id' => 116,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 16,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -1525,8 +1409,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             116 => [
-                'id' => 117,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 16,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -1538,8 +1421,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             117 => [
-                'id' => 118,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 17,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -1551,8 +1433,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             118 => [
-                'id' => 119,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 17,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -1564,8 +1445,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             119 => [
-                'id' => 120,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 17,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -1577,8 +1457,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             120 => [
-                'id' => 121,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 17,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -1590,8 +1469,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             121 => [
-                'id' => 122,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 17,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -1603,8 +1481,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             122 => [
-                'id' => 123,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 17,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -1616,8 +1493,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             123 => [
-                'id' => 124,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 17,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -1629,8 +1505,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             124 => [
-                'id' => 125,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 17,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -1642,8 +1517,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             125 => [
-                'id' => 126,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 17,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -1655,8 +1529,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             126 => [
-                'id' => 127,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 18,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -1668,8 +1541,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             127 => [
-                'id' => 128,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 18,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -1681,8 +1553,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             128 => [
-                'id' => 129,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 18,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -1694,8 +1565,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             129 => [
-                'id' => 130,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 18,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -1707,8 +1577,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             130 => [
-                'id' => 131,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 18,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -1720,8 +1589,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             131 => [
-                'id' => 132,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 18,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -1733,8 +1601,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             132 => [
-                'id' => 133,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 18,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -1746,8 +1613,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             133 => [
-                'id' => 134,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 18,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -1759,8 +1625,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             134 => [
-                'id' => 135,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 18,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -1772,8 +1637,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             135 => [
-                'id' => 136,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 19,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -1785,8 +1649,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             136 => [
-                'id' => 137,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 19,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -1798,8 +1661,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             137 => [
-                'id' => 138,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 19,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -1811,8 +1673,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             138 => [
-                'id' => 139,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 19,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -1824,8 +1685,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             139 => [
-                'id' => 140,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 19,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -1837,8 +1697,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             140 => [
-                'id' => 141,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 19,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -1850,8 +1709,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             141 => [
-                'id' => 142,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 19,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -1863,8 +1721,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             142 => [
-                'id' => 143,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 19,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -1876,8 +1733,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             143 => [
-                'id' => 144,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 19,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -1889,8 +1745,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             144 => [
-                'id' => 145,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 20,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -1902,8 +1757,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             145 => [
-                'id' => 146,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 20,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -1915,8 +1769,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             146 => [
-                'id' => 147,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 20,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -1928,8 +1781,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             147 => [
-                'id' => 148,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 20,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -1941,8 +1793,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             148 => [
-                'id' => 149,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 20,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -1954,8 +1805,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             149 => [
-                'id' => 150,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 20,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -1967,8 +1817,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             150 => [
-                'id' => 151,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 20,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -1980,8 +1829,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             151 => [
-                'id' => 152,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 20,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -1993,8 +1841,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             152 => [
-                'id' => 153,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 20,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -2006,8 +1853,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             153 => [
-                'id' => 154,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 21,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -2019,8 +1865,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             154 => [
-                'id' => 155,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 21,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -2032,8 +1877,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             155 => [
-                'id' => 156,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 21,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -2045,8 +1889,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             156 => [
-                'id' => 157,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 21,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -2058,8 +1901,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             157 => [
-                'id' => 158,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 21,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -2071,8 +1913,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             158 => [
-                'id' => 159,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 21,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -2084,8 +1925,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             159 => [
-                'id' => 160,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 21,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -2097,8 +1937,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             160 => [
-                'id' => 161,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 21,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -2110,8 +1949,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             161 => [
-                'id' => 162,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 21,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -2123,8 +1961,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             162 => [
-                'id' => 163,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 23,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -2136,8 +1973,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             163 => [
-                'id' => 164,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 23,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -2149,8 +1985,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             164 => [
-                'id' => 165,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 23,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -2162,8 +1997,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             165 => [
-                'id' => 166,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 23,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -2175,8 +2009,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             166 => [
-                'id' => 167,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 23,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -2188,8 +2021,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             167 => [
-                'id' => 168,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 23,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -2201,8 +2033,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             168 => [
-                'id' => 169,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 23,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -2214,8 +2045,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             169 => [
-                'id' => 170,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 23,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -2227,8 +2057,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             170 => [
-                'id' => 171,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 23,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -2240,8 +2069,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             171 => [
-                'id' => 172,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 25,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -2253,8 +2081,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             172 => [
-                'id' => 173,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 25,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -2266,8 +2093,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             173 => [
-                'id' => 174,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 25,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -2279,8 +2105,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             174 => [
-                'id' => 175,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 25,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -2292,8 +2117,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             175 => [
-                'id' => 176,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 25,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -2305,8 +2129,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             176 => [
-                'id' => 177,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 25,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -2318,8 +2141,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             177 => [
-                'id' => 178,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 25,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -2331,8 +2153,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             178 => [
-                'id' => 179,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 25,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -2344,8 +2165,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             179 => [
-                'id' => 180,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 25,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -2357,8 +2177,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             180 => [
-                'id' => 181,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 26,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -2370,8 +2189,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             181 => [
-                'id' => 182,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 26,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -2383,8 +2201,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             182 => [
-                'id' => 183,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 26,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -2396,8 +2213,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             183 => [
-                'id' => 184,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 26,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -2409,8 +2225,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             184 => [
-                'id' => 185,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 26,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -2422,8 +2237,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             185 => [
-                'id' => 186,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 26,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -2435,8 +2249,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             186 => [
-                'id' => 187,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 26,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -2448,8 +2261,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             187 => [
-                'id' => 188,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 26,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -2461,8 +2273,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             188 => [
-                'id' => 189,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 26,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -2474,8 +2285,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             189 => [
-                'id' => 190,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 27,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -2487,8 +2297,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             190 => [
-                'id' => 191,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 27,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -2500,8 +2309,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             191 => [
-                'id' => 192,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 27,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -2513,8 +2321,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             192 => [
-                'id' => 193,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 27,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -2526,8 +2333,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             193 => [
-                'id' => 194,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 27,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -2539,8 +2345,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             194 => [
-                'id' => 195,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 27,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -2552,8 +2357,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             195 => [
-                'id' => 196,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 27,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -2565,8 +2369,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             196 => [
-                'id' => 197,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 27,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -2578,8 +2381,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             197 => [
-                'id' => 198,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 27,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -2591,8 +2393,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             198 => [
-                'id' => 199,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 28,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -2604,8 +2405,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             199 => [
-                'id' => 200,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 28,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -2617,8 +2417,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             200 => [
-                'id' => 201,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 28,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -2630,8 +2429,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             201 => [
-                'id' => 202,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 28,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -2643,8 +2441,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             202 => [
-                'id' => 203,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 28,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -2656,8 +2453,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             203 => [
-                'id' => 204,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 28,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -2669,8 +2465,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             204 => [
-                'id' => 205,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 28,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -2682,8 +2477,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             205 => [
-                'id' => 206,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 28,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -2695,8 +2489,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             206 => [
-                'id' => 207,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 28,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -2708,8 +2501,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             207 => [
-                'id' => 208,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 29,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -2721,8 +2513,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             208 => [
-                'id' => 209,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 29,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -2734,8 +2525,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             209 => [
-                'id' => 210,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 29,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -2747,8 +2537,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             210 => [
-                'id' => 211,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 29,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -2760,8 +2549,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             211 => [
-                'id' => 212,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 29,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -2773,8 +2561,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             212 => [
-                'id' => 213,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 29,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -2786,8 +2573,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             213 => [
-                'id' => 214,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 29,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -2799,8 +2585,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             214 => [
-                'id' => 215,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 29,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -2812,8 +2597,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             215 => [
-                'id' => 216,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 29,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -2825,8 +2609,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             216 => [
-                'id' => 217,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 30,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -2838,8 +2621,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             217 => [
-                'id' => 218,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 30,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -2851,8 +2633,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             218 => [
-                'id' => 219,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 30,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -2864,8 +2645,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             219 => [
-                'id' => 220,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 30,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -2877,8 +2657,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             220 => [
-                'id' => 221,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 30,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -2890,8 +2669,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             221 => [
-                'id' => 222,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 30,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -2903,8 +2681,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             222 => [
-                'id' => 223,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 30,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -2916,8 +2693,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             223 => [
-                'id' => 224,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 30,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -2929,8 +2705,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             224 => [
-                'id' => 225,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 30,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -2942,8 +2717,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             225 => [
-                'id' => 226,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 31,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -2955,8 +2729,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             226 => [
-                'id' => 227,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 31,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -2968,8 +2741,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             227 => [
-                'id' => 228,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 31,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -2981,8 +2753,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             228 => [
-                'id' => 229,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 31,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -2994,8 +2765,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             229 => [
-                'id' => 230,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 31,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -3007,8 +2777,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             230 => [
-                'id' => 231,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 31,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -3020,8 +2789,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             231 => [
-                'id' => 232,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 31,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -3033,8 +2801,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             232 => [
-                'id' => 233,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 31,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -3046,8 +2813,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             233 => [
-                'id' => 234,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 31,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -3059,8 +2825,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             234 => [
-                'id' => 235,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 32,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -3072,8 +2837,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             235 => [
-                'id' => 236,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 32,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -3085,8 +2849,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             236 => [
-                'id' => 237,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 32,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -3098,8 +2861,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             237 => [
-                'id' => 238,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 32,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -3111,8 +2873,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             238 => [
-                'id' => 239,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 32,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -3124,8 +2885,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             239 => [
-                'id' => 240,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 32,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -3137,8 +2897,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             240 => [
-                'id' => 241,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 32,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -3150,8 +2909,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             241 => [
-                'id' => 242,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 32,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -3163,8 +2921,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             242 => [
-                'id' => 243,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 32,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -3176,8 +2933,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             243 => [
-                'id' => 244,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 33,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -3189,8 +2945,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             244 => [
-                'id' => 245,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 33,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -3202,8 +2957,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             245 => [
-                'id' => 246,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 33,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -3215,8 +2969,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             246 => [
-                'id' => 247,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 33,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -3228,8 +2981,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             247 => [
-                'id' => 248,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 33,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -3241,8 +2993,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             248 => [
-                'id' => 249,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 33,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -3254,8 +3005,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             249 => [
-                'id' => 250,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 33,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -3267,8 +3017,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             250 => [
-                'id' => 251,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 33,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -3280,8 +3029,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             251 => [
-                'id' => 252,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 33,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -3293,8 +3041,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             252 => [
-                'id' => 253,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 34,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -3306,8 +3053,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             253 => [
-                'id' => 254,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 34,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -3319,8 +3065,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             254 => [
-                'id' => 255,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 34,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -3332,8 +3077,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             255 => [
-                'id' => 256,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 34,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -3345,8 +3089,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             256 => [
-                'id' => 257,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 34,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -3358,8 +3101,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             257 => [
-                'id' => 258,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 34,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -3371,8 +3113,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             258 => [
-                'id' => 259,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 34,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -3384,8 +3125,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             259 => [
-                'id' => 260,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 34,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -3397,8 +3137,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             260 => [
-                'id' => 261,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 34,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -3410,8 +3149,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             261 => [
-                'id' => 262,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 35,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -3423,8 +3161,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             262 => [
-                'id' => 263,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 35,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -3436,8 +3173,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             263 => [
-                'id' => 264,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 35,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -3449,8 +3185,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             264 => [
-                'id' => 265,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 35,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -3462,8 +3197,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             265 => [
-                'id' => 266,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 35,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -3475,8 +3209,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             266 => [
-                'id' => 267,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 35,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -3488,8 +3221,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             267 => [
-                'id' => 268,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 35,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -3501,8 +3233,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             268 => [
-                'id' => 269,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 35,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -3514,8 +3245,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             269 => [
-                'id' => 270,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 35,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -3527,8 +3257,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             270 => [
-                'id' => 271,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 36,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -3540,8 +3269,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             271 => [
-                'id' => 272,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 36,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -3553,8 +3281,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             272 => [
-                'id' => 273,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 36,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -3566,8 +3293,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             273 => [
-                'id' => 274,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 36,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -3579,8 +3305,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             274 => [
-                'id' => 275,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 36,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -3592,8 +3317,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             275 => [
-                'id' => 276,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 36,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -3605,8 +3329,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             276 => [
-                'id' => 277,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 36,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -3618,8 +3341,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             277 => [
-                'id' => 278,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 36,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -3631,8 +3353,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             278 => [
-                'id' => 279,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 36,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -3644,8 +3365,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             279 => [
-                'id' => 280,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 37,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -3657,8 +3377,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             280 => [
-                'id' => 281,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 37,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -3670,8 +3389,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             281 => [
-                'id' => 282,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 37,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -3683,8 +3401,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             282 => [
-                'id' => 283,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 37,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -3696,8 +3413,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             283 => [
-                'id' => 284,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 37,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -3709,8 +3425,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             284 => [
-                'id' => 285,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 37,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -3722,8 +3437,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             285 => [
-                'id' => 286,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 37,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -3735,8 +3449,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             286 => [
-                'id' => 287,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 37,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -3748,8 +3461,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             287 => [
-                'id' => 288,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 37,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -3761,8 +3473,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             288 => [
-                'id' => 289,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 38,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -3774,8 +3485,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             289 => [
-                'id' => 290,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 38,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -3787,8 +3497,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             290 => [
-                'id' => 291,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 38,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -3800,8 +3509,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             291 => [
-                'id' => 292,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 38,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -3813,8 +3521,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             292 => [
-                'id' => 293,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 38,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -3826,8 +3533,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             293 => [
-                'id' => 294,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 38,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -3839,8 +3545,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             294 => [
-                'id' => 295,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 38,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -3852,8 +3557,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             295 => [
-                'id' => 296,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 38,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -3865,8 +3569,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             296 => [
-                'id' => 297,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 38,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -3878,8 +3581,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             297 => [
-                'id' => 298,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 39,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -3891,8 +3593,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             298 => [
-                'id' => 299,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 39,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -3904,8 +3605,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             299 => [
-                'id' => 300,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 39,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -3917,8 +3617,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             300 => [
-                'id' => 301,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 39,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -3930,8 +3629,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             301 => [
-                'id' => 302,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 39,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -3943,8 +3641,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             302 => [
-                'id' => 303,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 39,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -3956,8 +3653,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             303 => [
-                'id' => 304,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 39,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -3969,8 +3665,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             304 => [
-                'id' => 305,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 39,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -3982,8 +3677,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             305 => [
-                'id' => 306,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 39,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -3995,8 +3689,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             306 => [
-                'id' => 307,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 40,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -4008,8 +3701,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             307 => [
-                'id' => 308,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 40,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -4021,8 +3713,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             308 => [
-                'id' => 309,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 40,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -4034,8 +3725,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             309 => [
-                'id' => 310,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 40,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -4047,8 +3737,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             310 => [
-                'id' => 311,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 40,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -4060,8 +3749,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             311 => [
-                'id' => 312,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 40,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -4073,8 +3761,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             312 => [
-                'id' => 313,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 40,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -4086,8 +3773,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             313 => [
-                'id' => 314,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 40,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -4099,8 +3785,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             314 => [
-                'id' => 315,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 40,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -4112,8 +3797,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             315 => [
-                'id' => 316,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 41,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -4125,8 +3809,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             316 => [
-                'id' => 317,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 41,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -4138,8 +3821,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             317 => [
-                'id' => 318,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 41,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -4151,8 +3833,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             318 => [
-                'id' => 319,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 41,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -4164,8 +3845,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             319 => [
-                'id' => 320,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 41,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -4177,8 +3857,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             320 => [
-                'id' => 321,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 41,
                 'aspectos' => 'Cumplimiento del objeto del contrato',
                 'cumple' => null,
@@ -4190,8 +3869,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             321 => [
-                'id' => 322,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 41,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -4203,8 +3881,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             322 => [
-                'id' => 323,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 41,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -4216,8 +3893,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             323 => [
-                'id' => 324,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 41,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -4229,8 +3905,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             324 => [
-                'id' => 325,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 42,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -4242,8 +3917,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             325 => [
-                'id' => 326,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 42,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -4255,8 +3929,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             326 => [
-                'id' => 327,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 42,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -4268,8 +3941,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             327 => [
-                'id' => 328,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 42,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -4281,8 +3953,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             328 => [
-                'id' => 329,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 42,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -4294,8 +3965,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             329 => [
-                'id' => 330,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 42,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -4307,8 +3977,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             330 => [
-                'id' => 331,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 42,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -4320,8 +3989,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             331 => [
-                'id' => 332,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 42,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -4333,8 +4001,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             332 => [
-                'id' => 333,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 42,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -4346,8 +4013,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             333 => [
-                'id' => 334,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 43,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -4359,8 +4025,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             334 => [
-                'id' => 335,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 43,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -4372,8 +4037,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             335 => [
-                'id' => 336,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 43,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -4385,8 +4049,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             336 => [
-                'id' => 337,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 43,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -4398,8 +4061,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             337 => [
-                'id' => 338,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 43,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -4411,8 +4073,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             338 => [
-                'id' => 339,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 43,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -4424,8 +4085,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             339 => [
-                'id' => 340,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 43,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -4437,8 +4097,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             340 => [
-                'id' => 341,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 43,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -4450,8 +4109,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             341 => [
-                'id' => 342,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 43,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -4463,8 +4121,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             342 => [
-                'id' => 343,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 47,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -4476,8 +4133,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             343 => [
-                'id' => 344,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 47,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -4489,8 +4145,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             344 => [
-                'id' => 345,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 47,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -4502,8 +4157,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             345 => [
-                'id' => 346,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 47,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -4515,8 +4169,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             346 => [
-                'id' => 347,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 47,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -4528,8 +4181,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             347 => [
-                'id' => 348,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 47,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -4541,8 +4193,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             348 => [
-                'id' => 349,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 47,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -4554,8 +4205,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             349 => [
-                'id' => 350,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 47,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -4567,8 +4217,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             350 => [
-                'id' => 351,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 47,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -4580,8 +4229,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             351 => [
-                'id' => 352,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 48,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -4593,8 +4241,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             352 => [
-                'id' => 353,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 48,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -4606,8 +4253,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             353 => [
-                'id' => 354,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 48,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -4619,8 +4265,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             354 => [
-                'id' => 355,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 48,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -4632,8 +4277,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             355 => [
-                'id' => 356,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 48,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -4645,8 +4289,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             356 => [
-                'id' => 357,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 48,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -4658,8 +4301,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             357 => [
-                'id' => 358,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 48,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -4671,8 +4313,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             358 => [
-                'id' => 359,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 48,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -4684,8 +4325,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             359 => [
-                'id' => 360,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 48,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -4697,8 +4337,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             360 => [
-                'id' => 361,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 49,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -4710,8 +4349,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             361 => [
-                'id' => 362,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 49,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -4723,8 +4361,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             362 => [
-                'id' => 363,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 49,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -4736,8 +4373,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             363 => [
-                'id' => 364,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 49,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -4749,8 +4385,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             364 => [
-                'id' => 365,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 49,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -4762,8 +4397,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             365 => [
-                'id' => 366,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 49,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -4775,8 +4409,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             366 => [
-                'id' => 367,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 49,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -4788,8 +4421,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             367 => [
-                'id' => 368,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 49,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -4801,8 +4433,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             368 => [
-                'id' => 369,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 49,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -4814,8 +4445,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             369 => [
-                'id' => 370,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 50,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -4827,8 +4457,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             370 => [
-                'id' => 371,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 50,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -4840,8 +4469,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             371 => [
-                'id' => 372,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 50,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -4853,8 +4481,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             372 => [
-                'id' => 373,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 50,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -4866,8 +4493,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             373 => [
-                'id' => 374,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 50,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -4879,8 +4505,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             374 => [
-                'id' => 375,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 50,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -4892,8 +4517,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             375 => [
-                'id' => 376,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 50,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -4905,8 +4529,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             376 => [
-                'id' => 377,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 50,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -4918,8 +4541,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             377 => [
-                'id' => 378,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 50,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -4931,8 +4553,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             378 => [
-                'id' => 379,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 51,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -4944,8 +4565,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             379 => [
-                'id' => 380,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 51,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -4957,8 +4577,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             380 => [
-                'id' => 381,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 51,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -4970,8 +4589,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             381 => [
-                'id' => 382,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 51,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -4983,8 +4601,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             382 => [
-                'id' => 383,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 51,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -4996,8 +4613,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             383 => [
-                'id' => 384,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 51,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -5009,8 +4625,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             384 => [
-                'id' => 385,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 51,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -5022,8 +4637,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             385 => [
-                'id' => 386,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 51,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -5035,8 +4649,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             386 => [
-                'id' => 387,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 51,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -5048,8 +4661,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             387 => [
-                'id' => 388,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 52,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -5061,8 +4673,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             388 => [
-                'id' => 389,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 52,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -5074,8 +4685,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             389 => [
-                'id' => 390,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 52,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -5087,8 +4697,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             390 => [
-                'id' => 391,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 52,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -5100,8 +4709,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             391 => [
-                'id' => 392,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 52,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -5113,8 +4721,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             392 => [
-                'id' => 393,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 52,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -5126,8 +4733,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             393 => [
-                'id' => 394,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 52,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -5139,8 +4745,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             394 => [
-                'id' => 395,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 52,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -5152,8 +4757,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             395 => [
-                'id' => 396,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 52,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -5165,8 +4769,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             396 => [
-                'id' => 397,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 53,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -5178,8 +4781,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             397 => [
-                'id' => 398,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 53,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -5191,8 +4793,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             398 => [
-                'id' => 399,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 53,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -5204,8 +4805,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             399 => [
-                'id' => 400,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 53,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -5217,8 +4817,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             400 => [
-                'id' => 401,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 53,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -5230,8 +4829,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             401 => [
-                'id' => 402,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 53,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -5243,8 +4841,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             402 => [
-                'id' => 403,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 53,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -5256,8 +4853,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             403 => [
-                'id' => 404,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 53,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -5269,8 +4865,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             404 => [
-                'id' => 405,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 53,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -5282,8 +4877,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             405 => [
-                'id' => 406,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 54,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -5295,8 +4889,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             406 => [
-                'id' => 407,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 54,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -5308,8 +4901,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             407 => [
-                'id' => 408,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 54,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -5321,8 +4913,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             408 => [
-                'id' => 409,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 54,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -5334,8 +4925,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             409 => [
-                'id' => 410,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 54,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -5347,8 +4937,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             410 => [
-                'id' => 411,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 54,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -5360,8 +4949,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             411 => [
-                'id' => 412,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 54,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -5373,8 +4961,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             412 => [
-                'id' => 413,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 54,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -5386,8 +4973,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             413 => [
-                'id' => 414,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 54,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -5399,8 +4985,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             414 => [
-                'id' => 415,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 55,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -5412,8 +4997,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             415 => [
-                'id' => 416,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 55,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -5425,8 +5009,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             416 => [
-                'id' => 417,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 55,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -5438,8 +5021,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             417 => [
-                'id' => 418,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 55,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -5451,8 +5033,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             418 => [
-                'id' => 419,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 55,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -5464,8 +5045,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             419 => [
-                'id' => 420,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 55,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -5477,8 +5057,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             420 => [
-                'id' => 421,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 55,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -5490,8 +5069,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             421 => [
-                'id' => 422,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 55,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -5503,8 +5081,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             422 => [
-                'id' => 423,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 55,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -5516,8 +5093,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             423 => [
-                'id' => 424,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 56,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -5529,8 +5105,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             424 => [
-                'id' => 425,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 56,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -5542,8 +5117,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             425 => [
-                'id' => 426,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 56,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -5555,8 +5129,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             426 => [
-                'id' => 427,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 56,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -5568,8 +5141,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             427 => [
-                'id' => 428,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 56,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -5581,8 +5153,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             428 => [
-                'id' => 429,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 56,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -5594,8 +5165,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             429 => [
-                'id' => 430,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 56,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -5607,8 +5177,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             430 => [
-                'id' => 431,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 56,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -5620,8 +5189,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             431 => [
-                'id' => 432,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 56,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -5633,8 +5201,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             432 => [
-                'id' => 433,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 57,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -5646,8 +5213,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             433 => [
-                'id' => 434,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 57,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -5659,8 +5225,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             434 => [
-                'id' => 435,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 57,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -5672,8 +5237,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             435 => [
-                'id' => 436,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 57,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -5685,8 +5249,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             436 => [
-                'id' => 437,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 57,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -5698,8 +5261,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             437 => [
-                'id' => 438,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 57,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -5711,8 +5273,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             438 => [
-                'id' => 439,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 57,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -5724,8 +5285,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             439 => [
-                'id' => 440,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 57,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -5737,8 +5297,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             440 => [
-                'id' => 441,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 57,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -5750,8 +5309,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             441 => [
-                'id' => 442,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 58,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -5763,8 +5321,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             442 => [
-                'id' => 443,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 58,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -5776,8 +5333,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             443 => [
-                'id' => 444,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 58,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -5789,8 +5345,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             444 => [
-                'id' => 445,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 58,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -5802,8 +5357,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             445 => [
-                'id' => 446,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 58,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -5815,8 +5369,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             446 => [
-                'id' => 447,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 58,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -5828,8 +5381,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             447 => [
-                'id' => 448,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 58,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -5841,8 +5393,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             448 => [
-                'id' => 449,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 58,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -5854,8 +5405,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             449 => [
-                'id' => 450,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 58,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -5867,8 +5417,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             450 => [
-                'id' => 451,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 59,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -5880,8 +5429,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             451 => [
-                'id' => 452,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 59,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -5893,8 +5441,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             452 => [
-                'id' => 453,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 59,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -5906,8 +5453,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             453 => [
-                'id' => 454,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 59,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -5919,8 +5465,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             454 => [
-                'id' => 455,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 59,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -5932,8 +5477,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             455 => [
-                'id' => 456,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 59,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -5945,8 +5489,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             456 => [
-                'id' => 457,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 59,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -5958,8 +5501,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             457 => [
-                'id' => 458,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 59,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -5971,8 +5513,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             458 => [
-                'id' => 459,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 59,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -5984,8 +5525,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             459 => [
-                'id' => 460,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 60,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -5997,8 +5537,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             460 => [
-                'id' => 461,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 60,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -6010,8 +5549,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             461 => [
-                'id' => 462,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 60,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -6023,8 +5561,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             462 => [
-                'id' => 463,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 60,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -6036,8 +5573,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             463 => [
-                'id' => 464,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 60,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -6049,8 +5585,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             464 => [
-                'id' => 465,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 60,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -6062,8 +5597,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             465 => [
-                'id' => 466,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 60,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -6075,8 +5609,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             466 => [
-                'id' => 467,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 60,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -6088,8 +5621,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             467 => [
-                'id' => 468,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 60,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -6101,8 +5633,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             468 => [
-                'id' => 469,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 61,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -6114,8 +5645,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             469 => [
-                'id' => 470,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 61,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -6127,8 +5657,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             470 => [
-                'id' => 471,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 61,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -6140,8 +5669,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             471 => [
-                'id' => 472,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 61,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -6153,8 +5681,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             472 => [
-                'id' => 473,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 61,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -6166,8 +5693,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             473 => [
-                'id' => 474,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 61,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -6179,8 +5705,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             474 => [
-                'id' => 475,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 61,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -6192,8 +5717,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             475 => [
-                'id' => 476,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 61,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -6205,8 +5729,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             476 => [
-                'id' => 477,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 61,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -6218,8 +5741,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             477 => [
-                'id' => 478,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 62,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -6231,8 +5753,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             478 => [
-                'id' => 479,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 62,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -6244,8 +5765,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             479 => [
-                'id' => 480,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 62,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -6257,8 +5777,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             480 => [
-                'id' => 481,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 62,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -6270,8 +5789,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             481 => [
-                'id' => 482,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 62,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -6283,8 +5801,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             482 => [
-                'id' => 483,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 62,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -6296,8 +5813,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             483 => [
-                'id' => 484,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 62,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -6309,8 +5825,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             484 => [
-                'id' => 485,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 62,
                 'aspectos' => 'Formalización del cierre del proyecto',
                 'cumple' => null,
@@ -6322,8 +5837,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             485 => [
-                'id' => 486,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 62,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -6335,8 +5849,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             486 => [
-                'id' => 487,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 63,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -6348,8 +5861,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             487 => [
-                'id' => 488,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 63,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -6361,8 +5873,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             488 => [
-                'id' => 489,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 63,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -6374,8 +5885,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             489 => [
-                'id' => 490,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 63,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -6387,8 +5897,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             490 => [
-                'id' => 491,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 63,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -6400,8 +5909,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             491 => [
-                'id' => 492,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 63,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -6413,8 +5921,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             492 => [
-                'id' => 493,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 63,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -6426,8 +5933,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             493 => [
-                'id' => 494,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 63,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -6439,8 +5945,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             494 => [
-                'id' => 495,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 63,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -6452,8 +5957,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             495 => [
-                'id' => 496,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 64,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -6465,8 +5969,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             496 => [
-                'id' => 497,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 64,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -6478,8 +5981,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             497 => [
-                'id' => 498,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 64,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -6491,8 +5993,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             498 => [
-                'id' => 499,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 64,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -6504,8 +6005,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             499 => [
-                'id' => 500,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 64,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -6519,8 +6019,7 @@ class CierreContratosTableSeeder extends Seeder
         ]);
         \DB::table('cierre_contratos')->insert([
             0 => [
-                'id' => 501,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 64,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -6532,8 +6031,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             1 => [
-                'id' => 502,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 64,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -6545,8 +6043,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             2 => [
-                'id' => 503,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 64,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -6558,8 +6055,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             3 => [
-                'id' => 504,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 64,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -6571,8 +6067,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             4 => [
-                'id' => 505,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 65,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -6584,8 +6079,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             5 => [
-                'id' => 506,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 65,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -6597,8 +6091,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             6 => [
-                'id' => 507,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 65,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -6610,8 +6103,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             7 => [
-                'id' => 508,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 65,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -6623,8 +6115,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             8 => [
-                'id' => 509,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 65,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -6636,8 +6127,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             9 => [
-                'id' => 510,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 65,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -6649,8 +6139,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             10 => [
-                'id' => 511,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 65,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -6662,8 +6151,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             11 => [
-                'id' => 512,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 65,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -6675,8 +6163,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             12 => [
-                'id' => 513,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 65,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -6688,8 +6175,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             13 => [
-                'id' => 514,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 66,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -6701,8 +6187,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             14 => [
-                'id' => 515,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 66,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -6714,8 +6199,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             15 => [
-                'id' => 516,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 66,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -6727,8 +6211,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             16 => [
-                'id' => 517,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 66,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -6740,8 +6223,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             17 => [
-                'id' => 518,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 66,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -6753,8 +6235,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             18 => [
-                'id' => 519,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 66,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -6766,8 +6247,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             19 => [
-                'id' => 520,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 66,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -6779,8 +6259,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             20 => [
-                'id' => 521,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 66,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -6792,8 +6271,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             21 => [
-                'id' => 522,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 66,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -6805,8 +6283,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             22 => [
-                'id' => 523,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 67,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -6818,8 +6295,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             23 => [
-                'id' => 524,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 67,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -6831,8 +6307,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             24 => [
-                'id' => 525,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 67,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -6844,8 +6319,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             25 => [
-                'id' => 526,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 67,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -6857,8 +6331,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             26 => [
-                'id' => 527,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 67,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -6870,8 +6343,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             27 => [
-                'id' => 528,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 67,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -6883,8 +6355,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             28 => [
-                'id' => 529,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 67,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -6896,8 +6367,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             29 => [
-                'id' => 530,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 67,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -6909,8 +6379,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             30 => [
-                'id' => 531,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 67,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -6922,8 +6391,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             31 => [
-                'id' => 532,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 68,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -6935,8 +6403,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             32 => [
-                'id' => 533,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 68,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -6948,8 +6415,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             33 => [
-                'id' => 534,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 68,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -6961,8 +6427,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             34 => [
-                'id' => 535,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 68,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -6974,8 +6439,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             35 => [
-                'id' => 536,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 68,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -6987,8 +6451,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             36 => [
-                'id' => 537,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 68,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -7000,8 +6463,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             37 => [
-                'id' => 538,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 68,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -7013,8 +6475,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             38 => [
-                'id' => 539,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 68,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -7026,8 +6487,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             39 => [
-                'id' => 540,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 68,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -7039,8 +6499,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             40 => [
-                'id' => 541,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 69,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -7052,8 +6511,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             41 => [
-                'id' => 542,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 69,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -7065,8 +6523,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             42 => [
-                'id' => 543,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 69,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -7078,8 +6535,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             43 => [
-                'id' => 544,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 69,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -7091,8 +6547,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             44 => [
-                'id' => 545,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 69,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -7104,8 +6559,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             45 => [
-                'id' => 546,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 69,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -7117,8 +6571,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             46 => [
-                'id' => 547,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 69,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -7130,8 +6583,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             47 => [
-                'id' => 548,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 69,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -7143,8 +6595,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             48 => [
-                'id' => 549,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 69,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -7156,8 +6607,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             49 => [
-                'id' => 550,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 70,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -7169,8 +6619,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             50 => [
-                'id' => 551,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 70,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -7182,8 +6631,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             51 => [
-                'id' => 552,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 70,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -7195,8 +6643,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             52 => [
-                'id' => 553,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 70,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -7208,8 +6655,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             53 => [
-                'id' => 554,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 70,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -7221,8 +6667,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             54 => [
-                'id' => 555,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 70,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -7234,8 +6679,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             55 => [
-                'id' => 556,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 70,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -7247,8 +6691,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             56 => [
-                'id' => 557,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 70,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -7260,8 +6703,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             57 => [
-                'id' => 558,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 70,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -7273,8 +6715,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             58 => [
-                'id' => 559,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 71,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -7286,8 +6727,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             59 => [
-                'id' => 560,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 71,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -7299,8 +6739,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             60 => [
-                'id' => 561,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 71,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -7312,8 +6751,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             61 => [
-                'id' => 562,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 71,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -7325,8 +6763,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             62 => [
-                'id' => 563,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 71,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -7338,8 +6775,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             63 => [
-                'id' => 564,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 71,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -7351,8 +6787,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             64 => [
-                'id' => 565,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 71,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -7364,8 +6799,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             65 => [
-                'id' => 566,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 71,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -7377,8 +6811,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             66 => [
-                'id' => 567,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 71,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -7390,8 +6823,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             67 => [
-                'id' => 568,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 72,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -7403,8 +6835,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             68 => [
-                'id' => 569,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 72,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -7416,8 +6847,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             69 => [
-                'id' => 570,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 72,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -7429,8 +6859,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             70 => [
-                'id' => 571,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 72,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -7442,8 +6871,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             71 => [
-                'id' => 572,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 72,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -7455,8 +6883,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             72 => [
-                'id' => 573,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 72,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -7468,8 +6895,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             73 => [
-                'id' => 574,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 72,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -7481,8 +6907,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             74 => [
-                'id' => 575,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 72,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -7494,8 +6919,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             75 => [
-                'id' => 576,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 72,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -7507,8 +6931,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             76 => [
-                'id' => 577,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 73,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -7520,8 +6943,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             77 => [
-                'id' => 578,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 73,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -7533,8 +6955,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             78 => [
-                'id' => 579,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 73,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -7546,8 +6967,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             79 => [
-                'id' => 580,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 73,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -7559,8 +6979,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             80 => [
-                'id' => 581,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 73,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -7572,8 +6991,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             81 => [
-                'id' => 582,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 73,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -7585,8 +7003,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             82 => [
-                'id' => 583,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 73,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -7598,8 +7015,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             83 => [
-                'id' => 584,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 73,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -7611,8 +7027,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             84 => [
-                'id' => 585,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 73,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -7624,8 +7039,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             85 => [
-                'id' => 586,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 74,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -7637,8 +7051,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             86 => [
-                'id' => 587,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 74,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -7650,8 +7063,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             87 => [
-                'id' => 588,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 74,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -7663,8 +7075,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             88 => [
-                'id' => 589,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 74,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -7676,8 +7087,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             89 => [
-                'id' => 590,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 74,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -7689,8 +7099,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             90 => [
-                'id' => 591,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 74,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -7702,8 +7111,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             91 => [
-                'id' => 592,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 74,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -7715,8 +7123,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             92 => [
-                'id' => 593,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 74,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -7728,8 +7135,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             93 => [
-                'id' => 594,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 74,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -7741,8 +7147,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             94 => [
-                'id' => 595,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 75,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -7754,8 +7159,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             95 => [
-                'id' => 596,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 75,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -7767,8 +7171,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             96 => [
-                'id' => 597,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 75,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -7780,8 +7183,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             97 => [
-                'id' => 598,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 75,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -7793,8 +7195,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             98 => [
-                'id' => 599,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 75,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -7806,8 +7207,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             99 => [
-                'id' => 600,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 75,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -7819,8 +7219,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             100 => [
-                'id' => 601,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 75,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -7832,8 +7231,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             101 => [
-                'id' => 602,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 75,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -7845,8 +7243,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             102 => [
-                'id' => 603,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 75,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -7858,8 +7255,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             103 => [
-                'id' => 604,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 76,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -7871,8 +7267,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             104 => [
-                'id' => 605,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 76,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -7884,8 +7279,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             105 => [
-                'id' => 606,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 76,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -7897,8 +7291,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             106 => [
-                'id' => 607,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 76,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -7910,8 +7303,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             107 => [
-                'id' => 608,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 76,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -7923,8 +7315,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             108 => [
-                'id' => 609,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 76,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -7936,8 +7327,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             109 => [
-                'id' => 610,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 76,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -7949,8 +7339,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             110 => [
-                'id' => 611,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 76,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -7962,8 +7351,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             111 => [
-                'id' => 612,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 76,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -7975,8 +7363,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             112 => [
-                'id' => 613,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 77,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -7988,8 +7375,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             113 => [
-                'id' => 614,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 77,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -8001,8 +7387,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             114 => [
-                'id' => 615,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 77,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -8014,8 +7399,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             115 => [
-                'id' => 616,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 77,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -8027,8 +7411,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             116 => [
-                'id' => 617,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 77,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -8040,8 +7423,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             117 => [
-                'id' => 618,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 77,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -8053,8 +7435,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             118 => [
-                'id' => 619,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 77,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -8066,8 +7447,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             119 => [
-                'id' => 620,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 77,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -8079,8 +7459,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             120 => [
-                'id' => 621,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 77,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -8092,8 +7471,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             121 => [
-                'id' => 622,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 78,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -8105,8 +7483,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             122 => [
-                'id' => 623,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 78,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -8118,8 +7495,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             123 => [
-                'id' => 624,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 78,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -8131,8 +7507,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             124 => [
-                'id' => 625,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 78,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -8144,8 +7519,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             125 => [
-                'id' => 626,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 78,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -8157,8 +7531,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             126 => [
-                'id' => 627,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 78,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -8170,8 +7543,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             127 => [
-                'id' => 628,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 78,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -8183,8 +7555,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             128 => [
-                'id' => 629,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 78,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -8196,8 +7567,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             129 => [
-                'id' => 630,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 78,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -8209,8 +7579,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             130 => [
-                'id' => 631,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 79,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -8222,8 +7591,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             131 => [
-                'id' => 632,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 79,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -8235,8 +7603,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             132 => [
-                'id' => 633,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 79,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -8248,8 +7615,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             133 => [
-                'id' => 634,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 79,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -8261,8 +7627,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             134 => [
-                'id' => 635,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 79,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -8274,8 +7639,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             135 => [
-                'id' => 636,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 79,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -8287,8 +7651,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             136 => [
-                'id' => 637,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 79,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -8300,8 +7663,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             137 => [
-                'id' => 638,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 79,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -8313,8 +7675,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             138 => [
-                'id' => 639,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 79,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -8326,8 +7687,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             139 => [
-                'id' => 640,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 80,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -8339,8 +7699,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             140 => [
-                'id' => 641,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 80,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -8352,8 +7711,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             141 => [
-                'id' => 642,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 80,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -8365,8 +7723,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             142 => [
-                'id' => 643,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 80,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -8378,8 +7735,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             143 => [
-                'id' => 644,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 80,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -8391,8 +7747,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             144 => [
-                'id' => 645,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 80,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -8404,8 +7759,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             145 => [
-                'id' => 646,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 80,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -8417,8 +7771,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             146 => [
-                'id' => 647,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 80,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -8430,8 +7783,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             147 => [
-                'id' => 648,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 80,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -8443,8 +7795,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             148 => [
-                'id' => 649,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 81,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -8456,8 +7807,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             149 => [
-                'id' => 650,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 81,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -8469,8 +7819,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             150 => [
-                'id' => 651,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 81,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -8482,8 +7831,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             151 => [
-                'id' => 652,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 81,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -8495,8 +7843,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             152 => [
-                'id' => 653,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 81,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -8508,8 +7855,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             153 => [
-                'id' => 654,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 81,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -8521,8 +7867,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             154 => [
-                'id' => 655,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 81,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -8534,8 +7879,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             155 => [
-                'id' => 656,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 81,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -8547,8 +7891,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             156 => [
-                'id' => 657,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 81,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -8560,8 +7903,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             157 => [
-                'id' => 658,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 82,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -8573,8 +7915,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             158 => [
-                'id' => 659,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 82,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -8586,8 +7927,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             159 => [
-                'id' => 660,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 82,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -8599,8 +7939,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             160 => [
-                'id' => 661,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 82,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -8612,8 +7951,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             161 => [
-                'id' => 662,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 82,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -8625,8 +7963,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             162 => [
-                'id' => 663,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 82,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -8638,8 +7975,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             163 => [
-                'id' => 664,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 82,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -8651,8 +7987,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             164 => [
-                'id' => 665,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 82,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -8664,8 +7999,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             165 => [
-                'id' => 666,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 82,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -8677,8 +8011,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             166 => [
-                'id' => 667,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 83,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -8690,8 +8023,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             167 => [
-                'id' => 668,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 83,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -8703,8 +8035,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             168 => [
-                'id' => 669,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 83,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -8716,8 +8047,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             169 => [
-                'id' => 670,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 83,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -8729,8 +8059,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             170 => [
-                'id' => 671,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 83,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -8742,8 +8071,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             171 => [
-                'id' => 672,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 83,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -8755,8 +8083,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             172 => [
-                'id' => 673,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 83,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -8768,8 +8095,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             173 => [
-                'id' => 674,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 83,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -8781,8 +8107,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             174 => [
-                'id' => 675,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 83,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -8794,8 +8119,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             175 => [
-                'id' => 676,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 85,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -8807,8 +8131,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             176 => [
-                'id' => 677,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 85,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -8820,8 +8143,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             177 => [
-                'id' => 678,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 85,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -8833,8 +8155,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             178 => [
-                'id' => 679,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 85,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -8846,8 +8167,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             179 => [
-                'id' => 680,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 85,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -8859,8 +8179,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             180 => [
-                'id' => 681,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 85,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -8872,8 +8191,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             181 => [
-                'id' => 682,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 85,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -8885,8 +8203,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             182 => [
-                'id' => 683,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 85,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -8898,8 +8215,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             183 => [
-                'id' => 684,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 85,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -8911,8 +8227,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             184 => [
-                'id' => 685,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 84,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -8924,8 +8239,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             185 => [
-                'id' => 686,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 84,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -8937,8 +8251,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             186 => [
-                'id' => 687,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 84,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -8950,8 +8263,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             187 => [
-                'id' => 688,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 84,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -8963,8 +8275,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             188 => [
-                'id' => 689,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 84,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -8976,8 +8287,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             189 => [
-                'id' => 690,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 84,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -8989,8 +8299,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             190 => [
-                'id' => 691,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 84,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -9002,8 +8311,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             191 => [
-                'id' => 692,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 84,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -9015,8 +8323,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             192 => [
-                'id' => 693,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 84,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -9028,8 +8335,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             193 => [
-                'id' => 694,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 86,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -9041,8 +8347,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             194 => [
-                'id' => 695,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 86,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -9054,8 +8359,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             195 => [
-                'id' => 696,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 86,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -9067,8 +8371,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             196 => [
-                'id' => 697,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 86,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -9080,8 +8383,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             197 => [
-                'id' => 698,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 86,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -9093,8 +8395,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             198 => [
-                'id' => 699,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 86,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -9106,8 +8407,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             199 => [
-                'id' => 700,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 86,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -9119,8 +8419,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             200 => [
-                'id' => 701,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 86,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -9132,8 +8431,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             201 => [
-                'id' => 702,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 86,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -9145,8 +8443,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             202 => [
-                'id' => 703,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 87,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -9158,8 +8455,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             203 => [
-                'id' => 704,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 87,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -9171,8 +8467,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             204 => [
-                'id' => 705,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 87,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -9184,8 +8479,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             205 => [
-                'id' => 706,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 87,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -9197,8 +8491,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             206 => [
-                'id' => 707,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 87,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -9210,8 +8503,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             207 => [
-                'id' => 708,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 87,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -9223,8 +8515,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             208 => [
-                'id' => 709,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 87,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -9236,8 +8527,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             209 => [
-                'id' => 710,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 87,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -9249,8 +8539,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             210 => [
-                'id' => 711,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 87,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -9262,8 +8551,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             211 => [
-                'id' => 712,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 88,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -9275,8 +8563,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             212 => [
-                'id' => 713,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 88,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -9288,8 +8575,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             213 => [
-                'id' => 714,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 88,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -9301,8 +8587,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             214 => [
-                'id' => 715,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 88,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -9314,8 +8599,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             215 => [
-                'id' => 716,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 88,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -9327,8 +8611,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             216 => [
-                'id' => 717,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 88,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -9340,8 +8623,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             217 => [
-                'id' => 718,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 88,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -9353,8 +8635,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             218 => [
-                'id' => 719,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 88,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -9366,8 +8647,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             219 => [
-                'id' => 720,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 88,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -9379,8 +8659,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             220 => [
-                'id' => 721,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 89,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -9392,8 +8671,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             221 => [
-                'id' => 722,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 89,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -9405,8 +8683,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             222 => [
-                'id' => 723,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 89,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -9418,8 +8695,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             223 => [
-                'id' => 724,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 89,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -9431,8 +8707,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             224 => [
-                'id' => 725,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 89,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -9444,8 +8719,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             225 => [
-                'id' => 726,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 89,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -9457,8 +8731,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             226 => [
-                'id' => 727,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 89,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -9470,8 +8743,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             227 => [
-                'id' => 728,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 89,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -9483,8 +8755,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             228 => [
-                'id' => 729,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 89,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -9496,8 +8767,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             229 => [
-                'id' => 730,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 90,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -9509,8 +8779,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             230 => [
-                'id' => 731,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 90,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -9522,8 +8791,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             231 => [
-                'id' => 732,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 90,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -9535,8 +8803,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             232 => [
-                'id' => 733,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 90,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -9548,8 +8815,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             233 => [
-                'id' => 734,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 90,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -9561,8 +8827,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             234 => [
-                'id' => 735,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 90,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -9574,8 +8839,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             235 => [
-                'id' => 736,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 90,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -9587,8 +8851,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             236 => [
-                'id' => 737,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 90,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -9600,8 +8863,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             237 => [
-                'id' => 738,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 90,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -9613,8 +8875,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             238 => [
-                'id' => 739,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 91,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -9626,8 +8887,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             239 => [
-                'id' => 740,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 91,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -9639,8 +8899,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             240 => [
-                'id' => 741,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 91,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -9652,8 +8911,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             241 => [
-                'id' => 742,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 91,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -9665,8 +8923,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             242 => [
-                'id' => 743,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 91,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -9678,8 +8935,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             243 => [
-                'id' => 744,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 91,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -9691,8 +8947,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             244 => [
-                'id' => 745,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 91,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -9704,8 +8959,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             245 => [
-                'id' => 746,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 91,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -9717,8 +8971,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             246 => [
-                'id' => 747,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 91,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -9730,8 +8983,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             247 => [
-                'id' => 748,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 92,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -9743,8 +8995,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             248 => [
-                'id' => 749,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 92,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -9756,8 +9007,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             249 => [
-                'id' => 750,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 92,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -9769,8 +9019,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             250 => [
-                'id' => 751,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 92,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -9782,8 +9031,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             251 => [
-                'id' => 752,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 92,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -9795,8 +9043,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             252 => [
-                'id' => 753,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 92,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -9808,8 +9055,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             253 => [
-                'id' => 754,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 92,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -9821,8 +9067,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             254 => [
-                'id' => 755,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 92,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -9834,8 +9079,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             255 => [
-                'id' => 756,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 92,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -9847,8 +9091,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             256 => [
-                'id' => 757,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 93,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -9860,8 +9103,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             257 => [
-                'id' => 758,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 93,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -9873,8 +9115,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             258 => [
-                'id' => 759,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 93,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -9886,8 +9127,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             259 => [
-                'id' => 760,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 93,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -9899,8 +9139,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             260 => [
-                'id' => 761,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 93,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -9912,8 +9151,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             261 => [
-                'id' => 762,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 93,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -9925,8 +9163,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             262 => [
-                'id' => 763,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 93,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -9938,8 +9175,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             263 => [
-                'id' => 764,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 93,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -9951,8 +9187,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             264 => [
-                'id' => 765,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 93,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -9964,8 +9199,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             265 => [
-                'id' => 766,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 94,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -9977,8 +9211,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             266 => [
-                'id' => 767,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 94,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -9990,8 +9223,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             267 => [
-                'id' => 768,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 94,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -10003,8 +9235,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             268 => [
-                'id' => 769,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 94,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -10016,8 +9247,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             269 => [
-                'id' => 770,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 94,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -10029,8 +9259,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             270 => [
-                'id' => 771,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 94,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -10042,8 +9271,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             271 => [
-                'id' => 772,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 94,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -10055,8 +9283,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             272 => [
-                'id' => 773,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 94,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -10068,8 +9295,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             273 => [
-                'id' => 774,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 94,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -10081,8 +9307,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             274 => [
-                'id' => 775,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 95,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -10094,8 +9319,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             275 => [
-                'id' => 776,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 95,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -10107,8 +9331,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             276 => [
-                'id' => 777,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 95,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -10120,8 +9343,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             277 => [
-                'id' => 778,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 95,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -10133,8 +9355,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             278 => [
-                'id' => 779,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 95,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -10146,8 +9367,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             279 => [
-                'id' => 780,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 95,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -10159,8 +9379,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             280 => [
-                'id' => 781,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 95,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -10172,8 +9391,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             281 => [
-                'id' => 782,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 95,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -10185,8 +9403,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             282 => [
-                'id' => 783,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 95,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -10198,8 +9415,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             283 => [
-                'id' => 784,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 96,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -10211,8 +9427,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             284 => [
-                'id' => 785,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 96,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -10224,8 +9439,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             285 => [
-                'id' => 786,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 96,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -10237,8 +9451,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             286 => [
-                'id' => 787,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 96,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -10250,8 +9463,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             287 => [
-                'id' => 788,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 96,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -10263,8 +9475,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             288 => [
-                'id' => 789,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 96,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -10276,8 +9487,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             289 => [
-                'id' => 790,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 96,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -10289,8 +9499,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             290 => [
-                'id' => 791,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 96,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -10302,8 +9511,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             291 => [
-                'id' => 792,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 96,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -10315,8 +9523,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             292 => [
-                'id' => 793,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 97,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -10328,8 +9535,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             293 => [
-                'id' => 794,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 97,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -10341,8 +9547,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             294 => [
-                'id' => 795,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 97,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -10354,8 +9559,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             295 => [
-                'id' => 796,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 97,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -10367,8 +9571,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             296 => [
-                'id' => 797,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 97,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -10380,8 +9583,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             297 => [
-                'id' => 798,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 97,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -10393,8 +9595,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             298 => [
-                'id' => 799,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 97,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -10406,8 +9607,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             299 => [
-                'id' => 800,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 97,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -10419,8 +9619,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             300 => [
-                'id' => 801,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 97,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -10432,8 +9631,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             301 => [
-                'id' => 802,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 98,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -10445,8 +9643,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             302 => [
-                'id' => 803,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 98,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -10458,8 +9655,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             303 => [
-                'id' => 804,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 98,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -10471,8 +9667,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             304 => [
-                'id' => 805,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 98,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -10484,8 +9679,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             305 => [
-                'id' => 806,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 98,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -10497,8 +9691,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             306 => [
-                'id' => 807,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 98,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -10510,8 +9703,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             307 => [
-                'id' => 808,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 98,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -10523,8 +9715,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             308 => [
-                'id' => 809,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 98,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -10536,8 +9727,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             309 => [
-                'id' => 810,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 98,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -10549,8 +9739,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             310 => [
-                'id' => 811,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 99,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -10562,8 +9751,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             311 => [
-                'id' => 812,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 99,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -10575,8 +9763,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             312 => [
-                'id' => 813,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 99,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -10588,8 +9775,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             313 => [
-                'id' => 814,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 99,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -10601,8 +9787,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             314 => [
-                'id' => 815,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 99,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -10614,8 +9799,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             315 => [
-                'id' => 816,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 99,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -10627,8 +9811,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             316 => [
-                'id' => 817,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 99,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -10640,8 +9823,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             317 => [
-                'id' => 818,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 99,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -10653,8 +9835,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             318 => [
-                'id' => 819,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 99,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -10666,8 +9847,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             319 => [
-                'id' => 820,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 100,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -10679,8 +9859,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             320 => [
-                'id' => 821,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 100,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -10692,8 +9871,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             321 => [
-                'id' => 822,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 100,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -10705,8 +9883,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             322 => [
-                'id' => 823,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 100,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -10718,8 +9895,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             323 => [
-                'id' => 824,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 100,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -10731,8 +9907,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             324 => [
-                'id' => 825,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 100,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -10744,8 +9919,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             325 => [
-                'id' => 826,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 100,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -10757,8 +9931,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             326 => [
-                'id' => 827,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 100,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -10770,8 +9943,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             327 => [
-                'id' => 828,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 100,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -10783,8 +9955,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             328 => [
-                'id' => 829,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 101,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -10796,8 +9967,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             329 => [
-                'id' => 830,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 101,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -10809,8 +9979,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             330 => [
-                'id' => 831,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 101,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -10822,8 +9991,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             331 => [
-                'id' => 832,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 101,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -10835,8 +10003,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             332 => [
-                'id' => 833,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 101,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -10848,8 +10015,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             333 => [
-                'id' => 834,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 101,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -10861,8 +10027,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             334 => [
-                'id' => 835,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 101,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -10874,8 +10039,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             335 => [
-                'id' => 836,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 101,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -10887,8 +10051,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             336 => [
-                'id' => 837,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 101,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -10900,8 +10063,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             337 => [
-                'id' => 838,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 102,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -10913,8 +10075,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             338 => [
-                'id' => 839,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 102,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -10926,8 +10087,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             339 => [
-                'id' => 840,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 102,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -10939,8 +10099,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             340 => [
-                'id' => 841,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 102,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -10952,8 +10111,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             341 => [
-                'id' => 842,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 102,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -10965,8 +10123,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             342 => [
-                'id' => 843,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 102,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -10978,8 +10135,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             343 => [
-                'id' => 844,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 102,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -10991,8 +10147,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             344 => [
-                'id' => 845,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 102,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -11004,8 +10159,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             345 => [
-                'id' => 846,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 102,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -11017,8 +10171,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             346 => [
-                'id' => 847,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 103,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -11030,8 +10183,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             347 => [
-                'id' => 848,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 103,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -11043,8 +10195,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             348 => [
-                'id' => 849,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 103,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -11056,8 +10207,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             349 => [
-                'id' => 850,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 103,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -11069,8 +10219,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             350 => [
-                'id' => 851,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 103,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -11082,8 +10231,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             351 => [
-                'id' => 852,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 103,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -11095,8 +10243,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             352 => [
-                'id' => 853,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 103,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -11108,8 +10255,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             353 => [
-                'id' => 854,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 103,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -11121,8 +10267,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             354 => [
-                'id' => 855,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 103,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -11134,8 +10279,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             355 => [
-                'id' => 856,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 104,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -11147,8 +10291,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             356 => [
-                'id' => 857,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 104,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -11160,8 +10303,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             357 => [
-                'id' => 858,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 104,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -11173,8 +10315,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             358 => [
-                'id' => 859,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 104,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -11186,8 +10327,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             359 => [
-                'id' => 860,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 104,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -11199,8 +10339,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             360 => [
-                'id' => 861,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 104,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -11212,8 +10351,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             361 => [
-                'id' => 862,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 104,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -11225,8 +10363,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             362 => [
-                'id' => 863,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 104,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -11238,8 +10375,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             363 => [
-                'id' => 864,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 104,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -11251,8 +10387,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             364 => [
-                'id' => 865,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 105,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -11264,8 +10399,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             365 => [
-                'id' => 866,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 105,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -11277,8 +10411,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             366 => [
-                'id' => 867,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 105,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -11290,8 +10423,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             367 => [
-                'id' => 868,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 105,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -11303,8 +10435,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             368 => [
-                'id' => 869,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 105,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -11316,8 +10447,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             369 => [
-                'id' => 870,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 105,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -11329,8 +10459,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             370 => [
-                'id' => 871,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 105,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -11342,8 +10471,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             371 => [
-                'id' => 872,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 105,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -11355,8 +10483,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             372 => [
-                'id' => 873,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 105,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -11368,8 +10495,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             373 => [
-                'id' => 874,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 106,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -11381,8 +10507,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             374 => [
-                'id' => 875,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 106,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -11394,8 +10519,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             375 => [
-                'id' => 876,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 106,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -11407,8 +10531,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             376 => [
-                'id' => 877,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 106,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -11420,8 +10543,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             377 => [
-                'id' => 878,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 106,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -11433,8 +10555,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             378 => [
-                'id' => 879,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 106,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -11446,8 +10567,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             379 => [
-                'id' => 880,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 106,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -11459,8 +10579,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             380 => [
-                'id' => 881,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 106,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -11472,8 +10591,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             381 => [
-                'id' => 882,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 106,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -11485,8 +10603,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             382 => [
-                'id' => 883,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 107,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -11498,8 +10615,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             383 => [
-                'id' => 884,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 107,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -11511,8 +10627,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             384 => [
-                'id' => 885,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 107,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -11524,8 +10639,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             385 => [
-                'id' => 886,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 107,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -11537,8 +10651,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             386 => [
-                'id' => 887,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 107,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -11550,8 +10663,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             387 => [
-                'id' => 888,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 107,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -11563,8 +10675,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             388 => [
-                'id' => 889,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 107,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -11576,8 +10687,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             389 => [
-                'id' => 890,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 107,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -11589,8 +10699,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             390 => [
-                'id' => 891,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 107,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -11602,8 +10711,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             391 => [
-                'id' => 892,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 108,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -11615,8 +10723,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             392 => [
-                'id' => 893,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 108,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -11628,8 +10735,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             393 => [
-                'id' => 894,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 108,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -11641,8 +10747,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             394 => [
-                'id' => 895,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 108,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -11654,8 +10759,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             395 => [
-                'id' => 896,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 108,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -11667,8 +10771,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             396 => [
-                'id' => 897,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 108,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -11680,8 +10783,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             397 => [
-                'id' => 898,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 108,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -11693,8 +10795,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             398 => [
-                'id' => 899,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 108,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -11706,8 +10807,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             399 => [
-                'id' => 900,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 108,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -11719,8 +10819,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             400 => [
-                'id' => 901,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 109,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -11732,8 +10831,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             401 => [
-                'id' => 902,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 109,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -11745,8 +10843,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             402 => [
-                'id' => 903,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 109,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -11758,8 +10855,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             403 => [
-                'id' => 904,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 109,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -11771,8 +10867,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             404 => [
-                'id' => 905,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 109,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -11784,8 +10879,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             405 => [
-                'id' => 906,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 109,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -11797,8 +10891,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             406 => [
-                'id' => 907,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 109,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -11810,8 +10903,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             407 => [
-                'id' => 908,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 109,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -11823,8 +10915,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             408 => [
-                'id' => 909,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 109,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -11836,8 +10927,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             409 => [
-                'id' => 910,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 110,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -11849,8 +10939,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             410 => [
-                'id' => 911,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 110,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -11862,8 +10951,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             411 => [
-                'id' => 912,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 110,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -11875,8 +10963,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             412 => [
-                'id' => 913,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 110,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -11888,8 +10975,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             413 => [
-                'id' => 914,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 110,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -11901,8 +10987,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             414 => [
-                'id' => 915,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 110,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -11914,8 +10999,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             415 => [
-                'id' => 916,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 110,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -11927,8 +11011,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             416 => [
-                'id' => 917,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 110,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -11940,8 +11023,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             417 => [
-                'id' => 918,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 110,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -11953,8 +11035,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             418 => [
-                'id' => 919,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 111,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -11966,8 +11047,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             419 => [
-                'id' => 920,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 111,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -11979,8 +11059,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             420 => [
-                'id' => 921,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 111,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -11992,8 +11071,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             421 => [
-                'id' => 922,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 111,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -12005,8 +11083,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             422 => [
-                'id' => 923,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 111,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -12018,8 +11095,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             423 => [
-                'id' => 924,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 111,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -12031,8 +11107,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             424 => [
-                'id' => 925,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 111,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -12044,8 +11119,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             425 => [
-                'id' => 926,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 111,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -12057,8 +11131,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             426 => [
-                'id' => 927,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 111,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -12070,8 +11143,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             427 => [
-                'id' => 928,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 112,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -12083,8 +11155,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             428 => [
-                'id' => 929,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 112,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -12096,8 +11167,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             429 => [
-                'id' => 930,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 112,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -12109,8 +11179,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             430 => [
-                'id' => 931,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 112,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -12122,8 +11191,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             431 => [
-                'id' => 932,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 112,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -12135,8 +11203,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             432 => [
-                'id' => 933,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 112,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -12148,8 +11215,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             433 => [
-                'id' => 934,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 112,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -12161,8 +11227,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             434 => [
-                'id' => 935,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 112,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -12174,8 +11239,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             435 => [
-                'id' => 936,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 112,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -12187,8 +11251,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             436 => [
-                'id' => 937,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 113,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -12200,8 +11263,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             437 => [
-                'id' => 938,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 113,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -12213,8 +11275,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             438 => [
-                'id' => 939,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 113,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -12226,8 +11287,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             439 => [
-                'id' => 940,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 113,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -12239,8 +11299,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             440 => [
-                'id' => 941,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 113,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -12252,8 +11311,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             441 => [
-                'id' => 942,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 113,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -12265,8 +11323,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             442 => [
-                'id' => 943,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 113,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -12278,8 +11335,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             443 => [
-                'id' => 944,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 113,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -12291,8 +11347,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             444 => [
-                'id' => 945,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 113,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -12304,8 +11359,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             445 => [
-                'id' => 946,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 114,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -12317,8 +11371,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             446 => [
-                'id' => 947,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 114,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -12330,8 +11383,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             447 => [
-                'id' => 948,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 114,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -12343,8 +11395,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             448 => [
-                'id' => 949,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 114,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -12356,8 +11407,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             449 => [
-                'id' => 950,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 114,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -12369,8 +11419,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             450 => [
-                'id' => 951,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 114,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -12382,8 +11431,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             451 => [
-                'id' => 952,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 114,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -12395,8 +11443,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             452 => [
-                'id' => 953,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 114,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -12408,8 +11455,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             453 => [
-                'id' => 954,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 114,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -12421,8 +11467,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             454 => [
-                'id' => 955,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 115,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -12434,8 +11479,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             455 => [
-                'id' => 956,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 115,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -12447,8 +11491,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             456 => [
-                'id' => 957,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 115,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -12460,8 +11503,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             457 => [
-                'id' => 958,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 115,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -12473,8 +11515,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             458 => [
-                'id' => 959,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 115,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -12486,8 +11527,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             459 => [
-                'id' => 960,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 115,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -12499,8 +11539,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             460 => [
-                'id' => 961,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 115,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -12512,8 +11551,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             461 => [
-                'id' => 962,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 115,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -12525,8 +11563,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             462 => [
-                'id' => 963,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 115,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -12538,8 +11575,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             463 => [
-                'id' => 964,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 116,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -12551,8 +11587,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             464 => [
-                'id' => 965,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 116,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -12564,8 +11599,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             465 => [
-                'id' => 966,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 116,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -12577,8 +11611,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             466 => [
-                'id' => 967,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 116,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -12590,8 +11623,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             467 => [
-                'id' => 968,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 116,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -12603,8 +11635,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             468 => [
-                'id' => 969,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 116,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -12616,8 +11647,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             469 => [
-                'id' => 970,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 116,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -12629,8 +11659,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             470 => [
-                'id' => 971,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 116,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -12642,8 +11671,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             471 => [
-                'id' => 972,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 116,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -12655,8 +11683,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             472 => [
-                'id' => 973,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 117,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -12668,8 +11695,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             473 => [
-                'id' => 974,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 117,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -12681,8 +11707,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             474 => [
-                'id' => 975,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 117,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -12694,8 +11719,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             475 => [
-                'id' => 976,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 117,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -12707,8 +11731,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             476 => [
-                'id' => 977,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 117,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -12720,8 +11743,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             477 => [
-                'id' => 978,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 117,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -12733,8 +11755,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             478 => [
-                'id' => 979,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 117,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -12746,8 +11767,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             479 => [
-                'id' => 980,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 117,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -12759,8 +11779,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             480 => [
-                'id' => 981,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 117,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -12772,8 +11791,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             481 => [
-                'id' => 982,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 118,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -12785,8 +11803,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             482 => [
-                'id' => 983,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 118,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -12798,8 +11815,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             483 => [
-                'id' => 984,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 118,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -12811,8 +11827,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             484 => [
-                'id' => 985,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 118,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -12824,8 +11839,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             485 => [
-                'id' => 986,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 118,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -12837,8 +11851,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             486 => [
-                'id' => 987,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 118,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -12850,8 +11863,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             487 => [
-                'id' => 988,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 118,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -12863,8 +11875,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             488 => [
-                'id' => 989,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 118,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -12876,8 +11887,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             489 => [
-                'id' => 990,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 118,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -12889,8 +11899,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             490 => [
-                'id' => 991,
-                'no' => 1,
+                            'no' => 1,
                 'contrato_id' => 119,
                 'aspectos' => 'Liberación de fianza.',
                 'cumple' => null,
@@ -12902,8 +11911,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             491 => [
-                'id' => 992,
-                'no' => 2,
+                            'no' => 2,
                 'contrato_id' => 119,
                 'aspectos' => 'Póliza de responsabilidad civil',
                 'cumple' => null,
@@ -12915,8 +11923,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             492 => [
-                'id' => 993,
-                'no' => 3,
+                            'no' => 3,
                 'contrato_id' => 119,
                 'aspectos' => 'Pena convencional',
                 'cumple' => null,
@@ -12928,8 +11935,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             493 => [
-                'id' => 994,
-                'no' => 4,
+                            'no' => 4,
                 'contrato_id' => 119,
                 'aspectos' => 'Defectos y Vicios ocultos',
                 'cumple' => null,
@@ -12941,8 +11947,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             494 => [
-                'id' => 995,
-                'no' => 5,
+                            'no' => 5,
                 'contrato_id' => 119,
                 'aspectos' => 'Confidencialidad',
                 'cumple' => null,
@@ -12954,8 +11959,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             495 => [
-                'id' => 996,
-                'no' => 6,
+                            'no' => 6,
                 'contrato_id' => 119,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
                 'cumple' => null,
@@ -12967,8 +11971,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             496 => [
-                'id' => 997,
-                'no' => 7,
+                            'no' => 7,
                 'contrato_id' => 119,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
                 'cumple' => null,
@@ -12980,8 +11983,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             497 => [
-                'id' => 998,
-                'no' => 8,
+                            'no' => 8,
                 'contrato_id' => 119,
                 'aspectos' => 'Formalización del cierre del contrato',
                 'cumple' => null,
@@ -12993,8 +11995,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             498 => [
-                'id' => 999,
-                'no' => 9,
+                            'no' => 9,
                 'contrato_id' => 119,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
                 'cumple' => null,
@@ -13006,7 +12007,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             499 => [
-                'id' => 1000,
+
                 'no' => 1,
                 'contrato_id' => 120,
                 'aspectos' => 'Liberación de fianza.',
@@ -13021,7 +12022,7 @@ class CierreContratosTableSeeder extends Seeder
         ]);
         \DB::table('cierre_contratos')->insert([
             0 => [
-                'id' => 1001,
+
                 'no' => 2,
                 'contrato_id' => 120,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -13034,7 +12035,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             1 => [
-                'id' => 1002,
+
                 'no' => 3,
                 'contrato_id' => 120,
                 'aspectos' => 'Pena convencional',
@@ -13047,7 +12048,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             2 => [
-                'id' => 1003,
+
                 'no' => 4,
                 'contrato_id' => 120,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -13060,7 +12061,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             3 => [
-                'id' => 1004,
+
                 'no' => 5,
                 'contrato_id' => 120,
                 'aspectos' => 'Confidencialidad',
@@ -13073,7 +12074,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             4 => [
-                'id' => 1005,
+
                 'no' => 6,
                 'contrato_id' => 120,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -13086,7 +12087,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             5 => [
-                'id' => 1006,
+
                 'no' => 7,
                 'contrato_id' => 120,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -13099,7 +12100,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             6 => [
-                'id' => 1007,
+
                 'no' => 8,
                 'contrato_id' => 120,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -13112,7 +12113,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             7 => [
-                'id' => 1008,
+
                 'no' => 9,
                 'contrato_id' => 120,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -13125,7 +12126,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             8 => [
-                'id' => 1009,
+
                 'no' => 1,
                 'contrato_id' => 121,
                 'aspectos' => 'Liberación de fianza.',
@@ -13138,7 +12139,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             9 => [
-                'id' => 1010,
+
                 'no' => 2,
                 'contrato_id' => 121,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -13151,7 +12152,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             10 => [
-                'id' => 1011,
+
                 'no' => 3,
                 'contrato_id' => 121,
                 'aspectos' => 'Pena convencional',
@@ -13164,7 +12165,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             11 => [
-                'id' => 1012,
+
                 'no' => 4,
                 'contrato_id' => 121,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -13177,7 +12178,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             12 => [
-                'id' => 1013,
+
                 'no' => 5,
                 'contrato_id' => 121,
                 'aspectos' => 'Confidencialidad',
@@ -13190,7 +12191,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             13 => [
-                'id' => 1014,
+
                 'no' => 6,
                 'contrato_id' => 121,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -13203,7 +12204,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             14 => [
-                'id' => 1015,
+
                 'no' => 7,
                 'contrato_id' => 121,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -13216,7 +12217,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             15 => [
-                'id' => 1016,
+
                 'no' => 8,
                 'contrato_id' => 121,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -13229,7 +12230,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             16 => [
-                'id' => 1017,
+
                 'no' => 9,
                 'contrato_id' => 121,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -13242,7 +12243,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             17 => [
-                'id' => 1018,
+
                 'no' => 1,
                 'contrato_id' => 122,
                 'aspectos' => 'Liberación de fianza.',
@@ -13255,7 +12256,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             18 => [
-                'id' => 1019,
+
                 'no' => 2,
                 'contrato_id' => 122,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -13268,7 +12269,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             19 => [
-                'id' => 1020,
+
                 'no' => 3,
                 'contrato_id' => 122,
                 'aspectos' => 'Pena convencional',
@@ -13281,7 +12282,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             20 => [
-                'id' => 1021,
+
                 'no' => 4,
                 'contrato_id' => 122,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -13294,7 +12295,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             21 => [
-                'id' => 1022,
+
                 'no' => 5,
                 'contrato_id' => 122,
                 'aspectos' => 'Confidencialidad',
@@ -13307,7 +12308,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             22 => [
-                'id' => 1023,
+
                 'no' => 6,
                 'contrato_id' => 122,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -13320,7 +12321,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             23 => [
-                'id' => 1024,
+
                 'no' => 7,
                 'contrato_id' => 122,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -13333,7 +12334,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             24 => [
-                'id' => 1025,
+
                 'no' => 8,
                 'contrato_id' => 122,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -13346,7 +12347,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             25 => [
-                'id' => 1026,
+
                 'no' => 9,
                 'contrato_id' => 122,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -13359,7 +12360,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             26 => [
-                'id' => 1027,
+
                 'no' => 1,
                 'contrato_id' => 123,
                 'aspectos' => 'Liberación de fianza.',
@@ -13372,7 +12373,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             27 => [
-                'id' => 1028,
+
                 'no' => 2,
                 'contrato_id' => 123,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -13385,7 +12386,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             28 => [
-                'id' => 1029,
+
                 'no' => 3,
                 'contrato_id' => 123,
                 'aspectos' => 'Pena convencional',
@@ -13398,7 +12399,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             29 => [
-                'id' => 1030,
+
                 'no' => 4,
                 'contrato_id' => 123,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -13411,7 +12412,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             30 => [
-                'id' => 1031,
+
                 'no' => 5,
                 'contrato_id' => 123,
                 'aspectos' => 'Confidencialidad',
@@ -13424,7 +12425,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             31 => [
-                'id' => 1032,
+
                 'no' => 6,
                 'contrato_id' => 123,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -13437,7 +12438,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             32 => [
-                'id' => 1033,
+
                 'no' => 7,
                 'contrato_id' => 123,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -13450,7 +12451,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             33 => [
-                'id' => 1034,
+
                 'no' => 8,
                 'contrato_id' => 123,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -13463,7 +12464,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             34 => [
-                'id' => 1035,
+
                 'no' => 9,
                 'contrato_id' => 123,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -13476,7 +12477,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             35 => [
-                'id' => 1036,
+
                 'no' => 1,
                 'contrato_id' => 124,
                 'aspectos' => 'Liberación de fianza.',
@@ -13489,7 +12490,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             36 => [
-                'id' => 1037,
+
                 'no' => 2,
                 'contrato_id' => 124,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -13502,7 +12503,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             37 => [
-                'id' => 1038,
+
                 'no' => 3,
                 'contrato_id' => 124,
                 'aspectos' => 'Pena convencional',
@@ -13515,7 +12516,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             38 => [
-                'id' => 1039,
+
                 'no' => 4,
                 'contrato_id' => 124,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -13528,7 +12529,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             39 => [
-                'id' => 1040,
+
                 'no' => 5,
                 'contrato_id' => 124,
                 'aspectos' => 'Confidencialidad',
@@ -13541,7 +12542,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             40 => [
-                'id' => 1041,
+
                 'no' => 6,
                 'contrato_id' => 124,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -13554,7 +12555,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             41 => [
-                'id' => 1042,
+
                 'no' => 7,
                 'contrato_id' => 124,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -13567,7 +12568,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             42 => [
-                'id' => 1043,
+
                 'no' => 8,
                 'contrato_id' => 124,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -13580,7 +12581,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             43 => [
-                'id' => 1044,
+
                 'no' => 9,
                 'contrato_id' => 124,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -13593,7 +12594,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             44 => [
-                'id' => 1045,
+
                 'no' => 1,
                 'contrato_id' => 125,
                 'aspectos' => 'Liberación de fianza.',
@@ -13606,7 +12607,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             45 => [
-                'id' => 1046,
+
                 'no' => 2,
                 'contrato_id' => 125,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -13619,7 +12620,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             46 => [
-                'id' => 1047,
+
                 'no' => 3,
                 'contrato_id' => 125,
                 'aspectos' => 'Pena convencional',
@@ -13632,7 +12633,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             47 => [
-                'id' => 1048,
+
                 'no' => 4,
                 'contrato_id' => 125,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -13645,7 +12646,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             48 => [
-                'id' => 1049,
+
                 'no' => 5,
                 'contrato_id' => 125,
                 'aspectos' => 'Confidencialidad',
@@ -13658,7 +12659,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             49 => [
-                'id' => 1050,
+
                 'no' => 6,
                 'contrato_id' => 125,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -13671,7 +12672,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             50 => [
-                'id' => 1051,
+
                 'no' => 7,
                 'contrato_id' => 125,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -13684,7 +12685,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             51 => [
-                'id' => 1052,
+
                 'no' => 8,
                 'contrato_id' => 125,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -13697,7 +12698,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             52 => [
-                'id' => 1053,
+
                 'no' => 9,
                 'contrato_id' => 125,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -13710,7 +12711,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             53 => [
-                'id' => 1054,
+
                 'no' => 1,
                 'contrato_id' => 126,
                 'aspectos' => 'Liberación de fianza.',
@@ -13723,7 +12724,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             54 => [
-                'id' => 1055,
+
                 'no' => 2,
                 'contrato_id' => 126,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -13736,7 +12737,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             55 => [
-                'id' => 1056,
+
                 'no' => 3,
                 'contrato_id' => 126,
                 'aspectos' => 'Pena convencional',
@@ -13749,7 +12750,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             56 => [
-                'id' => 1057,
+
                 'no' => 4,
                 'contrato_id' => 126,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -13762,7 +12763,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             57 => [
-                'id' => 1058,
+
                 'no' => 5,
                 'contrato_id' => 126,
                 'aspectos' => 'Confidencialidad',
@@ -13775,7 +12776,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             58 => [
-                'id' => 1059,
+
                 'no' => 6,
                 'contrato_id' => 126,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -13788,7 +12789,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             59 => [
-                'id' => 1060,
+
                 'no' => 7,
                 'contrato_id' => 126,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -13801,7 +12802,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             60 => [
-                'id' => 1061,
+
                 'no' => 8,
                 'contrato_id' => 126,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -13814,7 +12815,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             61 => [
-                'id' => 1062,
+
                 'no' => 9,
                 'contrato_id' => 126,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -13827,7 +12828,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             62 => [
-                'id' => 1063,
+
                 'no' => 1,
                 'contrato_id' => 127,
                 'aspectos' => 'Liberación de fianza.',
@@ -13840,7 +12841,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             63 => [
-                'id' => 1064,
+
                 'no' => 2,
                 'contrato_id' => 127,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -13853,7 +12854,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             64 => [
-                'id' => 1065,
+
                 'no' => 3,
                 'contrato_id' => 127,
                 'aspectos' => 'Pena convencional',
@@ -13866,7 +12867,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             65 => [
-                'id' => 1066,
+
                 'no' => 4,
                 'contrato_id' => 127,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -13879,7 +12880,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             66 => [
-                'id' => 1067,
+
                 'no' => 5,
                 'contrato_id' => 127,
                 'aspectos' => 'Confidencialidad',
@@ -13892,7 +12893,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             67 => [
-                'id' => 1068,
+
                 'no' => 6,
                 'contrato_id' => 127,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -13905,7 +12906,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             68 => [
-                'id' => 1069,
+
                 'no' => 7,
                 'contrato_id' => 127,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -13918,7 +12919,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             69 => [
-                'id' => 1070,
+
                 'no' => 8,
                 'contrato_id' => 127,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -13931,7 +12932,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             70 => [
-                'id' => 1071,
+
                 'no' => 9,
                 'contrato_id' => 127,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -13944,7 +12945,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             71 => [
-                'id' => 1072,
+
                 'no' => 1,
                 'contrato_id' => 128,
                 'aspectos' => 'Liberación de fianza.',
@@ -13957,7 +12958,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             72 => [
-                'id' => 1073,
+
                 'no' => 2,
                 'contrato_id' => 128,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -13970,7 +12971,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             73 => [
-                'id' => 1074,
+
                 'no' => 3,
                 'contrato_id' => 128,
                 'aspectos' => 'Pena convencional',
@@ -13983,7 +12984,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             74 => [
-                'id' => 1075,
+
                 'no' => 4,
                 'contrato_id' => 128,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -13996,7 +12997,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             75 => [
-                'id' => 1076,
+
                 'no' => 5,
                 'contrato_id' => 128,
                 'aspectos' => 'Confidencialidad',
@@ -14009,7 +13010,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             76 => [
-                'id' => 1077,
+
                 'no' => 6,
                 'contrato_id' => 128,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -14022,7 +13023,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             77 => [
-                'id' => 1078,
+
                 'no' => 7,
                 'contrato_id' => 128,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -14035,7 +13036,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             78 => [
-                'id' => 1079,
+
                 'no' => 8,
                 'contrato_id' => 128,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -14048,7 +13049,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             79 => [
-                'id' => 1080,
+
                 'no' => 9,
                 'contrato_id' => 128,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -14061,7 +13062,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             80 => [
-                'id' => 1081,
+
                 'no' => 1,
                 'contrato_id' => 129,
                 'aspectos' => 'Liberación de fianza.',
@@ -14074,7 +13075,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             81 => [
-                'id' => 1082,
+
                 'no' => 2,
                 'contrato_id' => 129,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -14087,7 +13088,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             82 => [
-                'id' => 1083,
+
                 'no' => 3,
                 'contrato_id' => 129,
                 'aspectos' => 'Pena convencional',
@@ -14100,7 +13101,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             83 => [
-                'id' => 1084,
+
                 'no' => 4,
                 'contrato_id' => 129,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -14113,7 +13114,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             84 => [
-                'id' => 1085,
+
                 'no' => 5,
                 'contrato_id' => 129,
                 'aspectos' => 'Confidencialidad',
@@ -14126,7 +13127,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             85 => [
-                'id' => 1086,
+
                 'no' => 6,
                 'contrato_id' => 129,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -14139,7 +13140,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             86 => [
-                'id' => 1087,
+
                 'no' => 7,
                 'contrato_id' => 129,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -14152,7 +13153,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             87 => [
-                'id' => 1088,
+
                 'no' => 8,
                 'contrato_id' => 129,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -14165,7 +13166,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             88 => [
-                'id' => 1089,
+
                 'no' => 9,
                 'contrato_id' => 129,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -14178,7 +13179,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             89 => [
-                'id' => 1090,
+
                 'no' => 1,
                 'contrato_id' => 130,
                 'aspectos' => 'Liberación de fianza.',
@@ -14191,7 +13192,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             90 => [
-                'id' => 1091,
+
                 'no' => 2,
                 'contrato_id' => 130,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -14204,7 +13205,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             91 => [
-                'id' => 1092,
+
                 'no' => 3,
                 'contrato_id' => 130,
                 'aspectos' => 'Pena convencional',
@@ -14217,7 +13218,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             92 => [
-                'id' => 1093,
+
                 'no' => 4,
                 'contrato_id' => 130,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -14230,7 +13231,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             93 => [
-                'id' => 1094,
+
                 'no' => 5,
                 'contrato_id' => 130,
                 'aspectos' => 'Confidencialidad',
@@ -14243,7 +13244,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             94 => [
-                'id' => 1095,
+
                 'no' => 6,
                 'contrato_id' => 130,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -14256,7 +13257,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             95 => [
-                'id' => 1096,
+
                 'no' => 7,
                 'contrato_id' => 130,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -14269,7 +13270,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             96 => [
-                'id' => 1097,
+
                 'no' => 8,
                 'contrato_id' => 130,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -14282,7 +13283,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             97 => [
-                'id' => 1098,
+
                 'no' => 9,
                 'contrato_id' => 130,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -14295,7 +13296,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             98 => [
-                'id' => 1099,
+
                 'no' => 1,
                 'contrato_id' => 131,
                 'aspectos' => 'Liberación de fianza.',
@@ -14308,7 +13309,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             99 => [
-                'id' => 1100,
+
                 'no' => 2,
                 'contrato_id' => 131,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -14321,7 +13322,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             100 => [
-                'id' => 1101,
+
                 'no' => 3,
                 'contrato_id' => 131,
                 'aspectos' => 'Pena convencional',
@@ -14334,7 +13335,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             101 => [
-                'id' => 1102,
+
                 'no' => 4,
                 'contrato_id' => 131,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -14347,7 +13348,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             102 => [
-                'id' => 1103,
+
                 'no' => 5,
                 'contrato_id' => 131,
                 'aspectos' => 'Confidencialidad',
@@ -14360,7 +13361,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             103 => [
-                'id' => 1104,
+
                 'no' => 6,
                 'contrato_id' => 131,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -14373,7 +13374,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             104 => [
-                'id' => 1105,
+
                 'no' => 7,
                 'contrato_id' => 131,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -14386,7 +13387,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             105 => [
-                'id' => 1106,
+
                 'no' => 8,
                 'contrato_id' => 131,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -14399,7 +13400,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             106 => [
-                'id' => 1107,
+
                 'no' => 9,
                 'contrato_id' => 131,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -14412,7 +13413,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             107 => [
-                'id' => 1108,
+
                 'no' => 1,
                 'contrato_id' => 132,
                 'aspectos' => 'Liberación de fianza.',
@@ -14425,7 +13426,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             108 => [
-                'id' => 1109,
+
                 'no' => 2,
                 'contrato_id' => 132,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -14438,7 +13439,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             109 => [
-                'id' => 1110,
+
                 'no' => 3,
                 'contrato_id' => 132,
                 'aspectos' => 'Pena convencional',
@@ -14451,7 +13452,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             110 => [
-                'id' => 1111,
+
                 'no' => 4,
                 'contrato_id' => 132,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -14464,7 +13465,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             111 => [
-                'id' => 1112,
+
                 'no' => 5,
                 'contrato_id' => 132,
                 'aspectos' => 'Confidencialidad',
@@ -14477,7 +13478,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             112 => [
-                'id' => 1113,
+
                 'no' => 6,
                 'contrato_id' => 132,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -14490,7 +13491,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             113 => [
-                'id' => 1114,
+
                 'no' => 7,
                 'contrato_id' => 132,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -14503,7 +13504,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             114 => [
-                'id' => 1115,
+
                 'no' => 8,
                 'contrato_id' => 132,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -14516,7 +13517,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             115 => [
-                'id' => 1116,
+
                 'no' => 9,
                 'contrato_id' => 132,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -14529,7 +13530,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             116 => [
-                'id' => 1117,
+
                 'no' => 1,
                 'contrato_id' => 133,
                 'aspectos' => 'Liberación de fianza.',
@@ -14542,7 +13543,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             117 => [
-                'id' => 1118,
+
                 'no' => 2,
                 'contrato_id' => 133,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -14555,7 +13556,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             118 => [
-                'id' => 1119,
+
                 'no' => 3,
                 'contrato_id' => 133,
                 'aspectos' => 'Pena convencional',
@@ -14568,7 +13569,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             119 => [
-                'id' => 1120,
+
                 'no' => 4,
                 'contrato_id' => 133,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -14581,7 +13582,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             120 => [
-                'id' => 1121,
+
                 'no' => 5,
                 'contrato_id' => 133,
                 'aspectos' => 'Confidencialidad',
@@ -14594,7 +13595,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             121 => [
-                'id' => 1122,
+
                 'no' => 6,
                 'contrato_id' => 133,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -14607,7 +13608,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             122 => [
-                'id' => 1123,
+
                 'no' => 7,
                 'contrato_id' => 133,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -14620,7 +13621,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             123 => [
-                'id' => 1124,
+
                 'no' => 8,
                 'contrato_id' => 133,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -14633,7 +13634,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             124 => [
-                'id' => 1125,
+
                 'no' => 9,
                 'contrato_id' => 133,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -14646,7 +13647,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             125 => [
-                'id' => 1126,
+
                 'no' => 1,
                 'contrato_id' => 134,
                 'aspectos' => 'Liberación de fianza.',
@@ -14659,7 +13660,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             126 => [
-                'id' => 1127,
+
                 'no' => 2,
                 'contrato_id' => 134,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -14672,7 +13673,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             127 => [
-                'id' => 1128,
+
                 'no' => 3,
                 'contrato_id' => 134,
                 'aspectos' => 'Pena convencional',
@@ -14685,7 +13686,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             128 => [
-                'id' => 1129,
+
                 'no' => 4,
                 'contrato_id' => 134,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -14698,7 +13699,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             129 => [
-                'id' => 1130,
+
                 'no' => 5,
                 'contrato_id' => 134,
                 'aspectos' => 'Confidencialidad',
@@ -14711,7 +13712,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             130 => [
-                'id' => 1131,
+
                 'no' => 6,
                 'contrato_id' => 134,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -14724,7 +13725,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             131 => [
-                'id' => 1132,
+
                 'no' => 7,
                 'contrato_id' => 134,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -14737,7 +13738,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             132 => [
-                'id' => 1133,
+
                 'no' => 8,
                 'contrato_id' => 134,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -14750,7 +13751,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             133 => [
-                'id' => 1134,
+
                 'no' => 9,
                 'contrato_id' => 134,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -14763,7 +13764,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             134 => [
-                'id' => 1135,
+
                 'no' => 1,
                 'contrato_id' => 135,
                 'aspectos' => 'Liberación de fianza.',
@@ -14776,7 +13777,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             135 => [
-                'id' => 1136,
+
                 'no' => 2,
                 'contrato_id' => 135,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -14789,7 +13790,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             136 => [
-                'id' => 1137,
+
                 'no' => 3,
                 'contrato_id' => 135,
                 'aspectos' => 'Pena convencional',
@@ -14802,7 +13803,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             137 => [
-                'id' => 1138,
+
                 'no' => 4,
                 'contrato_id' => 135,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -14815,7 +13816,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             138 => [
-                'id' => 1139,
+
                 'no' => 5,
                 'contrato_id' => 135,
                 'aspectos' => 'Confidencialidad',
@@ -14828,7 +13829,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             139 => [
-                'id' => 1140,
+
                 'no' => 6,
                 'contrato_id' => 135,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -14841,7 +13842,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             140 => [
-                'id' => 1141,
+
                 'no' => 7,
                 'contrato_id' => 135,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -14854,7 +13855,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             141 => [
-                'id' => 1142,
+
                 'no' => 8,
                 'contrato_id' => 135,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -14867,7 +13868,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             142 => [
-                'id' => 1143,
+
                 'no' => 9,
                 'contrato_id' => 135,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -14880,7 +13881,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             143 => [
-                'id' => 1144,
+
                 'no' => 1,
                 'contrato_id' => 136,
                 'aspectos' => 'Liberación de fianza.',
@@ -14893,7 +13894,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             144 => [
-                'id' => 1145,
+
                 'no' => 2,
                 'contrato_id' => 136,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -14906,7 +13907,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             145 => [
-                'id' => 1146,
+
                 'no' => 3,
                 'contrato_id' => 136,
                 'aspectos' => 'Pena convencional',
@@ -14919,7 +13920,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             146 => [
-                'id' => 1147,
+
                 'no' => 4,
                 'contrato_id' => 136,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -14932,7 +13933,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             147 => [
-                'id' => 1148,
+
                 'no' => 5,
                 'contrato_id' => 136,
                 'aspectos' => 'Confidencialidad',
@@ -14945,7 +13946,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             148 => [
-                'id' => 1149,
+
                 'no' => 6,
                 'contrato_id' => 136,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -14958,7 +13959,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             149 => [
-                'id' => 1150,
+
                 'no' => 7,
                 'contrato_id' => 136,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -14971,7 +13972,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             150 => [
-                'id' => 1151,
+
                 'no' => 8,
                 'contrato_id' => 136,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -14984,7 +13985,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             151 => [
-                'id' => 1152,
+
                 'no' => 9,
                 'contrato_id' => 136,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -14997,7 +13998,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             152 => [
-                'id' => 1153,
+
                 'no' => 1,
                 'contrato_id' => 137,
                 'aspectos' => 'Liberación de fianza.',
@@ -15010,7 +14011,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             153 => [
-                'id' => 1154,
+
                 'no' => 2,
                 'contrato_id' => 137,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -15023,7 +14024,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             154 => [
-                'id' => 1155,
+
                 'no' => 3,
                 'contrato_id' => 137,
                 'aspectos' => 'Pena convencional',
@@ -15036,7 +14037,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             155 => [
-                'id' => 1156,
+
                 'no' => 4,
                 'contrato_id' => 137,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -15049,7 +14050,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             156 => [
-                'id' => 1157,
+
                 'no' => 5,
                 'contrato_id' => 137,
                 'aspectos' => 'Confidencialidad',
@@ -15062,7 +14063,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             157 => [
-                'id' => 1158,
+
                 'no' => 6,
                 'contrato_id' => 137,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -15075,7 +14076,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             158 => [
-                'id' => 1159,
+
                 'no' => 7,
                 'contrato_id' => 137,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -15088,7 +14089,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             159 => [
-                'id' => 1160,
+
                 'no' => 8,
                 'contrato_id' => 137,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -15101,7 +14102,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             160 => [
-                'id' => 1161,
+
                 'no' => 9,
                 'contrato_id' => 137,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -15114,7 +14115,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             161 => [
-                'id' => 1162,
+
                 'no' => 1,
                 'contrato_id' => 138,
                 'aspectos' => 'Liberación de fianza.',
@@ -15127,7 +14128,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             162 => [
-                'id' => 1163,
+
                 'no' => 2,
                 'contrato_id' => 138,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -15140,7 +14141,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             163 => [
-                'id' => 1164,
+
                 'no' => 3,
                 'contrato_id' => 138,
                 'aspectos' => 'Pena convencional',
@@ -15153,7 +14154,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             164 => [
-                'id' => 1165,
+
                 'no' => 4,
                 'contrato_id' => 138,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -15166,7 +14167,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             165 => [
-                'id' => 1166,
+
                 'no' => 5,
                 'contrato_id' => 138,
                 'aspectos' => 'Confidencialidad',
@@ -15179,7 +14180,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             166 => [
-                'id' => 1167,
+
                 'no' => 6,
                 'contrato_id' => 138,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -15192,7 +14193,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             167 => [
-                'id' => 1168,
+
                 'no' => 7,
                 'contrato_id' => 138,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -15205,7 +14206,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             168 => [
-                'id' => 1169,
+
                 'no' => 8,
                 'contrato_id' => 138,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -15218,7 +14219,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             169 => [
-                'id' => 1170,
+
                 'no' => 9,
                 'contrato_id' => 138,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -15231,7 +14232,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             170 => [
-                'id' => 1171,
+
                 'no' => 1,
                 'contrato_id' => 139,
                 'aspectos' => 'Liberación de fianza.',
@@ -15244,7 +14245,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             171 => [
-                'id' => 1172,
+
                 'no' => 2,
                 'contrato_id' => 139,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -15257,7 +14258,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             172 => [
-                'id' => 1173,
+
                 'no' => 3,
                 'contrato_id' => 139,
                 'aspectos' => 'Pena convencional',
@@ -15270,7 +14271,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             173 => [
-                'id' => 1174,
+
                 'no' => 4,
                 'contrato_id' => 139,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -15283,7 +14284,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             174 => [
-                'id' => 1175,
+
                 'no' => 5,
                 'contrato_id' => 139,
                 'aspectos' => 'Confidencialidad',
@@ -15296,7 +14297,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             175 => [
-                'id' => 1176,
+
                 'no' => 6,
                 'contrato_id' => 139,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -15309,7 +14310,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             176 => [
-                'id' => 1177,
+
                 'no' => 7,
                 'contrato_id' => 139,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -15322,7 +14323,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             177 => [
-                'id' => 1178,
+
                 'no' => 8,
                 'contrato_id' => 139,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -15335,7 +14336,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             178 => [
-                'id' => 1179,
+
                 'no' => 9,
                 'contrato_id' => 139,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -15348,7 +14349,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             179 => [
-                'id' => 1180,
+
                 'no' => 1,
                 'contrato_id' => 140,
                 'aspectos' => 'Liberación de fianza.',
@@ -15361,7 +14362,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             180 => [
-                'id' => 1181,
+
                 'no' => 2,
                 'contrato_id' => 140,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -15374,7 +14375,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             181 => [
-                'id' => 1182,
+
                 'no' => 3,
                 'contrato_id' => 140,
                 'aspectos' => 'Pena convencional',
@@ -15387,7 +14388,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             182 => [
-                'id' => 1183,
+
                 'no' => 4,
                 'contrato_id' => 140,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -15400,7 +14401,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             183 => [
-                'id' => 1184,
+
                 'no' => 5,
                 'contrato_id' => 140,
                 'aspectos' => 'Confidencialidad',
@@ -15413,7 +14414,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             184 => [
-                'id' => 1185,
+
                 'no' => 6,
                 'contrato_id' => 140,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -15426,7 +14427,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             185 => [
-                'id' => 1186,
+
                 'no' => 7,
                 'contrato_id' => 140,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -15439,7 +14440,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             186 => [
-                'id' => 1187,
+
                 'no' => 8,
                 'contrato_id' => 140,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -15452,7 +14453,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             187 => [
-                'id' => 1188,
+
                 'no' => 9,
                 'contrato_id' => 140,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -15465,7 +14466,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             188 => [
-                'id' => 1189,
+
                 'no' => 1,
                 'contrato_id' => 141,
                 'aspectos' => 'Liberación de fianza.',
@@ -15478,7 +14479,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             189 => [
-                'id' => 1190,
+
                 'no' => 2,
                 'contrato_id' => 141,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -15491,7 +14492,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             190 => [
-                'id' => 1191,
+
                 'no' => 3,
                 'contrato_id' => 141,
                 'aspectos' => 'Pena convencional',
@@ -15504,7 +14505,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             191 => [
-                'id' => 1192,
+
                 'no' => 4,
                 'contrato_id' => 141,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -15517,7 +14518,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             192 => [
-                'id' => 1193,
+
                 'no' => 5,
                 'contrato_id' => 141,
                 'aspectos' => 'Confidencialidad',
@@ -15530,7 +14531,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             193 => [
-                'id' => 1194,
+
                 'no' => 6,
                 'contrato_id' => 141,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -15543,7 +14544,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             194 => [
-                'id' => 1195,
+
                 'no' => 7,
                 'contrato_id' => 141,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -15556,7 +14557,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             195 => [
-                'id' => 1196,
+
                 'no' => 8,
                 'contrato_id' => 141,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -15569,7 +14570,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             196 => [
-                'id' => 1197,
+
                 'no' => 9,
                 'contrato_id' => 141,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -15582,7 +14583,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             197 => [
-                'id' => 1198,
+
                 'no' => 1,
                 'contrato_id' => 142,
                 'aspectos' => 'Liberación de fianza.',
@@ -15595,7 +14596,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             198 => [
-                'id' => 1199,
+
                 'no' => 2,
                 'contrato_id' => 142,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -15608,7 +14609,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             199 => [
-                'id' => 1200,
+
                 'no' => 3,
                 'contrato_id' => 142,
                 'aspectos' => 'Pena convencional',
@@ -15621,7 +14622,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             200 => [
-                'id' => 1201,
+
                 'no' => 4,
                 'contrato_id' => 142,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -15634,7 +14635,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             201 => [
-                'id' => 1202,
+
                 'no' => 5,
                 'contrato_id' => 142,
                 'aspectos' => 'Confidencialidad',
@@ -15647,7 +14648,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             202 => [
-                'id' => 1203,
+
                 'no' => 6,
                 'contrato_id' => 142,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -15660,7 +14661,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             203 => [
-                'id' => 1204,
+
                 'no' => 7,
                 'contrato_id' => 142,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -15673,7 +14674,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             204 => [
-                'id' => 1205,
+
                 'no' => 8,
                 'contrato_id' => 142,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -15686,7 +14687,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             205 => [
-                'id' => 1206,
+
                 'no' => 9,
                 'contrato_id' => 142,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -15699,7 +14700,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             206 => [
-                'id' => 1207,
+
                 'no' => 1,
                 'contrato_id' => 143,
                 'aspectos' => 'Liberación de fianza.',
@@ -15712,7 +14713,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             207 => [
-                'id' => 1208,
+
                 'no' => 2,
                 'contrato_id' => 143,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -15725,7 +14726,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             208 => [
-                'id' => 1209,
+
                 'no' => 3,
                 'contrato_id' => 143,
                 'aspectos' => 'Pena convencional',
@@ -15738,7 +14739,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             209 => [
-                'id' => 1210,
+
                 'no' => 4,
                 'contrato_id' => 143,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -15751,7 +14752,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             210 => [
-                'id' => 1211,
+
                 'no' => 5,
                 'contrato_id' => 143,
                 'aspectos' => 'Confidencialidad',
@@ -15764,7 +14765,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             211 => [
-                'id' => 1212,
+
                 'no' => 6,
                 'contrato_id' => 143,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -15777,7 +14778,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             212 => [
-                'id' => 1213,
+
                 'no' => 7,
                 'contrato_id' => 143,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -15790,7 +14791,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             213 => [
-                'id' => 1214,
+
                 'no' => 8,
                 'contrato_id' => 143,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -15803,7 +14804,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             214 => [
-                'id' => 1215,
+
                 'no' => 9,
                 'contrato_id' => 143,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -15816,7 +14817,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             215 => [
-                'id' => 1216,
+
                 'no' => 1,
                 'contrato_id' => 144,
                 'aspectos' => 'Liberación de fianza.',
@@ -15829,7 +14830,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             216 => [
-                'id' => 1217,
+
                 'no' => 2,
                 'contrato_id' => 144,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -15842,7 +14843,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             217 => [
-                'id' => 1218,
+
                 'no' => 3,
                 'contrato_id' => 144,
                 'aspectos' => 'Pena convencional',
@@ -15855,7 +14856,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             218 => [
-                'id' => 1219,
+
                 'no' => 4,
                 'contrato_id' => 144,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -15868,7 +14869,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             219 => [
-                'id' => 1220,
+
                 'no' => 5,
                 'contrato_id' => 144,
                 'aspectos' => 'Confidencialidad',
@@ -15881,7 +14882,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             220 => [
-                'id' => 1221,
+
                 'no' => 6,
                 'contrato_id' => 144,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -15894,7 +14895,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             221 => [
-                'id' => 1222,
+
                 'no' => 7,
                 'contrato_id' => 144,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -15907,7 +14908,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             222 => [
-                'id' => 1223,
+
                 'no' => 8,
                 'contrato_id' => 144,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -15920,7 +14921,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             223 => [
-                'id' => 1224,
+
                 'no' => 9,
                 'contrato_id' => 144,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -15933,7 +14934,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             224 => [
-                'id' => 1225,
+
                 'no' => 1,
                 'contrato_id' => 145,
                 'aspectos' => 'Liberación de fianza.',
@@ -15946,7 +14947,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             225 => [
-                'id' => 1226,
+
                 'no' => 2,
                 'contrato_id' => 145,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -15959,7 +14960,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             226 => [
-                'id' => 1227,
+
                 'no' => 3,
                 'contrato_id' => 145,
                 'aspectos' => 'Pena convencional',
@@ -15972,7 +14973,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             227 => [
-                'id' => 1228,
+
                 'no' => 4,
                 'contrato_id' => 145,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -15985,7 +14986,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             228 => [
-                'id' => 1229,
+
                 'no' => 5,
                 'contrato_id' => 145,
                 'aspectos' => 'Confidencialidad',
@@ -15998,7 +14999,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             229 => [
-                'id' => 1230,
+
                 'no' => 6,
                 'contrato_id' => 145,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -16011,7 +15012,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             230 => [
-                'id' => 1231,
+
                 'no' => 7,
                 'contrato_id' => 145,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -16024,7 +15025,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             231 => [
-                'id' => 1232,
+
                 'no' => 8,
                 'contrato_id' => 145,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -16037,7 +15038,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             232 => [
-                'id' => 1233,
+
                 'no' => 9,
                 'contrato_id' => 145,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -16050,7 +15051,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             233 => [
-                'id' => 1234,
+
                 'no' => 1,
                 'contrato_id' => 146,
                 'aspectos' => 'Liberación de fianza.',
@@ -16063,7 +15064,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             234 => [
-                'id' => 1235,
+
                 'no' => 2,
                 'contrato_id' => 146,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -16076,7 +15077,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             235 => [
-                'id' => 1236,
+
                 'no' => 3,
                 'contrato_id' => 146,
                 'aspectos' => 'Pena convencional',
@@ -16089,7 +15090,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             236 => [
-                'id' => 1237,
+
                 'no' => 4,
                 'contrato_id' => 146,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -16102,7 +15103,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             237 => [
-                'id' => 1238,
+
                 'no' => 5,
                 'contrato_id' => 146,
                 'aspectos' => 'Confidencialidad',
@@ -16115,7 +15116,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             238 => [
-                'id' => 1239,
+
                 'no' => 6,
                 'contrato_id' => 146,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -16128,7 +15129,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             239 => [
-                'id' => 1240,
+
                 'no' => 7,
                 'contrato_id' => 146,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -16141,7 +15142,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             240 => [
-                'id' => 1241,
+
                 'no' => 8,
                 'contrato_id' => 146,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -16154,7 +15155,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             241 => [
-                'id' => 1242,
+
                 'no' => 9,
                 'contrato_id' => 146,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -16167,7 +15168,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             242 => [
-                'id' => 1243,
+
                 'no' => 1,
                 'contrato_id' => 147,
                 'aspectos' => 'Liberación de fianza.',
@@ -16180,7 +15181,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             243 => [
-                'id' => 1244,
+
                 'no' => 2,
                 'contrato_id' => 147,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -16193,7 +15194,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             244 => [
-                'id' => 1245,
+
                 'no' => 3,
                 'contrato_id' => 147,
                 'aspectos' => 'Pena convencional',
@@ -16206,7 +15207,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             245 => [
-                'id' => 1246,
+
                 'no' => 4,
                 'contrato_id' => 147,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -16219,7 +15220,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             246 => [
-                'id' => 1247,
+
                 'no' => 5,
                 'contrato_id' => 147,
                 'aspectos' => 'Confidencialidad',
@@ -16232,7 +15233,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             247 => [
-                'id' => 1248,
+
                 'no' => 6,
                 'contrato_id' => 147,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -16245,7 +15246,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             248 => [
-                'id' => 1249,
+
                 'no' => 7,
                 'contrato_id' => 147,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -16258,7 +15259,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             249 => [
-                'id' => 1250,
+
                 'no' => 8,
                 'contrato_id' => 147,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -16271,7 +15272,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             250 => [
-                'id' => 1251,
+
                 'no' => 9,
                 'contrato_id' => 147,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -16284,7 +15285,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             251 => [
-                'id' => 1252,
+
                 'no' => 1,
                 'contrato_id' => 148,
                 'aspectos' => 'Liberación de fianza.',
@@ -16297,7 +15298,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             252 => [
-                'id' => 1253,
+
                 'no' => 2,
                 'contrato_id' => 148,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -16310,7 +15311,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             253 => [
-                'id' => 1254,
+
                 'no' => 3,
                 'contrato_id' => 148,
                 'aspectos' => 'Pena convencional',
@@ -16323,7 +15324,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             254 => [
-                'id' => 1255,
+
                 'no' => 4,
                 'contrato_id' => 148,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -16336,7 +15337,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             255 => [
-                'id' => 1256,
+
                 'no' => 5,
                 'contrato_id' => 148,
                 'aspectos' => 'Confidencialidad',
@@ -16349,7 +15350,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             256 => [
-                'id' => 1257,
+
                 'no' => 6,
                 'contrato_id' => 148,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -16362,7 +15363,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             257 => [
-                'id' => 1258,
+
                 'no' => 7,
                 'contrato_id' => 148,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -16375,7 +15376,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             258 => [
-                'id' => 1259,
+
                 'no' => 8,
                 'contrato_id' => 148,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -16388,7 +15389,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             259 => [
-                'id' => 1260,
+
                 'no' => 9,
                 'contrato_id' => 148,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -16401,7 +15402,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             260 => [
-                'id' => 1261,
+
                 'no' => 1,
                 'contrato_id' => 149,
                 'aspectos' => 'Liberación de fianza.',
@@ -16414,7 +15415,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             261 => [
-                'id' => 1262,
+
                 'no' => 2,
                 'contrato_id' => 149,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -16427,7 +15428,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             262 => [
-                'id' => 1263,
+
                 'no' => 3,
                 'contrato_id' => 149,
                 'aspectos' => 'Pena convencional',
@@ -16440,7 +15441,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             263 => [
-                'id' => 1264,
+
                 'no' => 4,
                 'contrato_id' => 149,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -16453,7 +15454,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             264 => [
-                'id' => 1265,
+
                 'no' => 5,
                 'contrato_id' => 149,
                 'aspectos' => 'Confidencialidad',
@@ -16466,7 +15467,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             265 => [
-                'id' => 1266,
+
                 'no' => 6,
                 'contrato_id' => 149,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -16479,7 +15480,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             266 => [
-                'id' => 1267,
+
                 'no' => 7,
                 'contrato_id' => 149,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -16492,7 +15493,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             267 => [
-                'id' => 1268,
+
                 'no' => 8,
                 'contrato_id' => 149,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -16505,7 +15506,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             268 => [
-                'id' => 1269,
+
                 'no' => 9,
                 'contrato_id' => 149,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -16518,7 +15519,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             269 => [
-                'id' => 1270,
+
                 'no' => 1,
                 'contrato_id' => 150,
                 'aspectos' => 'Liberación de fianza.',
@@ -16531,7 +15532,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             270 => [
-                'id' => 1271,
+
                 'no' => 2,
                 'contrato_id' => 150,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -16544,7 +15545,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             271 => [
-                'id' => 1272,
+
                 'no' => 3,
                 'contrato_id' => 150,
                 'aspectos' => 'Pena convencional',
@@ -16557,7 +15558,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             272 => [
-                'id' => 1273,
+
                 'no' => 4,
                 'contrato_id' => 150,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -16570,7 +15571,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             273 => [
-                'id' => 1274,
+
                 'no' => 5,
                 'contrato_id' => 150,
                 'aspectos' => 'Confidencialidad',
@@ -16583,7 +15584,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             274 => [
-                'id' => 1275,
+
                 'no' => 6,
                 'contrato_id' => 150,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -16596,7 +15597,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             275 => [
-                'id' => 1276,
+
                 'no' => 7,
                 'contrato_id' => 150,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -16609,7 +15610,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             276 => [
-                'id' => 1277,
+
                 'no' => 8,
                 'contrato_id' => 150,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -16622,7 +15623,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             277 => [
-                'id' => 1278,
+
                 'no' => 9,
                 'contrato_id' => 150,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -16635,7 +15636,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             278 => [
-                'id' => 1279,
+
                 'no' => 1,
                 'contrato_id' => 151,
                 'aspectos' => 'Liberación de fianza.',
@@ -16648,7 +15649,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             279 => [
-                'id' => 1280,
+
                 'no' => 2,
                 'contrato_id' => 151,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -16661,7 +15662,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             280 => [
-                'id' => 1281,
+
                 'no' => 3,
                 'contrato_id' => 151,
                 'aspectos' => 'Pena convencional',
@@ -16674,7 +15675,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             281 => [
-                'id' => 1282,
+
                 'no' => 4,
                 'contrato_id' => 151,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -16687,7 +15688,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             282 => [
-                'id' => 1283,
+
                 'no' => 5,
                 'contrato_id' => 151,
                 'aspectos' => 'Confidencialidad',
@@ -16700,7 +15701,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             283 => [
-                'id' => 1284,
+
                 'no' => 6,
                 'contrato_id' => 151,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -16713,7 +15714,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             284 => [
-                'id' => 1285,
+
                 'no' => 7,
                 'contrato_id' => 151,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -16726,7 +15727,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             285 => [
-                'id' => 1286,
+
                 'no' => 8,
                 'contrato_id' => 151,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -16739,7 +15740,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             286 => [
-                'id' => 1287,
+
                 'no' => 9,
                 'contrato_id' => 151,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -16752,7 +15753,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             287 => [
-                'id' => 1288,
+
                 'no' => 1,
                 'contrato_id' => 152,
                 'aspectos' => 'Liberación de fianza.',
@@ -16765,7 +15766,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             288 => [
-                'id' => 1289,
+
                 'no' => 2,
                 'contrato_id' => 152,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -16778,7 +15779,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             289 => [
-                'id' => 1290,
+
                 'no' => 3,
                 'contrato_id' => 152,
                 'aspectos' => 'Pena convencional',
@@ -16791,7 +15792,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             290 => [
-                'id' => 1291,
+
                 'no' => 4,
                 'contrato_id' => 152,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -16804,7 +15805,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             291 => [
-                'id' => 1292,
+
                 'no' => 5,
                 'contrato_id' => 152,
                 'aspectos' => 'Confidencialidad',
@@ -16817,7 +15818,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             292 => [
-                'id' => 1293,
+
                 'no' => 6,
                 'contrato_id' => 152,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -16830,7 +15831,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             293 => [
-                'id' => 1294,
+
                 'no' => 7,
                 'contrato_id' => 152,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -16843,7 +15844,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             294 => [
-                'id' => 1295,
+
                 'no' => 8,
                 'contrato_id' => 152,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -16856,7 +15857,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             295 => [
-                'id' => 1296,
+
                 'no' => 9,
                 'contrato_id' => 152,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -16869,7 +15870,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             296 => [
-                'id' => 1297,
+
                 'no' => 1,
                 'contrato_id' => 153,
                 'aspectos' => 'Liberación de fianza.',
@@ -16882,7 +15883,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             297 => [
-                'id' => 1298,
+
                 'no' => 2,
                 'contrato_id' => 153,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -16895,7 +15896,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             298 => [
-                'id' => 1299,
+
                 'no' => 3,
                 'contrato_id' => 153,
                 'aspectos' => 'Pena convencional',
@@ -16908,7 +15909,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             299 => [
-                'id' => 1300,
+
                 'no' => 4,
                 'contrato_id' => 153,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -16921,7 +15922,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             300 => [
-                'id' => 1301,
+
                 'no' => 5,
                 'contrato_id' => 153,
                 'aspectos' => 'Confidencialidad',
@@ -16934,7 +15935,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             301 => [
-                'id' => 1302,
+
                 'no' => 6,
                 'contrato_id' => 153,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -16947,7 +15948,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             302 => [
-                'id' => 1303,
+
                 'no' => 7,
                 'contrato_id' => 153,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -16960,7 +15961,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             303 => [
-                'id' => 1304,
+
                 'no' => 8,
                 'contrato_id' => 153,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -16973,7 +15974,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             304 => [
-                'id' => 1305,
+
                 'no' => 9,
                 'contrato_id' => 153,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -16986,7 +15987,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             305 => [
-                'id' => 1306,
+
                 'no' => 1,
                 'contrato_id' => 154,
                 'aspectos' => 'Liberación de fianza.',
@@ -16999,7 +16000,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             306 => [
-                'id' => 1307,
+
                 'no' => 2,
                 'contrato_id' => 154,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -17012,7 +16013,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             307 => [
-                'id' => 1308,
+
                 'no' => 3,
                 'contrato_id' => 154,
                 'aspectos' => 'Pena convencional',
@@ -17025,7 +16026,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             308 => [
-                'id' => 1309,
+
                 'no' => 4,
                 'contrato_id' => 154,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -17038,7 +16039,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             309 => [
-                'id' => 1310,
+
                 'no' => 5,
                 'contrato_id' => 154,
                 'aspectos' => 'Confidencialidad',
@@ -17051,7 +16052,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             310 => [
-                'id' => 1311,
+
                 'no' => 6,
                 'contrato_id' => 154,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -17064,7 +16065,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             311 => [
-                'id' => 1312,
+
                 'no' => 7,
                 'contrato_id' => 154,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -17077,7 +16078,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             312 => [
-                'id' => 1313,
+
                 'no' => 8,
                 'contrato_id' => 154,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -17090,7 +16091,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             313 => [
-                'id' => 1314,
+
                 'no' => 9,
                 'contrato_id' => 154,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -17103,7 +16104,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             314 => [
-                'id' => 1315,
+
                 'no' => 1,
                 'contrato_id' => 155,
                 'aspectos' => 'Liberación de fianza.',
@@ -17116,7 +16117,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             315 => [
-                'id' => 1316,
+
                 'no' => 2,
                 'contrato_id' => 155,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -17129,7 +16130,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             316 => [
-                'id' => 1317,
+
                 'no' => 3,
                 'contrato_id' => 155,
                 'aspectos' => 'Pena convencional',
@@ -17142,7 +16143,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             317 => [
-                'id' => 1318,
+
                 'no' => 4,
                 'contrato_id' => 155,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -17155,7 +16156,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             318 => [
-                'id' => 1319,
+
                 'no' => 5,
                 'contrato_id' => 155,
                 'aspectos' => 'Confidencialidad',
@@ -17168,7 +16169,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             319 => [
-                'id' => 1320,
+
                 'no' => 6,
                 'contrato_id' => 155,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -17181,7 +16182,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             320 => [
-                'id' => 1321,
+
                 'no' => 7,
                 'contrato_id' => 155,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -17194,7 +16195,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             321 => [
-                'id' => 1322,
+
                 'no' => 8,
                 'contrato_id' => 155,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -17207,7 +16208,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             322 => [
-                'id' => 1323,
+
                 'no' => 9,
                 'contrato_id' => 155,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -17220,7 +16221,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             323 => [
-                'id' => 1324,
+
                 'no' => 1,
                 'contrato_id' => 156,
                 'aspectos' => 'Liberación de fianza.',
@@ -17233,7 +16234,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             324 => [
-                'id' => 1325,
+
                 'no' => 2,
                 'contrato_id' => 156,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -17246,7 +16247,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             325 => [
-                'id' => 1326,
+
                 'no' => 3,
                 'contrato_id' => 156,
                 'aspectos' => 'Pena convencional',
@@ -17259,7 +16260,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             326 => [
-                'id' => 1327,
+
                 'no' => 4,
                 'contrato_id' => 156,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -17272,7 +16273,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             327 => [
-                'id' => 1328,
+
                 'no' => 5,
                 'contrato_id' => 156,
                 'aspectos' => 'Confidencialidad',
@@ -17285,7 +16286,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             328 => [
-                'id' => 1329,
+
                 'no' => 6,
                 'contrato_id' => 156,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -17298,7 +16299,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             329 => [
-                'id' => 1330,
+
                 'no' => 7,
                 'contrato_id' => 156,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -17311,7 +16312,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             330 => [
-                'id' => 1331,
+
                 'no' => 8,
                 'contrato_id' => 156,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -17324,7 +16325,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             331 => [
-                'id' => 1332,
+
                 'no' => 9,
                 'contrato_id' => 156,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -17337,7 +16338,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             332 => [
-                'id' => 1333,
+
                 'no' => 1,
                 'contrato_id' => 157,
                 'aspectos' => 'Liberación de fianza.',
@@ -17350,7 +16351,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             333 => [
-                'id' => 1334,
+
                 'no' => 2,
                 'contrato_id' => 157,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -17363,7 +16364,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             334 => [
-                'id' => 1335,
+
                 'no' => 3,
                 'contrato_id' => 157,
                 'aspectos' => 'Pena convencional',
@@ -17376,7 +16377,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             335 => [
-                'id' => 1336,
+
                 'no' => 4,
                 'contrato_id' => 157,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -17389,7 +16390,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             336 => [
-                'id' => 1337,
+
                 'no' => 5,
                 'contrato_id' => 157,
                 'aspectos' => 'Confidencialidad',
@@ -17402,7 +16403,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             337 => [
-                'id' => 1338,
+
                 'no' => 6,
                 'contrato_id' => 157,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -17415,7 +16416,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             338 => [
-                'id' => 1339,
+
                 'no' => 7,
                 'contrato_id' => 157,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -17428,7 +16429,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             339 => [
-                'id' => 1340,
+
                 'no' => 8,
                 'contrato_id' => 157,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -17441,7 +16442,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             340 => [
-                'id' => 1341,
+
                 'no' => 9,
                 'contrato_id' => 157,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -17454,7 +16455,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             341 => [
-                'id' => 1342,
+
                 'no' => 1,
                 'contrato_id' => 158,
                 'aspectos' => 'Liberación de fianza.',
@@ -17467,7 +16468,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             342 => [
-                'id' => 1343,
+
                 'no' => 2,
                 'contrato_id' => 158,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -17480,7 +16481,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             343 => [
-                'id' => 1344,
+
                 'no' => 3,
                 'contrato_id' => 158,
                 'aspectos' => 'Pena convencional',
@@ -17493,7 +16494,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             344 => [
-                'id' => 1345,
+
                 'no' => 4,
                 'contrato_id' => 158,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -17506,7 +16507,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             345 => [
-                'id' => 1346,
+
                 'no' => 5,
                 'contrato_id' => 158,
                 'aspectos' => 'Confidencialidad',
@@ -17519,7 +16520,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             346 => [
-                'id' => 1347,
+
                 'no' => 6,
                 'contrato_id' => 158,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -17532,7 +16533,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             347 => [
-                'id' => 1348,
+
                 'no' => 7,
                 'contrato_id' => 158,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -17545,7 +16546,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             348 => [
-                'id' => 1349,
+
                 'no' => 8,
                 'contrato_id' => 158,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -17558,7 +16559,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             349 => [
-                'id' => 1350,
+
                 'no' => 9,
                 'contrato_id' => 158,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -17571,7 +16572,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             350 => [
-                'id' => 1351,
+
                 'no' => 1,
                 'contrato_id' => 159,
                 'aspectos' => 'Liberación de fianza.',
@@ -17584,7 +16585,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             351 => [
-                'id' => 1352,
+
                 'no' => 2,
                 'contrato_id' => 159,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -17597,7 +16598,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             352 => [
-                'id' => 1353,
+
                 'no' => 3,
                 'contrato_id' => 159,
                 'aspectos' => 'Pena convencional',
@@ -17610,7 +16611,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             353 => [
-                'id' => 1354,
+
                 'no' => 4,
                 'contrato_id' => 159,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -17623,7 +16624,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             354 => [
-                'id' => 1355,
+
                 'no' => 5,
                 'contrato_id' => 159,
                 'aspectos' => 'Confidencialidad',
@@ -17636,7 +16637,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             355 => [
-                'id' => 1356,
+
                 'no' => 6,
                 'contrato_id' => 159,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -17649,7 +16650,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             356 => [
-                'id' => 1357,
+
                 'no' => 7,
                 'contrato_id' => 159,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -17662,7 +16663,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             357 => [
-                'id' => 1358,
+
                 'no' => 8,
                 'contrato_id' => 159,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -17675,7 +16676,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             358 => [
-                'id' => 1359,
+
                 'no' => 9,
                 'contrato_id' => 159,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -17688,7 +16689,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             359 => [
-                'id' => 1360,
+
                 'no' => 1,
                 'contrato_id' => 160,
                 'aspectos' => 'Liberación de fianza.',
@@ -17701,7 +16702,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             360 => [
-                'id' => 1361,
+
                 'no' => 2,
                 'contrato_id' => 160,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -17714,7 +16715,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             361 => [
-                'id' => 1362,
+
                 'no' => 3,
                 'contrato_id' => 160,
                 'aspectos' => 'Pena convencional',
@@ -17727,7 +16728,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             362 => [
-                'id' => 1363,
+
                 'no' => 4,
                 'contrato_id' => 160,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -17740,7 +16741,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             363 => [
-                'id' => 1364,
+
                 'no' => 5,
                 'contrato_id' => 160,
                 'aspectos' => 'Confidencialidad',
@@ -17753,7 +16754,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             364 => [
-                'id' => 1365,
+
                 'no' => 6,
                 'contrato_id' => 160,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -17766,7 +16767,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             365 => [
-                'id' => 1366,
+
                 'no' => 7,
                 'contrato_id' => 160,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -17779,7 +16780,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             366 => [
-                'id' => 1367,
+
                 'no' => 8,
                 'contrato_id' => 160,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -17792,7 +16793,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             367 => [
-                'id' => 1368,
+
                 'no' => 9,
                 'contrato_id' => 160,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -17805,7 +16806,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             368 => [
-                'id' => 1369,
+
                 'no' => 1,
                 'contrato_id' => 161,
                 'aspectos' => 'Liberación de fianza.',
@@ -17818,7 +16819,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             369 => [
-                'id' => 1370,
+
                 'no' => 2,
                 'contrato_id' => 161,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -17831,7 +16832,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             370 => [
-                'id' => 1371,
+
                 'no' => 3,
                 'contrato_id' => 161,
                 'aspectos' => 'Pena convencional',
@@ -17844,7 +16845,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             371 => [
-                'id' => 1372,
+
                 'no' => 4,
                 'contrato_id' => 161,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -17857,7 +16858,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             372 => [
-                'id' => 1373,
+
                 'no' => 5,
                 'contrato_id' => 161,
                 'aspectos' => 'Confidencialidad',
@@ -17870,7 +16871,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             373 => [
-                'id' => 1374,
+
                 'no' => 6,
                 'contrato_id' => 161,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -17883,7 +16884,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             374 => [
-                'id' => 1375,
+
                 'no' => 7,
                 'contrato_id' => 161,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -17896,7 +16897,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             375 => [
-                'id' => 1376,
+
                 'no' => 8,
                 'contrato_id' => 161,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -17909,7 +16910,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             376 => [
-                'id' => 1377,
+
                 'no' => 9,
                 'contrato_id' => 161,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -17922,7 +16923,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             377 => [
-                'id' => 1378,
+
                 'no' => 1,
                 'contrato_id' => 162,
                 'aspectos' => 'Liberación de fianza.',
@@ -17935,7 +16936,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             378 => [
-                'id' => 1379,
+
                 'no' => 2,
                 'contrato_id' => 162,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -17948,7 +16949,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             379 => [
-                'id' => 1380,
+
                 'no' => 3,
                 'contrato_id' => 162,
                 'aspectos' => 'Pena convencional',
@@ -17961,7 +16962,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             380 => [
-                'id' => 1381,
+
                 'no' => 4,
                 'contrato_id' => 162,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -17974,7 +16975,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             381 => [
-                'id' => 1382,
+
                 'no' => 5,
                 'contrato_id' => 162,
                 'aspectos' => 'Confidencialidad',
@@ -17987,7 +16988,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             382 => [
-                'id' => 1383,
+
                 'no' => 6,
                 'contrato_id' => 162,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -18000,7 +17001,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             383 => [
-                'id' => 1384,
+
                 'no' => 7,
                 'contrato_id' => 162,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -18013,7 +17014,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             384 => [
-                'id' => 1385,
+
                 'no' => 8,
                 'contrato_id' => 162,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -18026,7 +17027,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             385 => [
-                'id' => 1386,
+
                 'no' => 9,
                 'contrato_id' => 162,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -18039,7 +17040,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             386 => [
-                'id' => 1387,
+
                 'no' => 1,
                 'contrato_id' => 163,
                 'aspectos' => 'Liberación de fianza.',
@@ -18052,7 +17053,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             387 => [
-                'id' => 1388,
+
                 'no' => 2,
                 'contrato_id' => 163,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -18065,7 +17066,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             388 => [
-                'id' => 1389,
+
                 'no' => 3,
                 'contrato_id' => 163,
                 'aspectos' => 'Pena convencional',
@@ -18078,7 +17079,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             389 => [
-                'id' => 1390,
+
                 'no' => 4,
                 'contrato_id' => 163,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -18091,7 +17092,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             390 => [
-                'id' => 1391,
+
                 'no' => 5,
                 'contrato_id' => 163,
                 'aspectos' => 'Confidencialidad',
@@ -18104,7 +17105,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             391 => [
-                'id' => 1392,
+
                 'no' => 6,
                 'contrato_id' => 163,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -18117,7 +17118,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             392 => [
-                'id' => 1393,
+
                 'no' => 7,
                 'contrato_id' => 163,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -18130,7 +17131,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             393 => [
-                'id' => 1394,
+
                 'no' => 8,
                 'contrato_id' => 163,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -18143,7 +17144,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             394 => [
-                'id' => 1395,
+
                 'no' => 9,
                 'contrato_id' => 163,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -18156,7 +17157,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             395 => [
-                'id' => 1396,
+
                 'no' => 1,
                 'contrato_id' => 164,
                 'aspectos' => 'Liberación de fianza.',
@@ -18169,7 +17170,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             396 => [
-                'id' => 1397,
+
                 'no' => 2,
                 'contrato_id' => 164,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -18182,7 +17183,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             397 => [
-                'id' => 1398,
+
                 'no' => 3,
                 'contrato_id' => 164,
                 'aspectos' => 'Pena convencional',
@@ -18195,7 +17196,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             398 => [
-                'id' => 1399,
+
                 'no' => 4,
                 'contrato_id' => 164,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -18208,7 +17209,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             399 => [
-                'id' => 1400,
+
                 'no' => 5,
                 'contrato_id' => 164,
                 'aspectos' => 'Confidencialidad',
@@ -18221,7 +17222,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             400 => [
-                'id' => 1401,
+
                 'no' => 6,
                 'contrato_id' => 164,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -18234,7 +17235,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             401 => [
-                'id' => 1402,
+
                 'no' => 7,
                 'contrato_id' => 164,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -18247,7 +17248,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             402 => [
-                'id' => 1403,
+
                 'no' => 8,
                 'contrato_id' => 164,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -18260,7 +17261,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             403 => [
-                'id' => 1404,
+
                 'no' => 9,
                 'contrato_id' => 164,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -18273,7 +17274,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             404 => [
-                'id' => 1405,
+
                 'no' => 1,
                 'contrato_id' => 165,
                 'aspectos' => 'Liberación de fianza.',
@@ -18286,7 +17287,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             405 => [
-                'id' => 1406,
+
                 'no' => 2,
                 'contrato_id' => 165,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -18299,7 +17300,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             406 => [
-                'id' => 1407,
+
                 'no' => 3,
                 'contrato_id' => 165,
                 'aspectos' => 'Pena convencional',
@@ -18312,7 +17313,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             407 => [
-                'id' => 1408,
+
                 'no' => 4,
                 'contrato_id' => 165,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -18325,7 +17326,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             408 => [
-                'id' => 1409,
+
                 'no' => 5,
                 'contrato_id' => 165,
                 'aspectos' => 'Confidencialidad',
@@ -18338,7 +17339,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             409 => [
-                'id' => 1410,
+
                 'no' => 6,
                 'contrato_id' => 165,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -18351,7 +17352,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             410 => [
-                'id' => 1411,
+
                 'no' => 7,
                 'contrato_id' => 165,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -18364,7 +17365,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             411 => [
-                'id' => 1412,
+
                 'no' => 8,
                 'contrato_id' => 165,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -18377,7 +17378,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             412 => [
-                'id' => 1413,
+
                 'no' => 9,
                 'contrato_id' => 165,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -18390,7 +17391,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             413 => [
-                'id' => 1414,
+
                 'no' => 1,
                 'contrato_id' => 166,
                 'aspectos' => 'Liberación de fianza.',
@@ -18403,7 +17404,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             414 => [
-                'id' => 1415,
+
                 'no' => 2,
                 'contrato_id' => 166,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -18416,7 +17417,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             415 => [
-                'id' => 1416,
+
                 'no' => 3,
                 'contrato_id' => 166,
                 'aspectos' => 'Pena convencional',
@@ -18429,7 +17430,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             416 => [
-                'id' => 1417,
+
                 'no' => 4,
                 'contrato_id' => 166,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -18442,7 +17443,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             417 => [
-                'id' => 1418,
+
                 'no' => 5,
                 'contrato_id' => 166,
                 'aspectos' => 'Confidencialidad',
@@ -18455,7 +17456,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             418 => [
-                'id' => 1419,
+
                 'no' => 6,
                 'contrato_id' => 166,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -18468,7 +17469,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             419 => [
-                'id' => 1420,
+
                 'no' => 7,
                 'contrato_id' => 166,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -18481,7 +17482,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             420 => [
-                'id' => 1421,
+
                 'no' => 8,
                 'contrato_id' => 166,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -18494,7 +17495,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             421 => [
-                'id' => 1422,
+
                 'no' => 9,
                 'contrato_id' => 166,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -18507,7 +17508,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             422 => [
-                'id' => 1423,
+
                 'no' => 1,
                 'contrato_id' => 167,
                 'aspectos' => 'Liberación de fianza.',
@@ -18520,7 +17521,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             423 => [
-                'id' => 1424,
+
                 'no' => 2,
                 'contrato_id' => 167,
                 'aspectos' => 'Póliza de responsabilidad civil',
@@ -18533,7 +17534,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             424 => [
-                'id' => 1425,
+
                 'no' => 3,
                 'contrato_id' => 167,
                 'aspectos' => 'Pena convencional',
@@ -18546,7 +17547,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             425 => [
-                'id' => 1426,
+
                 'no' => 4,
                 'contrato_id' => 167,
                 'aspectos' => 'Defectos y Vicios ocultos',
@@ -18559,7 +17560,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             426 => [
-                'id' => 1427,
+
                 'no' => 5,
                 'contrato_id' => 167,
                 'aspectos' => 'Confidencialidad',
@@ -18572,7 +17573,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             427 => [
-                'id' => 1428,
+
                 'no' => 6,
                 'contrato_id' => 167,
                 'aspectos' => 'Cumplimiento del objeto del proyecto',
@@ -18585,7 +17586,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             428 => [
-                'id' => 1429,
+
                 'no' => 7,
                 'contrato_id' => 167,
                 'aspectos' => 'Aceptación del cliente sobre el entregable',
@@ -18598,7 +17599,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             429 => [
-                'id' => 1430,
+
                 'no' => 8,
                 'contrato_id' => 167,
                 'aspectos' => 'Formalización del cierre del contrato',
@@ -18611,7 +17612,7 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             430 => [
-                'id' => 1431,
+
                 'no' => 9,
                 'contrato_id' => 167,
                 'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
@@ -18621,6 +17622,2816 @@ class CierreContratosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'created_by' => 235,
+                'updated_by' => null,
+            ],
+            431 => [
+
+                'no' => 1,
+                'contrato_id' => 168,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            432 => [
+
+                'no' => 2,
+                'contrato_id' => 168,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            433 => [
+
+                'no' => 3,
+                'contrato_id' => 168,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            434 => [
+
+                'no' => 4,
+                'contrato_id' => 168,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            435 => [
+
+                'no' => 5,
+                'contrato_id' => 168,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            436 => [
+
+                'no' => 6,
+                'contrato_id' => 168,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            437 => [
+
+                'no' => 7,
+                'contrato_id' => 168,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            438 => [
+
+                'no' => 8,
+                'contrato_id' => 168,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            439 => [
+
+                'no' => 9,
+                'contrato_id' => 168,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            440 => [
+
+                'no' => 1,
+                'contrato_id' => 169,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            441 => [
+
+                'no' => 2,
+                'contrato_id' => 169,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            442 => [
+
+                'no' => 3,
+                'contrato_id' => 169,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            443 => [
+
+                'no' => 4,
+                'contrato_id' => 169,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            444 => [
+
+                'no' => 5,
+                'contrato_id' => 169,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            445 => [
+
+                'no' => 6,
+                'contrato_id' => 169,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            446 => [
+
+                'no' => 7,
+                'contrato_id' => 169,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            447 => [
+
+                'no' => 8,
+                'contrato_id' => 169,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            448 => [
+
+                'no' => 9,
+                'contrato_id' => 169,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            449 => [
+
+                'no' => 1,
+                'contrato_id' => 170,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            450 => [
+
+                'no' => 2,
+                'contrato_id' => 170,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            451 => [
+
+                'no' => 3,
+                'contrato_id' => 170,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            452 => [
+
+                'no' => 4,
+                'contrato_id' => 170,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            453 => [
+
+                'no' => 5,
+                'contrato_id' => 170,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            454 => [
+
+                'no' => 6,
+                'contrato_id' => 170,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            455 => [
+
+                'no' => 7,
+                'contrato_id' => 170,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            456 => [
+
+                'no' => 8,
+                'contrato_id' => 170,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            457 => [
+
+                'no' => 9,
+                'contrato_id' => 170,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            458 => [
+
+                'no' => 1,
+                'contrato_id' => 171,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            459 => [
+
+                'no' => 2,
+                'contrato_id' => 171,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            460 => [
+
+                'no' => 3,
+                'contrato_id' => 171,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            461 => [
+
+                'no' => 4,
+                'contrato_id' => 171,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            462 => [
+
+                'no' => 5,
+                'contrato_id' => 171,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            463 => [
+
+                'no' => 6,
+                'contrato_id' => 171,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            464 => [
+
+                'no' => 7,
+                'contrato_id' => 171,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            465 => [
+
+                'no' => 8,
+                'contrato_id' => 171,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            466 => [
+
+                'no' => 9,
+                'contrato_id' => 171,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            467 => [
+
+                'no' => 1,
+                'contrato_id' => 172,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            468 => [
+
+                'no' => 2,
+                'contrato_id' => 172,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            469 => [
+
+                'no' => 3,
+                'contrato_id' => 172,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            470 => [
+
+                'no' => 4,
+                'contrato_id' => 172,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            471 => [
+
+                'no' => 5,
+                'contrato_id' => 172,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            472 => [
+
+                'no' => 6,
+                'contrato_id' => 172,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            473 => [
+
+                'no' => 7,
+                'contrato_id' => 172,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            474 => [
+
+                'no' => 8,
+                'contrato_id' => 172,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            475 => [
+
+                'no' => 9,
+                'contrato_id' => 172,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            476 => [
+
+                'no' => 1,
+                'contrato_id' => 173,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            477 => [
+
+                'no' => 2,
+                'contrato_id' => 173,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            478 => [
+
+                'no' => 3,
+                'contrato_id' => 173,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            479 => [
+
+                'no' => 4,
+                'contrato_id' => 173,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            480 => [
+
+                'no' => 5,
+                'contrato_id' => 173,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            481 => [
+
+                'no' => 6,
+                'contrato_id' => 173,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            482 => [
+
+                'no' => 7,
+                'contrato_id' => 173,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            483 => [
+
+                'no' => 8,
+                'contrato_id' => 173,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            484 => [
+
+                'no' => 9,
+                'contrato_id' => 173,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            485 => [
+
+                'no' => 1,
+                'contrato_id' => 174,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            486 => [
+
+                'no' => 2,
+                'contrato_id' => 174,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            487 => [
+
+                'no' => 3,
+                'contrato_id' => 174,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            488 => [
+
+                'no' => 4,
+                'contrato_id' => 174,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            489 => [
+
+                'no' => 5,
+                'contrato_id' => 174,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            490 => [
+
+                'no' => 6,
+                'contrato_id' => 174,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            491 => [
+
+                'no' => 7,
+                'contrato_id' => 174,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            492 => [
+
+                'no' => 8,
+                'contrato_id' => 174,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            493 => [
+
+                'no' => 9,
+                'contrato_id' => 174,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            494 => [
+
+                'no' => 1,
+                'contrato_id' => 175,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            495 => [
+
+                'no' => 2,
+                'contrato_id' => 175,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            496 => [
+
+                'no' => 3,
+                'contrato_id' => 175,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            497 => [
+
+                'no' => 4,
+                'contrato_id' => 175,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            498 => [
+
+                'no' => 5,
+                'contrato_id' => 175,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            499 => [
+
+                'no' => 6,
+                'contrato_id' => 175,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+        ]);
+        \DB::table('cierre_contratos')->insert([
+            0 => [
+
+                'no' => 7,
+                'contrato_id' => 175,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            1 => [
+
+                'no' => 8,
+                'contrato_id' => 175,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            2 => [
+
+                'no' => 9,
+                'contrato_id' => 175,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            3 => [
+
+                'no' => 1,
+                'contrato_id' => 176,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            4 => [
+
+                'no' => 2,
+                'contrato_id' => 176,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            5 => [
+
+                'no' => 3,
+                'contrato_id' => 176,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            6 => [
+
+                'no' => 4,
+                'contrato_id' => 176,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            7 => [
+
+                'no' => 5,
+                'contrato_id' => 176,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            8 => [
+
+                'no' => 6,
+                'contrato_id' => 176,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            9 => [
+
+                'no' => 7,
+                'contrato_id' => 176,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            10 => [
+
+                'no' => 8,
+                'contrato_id' => 176,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            11 => [
+
+                'no' => 9,
+                'contrato_id' => 176,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            12 => [
+
+                'no' => 1,
+                'contrato_id' => 177,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            13 => [
+
+                'no' => 2,
+                'contrato_id' => 177,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            14 => [
+
+                'no' => 3,
+                'contrato_id' => 177,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            15 => [
+
+                'no' => 4,
+                'contrato_id' => 177,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            16 => [
+
+                'no' => 5,
+                'contrato_id' => 177,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            17 => [
+
+                'no' => 6,
+                'contrato_id' => 177,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            18 => [
+
+                'no' => 7,
+                'contrato_id' => 177,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            19 => [
+
+                'no' => 8,
+                'contrato_id' => 177,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            20 => [
+
+                'no' => 9,
+                'contrato_id' => 177,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            21 => [
+
+                'no' => 1,
+                'contrato_id' => 178,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            22 => [
+
+                'no' => 2,
+                'contrato_id' => 178,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            23 => [
+
+                'no' => 3,
+                'contrato_id' => 178,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            24 => [
+
+                'no' => 4,
+                'contrato_id' => 178,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            25 => [
+
+                'no' => 5,
+                'contrato_id' => 178,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            26 => [
+
+                'no' => 6,
+                'contrato_id' => 178,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            27 => [
+
+                'no' => 7,
+                'contrato_id' => 178,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            28 => [
+
+                'no' => 8,
+                'contrato_id' => 178,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            29 => [
+
+                'no' => 9,
+                'contrato_id' => 178,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            30 => [
+
+                'no' => 1,
+                'contrato_id' => 179,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            31 => [
+
+                'no' => 2,
+                'contrato_id' => 179,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            32 => [
+
+                'no' => 3,
+                'contrato_id' => 179,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            33 => [
+
+                'no' => 4,
+                'contrato_id' => 179,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            34 => [
+
+                'no' => 5,
+                'contrato_id' => 179,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            35 => [
+
+                'no' => 6,
+                'contrato_id' => 179,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            36 => [
+
+                'no' => 7,
+                'contrato_id' => 179,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            37 => [
+
+                'no' => 8,
+                'contrato_id' => 179,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            38 => [
+
+                'no' => 9,
+                'contrato_id' => 179,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            39 => [
+
+                'no' => 1,
+                'contrato_id' => 180,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            40 => [
+
+                'no' => 2,
+                'contrato_id' => 180,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            41 => [
+
+                'no' => 3,
+                'contrato_id' => 180,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            42 => [
+
+                'no' => 4,
+                'contrato_id' => 180,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            43 => [
+
+                'no' => 5,
+                'contrato_id' => 180,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            44 => [
+
+                'no' => 6,
+                'contrato_id' => 180,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            45 => [
+
+                'no' => 7,
+                'contrato_id' => 180,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            46 => [
+
+                'no' => 8,
+                'contrato_id' => 180,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            47 => [
+
+                'no' => 9,
+                'contrato_id' => 180,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            48 => [
+
+                'no' => 1,
+                'contrato_id' => 181,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            49 => [
+
+                'no' => 2,
+                'contrato_id' => 181,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            50 => [
+
+                'no' => 3,
+                'contrato_id' => 181,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            51 => [
+
+                'no' => 4,
+                'contrato_id' => 181,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            52 => [
+
+                'no' => 5,
+                'contrato_id' => 181,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            53 => [
+
+                'no' => 6,
+                'contrato_id' => 181,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            54 => [
+
+                'no' => 7,
+                'contrato_id' => 181,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            55 => [
+
+                'no' => 8,
+                'contrato_id' => 181,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            56 => [
+
+                'no' => 9,
+                'contrato_id' => 181,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 235,
+                'updated_by' => null,
+            ],
+            57 => [
+
+                'no' => 1,
+                'contrato_id' => 182,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            58 => [
+
+                'no' => 2,
+                'contrato_id' => 182,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            59 => [
+
+                'no' => 3,
+                'contrato_id' => 182,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            60 => [
+
+                'no' => 4,
+                'contrato_id' => 182,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            61 => [
+
+                'no' => 5,
+                'contrato_id' => 182,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            62 => [
+
+                'no' => 6,
+                'contrato_id' => 182,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            63 => [
+
+                'no' => 7,
+                'contrato_id' => 182,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            64 => [
+
+                'no' => 8,
+                'contrato_id' => 182,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            65 => [
+
+                'no' => 9,
+                'contrato_id' => 182,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            66 => [
+
+                'no' => 1,
+                'contrato_id' => 183,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            67 => [
+
+                'no' => 2,
+                'contrato_id' => 183,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            68 => [
+
+                'no' => 3,
+                'contrato_id' => 183,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            69 => [
+
+                'no' => 4,
+                'contrato_id' => 183,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            70 => [
+
+                'no' => 5,
+                'contrato_id' => 183,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            71 => [
+
+                'no' => 6,
+                'contrato_id' => 183,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            72 => [
+
+                'no' => 7,
+                'contrato_id' => 183,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            73 => [
+
+                'no' => 8,
+                'contrato_id' => 183,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            74 => [
+
+                'no' => 9,
+                'contrato_id' => 183,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            75 => [
+
+                'no' => 1,
+                'contrato_id' => 184,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            76 => [
+
+                'no' => 2,
+                'contrato_id' => 184,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            77 => [
+
+                'no' => 3,
+                'contrato_id' => 184,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            78 => [
+
+                'no' => 4,
+                'contrato_id' => 184,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            79 => [
+
+                'no' => 5,
+                'contrato_id' => 184,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            80 => [
+
+                'no' => 6,
+                'contrato_id' => 184,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            81 => [
+
+                'no' => 7,
+                'contrato_id' => 184,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            82 => [
+
+                'no' => 8,
+                'contrato_id' => 184,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            83 => [
+
+                'no' => 9,
+                'contrato_id' => 184,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            84 => [
+
+                'no' => 1,
+                'contrato_id' => 185,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            85 => [
+
+                'no' => 2,
+                'contrato_id' => 185,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            86 => [
+
+                'no' => 3,
+                'contrato_id' => 185,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            87 => [
+
+                'no' => 4,
+                'contrato_id' => 185,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            88 => [
+
+                'no' => 5,
+                'contrato_id' => 185,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            89 => [
+
+                'no' => 6,
+                'contrato_id' => 185,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            90 => [
+
+                'no' => 7,
+                'contrato_id' => 185,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            91 => [
+
+                'no' => 8,
+                'contrato_id' => 185,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            92 => [
+
+                'no' => 9,
+                'contrato_id' => 185,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            93 => [
+
+                'no' => 1,
+                'contrato_id' => 186,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            94 => [
+
+                'no' => 2,
+                'contrato_id' => 186,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            95 => [
+
+                'no' => 3,
+                'contrato_id' => 186,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            96 => [
+
+                'no' => 4,
+                'contrato_id' => 186,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            97 => [
+
+                'no' => 5,
+                'contrato_id' => 186,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            98 => [
+
+                'no' => 6,
+                'contrato_id' => 186,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            99 => [
+
+                'no' => 7,
+                'contrato_id' => 186,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            100 => [
+
+                'no' => 8,
+                'contrato_id' => 186,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            101 => [
+
+                'no' => 9,
+                'contrato_id' => 186,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            102 => [
+
+                'no' => 1,
+                'contrato_id' => 187,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            103 => [
+
+                'no' => 2,
+                'contrato_id' => 187,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            104 => [
+
+                'no' => 3,
+                'contrato_id' => 187,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            105 => [
+
+                'no' => 4,
+                'contrato_id' => 187,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            106 => [
+
+                'no' => 5,
+                'contrato_id' => 187,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            107 => [
+
+                'no' => 6,
+                'contrato_id' => 187,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            108 => [
+
+                'no' => 7,
+                'contrato_id' => 187,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            109 => [
+
+                'no' => 8,
+                'contrato_id' => 187,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            110 => [
+
+                'no' => 9,
+                'contrato_id' => 187,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            111 => [
+
+                'no' => 1,
+                'contrato_id' => 188,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            112 => [
+
+                'no' => 2,
+                'contrato_id' => 188,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            113 => [
+
+                'no' => 3,
+                'contrato_id' => 188,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            114 => [
+
+                'no' => 4,
+                'contrato_id' => 188,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            115 => [
+
+                'no' => 5,
+                'contrato_id' => 188,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            116 => [
+
+                'no' => 6,
+                'contrato_id' => 188,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            117 => [
+
+                'no' => 7,
+                'contrato_id' => 188,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            118 => [
+
+                'no' => 8,
+                'contrato_id' => 188,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            119 => [
+
+                'no' => 9,
+                'contrato_id' => 188,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            120 => [
+
+                'no' => 1,
+                'contrato_id' => 189,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            121 => [
+
+                'no' => 2,
+                'contrato_id' => 189,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            122 => [
+
+                'no' => 3,
+                'contrato_id' => 189,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            123 => [
+
+                'no' => 4,
+                'contrato_id' => 189,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            124 => [
+
+                'no' => 5,
+                'contrato_id' => 189,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            125 => [
+
+                'no' => 6,
+                'contrato_id' => 189,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            126 => [
+
+                'no' => 7,
+                'contrato_id' => 189,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            127 => [
+
+                'no' => 8,
+                'contrato_id' => 189,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            128 => [
+
+                'no' => 9,
+                'contrato_id' => 189,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            129 => [
+
+                'no' => 1,
+                'contrato_id' => 190,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            130 => [
+
+                'no' => 2,
+                'contrato_id' => 190,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            131 => [
+
+                'no' => 3,
+                'contrato_id' => 190,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            132 => [
+
+                'no' => 4,
+                'contrato_id' => 190,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            133 => [
+
+                'no' => 5,
+                'contrato_id' => 190,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            134 => [
+
+                'no' => 6,
+                'contrato_id' => 190,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            135 => [
+
+                'no' => 7,
+                'contrato_id' => 190,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            136 => [
+
+                'no' => 8,
+                'contrato_id' => 190,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            137 => [
+
+                'no' => 9,
+                'contrato_id' => 190,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            138 => [
+
+                'no' => 1,
+                'contrato_id' => 191,
+                'aspectos' => 'Liberación de fianza.',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            139 => [
+
+                'no' => 2,
+                'contrato_id' => 191,
+                'aspectos' => 'Póliza de responsabilidad civil',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            140 => [
+
+                'no' => 3,
+                'contrato_id' => 191,
+                'aspectos' => 'Pena convencional',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            141 => [
+
+                'no' => 4,
+                'contrato_id' => 191,
+                'aspectos' => 'Defectos y Vicios ocultos',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            142 => [
+
+                'no' => 5,
+                'contrato_id' => 191,
+                'aspectos' => 'Confidencialidad',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            143 => [
+
+                'no' => 6,
+                'contrato_id' => 191,
+                'aspectos' => 'Cumplimiento del objeto del proyecto',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            144 => [
+
+                'no' => 7,
+                'contrato_id' => 191,
+                'aspectos' => 'Aceptación del cliente sobre el entregable',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            145 => [
+
+                'no' => 8,
+                'contrato_id' => 191,
+                'aspectos' => 'Formalización del cierre del contrato',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
+                'updated_by' => null,
+            ],
+            146 => [
+
+                'no' => 9,
+                'contrato_id' => 191,
+                'aspectos' => 'Pago de los servicios dentro de las fechas establecidas',
+                'cumple' => null,
+                'observaciones' => null,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by' => 239,
                 'updated_by' => null,
             ],
         ]);

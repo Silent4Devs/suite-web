@@ -8,6 +8,7 @@ use App\Models\ContractManager\EntregableFile;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
 use App\Models\Organizacion;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -120,15 +121,17 @@ class Entregablecomponent extends Component
     public function store()
     {
         $this->validate([
-            'nombre_entregable' => 'required',
+            'nombre_entregable' => 'required|max:255',
             'descripcion' => 'required',
-            'plazo_entrega_inicio' => 'required',
-            'plazo_entrega_termina' => 'required',
-            'entrega_real' => 'required',
+            'plazo_entrega_inicio' => 'required|before_or_equal:plazo_entrega_termina',
+            'plazo_entrega_termina' => 'required|after_or_equal:plazo_entrega_inicio',
+            'entrega_real' => 'required|after_or_equal:plazo_entrega_inicio|before_or_equal:plazo_entrega_termina',
             'observaciones' => 'required',
             'entrega_real' => 'required',
-            // 'factura_id'=> 'required',
-            // 'aplica_deductiva' => 'required',
+            'factura_id' => 'required',
+            'aplica_deductiva' => 'required',
+            'deductiva_penalizacion' => 'numeric|max:100000000000',
+            'nota_credito' => 'max:255',
         ]);
 
         $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);
@@ -157,8 +160,8 @@ class Entregablecomponent extends Component
             'deductiva_factura_id' => $this->deductiva_factura_id,
             'nota_credito' => $this->nota_credito,
             'justificacion_deductiva_penalizacion' => $this->justificacion_deductiva_penalizacion,
-            'created_by' => auth()->user()->empleado->id,
-            'updated_by' => auth()->user()->empleado->id,
+            'created_by' => User::getCurrentUser()->empleado->id,
+            'updated_by' => User::getCurrentUser()->empleado->id,
         ]);
 
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();

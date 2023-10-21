@@ -40,10 +40,10 @@
             <div class="" style="margin-top:-20px; margin-left:10px; margin-right:10px;">
                 <div class="">
                     <!--  <section class="content-header">
-                                                                                                                                                                                                                    <h1>
-                                                                                                                                                                                                                        Contrato
-                                                                                                                                                                                                                    </h1>
-                                                                                                                                                                                                                </section>-->
+                                                                                                                                                                                                                        <h1>
+                                                                                                                                                                                                                            Contrato
+                                                                                                                                                                                                                        </h1>
+                                                                                                                                                                                                                    </section>-->
 
                     <div class="col s12">
                         <div class="form-group diseño-titulo">
@@ -187,7 +187,7 @@
             <div class="collapsible-header"><i class="material-icons">insert_drive_file</i>Facturación</div>
             <div class="col s12 m12">
                 <div class="card card-body">
-                    <table align="center">
+                    <table class="table" align="center">
                         <thead>
                             <tr>
                                 <th>

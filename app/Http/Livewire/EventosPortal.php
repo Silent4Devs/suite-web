@@ -6,6 +6,7 @@ use App\Models\Comiteseguridad;
 use App\Models\Empleado;
 use App\Models\FelicitarCumpleaños;
 use App\Models\PoliticaSgsi;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -46,7 +47,7 @@ class EventosPortal extends Component
         $this->hoy = Carbon::now();
         $this->hoy->toDateString();
 
-        $this->empleado_asignado = auth()->user()->n_empleado;
+        $this->empleado_asignado = User::getCurrentUser()->n_empleado;
     }
 
     public function render()
@@ -91,7 +92,7 @@ class EventosPortal extends Component
     {
         $felicitar = FelicitarCumpleaños::create([
             'cumpleañero_id' => $cumpleañero_id,
-            'felicitador_id' => auth()->user()->empleado->id,
+            'felicitador_id' => User::getCurrentUser()->empleado->id,
             'like' => true,
         ]);
     }
@@ -109,7 +110,7 @@ class EventosPortal extends Component
         $this->cumpleañero_id = $cumpleañero_id;
         $comentario = FelicitarCumpleaños::create([
             'cumpleañero_id' => $this->cumpleañero_id,
-            'felicitador_id' => auth()->user()->empleado->id,
+            'felicitador_id' => User::getCurrentUser()->empleado->id,
             'comentarios' => $this->comentarios,
         ]);
         $this->emit('comentario-almacenado');

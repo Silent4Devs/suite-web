@@ -78,29 +78,36 @@ class DatabaseSeeder extends Seeder
                 // PermisosTimesheetAdministrador::class,
 
                 //Katbol
-                // CentroCostosTableSeeder::class,
-                // CompradoresTableSeeder::class,
-                // ProductosTableSeeder::class,
-                // ProveedorOCSTableSeeder::class,
-                // SucursalesTableSeeder::class,
-                // // FacturacionTableSeeder::class,
+                // AreasSeeder::class,
                 // ProveedoresTableSeeder::class,
                 // ContratosTableSeeder::class,
-                // MonedaSeedder::class,
-                // // ConveniosModificatoriosTableSeeder::class,
-                // // EntregasMensualesTableSeeder::class,
-                // // CierreContratosTableSeeder::class,
+                // CedulaCumplimientoTableSeeder::class,
+                // CierreContratosTableSeeder::class,
+                // ConveniosModificatoriosTableSeeder::class,
+                // ConveniosModificatoriosFilesTableSeeder::class,
+                // FacturacionTableSeeder::class,
+                // EntregasMensualesTableSeeder::class,
+                // FacturasFilesTableSeeder::class,
+                // NivelesServicioTableSeeder::class,
+                // CentroCostosTableSeeder::class,
+                // ProductosTableSeeder::class,
+                // SucursalesTableSeeder::class,
+                // MonedasTableSeeder::class,
+                // ProveedorOCSTableSeeder::class,
+                // CompradoresSeeder::class,
+                RequsicionesTableSeeder::class,
+                ProductosRequisicionTableSeeder::class,
+                ProveedoresRequisicionesCatalogosTableSeeder::class,
+                ProveedorIndistintosTableSeeder::class,
+                ProveedorRequisicionsTableSeeder::class,
                 // PermisosKatbol::class,
+                // DashboardGestionContratosSeeder::class,
 
-                // //kaans
+                //kaans
                 // PermisosEscuelaInstructorSeeder::class,
                 // PlatformSeeder::class,
                 // PermisosEscuelaAdminSeeder::class,
                 // PermisosEscuelaEstudianteSeeder::class
-
-                //Clausulas y Clasificacion de auditorias
-                ClasificacionesAuditoriasSeeder::class,
-                ClausulasAuditoriasSeeder::class,
             ]
         );
     }

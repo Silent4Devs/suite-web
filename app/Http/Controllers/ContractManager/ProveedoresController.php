@@ -10,9 +10,12 @@ use App\Models\Organizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Traits\ObtenerOrganizacion;
 
 class ProveedoresController extends Controller
 {
+    use ObtenerOrganizacion;
+
     /**
      * Show the application dashboard.
      *
@@ -23,15 +26,8 @@ class ProveedoresController extends Controller
     {
         abort_if(Gate::denies('katbol_proveedores_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proveedores = Proveedores::get();
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo_katbol.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
-
-        // $logo_actual = asset('img/logo_katbol.png');
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         // dd($logo_actual);
@@ -87,7 +83,6 @@ class ProveedoresController extends Controller
 
         $proveedores->save();
         ($proveedores);
-
 
         return redirect()->route('contract_manager.proveedor.index')->with('success', 'Proveedor Registrado');
     }

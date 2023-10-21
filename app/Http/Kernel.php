@@ -57,5 +57,6 @@ class Kernel extends HttpKernel
         'primeros.pasos' => \App\Http\Middleware\PrimerosPasos::class,
         'version_iso_2013' => \App\Http\Middleware\VersionIso2013::class,
         'version_iso_2022' => \App\Http\Middleware\VersionIso2022::class,
+        // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
     ];
 }

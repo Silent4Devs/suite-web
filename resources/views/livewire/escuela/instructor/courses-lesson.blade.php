@@ -1,27 +1,32 @@
 <div class="px-4 py-3">
     @forelse ($section->lessons as $item)
-        <div class="card shadow-none">
-            <div class="card-header" style="border: 1px solid #D8D8D8;">
-                <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;">
-                    <i style="font-size:10pt; cursor: pointer;"
-                        class="d-inline fas fa-play-circle abirCollapse" data-toggle="collapse"
-                        data-target="#miCollapse{{ $item->id }}" aria-expanded="false"></i>
-                </a>
-                <h5 class="d-inline" style="color:#3086AF;">
-                    {{ $item->name }}
-                </h5>
-                <div class="d-inline">
-                    <a wire:click="destroy({{ $item }})" style="cursor: pointer">
-                        <i style="font-size:10pt;" class="m-1 fa-regular fa-trash-can" title="Eliminar" style="color:#747474"></i>
+
+        <div class="card shadow-none" id="card{{$item->id}}">
+            <div class="card-header row" style="border: 1px solid #D8D8D8;">
+                <div class="col-11 d-flex align-items-center" style="padding: 0px;">
+                    <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;" id="link{{$item->id}}">
+                        <i style="font-size:10pt; cursor: pointer;"
+                            class="d-inline fas fa-play-circle openCollapse mr-2" id="toggleButton{{$item->id}}" data-id='#collapse{{$item->id}}'></i>
+                    </a>
+                    <h5 class="d-inline" style="color:#3086AF; margin:0px">
+                        {{ $item->name }}
+                    </h5>
+                    <div class="d-inline">
+                        <a wire:click="destroy({{ $item }})" style="cursor: pointer">
+                            <i style="font-size:10px;" class="m-1 fa-regular fa-trash-can" title="Eliminar" style="color:#747474"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;" id="2link{{$item->id}}">
+                        <i style="font-size: 20px; cursor: pointer;"
+                            class="d-inline bi bi-caret-down-fill openCollapse mr-2" id="toggle2Button{{$item->id}}" data-id='#collapse{{$item->id}}'></i>
                     </a>
                 </div>
-                <div class="d-inline">
-                    <div class="d-flex aling-items-end">lll</div>
-                </div>
             </div>
-            <div class="card-body collapse hide" style="border: 1px solid #D8D8D8;" id="miCollapse{{ $item->id }}"
+            <div class="card-body collapse row" style="border: 1px solid #D8D8D8;" id="collapse{{$item->id}}"
                 wire:ignore>
-                <form wire:submit.prevent="update" class="px-3 py-2">
+                <form wire:submit.prevent="update" class="px-3 py-2 col-12">
                     <div class="grid mt-2 mb-2 grid-col-1 md:grid-cols-6 md:gap-2">
                         <label for="edit-lesson-name-{{ $section->id }}">Nombre</label>
                         <div class="md:col-span-5">
@@ -57,10 +62,10 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="mb-3">
+                                        @livewire('escuela.instructor.lesson-resources', ['lesson' => $item], key('lesson-resource' . $item->id))
+                                    </div>
                     <div class="d-flex justify-content-end mt-4">
-                        {{-- <button style="background-color:#333" type="submit"  >
-                                  Actualizar
-                                </button> --}}
                         <button type="submit" class="btn btn-outline-primary"
                             style="min-width:140px;">Actualizar</button>
                     </div>
@@ -76,18 +81,12 @@
     @include('livewire.escuela.instructor.add-new-lesson')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            let abrirCollapseButtons = document.querySelectorAll('i.abirCollapse');
-            abrirCollapseButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    // Encuentra el collapse asociado al botón actual
-                    let targetId = this.getAttribute('data-target');
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('openCollapse')) {
+                    let targetId = event.target.getAttribute('data-id');
                     let collapse = document.querySelector(targetId);
-                    if (collapse.classList.contains('hide')) {
-                        collapse.classList.remove('hide');
-                    } else {
-                        collapse.classList.add('hide');
-                    }
-                });
+                    collapse.classList.toggle('collapse');
+                }
             });
         });
     </script>
@@ -179,3 +178,4 @@
                     {{$item}}
                 </div>
             @endif --}}
+

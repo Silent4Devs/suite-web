@@ -9,6 +9,7 @@ use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Models\User;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -156,7 +157,7 @@ class ReporteAprobador extends Component
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
 
-        $this->aprobador = Empleado::find(auth()->user()->empleado->id);
+        $this->aprobador = Empleado::find(User::getCurrentUser()->empleado->id);
         $empleados_list = $this->aprobador->children;
         $this->empleados_list_global = $this->aprobador->children;
 
@@ -267,21 +268,21 @@ class ReporteAprobador extends Component
             foreach ($times_empleado_aprobados_pendientes_list as $time) {
                 $horas_semana = 0;
                 foreach ($time->horas as $hora) {
-                    $horas_total_time += $hora->horas_lunes;
-                    $horas_total_time += $hora->horas_martes;
-                    $horas_total_time += $hora->horas_miercoles;
-                    $horas_total_time += $hora->horas_jueves;
-                    $horas_total_time += $hora->horas_viernes;
-                    $horas_total_time += $hora->horas_sabado;
-                    $horas_total_time += $hora->horas_domingo;
+                    $horas_total_time += floatval($hora->horas_lunes);
+                    $horas_total_time += floatval($hora->horas_martes);
+                    $horas_total_time += floatval($hora->horas_miercoles);
+                    $horas_total_time += floatval($hora->horas_jueves);
+                    $horas_total_time += floatval($hora->horas_viernes);
+                    $horas_total_time += floatval($hora->horas_sabado);
+                    $horas_total_time += floatval($hora->horas_domingo);
 
-                    $horas_semana += $hora->horas_lunes;
-                    $horas_semana += $hora->horas_martes;
-                    $horas_semana += $hora->horas_miercoles;
-                    $horas_semana += $hora->horas_jueves;
-                    $horas_semana += $hora->horas_viernes;
-                    $horas_semana += $hora->horas_sabado;
-                    $horas_semana += $hora->horas_domingo;
+                    $horas_semana += floatval($hora->horas_lunes);
+                    $horas_semana += floatval($hora->horas_martes);
+                    $horas_semana += floatval($hora->horas_miercoles);
+                    $horas_semana += floatval($hora->horas_jueves);
+                    $horas_semana += floatval($hora->horas_viernes);
+                    $horas_semana += floatval($hora->horas_sabado);
+                    $horas_semana += floatval($hora->horas_domingo);
 
                     $times_empleado_calendario_array[] = [
                         'id' => $time->id,

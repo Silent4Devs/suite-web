@@ -13,6 +13,7 @@ use App\Models\Macroproceso;
 use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\RevisionDocumento;
+use App\Models\User;
 use App\Models\VistaDocumento;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -533,12 +534,11 @@ class DocumentosController extends Controller
     public function renderViewDocument(Documento $documento)
     {
         $path_documento = $this->getPathDocumento($documento, 'storage');
-        // dd($path_documento);
-
-        if (auth()->user()->empleado) {
-            if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists()) {
+        $usuario = User::getCurrentUser();
+        if ($usuario->empleado) {
+            if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', $usuario->empleado->id)->exists()) {
                 VistaDocumento::create([
-                    'empleado_id' => auth()->user()->empleado->id,
+                    'empleado_id' => $usuario->empleado->id,
                     'documento_id' => $documento->id,
                 ]);
             }

@@ -8,6 +8,7 @@ use App\Mail\SolicitudPermisoGoceSueldo as MailSolicitudPermisoGoceSueldo;
 use App\Models\Empleado;
 use App\Models\PermisosGoceSueldo;
 use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Flash;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = SolicitudPermisoGoceSueldo::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
@@ -84,7 +85,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
     {
         abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new SolicitudPermisoGoceSueldo();
-        $autoriza = auth()->user()->empleado->supervisor_id;
+        $autoriza = User::getCurrentUser()->empleado->supervisor_id;
         $permisos = PermisosGoceSueldo::get();
 
         return view('admin.solicitudGoceSueldo.create', compact('vacacion', 'autoriza', 'permisos'));
@@ -168,7 +169,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
     public function aprobacion(Request $request)
     {
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = SolicitudPermisoGoceSueldo::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
@@ -225,7 +226,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
     public function archivo(Request $request)
     {
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = SolicitudPermisoGoceSueldo::with('empleado')->where('autoriza', '=', $data)->where(function ($query) {

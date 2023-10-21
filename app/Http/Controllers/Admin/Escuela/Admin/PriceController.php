@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Price;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PriceController extends Controller
@@ -18,7 +18,7 @@ class PriceController extends Controller
     {
         $prices = Price::all();
 
-        return view('admin.prices.index', compact('prices'));    
+        return view('admin.prices.index', compact('prices'));
     }
 
     /**
@@ -41,11 +41,12 @@ class PriceController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:prices',
-            'value' => 'required|numeric'
+            'value' => 'required|numeric',
         ]);
         $price = Price::create($request->all());
 
         Alert::toast('El precio se creó con éxito', 'success');
+
         return redirect()->route('admin.prices.index', $price);
     }
 
@@ -81,13 +82,14 @@ class PriceController extends Controller
     public function update(Request $request, Price $price)
     {
         $request->validate([
-            'name' => 'required|unique:prices,name,'. $price->id,
-            'value' => 'required|numeric'
+            'name' => 'required|unique:prices,name,' . $price->id,
+            'value' => 'required|numeric',
         ]);
 
         $price->update($request->all());
 
         Alert::toast('El precio se actualizó con éxito', 'success');
+
         return redirect()->route('admin.prices.index', $price);
     }
 
@@ -102,6 +104,7 @@ class PriceController extends Controller
         $price->delete();
 
         Alert::toast('El precio se eliminó con éxito', 'success');
+
         return redirect()->route('admin.prices.index');
     }
 }

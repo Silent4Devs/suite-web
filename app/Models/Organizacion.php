@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 // use App\Models\Schedule;
 
@@ -81,10 +82,17 @@ class Organizacion extends Model implements Auditable
         'semanas_adicionales',
     ];
 
+    public static function getExists()
+    {
+        return Cache::remember('Organizacion:Organizacion_exists', 3600 * 12, function () {
+            return DB::table('organizacions')->exists();
+        });
+    }
+
     //Redis methods
     public static function getLogo()
     {
-        return Cache::remember('getLogo_organizacion', 3600 * 24, function () {
+        return Cache::remember('getLogo_organizacion', 3600 * 12, function () {
             return self::select('id', 'logotipo', 'empresa')->first();
         });
     }
@@ -92,7 +100,7 @@ class Organizacion extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('organizacion_all', 3600 * 24, function () {
+        return Cache::remember('organizacion_all', 3600 * 12, function () {
             return self::get();
         });
     }
@@ -100,7 +108,7 @@ class Organizacion extends Model implements Auditable
     //Redis methods
     public static function getFirst()
     {
-        return Cache::remember('organizacion_first', 3600 * 24, function () {
+        return Cache::remember('organizacion_first', 3600 * 12, function () {
             return self::get()->first();
         });
     }

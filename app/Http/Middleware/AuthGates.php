@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Role;
+use App\Models\User;
 use Closure;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +14,7 @@ class AuthGates
         $user = \Auth::user();
 
         if ($user) {
-            $roles = Role::with('permissions')->get();
+            $roles = Role::getAll();
             $permissionsArray = [];
 
             foreach ($roles as $role) {

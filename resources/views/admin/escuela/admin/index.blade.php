@@ -22,8 +22,8 @@
             </div>
             <div class="col-sm-12 mt-4">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="font-weight-bold mb-4" style="padding-bottom: 10px; border-color: #3086AF !important; font-size: 15px; border-bottom-style:solid;border-width: 1px;">Categorías populares</div>
+                        <div cl
+                    <div class="card-body">ass="font-weight-bold mb-4" style="padding-bottom: 10px; border-color: #3086AF !important; font-size: 15px; border-bottom-style:solid;border-width: 1px;">Categorías populares</div>
                         <canvas id="graficaBarras"></canvas>
                     </div>
                 </div>

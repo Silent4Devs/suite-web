@@ -17,9 +17,9 @@ use App\Models\ContractManager\ConveniosModificatorios;
 use App\Models\ContractManager\DolaresContrato;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
-use App\Models\ContractManager\Proveedores;
 use App\Models\Empleado;
 use App\Models\Organizacion;
+use App\Models\TimesheetCliente;
 use App\Models\User;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
@@ -49,17 +49,16 @@ class ContratosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        // dd(auth()->user()->empleado);
         abort_if(Gate::denies('katbol_contratos_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario_actual = Empleado::find(auth()->user()->empleado->id);
-        $areas = Area::get();
+        $usuario_actual = Empleado::find(User::getCurrentUser()->empleado->id);
+        $areas = Area::getIdNameAll();
 
-        $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'proveedores.nombre_comercial')
-            ->join('proveedores', 'contratos.proveedor_id', '=', 'proveedores.id')
+        $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'timesheet_clientes.nombre')
+            ->join('timesheet_clientes', 'contratos.proveedor_id', '=', 'timesheet_clientes.id')
             ->leftjoin('cedula_cumplimiento', 'contratos.id', '=', 'cedula_cumplimiento.contrato_id')
             ->get();
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         return view('contract_manager.contratos-katbol.index', compact('usuario_actual', 'areas'))
             ->with('contratos', $contratos);
@@ -74,11 +73,11 @@ class ContratosController extends AppBaseController
     {
         abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $contratos = new Contrato;
-        $areas = Area::get();
-        $organizacion = Organizacion::first();
+        $areas = Area::getAll();
+        $organizacion = Organizacion::getFirst();
         // $dolares = DolaresContrato::where('contrato_id', $id)->first();
         $dolares = null;
-        $proveedores = Proveedores::select('id', 'razon_social', 'nombre_comercial')->get();
+        $proveedores = TimesheetCliente::select('id', 'razon_social', 'nombre')->get();
 
         return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas'))->with('proveedores', $proveedores)->with('contratos', $contratos);
     }
@@ -92,19 +91,24 @@ class ContratosController extends AppBaseController
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'no_contrato' => 'required',
+            'no_contrato' => 'required_unless:identificador_privado,1',
             'nombre_servicio' => 'required',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
             'area_id' => 'required',
             'objetivo' => 'required',
             'estatus' => 'required',
+            'cargo_administrador' => 'max:250',
+            'area_administrador' => 'max:250',
+            'puesto' => 'max:250',
+            'area' => 'max:250',
             'file_contrato' => 'required',
             'fase' => 'required',
             'vigencia_contrato' => 'required',
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required|after:fecha_inicio',
-            'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',            'no_pagos' => 'required|numeric',
+            'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',
+            'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
             'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
@@ -117,6 +121,7 @@ class ContratosController extends AppBaseController
             'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'fecha_firma.before_or_equal' => 'La fecha firma no puede ser después de la fecha inicio del contrato',
             'fecha_firma.after_or_equal' => 'La fecha firma no puede ser antes de la fecha inicio del contrato',
+            'no_contrato.required_unless' => 'Solo los Contratos privados no requieren Numero de Contrato',
         ]);
 
         $resultado = null;
@@ -362,8 +367,8 @@ class ContratosController extends AppBaseController
     {
         $contrato = $this->contratoRepository->find($id);
         $formatoFecha = new FormatearFecha;
-        $organizacion = Organizacion::first();
-        $areas = Area::get();
+        $organizacion = Organizacion::getFirst();
+        $areas = Area::getIdNameAll();
         if (empty($contrato)) {
             // notify()->error('¡El registro no fue encontrado!');
 
@@ -371,7 +376,7 @@ class ContratosController extends AppBaseController
         }
         $proveedor_id = $contrato->proveedor_id;
         $contratos = Contrato::with('ampliaciones')->find($id);
-        $proveedores = Proveedores::get();
+        $proveedores = TimesheetCliente::get();
         $contrato->fecha_inicio = $contrato->fecha_inicio;
         $contrato->fecha_fin = $contrato->fecha_fin;
         $contrato->fecha_firma = $contrato->fecha_firma;
@@ -394,7 +399,7 @@ class ContratosController extends AppBaseController
     {
         abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $contrato = $this->contratoRepository->find($id);
-        $areas = Area::get();
+        $areas = Area::getAll();
         // dd($areas->count());
         $formatoFecha = new FormatearFecha;
         if (empty($contrato)) {
@@ -405,7 +410,7 @@ class ContratosController extends AppBaseController
         $proveedor_id = $contrato->proveedor_id;
         $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
         // dd($contratos);
-        $proveedores = Proveedores::get();
+        $proveedores = TimesheetCliente::get();
         if (!is_null($contrato->fecha_inicio)) {
             $contrato->fecha_inicio = $contrato->fecha_inicio;
         }
@@ -424,7 +429,7 @@ class ContratosController extends AppBaseController
         // dd($convenios);
         $dolares = DolaresContrato::where('contrato_id', $id)->first();
         // dd($dolares);
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         return view('contract_manager.contratos-katbol.edit', compact('proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
     }
@@ -447,6 +452,10 @@ class ContratosController extends AppBaseController
             'objetivo' => 'required',
             'estatus' => 'required',
             //  'file_contrato' => 'required',
+            'cargo_administrador' => 'max:250',
+            'area_administrador' => 'max:250',
+            'puesto' => 'max:250',
+            'area' => 'max:250',
             'fase' => 'required',
             'vigencia_contrato' => 'required',
             'fecha_inicio' => 'required',
@@ -454,7 +463,7 @@ class ContratosController extends AppBaseController
             'area_id' => 'required',
             // 'fecha_firma' => 'after:fecha_fin|before:fecha_inicio',
             'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',
-            'no_pagos' => 'required',
+            'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
             'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
@@ -546,7 +555,7 @@ class ContratosController extends AppBaseController
         $no_contrato_sin_slashes = preg_replace('[/]', '-', $request->no_contrato);
         //### RESTRUCTURACION DE CARPETAS UPDATE #############
 
-        $areas = Area::get();
+        $areas = Area::getIdNameAll();
 
         $contrato = $this->contratoRepository->update([
             'tipo_contrato' => $request->tipo_contrato,
@@ -574,7 +583,7 @@ class ContratosController extends AppBaseController
             'area_id' => $areas->count() > 0 ? $request->area_id : null,
             'area_administrador' => $request->area_administrador,
             'no_proyecto' => $request->no_proyecto,
-            'updated_by' => auth()->user()->empleado->id,
+            'updated_by' => User::getCurrentUser()->empleado->id,
         ], $id);
 
         $dolares = DolaresContrato::where('contrato_id', $id)->first();
@@ -756,16 +765,16 @@ class ContratosController extends AppBaseController
         abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $is_ampliado = $request->ampliado; // 0 -> no ampliado, 1 -> ampliado
         $contrato = Contrato::find($id);
-
+        $usuario = User::getCurrentUser();
         if ($is_ampliado) {
             $contrato->update([
                 'contrato_ampliado' => $is_ampliado,
-                'updated_by' => auth()->user()->empleado->id,
+                'updated_by' => $usuario->empleado->id,
             ]);
         } else {
             $contrato->update([
                 'contrato_ampliado' => $is_ampliado,
-                'updated_by' => auth()->user()->empleado->id,
+                'updated_by' => $usuario->empleado->id,
             ]);
         }
 
@@ -777,16 +786,16 @@ class ContratosController extends AppBaseController
         // $this->authorize('haveaccess', 'contratos.edit');
         $is_convenio = $request->convenio; // 0 -> no convenios, 1 -> convenios
         $contrato = Contrato::find($id);
-
+        $usuario = User::getCurrentUser();
         if ($is_convenio) {
             $contrato->update([
                 'convenio_modificatorio' => $is_convenio,
-                'updated_by' => auth()->user()->empleado->id,
+                'updated_by' => $usuario->empleado->id,
             ]);
         } else {
             $contrato->update([
                 'convenio_modificatorio' => $is_convenio,
-                'updated_by' => auth()->user()->empleado->id,
+                'updated_by' => $usuario->empleado->id,
             ]);
         }
 
@@ -796,7 +805,7 @@ class ContratosController extends AppBaseController
     public function uploadInTmpDirectory(Request $request)
     {
         // dd(Storage::disk('local')->exists('katbol-contratos-tmp/KaZoUut5PEQV81GC0Saw79Tt2K3eFvdlQ39ATXAY.pdf'));
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         $mines = str_replace('.', '', $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt');
 

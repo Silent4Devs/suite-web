@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Empleado.
@@ -154,6 +155,13 @@ class Empleado extends Model implements Auditable
     ];
 
     //Redis methods
+    public static function getExists()
+    {
+        return Cache::remember('Empleados:empleados_exists', 3600 * 12, function () {
+            return DB::table('empleados')->exists();
+        });
+    }
+
     public static function getAll(array $options = [])
     {
         // Generate a unique cache key based on the options provided
@@ -171,6 +179,17 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getIdNameAll(array $options = [])
+    {
+        // Generate a unique cache key based on the options provided
+
+        return Cache::remember('Empleados:empleados_id_name_all', 3600 * 12, function () use ($options) {
+            $query = self::select('id', 'name')->where('estatus', 'alta')->orderBy('id', 'desc')->get();
+
+            return $query;
+        });
+    }
+
     public static function getEmpleadoCurriculum($id)
     {
         return
@@ -181,8 +200,15 @@ class Empleado extends Model implements Auditable
 
     public static function getAltaEmpleados()
     {
-        return Cache::remember('empleados_alta', 3600 * 24, function () {
+        return Cache::remember('empleados_alta', 3600 * 12, function () {
             return self::alta()->select('id', 'area_id', 'name')->get();
+        });
+    }
+
+    public static function getIDaltaAll()
+    {
+        return Cache::remember('empleados_alta_id', 3600 * 12, function () {
+            return self::alta()->select('id')->get();
         });
     }
 

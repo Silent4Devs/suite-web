@@ -3,26 +3,32 @@
 namespace App\Http\Livewire\Escuela\Instructor;
 
 use App\Models\Escuela\Course;
-use Livewire\Component;
 use App\Models\Escuela\Requirement;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+
 class CourseRequirements extends Component
 {
     use LivewireAlert, AuthorizesRequests;
 
     public Requirement $requirement;
-    public $course, $name;
+    public $course;
+    public $name;
 
     protected $rules = [
         'requirement.name' => 'required',
+    ];
+
+    protected $messages = [
+        'requirement.name.required' => 'El campo nombre es obligatorio',
+        'requirement.name.max' => 'El campo nombre es obligatorio',
     ];
 
     public function mount($course)
     {
         $this->course = $course;
         $this->requirement = new Requirement();
-
     }
 
     public function render()
@@ -33,7 +39,10 @@ class CourseRequirements extends Component
     public function store()
     {
         $this->validate([
-            'name' => 'required',
+            'name' => 'required|max:255',
+        ], [
+            'name.required' => 'El campo nombre es obligatorio',
+            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
         ]);
 
         $this->course->requirements()->create([

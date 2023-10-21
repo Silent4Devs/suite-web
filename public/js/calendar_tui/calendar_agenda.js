@@ -123,7 +123,7 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = 'Fecha de recepción y liberción de factura';
+    calendar.name = 'Fecha de recepción y liberación de factura';
     calendar.color = '#171717';
     calendar.bgColor = '#FC0329';
     calendar.dragBgColor = '#FC0329';

@@ -15,6 +15,7 @@ use App\Models\ContractManager\Requsicion as ContractManagerRequsicion;
 use App\Models\ContractManager\Sucursal as ContractManagerSucursal;
 use App\Models\Empleado;
 use App\Models\Organizacion;
+use App\Models\User;
 use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
@@ -53,16 +54,19 @@ class RequisicionesEditComponent extends Component
     public $proveedores_show;
 
     // tasbs
+    //jenkis prueba
     public $habilitar_firma = false;
     public $habilitar_proveedores = false;
     public $habilitar_alerta = false;
     public $proveedor_sugerido = false;
     public $provedores_indistinto_catalogo;
+    public $disabled = '';
 
     public $habilitar_url = false;
     public $requisicion;
 
     public $selectedInput = [];
+    public $active = 'active';
     public $selectOption = [];
 
     public $id_catalogo = [];
@@ -73,7 +77,6 @@ class RequisicionesEditComponent extends Component
 
     public $requi_firmar;
 
-    protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores'];
 
     public function mount($requisiciondata)
     {
@@ -81,13 +84,9 @@ class RequisicionesEditComponent extends Component
         $this->compradores = ContractManagerComprador::with('user')->where('archivo', false)->get();
         $this->contratos = ContractManagerContrato::get();
         $this->productos = ContractManagerProducto::where('archivo', false)->get();
-        $this->user_tabantaj = ModelsUser::with('empleado')->get();
         $this->organizacion = Organizacion::first();
-        // $this->users = Empleado::get();
         $this->proveedores = ContractManagerProveedorOC::where('estado', false)->get();
-        $this->editrequisicion =
-            ContractManagerRequsicion::with('sucursal', 'comprador', 'contrato', 'productos_requisiciones', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo')
-            ->with('productos_requisiciones.producto')->where('archivo', false)
+        $this->editrequisicion = ContractManagerRequsicion::with('sucursal', 'comprador', 'contrato', 'productos_requisiciones', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'productos_requisiciones.producto')->where('archivo', false)
             ->find($requisiciondata->id);
 
         $this->proveedores_indistintos_count = $this->editrequisicion->provedores_indistintos_requisiciones->count();
@@ -120,12 +119,8 @@ class RequisicionesEditComponent extends Component
             'comprador_id' => $data['comprador_id'],
             'sucursal_id' => $data['sucursal_id'],
         ]);
-        $productos_existentes = ContractManagerProductoRequisicion::where('requisiciones_id', $this->editar_requisicion->id)->get();
-        if ($productos_existentes->count() > 0) {
-            foreach ($productos_existentes as $product) {
-                $product->delete();
-            }
-        }
+
+        ContractManagerProductoRequisicion::where('requisiciones_id', $this->editar_requisicion->id)->delete();
 
         for ($i = 1; $i <= $this->products_servs_count; $i++) {
             if (isset($data['cantidad_' . $i])) {
@@ -143,6 +138,7 @@ class RequisicionesEditComponent extends Component
 
         $this->habilitar_proveedores = true;
         $this->emit('cambiarTab', 'profile');
+        $this->active = 'desActive';
     }
 
     public function proveedoresUpdate($data, $editrequisicion)
@@ -269,6 +265,8 @@ class RequisicionesEditComponent extends Component
                 $this->dataFirma($editrequisicion);
             }
         }
+
+        $this->habilitar_proveedores = true;
     }
 
     public function dataFirma($editrequisicion)
@@ -302,15 +300,11 @@ class RequisicionesEditComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $user = ModelsUser::where('id', $this->editrequisicion->id_user)->first();
-
-            $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
-
-            $supervisor = $empleado->supervisor->email;
+            $supervisor = User::find($this->editrequisicion->id_user)->empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->editrequisicion, $organizacion, $tipo_firma));
 
-            return redirect(route('requisiciones'));
+            return redirect(route('contract_manager.requisiciones'));
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -76,7 +77,7 @@ class TareasComponent extends Component
 
     public function markTaskAsRead(string $notificationId)
     {
-        auth()->user()->unreadNotifications
+        User::getCurrentUser()->unreadNotifications
             ->when($notificationId, function ($query) use ($notificationId) {
                 return $query->where('id', $notificationId)->markAsRead();
             });

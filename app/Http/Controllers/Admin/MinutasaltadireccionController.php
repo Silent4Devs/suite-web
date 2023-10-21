@@ -37,25 +37,25 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('revision_por_direccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = Minutasaltadireccion::with(['responsable', 'team', 'participantes', 'planes'])->orderByDesc('id')->get();
+            $query = Minutasaltadireccion::with(['responsable', 'participantes', 'planes'])->orderByDesc('id')->get();
 
             return datatables()->of($query)->toJson();
         }
 
         $users = User::getAll();
-        $teams = Team::get();
+        //$teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.minutasaltadireccions.index', compact('users', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.minutasaltadireccions.index', compact('users', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
-        $esta_vinculado = auth()->user()->empleado ? true : false;
+        $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
         return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
     }
@@ -263,7 +263,7 @@ class MinutasaltadireccionController extends Controller
                 $planImplementacion->norma = 'ISO 27001';
                 $planImplementacion->modulo_origen = 'Minutas Alta Dirección';
                 $planImplementacion->objetivo = null;
-                $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+                $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
                 $minuta->planes()->save($planImplementacion);
             }
@@ -482,7 +482,7 @@ class MinutasaltadireccionController extends Controller
         $planImplementacion->norma = $request->norma;
         $planImplementacion->modulo_origen = $request->modulo_origen;
         $planImplementacion->objetivo = $request->objetivo;
-        $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+        $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
         $minuta = $id;
         $minuta->planes()->save($planImplementacion);

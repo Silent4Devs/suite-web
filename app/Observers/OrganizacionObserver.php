@@ -62,5 +62,6 @@ class OrganizacionObserver
         Cache::forget('getLogo_organizacion');
         Cache::forget('organization_all');
         Cache::forget('organizacion_first');
+        Cache::forget('Organizacion:Organizacion_exists');
     }
 }

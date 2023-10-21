@@ -117,7 +117,7 @@ class PlanificacionControlController extends Controller
 
         $origenCambio = PlanificacionControlOrigenCambio::get();
 
-        $esta_vinculado = auth()->user()->empleado ? true : false;
+        $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
         return view('admin.planificacionControls.create', compact('aprobadores', 'esta_vinculado', 'origenCambio', 'origen_seleccionado', 'responsables', 'duenos', 'empleados'));
     }
@@ -155,7 +155,7 @@ class PlanificacionControlController extends Controller
             'id_responsable_aprobar' => $request->id_responsable_aprobar,
         ]);
 
-        Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
+        Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl)));
 
         // dd($request->all());
         // $planificacionControl = PlanificacionControl::create($request->all());

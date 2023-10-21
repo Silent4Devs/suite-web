@@ -8,6 +8,7 @@ use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
+use App\Models\User;
 use Livewire\Component;
 
 class TimesheetHorasFilas extends Component
@@ -35,26 +36,29 @@ class TimesheetHorasFilas extends Component
 
     public function mount($origen, $timesheet_id)
     {
-        $empleado = auth()->user()->empleado;
-        $proyectos = $empleado->TimesheetProyectoEmpleado;
-        // dd($proyectos);
-        $proyectoempleado = TimesheetProyectoEmpleado::getAllByEmpleadoIdNoBloqueado($empleado->id);
-        $proyectoempleadoexists = TimesheetProyectoEmpleado::getAllByEmpleadoIdExistsNoBloqueado($empleado->id);
+        $empleado = User::getCurrentUser()->empleado;
+        $proyectos = $empleado->TimesheetProyectoEmpleado->where('usuario_bloqueado', false);
+
+        //Se comentaron temporalmente, ya no parecen ser necesarios
+        // $proyectoempleado = TimesheetProyectoEmpleado::getAllByEmpleadoIdNoBloqueado($empleado->id);
+        // $proyectoempleadoexists = TimesheetProyectoEmpleado::getAllByEmpleadoIdExistsNoBloqueado($empleado->id);
+        // $proyectos_totales = TimesheetProyecto::getAll();
+
         $comodines = TimesheetProyecto::select('id', 'identificador', 'proyecto')->where('proyecto', 'LIKE', 'S4B-' . '%')->get();
-        $proyectos_totales = TimesheetProyecto::getAll();
+        // dd($proyectoempleadoexists);
         // areas proyectos
         //to do Cambiar a array
         // dd($comodines);
         $proyectos_array = collect();
         $proyectos_array = $comodines;
         // dd($proyectos_array);
+        //Determinamos que este asignado a proyectos y que no este bloqueado en todos ellos
         if (!$proyectos->isEmpty()) {
             foreach ($proyectos as $key => $proyecto) {
                 $proyectos_array->push(
                     $proyecto->proyecto
                 );
             }
-            // dd('dentro del if', $proyectos_array);
         } else {
             $proyectos_area = TimesheetProyectoArea::with('proyecto')->where('area_id', $empleado->area_id)->get();
             //Traer todos los proyectos que ya han sido asignados en el area
@@ -62,7 +66,6 @@ class TimesheetHorasFilas extends Component
             //foreach borramos los proyectos del area que ya han sido asignados
             //$proyectos_array = $proyectos_array->whereNotIn('id', $fpe->proyecto_id);
             foreach ($proyectos_area as $pa) {
-                // dd($pa->proyectosAsignados);
                 $proyectos_array->push(
                     $pa->proyecto
                 );

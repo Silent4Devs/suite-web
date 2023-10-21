@@ -4,6 +4,7 @@ namespace App\Functions;
 
 use App\Models\ContractManager\EvaluacionServicio;
 use App\Models\ContractManager\NivelesServicio;
+use App\Models\User;
 use Carbon\Carbon;
 
 class EvaluacionServiciosData
@@ -12,19 +13,20 @@ class EvaluacionServiciosData
     {
         $actual = Carbon::now();
         $date = Carbon::now();
+        $empleado_id = User::getCurrentUser()->empleado->id;
         switch ($periodo_evaluacion) {
             case 0:
                 return [];
                 break;
             case 1:
-                $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Unica vez', 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Unica vez', 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
 
                 return $data;
                 break;
             case 2:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Dia', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Dia', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                 }
 
                 return $data;
@@ -32,7 +34,7 @@ class EvaluacionServiciosData
             case 3:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Semana', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Semana', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                 }
 
                 return $data;
@@ -40,7 +42,7 @@ class EvaluacionServiciosData
             case 4:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Quincena', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Quincena', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                 }
 
                 return $data;
@@ -48,7 +50,7 @@ class EvaluacionServiciosData
             case 5:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Mes', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Mes', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                 }
 
                 return $data;
@@ -56,7 +58,7 @@ class EvaluacionServiciosData
             case 6:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Bimestre', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Bimestre', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                 }
 
                 return $data;
@@ -64,7 +66,7 @@ class EvaluacionServiciosData
             case 7:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Trimestre', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Trimestre', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                 }
 
                 return $data;
@@ -72,7 +74,7 @@ class EvaluacionServiciosData
             case 8:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Semestre', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Semestre', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                 }
 
                 return $data;
@@ -80,7 +82,7 @@ class EvaluacionServiciosData
             case 9:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Año', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Año', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                 }
 
                 return $data;
@@ -88,7 +90,7 @@ class EvaluacionServiciosData
             case 10:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Mes', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'evaluacion' => 'Mes', 'evaluacion_day' => $i, 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                 }
 
                 return $data;
@@ -100,19 +102,20 @@ class EvaluacionServiciosData
     {
         $actual = Carbon::now();
         $date = Carbon::now();
+        $empleado_id = User::getCurrentUser()->empleado->id;
         switch ($periodo_evaluacion) {
             case 0:
                 return [];
                 break;
             case 1:
-                $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
 
                 return $data;
                 break;
             case 2:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                     $date->addWeekday();
                 }
 
@@ -121,7 +124,7 @@ class EvaluacionServiciosData
             case 3:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                     $date->addWeek();
                 }
 
@@ -130,7 +133,7 @@ class EvaluacionServiciosData
             case 4:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                     $date->addWeeks(2);
                 }
 
@@ -139,7 +142,7 @@ class EvaluacionServiciosData
             case 5:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                     $date->addMonth();
                 }
 
@@ -148,7 +151,7 @@ class EvaluacionServiciosData
             case 6:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                     $date->addMonths(2);
                 }
 
@@ -157,7 +160,7 @@ class EvaluacionServiciosData
             case 7:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                     $date->addMonths(3);
                 }
 
@@ -166,7 +169,7 @@ class EvaluacionServiciosData
             case 8:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                     $date->addMonths(6);
                 }
 
@@ -175,7 +178,7 @@ class EvaluacionServiciosData
             case 9:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                     $date->addYears(1);
                 }
 
@@ -184,7 +187,7 @@ class EvaluacionServiciosData
             case 10:
                 $data = [];
                 for ($i = 1; $i <= $revisiones; $i++) {
-                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => auth()->user()->empleado->id, 'updated_by' => auth()->user()->empleado->id];
+                    $data[] = ['servicio_id' => $id_evaluacion, 'nombre' => $nombre, 'metrica' => $metrica, 'unidad' => $unidad, 'fecha' => $date->toDateString(), 'created_at' => $actual, 'created_by' => $empleado_id, 'updated_by' => $empleado_id];
                     $date->addYears(2);
                 }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ActividadIncidente;
 use App\Models\IncidentesSeguridad;
 use App\Models\PlanImplementacion;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -218,7 +219,7 @@ class ActividadesIncidentesController extends Controller
                 $planImplementacion->norma = 'ISO 27001';
                 $planImplementacion->modulo_origen = 'Incidentes';
                 $planImplementacion->objetivo = null;
-                $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+                $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
                 $modelo->planes()->save($planImplementacion);
             }

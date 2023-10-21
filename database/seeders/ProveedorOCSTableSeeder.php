@@ -17,7 +17,6 @@ class ProveedorOCSTableSeeder extends Seeder
 
         \DB::table('proveedor_o_c_s')->insert([
             0 => [
-
                 'nombre' => 'Proveedores Varios Nacionales',
                 'razon_social' => 'Proveedores Varios Nacionales',
                 'rfc' => 'N/A',
@@ -34,7 +33,6 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-31',
             ],
             1 => [
-
                 'nombre' => 'FAR SYSTEMS',
                 'razon_social' => 'FAR SYSTEMS S.C.P',
                 'rfc' => 'FSY0501188U8',
@@ -51,7 +49,6 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             2 => [
-
                 'nombre' => 'AURUM TECNOLOGIA',
                 'razon_social' => 'Aurum Tecnología S.A de C.V',
                 'rfc' => 'ATE130116Q28',
@@ -68,7 +65,6 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             3 => [
-
                 'nombre' => 'AXTEL',
                 'razon_social' => 'AXTEL S.A.B. DE C.V.',
                 'rfc' => 'AXT940727FP8',
@@ -85,7 +81,6 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             4 => [
-
                 'nombre' => 'AyR',
                 'razon_social' => 'AYR ENLACES EMPRESARIALES, S.A. DE C.V',
                 'rfc' => 'AEE1605054P1',
@@ -102,7 +97,6 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             5 => [
-
                 'nombre' => 'ContPAQi',
                 'razon_social' => 'HUGO GONZALEZ GUERRA',
                 'rfc' => 'GUGH791023DD0',
@@ -119,7 +113,6 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             6 => [
-
                 'nombre' => 'MS NOTARIO',
                 'razon_social' => 'MS NOTARIO S.C',
                 'rfc' => 'MNO930107ST1',
@@ -136,7 +129,6 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             7 => [
-
                 'nombre' => 'Notario 208',
                 'razon_social' => 'N208 S.C',
                 'rfc' => 'NXX1210186TA',
@@ -153,7 +145,6 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             8 => [
-
                 'nombre' => 'Neixar MXN',
                 'razon_social' => 'Neixar Systems S.A de C.V',
                 'rfc' => 'NSY060512CS6',

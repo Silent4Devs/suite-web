@@ -8,7 +8,6 @@ use App\Http\Livewire\Escuela\CourseStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
     Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
@@ -36,9 +35,10 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('/', 'InicioUsuarioController@index');
+    Route::get('/home', 'InicioUsuarioController@index')->name('home');
     Route::post('/obtenerauditoria', 'DashboardAuditoriasSGIController@obtenerauditoria')->name('obtener-auditoria');
-
-    Route::get('/', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
     //log-viewer
     Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
@@ -110,7 +110,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('organizacions/{schedule}/delete-schedule', 'OrganizacionController@deleteSchedule')->name('organizacions.delete-schedule');
     Route::resource('organizacions', 'OrganizacionController');
     // Inicio usuario
-    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
 
     // Areas
     Route::get('areas/exportar', 'AreasController@exportTo')->name('areas.exportar');
@@ -129,8 +128,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('puestos/process-csv-import', 'PuestosController@processCsvImport')->name('puestos.processCsvImport');
     Route::resource('puestos', 'PuestosController');
     Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
-
-
 
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
         // Visitantes
@@ -1591,19 +1588,20 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
     Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
     Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
-    Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
+    Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
     Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
     Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
     Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
     Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
     Route::post('requisiciones/pdf/{id}', 'RequisicionesController@pdf')->name('requisiciones.pdf');
-    Route::post('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');
+    Route::get('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');
     Route::get('requisiciones/aprobados/{id}', 'RequisicionesController@firmarAprobadores')->name('requisiciones.firmarAprobadores');
     Route::post('requisiciones/firma', 'RequisicionesController@guardarFirmaAprobacion')->name('requisiciones.firma');
     Route::get('requisiciones/firmar/{tipo_firma}/{id}', 'RequisicionesController@Firmar')->name('requisiciones.firmar');
     Route::post('requisiciones/firma-update/{tipo_firma}/{id}', 'RequisicionesController@FirmarUpdate')->name('requisiciones.firmar-update');
     Route::get('requisiciones/archivo', 'RequisicionesController@archivo')->name('requisiciones.archivo');
-    Route::post('requisiciones/archivo-estado/{id}', 'RequisicionesController@estado')->name('requisiciones.estado');
+    Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
+    Route::get('requisiciones/archivo-estado/{id}', 'RequisicionesController@estado')->name('requisiciones.estado');
     Route::post('requisiciones/rechazada/{id}', 'RequisicionesController@rechazada')->name('requisiciones.rechazada');
 
     // ordenes de compra

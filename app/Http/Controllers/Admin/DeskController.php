@@ -32,12 +32,13 @@ use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
+use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate; //mejora apunta a este modelo
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
 
 class DeskController extends Controller
 {
@@ -46,13 +47,13 @@ class DeskController extends Controller
     public function index()
     {
         abort_if(Gate::denies('centro_de_atencion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $incidentes_seguridad = IncidentesSeguridad::getAll()->where('archivado', IncidentesSeguridad::NO_ARCHIVADO);
+        $incidentesSeguridad = IncidentesSeguridad::getAll();
+        $incidentes_seguridad = $incidentesSeguridad->where('archivado', IncidentesSeguridad::NO_ARCHIVADO);
         $riesgos_identificados = RiesgoIdentificado::getAll();
         $quejas = Quejas::getAll();
         $denuncias = Denuncias::getAll();
         $mejoras = Mejoras::getAll();
         $sugerencias = Sugerencias::getAll();
-        $incidentesSeguridad = IncidentesSeguridad::getAll();
         $quejasClientes = QuejasCliente::getAll();
 
         $total_seguridad = $incidentesSeguridad->count();
@@ -166,7 +167,7 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $incidentes_seguridad = IncidentesSeguridad::with('asignado', 'reporto')->where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->get();
+        $incidentes_seguridad = IncidentesSeguridad::where('archivado', false)->get();
 
         return datatables()->of($incidentes_seguridad)->toJson();
     }
@@ -176,8 +177,6 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente))->load('evidencias_seguridad');
-
-        // $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'seguridad')->where('seguridad_id', intval($id_incidente))->first();
 
@@ -201,9 +200,9 @@ class DeskController extends Controller
     public function updateSeguridad(Request $request, $id_incidente)
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //    dd($request->all());
+
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
-        // dd( $incidentesSeguridad);
+
 
         $request->validate([
             'titulo' => 'required|string',
@@ -235,9 +234,9 @@ class DeskController extends Controller
             'categoria_id' => $request->categoria_id,
             'subcategoria_id' => $request->subcategoria_id,
         ]);
-        // dd($incidentesSeguridad);
+
         $documento = $incidentesSeguridad->evidencia;
-        // dd($documento);
+
         if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -352,7 +351,7 @@ class DeskController extends Controller
     public function recuperarArchivadoSugerencia($id)
     {
         $riesgo = Sugerencias::find($id);
-        // dd($recurso);
+
         $riesgo->update([
             'archivado' => false,
         ]);
@@ -458,7 +457,7 @@ class DeskController extends Controller
     public function recuperarArchivadoRiesgo($id)
     {
         $riesgo = RiesgoIdentificado::find($id);
-        // dd($recurso);
+
         $riesgo->update([
             'archivado' => false,
         ]);
@@ -555,7 +554,7 @@ class DeskController extends Controller
 
     public function archivadoQueja(Request $request, $incidente)
     {
-        // dd($request);
+
         if ($request->ajax()) {
             $queja = Quejas::findOrfail(intval($incidente));
             $queja->update([
@@ -576,7 +575,7 @@ class DeskController extends Controller
     public function recuperarArchivadoQueja($id)
     {
         $queja = Quejas::find($id);
-        // dd($recurso);
+
         $queja->update([
             'archivado' => false,
         ]);
@@ -681,7 +680,6 @@ class DeskController extends Controller
     public function recuperarArchivadoDenuncia($id)
     {
         $queja = Denuncias::find($id);
-        // dd($recurso);
         $queja->update([
             'archivado' => false,
         ]);
@@ -749,7 +747,7 @@ class DeskController extends Controller
 
     public function updateAnalisisMejoras(Request $request, $id_mejoras)
     {
-        // dd($request->all());
+
         $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_mejoras));
         $analisis_seguridad->update([
             'problema_diagrama' => $request->problema_diagrama,
@@ -802,7 +800,6 @@ class DeskController extends Controller
     public function recuperarArchivadoMejora($id)
     {
         $mejora = Mejoras::find($id);
-        // dd($recurso);
         $mejora->update([
             'archivado' => false,
         ]);
@@ -884,7 +881,6 @@ class DeskController extends Controller
     public function recuperarArchivadoSeguridad($id)
     {
         $recurso = IncidentesSeguridad::find($id);
-        // dd($recurso);
         $recurso->update([
             'archivado' => IncidentesSeguridad::NO_ARCHIVADO,
         ]);
@@ -917,7 +913,6 @@ class DeskController extends Controller
 
         $quejasClientes = QuejasCliente::with('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos')->where('archivado', false)->get();
 
-        // dd($quejasClientes);
         return datatables()->of($quejasClientes)->toJson();
     }
 
@@ -925,7 +920,6 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_clientes_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // dd($request->correo);
         $request->validate([
             'cliente_id' => 'required',
             'proyectos_id' => 'required',
@@ -967,7 +961,7 @@ class DeskController extends Controller
             'canal' => $request->canal,
             'otro_canal' => $request->otro_canal,
             'solucion_requerida_cliente' => $request->solucion_requerida_cliente,
-            'empleado_reporto_id' => auth()->user()->empleado->id,
+            'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'correo_cliente' => $correo_cliente,
 
         ]);
@@ -1012,13 +1006,13 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_quejas_cliente_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos');
-        // dd($quejasClientes);
+
         $procesos = Proceso::getAll();
 
         $activos = Activo::getAll();
 
         $analisis = AnalisisQuejasClientes::where('formulario', '=', 'quejaCliente')->where('quejas_clientes_id', intval($id_quejas))->first();
-        // dd($analisis);
+
         $areas = Area::getAll();
 
         $empleados = Empleado::orderBy('name')->get();
@@ -1063,7 +1057,7 @@ class DeskController extends Controller
         //    ]);
         //}
         $notificar_atencion_queja_no_aprobada = intval($request->notificar_atencion_queja_no_aprobada) == 1 ? true : false;
-        // dd($request->all());
+
         $quejasClientes->update([
             'cliente_id' => $request->cliente_id ? $request->cliente_id : $quejasClientes->cliente_id,
             'proyectos_id' => $request->proyectos_id ? $request->proyectos_id : $quejasClientes->proyectos_id,
@@ -1162,7 +1156,7 @@ class DeskController extends Controller
                 'estatus' => 'No procedente',
             ]);
         }
-        // dd($cerrar_ticket);
+
         if ($cerrar_ticket) {
             $quejasClientes->update([
                 'estatus' => 'Cerrado',
@@ -1281,7 +1275,7 @@ class DeskController extends Controller
         ]);
 
         $empleado_email = Empleado::select('name', 'email')->find($request->responsable_atencion_queja_id);
-        $empleado_copia = auth()->user()->empleado;
+        $empleado_copia = User::getCurrentUser()->empleado;
 
         if ($quejasClientes->registro != null && $request->responsable_atencion_queja_id != null) {
             Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($empleado_copia->email))->send(new NotificacionResponsableQuejaEmail($quejasClientes, $empleado_email));
@@ -1350,7 +1344,7 @@ class DeskController extends Controller
 
     public function archivadoQuejaClientes(Request $request, $id)
     {
-        // dd($request);
+
         if ($request->ajax()) {
             $queja = QuejasCliente::findOrfail(intval($id));
             $queja->update([
@@ -1364,7 +1358,7 @@ class DeskController extends Controller
     public function recuperarArchivadoQuejaCliente($id)
     {
         $queja = QuejasCliente::find($id);
-        // dd($recurso);
+
         $queja->update([
             'archivado' => false,
         ]);
@@ -1477,7 +1471,7 @@ class DeskController extends Controller
         $proyectos = TimesheetProyecto::getAll()->with('cliente')->find($quejasproyectos);
         $proyectosLabel = [];
         foreach ($proyectos as $proyecto) {
-            // dd($proyecto);
+
             $cantidad = $quejasClientes->where('proyectos_id', $proyecto->id)->count();
             array_push($proyectosLabel, [
                 'nombre' => $proyecto->proyecto,
@@ -1566,7 +1560,7 @@ class DeskController extends Controller
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
             if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
-                if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id) {
+                if ($quejasClientes->responsable_atencion_queja_id != User::getCurrentUser()->empleado->id) {
                     $this->validateRequestRegistroQuejaCliente($request);
                     $this->validateRequestAnalisisQuejaCliente($request);
                 }
@@ -1598,7 +1592,7 @@ class DeskController extends Controller
 
     public function validateRequestRegistroQuejaCliente($request)
     {
-        // dd($request->all());
+
         $request->validate(
             [
                 'cliente_id' => 'required',

@@ -35077,6 +35077,17 @@ h3 {
   margin-right: 0 !important;
 }
 
+/*Escuela  ***************************/
+.cancel{
+    background: #FFFFFF;
+    color: #006DDB;
+    border: 1px solid #006DDB;
+}
+
+.cancel:hover{
+    color:#006DDB;
+}
+
 /* footer -------------------------- */
 .app-footer{
   background-color: #788BAC;
@@ -35097,3 +35108,12 @@ h3 {
   }
 } */
 
+.circulo-kaans{
+            width: 75px;
+            height: 75px;
+        }
+        .circulo-kaans img {
+            width: 75px; 
+            height: 75px;
+            border-radius: 50%;
+        }

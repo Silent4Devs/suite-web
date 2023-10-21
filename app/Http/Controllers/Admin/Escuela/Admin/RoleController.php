@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use notify;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -18,6 +17,7 @@ class RoleController extends Controller
         $this->middleware('can:Editar role')->only('edit', 'update');
         $this->middleware('can:Eliminar role')->only('destroy');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,8 +26,8 @@ class RoleController extends Controller
     public function index()
     {
         return view('admin.roles.index', [
-            'roles' => Role::all(),
-            'permissions' => Permission::all(),
+            'roles' => Role::getAll(),
+            'permissions' => Permission::getAll(),
         ]);
     }
 
@@ -39,7 +39,7 @@ class RoleController extends Controller
     public function create()
     {
         return view('admin.roles.create', [
-            'permissions' => Permission::all(),
+            'permissions' => Permission::getAll(),
         ]);
     }
 
@@ -89,7 +89,7 @@ class RoleController extends Controller
     {
         return view('admin.roles.edit', [
             'role' => $role,
-            'permissions' => Permission::all(),
+            'permissions' => Permission::getAll(),
         ]);
     }
 

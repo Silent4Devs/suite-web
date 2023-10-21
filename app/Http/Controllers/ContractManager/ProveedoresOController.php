@@ -5,11 +5,8 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\ProveedorOC;
 use Gate;
-use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use RealRashid\SweetAlert\Facades\Alert;
-
 
 class ProveedoresOController extends Controller
 {
@@ -59,17 +56,7 @@ class ProveedoresOController extends Controller
      */
     public function store(Request $request)
     {
-        $ids = ProveedorOC::pluck('id');
-
-        foreach ($ids as $id) {
-            $string1 = strval($id);
-            if ($string1  === $request->id) {
-                return view('contract_manager.proveedores.error');
-            }
-        }
-
         $proveedores = new ProveedorOC();
-        $proveedores->id = $request->id;
         $proveedores->nombre = $request->nombre;
         $proveedores->razon_social = $request->razon_social;
         $proveedores->rfc = $request->rfc;
