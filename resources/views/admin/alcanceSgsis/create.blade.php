@@ -1,11 +1,48 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+    .radius
+        {
+            border-radius: 16px;
+        }
+        .titulo-card
+        {
+
+            text-align: left;
+            font: 20px Roboto;
+            color: #606060;
+        }
+</style>
+
     {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
     <h5 class="col-12 titulo_general_funcion"> Registrar: Determinación de Alcance</h5>
+        <div class="card-body" style="background-color: #5397D5;">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="{{asset('assets/Imagen 2@2x.png')}}" alt="jpg" style="margin: 11px 10px 10px 10px"
+                     class="img-fluid">
+                </div>
+                <div class="col-md-10 mt-4">
+                    <div style="font:20px Segoe UI;color:white;" class="mr-1">
+                        ¿Qué es? Determinación de Alcance
+                    </div>
+                    <div style="font: 14px Segoe UI;color:white;"class="mt-3 mr-1">
+                    Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los límites del proyecto.
+                    </div>
+                    <div style="font: 12px Segoe UI;color:white;"class="mr-5 mt-4 mb-4">
+                        Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya que ayuda a evitar
+                        la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una comprensión clara de lo que se espera.
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <div class="mt-4 card">
 
-        <div class="card-body">
+        <div class="card-body radius">
+            <h5 class="titulo-card">Alcance</h5>
+            <hr>
             <form method="POST" action="{{ route('admin.alcance-sgsis.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
