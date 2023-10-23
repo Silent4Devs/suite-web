@@ -73,3 +73,11 @@
 </body>
 
 </html>
+
+<script>
+     @if(session('mensaje'))
+    <script>
+        alert("{{ session('mensaje') }}");
+    </script>
+    @endif
+</script>
