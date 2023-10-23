@@ -293,14 +293,14 @@ class RequisicionesController extends Controller
             if ($supervisor === $user->name) {
                 $tipo_firma = 'firma_jefe';
             } else {
-                return view('contract_manager.requisiciones.error');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar');
             }
         } elseif ($requisicion->firma_finanzas === null) {
             $user =   User::getCurrentUser();
             if ($user->name === 'Lourdes Del Pilar Abadia Velasco') {
                 $tipo_firma = 'firma_finanzas';
             } else {
-                return view('contract_manager.requisiciones.error');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar');
             }
         } elseif ($requisicion->firma_compras === null) {
             $user =   User::getCurrentUser();
@@ -308,7 +308,7 @@ class RequisicionesController extends Controller
             if ($comprador->user->name === $user->name) {
                 $tipo_firma = 'firma_compras';
             } else {
-                return view('contract_manager.requisiciones.error');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
