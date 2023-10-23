@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <style>
-        .btn-outline-success
-        {
+        .btn-outline-success {
             background: #788bac !important;
             color: white;
             border: none;
@@ -23,8 +22,7 @@
 
         }
 
-        .btn_cargar
-        {
+        .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
             color: #345183;
@@ -39,24 +37,20 @@
             margin-right: 10px !important;
         }
 
-        .table tr td:nth-child(2)
-        {
+        .table tr td:nth-child(2) {
             text-align: justify !important;
         }
 
-        .table tr th:nth-child(3)
-        {
+        .table tr th:nth-child(3) {
             text-align: center !important;
-            min-width: 800px !important;
+            min-width: 200px !important;
         }
 
-        .table tr td:nth-child(4)
-        {
+        .table tr td:nth-child(4) {
             text-align: center !important;
         }
 
-        .table tr th:nth-child(4)
-        {
+        .table tr th:nth-child(4) {
             width: 120px !important;
             max-width: 120px !important;
             min-width: 120px !important;
@@ -64,88 +58,79 @@
             text-align: center !important;
         }
 
-        .table tr th:nth-child(2)
-        {
+        .table tr th:nth-child(2) {
             width: 400px !important;
-            max-width: 700px !important;
-            min-width: 700px !important;
+            max-width: 500px !important;
+            min-width: 100px !important;
             text-align: center !important;
         }
 
-        .table tr td:nth-child(5)
-        {
+
+        .table tr td:nth-child(5) {
             max-width: 200px !important;
             min-width: 200px !important;
             width: 200px !important;
             text-align: center !important;
         }
 
-        .table tr th:nth-child(5)
-        {
+        .table tr th:nth-child(5) {
             width: 200px !important;
             max-width: 200px !important;
             min-width: 200px !important;
             text-align: center !important;
         }
 
-        .table tr td:nth-child(6)
-        {
+        .table tr td:nth-child(6) {
             max-width: 200px !important;
             min-width: 200px !important;
             width: 200px !important;
             text-align: center !important;
         }
 
-        .table tr th:nth-child(6)
-        {
+        .table tr th:nth-child(6) {
             width: 200px !important;
             max-width: 200px !important;
             min-width: 200px !important;
             text-align: center !important;
         }
 
-        .table tr td:nth-child(7)
-        {
+        .table tr td:nth-child(7) {
             max-width: 200px !important;
             min-width: 200px !important;
             width: 200px !important;
             text-align: center !important;
         }
 
-        .table tr th:nth-child(7)
-        {
+        .table tr th:nth-child(7) {
             width: 200px !important;
             max-width: 200px !important;
             min-width: 200px !important;
             text-align: center !important;
         }
 
-        .table tr td:nth-child(8)
-        {
+        .table tr td:nth-child(8) {
             max-width: 80px !important;
             min-width: 80px !important;
             width: 80px !important;
             text-align: center !important;
         }
 
-        .table tr th:nth-child(8)
-        {
+        .table tr th:nth-child(8) {
             width: 80px !important;
             max-width: 80px !important;
             min-width: 80px !important;
             text-align: center !important;
         }
 
-        .agregar
-        {
+        .agregar {
             margin-right: 15px;
         }
-        .radius
-        {
+
+        .radius {
             border-radius: 16px;
         }
-        .titulo-card
-        {
+
+        .titulo-card {
 
             text-align: left;
             font: 20px Roboto;
@@ -156,10 +141,10 @@
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('determinacion_alcance_agregar')
         <div class="row d-flex align-items-center">
-        <h5 class="col-12 titulo_general_funcion">Determinación de Alcance</h5>
-         <a type="button" class="col-md-2 btn btn-primary btn-lg ml-auto"
-         style="margin-right: 14px; font-size: 14px;" href="{{ route('admin.alcance-sgsis.create') }}">
-         Registrar Alcance</a>
+            <h5 class="col-12 titulo_general_funcion">Determinación de Alcance</h5>
+            <a type="button" class="col-md-2 btn btn-primary btn-lg ml-auto" style="margin-right: 14px; font-size: 14px;"
+                href="{{ route('admin.alcance-sgsis.create') }}">
+                Registrar Alcance</a>
         </div>
         <div class="mt-5 card radius">
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -189,9 +174,10 @@
             <table class="table table-striped datatable-AlcanceSgsi">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="min-width:150px !important;background-color:rgb(255, 255, 255); color:#414141;">Nombre del Alcance</th>
-                        <th style="min-width:100px; background-color:rgb(255, 255, 255); color:#414141;">Alcance</th>
-                        <th style="min-width:1000px;background-color:rgb(255, 255, 255); color:#414141;">Estatus</th>
+                        <th style="max-width:300px !important;background-color:rgb(255, 255, 255); color:#414141;">Nombre
+                            del Alcance</th>
+                        <th style="min-width:200px; background-color:rgb(255, 255, 255); color:#414141;">Alcance</th>
+                        <th style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">Estatus</th>
                     </tr>
                 </thead>
             </table>
@@ -203,8 +189,7 @@
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            let dtButtons = [
-                {
+            let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Alcance SGSIS ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -388,8 +373,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.alcance-sgsis.index') }}",
-                columns: [
-                    {
+                columns: [{
                         data: 'nombre',
                         name: 'nombre',
                     },

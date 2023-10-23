@@ -1,64 +1,86 @@
 @extends('layouts.admin')
 @section('content')
-
-<style>
-    .radius
-        {
+    <style>
+        .radius {
             border-radius: 16px;
+            box-shadow: none;
         }
-        .titulo-card
-        {
 
+        .titulo-card {
             text-align: left;
             font: 20px Roboto;
             color: #606060;
         }
-</style>
+
+        .boton-cancelar {
+            background-color: white;
+            border-color: #057BE2;
+            font: 14px Roboto;
+            color: #057BE2;
+            border-radius: 4px;
+            width: 148px;
+            height: 48px;
+            align-content: center;
+        }
+
+        .boton-enviar {
+            background-color: #057BE2;
+            border-color: #057BE2;
+            font: 14px Roboto;
+            color: white;
+            border-radius: 4px;
+            width: 148px;
+            height: 48px;
+        }
+    </style>
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
     <h5 class="col-12 titulo_general_funcion"> Registrar: Determinación de Alcance</h5>
-        <div class="card-body" style="background-color: #5397D5;">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="{{asset('assets/Imagen 2@2x.png')}}" alt="jpg" style="margin: 11px 10px 10px 10px"
-                     class="img-fluid">
+    <div class="card-body radius" style="background-color: #5397D5;">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="" class="img-fluid">
+            </div>
+            <div class="col-md-10">
+                <div style="font:20px Segoe UI;color:white;" class="mr-1">
+                    ¿Qué es? Determinación de Alcance
                 </div>
-                <div class="col-md-10 mt-4">
-                    <div style="font:20px Segoe UI;color:white;" class="mr-1">
-                        ¿Qué es? Determinación de Alcance
-                    </div>
-                    <div style="font: 14px Segoe UI;color:white;"class="mt-3 mr-1">
-                    Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los límites del proyecto.
-                    </div>
-                    <div style="font: 12px Segoe UI;color:white;"class="mr-5 mt-4 mb-4">
-                        Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya que ayuda a evitar
-                        la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una comprensión clara de lo que se espera.
-                    </div>
+                <div style="font: 14px Segoe UI;color:white;"class="mt-3 mr-1">
+                    Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
+                    límites del proyecto.
+                </div>
+                <div style="font: 12px Segoe UI;color:white;"class="mr-5 mt-2 mb-3">
+                    Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
+                    que ayuda a evitar
+                    la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
+                    comprensión clara de lo que se espera.
                 </div>
             </div>
         </div>
+    </div>
 
-    <div class="mt-4 card">
+    <div class="mt-4 card radius">
 
-        <div class="card-body radius">
+        <div class="card-body">
             <h5 class="titulo-card">Alcance</h5>
             <hr>
             <form method="POST" action="{{ route('admin.alcance-sgsis.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <div class="form-group">
-                        <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre de Alcance</label>
-                        <input type="text" class="form-control" id="nombre"  name="nombre"
-                        value="{{ old('nombre') }}" required>
-                            @if ($errors->has('nombre'))
+                        <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre de
+                            Alcance</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}"
+                            required>
+                        @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
                             </div>
                         @endif
                     </div>
 
-                    <label class="required" for="alcancesgsi"> <i class="fas fa-shield-alt iconos-crear"></i>Alcance </label><i
-                        class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                    <label class="required" for="alcancesgsi"> <i class="fas fa-shield-alt iconos-crear"></i>Alcance
+                    </label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                         title="Actividad clave que determina la base necesaria para las actividades de implementación del SGSI."></i>
                     <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }}" name="alcancesgsi"
                         id="alcancesgsi">{{ old('alcancesgsi') }}</textarea>
@@ -71,8 +93,9 @@
 
                 <div class="row">
 
-                    <div class="form-group col-sm-4">
-                        <label class="required" for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de
+                    <div class="form-group col-sm-6">
+                        <label class="required" for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i>
+                            Fecha de
                             publicación</label>
                         <input required class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
                             type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
@@ -84,24 +107,26 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-sm-4">
-                        <label class="required" for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de entrada en
+                    {{-- <div class="form-group col-sm-4">
+                        <label class="required" for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+                            entrada en
                             vigor</label>
-                        <input required class="form-control {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}" type="date"
-                            name="fecha_entrada" id="fecha_entrada" min="1945-01-01"
+                        <input required class="form-control {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}"
+                            type="date" name="fecha_entrada" id="fecha_entrada" min="1945-01-01"
                             value="{{ old('fecha_entrada') }}">
                         @if ($errors->has('fecha_entrada'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_entrada') }}
                             </div>
                         @endif
-                    </div>
+                    </div> --}}
 
-                    <div class="form-group col-sm-4">
-                        <label class="required" for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+                    <div class="form-group col-sm-6">
+                        <label class="required" for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i>Fecha
+                            de
                             revisión</label>
-                        <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}" type="date"
-                            name="fecha_revision" id="fecha_revision" min="1945-01-01"
+                        <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
+                            type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
                             value="{{ old('fecha_revision') }}">
                         @if ($errors->has('fecha_revision'))
                             <div class="invalid-feedback">
@@ -110,85 +135,17 @@
                         @endif
                     </div>
                 </div>
-
-
-                <div class="row">
-                    <div class="mt-1 form-group col-12">
-                        <b>Revisó alcance:</b>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label class="required" for="id_reviso_alcance"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                        <select required class="form-control select2 {{ $errors->has('reviso_alcance') ? 'is-invalid' : '' }}"
-                            name="id_reviso_alcance" id="id_reviso_alcance">
-                            <option disabled selected>Seleccionar colaborador</option>
-                            @foreach ($empleados as $empleado)
-                                <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
-                                    data-area="{{ $empleado->area->area }}"
-                                    {{ old('id_reviso_alcance') == $empleado->id ? ' selected="selected"' : '' }}>
-                                    {{ $empleado->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('id_reviso_alcance'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_reviso_alcance') }}
-                            </div>
-                        @endif
-                    </div>
-
-
-                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                        <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                        <div class="form-control" id="puesto_reviso" readonly></div>
-                    </div>
-
-
-                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                        <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                        <div class="form-control" id="area_reviso" readonly></div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label class="required" for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
-                        <select required
-                        class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
-                        name="normas[]" id="controles" multiple="multiple">
-                        <option value disabled>
-                            Selecciona una opción</option>
-                        @foreach ($normas as $norma)
-                        <option value="{{ $norma->id }}" data-area="{{ $norma->norma }}"
-                            {{ old('norma') == $norma->id ? ' selected="selected"' : '' }}>
-                            {{ $norma->norma }}
-                        </option>
-                        @endforeach
-                        </select>
-                            @if ($errors->has('norma'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('normas') }}
-                                </div>
-                            @endif
-                    </div>
-                </div>
-
-
-                <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.alcance-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
-            </form>
         </div>
+        </form>
     </div>
-
-
-
+    <div class="text-right form-group col-12">
+        <a type="button" href="{{ route('admin.alcance-sgsis.index') }}" class="btn boton-cancelar">
+            Cancelar
+        </a>
+        <button type="button" class="btn boton-enviar" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
 @endsection
 
 @section('scripts')
@@ -277,12 +234,10 @@
         })
 
         function recortarTexto(texto, length = 30) {
-        let trimmedString = texto?.length > length ?
-            texto.substring(0, length - 3) + "..." :
-            texto;
-        return trimmedString;
-    }
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
     </script>
-
-
 @endsection
