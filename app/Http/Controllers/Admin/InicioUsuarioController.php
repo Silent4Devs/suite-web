@@ -55,9 +55,10 @@ class InicioUsuarioController extends Controller
 {
     public function index()
     {
+        abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $hoy = Carbon::now();
         $hoy->toDateString();
-        abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $usuario = User::getCurrentUser();
         $usuarioVinculadoConEmpleado = false;
@@ -132,8 +133,8 @@ class InicioUsuarioController extends Controller
         $empleado = $usuario->empleado;
         $recursos = collect();
         $eventos = Calendario::getAll();
-        $oficiales = CalendarioOficial::get();
-        $cumples_aniversarios = Empleado::with('area')->alta()->get();
+        $oficiales = CalendarioOficial::getAll();
+        $cumples_aniversarios = Empleado::getAltaEmpleadosWithArea();
         $mis_quejas = collect();
         $mis_quejas_count = 0;
         $mis_denuncias = collect();
@@ -169,7 +170,7 @@ class InicioUsuarioController extends Controller
                 $query->where('empleados.id', $empleado->id);
             })->where('fecha_fin', '>=', Carbon::now()->toDateString())->count();
         }
-        $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
+        $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         $revisiones = [];
         $mis_documentos = [];
         $contador_revisiones = 0;
@@ -187,7 +188,7 @@ class InicioUsuarioController extends Controller
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
 
             $contador_revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->where('estatus', Documento::SOLICITUD_REVISION)->count();
-            $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $usuario->empleado->id)->get();
+            $mis_documentos = Documento::getWithMacroproceso($usuario->empleado->id);
             //Evaluaciones
             $last_evaluacion = Evaluacion::select('id', 'nombre', 'fecha_inicio', 'fecha_fin')->latest()->first();
             if ($last_evaluacion) {
@@ -215,10 +216,10 @@ class InicioUsuarioController extends Controller
             if ($usuario->empleado->children->count()) {
                 $esLider = true;
                 $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
-                $equipo_a_cargo = Empleado::find($equipo_a_cargo);
+                $equipo_a_cargo = Empleado::getAll()->find($equipo_a_cargo);
             } else {
                 $equipo_trabajo = $usuario->empleado->empleados_misma_area;
-                $equipo_trabajo = Empleado::find($equipo_trabajo);
+                $equipo_trabajo = Empleado::getAll()->find($equipo_trabajo);
             }
             $supervisor = $usuario->empleado->supervisor;
         }
@@ -233,11 +234,13 @@ class InicioUsuarioController extends Controller
                 $cumpleaños_usuario = null;
             }
 
-            $cumpleaños_felicitados_like_contador = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
+            $felicitar = FelicitarCumpleaños::getAllWhereYear($usuario->empleado->id, $hoy->format('Y'));
 
-            $cumpleaños_felicitados_like_usuarios = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->get();
+            $cumpleaños_felicitados_like_contador = $felicitar->where('like', true)->count();
 
-            $cumpleaños_felicitados_comentarios = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->get();
+            $cumpleaños_felicitados_like_usuarios = $felicitar->where('like', true);
+
+            $cumpleaños_felicitados_comentarios = $felicitar->where('like', false)->where('comentarios', '!=', null);
         } else {
             $activos = false;
             $cumpleaños_usuario = null;
@@ -280,11 +283,11 @@ class InicioUsuarioController extends Controller
             // $solicitudes_pendientes = 1;
         }
 
-        $existsEmpleado = Empleado::exists();
-        $existsOrganizacion = Organizacion::exists();
-        $existsAreas = Area::exists();
-        $existsPuesto = Puesto::exists();
-        $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
+        $existsEmpleado = Empleado::getExists();
+        $existsOrganizacion = Organizacion::getExists();
+        $existsAreas = Area::getExists();
+        $existsPuesto = Puesto::getExists();
+        $existsVinculoEmpleadoAdmin = User::getExists();
 
         return view('admin.inicioUsuario.index', compact(
             'solicitudes_pendientes',
@@ -1201,7 +1204,7 @@ class InicioUsuarioController extends Controller
 
     public function expediente($id_empleado)
     {
-        $empleado = Empleado::find($id_empleado);
+        $empleado = Empleado::getAll()->find($id_empleado);
 
         $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->get();
 
@@ -1244,7 +1247,7 @@ class InicioUsuarioController extends Controller
         if ($request->name == 'file') {
             $fileName = time() . $request->file('value')->getClientOriginalName();
             // dd($request->file('value'));
-            $empleado = Empleado::find($request->empleadoId);
+            $empleado = Empleado::getAll()->find($request->empleadoId);
             $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 

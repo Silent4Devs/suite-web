@@ -166,7 +166,7 @@ class ConfigurarSoporteController extends Controller
     public function getgetEmployeeData(Request $request)
     {
         // return response()->json(['test' => 'test']);
-        $empleados = Empleado::find($request->id);
+        $empleados = Empleado::getAll()->find($request->id);
 
         // dd($empleados);
         // return response()->json([$empleados->extension]);

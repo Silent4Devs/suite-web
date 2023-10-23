@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Documento extends Model implements Auditable
 {
@@ -60,6 +62,21 @@ class Documento extends Model implements Auditable
     public function searchableAs()
     {
         return 'posts_index';
+    }
+
+    //Redis methods
+    public static function getLastFiveWithMacroproceso()
+    {
+        return Cache::remember('Documentos:Documentos_last_five_macroprocesos', 3600 * 4, function () {
+            return self::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
+        });
+    }
+
+    public static function getWithMacroproceso($empleado_id)
+    {
+        return Cache::remember('Documentos:Documentos_all_macroprocesos_' . $empleado_id, 3600 * 4, function () use ($empleado_id) {
+            return self::where('elaboro_id', $empleado_id)->get();
+        });
     }
 
     public function getNoVistasAttribute()

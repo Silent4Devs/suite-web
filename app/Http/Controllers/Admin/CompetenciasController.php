@@ -281,7 +281,7 @@ class CompetenciasController extends Controller
             'año.required' => 'El campo fecha inicio es requerido',
         ]);
 
-        $empleado = Empleado::find(intval($empleado));
+        $empleado = Empleado::getAll()->find(intval($empleado));
         $curso = CursosDiplomasEmpleados::create([
             'empleado_id' => $empleado->id,
             'curso_diploma' => $request->curso_diploma,

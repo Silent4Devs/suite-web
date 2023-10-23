@@ -917,7 +917,7 @@ class EmpleadoController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado = Empleado::find(intval($id));
+        $empleado = Empleado::getAll()->find(intval($id));
         $empleados = Empleado::getaltaAll();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::getAll();
@@ -944,7 +944,7 @@ class EmpleadoController extends Controller
         // dd($idiomas);
         // dd(Empleado::find(63));
         $id_empleado = $id;
-        $empleado = Empleado::find($id_empleado);
+        $empleado = Empleado::getAll()->find($id_empleado);
         $lista_docs = $this->getListaDocumentos($id_empleado);
         $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('archivado', false)->get();
         // expediente ------------------------------------------------------------
@@ -1075,7 +1075,7 @@ class EmpleadoController extends Controller
         ]);
 
         $this->validateDynamicForms($request);
-        $empleado = Empleado::find($id);
+        $empleado = Empleado::getAll()->find($id);
         $image = $empleado->foto;
         if ($request->snap_foto && $request->file('foto')) {
             if ($request->snap_foto) {

@@ -17,7 +17,7 @@ class AgregarObjetivosParticipanteEv360Seeder extends Seeder
      */
     public function run()
     {
-        $evaluado = Empleado::find(253);
+        $evaluado = Empleado::getAll()->find(253);
         $evaluacion = Evaluacion::find(21);
         $evaluadores_objetivos = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
             ->where('evaluado_id', $evaluado->id)->get();

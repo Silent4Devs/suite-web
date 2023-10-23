@@ -138,25 +138,25 @@
                                     $color = 'rgb(253, 171, 61)';
                                     break;
                                 case 'STATUS_DONE':
-                                    $color="rgb(0, 200, 117)";
+                                    $color = 'rgb(0, 200, 117)';
                                     $estatus = 'Completado';
                                     break;
                                 case 'STATUS_FAILED':
                                     $estatus = 'Con Retraso';
-                                    $color="rgb(226, 68, 92)";
+                                    $color = 'rgb(226, 68, 92)';
                                     break;
                                 case 'STATUS_SUSPENDED':
                                     $estatus = 'Suspendido';
-                                    $color="#aaaaaa";
+                                    $color = '#aaaaaa';
                                     break;
                                 case 'STATUS_WAITING':
                                     $estatus = 'En Espera';
-                                    $color="#F79136";
+                                    $color = '#F79136';
 
                                     break;
                                 case 'STATUS_UNDEFINED':
                                     $estatus = 'Indefinido';
-                                    $color="#00b1e1";
+                                    $color = '#00b1e1';
                                     break;
                                 default:
                                     $estatus = 'Indefinido';
@@ -177,7 +177,7 @@
                             <td>
                                 @foreach ($actividad->assigs as $assig)
                                     @php
-                                        $empleado = App\Models\Empleado::find(intval($assig->resourceId));
+                                        $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
                                     @endphp
                                     <img src="{{ $empleado->avatar_ruta }}" id="res_{{ $empleado->id }}"
                                         alt="{{ $empleado->name }}" title="{{ $empleado->name }}"
@@ -188,7 +188,7 @@
                                 @php
                                     $asignados = [];
                                     foreach ($actividad->assigs as $assig) {
-                                        $empleado = App\Models\Empleado::find(intval($assig->resourceId));
+                                        $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
                                         array_push($asignados, $empleado->id);
                                     }
                                 @endphp
