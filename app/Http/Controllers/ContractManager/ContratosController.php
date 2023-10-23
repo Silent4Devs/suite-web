@@ -50,7 +50,7 @@ class ContratosController extends AppBaseController
     public function index(Request $request)
     {
         abort_if(Gate::denies('katbol_contratos_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario_actual = Empleado::find(User::getCurrentUser()->empleado->id);
+        $usuario_actual = Empleado::getAll()->find(User::getCurrentUser()->empleado->id);
         $areas = Area::getIdNameAll();
 
         $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'timesheet_clientes.nombre')

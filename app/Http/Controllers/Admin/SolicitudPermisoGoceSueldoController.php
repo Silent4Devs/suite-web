@@ -99,8 +99,11 @@ class SolicitudPermisoGoceSueldoController extends Controller
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
         ]);
-        $supervisor = Empleado::find($request->autoriza);
-        $solicitante = Empleado::find($request->empleado_id);
+
+        $empleados = Empleado::getAll();
+
+        $supervisor = $empleados->find($request->autoriza);
+        $solicitante = $empleados->find($request->empleado_id);
         $solicitud = SolicitudPermisoGoceSueldo::create($request->all());
         Mail::to(removeUnicodeCharacters($supervisor->email))->send(new MailSolicitudPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
 
@@ -146,8 +149,10 @@ class SolicitudPermisoGoceSueldoController extends Controller
             'aprobacion' => 'required|int',
         ]);
         $solicitud = SolicitudPermisoGoceSueldo::find($id);
-        $supervisor = Empleado::find($request->autoriza);
-        $solicitante = Empleado::find($request->empleado_id);
+        $empleados = Empleado::getAll();
+
+        $supervisor = $empleados->find($request->autoriza);
+        $solicitante = $empleados->find($request->empleado_id);
         $solicitud->update($request->all());
 
         Mail::to(removeUnicodeCharacters($solicitante->email))->send(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
