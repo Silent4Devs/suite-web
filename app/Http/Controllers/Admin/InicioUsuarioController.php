@@ -224,7 +224,7 @@ class InicioUsuarioController extends Controller
             $supervisor = $usuario->empleado->supervisor;
         }
 
-        $panel_rules = PanelInicioRule::select('nombre', 'n_empleado', 'area', 'jefe_inmediato', 'puesto', 'perfil', 'fecha_ingreso', 'genero', 'estatus', 'email', 'telefono', 'sede', 'direccion', 'cumpleaños')->get()->first();
+        $panel_rules = PanelInicioRule::getAll();
 
         if (!is_null($usuario->empleado)) {
             $activos = Activo::select('*')->where('id_responsable', '=', $usuario->empleado->id)->get();
