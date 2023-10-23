@@ -76,6 +76,7 @@
 
 @section('scripts')
     @parent
+
     <script>
        function mostrarAlerta(url) {
         Swal.fire({
@@ -95,78 +96,30 @@
                 }
             });
     }
+
+    function mostrarAlerta2(url) {
+         Swal.fire({
+                 title: '¿Estás seguro?',
+                 text: 'No podrás deshacer esta acción',
+                 icon: 'warning',
+                 showCancelButton: true,
+                 confirmButtonText: 'Sí, archivar',
+                 cancelButtonText: 'Cancelar'
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     // Coloca aquí la lógica para eliminar el elemento
+                     // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
+                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
+                     Swal.fire('Archivado!', 'El elemento ha sido archivado.', 'success');
+                     window.location.href = url;
+                 }
+             });
+     }
     </script>
 
 
     <script type="text/javascript">
         (function() {
-
-            window.AbrirModal = function(user_id) {
-                let errores = document.querySelectorAll('.errores');
-                errores.forEach(element => {
-                    element.innerHTML = "";
-                });
-                $(`#vincularEmpleado${user_id}`).modal('show');
-                $('.select2').select2({
-                    'theme': 'bootstrap4',
-                    'dropdownParent': $(`#vincularEmpleado${user_id}`)
-                });
-            }
-
-            window.VincularEmpleado = function(nombre, user_id) {
-                console.log(user_id);
-                let n_empleado = document.getElementById(`n_empleado${user_id}`).value;
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/users/vincular",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        n_empleado,
-                        user_id
-                    },
-                    dataType: "JSON",
-                    beforeSend: function() {
-                        Swal.fire(
-                            '¡Estamos Vinculando!',
-                            `El usuario: ${nombre} está siendo vinculado`,
-                            'info'
-                        )
-                    },
-                    success: function(response) {
-                        Swal.fire(
-                            'Usuario Vinculado',
-                            `El usuario: ${nombre} ha sido vinculado`,
-                            'success'
-                        )
-                        table.ajax.reload();
-                        $(`#vincularEmpleado${user_id}`).modal('hide')
-                        $('.modal-backdrop').hide();
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1000);
-                    },
-                    error: function(error) {
-                        $.each(error.responseJSON.errors, function(indexInArray,
-                            valueOfElement) {
-                            $(`span.${indexInArray}_error`).text(valueOfElement[0]);
-                            console.log(indexInArray, valueOfElement);
-                        });
-                        Swal.fire(
-                            'Ocurrió un error',
-                            `Error: ${error.responseJSON.message}`,
-                            'error'
-                        )
-                    }
-                });
-            }
-
-        });
-
-
-
-
 
             // Search function
             $.fn.dataTable.Api.register('alphabetSearch()', function(searchTerm) {
@@ -397,8 +350,6 @@
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>"
             });
-
-
         });
     </script>
 @endsection
