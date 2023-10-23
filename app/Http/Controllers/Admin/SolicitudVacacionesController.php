@@ -252,8 +252,10 @@ class SolicitudVacacionesController extends Controller
             'autoriza' => 'required|int',
         ]);
         //envio de email
-        $supervisor = Empleado::find($request->autoriza);
-        $solicitante = Empleado::find($request->empleado_id);
+        $empleados = Empleado::getAll();
+
+        $supervisor = $empleados->find($request->autoriza);
+        $solicitante = $empleados->find($request->empleado_id);
 
         $solicitud = SolicitudVacaciones::create($request->all());
 
@@ -298,8 +300,9 @@ class SolicitudVacacionesController extends Controller
         ]);
 
         $solicitud = SolicitudVacaciones::find($id);
-        $supervisor = Empleado::find($request->autoriza);
-        $solicitante = Empleado::find($request->empleado_id);
+        $empleados = Empleado::getAll();
+        $supervisor = $empleados->find($request->autoriza);
+        $solicitante = $empleados->find($request->empleado_id);
 
         $solicitud->update($request->all());
 

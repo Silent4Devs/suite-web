@@ -35,10 +35,9 @@ class UsersController extends Controller
         // $empleados = $empleadosNoAsignados->filter(function ($item) {
         //     return !User::where('n_empleado', $item->n_empleado)->exists();
         // })->values();
-        $empleados = Empleado::getIDaltaAll();
-        $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
-
-        return view('admin.users.index', compact('empleados', 'existsVinculoEmpleadoAdmin'));
+        $existsVinculoEmpleadoAdmin = User::getExists();
+        $users = Empleado::getIDaltaAll();
+        return view('admin.users.index', compact('users', 'existsVinculoEmpleadoAdmin'));
     }
 
     public function getUsersIndex(Request $request)
@@ -119,16 +118,15 @@ class UsersController extends Controller
         return view('admin.users.show', compact('user'));
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
         abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $delete = $user->delete();
-        if ($delete) {
-            return response()->json(['sucess', true]);
-        }
+        $registro = User::find($id); // Donde $id es el ID del registro que deseas eliminar.
 
-        return response()->json(['error', true]);
+        $registro->delete();
+
+        return redirect()->route('admin.users.index');
     }
 
     public function massDestroy(MassDestroyUserRequest $request)

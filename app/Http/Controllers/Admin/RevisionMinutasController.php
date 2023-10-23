@@ -15,7 +15,7 @@ class RevisionMinutasController extends Controller
         if (!$minuta) {
             abort_if(!$minuta, 404);
         }
-        $empleado = Empleado::find(intval($revisionMinuta->empleado_id));
+        $empleado = Empleado::getAll()->find(intval($revisionMinuta->empleado_id));
 
         return view('externos.minutas.revisiones.edit', compact('minuta', 'empleado', 'revisionMinuta'));
     }

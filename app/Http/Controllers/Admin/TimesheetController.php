@@ -334,7 +334,7 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        $empleado = Empleado::find(User::getCurrentUser()->empleado->id);
+        $empleado = Empleado::getAll()->find(User::getCurrentUser()->empleado->id);
 
         // areas proyectos
         $proyectos_array = collect();

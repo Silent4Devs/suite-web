@@ -97,7 +97,7 @@ class BajaEmpleadoComponent extends Component
 
     public function obtenerDocumentosQueMeDebenAprobar()
     {
-        $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $this->empleado->id)->get();
+        $mis_documentos = Documento::getWithMacroproceso($this->empleado->id);
 
         return $mis_documentos;
     }
