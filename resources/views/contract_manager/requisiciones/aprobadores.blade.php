@@ -58,6 +58,11 @@
 @endsection
 @section('scripts')
     @parent
+    @if(session('mensaje'))
+    <script>
+        alert("{{ session('mensaje') }}");
+    </script>
+    @endif
     <script type="text/javascript">
         (function() {
 

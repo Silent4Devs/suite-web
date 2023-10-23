@@ -157,14 +157,15 @@ class ReporteAprobador extends Component
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
 
-        $this->aprobador = Empleado::find(User::getCurrentUser()->empleado->id);
+        $this->aprobador = Empleado::getAll()->find(User::getCurrentUser()->empleado->id);
         $empleados_list = $this->aprobador->children;
         $this->empleados_list_global = $this->aprobador->children;
 
         if ($this->habilitarTodos) {
             $equipo_a_cargo = $this->obtenerEquipo($this->aprobador->children);
-            $empleados_list = Empleado::find($equipo_a_cargo);
-            $this->empleados_list_global = Empleado::find($equipo_a_cargo);
+            $empleados = Empleado::getAll();
+            $empleados_list = $empleados->find($equipo_a_cargo);
+            $this->empleados_list_global = $empleados->find($equipo_a_cargo);
         }
         //calendario tabla
         $calendario_array = [];
@@ -452,7 +453,7 @@ class ReporteAprobador extends Component
 
         $this->times_empleado_horas = collect();
 
-        $this->empleado = Empleado::find($this->empleado_seleccionado_id);
+        $this->empleado = Empleado::getAll()->find($this->empleado_seleccionado_id);
 
         // calcular fechas de parametros en reporte empleado
         $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;

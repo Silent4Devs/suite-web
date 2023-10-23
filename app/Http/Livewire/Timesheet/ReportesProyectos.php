@@ -355,7 +355,7 @@ class ReportesProyectos extends Component
 
                 $h_total_tarea_total += $h_total_tarea;
 
-                $empleado = Empleado::find($hora->timesheet->empleado_id);
+                $empleado = Empleado::getAll()->find($hora->timesheet->empleado_id);
 
                 if (!$empleados->contains('id', $empleado->id)) {
                     $empleados->push([

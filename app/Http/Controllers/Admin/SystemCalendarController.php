@@ -74,7 +74,7 @@ class SystemCalendarController extends Controller
         }
 
         $eventos = Calendario::getAll();
-        $oficiales = CalendarioOficial::get();
+        $oficiales = CalendarioOficial::getAll();
         $contratos = Contrato::select('nombre_servicio', 'fecha_inicio', 'fecha_fin')->get();
 
         $facturas = Factura::select('concepto', 'fecha_recepcion', 'fecha_liberacion')->get();
