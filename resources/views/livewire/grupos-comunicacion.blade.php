@@ -6,7 +6,7 @@
                     <i class="fas fa-users iconos-crear"></i> Público objetivo <small class="text-danger"></small>
                 </label>
                 <select class="mt-2 form-control {{ $errors->has('evaluados_objetivo') ? 'is-invalid' : '' }}"
-                    wire:model="evaluados_objetivo" id="evaluados_objetivo" name="evaluados_objetivo"
+                    wire:model.lazy="evaluados_objetivo" id="evaluados_objetivo" name="evaluados_objetivo"
                     wire:change="habilitarSelectAlternativo()">
                     <option value="" selected>-- Seleciona una opción --</option>
                     <option value="all">Toda la empresa</option>
