@@ -143,29 +143,29 @@ services:
     networks:
       - tabantajnetwork
 
-  dd-agent:
-    image: gcr.io/datadoghq/agent:7
-    container_name: dd-agent
-    restart: unless-stopped
-    tty: true
-    environment:
-      - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
-      - DD_SITE="us5.datadoghq.com"
-      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
-      - DD_ENV=prod
-      - DD_APM_ENABLED=true
-      - DD_APM_NON_LOCAL_TRAFFIC=true
-      - DD_SYSTEM_PROBE_ENABLED=true
-      - DD_APM_RECEIVER_SOCKET=/opt/datadog/apm/inject/run/apm.socket
-      - DD_DOGSTATSD_SOCKET=/opt/datadog/apm/inject/run/dsd.socket
-    volumes:
-      - /opt/datadog/apm:/opt/datadog/apm
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /proc/:/host/proc/:ro
-      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-    networks:
-      - tabantajnetwork
+  # dd-agent:
+  #   image: gcr.io/datadoghq/agent:7
+  #   container_name: dd-agent
+  #   restart: unless-stopped
+  #   tty: true
+  #   environment:
+  #     - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
+  #     - DD_SITE="us5.datadoghq.com"
+  #     - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+  #     - DD_ENV=prod
+  #     - DD_APM_ENABLED=true
+  #     - DD_APM_NON_LOCAL_TRAFFIC=true
+  #     - DD_SYSTEM_PROBE_ENABLED=true
+  #     - DD_APM_RECEIVER_SOCKET=/opt/datadog/apm/inject/run/apm.socket
+  #     - DD_DOGSTATSD_SOCKET=/opt/datadog/apm/inject/run/dsd.socket
+  #   volumes:
+  #     - /opt/datadog/apm:/opt/datadog/apm
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - /proc/:/host/proc/:ro
+  #     - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+  #     - /var/lib/docker/containers:/var/lib/docker/containers:ro
+  #   networks:
+  #     - tabantajnetwork
 
   # prometheus-tabantaj:
   #   image: prom/prometheus
