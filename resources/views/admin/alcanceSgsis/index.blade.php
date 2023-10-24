@@ -122,7 +122,8 @@
             text-align: center !important;
         }
 
-        .agregar {
+        .agregar
+        {
             margin-right: 15px;
         }
 
@@ -189,7 +190,8 @@
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            let dtButtons = [{
+            let dtButtons = [
+                {
                     extend: 'csvHtml5',
                     title: `Alcance SGSIS ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',

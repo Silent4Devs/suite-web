@@ -107,12 +107,23 @@
             margin: 0 !important;
             margin-left: 5px !important;
         }
+        .radius
+        {
+            border-radius: 16px;
+        }
+
+        .titulo-card
+        {
+            text-align: left;
+            font: 20px Roboto;
+            color: #606060;
+        }
 
     </style>
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
     <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
-    <div class="mt-5 card">
+    <div class="mt-5 card radius">
         @can('matriz_requisitos_legales_agregar')
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Matriz de Requisitos Legales</strong></h3>
@@ -129,7 +140,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>{{ trans('cruds.matrizRequisitoLegale.fields.id') }}</th>
-                        <th style="min-width: 250px;">Nombre del requisito</th>
+                        <th style="min-width: 250px;">Nombre del requisito legal</th>
                         <th style="min-width: 250px;">Obligación del cumplimiento</th>
                         <th>Alcance&nbsp;y&nbsp;grado&nbsp;de&nbsp;aplicabilidad</th>
                         {{-- <th style="min-width: 200px;">Medio&nbsp;de&nbsp;publicación</th>
@@ -161,26 +172,27 @@
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
+            let dtButtons = [
+                // {
+                //     extend: 'csvHtml5',
+                //     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar CSV',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible']
+                //     }
+                // },
+                // {
+                //     extend: 'excelHtml5',
+                //     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar Excel',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible']
+                //     }
+                // },
                 // {
                 //     extend: 'pdfHtml5',
                 //     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
@@ -197,35 +209,35 @@
                 //         doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
                 //     }
                 // },
-                {
-                    extend: 'print',
-                    title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                }
+                // {
+                //     extend: 'print',
+                //     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Imprimir',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible']
+                //     }
+                // },
+                // {
+                //     extend: 'colvis',
+                //     text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Seleccionar Columnas',
+                // },
+                // {
+                //     extend: 'colvisGroup',
+                //     text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     show: ':hidden',
+                //     titleAttr: 'Ver todo',
+                // },
+                // {
+                //     extend: 'colvisRestore',
+                //     text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Restaurar a estado anterior',
+                // }
 
             ];
             @can('matriz_requisitos_legales_agregar')
@@ -239,29 +251,29 @@
                 window.location.href = url;
                 }
                 };
-                let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-matriz_requisitos_legales') }}",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
-                };
-                let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#csvImportModal').modal('show');
-                }
-                };
+                // let btnExport = {
+                // text: '<i class="fas fa-download"></i>',
+                // titleAttr: 'Descargar plantilla',
+                // className: "btn btn_cargar" ,
+                // url:"{{ route('descarga-matriz_requisitos_legales') }}",
+                // action: function(e, dt, node, config) {
+                // let {
+                // url
+                // } = config;
+                // window.location.href = url;
+                // }
+                // };
+                // let btnImport = {
+                // text: '<i class="fas fa-file-upload"></i>',
+                // titleAttr: 'Importar datos',
+                // className: "btn btn_cargar",
+                // action: function(e, dt, node, config) {
+                // $('#csvImportModal').modal('show');
+                // }
+                // };
                 dtButtons.push(btnAgregar);
-                dtButtons.push(btnExport);
-                dtButtons.push(btnImport);
+                // dtButtons.push(btnExport);
+                // dtButtons.push(btnImport);
             @endcan
 
             let dtOverrideGlobals = {

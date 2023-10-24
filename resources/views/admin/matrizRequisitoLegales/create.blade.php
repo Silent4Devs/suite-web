@@ -1,14 +1,87 @@
 @extends('layouts.admin')
 @section('content')
     <style>
-        .select2-search.select2-search--inline {
+        .select2-search.select2-search--inline
+        {
             margin-top: -20px !important;
+        }
+
+        .titulo-matriz
+        {
+            text-align: left;
+            font: 20px Roboto;
+            letter-spacing: 0px;
+            color: #606060;
+            opacity: 1;
+        }
+
+        .radius
+        {
+            border-radius: 16px;
+            box-shadow: none;
+        }
+
+        .titulo-card
+        {
+            text-align: left;
+            font: 20px Roboto;
+            color: #306BA9;
+        }
+
+        .boton-cancelar
+        {
+            background-color: white;
+            border-color: #057BE2;
+            font: 14px Roboto;
+            color: #057BE2;
+            border-radius: 4px;
+            width: 148px;
+            height: 48px;
+            align-content: center;
+        }
+
+        .boton-enviar
+        {
+            background-color: #057BE2;
+            border-color: #057BE2;
+            font: 14px Roboto;
+            color: white;
+            border-radius: 4px;
+            width: 148px;
+            height: 48px;
+        }
+        .borde-color
+        {
+            border-radius:8px;
+            border-color: black;
+            background-color: white;
         }
 
     </style>
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Matriz de Requisitos Legales</h5>
-    <div class="mt-4 card">
+    <h5 class="col-12 titulo-matriz">Matriz de Requisitos Legales y Regulatorios</h5>
+    <div class="card radius" style="background-color: #5397D5;">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:150px; height:137px;" class="mt-3 mb-3 ml-3 img-fluid">
+            </div>
+            <div class="col-md-10 mt-3">
+                <div style="font:20px Segoe UI;color:white;" class="mr-2">
+                    ¿Qué es? Matriz de Requisitos Legales y Regulatorios
+                </div>
+                <div style="font: 14px Segoe UI;color:white;"class="mt-3 mr-2">
+                    Es una herramienta utilizada en el ámbito empresarial y de gestión para
+                    rastrear y gestionar los requisitos legales y regulaciones aplicables a una organización.
+                </div>
+                <div style="font: 12px Segoe UI;color:white;"class="mr-5 mt-3 mb-3">
+                    Esta matriz tiene como objetivo principal ayudar a las empresas a garantizar que están
+                    cumpliendo con todas las leyes, regulaciones y normativas relevantes que se aplican a sus
+                    operaciones.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 card" style="border-radius: 8px">
         {{-- <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px">
         <h3 class="mb-1 text-center text-white"><strong>Registrar:</strong> Matriz de Requisitos Legales </h3>
     </div> --}}
@@ -18,13 +91,15 @@
                 class="row">
                 @csrf
                 <div class="form-group col-12">
-                    <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
-                        Requisito Legal</p>
+                    <p class="titulo-card" style="">
+                        Requisito Legal
+                    </p>
+                    <hr>
                 </div>
 
                 <div class="form-group col-12">
-                    <label class="required" for="nombrerequisito"> <i class="fas fa-clipboard-list iconos-crear"></i>
-                        Fundamento</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                    <label class="form-label required" for="nombrerequisito"> <i class="fas fa-clipboard-list iconos-crear"></i>
+                        Nombre del requisito legal, regulatorio, contractual o estatutario</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                         title="Nombre de la ley,norma,reglamento o documento donde se encuentra el requisito"></i>
                     <input required class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }}" type="text"
                         name="nombrerequisito" id="nombrerequisito" value="{{ old('nombrerequisito', '') }}">
@@ -34,39 +109,33 @@
                         </div>
                     @endif
                 </div>
+                <div>
+                    <div class="form-outline border border-dark" style="border-radius: 8px;">
+                        <input type="text" id="form12" class="form-control borde-color" />
+                        <label class="form-label required borde-color" for="nombrerequisito"> <i class="fas fa-clipboard-list iconos-crear"></i>
+                            Nombre del requisito legal, regulatorio, contractual o estatutario</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                            title="Nombre de la ley,norma,reglamento o documento donde se encuentra el requisito"></i>
+                      </div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="formacumple">
+                        <i class="fas fa-file-invoice iconos-crear"></i> Cláusula, sección o apartado aplicable*
+                    </label>
+                    <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                       title="Sección, artículo, fracción, fragmento, párrafo, donde se indique el requisito"></i>
 
-                <div class="form-group col-sm-8">
-                    <label for="formacumple"><i class="fas fa-file-invoice iconos-crear"></i> Apartado</label><i
-                        class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                        title="Sección,artículo,fracción,fragmento,párrafo,,donde se indique el requisito"></i>
-                    <input class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }}" type="text"
-                        name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}">
+                    <div class="form-outline">
+                        <input type="text" class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }}" name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}" aria-describedby="textExample1" />
+                        <label class="form-label" for="formacumple">Cláusula, sección o apartado aplicable*</label>
+                    </div>
+
                     @if ($errors->has('formacumple'))
                         <div class="invalid-feedback">
                             {{ $errors->first('formacumple') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.formacumple_helper') }}</span>
-                </div>
 
-                <div class="form-group col-sm-4">
-                    <label class="required"> <i class="fas fa-bars iconos-crear"></i> Tipo</label><i
-                        class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                        title="Seleccionar el tipo de requisito según el origen de la obligación"></i>
-                    <select required class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo">
-                        <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
-                            {{ trans('global.pleaseSelect') }}</option>
-                        @foreach (App\Models\MatrizRequisitoLegale::TIPO_SELECT as $key => $label)
-                            <option value="{{ $key }}"
-                                {{ old('tipo', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('tipo'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('tipo') }}
-                        </div>
-                    @endif
+                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.formacumple_helper') }}</span>
                 </div>
 
 
@@ -84,7 +153,7 @@
                     @endif
                 </div>
 
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-6">
                     <label for="fechaexpedicion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de
                         publicación</label>
                     <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}"
@@ -98,7 +167,7 @@
                     <span
                         class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-6">
                     <label for="fechavigor"> <i class="far fa-calendar-alt iconos-crear"></i>
                         {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
                     <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
@@ -113,29 +182,9 @@
                         class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
                 </div>
 
-                <div class="form-group col-sm-4">
-                    <label class="required" for="periodicidad_cumplimiento"><i class="far fa-clock iconos-crear"></i>
-                        Periodicidad de cumplimiento</label>
-                    <select required class="form-control {{ $errors->has('periodicidad_cumplimiento') ? 'is-invalid' : '' }}"
-                        name="periodicidad_cumplimiento" id="periodicidad_cumplimiento">
-                        <option value disabled {{ old('periodicidad_cumplimiento', null) === null ? 'selected' : '' }}>
-                            {{ trans('global.pleaseSelect') }}</option>
-                        @foreach (App\Models\MatrizRequisitoLegale::PERIODICIDAD_SELECT as $key => $label)
-                            <option value="{{ $key }}"
-                                {{ old('periodicidad_cumplimiento', '') === (string) $key ? 'selected' : '' }}>
-                                {{ $label }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('periodicidad_cumplimiento'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('periodicidad_cumplimiento') }}
-                        </div>
-                    @endif
-                </div>
-
                 <div class="form-group col-sm-12">
                     <label class="required" for="requisitoacumplir"> <i
-                            class="fas fa-clipboard-list iconos-crear"></i> Requisito(s) a cumplir</label>
+                            class="fas fa-clipboard-list iconos-crear"></i> Descripción del requisito a cumplir*</label>
                     <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }}" name="requisitoacumplir"
                         id="requisitoacumplir">{{ old('requisitoacumplir') }}</textarea>
                     @if ($errors->has('requisitoacumplir'))
@@ -143,48 +192,36 @@
                             {{ $errors->first('requisitoacumplir') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}</span>
-                </div>
-
-                <div class="form-group col-sm-12">
-                    <label for="alcance"><i class="fas fa-binoculars iconos-crear"></i> Alcance y grado de
-                        aplicabilidad</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                        title="Especificar el alcance y grado de aplicabilidad del requisito hacia la organización "></i>
-                    <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" name="alcance"
-                        id="alcance">{{ old('alcance') }}</textarea>
-                    @if ($errors->has('alcance'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('alcance') }}
-                        </div>
-                    @endif
-                </div>
-
-                <div class="form-group col-sm-12">
-                    <label for="cumplimiento_organizacion"><i class="fas fa-clipboard-check iconos-crear"></i> Forma en que la
-                        organización cumple con el requisito</label><i class="fas fa-info-circle"
-                        style="font-size:12pt; float: right;" title="Especificar"></i>
-                    <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" name="cumplimiento_organizacion"
-                        id="cumplimiento_organizacion">{{ old('cumplimiento_organizacion') }}</textarea>
-                    @if ($errors->has('cumplimiento_organizacion'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('cumplimiento_organizacion') }}
-                        </div>
-                    @endif
-                </div>
-
-
-
-                <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
                 </div>
             </form>
+            <button type="button" class="btn btn-light" style="background-color: white; border-color:white; color:#057BE2;">
+                Añadir nuevo Requisito
+                <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
+            </button>
         </div>
     </div>
+    <div class="text-right form-group col-12">
+        <span
+        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
+        </span>
+        <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn_cancelar">Cancelar</a>
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
 @endsection
+@section('styles')
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet">
+
+    <!-- Otros estilos que puedas tener aquí -->
+    <link href="tu-archivo-de-estilos.css" rel="stylesheet">
+@endsection
+
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {

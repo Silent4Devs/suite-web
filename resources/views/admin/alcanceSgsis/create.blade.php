@@ -36,20 +36,20 @@
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
     <h5 class="col-12 titulo_general_funcion"> Registrar: Determinación de Alcance</h5>
-    <div class="card-body radius" style="background-color: #5397D5;">
+    <div class="card radius" style="background-color: #5397D5;">
         <div class="row">
             <div class="col-md-2">
-                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="" class="img-fluid">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:140px; height:117px;" class="mt-2 mb-2 ml-2 img-fluid">
             </div>
-            <div class="col-md-10">
-                <div style="font:20px Segoe UI;color:white;" class="mr-1">
+            <div class="col-md-10 mt-2">
+                <div style="font:20px Segoe UI;color:white;" class="mr-2">
                     ¿Qué es? Determinación de Alcance
                 </div>
-                <div style="font: 14px Segoe UI;color:white;"class="mt-3 mr-1">
+                <div style="font: 14px Segoe UI;color:white;"class="mt-3 mr-2">
                     Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
                     límites del proyecto.
                 </div>
-                <div style="font: 12px Segoe UI;color:white;"class="mr-5 mt-2 mb-3">
+                <div style="font: 12px Segoe UI;color:white;"class="mr-5 mt-3 mb-3">
                     Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
                     que ayuda a evitar
                     la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
