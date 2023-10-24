@@ -78,7 +78,6 @@
             -ms-transform: rotate(45deg);
             transform: rotate(45deg);
         }
-
     </style>
     <style>
         article {
@@ -158,7 +157,6 @@
         .disableEvents {
             pointer-events: none;
         }
-
     </style>
     <style>
         .card {
@@ -292,7 +290,6 @@
         .display-almacenando p {
             font-size: 30px;
         }
-
     </style>
     <style>
         .lds-facebook {
@@ -338,7 +335,6 @@
                 height: 32px;
             }
         }
-
     </style>
     <style>
         /* The container */
@@ -408,7 +404,6 @@
             -ms-transform: rotate(45deg);
             transform: rotate(45deg);
         }
-
     </style>
     <div class="container row justify-content-center">
         <div class="mt-3 col-12" style="position: relative;">
@@ -482,10 +477,8 @@
                                             <label for="descripcion">
                                                 <i class="mr-1 fas fa-file-signature iconos-crear"></i> Descripción
                                             </label>
-                                            <textarea
-                                                class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                                name="descripcion" id="" cols="1" wire:model.defer="descripcion"
-                                                rows="1">{{ old('descripcion') }}</textarea>
+                                            <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id=""
+                                                cols="1" wire:model.defer="descripcion" rows="1">{{ old('descripcion') }}</textarea>
                                             <small id="descripcionHelp" class="form-text text-muted">Ingresa la
                                                 descripción de la evaluación</small>
                                             @if ($errors->has('descripcion'))
@@ -512,8 +505,7 @@
                                                     <div class="col-7">
                                                         <label for="pesoGeneralCompetencias"><i
                                                                 class="mr-2 iconos-crear fas fa-question-circle"></i>Peso
-                                                            General (0-100%)<span
-                                                                class="text-danger">*</span></label>
+                                                            General (0-100%)<span class="text-danger">*</span></label>
                                                     </div>
                                                 @endif
                                             </div>
@@ -529,7 +521,7 @@
                                                             {{-- Evaluación de Desempeño Jun-Dic 2021 --}}
                                                             {{-- Evaluación de desempeño realizada en el segundo periodo del año 2021 para los empleados de S4B sede Torre Murano. --}}
                                                             <input type="checkbox" type="checkbox"
-                                                                wire:model="includeCompetencias"
+                                                                wire:model.lazy="includeCompetencias"
                                                                 wire:change.prevent="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
                                                             <span class="checkmark"></span>
                                                         </label>
@@ -539,8 +531,8 @@
                                                     style="position: relative;">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
                                                         wire:model.defer="pesoGeneralCompetencias"
-                                                        id="pesoGeneralCompetencias" class="form-control"
-                                                        type="number" min="0" max="100">
+                                                        id="pesoGeneralCompetencias" class="form-control" type="number"
+                                                        min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
                                             </div>
@@ -553,7 +545,7 @@
                                                                     ({{ $errors->first('includeObjetivos') }})
                                                                 </small>
                                                             @endif
-                                                            <input type="checkbox" wire:model="includeObjetivos"
+                                                            <input type="checkbox" wire:model.lazy="includeObjetivos"
                                                                 class="form-check-input" type="checkbox"
                                                                 wire:change.prevent="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
                                                             <span class="checkmark"></span>
@@ -654,8 +646,9 @@
                                 <li id="finalizarEvaluacion"><strong>Finalizar</strong></li>
                             </ul>
                             <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                    aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                    role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                                </div>
                             </div>
                             <div class="card-body">
                                 {{-- <h4 class="head">Selecciona tu público objetivo</h4> --}}
@@ -700,7 +693,7 @@
                                                 </label>
                                                 <select
                                                     class="mt-2 form-control {{ $errors->has('evaluados_objetivo') ? 'is-invalid' : '' }}"
-                                                    wire:model="evaluados_objetivo" id="evaluados_objetivo"
+                                                    wire:model.lazy="evaluados_objetivo" id="evaluados_objetivo"
                                                     name="evaluados_objetivo"
                                                     wire:change="habilitarSelectAlternativo()">
                                                     <option value="" selected>-- Seleciona una opción --</option>
@@ -728,7 +721,8 @@
                                                     <select
                                                         class="mt-3 form-control {{ $errors->has('by_area') ? 'is-invalid' : '' }}"
                                                         id="by_area" wire:model.defer="by_area">
-                                                        <option value="" selected>-- Seleciona el área a evaluar --
+                                                        <option value="" selected>-- Seleciona el área a evaluar
+                                                            --
                                                         </option>
                                                         @foreach ($areas as $area)
                                                             <option value="{{ $area->id }}">{{ $area->area }}
@@ -742,7 +736,8 @@
                                                     @endif
                                                 @endif
                                                 @if ($habilitarSelectManual)
-                                                    <label class="m-0 mt-2" for="">Selecciona a los empleados a
+                                                    <label class="m-0 mt-2" for="">Selecciona a los empleados
+                                                        a
                                                         evaluar</label>
                                                     <select
                                                         class="mt-3 form-control {{ $errors->has('by_manual') ? 'is-invalid' : '' }}"
@@ -786,14 +781,16 @@
                                 <li id="finalizarEvaluacion"><strong>Finalizar</strong></li>
                             </ul>
                             <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                    aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                    role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="px-1 py-2 mb-3 rounded shadow-sm"
                                     style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                     <div class="row w-100">
-                                        <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                        <div
+                                            class="text-center col-1 align-items-center d-flex justify-content-center">
                                             <div class="w-100">
                                                 <i class="fas fa-info-circle"
                                                     style="color: #3B82F6; font-size: 22px"></i>
@@ -820,7 +817,7 @@
                                         <article class="ml-5 feature1">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('jefe_inmediato')"
-                                                wire:model="evaluado_por_jefe" wire:target="evaluado_por_jefe"
+                                                wire:model.lazy="evaluado_por_jefe" wire:target="evaluado_por_jefe"
                                                 id="feature1" wire:loading.attr="readonly" />
                                             <div>
                                                 <span class="text-center">
@@ -837,7 +834,8 @@
                                             </div>
                                             @if ($evaluado_por_jefe)
                                                 <input class="ml-4" wire:model.defer="pesoEvaluacionJefe"
-                                                    type="number" placeholder="Define peso..." max="100" min="0">
+                                                    type="number" placeholder="Define peso..." max="100"
+                                                    min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionJefe'))
@@ -851,7 +849,7 @@
                                         <article class="feature2">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('misma_area')"
-                                                wire:model="evaluado_por_misma_area" id="feature2"
+                                                wire:model.lazy="evaluado_por_misma_area" id="feature2"
                                                 wire:target="evaluado_por_misma_area" wire:loading.attr="readonly" />
                                             <div>
                                                 <div>
@@ -870,7 +868,8 @@
                                             </div>
                                             @if ($evaluado_por_misma_area)
                                                 <input class="ml-4" wire:model.defer="pesoEvaluacionArea"
-                                                    type="number" placeholder="Define peso..." max="100" min="0">
+                                                    type="number" placeholder="Define peso..." max="100"
+                                                    min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionArea'))
@@ -883,7 +882,7 @@
                                         <article class="mt-4 ml-5 feature3">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('equipo_a_cargo')"
-                                                wire:model="evaluado_por_equipo_a_cargo" id="feature3"
+                                                wire:model.lazy="evaluado_por_equipo_a_cargo" id="feature3"
                                                 wire:target="evaluado_por_equipo_a_cargo"
                                                 wire:loading.attr="readonly" />
                                             <div>
@@ -901,7 +900,8 @@
                                             </div>
                                             @if ($evaluado_por_equipo_a_cargo)
                                                 <input class="ml-4" wire:model.defer="pesoEvaluacionEquipo"
-                                                    type="number" placeholder="Define peso..." max="100" min="0">
+                                                    type="number" placeholder="Define peso..." max="100"
+                                                    min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionEquipo'))
@@ -913,9 +913,9 @@
 
                                         <article class="mt-4 feature4">
                                             <input readonly disabled type="checkbox"
-                                                wire:change="restarGrados('autoevaluacion')" wire:model="autoevaluacion"
-                                                id="feature4" wire:target="autoevaluacion"
-                                                wire:loading.attr="readonly" />
+                                                wire:change="restarGrados('autoevaluacion')"
+                                                wire:model.lazy="autoevaluacion" id="feature4"
+                                                wire:target="autoevaluacion" wire:loading.attr="readonly" />
                                             <div>
                                                 <span class="text-center">
                                                     <span class="icono-card-evaluadores"><i
@@ -931,7 +931,8 @@
                                             </div>
                                             @if ($autoevaluacion)
                                                 <input class="ml-4" wire:model.defer="pesoAutoevaluacion"
-                                                    type="number" placeholder="Define peso..." max="100" min="0">
+                                                    type="number" placeholder="Define peso..." max="100"
+                                                    min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoAutoevaluacion'))
@@ -977,7 +978,8 @@
                                                         <select name="" id="" class="form-control"
                                                             wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
                                                             style="pointer-events: none; -webkit-appearance: none;">
-                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            <option value="" selected>Selecciona un evaluador
+                                                            </option>
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
                                                                     {{ $empleado->name }}
@@ -994,7 +996,8 @@
                                                         <select name="" id="" class="form-control"
                                                             wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
                                                             style="pointer-events: none; -webkit-appearance: none;">
-                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            <option value="" selected>Selecciona un evaluador
+                                                            </option>
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
                                                                     {{ $empleado->name }}
@@ -1060,7 +1063,8 @@
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['par']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
                                                             wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.par.id">
-                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            <option value="" selected>Selecciona un evaluador
+                                                            </option>
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
                                                                     {{ $empleado->name }}
@@ -1077,7 +1081,8 @@
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
                                                             wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
-                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            <option value="" selected>Selecciona un evaluador
+                                                            </option>
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
                                                                     {{ $empleado->name }}
@@ -1093,7 +1098,8 @@
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
                                                             wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
-                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            <option value="" selected>Selecciona un evaluador
+                                                            </option>
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
                                                                     {{ $empleado->name }}
@@ -1158,8 +1164,9 @@
                                 <li id="finalizarEvaluacion"><strong>Finalizar</strong></li>
                             </ul>
                             <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                    aria-valuemin="0" aria-valuemax="100" style="width: 90%"></div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                    role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
+                                </div>
                             </div>
                             <div class="card-body">
                                 {{-- <h4 class="head">Selecciona los periodos a evaluar</h4>
@@ -1250,8 +1257,9 @@
                                 <li class="active" id="finalizarEvaluacion"><strong>Finalizar</strong></li>
                             </ul>
                             <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                    aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                    role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                </div>
                             </div>
                             <div class="card-body">
                                 <h2 class="mt-2 text-center purple-text"><strong>¡EVALUACIÓN CREADA!</strong></h2> <br>
