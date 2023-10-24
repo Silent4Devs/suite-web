@@ -36,6 +36,7 @@ class User extends Authenticatable implements Auditable
     ];
 
     protected $fillable = [
+        'id',
         'name',
         'n_empleado',
         'email',
@@ -72,6 +73,13 @@ class User extends Authenticatable implements Auditable
     {
         return Cache::remember('Users:users_all', 3600 * 13, function () {
             return self::select('name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')->get();
+        });
+    }
+
+    public static function getUserWithRole()
+    {
+        return Cache::remember('Users:user_with_role', 3600 * 12, function () {
+            return self::with('roles', 'empleado.puesto', 'organizacion')->get();
         });
     }
 

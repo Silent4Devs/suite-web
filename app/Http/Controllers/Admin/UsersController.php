@@ -36,7 +36,9 @@ class UsersController extends Controller
         //     return !User::where('n_empleado', $item->n_empleado)->exists();
         // })->values();
         $existsVinculoEmpleadoAdmin = User::getExists();
-        $users = Empleado::getIDaltaAll();
+
+        $users = User::getUserWithRole();
+
         return view('admin.users.index', compact('users', 'existsVinculoEmpleadoAdmin'));
     }
 
