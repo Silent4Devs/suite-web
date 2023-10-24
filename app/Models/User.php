@@ -76,6 +76,13 @@ class User extends Authenticatable implements Auditable
         });
     }
 
+    public static function getUserWithRole()
+    {
+        return Cache::remember('Users:user_with_role', 3600 * 12, function () {
+            return self::with('roles', 'empleado.puesto', 'organizacion')->get();
+        });
+    }
+
     public static function getCurrentUser()
     {
         $cacheKey = 'Auth_user:user' . auth()->user()->id;
