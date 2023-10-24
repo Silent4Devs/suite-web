@@ -94,7 +94,6 @@ public/js/app.js
 .php-cs-fixer.cache
 /resources/views/layouts/navs
 storage/app/katbol-contratos-tmp/
-infra
 /infra/mysql/*
 /infra/mysql
 /storage/app/public/users-avatar/*
