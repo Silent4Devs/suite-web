@@ -11,6 +11,7 @@ use App\Models\Empleado;
 use App\Models\GapDo;
 use App\Models\GapTre;
 use App\Models\GapUno;
+use App\Models\Norma;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -21,6 +22,8 @@ class TemplateController extends Controller
 {
     public function index()
     {
-        return view('admin.analisisdebrecha2022nv.templatess.index');
+        $normas = Norma::get();
+
+        return view('admin.analisisdebrecha2022nv.templatess.index')->with('normas', $normas);
     }
 }
