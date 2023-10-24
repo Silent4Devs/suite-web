@@ -22,7 +22,7 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
-      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.env: "prod"
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     env_file:
@@ -62,7 +62,7 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres-tabantaj"}]'
-      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.env: "prod"
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
@@ -104,7 +104,7 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
-      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.env: "prod"
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     networks:
@@ -125,7 +125,7 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
       com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
-      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.env: "prod"
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
@@ -140,6 +140,32 @@ services:
       - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
       - REDIS_1_PORT=6379 # Replace with your Redis container port
       #- REDIS_1_AUTH=silent11!
+    networks:
+      - tabantajnetwork
+
+  dd-agent:
+    image: gcr.io/datadoghq/agent:7
+    container_name: dd-agent
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 6360:80
+    environment:
+      - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
+      - DD_SITE="us5.datadoghq.com"
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+      - DD_ENV=prod
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_SYSTEM_PROBE_ENABLED=true
+      - DD_APM_RECEIVER_SOCKET=/opt/datadog/apm/inject/run/apm.socket
+      - DD_DOGSTATSD_SOCKET=/opt/datadog/apm/inject/run/dsd.socket
+    volumes:
+      - /opt/datadog/apm:/opt/datadog/apm
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
     networks:
       - tabantajnetwork
 
