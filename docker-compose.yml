@@ -148,8 +148,6 @@ services:
     container_name: dd-agent
     restart: unless-stopped
     tty: true
-    ports:
-      - 6360:80
     environment:
       - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
       - DD_SITE="us5.datadoghq.com"
