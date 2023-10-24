@@ -30,7 +30,7 @@
                     <tr>
                         <th style="vertical-align: top">Nombre</th>
                         <th style="vertical-align: top">Correo Electronico</th>
-                        {{-- <th style="vertical-align: top">Roles</th> --}}
+                        <th style="vertical-align: top">Roles</th>
                         <th style="vertical-align: top">Empleado Vinculado</th>
                         <th style="vertical-align: top">Area</th>
                         <th style="vertical-align: top">Puesto</th>
@@ -43,17 +43,32 @@
                     <tr>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
-                        {{-- <td>{{$user->title}}</td> --}}
+                        <td> @foreach ($user->roles as $role)
+                            {{ $role->title }}
+                            {{-- Si deseas separar los títulos de los roles, puedes usar una coma u otro separador --}}
+                            @if (!$loop->last)
+                                ,
+                            @endif
+                        @endforeach</td>
                         <td>{{$user->name}}</td>
-                        <td>{{$user->area->area}}</td>
-                        <td>{{$user->puesto}}</td>
+                        <td>
+                           @if (!is_null($user->empleado))
+                           {{$user->empleado->area->area}}
+                           @endif
+                        </td>
+
+                        <td>
+                            @if (!is_null($user->empleado))
+                           {{$user->empleado->puesto}}
+                           @endif
+                        </td>
                         <td>
 
                                 <a href="{{ url('/admin/users/' . $user->id . '/edit') }}"><i class="fas fa-edit"></i></a>
 
                                 <a href="{{  url('/admin/users/' . $user->id . '')}}"><i class="fas fa-eye"></i></a>
 
-                                <a  onclick="AbrirModal($user->id);"> <i class="fas fa-user-tag"></i></a>
+                                <a href="{{ url('/admin/users/vincular') }}"> <i class="fas fa-user-tag"></i></a>
 
                                 <a href="{{   url('/admin/users/bloqueo/' . $user->id . '/change')}}"> <i class="fas fa-lock"></i></a>
 
@@ -96,25 +111,6 @@
                 }
             });
     }
-
-    function mostrarAlerta2(url) {
-         Swal.fire({
-                 title: '¿Estás seguro?',
-                 text: 'No podrás deshacer esta acción',
-                 icon: 'warning',
-                 showCancelButton: true,
-                 confirmButtonText: 'Sí, archivar',
-                 cancelButtonText: 'Cancelar'
-             }).then((result) => {
-                 if (result.isConfirmed) {
-                     // Coloca aquí la lógica para eliminar el elemento
-                     // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
-                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
-                     Swal.fire('Archivado!', 'El elemento ha sido archivado.', 'success');
-                     window.location.href = url;
-                 }
-             });
-     }
     </script>
 
 
