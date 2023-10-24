@@ -22,7 +22,7 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
-      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.env: "prod"
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     env_file:
@@ -62,7 +62,7 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres-tabantaj"}]'
-      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.env: "prod"
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
@@ -104,7 +104,7 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
-      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.env: "prod"
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     networks:
@@ -125,7 +125,7 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
       com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
-      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.env: "prod"
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
