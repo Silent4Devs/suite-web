@@ -59,7 +59,7 @@
                             {{ trans('cruds.user.fields.area') }}
                         </th>
                         <td>
-                            {{ $user->area->area ?? '' }}
+                            {{ $user->empleado->area->area ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -67,7 +67,7 @@
                             {{ trans('cruds.user.fields.puesto') }}
                         </th>
                         <td>
-                            {{ $user->puesto->puesto ?? '' }}
+                            {{ $user->empleado->puesto ?? '' }}
                         </td>
                     </tr>
                 </tbody>
