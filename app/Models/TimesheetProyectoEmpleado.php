@@ -23,6 +23,13 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
         'correo_enviado',
     ];
 
+    public static function getAll()
+    {
+        return Cache::remember('TimesheetProyectoEmpleado:timesheetproyectoempleado_all', 3600 * 4, function () {
+            return self::get();
+        });
+    }
+
     public static function getIdAreaTimeProy($proyecto_id)
     {
         return

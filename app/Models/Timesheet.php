@@ -35,14 +35,14 @@ class Timesheet extends Model implements Auditable
 
     public static function getPersonalTimesheet()
     {
-        return Cache::remember('timesheet-' . auth()->user()->empleado->id, now()->addHours(2), function () {
+        return Cache::remember('Timesheet:timesheet-' . auth()->user()->empleado->id, now()->addHours(3), function () {
             return self::where('empleado_id', auth()->user()->empleado->id)->get();
         });
     }
 
     public static function getAll()
     {
-        return Cache::remember('timesheet-all', now()->addHours(2), function () {
+        return Cache::remember('Timesheet:timesheet_all', now()->addHours(4), function () {
             return self::get();
         });
     }

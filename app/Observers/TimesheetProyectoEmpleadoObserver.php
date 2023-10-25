@@ -52,5 +52,6 @@ class TimesheetProyectoEmpleadoObserver
 
         Cache::forget('GetAllByEmpleadoId_' . auth()->user()->empleado->id);
         Cache::forget('GetAllByEmpleadoIdExists_' . auth()->user()->empleado->id);
+        Cache::forget('TimesheetProyectoEmpleado:timesheetproyectoempleado_all');
     }
 }

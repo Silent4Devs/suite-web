@@ -60,5 +60,6 @@ class EmpleadosObserver
         Cache::forget('empleados_reportes_all');
         Cache::forget('empleados_alta_id');
         Cache::forget('Empleados:empleados_exists');
+        Cache::forget('Empleados:empleados_select_area');
     }
 }
