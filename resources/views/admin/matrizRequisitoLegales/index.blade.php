@@ -1,92 +1,92 @@
 @extends('layouts.admin')
 @section('content')
-
-
     <style>
         /* .img-size {
-                height: 450px;
-                width: 700px;
-                background-size: cover;
-                overflow: hidden;
-            }
+                                height: 450px;
+                                width: 700px;
+                                background-size: cover;
+                                overflow: hidden;
+                            }
 
-            .modal-content {
-                width: 700px;
-                border: none;
-            }
+                            .modal-content {
+                                width: 700px;
+                                border: none;
+                            }
 
-            .modal-body {
-                padding: 0;
-            }
+                            .modal-body {
+                                padding: 0;
+                            }
 
-            .carousel-control-prev-icon {
-                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-                width: 30px;
-                height: 48px;
-            }
+                            .carousel-control-prev-icon {
+                                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+                                width: 30px;
+                                height: 48px;
+                            }
 
-            .carousel-control-next-icon {
-                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-                width: 30px;
-                height: 48px;
-            }
+                            .carousel-control-next-icon {
+                                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+                                width: 30px;
+                                height: 48px;
+                            }
 
-            .carousel-control-next {
-                top: 100px;
-                height: 10px;
-            }
+                            .carousel-control-next {
+                                top: 100px;
+                                height: 10px;
+                            }
 
-            .carousel-control-prev {
-                height: 40px;
-                top: 80px;
-            } */
+                            .carousel-control-prev {
+                                height: 40px;
+                                top: 80px;
+                            } */
 
         /* .btn_cargar {
-            border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
-            padding: 0;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 !important;
-            margin-right: 10px !important;
-        }
+                            border-radius: 100px !important;
+                            border: 1px solid #345183;
+                            color: #345183;
+                            text-align: center;
+                            padding: 0;
+                            width: 45px;
+                            height: 45px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin: 0 !important;
+                            margin-right: 10px !important;
+                        }
 
-        .btn_cargar:hover {
-            color: #fff;
-            background: #345183;
-        }
+                        .btn_cargar:hover {
+                            color: #fff;
+                            background: #345183;
+                        }
 
-        .btn_cargar i {
-            font-size: 15pt;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+                        .btn_cargar i {
+                            font-size: 15pt;
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
 
-        .agregar {
-            margin-right: 15px;
-        } */
+                        .agregar {
+                            margin-right: 15px;
+                        } */
 
         .btn-outline-success {
             background: #788bac !important;
             color: white;
-            border:none;
-        }
-        .btn-outline-success:focus{
-            border-color:#345183 !important;
-            box-shadow:none;
+            border: none;
         }
 
-        .btn-outline-success:active{
-            box-shadow:none !important;
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
         }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
         .btn-outline-success:hover {
             background: #788bac;
             color: white;
@@ -107,18 +107,16 @@
             margin: 0 !important;
             margin-left: 5px !important;
         }
-        .radius
-        {
+
+        .radius {
             border-radius: 16px;
         }
 
-        .titulo-card
-        {
+        .titulo-card {
             text-align: left;
             font: 20px Roboto;
             color: #606060;
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
@@ -130,7 +128,10 @@
             </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'Amenaza', 'route' => 'admin.amenazas.parseCsvImport'])
+                    @include('csvImport.modal', [
+                        'model' => 'Amenaza',
+                        'route' => 'admin.amenazas.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -146,7 +147,7 @@
                         {{-- <th style="min-width: 200px;">Medio&nbsp;de&nbsp;publicación</th>
                         <th>Fecha&nbsp;de publicación</th>
                         <th>Fecha&nbsp;de&nbsp;entrada en&nbsp;vigor</th> --}}
-                        <th  style="min-width: 250px;">¿Cómo&nbsp;cumple?</th>
+                        <th style="min-width: 250px;">¿Cómo&nbsp;cumple?</th>
                         <th>Periodicidad&nbsp;de&nbsp;cumplimiento</th>
                         <th>¿En&nbsp;cumplimiento?</th>
                         {{-- <th>Descripción&nbsp;del&nbsp;cumplimiento/incumplimiento</th> --}}
@@ -162,9 +163,6 @@
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -242,14 +240,16 @@
             ];
             @can('matriz_requisitos_legales_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nueva matríz de requisitos legales',
-                url: "{{ route('admin.matriz-requisito-legales.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar nueva matríz de requisitos legales',
+                    url: "{{ route('admin.matriz-requisito-legales.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 // let btnExport = {
                 // text: '<i class="fas fa-download"></i>',
@@ -283,8 +283,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.matriz-requisito-legales.index') }}",
-                columns: [
-                    {
+                columns: [{
                         data: 'id',
                         name: 'id'
                     },
@@ -322,19 +321,19 @@
                     },
                     {
                         data: 'cumplerequisito',
-                        render:function(data,type,row,meta){
-                           if(row.evaluaciones[0]){
-                               return row.evaluaciones[0].cumplerequisito;
-                           }
+                        render: function(data, type, row, meta) {
+                            if (row.evaluaciones[0]) {
+                                return row.evaluaciones[0].cumplerequisito;
+                            }
                             return 'No evaluado';
                         }
                     },
                     {
                         data: 'metodo',
-                        render:function(data,type,row,meta){
-                           if(row.evaluaciones[0]){
-                               return row.evaluaciones[0].metodo;
-                           }
+                        render: function(data, type, row, meta) {
+                            if (row.evaluaciones[0]) {
+                                return row.evaluaciones[0].metodo;
+                            }
                             return 'No evaluado';
                         }
                     },
@@ -351,57 +350,57 @@
                     //         console.log(archivos)
                     //         archivo = ` <div class="container">
 
-                    //                 <div class="mb-4 row">
-                    //                 <div class="text-center col">
-                    //                     <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
-                    //                 </div>
-                    //                 </div>
+                //                 <div class="mb-4 row">
+                //                 <div class="text-center col">
+                //                     <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                //                 </div>
+                //                 </div>
 
-                    //                 <!-- modal -->
-                    //                 <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                    //                 <div class="modal-dialog modal-lg">
-                    //                     <div class="modal-content">
-                    //                     <div class="modal-body">`;
+                //                 <!-- modal -->
+                //                 <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                //                 <div class="modal-dialog modal-lg">
+                //                     <div class="modal-content">
+                //                     <div class="modal-body">`;
                     //         if (archivos.length > 0) {
                     //             archivo += `
-                    //                             <!-- carousel -->
-                    //                         <div
-                    //                             id='carouselExampleIndicators${row.id}'
-                    //                             class='carousel slide'
-                    //                             data-ride='carousel'
-                    //                             >
-                    //                         <ol class='carousel-indicators'>
-                    //                                 ${archivos?.map((archivo,idx)=>{
-                    //                                     return `
+                //                             <!-- carousel -->
+                //                         <div
+                //                             id='carouselExampleIndicators${row.id}'
+                //                             class='carousel slide'
+                //                             data-ride='carousel'
+                //                             >
+                //                         <ol class='carousel-indicators'>
+                //                                 ${archivos?.map((archivo,idx)=>{
+                //                                     return `
                     //                                         <li
                     //                                         data-target='#carouselExampleIndicators${row.id}'
                     //                                         data-slide-to='${idx}'
                     //                                         ></li>`
-                    //                                 })}
-                    //                         </ol>
-                    //                         <div class='carousel-inner'>
-                    //                                 ${archivos?.map((archivo,idx)=>{
-                    //                                     return `
+                //                                 })}
+                //                         </ol>
+                //                         <div class='carousel-inner'>
+                //                                 ${archivos?.map((archivo,idx)=>{
+                //                                     return `
                     //                                         <div class='carousel-item ${idx==0?"active":""}'>
                     //                                             <iframe seamless class='img-size' src='{{ asset('storage/matriz_evidencias') }}/${archivo.evidencia}'></iframe>
                     //                                         </div>`
-                    //                                 })}
+                //                                 })}
 
-                    //                         </div>
+                //                         </div>
 
-                    //                         </div>`;
+                //                         </div>`;
                     //         } else {
                     //             archivo += `
-                    //                             <div class="text-center">
-                    //                                 <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
-                    //                                 <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
-                    //                                 </div>
-                    //                             `
+                //                             <div class="text-center">
+                //                                 <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                //                                 <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
+                //                                 </div>
+                //                             `
                     //         }
                     //         archivo += `</div>
-                    //                     <div class="modal-footer">
-                    //                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    //                        ${archivos.length==0?`
+                //                     <div class="modal-footer">
+                //                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                //                        ${archivos.length==0?`
                     //                                 <a
                     //                                     class='carousel-control-prev'
                     //                                     href='#carouselExampleIndicators${row.id}'
@@ -425,10 +424,10 @@
                     //                                         ></span>
                     //                                     <span class='sr-only'>Next</span>
                     //                                 </a>`:""}
-                    //                     </div>
-                    //                     </div>
-                    //                 </div>
-                    //                 </div>`
+                //                     </div>
+                //                     </div>
+                //                 </div>
+                //                 </div>`
                     //         return archivo;
                     //     }
                     // },
