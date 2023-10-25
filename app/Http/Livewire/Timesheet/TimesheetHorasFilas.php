@@ -44,7 +44,7 @@ class TimesheetHorasFilas extends Component
         // $proyectoempleadoexists = TimesheetProyectoEmpleado::getAllByEmpleadoIdExistsNoBloqueado($empleado->id);
         // $proyectos_totales = TimesheetProyecto::getAll();
 
-        $comodines = TimesheetProyecto::select('id', 'identificador', 'proyecto')->where('proyecto', 'LIKE', 'S4B-' . '%')->get();
+        $comodines = TimesheetProyecto::getIdNameAll()->where('proyecto', 'LIKE', 'S4B-' . '%');
         // dd($proyectoempleadoexists);
         // areas proyectos
         //to do Cambiar a array
@@ -62,7 +62,7 @@ class TimesheetHorasFilas extends Component
         } else {
             $proyectos_area = TimesheetProyectoArea::with('proyecto')->where('area_id', $empleado->area_id)->get();
             //Traer todos los proyectos que ya han sido asignados en el area
-            $proyectos_filtro = TimesheetProyectoEmpleado::where('area_id', $empleado->area_id)->get();
+            $proyectos_filtro = TimesheetProyectoEmpleado::getAll()->where('area_id', $empleado->area_id);
             //foreach borramos los proyectos del area que ya han sido asignados
             //$proyectos_array = $proyectos_array->whereNotIn('id', $fpe->proyecto_id);
             foreach ($proyectos_area as $pa) {
@@ -176,8 +176,8 @@ class TimesheetHorasFilas extends Component
     {
         if ($this->origen == 'edit') {
             $this->contador = 2;
-            $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
-            $this->timesheet = Timesheet::find($this->timesheet_id);
+            $this->horas = TimesheetHoras::getData()->where('timesheet_id', $this->timesheet_id);
+            $this->timesheet = Timesheet::getAll()->find($this->timesheet_id);
         }
 
         return view('livewire.timesheet.timesheet-horas-filas');

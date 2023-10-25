@@ -113,6 +113,13 @@ class Organizacion extends Model implements Auditable
         });
     }
 
+    public static function getFechaRegistroTimesheet()
+    {
+        return Cache::remember('Organizacion:fecha_registro_timesheet', 3600 * 12, function () {
+            return self::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+        });
+    }
+
     public function getLogotipoAttribute($value)
     {
         $logotipo = asset('img/logo_policromatico_2.png');

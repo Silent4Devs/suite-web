@@ -169,7 +169,7 @@ class ReporteAprobador extends Component
         }
         //calendario tabla
         $calendario_array = [];
-        $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+        $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::getFechaRegistroTimesheet();
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
         $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now());
         $total_months = 0;
@@ -239,7 +239,7 @@ class ReporteAprobador extends Component
         foreach ($empleados_list as $empleado_list) {
             $horas_total_time = 0;
 
-            $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+            $fecha_registro_timesheet = Organizacion::getFechaRegistroTimesheet();
 
             if ($this->fecha_inicio) {
                 $fecha_inicio_timesheet_empleado = $this->fecha_inicio;
@@ -456,7 +456,7 @@ class ReporteAprobador extends Component
         $this->empleado = Empleado::getAll()->find($this->empleado_seleccionado_id);
 
         // calcular fechas de parametros en reporte empleado
-        $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+        $fecha_registro_timesheet = Organizacion::getFechaRegistroTimesheet();
 
         if ($this->fecha_inicio_empleado) {
             $fecha_inicio_timesheet_empleado = Carbon::parse($this->empleado->antiguedad)->lt($this->fecha_inicio_empleado) ? $this->fecha_inicio_empleado : $this->empleado->antiguedad;

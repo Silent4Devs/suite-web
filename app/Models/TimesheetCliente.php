@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class TimesheetCliente extends Model
-    // implements Auditable
+// implements Auditable
 {
     use HasFactory;
     // use \OwenIt\Auditing\Auditable;
@@ -43,8 +43,15 @@ class TimesheetCliente extends Model
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('timesheetcliente_all', 3600 * 24, function () {
+        return Cache::remember('TimesheetCliente:timesheetcliente_all', 3600 * 8, function () {
             return self::get();
+        });
+    }
+
+    public static function getAllOrderBy($value)
+    {
+        return Cache::remember('TimesheetCliente:timesheetcliente_order_by_' . $value, 3600, function () use ($value) {
+            return self::orderBy($value)->get();
         });
     }
 

@@ -44,18 +44,21 @@ class TablaProyectosTimesheet extends Component
 
     public $areas;
 
+    public $timesheetproyectoquery;
+
     public function mount()
     {
         $this->tipos = TimesheetProyecto::TIPOS;
         $this->tipo = $this->tipos['Interno'];
         $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
+        $this->timesheetproyectoquery = TimesheetProyecto::getAll();
     }
 
     public function render()
     {
-        $this->proceso_count = TimesheetProyecto::getAll()->where('estatus', 'proceso')->count();
-        $this->cancelado_count = TimesheetProyecto::getAll()->where('estatus', 'cancelado')->count();
-        $this->terminado_count = TimesheetProyecto::getAll()->where('estatus', 'terminado')->count();
+        $this->proceso_count = $this->timesheetproyectoquery->where('estatus', 'proceso')->count();
+        $this->cancelado_count = $this->timesheetproyectoquery->where('estatus', 'cancelado')->count();
+        $this->terminado_count = $this->timesheetproyectoquery->where('estatus', 'terminado')->count();
 
         $this->emit('cerrarModal');
 
@@ -63,7 +66,7 @@ class TablaProyectosTimesheet extends Component
 
         $this->areas = Area::getAll();
 
-        $this->clientes = TimesheetCliente::orderBy('nombre')->get();
+        $this->clientes = TimesheetCliente::getAllOrderBy('nombre');
 
         $this->emit('scriptTabla');
 
