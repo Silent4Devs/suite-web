@@ -38,8 +38,8 @@ class TimesheetHorasCreateCopia extends Component
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;
 
-        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
-        $this->timesheet = Timesheet::find($this->timesheet_id);
+        $this->horas = TimesheetHoras::getData()->where('timesheet_id', $this->timesheet_id);
+        $this->timesheet = Timesheet::getAll()->find($this->timesheet_id);
     }
 
     public function removerFila($id, $tr)

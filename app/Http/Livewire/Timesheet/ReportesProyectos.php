@@ -338,7 +338,7 @@ class ReportesProyectos extends Component
 
         $this->total_horas_proyecto = 0;
         foreach ($tareas as $tarea) {
-            $horas = TimesheetHoras::where('tarea_id', $tarea->id)->get();
+            $horas = TimesheetHoras::getData()->where('tarea_id', $tarea->id)->get();
             $empleados = collect();
             $h_total_tarea = 0;
             $h_total_tarea_total = 0;
