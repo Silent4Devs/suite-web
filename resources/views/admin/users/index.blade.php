@@ -72,7 +72,10 @@
 
                                 <a href="{{   url('/admin/users/bloqueo/' . $user->id . '/change')}}"> <i class="fas fa-lock"></i></a>
 
-                                <a href="{{   url('/admin/users/destroy/' . $user->id . '')}}"><i class="fas fa-trash text-danger"></i></a>
+                                <a onclick="mostrarAlerta('{{ url('/admin/users/destroy/' . $user->id . '') }}');">
+                                    <i class="fas fa-trash text-danger"></i>
+                                </a>
+
 
 
                         </td>
@@ -107,6 +110,7 @@
                     // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                     Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
+                    console.log(url);
                     window.location.href = url;
                 }
             });
