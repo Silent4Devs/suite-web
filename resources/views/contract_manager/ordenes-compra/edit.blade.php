@@ -345,7 +345,7 @@
             Sub total <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input type="text" name="sub_total{{ $count }}" data-count="{{ $count }}"
+            <input type="text"  name="sub_total{{ $count }}" data-count="{{ $count }}"
                  class="mod-sub_total browser-default" required
                 value="{{ $producto->sub_total }}">
         </div>
@@ -355,7 +355,7 @@
             IVA <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input type="text" name="iva{{ $count }}" data-count="{{ $count }}"
+            <input type="text"  name="iva{{ $count }}" data-count="{{ $count }}"
                 class="mod-iva browser-default" required value="{{ $producto->iva }}">
         </div>
     </div>
@@ -364,7 +364,7 @@
             IVA retenido
         </label>
         <div class="caja-input-dinero">
-            <input type="text" name="iva_retenido{{ $count }}" data-count="{{ $count }}"
+            <input type="text"  name="iva_retenido{{ $count }}" data-count="{{ $count }}"
                class="mod-iva_retenido browser-default"
                 value="{{ $producto->iva_retenido }}">
         </div>
@@ -533,8 +533,7 @@
         if (e.target.parentNode.classList.contains('caja-input-dinero')) {
             let count_serv = e.target.name.split('')[e.target.name.length - 1];
 
-            $('#input-total-serv' + count_serv).val(
-                parseFloat(document.querySelector('.productos-info .mod-sub_total[data-count="' +
+            let total_serv = parseFloat(document.querySelector('.productos-info .mod-sub_total[data-count="' +
                     count_serv + '"]').value === "" ? 0 : document.querySelector(
                     '.productos-info .mod-sub_total[data-count="' + count_serv + '"]').value) + parseFloat(
                     document.querySelector('.productos-info .mod-iva[data-count="' + count_serv + '"]')
@@ -542,7 +541,11 @@
                         count_serv + '"]').value) - Array.from(document.querySelectorAll(
                     '.productos-info .caja-input-dinero input[data-count="' + count_serv +
                     '"]:not(.mod-total, .mod-sub_total, .mod-iva)')).reduce((acumulador, elemento) =>
-                    acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)), 0)
+                    acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)), 0);
+
+
+            $('#input-total-serv' + count_serv).val(
+                 parseFloat(total_serv).toFixed(4)
             );
 
             $('#sub_total_calculado').val(Array.from(document.querySelectorAll('.mod-sub_total')).reduce((
