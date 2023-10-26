@@ -277,7 +277,7 @@
                         Son:
                     </td>
                 <td>
-                    <strong> {{ $letras }} pesos </strong>
+                    <strong> {{ $letras }} dolares </strong>
                 </td>
             </tr>
             <tr>
