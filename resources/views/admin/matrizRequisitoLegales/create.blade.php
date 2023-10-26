@@ -92,11 +92,8 @@
                 </div>
 
                 <div class="form-group col-12">
-                    <label class="form-label required" for="nombrerequisito"> <i
-                            class="fas fa-clipboard-list iconos-crear"></i>
-                        Nombre del requisito legal, regulatorio, contractual o estatutario</label><i
-                        class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                        title="Nombre de la ley,norma,reglamento o documento donde se encuentra el requisito"></i>
+                    <label class="form-label required" for="nombrerequisito">
+                        Nombre del requisito legal, regulatorio, contractual o estatutario</label>
                     <input required class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }}"
                         type="text" name="nombrerequisito" id="nombrerequisito" value="{{ old('nombrerequisito', '') }}">
                     @if ($errors->has('nombrerequisito'))
@@ -124,9 +121,7 @@
 
 
         <div class="form-group col-sm-12">
-            <label for="medio"> <i class="fas fa-newspaper iconos-crear"></i> Medio de publicación</label><i
-                class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                title="Medio digital (página web) o físico a través del cuál se publicó el requisito a cumplir. Ejemplo:Diario Oficial de la Federación."></i>
+            <label for="medio">Medio de publicación</label>
             <input class="form-control {{ $errors->has('medio') ? 'is-invalid' : '' }}" type="text" name="medio"
                 id="medio" value="{{ old('medio', '') }}">
             @if ($errors->has('medio'))
@@ -135,34 +130,36 @@
                 </div>
             @endif
         </div>
+        <div class="row ml-1">
+            <div class="col-md-6" style="width:565px;">
+                <label for="fechaexpedicion"></i> Fecha de
+                    publicación</label>
+                <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}" type="date"
+                    name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01" value="{{ old('fechaexpedicion') }}">
+                @if ($errors->has('fechaexpedicion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fechaexpedicion') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
+            </div>
+            <div class="col-md-6" style="width:565px;">
+                <label for="fechavigor">
+                    {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
+                <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
+                    name="fechavigor" id="fechavigor" min="1945-01-01" value="{{ old('fechavigor') }}">
+                @if ($errors->has('fechavigor'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fechavigor') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
+            </div>
+        </div>
 
-        <div class="form-group col-sm-6">
-            <label for="fechaexpedicion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de
-                publicación</label>
-            <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}" type="date"
-                name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01" value="{{ old('fechaexpedicion') }}">
-            @if ($errors->has('fechaexpedicion'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('fechaexpedicion') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
-        </div>
-        <div class="form-group col-sm-6">
-            <label for="fechavigor"> <i class="far fa-calendar-alt iconos-crear"></i>
-                {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
-            <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
-                name="fechavigor" id="fechavigor" min="1945-01-01" value="{{ old('fechavigor') }}">
-            @if ($errors->has('fechavigor'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('fechavigor') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
-        </div>
 
         <div class="form-group col-sm-12">
-            <label class="required" for="requisitoacumplir"> <i class="fas fa-clipboard-list iconos-crear"></i>
+            <label class="required" for="requisitoacumplir">
                 Descripción del requisito a cumplir*</label>
             <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }}"
                 name="requisitoacumplir" id="requisitoacumplir">{{ old('requisitoacumplir') }}</textarea>
@@ -182,8 +179,8 @@
     <div class="text-right form-group col-12">
         <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
         </span>
-        <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn_cancelar">Cancelar</a>
-        <button class="btn btn-danger" type="submit">
+        <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn boton-cancelar">Cancelar</a>
+        <button class="btn boton-enviar" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

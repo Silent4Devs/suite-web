@@ -120,7 +120,14 @@
     </style>
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
-    <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
+    <div class="row d-flex align-items-center">
+        <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
+        <button type="button" class="col-md-3 btn btn-primary btn-lg ml-auto" style="margin-right: 14px; font-size: 14px;"
+        url="{{ route('admin.matriz-requisito-legales.create') }}">
+            Nueva Matriz de Requisitos
+            <i class="fa-regular fa-plus fa-lg" style="color: #ffffff;"></i>
+        </button >
+    </div>
     <div class="mt-5 card radius">
         @can('matriz_requisitos_legales_agregar')
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">

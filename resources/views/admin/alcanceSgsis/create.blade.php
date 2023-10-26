@@ -12,7 +12,8 @@
             color: #606060;
         }
 
-        .boton-cancelar {
+        .boton-cancelar
+        {
             background-color: white;
             border-color: #057BE2;
             font: 14px Roboto;
