@@ -1,8 +1,10 @@
 <div>
-    <table class="table table-bordered w-100 datatable-User">
-        <thead class="thead-dark">
+    <table class="table">
+        <thead>
             <tr>
-
+                <th style="vertical-align: top">
+                    ID
+                </th>
                 <th style="vertical-align: top">
                     User
                 </th>
@@ -23,27 +25,36 @@
                 </th>
             </tr>
         </thead>
-        @foreach ($articles as $item)
-            <tr>
-                <td>
-                    {{ $item->user_id }}
-                </td>
-                <td>
-                    {{ $item->event }}
-                </td>
-                <td>
-                    {{ $item->old_values }}
-                </td>
-                <td>
-                    {{ $item->new_values }}
-                </td>
-                <td>
-                    {{ $item->url }}
-                </td>
-                <td>
-                    {{ $item->tags }}
-                </td>
-            </tr>
-        @endforeach
+        <tbody>
+            @foreach ($articles as $item)
+                <tr>
+                    <td>
+                        {{ $item->id }}
+                    </td>
+                    <td>
+                        @php
+                            $user = App\Models\User::select('id', 'name')->find($item->user_id);
+                        @endphp
+                        {{ $user->name ?? 'No user' }}
+                    </td>
+                    <td>
+                        {{ $item->event }}
+                    </td>
+                    <td>
+                        <p>{{ $item->old_values }}</p>
+                    </td>
+                    <td>
+                        {{ $item->new_values }}
+                    </td>
+                    <td>
+                        {{ $item->url }}
+                    </td>
+                    <td>
+                        {{ $item->tags }}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
+    {{ $articles->links() }}
 </div>

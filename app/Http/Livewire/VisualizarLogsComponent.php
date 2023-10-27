@@ -10,12 +10,12 @@ class VisualizarLogsComponent extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
     public function render()
     {
-        $articles = Audit::get();
-
         return view('livewire.visualizar-logs-component', [
-            'articles' => $articles,
+            'articles' => Audit::orderByDesc('id')->paginate(10),
         ]);
     }
 }
