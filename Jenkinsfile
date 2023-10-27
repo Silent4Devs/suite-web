@@ -4,7 +4,7 @@ pipeline {
 
     stage('install') {
       steps {
-        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
+        git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
       }
     }
 
@@ -30,13 +30,11 @@ pipeline {
             steps {
                 script {
                     sshagent(credentials: ['Nombre de Credencial SSH']) {
-                        sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin develop"'
+                        sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
                     }
               }
       }
 
-
-  }
 
   }
 
