@@ -179,6 +179,7 @@
                         <th class="d-flex justify-content-center"
                             style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">
                             Estatus</th>
+                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Opciones</th>
                     </tr>
                 </thead>
             </table>
@@ -385,6 +386,10 @@
                     {
                         data: 'id_reviso_alcance',
                         name: 'id_reviso_alcance'
+                    },
+                    {
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}'
                     },
                 ],
                 orderCellsTop: true,
