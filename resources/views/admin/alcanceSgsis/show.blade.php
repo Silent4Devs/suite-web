@@ -29,14 +29,14 @@
                     $logotipo = $organizacion->logotipo;
                     $empresa = $organizacion->empresa;
                 @endphp
-                <div class="row mt-5 col-12 ml-0" style="width: 542px;
-                height: 157px;border-radius: 5px">
-                    <div class="col-2" style="border-left: 20px solid #2395AA">
-                        <img src="{{ asset($logotipo) }}" class="mt-2 ml-1" style="width:100px;">
+                <div class="row mt-5 col-12 ml-0" style="border-radius: 5px;height:147px;
+                padding-left: 0px;padding-right: 0px;">
+                    <div class="col-3" style="border-left: 25px solid #2395AA">
+                        <img src="{{ asset($logotipo) }}" class="mt-2 img-fluid" style="">
                     </div>
-                    <div class="col-6 p-2" style="text-align: left;">
+                    <div class="col-5 p-2 mt-3" style="text-align: left;">
                         <br>
-                        <span style="color:#306BA9; font-size:20px;">
+                        <span class="" style="color:#306BA9; font-size:20px;">
                             Reporte Determinación de alcance
                         </span>
 
@@ -50,24 +50,33 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" style="border-right: 16px solid white">
+                    <div class="col-md-11" style="padding-right:0px; padding-left:14px;">
+                        <div class="card mb-1" style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
+                            <div class="mt-4" style="font-weight: bold;margin-left:55px;font-size:14px; color:#306BA9;">
+                                Nombre del alcance
+                            </div>
 
-                <div class="mt-5 mb-3  dato_mairg" style="border-bottom: solid 2px #345183;">
-                    <span style="font-size: 17px; font-weight: bold; ml-4">
-                        Nombre del alcance</span>
+                            <div class="px-2 mt-2 ml-5 mr-5" style="font-size:14px; color:#606060;">
+                                {!! $alcanceSgsi->alcancesgsi !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 mb-1" style="width:10px;padding-left:0px;padding-right:0px;background-color:#295082;width:10px;padding-left:0px;padding-right: 43px;">
+
+                    </div>
                 </div>
 
-                <div class="px-2 mt-2">
-                    {!! $alcanceSgsi->alcancesgsi !!}
-                </div>
 
-                <div class="mt-5 mb-3  dato_mairg" style="border-bottom: solid 2px #345183;">
-                    <span style="font-size: 17px; font-weight: bold; ml-4">
+
+                <div class="mt-5 mb-3  dato_mairg" style="">
+                    <span style="font-size:14px; color:#306BA9;margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
                         Alcance</span>
                 </div>
 
-                <ul>
+                <ul style="margin-left:30px;">
                     @foreach ($alcanceSgsi->normas as $norma)
-                        <li style="font-size:12px;">
+                        <li style="font-size:14px;color:#606060;">
                             {{ $norma->norma }}
                         </li>
                     @endforeach
