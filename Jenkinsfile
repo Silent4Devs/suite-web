@@ -37,7 +37,7 @@ pipeline {
           script {
               try {
                   // Copiar un archivo de configuración al servidor QA
-                  sh 'scp /var/jenkins_home/config.xml desarrollo@192.168.9.78:/var/contenedor/tabantaj'
+                  sh 'scp /var/jenkins_home/config.xml root@tabantaj-qa:/var/contenedor/tabantaj'
               } catch (Exception e) {
                   echo 'Excepción ocurrida: ' + e.toString()
               }
