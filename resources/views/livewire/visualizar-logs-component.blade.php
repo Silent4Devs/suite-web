@@ -1,4 +1,4 @@
-<div>
+<div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
@@ -41,10 +41,24 @@
                         {{ $item->event }}
                     </td>
                     <td>
-                        <p>{{ $item->old_values }}</p>
+                        <p>
+                            @php
+                                $oldValues = json_decode($item->old_values, true);
+                            @endphp
+                            @foreach ($oldValues as $key => $value)
+                                <strong>{{ $key }}:</strong> {{ $value }}<br>
+                            @endforeach
+                        </p>
                     </td>
                     <td>
-                        {{ $item->new_values }}
+                        <p>
+                            @php
+                                $newValues = json_decode($item->new_values, true);
+                            @endphp
+                            @foreach ($newValues as $key => $value)
+                                <strong>{{ $key }}:</strong> {{ $value }}<br>
+                            @endforeach
+                        </p>
                     </td>
                     <td>
                         {{ $item->url }}
