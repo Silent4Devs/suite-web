@@ -28,9 +28,7 @@ pipeline {
      stage('Deploy via SSH') {
             steps {
                 script {
-                    sshagent(credentials: ['dev']) {
                         sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
-                    }
               }
       }
      }
