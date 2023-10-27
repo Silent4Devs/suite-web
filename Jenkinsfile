@@ -12,7 +12,6 @@ pipeline {
       steps {
         script{
           try {
-  
                 sh 'docker-compose exec php cp .env.example .env'
                 sh 'docker-compose exec php composer install --ignore-platform-reqs'
                 sh 'docker-compose exec php php artisan key:generate'
@@ -29,12 +28,16 @@ pipeline {
      stage('Deploy via SSH') {
             steps {
                 script {
-                    sshagent(credentials: ['Nombre de Credencial SSH']) {
-                        sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
-                    }
+
+                   sshagent(['/root/.ssh/id_rsa.pub']) {
+                   sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
+
+                  }
               }
-      }
+          }
+     }
+     
 
-
-  }
+     }
+}
 
