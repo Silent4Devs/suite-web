@@ -2,75 +2,75 @@
 @section('content')
     <style>
         /* .img-size {
-                                height: 450px;
-                                width: 700px;
-                                background-size: cover;
-                                overflow: hidden;
-                            }
+                                                                                                                            height: 450px;
+                                                                                                                            width: 700px;
+                                                                                                                            background-size: cover;
+                                                                                                                            overflow: hidden;
+                                                                                                                        }
 
-                            .modal-content {
-                                width: 700px;
-                                border: none;
-                            }
+                                                                                                                        .modal-content {
+                                                                                                                            width: 700px;
+                                                                                                                            border: none;
+                                                                                                                        }
 
-                            .modal-body {
-                                padding: 0;
-                            }
+                                                                                                                        .modal-body {
+                                                                                                                            padding: 0;
+                                                                                                                        }
 
-                            .carousel-control-prev-icon {
-                                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-                                width: 30px;
-                                height: 48px;
-                            }
+                                                                                                                        .carousel-control-prev-icon {
+                                                                                                                            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+                                                                                                                            width: 30px;
+                                                                                                                            height: 48px;
+                                                                                                                        }
 
-                            .carousel-control-next-icon {
-                                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-                                width: 30px;
-                                height: 48px;
-                            }
+                                                                                                                        .carousel-control-next-icon {
+                                                                                                                            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+                                                                                                                            width: 30px;
+                                                                                                                            height: 48px;
+                                                                                                                        }
 
-                            .carousel-control-next {
-                                top: 100px;
-                                height: 10px;
-                            }
+                                                                                                                        .carousel-control-next {
+                                                                                                                            top: 100px;
+                                                                                                                            height: 10px;
+                                                                                                                        }
 
-                            .carousel-control-prev {
-                                height: 40px;
-                                top: 80px;
-                            } */
+                                                                                                                        .carousel-control-prev {
+                                                                                                                            height: 40px;
+                                                                                                                            top: 80px;
+                                                                                                                        } */
 
         /* .btn_cargar {
-                            border-radius: 100px !important;
-                            border: 1px solid #345183;
-                            color: #345183;
-                            text-align: center;
-                            padding: 0;
-                            width: 45px;
-                            height: 45px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            margin: 0 !important;
-                            margin-right: 10px !important;
-                        }
+                                                                                                                        border-radius: 100px !important;
+                                                                                                                        border: 1px solid #345183;
+                                                                                                                        color: #345183;
+                                                                                                                        text-align: center;
+                                                                                                                        padding: 0;
+                                                                                                                        width: 45px;
+                                                                                                                        height: 45px;
+                                                                                                                        display: flex;
+                                                                                                                        justify-content: center;
+                                                                                                                        align-items: center;
+                                                                                                                        margin: 0 !important;
+                                                                                                                        margin-right: 10px !important;
+                                                                                                                    }
 
-                        .btn_cargar:hover {
-                            color: #fff;
-                            background: #345183;
-                        }
+                                                                                                                    .btn_cargar:hover {
+                                                                                                                        color: #fff;
+                                                                                                                        background: #345183;
+                                                                                                                    }
 
-                        .btn_cargar i {
-                            font-size: 15pt;
-                            width: 100%;
-                            height: 100%;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                        }
+                                                                                                                    .btn_cargar i {
+                                                                                                                        font-size: 15pt;
+                                                                                                                        width: 100%;
+                                                                                                                        height: 100%;
+                                                                                                                        display: flex;
+                                                                                                                        justify-content: center;
+                                                                                                                        align-items: center;
+                                                                                                                    }
 
-                        .agregar {
-                            margin-right: 15px;
-                        } */
+                                                                                                                    .agregar {
+                                                                                                                        margin-right: 15px;
+                                                                                                                    } */
 
         .btn-outline-success {
             background: #788bac !important;
@@ -122,11 +122,14 @@
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
     <div class="row d-flex align-items-center">
         <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
-        <button type="button" class="col-md-3 btn btn-primary btn-lg ml-auto" style="margin-right: 14px; font-size: 14px;"
-        url="{{ route('admin.matriz-requisito-legales.create') }}">
-            Nueva Matriz de Requisitos
-            <i class="fa-regular fa-plus fa-lg" style="color: #ffffff;"></i>
-        </button >
+        <button type="button" class="col-md-3 btn btn-primary ml-auto" style="margin-right: 14px; font-size: 14px;"
+            url="{{ route('admin.matriz-requisito-legales.create') }}">
+            <div class="ml-1 mt-2">
+                Nueva Matriz de Requisitos
+                <i class="fa-regular fa-plus fa-lg" style="color: #ffffff;"></i>
+            </div>
+
+        </button>
     </div>
     <div class="mt-5 card radius">
         @can('matriz_requisitos_legales_agregar')
@@ -149,21 +152,8 @@
                     <tr>
                         <th>{{ trans('cruds.matrizRequisitoLegale.fields.id') }}</th>
                         <th style="min-width: 250px;">Nombre del requisito legal</th>
-                        <th style="min-width: 250px;">Obligación del cumplimiento</th>
-                        <th>Alcance&nbsp;y&nbsp;grado&nbsp;de&nbsp;aplicabilidad</th>
-                        {{-- <th style="min-width: 200px;">Medio&nbsp;de&nbsp;publicación</th>
-                        <th>Fecha&nbsp;de publicación</th>
-                        <th>Fecha&nbsp;de&nbsp;entrada en&nbsp;vigor</th> --}}
-                        <th style="min-width: 250px;">¿Cómo&nbsp;cumple?</th>
-                        <th>Periodicidad&nbsp;de&nbsp;cumplimiento</th>
-                        <th>¿En&nbsp;cumplimiento?</th>
-                        {{-- <th>Descripción&nbsp;del&nbsp;cumplimiento/incumplimiento</th> --}}
-                        <th>Método&nbsp;utilizado&nbsp;de&nbsp;verificación</th>
-                        {{-- <th style="text-align:center;">Evidencia</th>
-                        <th>Revisó&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor</th>
-                        <th>Puesto&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor</th>
-                        <th>Área&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor</th>
-                        <th>Comentarios&nbsp;@for ($i = 0; $i < 70; $i++)&nbsp;@endfor</th> --}}
+                        <th style="min-width: 250px;">Clausula</th>
+                        <th>Fecha&nbsp;de&nbsp;publicación</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -302,48 +292,48 @@
                         data: 'formacumple',
                         name: 'formacumple'
                     },
-                    {
-                        data: 'alcance',
-                        name: 'alcance'
-                    },
+                    // {
+                    //     data: 'alcance',
+                    //     name: 'alcance'
+                    // },
                     // {
                     //     data: 'medio',
                     //     name: 'medio'
                     // },
-                    // {
-                    //     data: 'fechaexpedicion',
-                    //     name: 'fechaexpedicion'
-                    // },
+                    {
+                        data: 'fechaexpedicion',
+                        name: 'fechaexpedicion'
+                    },
                     // {
                     //     data: 'fechavigor',
                     //     name: 'fechavigor'
                     // },
-                    {
-                        data: 'cumplimiento_organizacion',
-                        name: 'cumplimiento_organizacion'
-                    },
-                    {
-                        data: 'periodicidad_cumplimiento',
-                        name: 'periodicidad_cumplimiento'
-                    },
-                    {
-                        data: 'cumplerequisito',
-                        render: function(data, type, row, meta) {
-                            if (row.evaluaciones[0]) {
-                                return row.evaluaciones[0].cumplerequisito;
-                            }
-                            return 'No evaluado';
-                        }
-                    },
-                    {
-                        data: 'metodo',
-                        render: function(data, type, row, meta) {
-                            if (row.evaluaciones[0]) {
-                                return row.evaluaciones[0].metodo;
-                            }
-                            return 'No evaluado';
-                        }
-                    },
+                    // {
+                    //     data: 'cumplimiento_organizacion',
+                    //     name: 'cumplimiento_organizacion'
+                    // },
+                    // {
+                    //     data: 'periodicidad_cumplimiento',
+                    //     name: 'periodicidad_cumplimiento'
+                    // },
+                    // {
+                    //     data: 'cumplerequisito',
+                    //     render: function(data, type, row, meta) {
+                    //         if (row.evaluaciones[0]) {
+                    //             return row.evaluaciones[0].cumplerequisito;
+                    //         }
+                    //         return 'No evaluado';
+                    //     }
+                    // },
+                    // {
+                    //     data: 'metodo',
+                    //     render: function(data, type, row, meta) {
+                    //         if (row.evaluaciones[0]) {
+                    //             return row.evaluaciones[0].metodo;
+                    //         }
+                    //         return 'No evaluado';
+                    //     }
+                    // },
                     // {
                     //     data: 'descripcion_cumplimiento',
                     //     name: 'descripcion_cumplimiento'

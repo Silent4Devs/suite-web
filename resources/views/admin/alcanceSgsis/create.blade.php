@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .radius {
             border-radius: 16px;
@@ -12,8 +14,7 @@
             color: #606060;
         }
 
-        .boton-cancelar
-        {
+        .boton-cancelar {
             background-color: white;
             border-color: #057BE2;
             font: 14px Roboto;
@@ -33,6 +34,12 @@
             width: 148px;
             height: 48px;
         }
+
+        .form {
+            background: #F8FAFC;
+            border-radius: 4px;
+            opacity: 1;
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
@@ -40,7 +47,8 @@
     <div class="card radius" style="background-color: #5397D5;">
         <div class="row">
             <div class="col-md-2">
-                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:140px; height:117px;" class="mt-2 mb-2 ml-2 img-fluid">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:140px; height:117px;"
+                    class="mt-2 mb-2 ml-2 img-fluid">
             </div>
             <div class="col-md-10 mt-2">
                 <div style="font:20px Segoe UI;color:white;" class="mr-2">
@@ -68,47 +76,62 @@
             <form method="POST" action="{{ route('admin.alcance-sgsis.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <div class="form-group">
-                        <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre de
-                            Alcance</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}"
-                            required>
+                    <div class="form-floating" style="font-size:5px:; color:#057BE2;">
+                        <input class="form-control form"placeholder="Agrega un nombre al alcance" id="floatingTextarea"
+                            id="nombre" name="nombre" value="{{ old('nombre') }}" required>
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
                             </div>
                         @endif
+                        <label for="floatingTextarea">Nombre del alcance</label>
                     </div>
-
-                    <label class="required" for="alcancesgsi"> <i class="fas fa-shield-alt iconos-crear"></i>Alcance
-                    </label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                        title="Actividad clave que determina la base necesaria para las actividades de implementación del SGSI."></i>
-                    <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }}" name="alcancesgsi"
-                        id="alcancesgsi">{{ old('alcancesgsi') }}</textarea>
-                    @if ($errors->has('alcancesgsi'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('alcancesgsi') }}
-                        </div>
-                    @endif
+                </div>
+                <div class="form-floating">
+                    <input required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form"
+                        name="alcancesgsi" id="alcancesgsi" value="{{ old('alcancesgsi') }}">
+                    <label for="alcancesgi">Alcance</label>
                 </div>
 
-                <div class="row">
 
-                    <div class="form-group col-sm-6">
-                        <label class="required" for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i>
-                            Fecha de
-                            publicación</label>
-                        <input required class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
-                            value="{{ old('fecha_publicacion') }}">
-                        @if ($errors->has('fecha_publicacion'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_publicacion') }}
-                            </div>
-                        @endif
+                <label class="required" for="alcancesgsi">Alcance
+                </label>
+                <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form" name="alcancesgsi"
+                    id="alcancesgsi">{{ old('alcancesgsi') }}</textarea>
+                @if ($errors->has('alcancesgsi'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('alcancesgsi') }}
                     </div>
+                @endif
+        </div>
 
-                    {{-- <div class="form-group col-sm-4">
+        <div class="row mt-2 ml-1 mb-4">
+            <div class="form-floating col-md-6" style="width:500px;">
+                <input required class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }} form"
+                    type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
+                    value="{{ old('fecha_publicacion') }}"style="font-size:5px:;">
+                @if ($errors->has('fecha_publicacion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_publicacion') }}
+                    </div>
+                @endif
+                <label class="required ml-2" for="fecha_publicacion">Fecha de Publicacion</label>
+            </div>
+            {{-- <div class="form-group col-sm-6">
+                <label class="required" for="fecha_publicacion">
+                    Fecha de
+                    publicación</label>
+                <input required class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
+                    type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
+                    value="{{ old('fecha_publicacion') }}">
+                @if ($errors->has('fecha_publicacion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_publicacion') }}
+                    </div>
+                @endif
+            </div> --}}
+
+            {{-- <div class="form-group col-sm-4">
                         <label class="required" for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                             entrada en
                             vigor</label>
@@ -121,27 +144,40 @@
                             </div>
                         @endif
                     </div> --}}
-
-                    <div class="form-group col-sm-6">
-                        <label class="required" for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i>Fecha
-                            de
-                            revisión</label>
-                        <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
-                            value="{{ old('fecha_revision') }}">
-                        @if ($errors->has('fecha_revision'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_revision') }}
-                            </div>
-                        @endif
+            <div class="form-floating col-md-6" style="width:500px;">
+                <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }} form"
+                    type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
+                    value="{{ old('fecha_revision') }}">
+                @if ($errors->has('fecha_publicacion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_publicacion') }}
                     </div>
-                </div>
+                @endif
+                <label class="required ml-2" for="fecha_revision">Fecha
+                    de
+                    revisión</label>
+            </div>
+
+            {{-- <div class="form-group col-sm-6">
+                <label class="required" for="fecha_revision">Fecha
+                    de
+                    revisión</label>
+                <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
+                    type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
+                    value="{{ old('fecha_revision') }}">
+                @if ($errors->has('fecha_revision'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_revision') }}
+                    </div>
+                @endif
+            </div> --}}
         </div>
-        </form>
+    </div>
+    </form>
     </div>
     <div class="text-right form-group col-12">
         <a type="button" href="{{ route('admin.alcance-sgsis.index') }}" class="btn boton-cancelar">
-            Cancelar
+            <div class="mt-2">Cancelar</div>
         </a>
         <button type="button" class="btn boton-enviar" type="submit">
             {{ trans('global.save') }}
@@ -152,53 +188,54 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            CKEDITOR.replace('alcancesgsi', {
-                toolbar: [{
-                        name: 'styles',
-                        items: ['Styles', 'Format', 'Font', 'FontSize']
-                    },
-                    {
-                        name: 'colors',
-                        items: ['TextColor', 'BGColor']
-                    },
-                    {
-                        name: 'editing',
-                        groups: ['find', 'selection', 'spellchecker'],
-                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                    }, {
-                        name: 'clipboard',
-                        groups: ['undo'],
-                        items: ['Undo', 'Redo']
-                    },
-                    {
-                        name: 'tools',
-                        items: ['Maximize']
-                    },
-                    {
-                        name: 'basicstyles',
-                        groups: ['basicstyles', 'cleanup'],
-                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
-                            '-',
-                            'CopyFormatting', 'RemoveFormat'
-                        ]
-                    },
-                    {
-                        name: 'paragraph',
-                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                            'Blockquote',
-                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                        ]
-                    },
-                    {
-                        name: 'links',
-                        items: ['Link', 'Unlink']
-                    },
-                    {
-                        name: 'insert',
-                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
-                    },
+            {
+                toolbar: [
+                    // {
+                    //     name: 'styles',
+                    //     items: ['Styles', 'Format', 'Font', 'FontSize']
+                    // },
+                    // {
+                    //     name: 'colors',
+                    //     items: ['TextColor', 'BGColor']
+                    // },
+                    // {
+                    //     name: 'editing',
+                    //     groups: ['find', 'selection', 'spellchecker'],
+                    //     items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    // }, {
+                    //     name: 'clipboard',
+                    //     groups: ['undo'],
+                    //     items: ['Undo', 'Redo']
+                    // },
+                    // {
+                    //     name: 'tools',
+                    //     items: ['Maximize']
+                    // },
+                    // {
+                    //     name: 'basicstyles',
+                    //     groups: ['basicstyles', 'cleanup'],
+                    //     items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                    //         '-',
+                    //         'CopyFormatting', 'RemoveFormat'
+                    //     ]
+                    // },
+                    // {
+                    //     name: 'paragraph',
+                    //     groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                    //     items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    //         'Blockquote',
+                    //         '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                    //         'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                    //     ]
+                    // },
+                    // {
+                    //     name: 'links',
+                    //     items: ['Link', 'Unlink']
+                    // },
+                    // {
+                    //     name: 'insert',
+                    //     items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    // },
                     '/',
 
 
@@ -208,9 +245,9 @@
                     // }
                 ]
             });
-            $('.controles-select').select2({
-                'theme': 'bootstrap4'
-            });
+        // $('.controles-select').select2({
+        //     'theme': 'bootstrap4'
+        // });
 
         });
     </script>

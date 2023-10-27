@@ -55,7 +55,6 @@
             max-width: 120px !important;
             min-width: 120px !important;
             text-align: center !important;
-            text-align: center !important;
         }
 
         .table tr th:nth-child(2) {
@@ -122,8 +121,7 @@
             text-align: center !important;
         }
 
-        .agregar
-        {
+        .agregar {
             margin-right: 15px;
         }
 
@@ -178,7 +176,9 @@
                         <th style="max-width:300px !important;background-color:rgb(255, 255, 255); color:#414141;">Nombre
                             del Alcance</th>
                         <th style="min-width:200px; background-color:rgb(255, 255, 255); color:#414141;">Alcance</th>
-                        <th style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">Estatus</th>
+                        <th class="d-flex justify-content-center"
+                            style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">
+                            Estatus</th>
                     </tr>
                 </thead>
             </table>
@@ -190,8 +190,7 @@
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            let dtButtons = [
-                {
+            let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Alcance SGSIS ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',

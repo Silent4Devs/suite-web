@@ -131,7 +131,7 @@
             @endif
         </div>
         <div class="row ml-1">
-            <div class="col-md-6" style="width:565px;">
+            <div class="col-md-6" style="width:500px;">
                 <label for="fechaexpedicion"></i> Fecha de
                     publicación</label>
                 <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}" type="date"
@@ -143,7 +143,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
             </div>
-            <div class="col-md-6" style="width:565px;">
+            <div class="col-md-6" style="width:500px;">
                 <label for="fechavigor">
                     {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
                 <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
@@ -159,7 +159,7 @@
 
 
         <div class="form-group col-sm-12">
-            <label class="required" for="requisitoacumplir">
+            <label class="required mt-4" for="requisitoacumplir">
                 Descripción del requisito a cumplir*</label>
             <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }}"
                 name="requisitoacumplir" id="requisitoacumplir">{{ old('requisitoacumplir') }}</textarea>
@@ -170,7 +170,8 @@
             @endif
         </div>
         </form>
-        <button type="button" class="btn btn-light" style="background-color: white; border-color:white; color:#057BE2;">
+        <button type="button" class="btn btn-light mr-auto mb-3"
+            style="background-color: white; border-color:white; color:#057BE2;">
             Añadir nuevo Requisito
             <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
         </button>
@@ -179,8 +180,10 @@
     <div class="text-right form-group col-12">
         <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
         </span>
-        <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn boton-cancelar">Cancelar</a>
-        <button class="btn boton-enviar" type="submit">
+        <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn boton-cancelar">
+            <div class="mt-2">Cancelar</div>
+        </a>
+        <button class="btn boton-enviar ml-2 mr-2" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>
