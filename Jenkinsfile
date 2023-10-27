@@ -30,7 +30,6 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                // SSH into the deployment server and pull the Docker image
                 sshagent(['your_ssh_credentials_id']) {
                     sh "ssh ${DEPLOY_USER}@${DEPLOY_SERVER} 'git pull"
                 }
