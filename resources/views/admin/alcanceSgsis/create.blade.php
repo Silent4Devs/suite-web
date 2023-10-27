@@ -84,38 +84,27 @@
                                 {{ $errors->first('nombre') }}
                             </div>
                         @endif
-                        <label for="floatingTextarea">Nombre del alcance</label>
+                        <label for="floatingTextarea" style="color: #606060;">Nombre del alcance</label>
                     </div>
                 </div>
                 <div class="form-floating">
                     <input required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form"
                         name="alcancesgsi" id="alcancesgsi" value="{{ old('alcancesgsi') }}">
-                    <label for="alcancesgi">Alcance</label>
+                    <label for="alcancesgi" style="color: #606060;">Alcance</label>
                 </div>
-
-
-                <label class="required" for="alcancesgsi">Alcance
-                </label>
-                <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form" name="alcancesgsi"
-                    id="alcancesgsi">{{ old('alcancesgsi') }}</textarea>
-                @if ($errors->has('alcancesgsi'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('alcancesgsi') }}
-                    </div>
-                @endif
         </div>
 
         <div class="row mt-2 ml-1 mb-4">
-            <div class="form-floating col-md-6" style="width:500px;">
+            <div class="form-floating col-md-6" style="width:565px;">
                 <input required class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }} form"
                     type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
-                    value="{{ old('fecha_publicacion') }}"style="font-size:5px:;">
+                    value="{{ old('fecha_publicacion') }}"style="font-size:5px:;color: #606060;">
                 @if ($errors->has('fecha_publicacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_publicacion') }}
                     </div>
                 @endif
-                <label class="required ml-2" for="fecha_publicacion">Fecha de Publicacion</label>
+                <label class="required ml-2" for="fecha_publicacion" style="color: #606060;">Fecha de Publicacion</label>
             </div>
             {{-- <div class="form-group col-sm-6">
                 <label class="required" for="fecha_publicacion">
@@ -144,7 +133,7 @@
                             </div>
                         @endif
                     </div> --}}
-            <div class="form-floating col-md-6" style="width:500px;">
+            <div class="form-floating col-md-6" style="width:565px;">
                 <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }} form"
                     type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
                     value="{{ old('fecha_revision') }}">
@@ -179,8 +168,8 @@
         <a type="button" href="{{ route('admin.alcance-sgsis.index') }}" class="btn boton-cancelar">
             <div class="mt-2">Cancelar</div>
         </a>
-        <button type="button" class="btn boton-enviar" type="submit">
-            {{ trans('global.save') }}
+        <button type="button" class="btn boton-enviar ml-1 mr-2" type="submit" style="font-size:14px;width:250px;">
+            {{ trans('global.save') }} y enviar a aprobación
         </button>
     </div>
 @endsection
