@@ -459,9 +459,9 @@
                                                 @foreach ($certificados as $certificado)
                                                     <tr>
                                                         <td>{{ $certificado->nombre }}</td>
-                                                        <td>{{ $beneficiario->vigencia }}</td>
-                                                        <td>{{ $beneficiario->estatus }}</td>
-                                                        <td>{{ $beneficiario->documento }}</td>
+                                                        <td>{{ $certificado->vigencia }}</td>
+                                                        <td>{{ $certificado->estatus }}</td>
+                                                        <td>{{ $certificado->documento }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -493,9 +493,9 @@
                                                 @foreach ($certificados as $certificado)
                                                     <tr>
                                                         <td>{{ $certificado->nombre }}</td>
-                                                        <td>{{ $beneficiario->vigencia }}</td>
-                                                        <td>{{ $beneficiario->estatus }}</td>
-                                                        <td>{{ $beneficiario->documento }}</td>
+                                                        <td>{{ $certificado->vigencia }}</td>
+                                                        <td>{{ $certificado->estatus }}</td>
+                                                        <td>{{ $certificado->documento }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
