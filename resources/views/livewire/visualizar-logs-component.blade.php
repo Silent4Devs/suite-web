@@ -3,9 +3,9 @@
         <div class="mb-3">
             <input type="text" class="form-control" placeholder="Search" wire:model.lazy="search">
         </div>
-        <div wire:loading wire:target='search'>
+        {{--  <div wire:loading wire:target='search'>
             Cargando...
-        </div>
+        </div>  --}}
         <div class="table-responsive" wire:remove>
             <table class="table">
                 <thead>
