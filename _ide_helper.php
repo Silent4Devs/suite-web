@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.28.0.
+ * Generated for Laravel 10.29.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -435,6 +435,18 @@
         {
                         /** @var \Illuminate\Foundation\Application $instance */
                         return $instance->runningInConsole();
+        }
+                    /**
+         * Determine if the application is running any of the given console commands.
+         *
+         * @param string|array $commands
+         * @return bool 
+         * @static 
+         */ 
+        public static function runningConsoleCommand(...$commands)
+        {
+                        /** @var \Illuminate\Foundation\Application $instance */
+                        return $instance->runningConsoleCommand(...$commands);
         }
                     /**
          * Determine if the application is running unit tests.
@@ -21692,13 +21704,9 @@
                         return $instance->captureLastError($hint);
         }
                     /**
-         * 
+         * {@inheritdoc}
          *
-         * @param string $slug Identifier of the Monitor
-         * @param \Sentry\CheckInStatus $status The status of the check-in
-         * @param int|float|null $duration The duration of the check-in
-         * @param \Sentry\MonitorConfig|null $monitorConfig Configuration of the Monitor
-         * @param string|null $checkInId A check-in ID from the previous check-in
+         * @param int|float|null $duration
          * @static 
          */ 
         public static function captureCheckIn($slug, $status, $duration = null, $monitorConfig = null, $checkInId = null)
