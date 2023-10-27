@@ -9,13 +9,16 @@ use Livewire\WithPagination;
 class VisualizarLogsComponent extends Component
 {
     use WithPagination;
+    public $search = '';
 
     protected $paginationTheme = 'bootstrap';
 
     public function render()
     {
-        return view('livewire.visualizar-logs-component', [
-            'articles' => Audit::orderByDesc('id')->paginate(10),
-        ]);
+        $articles = Audit::select('id', 'user_id', 'event', 'old_values', 'new_values', 'url', 'tags', 'created_at', 'updated_at')->with('user:id,name')
+            ->orderByDesc('id')
+            ->fastPaginate(50);
+
+        return view('livewire.visualizar-logs-component', compact('articles'));
     }
 }

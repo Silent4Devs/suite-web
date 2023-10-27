@@ -46,4 +46,9 @@ class Audit extends Model
         'user_agent',
         'tags',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
