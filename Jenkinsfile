@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
 
-                   sshagent(['/home/desarrollo/.ssh/id_rsa']) {
+                   sshagent(['SHA256:7EPD0/Eb0KtSDO3o19K8gPJQnaQbwR0wdqnsD3ch4y8']) {
                    sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
 
                   }
