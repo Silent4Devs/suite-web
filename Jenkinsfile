@@ -1,52 +1,44 @@
 pipeline {
-  agent any
-  stages {
-
-    stage('install') {
-       steps {
-                script {
-                    checkout([$class: 'GitSCM', branches: [[name: 'develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'LocalBranch', localBranch: 'origin/develop']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://gitlab.com/silent4business/tabantaj.git']]])
-                }
-        }
-      // steps {
-      //   git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
-      // }
+    agent any
+    environment {
+        // Define environment variables
+        DEPLOY_SERVER = '192.168.9.78'
+        DEPLOY_USER = 'desarrollo'
+        DEPLOY_DIR = '/var/contenedor/tabantaj'
     }
-
-    stage('build') {
-      steps {
-        script{
-          try {
-                // sh 'docker-compose build'
-                sh 'docker-compose up -d'
-                sh 'docker-compose exec php cp .env.example .env'
-                sh 'docker-compose exec php composer install --ignore-platform-reqs'
-                sh 'docker-compose exec php php artisan key:generate'
-                sh 'docker-compose exec php php artisan migrate'
-                sh 'docker-compose exec php chmod 777 -R storage'
-                sh 'docker-compose exec php php artisan optimize:clear'
-            } catch (Exception e) {
-              echo 'Exception occurred: ' + e.toString()
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
         }
-      }
+        stage('Build and Test') {
+            steps {
+                // Build your Docker image using the Dockerfile
+                sh "docker-compose build --no-cache"
+                // Run your tests inside the Docker container
+                sh "docker-compose up"
+            }
+        }
+        stage('Push to Container Registry') {
+            steps {
+                // Push the Docker image to your container registry
+                withCredentials([usernamePassword(credentialsId: 'your_registry_creds_id', usernameVariable: 'desarrollo', passwordVariable: 'S3cur3.qa')]) {
+                    sh "docker login -u $USERNAME -p $PASSWORD $DOCKER_REGISTRY_URL"
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // SSH into the deployment server and pull the Docker image
+                sshagent(['your_ssh_credentials_id']) {
+                    sh "ssh ${DEPLOY_USER}@${DEPLOY_SERVER} 'git pull"
+                }
+                // Start the Docker container on the deployment server
+                sshagent(['your_ssh_credentials_id']) {
+                    sh "ssh ${DEPLOY_USER}@${DEPLOY_SERVER} 'docker run -d -p 80:80 --name tabantaj'"
+                }
+            }
+        }
     }
-
-      stage('Desplegar a QA') {
-      steps {
-          script {
-              try {
-                  sh 'scp /var/jenkins_home/config.xml desarrollo@192.168.9.78:/var/contenedor/tabantaj'
-              } catch (Exception e) {
-                  echo 'Excepción ocurrida: ' + e.toString()
-              }
-          }
-      }
-  }
-
-
-
-  }
-
-  }
-
+}
