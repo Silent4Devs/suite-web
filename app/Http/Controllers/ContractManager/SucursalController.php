@@ -5,7 +5,9 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Sucursal;
 use Gate;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class SucursalController extends Controller
@@ -56,24 +58,32 @@ class SucursalController extends Controller
      */
     public function store(Request $request)
     {
-        $sucursales = new Sucursal();
-        $sucursales->descripcion = $request->descripcion;
-        $sucursales->rfc = $request->rfc;
-        $sucursales->empresa = $request->empresa;
-        $sucursales->cuenta_contable = $request->cuenta_contable;
-        $sucursales->zona = $request->zona;
-        $sucursales->direccion = $request->direccion;
+        try {
+            DB::beginTransaction();
 
-        $file = $request->file('mylogo');
+            $sucursales = new Sucursal();
+            $sucursales->descripcion = $request->descripcion;
+            $sucursales->rfc = $request->rfc;
+            $sucursales->empresa = $request->empresa;
+            $sucursales->cuenta_contable = $request->cuenta_contable;
+            $sucursales->zona = $request->zona;
+            $sucursales->direccion = $request->direccion;
 
-        if ($file != null) {
-            $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(base_path('public/razon_social'), $nombre);
-            $sucursales->mylogo = $nombre;
-            $sucursales->save();
+            $file = $request->file('mylogo');
+
+            if ($file != null) {
+                $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(base_path('public/razon_social'), $nombre);
+                $sucursales->mylogo = $nombre;
+                $sucursales->save();
+            }
+            DB::commit();
+
+            return redirect('/contract_manager/sucursales');
+        } catch (QueryException $e) {
+            DB::rollback();
+            return "Error al insertar el proveedor: " . $e->getMessage();
         }
-
-        return redirect('/contract_manager/sucursales');
     }
 
     /**
