@@ -2,13 +2,14 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Requsicion extends Model
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
 
     protected $fillable = [
         'fecha',

@@ -2,14 +2,15 @@
 
 namespace App\Models\ContractManager;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VariablePlantilla extends Model implements Auditable
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
     use AuditableTrait;
 
     public $table = 'variables_plantillas';

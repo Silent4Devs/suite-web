@@ -2,12 +2,13 @@
 
 namespace App\Models\Escuela;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UsuariosCursos extends Model
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
     protected $table = 'course_user';
 
     protected $fillable = [
