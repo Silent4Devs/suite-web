@@ -5,7 +5,9 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Producto;
 use Gate;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductoController extends Controller
@@ -56,12 +58,23 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $productos = new Producto();
-        $productos->descripcion = $request->descripcion;
-        $productos->clave = $request->clave;
-        $productos->save();
+        try {
+            DB::beginTransaction();
 
-        return redirect('/contract_manager/productos');
+            // Intenta insertar un nuevo usuario en la tabla 'usuarios'
+            $productos = new Producto();
+            $productos->descripcion = $request->descripcion;
+            $productos->clave = $request->clave;
+            $productos->save();
+
+            // Confirma la transacción si la inserción tiene éxito
+            DB::commit();
+
+            return redirect('/contract_manager/productos');
+        } catch (QueryException $e) {
+            DB::rollback();
+            return "Error al insertar el producto: " . $e->getMessage();
+        }
     }
 
     /**
