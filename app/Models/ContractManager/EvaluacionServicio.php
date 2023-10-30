@@ -2,17 +2,18 @@
 
 namespace App\Models\ContractManager;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EvaluacionServicio extends Model implements Auditable
 {
     public $table = 'evaluacion_servicio';
 
-    use HasFactory, softDeletes;
+    use HasFactory, softDeletes, ClearsResponseCache;
     use AuditableTrait;
 
     protected $dates = ['deleted_at'];

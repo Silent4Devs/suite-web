@@ -2,13 +2,14 @@
 
 namespace App\Models\Escuela;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Price extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, ClearsResponseCache;
     use HasFactory;
     protected $guarded = ['id'];
 

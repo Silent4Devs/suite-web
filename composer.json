@@ -48,6 +48,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
+        "beyondcode/laravel-query-detector": "^1.7",
         "friendsofphp/php-cs-fixer": "^3.2",
         "jason-guru/laravel-make-repository": "^0.0.3",
         "laravel/dusk": "^7.7",
