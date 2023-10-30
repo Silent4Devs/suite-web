@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -38,7 +39,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Organizacion extends Model implements Auditable
 {
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'organizacions';
 

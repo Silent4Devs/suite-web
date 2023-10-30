@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Audit extends Model
 {
+    use ClearsResponseCache;
+
     protected $table = 'audits';
 
     protected $casts = [

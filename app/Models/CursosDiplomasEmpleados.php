@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use App\Traits\DateTranslator;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Jenssegers\Date\Date;
+use App\Traits\DateTranslator;
+use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CursosDiplomasEmpleados extends Model implements Auditable
 {
     use SoftDeletes;
     use DateTranslator;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'cursos_diplomados_empleados';
 

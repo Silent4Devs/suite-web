@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TimesheetCliente extends Model
+class TimesheetCliente extends Model implements Auditable
 // implements Auditable
 {
-    use HasFactory;
-    // use \OwenIt\Auditing\Auditable;
+    use HasFactory, ClearsResponseCache;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'timesheet_clientes';
 
