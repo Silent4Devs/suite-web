@@ -3,15 +3,16 @@
 namespace App\Models\Iso27;
 
 use App\Models\Empleado;
+use App\Traits\ClearsResponseCache;
 use App\Models\NotificacionAprobadore;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DeclaracionAplicabilidadAprobarIso extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, ClearsResponseCache;
     use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
