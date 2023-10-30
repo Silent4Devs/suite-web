@@ -90,8 +90,8 @@
                     </div>
                 </div>
                 <div class="form-floating">
-                    <input required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form"
-                        name="alcancesgsi" id="alcancesgsi" value="{{ old('alcancesgsi') }}">
+                    <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form"
+                        name="alcancesgsi" id="alcancesgsi" value="{{ old('alcancesgsi') }}" style="height:200px;"></textarea>
                     <label for="alcancesgi" style="color: #606060;">Alcance</label>
                 </div>
         </div>
