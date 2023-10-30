@@ -5,7 +5,9 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\ProveedorOC;
 use Gate;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProveedoresOController extends Controller
@@ -56,20 +58,29 @@ class ProveedoresOController extends Controller
      */
     public function store(Request $request)
     {
-        $proveedores = new ProveedorOC();
-        $proveedores->nombre = $request->nombre;
-        $proveedores->razon_social = $request->razon_social;
-        $proveedores->rfc = $request->rfc;
-        $proveedores->contacto = $request->contacto;
-        $proveedores->facturacion = $request->facturacion;
-        $proveedores->direccion = $request->direccion;
-        $proveedores->envio = $request->envio;
-        $proveedores->credito = $request->credito;
-        $proveedores->fecha_inicio = $request->fecha_inicio;
-        $proveedores->fecha_fin = $request->fecha_fin;
-        $proveedores->save();
 
-        return redirect('/contract_manager/proveedores');
+        try {
+            DB::beginTransaction();
+
+            $proveedores = new ProveedorOC();
+            $proveedores->nombre = $request->nombre;
+            $proveedores->razon_social = $request->razon_social;
+            $proveedores->rfc = $request->rfc;
+            $proveedores->contacto = $request->contacto;
+            $proveedores->facturacion = $request->facturacion;
+            $proveedores->direccion = $request->direccion;
+            $proveedores->envio = $request->envio;
+            $proveedores->credito = $request->credito;
+            $proveedores->fecha_inicio = $request->fecha_inicio;
+            $proveedores->fecha_fin = $request->fecha_fin;
+            $proveedores->save();
+            DB::commit();
+
+            return redirect('/contract_manager/proveedores');
+        } catch (QueryException $e) {
+            DB::rollback();
+            return "Error al insertar el proveedor: " . $e->getMessage();
+        }
     }
 
     /**
