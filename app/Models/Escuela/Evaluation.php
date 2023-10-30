@@ -2,14 +2,15 @@
 
 namespace App\Models\Escuela;
 
-use App\Models\Escuela\Instructor\Question;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Escuela\Instructor\Question;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Evaluation extends Model
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
     use SoftDeletes;
     protected $table = 'evaluations';
     protected $guarded = ['id'];

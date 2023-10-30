@@ -3,10 +3,11 @@
 namespace App\Models\ContractManager;
 
 use Carbon\Carbon;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class DolaresContrato.
@@ -23,7 +24,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class DolaresContrato extends Model implements Auditable
 {
-    use SoftDeletes;
+    use SoftDeletes, ClearsResponseCache;
     use AuditableTrait;
 
     protected $table = 'dolares_contratos';

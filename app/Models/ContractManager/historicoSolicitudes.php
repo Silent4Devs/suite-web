@@ -2,12 +2,13 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 
 class historicoSolicitudes extends Model
 {
     // use SoftDeletes;
-    // use AuditableTrait;
+    use ClearsResponseCache;
 
     protected $table = 'historico_solicitudes';
 

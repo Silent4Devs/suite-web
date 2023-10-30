@@ -2,11 +2,12 @@
 
 namespace App\Models\ContractManager;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ConveniosModificatorios extends Model implements Auditable
 {
@@ -14,7 +15,7 @@ class ConveniosModificatorios extends Model implements Auditable
 
     protected $appends = ['archivo'];
 
-    use HasFactory, softDeletes;
+    use HasFactory, softDeletes, ClearsResponseCache;
     use AuditableTrait;
 
     protected $fillable = [
