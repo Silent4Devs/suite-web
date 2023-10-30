@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use DateTimeInterface;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class AuditLog extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     public $table = 'audit_logs';
 

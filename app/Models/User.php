@@ -6,6 +6,7 @@ use Hash;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
 use App\Notifications\MyResetPassword;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements Auditable
 {
     use SoftDeletes, Notifiable, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     public $table = 'users';
 

@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
-use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
-use App\Models\RH\BeneficiariosEmpleado;
-use App\Models\RH\ContactosEmergenciaEmpleado;
-use App\Models\RH\DependientesEconomicosEmpleados;
-use Carbon\Carbon;
 use DateTime;
+use Carbon\Carbon;
 use DateTimeInterface;
 use EloquentFilter\Filterable;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Cache;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ClearsResponseCache;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\RH\BeneficiariosEmpleado;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\RH\ContactosEmergenciaEmpleado;
+use App\Models\RH\DependientesEconomicosEmpleados;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
+use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 
 /**
  * Class Empleado.
@@ -58,7 +59,7 @@ class Empleado extends Model implements Auditable
     use SoftDeletes;
     use HasFactory;
     use Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     const BAJA = 'baja';
 

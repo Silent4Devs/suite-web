@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class CartaAceptacionAprobacione.
@@ -24,7 +25,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class CartaAceptacionAprobacione extends Model implements Auditable
 {
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'carta_aceptacion_aprobaciones';
 

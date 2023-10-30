@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use DateTimeInterface;
 use EloquentFilter\Filterable;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
@@ -38,7 +39,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Area extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory, Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'areas';
 
