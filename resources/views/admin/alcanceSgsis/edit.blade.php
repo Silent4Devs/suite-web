@@ -26,8 +26,6 @@
                         </div>
                     @endif
                 </div>
-
-
                 <div class="row">
 
                     <div class="form-group col-sm-4">
@@ -42,7 +40,6 @@
                             </div>
                         @endif
                     </div>
-
 
 
                     <div class="form-group col-sm-4">

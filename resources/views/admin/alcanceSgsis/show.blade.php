@@ -17,7 +17,7 @@
         <div class="card col-sm-12 col-md-10" style="border-radius: 16px; height:1556px;">
             <div class="card-body">
                 <div class="print-none" style="text-align:right;">
-                    <button class="btn btn-outline-primary" style="width:150px;"
+                    <button class="btn btn-outline-primary mt-4" style="font-size:14px;width:150px;"
                     onclick="javascript:window.print()">
                     Imprimir
                     <i class="fas fa-print"style="color:#057BE2;"></i>
@@ -36,17 +36,18 @@
                     </div>
                     <div class="col-5 p-2 mt-3" style="text-align: left;">
                         <br>
-                        <span class="" style="color:#306BA9; font-size:20px;">
+                        <span class="" style="color:#306BA9; font-size:20px;font-weight:bold;">
                             Reporte Determinación de alcance
                         </span>
 
                     </div>
-                    <div class="col-4 p-2" style="background:#EEFCFF;">
-                        <span class="ml-5" style="font-size:14px;color:#345183;">Fecha de revisión:
-                            {{ \Carbon\Carbon::parse($alcanceSgsi->created_at)->format('d-m-Y') }}
+                    <div class="col-4 pt-5 pl-5" style="background:#EEFCFF;">
+                        <span class="" style="font-size:14px;color:#345183;background:#EEFCFF;">Fecha de revisión:
+                            {{ \Carbon\Carbon::parse($alcanceSgsi->fecha_revision)->format('d-m-Y') }}
                         </span>
-                        <div class="ml-5" style="font-size:14px;color:#345183;">
-                            Fecha de publicación: 19-09-2022
+                        <div class="" style="font-size:14px;color:#345183;">
+                            Fecha de publicación:
+                            {{ \Carbon\Carbon::parse($alcanceSgsi->fecha_publicacion)->format('d-m-Y') }}
                         </div>
                     </div>
                 </div>
@@ -56,31 +57,24 @@
                             <div class="mt-4" style="font-weight: bold;margin-left:55px;font-size:14px; color:#306BA9;">
                                 Nombre del alcance
                             </div>
-
-                            <div class="px-2 mt-2 ml-5 mr-5" style="font-size:14px; color:#606060;">
-                                {!! $alcanceSgsi->alcancesgsi !!}
+                            <div class="px-2 mt-2 ml-5 mr-5 mb-4" style="font-size:14px; color:#606060;">
+                                {!! $alcanceSgsi->nombre !!}
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-1 mb-1" style="width:10px;padding-left:0px;padding-right:0px;background-color:#295082;width:10px;padding-left:0px;padding-right: 43px;">
-
+                    <div class="col-md-1 mb-1" style="width:10px;padding-left:0px;padding-right:0px;background-color:#295082;
+                    width:10px;padding-left:0px;padding-right: 43px;">
+                    </div>
+                </div>
+                <div class="mt-4 mb-3  dato_mairg" style="">
+                    <span style="font-size:14px; color:#306BA9;margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
+                        Alcance
+                    </span>
+                    <div class="px-2 mt-2 ml-5 mr-5" style="font-size:14px; color:#606060;">
+                        {!! $alcanceSgsi->alcancesgsi !!}
                     </div>
                 </div>
 
-
-
-                <div class="mt-5 mb-3  dato_mairg" style="">
-                    <span style="font-size:14px; color:#306BA9;margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
-                        Alcance</span>
-                </div>
-
-                <ul style="margin-left:30px;">
-                    @foreach ($alcanceSgsi->normas as $norma)
-                        <li style="font-size:14px;color:#606060;">
-                            {{ $norma->norma }}
-                        </li>
-                    @endforeach
-                </ul>
                 <div class="border-bottom" style="margin-top:100px;"> </div>
 
             </div>
