@@ -9,15 +9,15 @@ trait ClearsResponseCache
     public static function bootClearsResponseCache()
     {
         self::created(function () {
-            ResponseCache::clear();
+            //ResponseCache::clear();
         });
 
         self::updated(function () {
-            ResponseCache::clear();
+            //ResponseCache::clear();
         });
 
         self::deleted(function () {
-            ResponseCache::clear();
+            //ResponseCache::clear();
         });
     }
 }

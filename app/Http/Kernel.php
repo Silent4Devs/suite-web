@@ -30,7 +30,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\SetLocale::class,
-            \Spatie\ResponseCache\Middlewares\CacheResponse::class,
+            //\Spatie\ResponseCache\Middlewares\CacheResponse::class,
         ],
         'api' => [
             'throttle:60,1',
@@ -62,6 +62,6 @@ class Kernel extends HttpKernel
     ];
 
     protected $middlewareAliases = [
-        'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
+        //'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
      ];
 }
