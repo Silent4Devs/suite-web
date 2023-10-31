@@ -91,7 +91,7 @@ class BajaEmpleadoComponent extends Component
 
     public function obtenerDocumentosQueDeboAprobar()
     {
-        $revisiones = RevisionDocumento::getAllWithDocumento()->where('empleado_id', $this->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO);
+        $revisiones = RevisionDocumento::getAllWithDocumento();
 
         return $revisiones;
     }
