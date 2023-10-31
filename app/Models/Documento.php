@@ -66,6 +66,13 @@ class Documento extends Model implements Auditable
     }
 
     //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Documentos:Documentos_all', 3600 * 4, function () {
+            return self::get();
+        });
+    }
+
     public static function getLastFiveWithMacroproceso()
     {
         return Cache::remember('Documentos:Documentos_last_five_macroprocesos', 3600 * 4, function () {

@@ -55,7 +55,7 @@ class PlanImplementacion extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('implementaciones', 3600 * 24, function () {
+        return Cache::remember('PlanImplementacion:implementaciones', 3600 * 8, function () {
             return self::get();
         });
     }
