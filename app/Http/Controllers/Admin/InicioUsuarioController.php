@@ -1191,7 +1191,7 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_de_puesto'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto_id = User::getCurrentUser()->empleado->puesto_id;
-        $puesto = Puesto::find($puesto_id);
+        $puesto = Puesto::getAll()->find($puesto_id);
 
         $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
 
@@ -1202,12 +1202,12 @@ class InicioUsuarioController extends Controller
     {
         $empleado = Empleado::getAll()->find($id_empleado);
 
-        $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->get();
-
+        $evidendiasdocumentos = EvidenciasDocumentosEmpleados::getAll();
+        $docs_empleado = $evidendiasdocumentos->where('empleado_id', $id_empleado)->get();
         $lista_docs_model = ListaDocumentoEmpleado::getAll();
         $lista_docs = collect();
         foreach ($lista_docs_model as $doc) {
-            $documentos_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
+            $documentos_empleado = $evidendiasdocumentos->where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
             if ($documentos_empleado) {
                 $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
                 if ($documento) {

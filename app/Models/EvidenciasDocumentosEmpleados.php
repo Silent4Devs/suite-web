@@ -41,6 +41,13 @@ class EvidenciasDocumentosEmpleados extends Model implements Auditable
 
     public static function getAll()
     {
+        return Cache::remember('EvidenciasDocumentos:revision_documentos_all', 3600 * 8, function () {
+            return self::get();
+        });
+    }
+
+    public static function getAllWithDocumento()
+    {
         return Cache::remember('EvidenciasDocumentos:revision_documentos_all_documentos', 3600 * 8, function () {
             return self::with('documento')->get();
         });
