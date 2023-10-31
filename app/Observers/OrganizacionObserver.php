@@ -59,9 +59,9 @@ class OrganizacionObserver
 
     private function forgetCache()
     {
-        Cache::forget('getLogo_organizacion');
-        Cache::forget('organization_all');
-        Cache::forget('organizacion_first');
+        Cache::forget('Organizacion:getLogo_organizacion');
+        Cache::forget('Organizacion:organization_all');
+        Cache::forget('Organizacion:organizacion_first');
         Cache::forget('Organizacion:Organizacion_exists');
         Cache::forget('Organizacion:fecha_registro_timesheet');
     }
