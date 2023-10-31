@@ -36,8 +36,8 @@ class RevisionDocumento extends Model implements Auditable
 
     public static function getAllWithDocumento()
     {
-        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos', 3600 * 8, function () {
-            return self::with('documento')->get();
+        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos_' . User::getCurrentUser()->empleado->id, 3600 * 8, function () {
+            return self::with('documento')->where('empleado_id', User::getCurrentUser()->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
         });
     }
 

@@ -12,7 +12,7 @@ class RevisionDocumentoController extends Controller
 {
     public function archivo()
     {
-        $revisiones = RevisionDocumento::getAllWithDocumento()->where('empleado_id', User::getCurrentUser()->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO);
+        $revisiones = RevisionDocumento::getAllWithDocumento();
 
         return view('admin.revisiones.archivo', compact('revisiones'));
     }
