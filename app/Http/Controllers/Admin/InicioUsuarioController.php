@@ -943,7 +943,7 @@ class InicioUsuarioController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
-            'comentarios' => $reques    t->comentarios,
+            'comentarios' => $request->comentarios,
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
