@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use App\Traits\ClearsResponseCache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -37,6 +38,13 @@ class EvidenciasDocumentosEmpleados extends Model implements Auditable
     ];
 
     protected $appends = ['ruta_documento', 'ruta_absoluta_documento'];
+
+    public static function getAll()
+    {
+        return Cache::remember('EvidenciasDocumentos:revision_documentos_all_documentos', 3600 * 8, function () {
+            return self::with('documento')->get();
+        });
+    }
 
     public function getRutaDocumentoAttribute()
     {
