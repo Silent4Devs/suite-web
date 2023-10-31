@@ -2,54 +2,55 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Activo;
-use App\Models\AnalisisSeguridad;
+use Carbon\Carbon;
 use App\Models\Area;
-use App\Models\AuditoriaAnual;
-use App\Models\AuditoriaInterna;
-use App\Models\Calendario;
-use App\Models\CalendarioOficial;
+use App\Models\Sede;
+use App\Models\User;
+use App\Models\Activo;
+use App\Models\Puesto;
+use App\Models\Quejas;
+use App\Models\Mejoras;
+use App\Models\Proceso;
+use App\Models\Recurso;
+use App\Models\Empleado;
 use App\Models\Denuncias;
 use App\Models\Documento;
-use App\Models\Empleado;
-use App\Models\EvidenciaDocumentoEmpleadoArchivo;
-use App\Models\EvidenciasDenuncia;
-use App\Models\EvidenciasDocumentosEmpleados;
+use App\Models\Calendario;
+use App\Models\Sugerencias;
+use Illuminate\Support\Str;
+use App\Models\Organizacion;
+use App\Models\VersionesIso;
+use Illuminate\Http\Request;
+use App\Models\RH\Evaluacion;
+use Illuminate\Http\Response;
+use App\Models\AuditoriaAnual;
 use App\Models\EvidenciasQueja;
+use App\Models\PanelInicioRule;
+use App\Models\SolicitudDayOff;
+use App\Models\AuditoriaInterna;
 use App\Models\EvidenciasRiesgo;
+use App\Models\AnalisisSeguridad;
+use App\Models\CalendarioOficial;
+use App\Models\RevisionDocumento;
+use App\Models\EvidenciasDenuncia;
+use App\Models\PlanImplementacion;
+use App\Models\RiesgoIdentificado;
 use App\Models\EvidenciasSeguridad;
 use App\Models\FelicitarCumpleaños;
 use App\Models\IncidentesSeguridad;
-use App\Models\ListaDocumentoEmpleado;
-use App\Models\Mejoras;
-use App\Models\Organizacion;
-use App\Models\PanelInicioRule;
-use App\Models\PlanImplementacion;
-use App\Models\Proceso;
-use App\Models\Puesto;
-use App\Models\PuestoIdiomaPorcentajePivot;
-use App\Models\Quejas;
-use App\Models\Recurso;
-use App\Models\RevisionDocumento;
-use App\Models\RH\Evaluacion;
-use App\Models\RH\EvaluacionRepuesta;
+use App\Models\SolicitudVacaciones;
+use App\Http\Controllers\Controller;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\ObjetivoRespuesta;
-use App\Models\RiesgoIdentificado;
-use App\Models\Sede;
-use App\Models\SolicitudDayOff;
-use App\Models\SolicitudPermisoGoceSueldo;
-use App\Models\SolicitudVacaciones;
-use App\Models\SubcategoriaIncidente;
-use App\Models\Sugerencias;
-use App\Models\User;
-use App\Models\VersionesIso;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
+use App\Models\RH\EvaluacionRepuesta;
+use App\Models\SubcategoriaIncidente;
+use Illuminate\Support\Facades\Cache;
+use App\Models\ListaDocumentoEmpleado;
+use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\PuestoIdiomaPorcentajePivot;
+use App\Models\EvidenciasDocumentosEmpleados;
+use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 
 class InicioUsuarioController extends Controller
 {
@@ -147,29 +148,24 @@ class InicioUsuarioController extends Controller
         $solicitud_dayoff = 0;
         $solicitud_permiso = 0;
         $solicitudes_pendientes = 0;
-        if ($usuario->empleado) {
-            $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
-                $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);
-            })->orWhere('lider_id', $usuario->empleado->id)->get();
-            $auditoria_internas_lider = AuditoriaInterna::where('lider_id', $usuario->empleado->id)->get();
-            $auditoria_internas = collect();
-            foreach ($auditoria_internas_lider as $auditoria) {
-                $auditoria_internas->push($auditoria);
-            }
-            foreach ($auditoria_internas_participante as $auditoria) {
-                $auditoria_internas->push($auditoria);
-            }
-            $auditoria_internas = $auditoria_internas->unique();
-            $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
+        $cacheKey = 'AuditoriaInterna:auditoria_internas_' . $usuario->id;
+        $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($usuario, $empleado) {
+            return AuditoriaInterna::where(function ($query) use ($usuario, $empleado) {
+                $query->whereHas('equipo', function ($subquery) use ($empleado) {
+                    $subquery->where('auditoria_interno_empleado.empleado_id', $empleado->id);
+                })->orWhere('lider_id', $usuario->empleado->id);
+            })->distinct()->get();
+        });
+
+        $cacheKeyRecursos = 'Recursos:recursos_' . $usuario->id;
+        $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
+            return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
             })->get();
-        }
-        $contador_recursos = 0;
-        if ($usuario->empleado) {
-            $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                $query->where('empleados.id', $empleado->id);
-            })->where('fecha_fin', '>=', Carbon::now()->toDateString())->count();
-        }
+        });
+
+        $contador_recursos = $recursos->where('fecha_fin', '>=', Carbon::now()->toDateString())->count();
+
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         $revisiones = [];
         $mis_documentos = [];
@@ -185,9 +181,9 @@ class InicioUsuarioController extends Controller
         $mis_objetivos = collect();
 
         if ($usuario->empleado) {
-            $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
+            $revisiones = RevisionDocumento::getAllWithDocumento()->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO);
 
-            $contador_revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->where('estatus', Documento::SOLICITUD_REVISION)->count();
+            $contador_revisiones = $revisiones->where('estatus', Documento::SOLICITUD_REVISION)->count();
             $mis_documentos = Documento::getWithMacroproceso($usuario->empleado->id);
             //Evaluaciones
             $last_evaluacion = Evaluacion::select('id', 'nombre', 'fecha_inicio', 'fecha_fin')->latest()->first();
@@ -262,19 +258,19 @@ class InicioUsuarioController extends Controller
             )->find($usuario->empleado->id)->puestoRelacionado;
             $competencias = !is_null($competencias) ? $competencias->competencias : collect();
 
-            $quejas = Quejas::getAll();
-            $denuncias = Denuncias::getAll();
-            $mejoras = Mejoras::getAll();
-            $sugerencias = Sugerencias::getAll();
+            $quejas = Quejas::getAll()->where('empleado_quejo_id', $usuario->empleado->id);
+            $denuncias = Denuncias::getAll()->where('empleado_denuncio_id', $usuario->empleado->id);
+            $mejoras = Mejoras::getAll()->where('empleado_mejoro_id', $usuario->empleado->id);
+            $sugerencias = Sugerencias::getAll()->where('empleado_sugirio_id', $usuario->empleado->id);
 
             $mis_quejas = $quejas->where('empleado_quejo_id', $usuario->empleado->id);
-            $mis_quejas_count = $quejas->where('empleado_quejo_id', $usuario->empleado->id)->count();
-            $mis_denuncias = $denuncias->where('empleado_denuncio_id', $usuario->empleado->id);
-            $mis_denuncias_count = $denuncias->where('empleado_denuncio_id', $usuario->empleado->id)->count();
-            $mis_propuestas = $mejoras->where('empleado_mejoro_id', $usuario->empleado->id);
-            $mis_propuestas_count = $mejoras->where('empleado_mejoro_id', $usuario->empleado->id)->count();
-            $mis_sugerencias = $sugerencias->where('empleado_sugirio_id', $usuario->empleado->id);
-            $mis_sugerencias_count = $sugerencias->where('empleado_sugirio_id', $usuario->empleado->id)->count();
+            $mis_quejas_count = $quejas->count();
+            $mis_denuncias = $denuncias;
+            $mis_denuncias_count = $denuncias->count();
+            $mis_propuestas = $mejoras;
+            $mis_propuestas_count = $mejoras->count();
+            $mis_sugerencias = $sugerencias;
+            $mis_sugerencias_count = $sugerencias->count();
 
             $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
             $solicitud_dayoff = SolicitudDayOff::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
@@ -947,7 +943,7 @@ class InicioUsuarioController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
-            'comentarios' => $request->comentarios,
+            'comentarios' => $reques    t->comentarios,
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
@@ -1038,7 +1034,7 @@ class InicioUsuarioController extends Controller
 
     public function archivoAprobacion()
     {
-        $mis_documentos = Documento::get()->where('deleted_at', '=', null);
+        $mis_documentos = Documento::getAll()->where('deleted_at', '=', null);
 
         return view('admin.inicioUsuario.aprobaciones_archivo', compact('mis_documentos'));
     }

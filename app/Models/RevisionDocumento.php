@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,6 +33,13 @@ class RevisionDocumento extends Model implements Auditable
     protected $appends = [
         'fecha_solicitud', 'before_level_all_answered', 'estatus_revisiones_formateado', 'color_revisiones_estatus',
     ];
+
+    public static function getAllWithDocumento()
+    {
+        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos', 3600 * 8, function () {
+            return self::with('documento')->get();
+        });
+    }
 
     public function getBeforeLevelAllAnsweredAttribute()
     {

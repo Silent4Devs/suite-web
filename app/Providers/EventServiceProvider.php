@@ -104,10 +104,14 @@ use App\Observers\SubCategoriaActivoObserver;
 use App\Observers\IncidentesSeguridadObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
 use App\Listeners\IncidentesDeSeguridadListener;
+use App\Models\AuditoriaInterna;
+use App\Models\RevisionDocumento;
+use App\Observers\AuditoriaInternaObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\DeclaracionAplicabilidadObserver;
 use App\Observers\TimesheetProyectoEmpleadoObserver;
 use App\Observers\MatrizRiesgosSistemaGestionObserver;
+use App\Observers\RevisionDocumentoObserver;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -199,5 +203,7 @@ class EventServiceProvider extends ServiceProvider
         VersionesIso::observe(VersionesIsoObserver::class);
         CalendarioOficial::observe(CalendarioObserver::class);
         Documento::observe(DocumentoObserver::class);
+        AuditoriaInterna::observe(AuditoriaInternaObserver::class);
+        RevisionDocumento::observe(RevisionDocumentoObserver::class);
     }
 }
