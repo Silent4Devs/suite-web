@@ -181,7 +181,7 @@ class InicioUsuarioController extends Controller
         $mis_objetivos = collect();
 
         if ($usuario->empleado) {
-            $revisiones = RevisionDocumento::getAllWithDocumento()->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO);
+            $revisiones = RevisionDocumento::getAllWithDocumento();
 
             $contador_revisiones = $revisiones->where('estatus', Documento::SOLICITUD_REVISION)->count();
             $mis_documentos = Documento::getWithMacroproceso($usuario->empleado->id);
