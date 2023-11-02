@@ -119,7 +119,7 @@ services:
     command: php artisan queue:work --tries=3
     depends_on:
       - php
-    container_name: php-tabantaj
+    container_name: worker-tabantaj
     restart: unless-stopped
     tty: true
     networks:
