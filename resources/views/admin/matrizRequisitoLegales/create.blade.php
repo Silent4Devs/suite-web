@@ -50,6 +50,18 @@
             border-color: black;
             background-color: white;
         }
+
+        .form {
+            background: #F8FAFC;
+            border-radius: 4px;
+            opacity: 1;
+        }
+
+        .letra-etiqueta-flotante {
+            font: 14px Roboto;
+            color: #606060;
+            text-align: left;
+        }
     </style>
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
     <h5 class="col-12 titulo-matriz">Matriz de Requisitos Legales y Regulatorios</h5>
@@ -80,7 +92,7 @@
         <h3 class="mb-1 text-center text-white"><strong>Registrar:</strong> Matriz de Requisitos Legales </h3>
     </div> --}}
 
-        <div class="card-body">
+        <div class="card-body pb-0">
             <form method="POST" action="{{ route('admin.matriz-requisito-legales.store') }}" enctype="multipart/form-data"
                 class="row">
                 @csrf
@@ -92,21 +104,31 @@
                 </div>
 
                 <div class="form-group col-12">
-                    <label class="form-label required" for="nombrerequisito">
-                        Nombre del requisito legal, regulatorio, contractual o estatutario</label>
-                    <input required class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }}"
-                        type="text" name="nombrerequisito" id="nombrerequisito" value="{{ old('nombrerequisito', '') }}">
-                    @if ($errors->has('nombrerequisito'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('nombrerequisito') }}
-                        </div>
-                    @endif
+                    <div class="form-floating">
+                        <input required class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form "
+                            type="text" name="nombrerequisito" id="nombrerequisito"
+                            value="{{ old('nombrerequisito', '') }}" style="height:55px;"
+                            placeholder="Nombre del requisito legal, regulatorio, contractual o estatutario">
+                        @if ($errors->has('nombrerequisito'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('nombrerequisito') }}
+                            </div>
+                        @endif
+                        <label style="color:#606060;font-size:14px;" for="nombrerequisito">
+                            Nombre del requisito legal, regulatorio, contractual o estatutario</label>
+                    </div>
                 </div>
                 <div class="form-group col-sm-6">
-                    <label class="form-label" for="formacumple">Cláusula, sección o apartado aplicable*</label>
-                    <input type="text" class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }}"
-                        name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}"
-                        aria-describedby="textExample1" />
+                    <div class="form-floating">
+                        <input type="text"
+                            class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form"
+                            name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}"
+                            aria-describedby="textExample1" placeholder="Cláusula, sección o apartado aplicable*"
+                            style="height:55px;" />
+                        <label class="" style="color:#606060;font-size:14px;" for="formacumple">Cláusula, sección o
+                            apartado
+                            aplicable*</label>
+                    </div>
                 </div>
 
                 @if ($errors->has('formacumple'))
@@ -118,56 +140,52 @@
                 <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.formacumple_helper') }}</span>
         </div>
 
-
-
-        <div class="form-group col-sm-12">
-            <label for="medio">Medio de publicación</label>
-            <input class="form-control {{ $errors->has('medio') ? 'is-invalid' : '' }}" type="text" name="medio"
-                id="medio" value="{{ old('medio', '') }}">
-            @if ($errors->has('medio'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('medio') }}
+        <div class="row" style="padding-left:24px; padding-right:24px;">
+            <div class="col-sm-6">
+                <div class="form-floating">
+                    <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
+                        type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
+                        value="{{ old('fechaexpedicion') }}">
+                    @if ($errors->has('fechaexpedicion'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fechaexpedicion') }}
+                        </div>
+                    @endif
+                    <label for="fechaexpedicion"></i> Fecha de
+                        publicación</label>
                 </div>
-            @endif
-        </div>
-        <div class="row ml-1">
-            <div class="col-md-6" style="width:500px;">
-                <label for="fechaexpedicion"></i> Fecha de
-                    publicación</label>
-                <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}" type="date"
-                    name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01" value="{{ old('fechaexpedicion') }}">
-                @if ($errors->has('fechaexpedicion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fechaexpedicion') }}
-                    </div>
-                @endif
                 <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
             </div>
-            <div class="col-md-6" style="width:500px;">
-                <label for="fechavigor">
-                    {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
-                <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
-                    name="fechavigor" id="fechavigor" min="1945-01-01" value="{{ old('fechavigor') }}">
-                @if ($errors->has('fechavigor'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fechavigor') }}
-                    </div>
-                @endif
+            <div class="col-sm-6">
+                <div class="form-floating">
+                    <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
+                        type="date" name="fechavigor" id="fechavigor" min="1945-01-01" value="{{ old('fechavigor') }}">
+                    @if ($errors->has('fechavigor'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fechavigor') }}
+                        </div>
+                    @endif
+                    <label for="fechavigor">
+                        {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
+                </div>
                 <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
             </div>
         </div>
 
 
-        <div class="form-group col-sm-12">
-            <label class="required mt-4" for="requisitoacumplir">
-                Descripción del requisito a cumplir*</label>
-            <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }}"
-                name="requisitoacumplir" id="requisitoacumplir">{{ old('requisitoacumplir') }}</textarea>
-            @if ($errors->has('requisitoacumplir'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('requisitoacumplir') }}
-                </div>
-            @endif
+        <div class="form-group col-sm-12 mt-4">
+            <div class="form-floating" style="padding-left:6px;padding-right:6px;">
+                <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
+                    style="height:200px;" name="requisitoacumplir" placeholder="Descripción del requisito a cumplir*"
+                    id="requisitoacumplir">{{ old('requisitoacumplir') }}</textarea>
+                @if ($errors->has('requisitoacumplir'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('requisitoacumplir') }}
+                    </div>
+                @endif
+                <label style="color:#606060;font-size:14px;" for="requisitoacumplir">
+                    Descripción del requisito a cumplir*</label>
+            </div>
         </div>
         </form>
         <button type="button" class="btn btn-light mr-auto mb-3"

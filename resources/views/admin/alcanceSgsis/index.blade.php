@@ -135,6 +135,10 @@
             font: 20px Roboto;
             color: #606060;
         }
+
+        .dt-buttons.btn-group {
+            display: none !important;
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}

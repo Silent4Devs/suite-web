@@ -14,6 +14,31 @@
             color: #606060;
         }
 
+        .form {
+            background: #F8FAFC;
+            border-radius: 4px;
+            opacity: 1;
+        }
+
+        .titulo-matriz {
+            text-align: left;
+            font: 20px Roboto;
+            letter-spacing: 0px;
+            color: #606060;
+            opacity: 1;
+        }
+
+        .radius {
+            border-radius: 16px;
+            box-shadow: none;
+        }
+
+        .titulo-card {
+            text-align: left;
+            font: 20px Roboto;
+            color: #306BA9;
+        }
+
         .boton-cancelar {
             background-color: white;
             border-color: #057BE2;
@@ -35,10 +60,16 @@
             height: 48px;
         }
 
-        .form {
-            background: #F8FAFC;
-            border-radius: 4px;
-            opacity: 1;
+        .borde-color {
+            border-radius: 8px;
+            border-color: black;
+            background-color: white;
+        }
+
+        .letra-etiqueta-flotante {
+            font: 14px Roboto;
+            color: #606060;
+            text-align: left;
         }
     </style>
 
@@ -90,8 +121,8 @@
                     </div>
                 </div>
                 <div class="form-floating">
-                    <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form"
-                        name="alcancesgsi" id="alcancesgsi" value="{{ old('alcancesgsi') }}" style="height:200px;"></textarea>
+                    <input required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form"
+                        name="alcancesgsi" id="alcancesgsi" value="{{ old('alcancesgsi') }}"placeholder="Alcance">
                     <label for="alcancesgi" style="color: #606060;">Alcance</label>
                 </div>
         </div>
@@ -100,7 +131,7 @@
             <div class="form-floating col-sm-6">
                 <input required class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }} form"
                     type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
-                    value="{{ old('fecha_publicacion') }}"style="">
+                    value="{{ old('fecha_publicacion') }}" placeholder="Fecha de publicación">
                 @if ($errors->has('fecha_publicacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_publicacion') }}
@@ -111,8 +142,8 @@
             </div>
             <div class="form-floating col-sm-6" style="">
                 <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }} form"
-                    type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
-                    value="{{ old('fecha_revision') }}">
+                    placeholder="Fecha de publicación" type="date" name="fecha_revision" id="fecha_revision"
+                    min="1945-01-01" value="{{ old('fecha_revision') }}" placeholder="Fecha de revisión">
                 @if ($errors->has('fecha_publicacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_publicacion') }}

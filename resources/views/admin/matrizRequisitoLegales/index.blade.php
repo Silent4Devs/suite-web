@@ -1,76 +1,81 @@
 @extends('layouts.admin')
 @section('content')
     <style>
+        .table-striped tbody tr:nth-of-type(odd),
+        table.table tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
         /* .img-size {
-                                                                                                                            height: 450px;
-                                                                                                                            width: 700px;
-                                                                                                                            background-size: cover;
-                                                                                                                            overflow: hidden;
-                                                                                                                        }
+                                                                                                                                                                                                                                                                                                        height: 450px;
+                                                                                                                                                                                                                                                                                                        width: 700px;
+                                                                                                                                                                                                                                                                                                        background-size: cover;
+                                                                                                                                                                                                                                                                                                        overflow: hidden;
+                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                        .modal-content {
-                                                                                                                            width: 700px;
-                                                                                                                            border: none;
-                                                                                                                        }
+                                                                                                                                                                                                                                                                                                    .modal-content {
+                                                                                                                                                                                                                                                                                                        width: 700px;
+                                                                                                                                                                                                                                                                                                        border: none;
+                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                        .modal-body {
-                                                                                                                            padding: 0;
-                                                                                                                        }
+                                                                                                                                                                                                                                                                                                    .modal-body {
+                                                                                                                                                                                                                                                                                                        padding: 0;
+                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                        .carousel-control-prev-icon {
-                                                                                                                            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-                                                                                                                            width: 30px;
-                                                                                                                            height: 48px;
-                                                                                                                        }
+                                                                                                                                                                                                                                                                                                    .carousel-control-prev-icon {
+                                                                                                                                                                                                                                                                                                        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+                                                                                                                                                                                                                                                                                                        width: 30px;
+                                                                                                                                                                                                                                                                                                        height: 48px;
+                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                        .carousel-control-next-icon {
-                                                                                                                            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-                                                                                                                            width: 30px;
-                                                                                                                            height: 48px;
-                                                                                                                        }
+                                                                                                                                                                                                                                                                                                    .carousel-control-next-icon {
+                                                                                                                                                                                                                                                                                                        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+                                                                                                                                                                                                                                                                                                        width: 30px;
+                                                                                                                                                                                                                                                                                                        height: 48px;
+                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                        .carousel-control-next {
-                                                                                                                            top: 100px;
-                                                                                                                            height: 10px;
-                                                                                                                        }
+                                                                                                                                                                                                                                                                                                    .carousel-control-next {
+                                                                                                                                                                                                                                                                                                        top: 100px;
+                                                                                                                                                                                                                                                                                                        height: 10px;
+                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                        .carousel-control-prev {
-                                                                                                                            height: 40px;
-                                                                                                                            top: 80px;
-                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                    .carousel-control-prev {
+                                                                                                                                                                                                                                                                                                        height: 40px;
+                                                                                                                                                                                                                                                                                                        top: 80px;
+                                                                                                                                                                                                                                                                                                    } */
 
         /* .btn_cargar {
-                                                                                                                        border-radius: 100px !important;
-                                                                                                                        border: 1px solid #345183;
-                                                                                                                        color: #345183;
-                                                                                                                        text-align: center;
-                                                                                                                        padding: 0;
-                                                                                                                        width: 45px;
-                                                                                                                        height: 45px;
-                                                                                                                        display: flex;
-                                                                                                                        justify-content: center;
-                                                                                                                        align-items: center;
-                                                                                                                        margin: 0 !important;
-                                                                                                                        margin-right: 10px !important;
-                                                                                                                    }
+                                                                                                                                                                                                                                                                                                    border-radius: 100px !important;
+                                                                                                                                                                                                                                                                                                    border: 1px solid #345183;
+                                                                                                                                                                                                                                                                                                    color: #345183;
+                                                                                                                                                                                                                                                                                                    text-align: center;
+                                                                                                                                                                                                                                                                                                    padding: 0;
+                                                                                                                                                                                                                                                                                                    width: 45px;
+                                                                                                                                                                                                                                                                                                    height: 45px;
+                                                                                                                                                                                                                                                                                                    display: flex;
+                                                                                                                                                                                                                                                                                                    justify-content: center;
+                                                                                                                                                                                                                                                                                                    align-items: center;
+                                                                                                                                                                                                                                                                                                    margin: 0 !important;
+                                                                                                                                                                                                                                                                                                    margin-right: 10px !important;
+                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                    .btn_cargar:hover {
-                                                                                                                        color: #fff;
-                                                                                                                        background: #345183;
-                                                                                                                    }
+                                                                                                                                                                                                                                                                                                .btn_cargar:hover {
+                                                                                                                                                                                                                                                                                                    color: #fff;
+                                                                                                                                                                                                                                                                                                    background: #345183;
+                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                    .btn_cargar i {
-                                                                                                                        font-size: 15pt;
-                                                                                                                        width: 100%;
-                                                                                                                        height: 100%;
-                                                                                                                        display: flex;
-                                                                                                                        justify-content: center;
-                                                                                                                        align-items: center;
-                                                                                                                    }
+                                                                                                                                                                                                                                                                                                .btn_cargar i {
+                                                                                                                                                                                                                                                                                                    font-size: 15pt;
+                                                                                                                                                                                                                                                                                                    width: 100%;
+                                                                                                                                                                                                                                                                                                    height: 100%;
+                                                                                                                                                                                                                                                                                                    display: flex;
+                                                                                                                                                                                                                                                                                                    justify-content: center;
+                                                                                                                                                                                                                                                                                                    align-items: center;
+                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                    .agregar {
-                                                                                                                        margin-right: 15px;
-                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                .agregar {
+                                                                                                                                                                                                                                                                                                    margin-right: 15px;
+                                                                                                                                                                                                                                                                                                } */
 
         .btn-outline-success {
             background: #788bac !important;
@@ -117,19 +122,23 @@
             font: 20px Roboto;
             color: #606060;
         }
+
+        .dt-buttons.btn-group {
+            display: none !important;
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
     <div class="row d-flex align-items-center">
         <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
-        <button type="button" class="col-md-3 btn btn-primary ml-auto" style="margin-right: 14px; font-size: 14px;"
-            url="{{ route('admin.matriz-requisito-legales.create') }}">
+        <a class="col-md-3 btn btn-primary ml-auto" style="margin-right: 14px; font-size: 14px;"
+            href="{{ route('admin.matriz-requisito-legales.create') }}">
             <div class="ml-1 mt-2">
                 Nueva Matriz de Requisitos
                 <i class="fa-regular fa-plus fa-lg" style="color: #ffffff;"></i>
             </div>
 
-        </button>
+        </a>
     </div>
     <div class="mt-5 card radius">
         @can('matriz_requisitos_legales_agregar')
@@ -150,11 +159,12 @@
             <table class="table datatable-MatrizRequisitoLegale">
                 <thead class="thead-dark">
                     <tr>
-                        <th>{{ trans('cruds.matrizRequisitoLegale.fields.id') }}</th>
-                        <th style="min-width: 250px;">Nombre del requisito legal</th>
-                        <th style="min-width: 250px;">Clausula</th>
-                        <th>Fecha&nbsp;de&nbsp;publicación</th>
-                        <th>Opciones</th>
+                        <th style="background-color:rgb(255, 255, 255); color:#414141;">
+                            {{ trans('cruds.matrizRequisitoLegale.fields.id') }}</th>
+                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Nombre del requisito legal</th>
+                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Clausula</th>
+                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Fecha&nbsp;de&nbsp;publicación</th>
+                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Opciones</th>
                     </tr>
                 </thead>
             </table>
@@ -473,21 +483,36 @@
                                 `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let botones = `
                             <div class="btn-group">
-                                @can('matriz_requisitos_legales_ver')
-                                <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>
-                                @endcan
-                                @can('matriz_requisitos_legales_editar')
-                                <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
-                                @endcan
-                                @can('matriz_requisitos_legales_evaluar')
-                                <a class="btn btn-sm" style="color:#77C64F;" href="${urlEvaluarMatriz}" title="Evaluar Requisito Legal"><i class="fas fa-calendar-check"></i></a>
-                                @endcan
-                                @can('matriz_requisitos_legales_eliminar')
-                                <button class="btn btn-sm" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i></button>
-                                @endcan
+
                             </div>
                              `;
-                            return botones;
+
+                            let html =
+                                `
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+
+
+                                        @can('matriz_requisitos_legales_ver')
+                                        <a class="dropdown-item" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i> ver</a>
+                                        @endcan
+                                        @can('matriz_requisitos_legales_editar')
+                                        <a class="dropdown-item" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i> editar</a>
+                                        @endcan
+                                        @can('matriz_requisitos_legales_evaluar')
+                                        <a class="dropdown-item" style="color:#77C64F;" href="${urlEvaluarMatriz}" title="Evaluar Requisito Legal"><i class="fas fa-calendar-check"></i> evaluar</a>
+                                        @endcan
+                                        @can('matriz_requisitos_legales_eliminar')
+                                        <button class="dropdown-item" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i> eliminar</button>
+                                        @endcan
+                                    </div>
+                                </div>`;
+
+                            return html;
                         }
                     }
                 ],
@@ -500,8 +525,9 @@
 
             window.eliminar = function(url, nombre) {
                 Swal.fire({
-                    title: `¿Estás seguro de eliminar la siguiente matríz de requisito legal?`,
-                    html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
+                    title: `¿
+                                                Estás seguro de eliminar la siguiente matríz de requisito legal ? `,
+                    html: ` < strong > < i class = "mr-2 fas fa-exclamation-triangle" > < /i>${nombre}</strong > `,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -519,14 +545,22 @@
                             beforeSend: function() {
                                 Swal.fire(
                                     '¡Estamos Eliminando!',
-                                    `La Matríz de requisito legal: ${nombre} está siendo eliminada`,
+                                    `
+                                                La Matríz de requisito legal: $ {
+                                                    nombre
+                                                }
+                                                está siendo eliminada`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
                                     'Eliminado!',
-                                    `La Matríz de requisito legal: ${nombre} ha sido eliminada`,
+                                    `
+                                                La Matríz de requisito legal: $ {
+                                                    nombre
+                                                }
+                                                ha sido eliminada`,
                                     'success'
                                 )
                                 table.ajax.reload();
@@ -535,7 +569,11 @@
                                 console.log(error);
                                 Swal.fire(
                                     'Ocurrió un error',
-                                    `Error: ${error.responseJSON.message}`,
+                                    `
+                                                Error: $ {
+                                                    error.responseJSON.message
+                                                }
+                                                `,
                                     'error'
                                 )
                             }
