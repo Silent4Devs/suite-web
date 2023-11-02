@@ -49,7 +49,7 @@ class PoliticaSgsi extends Model implements Auditable
     public static function getAll()
     {
         return Cache::remember('politicas_sgsi_all', 3600 * 12, function () {
-            return self::get();
+            return self::with('reviso')->get();
         });
     }
 
@@ -81,5 +81,10 @@ class PoliticaSgsi extends Model implements Auditable
     public function reviso()
     {
         return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id')->alta();
+    }
+
+    public function revisobaja()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id');
     }
 }

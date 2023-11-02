@@ -63,7 +63,7 @@ class PoliticaSgsiController extends Controller
                 return $row->fecha_entrada ? $row->fecha_entrada : '';
             });
             $table->addColumn('reviso_politica', function ($row) {
-                return $row->reviso ? $row->reviso : '';
+                return $row->reviso ? $row->reviso->empleado->name : '';
             });
             $table->editColumn('puesto_reviso', function ($row) {
                 return $row->reviso ? $row->reviso->puesto : '';
@@ -177,7 +177,14 @@ class PoliticaSgsiController extends Controller
     public function visualizacion()
     {
         $politicaSgsis = PoliticaSgsi::getAll();
-
+        foreach ($politicaSgsis as $polsgsis) {
+            if (!isset($polsgsis->reviso)) {
+                $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
+                $polsgsis->estemp = "baja";
+            } else {
+                $polsgsis->estemp = "alta";
+            }
+        }
         $organizacions = Organizacion::getFirst();
 
         return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis', 'organizacions'));
