@@ -31,7 +31,7 @@
 @section('scripts')
 
     @parent
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <script src="{{ asset('gantt/libs/jquery/jquery.livequery.1.1.1.min.js') }}"></script>
