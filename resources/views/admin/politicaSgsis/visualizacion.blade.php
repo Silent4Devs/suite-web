@@ -79,18 +79,40 @@
                             revisión</label>
                         <div class="dato_politica">{{ $data->fecha_revision ?: 'No definido' }}</div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Revisó: </label>
-                        <div class="dato_politica">{{ $data->reviso->name ?: 'No definido' }}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                        <div class="dato_politica">{{ $data->reviso->puesto ?: 'No definido' }}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                        <div class="dato_politica">{{ $data->reviso->area->area ?: 'No definido' }}</div>
-                    </div>
+                    @if ($data->estemp == 'alta')
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Revisó: </label>
+                            <div class="dato_politica">{{ $data->reviso->name ?: 'No definido' }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                            <div class="dato_politica">{{ $data->reviso->puesto ?: 'No definido' }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                            <div class="dato_politica">{{ $data->reviso->area->area ?? 'No definido' }}</div>
+                        </div>
+                    @elseif ($data->estemp == 'baja')
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Revisó: </label>
+                            <div class="dato_politica">El empleado ya no se encuentra en la empresa:
+                                {{ $data->revisobaja->revisobaja->name ?: 'No definido' }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                            <div class="dato_politica">El empleado ya no se encuentra en la empresa:
+                                {{ $data->revisobaja->revisobaja->puesto ?: 'No definido' }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                            <div class="dato_politica">El empleado ya no se encuentra en la empresa:
+                                {{ $data->revisobaja->revisobaja->area->area ?: 'No definido' }}
+                            </div>
+                        </div>
+                    @endif
+
                 </div>
             </div>
             <hr>
