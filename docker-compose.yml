@@ -110,6 +110,40 @@ services:
     networks:
       - tabantajnetwork
 
+  queue-worker:
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    command: php artisan queue:work --tries=3
+    depends_on:
+      - php
+    container_name: queue-worker-tabantaj
+    restart: unless-stopped
+    tty: true
+    environment:
+      CONTAINER_ROLE: queue
+    networks:
+      - tabantajnetwork
+
+  schedule-worker:
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile
+    depends_on:
+      - php
+    restart: unless-stopped
+    container_name: schedule-worker-tabantaj
+    working_dir: /var/www/
+    volumes:
+      - .:/var/www/html
+    command: php artisan schedule:work
+    networks:
+      - tabantajnetwork
+    environment:
+      CONTAINER_ROLE: scheduler
+
   redis-tabantaj:
     image: redis:alpine
     container_name: redis-tabantaj
