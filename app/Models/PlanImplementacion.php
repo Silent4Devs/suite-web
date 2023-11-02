@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PlanImplementacion extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'plan_implementacions';
 
@@ -54,7 +55,7 @@ class PlanImplementacion extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('implementaciones', 3600 * 24, function () {
+        return Cache::remember('PlanImplementacion:implementaciones', 3600 * 8, function () {
             return self::get();
         });
     }

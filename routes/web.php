@@ -33,9 +33,8 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
-    Route::post('/obtenerauditoria', 'DashboardAuditoriasSGIController@obtenerauditoria')->name('obtener-auditoria');
-
-    Route::get('/', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('/', 'InicioUsuarioController@index');
     Route::get('/home', 'InicioUsuarioController@index')->name('home');
     //log-viewer
     Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
@@ -46,7 +45,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('users/bloqueo/{user}/change', 'UsersController@toogleBloqueo')->name('users.toogle-bloqueo');
     Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
     Route::post('users/list/get', 'UsersController@getUsersIndex')->name('users.getUsersIndex');
-    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::get('users/destroy/{id}', 'UsersController@destroy')->name('users.destroy');
 
     Route::resource('users', 'UsersController');
 
@@ -108,7 +107,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('organizacions/{schedule}/delete-schedule', 'OrganizacionController@deleteSchedule')->name('organizacions.delete-schedule');
     Route::resource('organizacions', 'OrganizacionController');
     // Inicio usuario
-    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
 
     // Areas
     Route::get('areas/exportar', 'AreasController@exportTo')->name('areas.exportar');

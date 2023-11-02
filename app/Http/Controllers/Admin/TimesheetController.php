@@ -149,7 +149,7 @@ class TimesheetController extends Controller
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::getFirst();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas_count = TimesheetHoras::getData()->where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.create-copia', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
@@ -262,6 +262,13 @@ class TimesheetController extends Controller
 
         foreach ($request->timesheet as $index => $hora) {
             if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
+
+                foreach ($hora as $key => $value) {
+                    if ($value === '') {
+                        $hora[$key] = null;
+                    }
+                }
+
                 $horas_nuevas = TimesheetHoras::create([
                     'timesheet_id' => $timesheet_nuevo->id,
                     'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
@@ -310,8 +317,8 @@ class TimesheetController extends Controller
     public function show($id)
     {
         $timesheet = Timesheet::find($id);
-        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas = TimesheetHoras::getAll()->where('timesheet_id', $id);
+        $horas_count = $horas->count();
 
         $hoy = Carbon::now();
         $hoy_format = $hoy->format('d/m/Y');
@@ -327,7 +334,7 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        $empleado = Empleado::find(User::getCurrentUser()->empleado->id);
+        $empleado = Empleado::getAll()->find(User::getCurrentUser()->empleado->id);
 
         // areas proyectos
         $proyectos_array = collect();
@@ -351,7 +358,7 @@ class TimesheetController extends Controller
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::getFirst();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas_count = TimesheetHoras::getData()->where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
@@ -578,7 +585,7 @@ class TimesheetController extends Controller
                 'identificador.unique' => 'El ID ya esta en uso',
             ],
         );
-        if ($request->fecha_inicio && $request->fecha_fin) {
+        if ($request->fecha_fin) {
             $request->validate(
                 [
                     'fecha_inicio' => 'before:fecha_fin',
@@ -594,11 +601,11 @@ class TimesheetController extends Controller
             'identificador' => $request->identificador,
             'proyecto' => $request->proyecto_name,
             'cliente_id' => $request->cliente_id,
-            'fecha_inicio' => $request->fecha_inicio,
-            'fecha_fin' => $request->fecha_fin,
+            'fecha_inicio' => $request->fecha_inicio == '' ? null : $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin  == '' ? null : $request->fecha_fin,
             'sede_id' => $request->sede_id,
             'tipo' => $request->tipo,
-            'horas_proyecto' => $request->horas_proyecto,
+            'horas_proyecto' => $request->horas_proyecto == '' ? null : $request->horas_proyecto,
         ]);
 
         foreach ($request->areas_seleccionadas as $key => $area_id) {
@@ -1066,7 +1073,7 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::getAll()->find($id);
         $clientes = TimesheetCliente::getAll();
-        $areas = Area::getAll();
+        $areas = Area::getIdNameAll();
         $sedes = Sede::getAll();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
@@ -1081,7 +1088,7 @@ class TimesheetController extends Controller
     public function notificacionhorassobrepasadas($id)
     {
         // dd("Si llega a la funcion");
-        $verificacion_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
+        $verificacion_proyectos = TimesheetProyectoEmpleado::select('id', 'empleado_id')->where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
         // dd($emp_proyectos);
         if ($verificacion_proyectos) {
             $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
@@ -1094,19 +1101,30 @@ class TimesheetController extends Controller
                 ->where('empleado_id', '=', $ep->empleado_id)
                 ->get();
 
-            $tot_horas_proyecto = 0;
-
-            $sumalun = $times->sum('horas_lunes');
-            $sumamar = $times->sum('horas_martes');
-            $sumamie = $times->sum('horas_miercoles');
-            $sumajue = $times->sum('horas_jueves');
-            $sumavie = $times->sum('horas_viernes');
-            $sumasab = $times->sum('horas_sabado');
-            $sumadom = $times->sum('horas_domingo');
-
-            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
-
             if ($ep->proyecto->tipo === 'Externo') {
+
+                $tot_horas_proyecto = 0;
+
+                $sumalun = 0;
+                $sumamar = 0;
+                $sumamie = 0;
+                $sumajue = 0;
+                $sumavie = 0;
+                $sumasab = 0;
+                $sumadom = 0;
+
+                foreach ($times as $time) {
+                    $sumalun += floatval($time->horas_lunes);
+                    $sumamar += floatval($time->horas_martes);
+                    $sumamie += floatval($time->horas_miercoles);
+                    $sumajue += floatval($time->horas_jueves);
+                    $sumavie += floatval($time->horas_viernes);
+                    $sumasab += floatval($time->horas_sabado);
+                    $sumadom += floatval($time->horas_domingo);
+                }
+
+                $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
+
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
                     $empleado_query = Empleado::select('id', 'name', 'email', 'foto')->get();

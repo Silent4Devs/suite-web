@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-4 form-group" style="padding-left:0px !important;">
                 <label class="form-label">Colaborador</label>
-                <select class="form-control" wire:model="emp_id">
+                <select class="form-control" wire:model.lazy="emp_id">
                     <option selected value="0">Todos</option>
                     @foreach ($emp as $em)
                         <option value="{{ $em->id }}">{{ $em->name }}</option>
@@ -13,17 +13,17 @@
             </div>
             <div class="col-md-4 form-group">
                 <label class="form-label">Fecha de inicio</label>
-                <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model="fecha_inicio">
+                <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model.lazy="fecha_inicio">
             </div>
             <div class="col-md-4 form-group">
                 <label class="form-label">Fecha de fin</label>
-                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model="fecha_fin">
+                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.lazy="fecha_fin">
             </div>
         </div>
         <div class="row" wire:ignore>
             <div class="col-md-4 form-group" style="padding-left:0px !important;">
                 <label class="form-label">Proyecto</label>
-                <select class="form-control" wire:model="proy_id">
+                <select class="form-control" wire:model.lazy="proy_id">
                     <option selected value="0">Todos</option>
                     @foreach ($proy as $pro)
                         <option value="{{ $pro->id }}">{{ $pro->identificador }} - {{ $pro->proyecto }}</option>
@@ -148,7 +148,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <table class="table w-100 datatable_timesheet_registros_reportes" id="proyemp" hidden>
+                {{--  <table class="table w-100 datatable_timesheet_registros_reportes" id="proyemp" hidden>
                     <thead class="w-100">
                         <tr>
                             <th>Fecha Inicio </th>
@@ -159,41 +159,41 @@
                             <th>Tarea</th>
                             <th>Descripcion</th>
                             <th>Horas Totales de la Tarea</th>
-                            {{-- <th>Opciones</th> --}}
-                        </tr>
-                    </thead>
+                            {{-- <th>Opciones</th>
+                </tr>
+                </thead>
 
-                    <tbody>
-                        @foreach ($times as $time)
-                            <tr class="tr_{{ $time->estatus }}">
-                                <td>
-                                    {!! $time->timesheet->inicioLetras !!}
-                                </td>
-                                <td>
-                                    {!! $time->timesheet->finLetras !!}
-                                </td>
-                                <td>
-                                    {{ $time->timesheet->empleado->name }}
-                                </td>
-                                <td>
-                                    {{ $time->timesheet->aprobador->name }}
-                                </td>
-                                <td>
-                                    {{ $time->proyecto->proyecto }}
-                                </td>
-                                <td>
-                                    {{ $time->tarea->tarea }}
-                                </td>
-                                <td>
-                                    {{ $time->descripcion }}
-                                </td>
-                                <td>
-                                    {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <tbody>
+                    @foreach ($times as $time)
+                        <tr class="tr_{{ $time->estatus }}">
+                            <td>
+                                {!! $time->timesheet->inicioLetras !!}
+                            </td>
+                            <td>
+                                {!! $time->timesheet->finLetras !!}
+                            </td>
+                            <td>
+                                {{ $time->timesheet->empleado->name }}
+                            </td>
+                            <td>
+                                {{ $time->timesheet->aprobador->name }}
+                            </td>
+                            <td>
+                                {{ $time->proyecto->proyecto }}
+                            </td>
+                            <td>
+                                {{ $time->tarea->tarea }}
+                            </td>
+                            <td>
+                                {{ $time->descripcion }}
+                            </td>
+                            <td>
+                                {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+                </table> --}}
 
                 <div class="row">
                     <div class="col-6 p-0">

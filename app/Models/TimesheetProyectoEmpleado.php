@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TimesheetProyectoEmpleado extends Model implements Auditable
 {
     use HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'timesheet_proyectos_empleados';
 
@@ -23,6 +24,21 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
         'correo_enviado',
     ];
 
+    public static function getAll()
+    {
+        return Cache::remember('TimesheetProyectoEmpleado:timesheetproyectoempleado_all', 3600 * 4, function () {
+            return self::get();
+        });
+    }
+
+    public static function getIdAreaTimeProy($proyecto_id)
+    {
+        return
+            Cache::remember('TimesheetProyectoEmpleado:getIdAreaTimeProy_' . $proyecto_id, 3600 * 2, function () use ($proyecto_id) {
+                return self::select('id', 'area_id')->orderBy('id')->get();
+            });
+    }
+
     public static function getAllByEmpleadoIdNoBloqueado($empleado_id)
     {
         return
@@ -34,7 +50,7 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
     public static function getAllByEmpleadoIdExistsNoBloqueado($empleado_id)
     {
         return
-            Cache::remember('GetAllByEmpleadoId_' . $empleado_id, 3600 * 1, function () use ($empleado_id) {
+            Cache::remember('GetAllByEmpleadoIdExists_' . $empleado_id, 3600 * 1, function () use ($empleado_id) {
                 return self::where('empleado_id', $empleado_id)->where('usuario_bloqueado', false)->exists();
             });
     }

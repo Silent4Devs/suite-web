@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
 use EloquentFilter\Filterable;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+use App\Traits\ClearsResponseCache;
+use App\Traits\MultiTenantModelTrait;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Area.
@@ -37,7 +39,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Area extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory, Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'areas';
 
@@ -66,10 +68,24 @@ class Area extends Model implements Auditable
     protected $appends = ['grupo_name', 'foto_ruta'];
 
     //Redis methods
+    public static function getExists()
+    {
+        return Cache::remember('Areas:Areas_exists', 3600 * 12, function () {
+            return DB::table('areas')->exists();
+        });
+    }
+
     public static function getAll()
     {
-        return Cache::remember('areas_all', 3600 * 24, function () {
+        return Cache::remember('areas_all', 3600 * 12, function () {
             return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getIdNameAll()
+    {
+        return Cache::remember('Areas:area_id_name_all', 3600 * 12, function () {
+            return self::select('id', 'area')->orderByDesc('id')->get();
         });
     }
 

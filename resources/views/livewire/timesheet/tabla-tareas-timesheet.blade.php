@@ -30,7 +30,7 @@
     </style>
     <x-loading-indicator />
     @can('timesheet_administrador_tareas_proyectos_create')
-        <form wire:submit.prevent="create()" class="form-group w-100">
+        <form wire:submit.prevent="create()"  class="form-group w-100">
             <div class="d-flex justify-content-center w-100">
                 <div class="form-group w-100 mr-4 ">
                     <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>

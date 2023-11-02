@@ -101,9 +101,10 @@ class EnvioDocumentosController extends Controller
             'descripcion' => 'required|string',
             'fecha_limite' => 'required|date',
         ]);
+        $empleado = Empleado::getAll();
         $solicitud = EnvioDocumentos::create($request->all());
-        $coordinador = Empleado::find($request->id_coordinador);
-        $solicitante = Empleado::find($request->id_solicita);
+        $coordinador = $empleado->find($request->id_coordinador);
+        $solicitante = $empleado->find($request->id_solicita);
         Mail::to(removeUnicodeCharacters($coordinador->email))->send(new MailMensajeria($solicitante, $coordinador, $solicitud));
 
         Flash::success('Solicitud creada satisfactoriamente.');

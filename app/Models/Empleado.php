@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
-use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
-use App\Models\RH\BeneficiariosEmpleado;
-use App\Models\RH\ContactosEmergenciaEmpleado;
-use App\Models\RH\DependientesEconomicosEmpleados;
-use Carbon\Carbon;
 use DateTime;
+use Carbon\Carbon;
 use DateTimeInterface;
 use EloquentFilter\Filterable;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\RH\BeneficiariosEmpleado;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\RH\ContactosEmergenciaEmpleado;
+use App\Models\RH\DependientesEconomicosEmpleados;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
+use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 
 /**
  * Class Empleado.
@@ -57,7 +59,7 @@ class Empleado extends Model implements Auditable
     use SoftDeletes;
     use HasFactory;
     use Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     const BAJA = 'baja';
 
@@ -154,12 +156,16 @@ class Empleado extends Model implements Auditable
     ];
 
     //Redis methods
+    public static function getExists()
+    {
+        return Cache::remember('Empleados:empleados_exists', 3600 * 8, function () {
+            return DB::table('empleados')->exists();
+        });
+    }
+
     public static function getAll(array $options = [])
     {
-        // Generate a unique cache key based on the options provided
-        $cacheKey = 'empleados_all_' . md5(serialize($options));
-
-        return Cache::remember('empleados_all', 3600 * 12, function () use ($options) {
+        return Cache::remember('Empleados:empleados_all', 3600 * 8, function () use ($options) {
             $query = self::query();
 
             if (isset($options['orderBy'])) {
@@ -171,24 +177,56 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getIdNameAll(array $options = [])
+    {
+        // Generate a unique cache key based on the options provided
+
+        return Cache::remember('Empleados:empleados_id_name_all', 3600 * 8, function () use ($options) {
+            $query = self::select('id', 'name')->where('estatus', 'alta')->orderBy('id', 'desc')->get();
+
+            return $query;
+        });
+    }
+
     public static function getEmpleadoCurriculum($id)
     {
         return
-            Cache::remember('EmpleadoCurriculum_' . $id, 3600 * 12, function () use ($id) {
+            Cache::remember('EmpleadoCurriculum_' . $id, 3600 * 8, function () use ($id) {
                 return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
             });
     }
 
     public static function getAltaEmpleados()
     {
-        return Cache::remember('empleados_alta', 3600 * 24, function () {
+        return Cache::remember('empleados_alta', 3600 * 12, function () {
             return self::alta()->select('id', 'area_id', 'name')->get();
+        });
+    }
+
+    public static function getAltaEmpleadosWithArea()
+    {
+        return Cache::remember('Empleados:empleados_alta_area', 3600 * 12, function () {
+            return self::with('area')->alta()->get();
+        });
+    }
+
+    public static function getSelectEmpleadosWithArea()
+    {
+        return Cache::remember('Empleados:empleados_select_area', 3600 * 12, function () {
+            return self::select('id', 'antiguedad', 'estatus', 'name', 'puesto', 'fecha_baja', 'area_id', 'foto')->with('area')->get();
+        });
+    }
+
+    public static function getIDaltaAll()
+    {
+        return Cache::remember('empleados_alta_id', 3600 * 12, function () {
+            return self::alta()->with('area', 'puestoRelacionado')->select('id', 'name', 'email', 'area_id', 'puesto_id')->get();
         });
     }
 
     public static function getaltaAll()
     {
-        return Cache::remember('empleados_alta_all', 3600 * 24, function () {
+        return Cache::remember('empleados_alta_all', 3600 * 12, function () {
             return self::alta()->get();
         });
     }

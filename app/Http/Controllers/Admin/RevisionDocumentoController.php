@@ -12,7 +12,7 @@ class RevisionDocumentoController extends Controller
 {
     public function archivo()
     {
-        $revisiones = RevisionDocumento::with('documento')->where('empleado_id', User::getCurrentUser()->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
+        $revisiones = RevisionDocumento::getAllWithDocumento();
 
         return view('admin.revisiones.archivo', compact('revisiones'));
     }
@@ -79,7 +79,7 @@ class RevisionDocumentoController extends Controller
     {
         $usuario = User::getCurrentUser();
         if ($usuario->empleado) {
-            $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $usuario->empleado->id)->get();
+            $mis_documentos = Documento::getWithMacroproceso($usuario->empleado->id);
 
             return $mis_documentos;
         } else {

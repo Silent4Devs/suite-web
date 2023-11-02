@@ -3,11 +3,12 @@
 namespace App\Models\ContractManager;
 
 use App\Models\TimesheetCliente;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Contrato.
@@ -27,7 +28,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class Contrato extends Model implements Auditable
 {
-    use HasFactory, softDeletes;
+    use HasFactory, softDeletes, ClearsResponseCache;
     use AuditableTrait;
 
     public $table = 'contratos';

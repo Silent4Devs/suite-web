@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class DeclaracionAplicabilidadResponsable.
@@ -23,7 +24,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class DeclaracionAplicabilidadResponsable extends Model implements Auditable
 {
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'declaracion_aplicabilidad_responsables';
 

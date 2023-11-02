@@ -157,18 +157,19 @@ class ReporteAprobador extends Component
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
 
-        $this->aprobador = Empleado::find(User::getCurrentUser()->empleado->id);
+        $this->aprobador = Empleado::getAll()->find(User::getCurrentUser()->empleado->id);
         $empleados_list = $this->aprobador->children;
         $this->empleados_list_global = $this->aprobador->children;
 
         if ($this->habilitarTodos) {
             $equipo_a_cargo = $this->obtenerEquipo($this->aprobador->children);
-            $empleados_list = Empleado::find($equipo_a_cargo);
-            $this->empleados_list_global = Empleado::find($equipo_a_cargo);
+            $empleados = Empleado::getAll();
+            $empleados_list = $empleados->find($equipo_a_cargo);
+            $this->empleados_list_global = $empleados->find($equipo_a_cargo);
         }
         //calendario tabla
         $calendario_array = [];
-        $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+        $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::getFechaRegistroTimesheet();
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
         $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now());
         $total_months = 0;
@@ -238,7 +239,7 @@ class ReporteAprobador extends Component
         foreach ($empleados_list as $empleado_list) {
             $horas_total_time = 0;
 
-            $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+            $fecha_registro_timesheet = Organizacion::getFechaRegistroTimesheet();
 
             if ($this->fecha_inicio) {
                 $fecha_inicio_timesheet_empleado = $this->fecha_inicio;
@@ -268,21 +269,21 @@ class ReporteAprobador extends Component
             foreach ($times_empleado_aprobados_pendientes_list as $time) {
                 $horas_semana = 0;
                 foreach ($time->horas as $hora) {
-                    $horas_total_time += $hora->horas_lunes;
-                    $horas_total_time += $hora->horas_martes;
-                    $horas_total_time += $hora->horas_miercoles;
-                    $horas_total_time += $hora->horas_jueves;
-                    $horas_total_time += $hora->horas_viernes;
-                    $horas_total_time += $hora->horas_sabado;
-                    $horas_total_time += $hora->horas_domingo;
+                    $horas_total_time += floatval($hora->horas_lunes);
+                    $horas_total_time += floatval($hora->horas_martes);
+                    $horas_total_time += floatval($hora->horas_miercoles);
+                    $horas_total_time += floatval($hora->horas_jueves);
+                    $horas_total_time += floatval($hora->horas_viernes);
+                    $horas_total_time += floatval($hora->horas_sabado);
+                    $horas_total_time += floatval($hora->horas_domingo);
 
-                    $horas_semana += $hora->horas_lunes;
-                    $horas_semana += $hora->horas_martes;
-                    $horas_semana += $hora->horas_miercoles;
-                    $horas_semana += $hora->horas_jueves;
-                    $horas_semana += $hora->horas_viernes;
-                    $horas_semana += $hora->horas_sabado;
-                    $horas_semana += $hora->horas_domingo;
+                    $horas_semana += floatval($hora->horas_lunes);
+                    $horas_semana += floatval($hora->horas_martes);
+                    $horas_semana += floatval($hora->horas_miercoles);
+                    $horas_semana += floatval($hora->horas_jueves);
+                    $horas_semana += floatval($hora->horas_viernes);
+                    $horas_semana += floatval($hora->horas_sabado);
+                    $horas_semana += floatval($hora->horas_domingo);
 
                     $times_empleado_calendario_array[] = [
                         'id' => $time->id,
@@ -452,10 +453,10 @@ class ReporteAprobador extends Component
 
         $this->times_empleado_horas = collect();
 
-        $this->empleado = Empleado::find($this->empleado_seleccionado_id);
+        $this->empleado = Empleado::getAll()->find($this->empleado_seleccionado_id);
 
         // calcular fechas de parametros en reporte empleado
-        $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+        $fecha_registro_timesheet = Organizacion::getFechaRegistroTimesheet();
 
         if ($this->fecha_inicio_empleado) {
             $fecha_inicio_timesheet_empleado = Carbon::parse($this->empleado->antiguedad)->lt($this->fecha_inicio_empleado) ? $this->fecha_inicio_empleado : $this->empleado->antiguedad;

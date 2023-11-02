@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\User;
 
 class IsAdmin
 {
@@ -14,7 +15,7 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (!auth()->user()->is_admin) {
+        if (!User::getCurrentUser()->is_admin) {
             abort(403);
         }
 

@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use App\Traits\DateTranslator;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class IdiomaEmpleado extends Model implements Auditable
 {
     use HasFactory;
     use DateTranslator;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     const NIVELES = [
         'Basico' => 'Básico',

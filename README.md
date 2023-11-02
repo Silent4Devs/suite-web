@@ -40,7 +40,7 @@ Corriendo el proyecto:
 
 Instalación:
 
-1. docker-compose exec php composer install --ignore-platform-reqs
+1. docker-compose exec php composer install --no-dev
 2. docker-compose exec php cp .env.example .env
 3. docker-compose exec php php artisan key:generate
 4. docker-compose exec php php artisan migrate

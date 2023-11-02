@@ -50,15 +50,15 @@ class ContratosController extends AppBaseController
     public function index(Request $request)
     {
         abort_if(Gate::denies('katbol_contratos_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario_actual = Empleado::find(User::getCurrentUser()->empleado->id);
-        $areas = Area::get();
+        $usuario_actual = Empleado::getAll()->find(User::getCurrentUser()->empleado->id);
+        $areas = Area::getIdNameAll();
 
         $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'timesheet_clientes.nombre')
             ->join('timesheet_clientes', 'contratos.proveedor_id', '=', 'timesheet_clientes.id')
             ->leftjoin('cedula_cumplimiento', 'contratos.id', '=', 'cedula_cumplimiento.contrato_id')
             ->get();
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         return view('contract_manager.contratos-katbol.index', compact('usuario_actual', 'areas'))
             ->with('contratos', $contratos);
@@ -73,8 +73,8 @@ class ContratosController extends AppBaseController
     {
         abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $contratos = new Contrato;
-        $areas = Area::get();
-        $organizacion = Organizacion::first();
+        $areas = Area::getAll();
+        $organizacion = Organizacion::getFirst();
         // $dolares = DolaresContrato::where('contrato_id', $id)->first();
         $dolares = null;
         $proveedores = TimesheetCliente::select('id', 'razon_social', 'nombre')->get();
@@ -367,8 +367,8 @@ class ContratosController extends AppBaseController
     {
         $contrato = $this->contratoRepository->find($id);
         $formatoFecha = new FormatearFecha;
-        $organizacion = Organizacion::first();
-        $areas = Area::get();
+        $organizacion = Organizacion::getFirst();
+        $areas = Area::getIdNameAll();
         if (empty($contrato)) {
             // notify()->error('¡El registro no fue encontrado!');
 
@@ -399,7 +399,7 @@ class ContratosController extends AppBaseController
     {
         abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $contrato = $this->contratoRepository->find($id);
-        $areas = Area::get();
+        $areas = Area::getAll();
         // dd($areas->count());
         $formatoFecha = new FormatearFecha;
         if (empty($contrato)) {
@@ -429,7 +429,7 @@ class ContratosController extends AppBaseController
         // dd($convenios);
         $dolares = DolaresContrato::where('contrato_id', $id)->first();
         // dd($dolares);
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         return view('contract_manager.contratos-katbol.edit', compact('proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
     }
@@ -555,7 +555,7 @@ class ContratosController extends AppBaseController
         $no_contrato_sin_slashes = preg_replace('[/]', '-', $request->no_contrato);
         //### RESTRUCTURACION DE CARPETAS UPDATE #############
 
-        $areas = Area::get();
+        $areas = Area::getIdNameAll();
 
         $contrato = $this->contratoRepository->update([
             'tipo_contrato' => $request->tipo_contrato,
@@ -805,7 +805,7 @@ class ContratosController extends AppBaseController
     public function uploadInTmpDirectory(Request $request)
     {
         // dd(Storage::disk('local')->exists('katbol-contratos-tmp/KaZoUut5PEQV81GC0Saw79Tt2K3eFvdlQ39ATXAY.pdf'));
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         $mines = str_replace('.', '', $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt');
 

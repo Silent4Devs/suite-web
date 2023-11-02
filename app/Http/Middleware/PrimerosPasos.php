@@ -2,13 +2,14 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
 use App\Models\Area;
+use App\Models\User;
+use App\Models\Puesto;
 use App\Models\Empleado;
 use App\Models\Organizacion;
-use App\Models\Puesto;
-use App\Models\User;
-use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PrimerosPasos
 {
@@ -24,11 +25,11 @@ class PrimerosPasos
      */
     public function handle(Request $request, Closure $next)
     {
-        $existsEmpleado = Empleado::exists();
-        $existsOrganizacion = Organizacion::exists();
-        $existsAreas = Area::exists();
-        $existsPuesto = Puesto::exists();
-        $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
+        $existsEmpleado = Empleado::getExists();
+        $existsOrganizacion = Organizacion::getExists();
+        $existsAreas = Area::getExists();
+        $existsPuesto = Puesto::getExists();
+        $existsVinculoEmpleadoAdmin = User::getExists();
         if (
             !$existsEmpleado ||
             !$existsOrganizacion ||

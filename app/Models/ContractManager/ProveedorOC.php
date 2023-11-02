@@ -2,12 +2,16 @@
 
 namespace App\Models\ContractManager;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ProveedorOC extends Model
+class ProveedorOC extends Model implements Auditable
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
+    use \OwenIt\Auditing\Auditable;
+
 
     protected $fillable = [
         'id',
@@ -22,7 +26,7 @@ class ProveedorOC extends Model
         'credito',
         'fecha_inicio',
         'fecha_fin',
-        ];
+    ];
 
     public $table = 'proveedor_o_c_s';
 }

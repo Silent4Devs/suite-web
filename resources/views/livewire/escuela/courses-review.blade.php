@@ -1,38 +1,38 @@
 <section class="my-4">
     <h1 class="font-bold text-3xl text-gray-800 mb-2">Valoración</h1>
 
-    @if($enrolled)
+    @if ($enrolled)
         <article>
-            @if(!$review)
-                <textarea wire:model="comment" class="form-control w-full" rows="3" placeholder="Ingrese una reseña del curso"></textarea>
+            @if (!$review)
+                <textarea wire:model.lazy="comment" class="form-control w-full" rows="3" placeholder="Ingrese una reseña del curso"></textarea>
 
                 <div class="d-flex mt-4 mb-4">
                     <button class="btn btn-primary mr-4 " wire:click="store">Guardar</button>
 
                     <ul style="list-style: none;" class="d-flex pt-2">
                         <li class="mr-1 cursor-pointer" wire:click="$set('rating', 1)">
-                            <i
-                                class="fas fa-star" style="color: {{$rating >= 1 ? '#E3A008' : 'gray' }}; font-size: 18px;">
+                            <i class="fas fa-star"
+                                style="color: {{ $rating >= 1 ? '#E3A008' : 'gray' }}; font-size: 18px;">
                             </i>
                         </li>
                         <li class="mr-1 cursor-pointer" wire:click="$set('rating', 2)">
-                            <i
-                                class="fas fa-star" style="color: {{$rating >= 2 ? '#E3A008' : 'gray' }}; font-size: 18px;">
+                            <i class="fas fa-star"
+                                style="color: {{ $rating >= 2 ? '#E3A008' : 'gray' }}; font-size: 18px;">
                             </i>
                         </li>
                         <li class="mr-1 cursor-pointer" wire:click="$set('rating', 3)">
-                            <i
-                                class="fas fa-star" style="color: {{$rating >= 3 ? '#E3A008' : 'gray' }}; font-size: 18px;">
+                            <i class="fas fa-star"
+                                style="color: {{ $rating >= 3 ? '#E3A008' : 'gray' }}; font-size: 18px;">
                             </i>
                         </li>
                         <li class="mr-1 cursor-pointer" wire:click="$set('rating', 4)">
-                            <i
-                                class="fas fa-star" style="color: {{$rating >= 4 ? '#E3A008' : 'gray' }}; font-size: 18px;">
+                            <i class="fas fa-star"
+                                style="color: {{ $rating >= 4 ? '#E3A008' : 'gray' }}; font-size: 18px;">
                             </i>
                         </li>
                         <li class="mr-1 cursor-pointer" wire:click="$set('rating', 5)">
-                            <i
-                                class="fas fa-star" style="color: {{$rating >= 5 ? '#E3A008' : 'gray' }}; font-size: 18px;">
+                            <i class="fas fa-star"
+                                style="color: {{ $rating >= 5 ? '#E3A008' : 'gray' }}; font-size: 18px;">
                             </i>
                         </li>
                     </ul>
@@ -49,23 +49,24 @@
 
     <div class="card shadow-sm">
         <div class="card-body" style="border: 1px solid #D8D8D8;">
-            <h5 class="text-gray-800 text-xl">{{$course->reviews->count()}} valoraciones</h5>
+            <h5 class="text-gray-800 text-xl">{{ $course->reviews->count() }} valoraciones</h5>
             @foreach ($course->reviews as $review)
                 <div class="mb-2">
                     <div class="mr-4">
-                        <img class="h-12 w-12 object-cover rounded-full shadow-lg" src="{{$review->user->profile_photo_url}}" alt="">
+                        <img class="h-12 w-12 object-cover rounded-full shadow-lg"
+                            src="{{ $review->user->profile_photo_url }}" alt="">
                     </div>
                     <div class="card flex-1 shadow-none">
-                        <div class="px-4"  style="background-color: #CDD7E1;">
+                        <div class="px-4" style="background-color: #CDD7E1;">
                             <p class="mt-2">
                                 <b>
-                                    {{$review->user->name}}
+                                    {{ $review->user->name }}
                                 </b>
                                 <i class="fas fa-star" style="color: #E3A008; font-size: 18px;"></i>
-                                {{$review->rating}}
+                                {{ $review->rating }}
                             </p>
                             <p>
-                                {{$review->comment}}
+                                {{ $review->comment }}
                             </p>
                         </div>
                     </div>
