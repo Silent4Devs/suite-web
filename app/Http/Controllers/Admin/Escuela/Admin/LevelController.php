@@ -18,7 +18,7 @@ class LevelController extends Controller
     {
         $levels = Level::all();
 
-        return view('admin.Escuela.Admin.levels.index', compact('levels'));
+        return view('admin.escuela.admin.levels.index', compact('levels'));
     }
 
     /**
@@ -28,7 +28,7 @@ class LevelController extends Controller
      */
     public function create()
     {
-        return view('admin.Escuela.Admin.levels.create');
+        return view('admin.escuela.admin.levels.create');
     }
 
     /**
@@ -57,7 +57,7 @@ class LevelController extends Controller
      */
     public function show(Level $level)
     {
-        return view('admin.Escuela.Admin.levels.show', compact('level'));
+        return view('admin.escuela.admin.levels.show', compact('level'));
     }
 
     /**
@@ -68,7 +68,7 @@ class LevelController extends Controller
      */
     public function edit(Level $level)
     {
-        return view('admin.Escuela.Admin.levels.edit', compact('level'));
+        return view('admin.escuela.admin.levels.edit', compact('level'));
     }
 
     /**
