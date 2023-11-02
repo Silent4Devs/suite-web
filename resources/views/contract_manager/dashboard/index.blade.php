@@ -6,6 +6,7 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/dashboard.css') }}">
 
+
 <style type="text/css">
     .dataTables_info,
     .dataTables_length {

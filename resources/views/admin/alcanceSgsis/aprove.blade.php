@@ -73,78 +73,79 @@
         <div class="card-body">
             <h5 class="titulo-card">Alcance</h5>
             <hr>
-            <form method="POST" action="{{ route('admin.alcance-sgsis.update', [$alcanceSgsi->id]) }}"
-                enctype="multipart/form-data">
-                @method('PUT')
-                @csrf
-                <div class="form-group">
-                    <div class="form-floating form" style="">
-                        <input class="form-control form" placeholder="Agrega un nombre al alcance"id="nombre"
-                            name="nombre"value="{{ old('nombre', $alcanceSgsi->nombre) }}" required>
-                        <label for="nombre" style="color: #606060;">
-                            Nombre de Alcance
+            @if ($alcanceSgsi && $alcanceSgsi->nombre == 'valio')
+                <form method="POST" action="{{ route('admin.alcance-sgsis.update', [$alcanceSgsi->id]) }}"
+                    enctype="multipart/form-data">
+            @endif
+            @method('PUT')
+            @csrf
+            <div class="form-group">
+                <div class="form-floating form" style="">
+                    <input class="form-control form" placeholder="Agrega un nombre al alcance"id="nombre"
+                        name="nombre"value="{{ old('nombre', $alcanceSgsi->nombre) }}" required>
+                    <label for="nombre" style="color: #606060;">
+                        Nombre de Alcance
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-floating mb-3">
+                    <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form" name="alcancesgsi"
+                        id="alcancesgsi" style="height:200px;">{!! old('alcancesgsi', strip_tags($alcanceSgsi->alcancesgsi)) !!}</textarea>
+                    @if ($errors->has('alcancesgsi'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('alcancesgsi') }}
+                        </div>
+                    @endif
+                    <label for="alcancesgsi" style="color: #606060;">
+                        Alcance
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="form-floating col-sm-6">
+                        <input required
+                            class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }} form"
+                            type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
+                            value="{{ old('fecha_publicacion', \Carbon\Carbon::parse($alcanceSgsi->fecha_publicacion)->format('Y-m-d')) }}">
+                        @if ($errors->has('fecha_publicacion'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_publicacion') }}
+                            </div>
+                        @endif
+                        <label class="required" for="fecha_publicacion" style="color: #606060;">Fecha de
+                            publicación</label>
+                    </div>
+
+
+                    <div class="form-floating col-sm-6 mb-3">
+                        <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }} form"
+                            type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
+                            value="{{ old('fecha_revision', \Carbon\Carbon::parse($alcanceSgsi->fecha_revision)->format('Y-m-d')) }}">
+                        @if ($errors->has('fecha_revision'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_revision') }}
+                            </div>
+                        @endif
+                        <label class="required" for="fecha_revision" style="padding-right:26px;">Fecha
+                            de revisión
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="form-floating mb-3">
-                        <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form" name="alcancesgsi"
-                            id="alcancesgsi" style="height:200px;">{!! old('alcancesgsi', strip_tags($alcanceSgsi->alcancesgsi)) !!}</textarea>
-                        @if ($errors->has('alcancesgsi'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('alcancesgsi') }}
-                            </div>
-                        @endif
-                        <label for="alcancesgsi" style="color: #606060;">
-                            Alcance
-                        </label>
-                    </div>
-                    <div class="row">
-                        <div class="form-floating col-sm-6">
-                            <input required
-                                class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }} form"
-                                type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
-                                value="{{ old('fecha_publicacion', \Carbon\Carbon::parse($alcanceSgsi->fecha_publicacion)->format('Y-m-d')) }}">
-                            @if ($errors->has('fecha_publicacion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('fecha_publicacion') }}
-                                </div>
-                            @endif
-                            <label class="required" for="fecha_publicacion" style="color: #606060;">Fecha de
-                                publicación</label>
-                        </div>
 
 
-                        <div class="form-floating col-sm-6 mb-3">
-                            <input required
-                                class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }} form"
-                                type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
-                                value="{{ old('fecha_revision', \Carbon\Carbon::parse($alcanceSgsi->fecha_revision)->format('Y-m-d')) }}">
-                            @if ($errors->has('fecha_revision'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('fecha_revision') }}
-                                </div>
-                            @endif
-                            <label class="required" for="fecha_revision" style="padding-right:26px;">Fecha
-                                de revisión
-                            </label>
-                        </div>
-                    </div>
+                <div class="text-right form-group col-12">
+                    <a href="{{ route('admin.alcance-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
+                </div>
+                </form>
+            </div>
+        @endsection
 
 
-                    <div class="text-right form-group col-12">
-                        <a href="{{ route('admin.alcance-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
-                        <button class="btn btn-danger" type="submit">
-                            {{ trans('global.save') }}
-                        </button>
-                    </div>
-            </form>
-        </div>
-    @endsection
-
-
-    @section('scripts')
-        {{-- <script>
+        @section('scripts')
+            {{-- <script>
             $(document).ready(function() {
                 CKEDITOR.replace('alcancesgsi', {
                     toolbar: [
@@ -210,30 +211,30 @@
             });
         </script> --}}
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function(e) {
+            <script>
+                document.addEventListener('DOMContentLoaded', function(e) {
 
-                let reviso_alcance = document.querySelector('#id_reviso_alcance');
-                let area_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-area');
-                let puesto_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-puesto');
+                    let reviso_alcance = document.querySelector('#id_reviso_alcance');
+                    let area_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-area');
+                    let puesto_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-puesto');
 
-                document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
-                document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
-                reviso_alcance.addEventListener('change', function(e) {
-                    e.preventDefault();
-                    let area = this.options[this.selectedIndex].getAttribute('data-area');
-                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                    document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
-                    document.getElementById('area_reviso').innerHTML = recortarTexto(area);
+                    document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
+                    document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
+                    reviso_alcance.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let area = this.options[this.selectedIndex].getAttribute('data-area');
+                        let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                        document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
+                        document.getElementById('area_reviso').innerHTML = recortarTexto(area);
+                    })
+
                 })
 
-            })
-
-            function recortarTexto(texto, length = 30) {
-                let trimmedString = texto?.length > length ?
-                    texto.substring(0, length - 3) + "..." :
-                    texto;
-                return trimmedString;
-            }
-        </script>
-    @endsection
+                function recortarTexto(texto, length = 30) {
+                    let trimmedString = texto?.length > length ?
+                        texto.substring(0, length - 3) + "..." :
+                        texto;
+                    return trimmedString;
+                }
+            </script>
+        @endsection

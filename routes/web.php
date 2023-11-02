@@ -609,6 +609,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         //Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
             //Route::resource('analisis-brechas', 'AnalisisBController');
+            Route::get('/templates', 'TemplateController@index')->name('templates');
             Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
             Route::get('analisis-brechas/{id}', 'AnalisisBController@index')->name('analisis-brechas');
             Route::post('analisis-brechas/update', 'AnalisisBController@update');
@@ -619,6 +620,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::group(['middleware' => ['version_iso_2022']], function () {
             //Analisis brechas 2022
+
+            Route::get('/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
+            Route::get('/templates', 'TemplateController@index')->name('templates');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
             Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
@@ -837,6 +841,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // Alcance Sgsis
         Route::delete('alcance-sgsis/destroy', 'AlcanceSgsiController@massDestroy')->name('alcance-sgsis.massDestroy');
         Route::resource('alcance-sgsis', 'AlcanceSgsiController');
+        Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
+
 
         // Comiteseguridads
         Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
