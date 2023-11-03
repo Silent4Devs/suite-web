@@ -34,6 +34,7 @@
         "phpoffice/phpword": "^1.0",
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.0",
+        "rap2hpoutre/fast-excel": "^5.3",
         "realrashid/sweet-alert": "^7.1",
         "sentry/sentry-laravel": "^3.8",
         "simplesoftwareio/simple-qrcode": "^4.2",
@@ -48,7 +49,6 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
-        "beyondcode/laravel-query-detector": "^1.7",
         "friendsofphp/php-cs-fixer": "^3.2",
         "jason-guru/laravel-make-repository": "^0.0.3",
         "laravel/dusk": "^7.7",
