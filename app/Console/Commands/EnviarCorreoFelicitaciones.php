@@ -51,8 +51,7 @@ class EnviarCorreoFelicitaciones extends Command
         $cumplehoy = Carbon::today();
         $cumplehoy->toDateString();
         // dd($cumplehoy);
-        $cumpleañeros = Empleado::getaltaAll()
-            ->whereMonth('cumpleaños', '=', $cumplehoy->format('m'))
+        $cumpleañeros = Empleado::whereMonth('cumpleaños', '=', $cumplehoy->format('m'))
             ->whereDay('cumpleaños', '=', $cumplehoy->format('d'))
             ->get();
 
