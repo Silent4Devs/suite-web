@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TimesheetCliente extends Model implements Auditable
+class TimesheetCliente extends Model
 // implements Auditable
 {
     use HasFactory, ClearsResponseCache;
-    use \OwenIt\Auditing\Auditable;
+    // use \OwenIt\Auditing\Auditable;
 
     protected $table = 'timesheet_clientes';
 
