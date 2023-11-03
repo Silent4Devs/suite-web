@@ -17,7 +17,11 @@
             <tr>
                 <td class="td-img-doc">
                     @if ($requisiciones->sucursal->mylogo)
+<<<<<<< HEAD
                         <img src="{{ url('razon_social/' . $requisiciones->sucursal->mylogo) }}">
+=======
+                        <img src="{{ asset('razon_social/'.$requisiciones->sucursal->mylogo) }}">
+>>>>>>> e7fd7b0d24b5a99f2ba3925bb8d9cafd990a4d4a
                     @else
                         <img src="{{ asset('sinLogo.png') }}">
                     @endif

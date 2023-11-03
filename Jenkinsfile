@@ -4,11 +4,12 @@ pipeline {
 
     stage('install') {
       steps {
-        git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
+        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
       }
     }
 
-    stage('build') {
+
+     stage('build') {
       steps {
         script{
           try {
