@@ -17,9 +17,9 @@
             <tr>
                 <td class="td-img-doc">
                     @if ($requisiciones->sucursal->mylogo)
-                        <img src="{{ url('razon_social/' . $requisiciones->sucursal->mylogo) }}">
+                        <img src="{{ public_path('razon_social/'.trim($requisiciones->sucursal->mylogo)) }}">
                     @else
-                        <img src="{{ asset('sinLogo.png') }}">
+                        <img src="{{ public_path('sinLogo.png') }}">
                     @endif
                 </td>
                 <td class="info-header">
