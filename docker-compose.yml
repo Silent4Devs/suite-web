@@ -134,15 +134,15 @@ services:
     depends_on:
       - php
     restart: unless-stopped
+    tty: true
     container_name: schedule-worker-tabantaj
-    working_dir: /var/www/
     volumes:
       - .:/var/www/html
     command: php artisan schedule:work
-    networks:
-      - tabantajnetwork
     environment:
       CONTAINER_ROLE: scheduler
+    networks:
+      - tabantajnetwork
 
   redis-tabantaj:
     image: redis:alpine
