@@ -32,13 +32,18 @@
                     100% entre las secciones
                 </div>
             </div>
+            <div class="row">
+                <button class="btn btn-link" wire:click.prevent="addPregunta">
+                    + Agregar Pregunta
+                </button>
+            </div>
             <form>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <textarea class="form-control">
-                            </textarea>
-                            <label>Descripción</label>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="descripcion_s1" name="descripcion_s1" placeholder="Descripcion"
+                                style="height: 150px"></textarea>
+                            <label for="descripcion_s1">Descripción</label>
                         </div>
                     </div>
                 </div>
@@ -47,19 +52,35 @@
         <div class="card card-body mt-5">
             <div style="color:#306BA9; font-size:16px;">Formulario
                 <hr style="">
-                <form>
+            </div>
+        </div>
+        <form>
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="pregunta_1" name="pregunta_1" placeholder="Pregunta" style="height: 150px"></textarea>
+                            <label for="pregunta_1">Pregunta</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @foreach ($preguntas as $key => $p)
+                <div class="card card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <textarea class="form-control">
-                                </textarea>
-                                <label>Pregunta</label>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="pregunta_{{ $key }}" name="pregunta_{{ $key }}"
+                                    placeholder="Pregunta" style="height: 150px"></textarea>
+                                <label for="pregunta_{{ $key }}">Pregunta</label>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
+                </div>
+            @endforeach
+
+        </form>
     </div>
 </div>
 

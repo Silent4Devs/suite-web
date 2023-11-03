@@ -7,7 +7,20 @@ use Livewire\Component;
 class SeccionesTemplate extends Component
 {
 
+    public $preguntas = [];
     public $secciones = 1;
+
+    public function addPregunta()
+    {
+        $this->preguntas[] = '';
+    }
+
+    public function removePregunta($index)
+    {
+        // dd($index);
+        unset($this->preguntas[$index]);
+        $this->preguntas = array_values($this->preguntas);
+    }
 
     public function updatedSecciones($value)
     {

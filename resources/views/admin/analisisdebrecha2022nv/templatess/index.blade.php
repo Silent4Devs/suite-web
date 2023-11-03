@@ -57,7 +57,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion"></textarea>
+                        <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion" style="height: 100px"></textarea>
                         <label for="descripcion">Descripción</label>
                     </div>
                 </div>
