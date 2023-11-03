@@ -70,12 +70,12 @@
                         <i class="text-2xl text-gray-600 fas fa-toggle-off" style="font-size: 30px;"></i>
                     @endif
                 </div>
-                 {{-- @if ($current->resource)
+                 @if ($current->resource)
                     <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download">
-                        <i class="text-lg fas fa-download"></i>
-                        <p class="ml-2 text-sm">Descargar Recurso</p>
+                        <i class="text-lg fas fa-download d-inline"></i>
+                        <p class="ml-2 text-sm d-inline">Descargar Recurso</p>
                     </div>
-                @endif  --}}
+                @endif
             </div>
 
 
@@ -109,7 +109,7 @@
             </div>
         </div>
 
-        <ul style="list-style: none;">
+        <ul style="list-style: none; cursor: pointer;">
             @foreach ($course->sections as $section)
                 <li >
                     <i style="font-size:10pt; cursor: pointer;"
@@ -124,12 +124,12 @@
                                         @if ($lesson->completed)
                                             @if ($current->id == $lesson->id)
                                                 <span class="text-primary">
-                                                    <a class="cursor:pointer"
+                                                    <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>
                                             @else
                                                 <span style="color:#D9D9D9;">
-                                                    <a class="cursor:pointer"
+                                                    <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>
                                             @endif
@@ -137,12 +137,12 @@
                                             @if ($current->id == $lesson->id)
                                                 <span
                                                     class="text-primary">
-                                                    <a class="cursor:pointer"
+                                                    <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>
                                             @else
                                                 <span class="">
-                                                    <a class="cursor:pointer"
+                                                    <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>
                                             @endif
@@ -160,7 +160,7 @@
                                             <div>
                                                 <span
                                                     class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
-                                                <a class="cursor:pointer"
+                                                <a class="cursor:pointer;"
                                                     href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
                                                     wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
                                                 </a>

@@ -32,7 +32,7 @@ class Questions extends Component
         return [
             'answers' => 'required',
             'question' => 'required',
-            'explanation' => 'nullable',
+            'explanation' => 'required',
             'answers.*.answer' => 'required',
             'answers' => [new AnswersValidationRule()],
         ];
@@ -192,6 +192,7 @@ class Questions extends Component
     public function save()
     {
         $this->validate();
+        // dd($this->explanation);
         $question = Question::create([
             'explanation' => $this->explanation,
             'question' => $this->question,
