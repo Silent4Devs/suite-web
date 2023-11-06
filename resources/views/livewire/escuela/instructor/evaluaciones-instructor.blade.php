@@ -9,7 +9,7 @@
             <form action="" method="post">
                 @csrf
                 <div wire:ignore x-show="open">
-                    <p class="text-primary mt-2">Sección a evaluar</p>
+                    <p class="text-primary mt-2">Sección a evaluar<span style="color:red">*</span></label></p>
                     <select wire:model.defer="section_id" id="section_id" name="section[is_active]"
                         value="{{ old('section.is_active') }}" class="form-control">
                         <option value="" selected disabled>Seleccionar una o más secciones
@@ -25,7 +25,7 @@
                 @enderror
 
 
-                    <p class="text-primary mt-4">Nombre</p>
+                    <p class="text-primary mt-4">Nombre<span style="color:red">*</span></label></p>
                     @error('section.name')
                         <span class="content-end float-right text-xs text-red-700">{{ $message }}</span>
                     @enderror

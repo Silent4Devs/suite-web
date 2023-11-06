@@ -15,7 +15,7 @@
                 <div class="card-body" style="border: 1px solid #D8D8D8;">
                     <div class="row text-primary">
                         <div class="col-8">
-                            <label for="name-{{ $section->id }}">Nombre</label>
+                            <label for="name-{{ $section->id }}">Nombre</label><span style="color:red">*</span>
                             <div>
                                 <input wire:model.lazy="name" id="name-{{ $section->id }}" x-ref="lessonName" type="text"
                                     class="w-full form-control @if ($errors->has('name')) invalid @endif">
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <label for="platform-{{ $section->id }}">Plataforma</label>
+                            <label for="platform-{{ $section->id }}">Plataforma</label><span style="color:red">*</span>
                             <div class="md:col-span-5">
                                 <select wire:model.lazy="platform_id" id="platform-{{ $section->id }}" type="text"
                                     class=" w-full form-control @if ($errors->has('platform_id')) invalid @endif">
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="col-12 mt-4">
-                            <label for="url-{{ $section->id }}">URL</label>
+                            <label for="url-{{ $section->id }}">URL</label><span style="color:red">*</span>
                             <div>
                                 <input wire:model.lazy="url" id="url-{{ $section->id }}" type="text"
                                     class=" w-full form-control @if ($errors->has('url')) invalid @endif">

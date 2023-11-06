@@ -18,8 +18,8 @@
                     <label>Descripción<span style="color:red">*</span></label>
                     <input class="form-control" type="text" value="" id="title"
                         wire:model.defer="explanation">
-                    @error('question')
-                        <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>
+                    @error('explanation')
+                        <p class="text-xs text-red-700">El campo descripción es obligatorio.</p>
                     @enderror
                 </div>
                 <div class="mt-4">
