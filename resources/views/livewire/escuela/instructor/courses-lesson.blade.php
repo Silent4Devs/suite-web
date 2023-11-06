@@ -28,7 +28,7 @@
                 wire:ignore>
                 <form wire:submit.prevent="update" class="px-3 py-2 col-12">
                     <div class="grid mt-2 mb-2 grid-col-1 md:grid-cols-6 md:gap-2">
-                        <label for="edit-lesson-name-{{ $section->id }}">Nombre</label>
+                        <label for="edit-lesson-name-{{ $section->id }}">Nombre</label><span style="color:red">*</span>
                         <div class="md:col-span-5">
                             <input wire:model="lesson.name" id="edit-lesson-name-{{ $section->id }}" type="text"
                                 class=" w-full form-control @if ($errors->has('lesson.name')) invalid @endif">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="grid items-center mb-2 grid-col-1 md:grid-cols-6 md:gap-3">
-                        <label for="edit-lesson-platform-{{ $section->id }}">Plataforma</label>
+                        <label for="edit-lesson-platform-{{ $section->id }}">Plataforma</label><span style="color:red">*</span>
                         <div class="md:col-span-5">
                             <select wire:model="lesson.platform_id" id="edit-lesson-platform-{{ $section->id }}"
                                 type="text"
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="grid items-center mb-2 grid-col-1 md:grid-cols-6 md:gap-3">
-                        <label for="edit-lesson-url-{{ $section->id }}">URL</label>
+                        <label for="edit-lesson-url-{{ $section->id }}">URL</label><span style="color:red">*</span>
                         <div class="md:col-span-5">
                             <input wire:model="lesson.url" id="edit-lesson-url-{{ $section->id }}" type="text"
                                 class="form-control w-full @if ($errors->has('lesson.url')) invalid @endif">
