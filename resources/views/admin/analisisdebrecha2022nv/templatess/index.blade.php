@@ -13,7 +13,7 @@
 @section('content')
     <h5 class="titulo">Construir Evaluación para medir el cumplimiento del Análisis de Brechas</h5>
 
-    <div class="card card-t">
+    <div class="card card-body">
         <div class="row">
             <div class="col-md-2">
                 <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}"
