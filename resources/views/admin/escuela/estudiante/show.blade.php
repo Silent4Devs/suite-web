@@ -22,6 +22,7 @@
         .btn-mas-info-c:hover {
             color: #fff;
         }
+
         </style>
     <section class="row">
         <div class="col-12">
@@ -29,7 +30,7 @@
                 <div class="row no-gutters">
                   <div class="col-8 contenedor">
                     @isset($course->image->url)
-                            <img src="{{ Storage::url($course->image->url) }}"
+                            <img src="{{ asset(Storage::url($course->image->url)) }}"
                                 id="picture" alt="">
                         @else
                             <img src="{{ asset('img/home/imagen-estudiantes.jpg') }}" id="picture"
@@ -146,7 +147,7 @@
                         @foreach ($similares as $similar)
                             <div class="card shadow-sm similar">
                                 @isset($similar->image->url)
-                                    <img class="object-cover w-40 h-32" src="{{ Storage::url($similar->image->url) }}"
+                                    <img class="object-cover w-40 h-32" src="{{ asset(Storage::url($similar->image->url)) }}"
                                         alt="">
                                 @else
                                     <img class="object-cover w-40 h-32" src="{{ asset('img/home/imagen-estudiantes.jpg') }}"

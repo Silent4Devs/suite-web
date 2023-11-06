@@ -4,6 +4,15 @@
             margin-left: 35px;
         }
 
+        .advance {
+            background-color: #345183;
+            color:#FFFFFF;
+        }
+
+        .advance:hover{
+            color:#FFFFFF;
+        }
+
     </style>
     <x-loading-indicator wire:loading />
     <div class="card shadow-none" wire:ignore>
@@ -62,6 +71,8 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <a class="btn advance mb-3" href="{{ url()->previous() }}" role="button">REGRESAR</a>
 
         {{-- </x-table-responsive> --}}
         {{-- @push('js')
