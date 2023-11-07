@@ -27,7 +27,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
 
     public function collection()
     {
-
+        //query
         $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')->withwhereHas('timesheet', function ($query) {
             if ($this->emp_id != 0) {
                 $query->where('empleado_id', $this->emp_id);
