@@ -16,9 +16,9 @@
                 </div>
                 <div>
                     <label>Descripción<span style="color:red">*</span></label>
-                    <input class="form-control" type="text" value="" id="title"
-                        wire:model.defer="question">
-                    @error('question')
+                    <input class="form-control" type="text" value="" id="description"
+                        wire:model.defer="explanation">
+                    @error('explanation')
                         <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>
                     @enderror
                 </div>
