@@ -64,8 +64,15 @@ class TimesheetProyecto extends Model implements Auditable
 
     public static function getAllOrderByIdentificador()
     {
-        return Cache::remember('timesheetproyecto_all_order_by_identificador', 3600, function () {
+        return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_identificador', 3600, function () {
             return self::orderBy('identificador', 'asc')->get();
+        });
+    }
+
+    public static function getAllByProceso()
+    {
+        return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_proceso', 3600 * 4, function () {
+            return self::where('estatus', 'proceso')->orderBy('identificador', 'asc')->get();
         });
     }
 
