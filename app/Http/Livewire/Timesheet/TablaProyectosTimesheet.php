@@ -120,7 +120,7 @@ class TablaProyectosTimesheet extends Component
 
     public function procesos()
     {
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
+        $this->proyectos = TimesheetProyecto::getAllByProceso();
     }
 
     public function cancelados()
