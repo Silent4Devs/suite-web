@@ -370,3 +370,4 @@ volumes:
 
 networks:
   tabantajnetwork:
+    driver: bridge
