@@ -606,6 +606,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');
 
+        //Template Analisis de Brechas
+        Route::get('templates', 'TemplateController@index')->name('templates');
+        Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+
+
         //Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
             //Route::resource('analisis-brechas', 'AnalisisBController');
@@ -641,8 +646,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
         });
 
-        //Template Analisis de Brechas
-        Route::get('/templates', 'TemplateController@index')->name('templates');
+
 
         Route::group(['middleware' => ['version_iso_2013']], function () {
             // Declaracion de Aplicabilidad

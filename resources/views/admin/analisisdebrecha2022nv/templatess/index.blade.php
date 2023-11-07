@@ -8,6 +8,9 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css"
         integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
 </head>
 
 @section('content')
@@ -31,151 +34,6 @@
             </div>
         </div>
     </div>
-    <div class="card card-body mt-5">
-        <div style="color:#306BA9; font-size:16px;">Datos Generales</div>
-        <hr style="">
-        <form>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-floating mb-3 ">
-                        <input type="text" class="form-control" placeholder="Nombre del Template" id="nombre_template"
-                            name="nombre_template" required>
-                        <label for="nombre_template">Nombre del Template</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-floating mb-3 ">
-                        <select id="norma" name="norma" class="form-control " required>
-                            @foreach ($normas as $norma)
-                                <option value="{{ $norma->id }}">{{ $norma->norma }}</option>
-                            @endforeach
-                        </select>
-                        <label for="norma">Norma</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion" style="height: 100px"></textarea>
-                        <label for="descripcion">Descripción</label>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="card card-body mt-5">
-        <div class="col-m-12" style="color:#306BA9; font-size:16px;">
-            Define el valor de los parámetros con los que se evaluará tu cuestionario
-        </div>
-        <div class="col-m-12 mt-3" style="font: italic 14px Roboto;">
-            Estatus: Define el nombre de tu parámetro
-        </div>
-        <div class="col-m-12 mt-3" style="font: italic 14px Roboto;">
-            Valor: Agrega el valor de tu parámetro con los que se evaluará tu cuestionario
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-3">
-                <div class="form-row">
-                    <div class="col-8">
-                        <div class="form-floating mb-3 ">
-                            <input type="text" id="estatus_1" name="estatus_1" class="form-control" placeholder="Estatus"
-                                required>
-                            <label for="estatus_1">Estatus</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-floating mb-3 ">
-                            <input type="number" id="valor_estatus_1" name="valor_estatus_1" class="form-control"
-                                placeholder="Valor" required>
-                            <label for="valor_estatus_1">Valor</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-12 color-picker">
-                        <input type="color" id="color_estatus_1" name="color_estatus_1" class="color-input form-control"
-                            value="#563d7c" title="Seleccione un color">
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-row">
-                    <div class="col-8">
-                        <div class="form-floating mb-3 ">
-                            <input type="text" id="estatus_2" name="estatus_2" class="form-control" placeholder="Estatus"
-                                required>
-                            <label for="estatus_2">Estatus</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-floating mb-3 ">
-                            <input type="number" id="valor_estatus_2" name="valor_estatus_2" class="form-control"
-                                placeholder="Valor" required>
-                            <label for="valor_estatus_2">Valor</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-12 color-picker">
-                        <input type="color" id="color_estatus_2" name="color_estatus_2"
-                            class="color-input form-control" value="#563d7c" title="Seleccione un color">
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-row">
-                    <div class="col-8">
-                        <div class="form-floating mb-3 ">
-                            <input type="text" id="estatus_3" name="estatus_3" class="form-control"
-                                placeholder="Estatus">
-                            <label for="estatus_3">Estatus</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-floating mb-3 ">
-                            <input type="number" id="valor_estatus_3" name="valor_estatus_3" class="form-control"
-                                placeholder="Valor">
-                            <label for="valor_estatus_3">Valor</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-12 color-picker">
-                        <input type="color" id="color_estatus_3" name="color_estatus_3"
-                            class="color-input form-control" value="#563d7c" title="Seleccione un color">
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-row">
-                    <div class="col-8">
-                        <div class="form-floating mb-3 ">
-                            <input type="text" id="estatus_4" name="estatus_4" class="form-control"
-                                placeholder="Estatus">
-                            <label for="estatus_4">Estatus</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-floating mb-3 ">
-                            <input type="number" id="valor_estatus_4" name="valor_estatus_4" class="form-control"
-                                placeholder="Valor">
-                            <label for="valor_estatus_4">Valor</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-12 color-picker">
-                        <input type="color" id="color_estatus_4" name="color_estatus_4"
-                            class="color-input form-control" value="#563d7c" title="Seleccione un color">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     {{-- Aqui se necesita el livewire --}}
 
@@ -183,5 +41,13 @@
 @endsection
 
 @section('scripts')
+    <script>
+        var sortable = new Sortable(document.getElementById('sortable-container'), {
+            animation: 150, // Animation speed (in milliseconds)
+            handle: '.drag-handle', // Selector for the drag handle
+            // Additional options if needed
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
