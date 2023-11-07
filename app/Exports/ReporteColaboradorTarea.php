@@ -5,6 +5,8 @@ namespace App\Exports;
 use App\Models\TimesheetHoras;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Carbon\Carbon;
+
 
 class ReporteColaboradorTarea implements FromCollection, WithHeadings
 {
@@ -41,7 +43,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
             }
         })->get()->map(function ($timesheetHora) {
             return [
-                'Fecha Día' =>   $timesheetHora->timesheet->fecha_dia,
+                'Fecha Día' =>  \Carbon\Carbon::parse($timesheetHora->timesheet->fecha_dia)->format('d/m/Y'),
                 'Empleado' => $timesheetHora->timesheet->empleado->name,
                 'Supervisor' => $timesheetHora->timesheet->aprobador->name,
                 'Proyecto' => $timesheetHora->proyecto->proyecto,
