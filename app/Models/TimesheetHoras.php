@@ -47,6 +47,13 @@ class TimesheetHoras extends Model implements Auditable
         });
     }
 
+    // public static function getDataCount()
+    // {
+    //     return Cache::remember('TimesheetHoras:timesheet_data_all_count', 3600 * 2, function () {
+    //         return self::select('id')->orderBy('id', 'asc')->count();
+    //     });
+    // }
+
     public static function getDataProyTarea()
     {
         return Cache::remember('TimesheetHoras:timesheet_data_proy_tarea', 3600, function () {
