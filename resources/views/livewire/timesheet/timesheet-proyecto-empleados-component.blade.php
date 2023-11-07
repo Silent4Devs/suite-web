@@ -14,7 +14,7 @@
         </div>
     </div>
     <form wire:submit.prevent="addEmpleado" wire:ignore>
-        {{-- <x-loading-indicator /> --}}
+        <x-loading-indicator />
         <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
