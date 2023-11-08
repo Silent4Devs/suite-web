@@ -24,10 +24,6 @@ class CourseStatus extends Component
     public function mount(Course $course, $evaluacionesLeccion)
     {
         $this->course = $course;
-        //Evaluaciones para el curso en general
-        $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
-        $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
-
         //determinamos cual es la lección actual
         foreach ($course->lessons as $lesson) {
             if (!$lesson->completed) {
@@ -48,6 +44,10 @@ class CourseStatus extends Component
 
     public function render()
     {
+        //Evaluaciones para el curso en general
+        $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
+        $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+
         return view('livewire.escuela.course-status');
     }
 
