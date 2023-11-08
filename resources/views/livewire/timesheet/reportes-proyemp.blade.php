@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="datatable-fix w-100 mt-2">
-                <table class="table w-100 datatable_timesheet_registros_reportes">
+                <table class="table w-100">
                     <thead class="w-100">
                         <tr>
                             <th>Fecha Inicio</th>
@@ -117,13 +117,6 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            Livewire.on('scriptTabla', () => {
-                tablaLivewire('datatable_timesheet');
-            });
-        });
-    </script>
     <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
 
     <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
