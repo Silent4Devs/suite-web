@@ -102,7 +102,7 @@ class ReportesProyemp extends Component
         });
 
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->Paginate($this->perPage);
+        $times = $query->fastPaginate($this->perPage);
 
         return view('livewire.timesheet.reportes-proyemp', compact('times'));
     }
