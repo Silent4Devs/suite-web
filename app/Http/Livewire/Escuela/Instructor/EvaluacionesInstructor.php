@@ -70,7 +70,6 @@ class EvaluacionesInstructor extends Component
     {
         $this->course = $course;
         $this->course_id = $course->id;
-        $this->sections = Section::where('course_id', $course->id)->get();
     }
 
     public function save()
@@ -134,6 +133,8 @@ class EvaluacionesInstructor extends Component
 
     public function render()
     {
+        $this->sections = Section::where('course_id', $this->course->id)->get();
+
         return view('livewire.escuela.instructor.evaluaciones-instructor')->with('course', $this->course);
     }
 

@@ -75,7 +75,6 @@ class ReportesProyemp extends Component
 
     public function render()
     {
-
         $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')->withwhereHas('timesheet', function ($query) {
             if ($this->emp_id != 0) {
                 $query->where('empleado_id', $this->emp_id);
