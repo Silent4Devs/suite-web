@@ -34,11 +34,12 @@ class CoursesLesson extends Component
     {
         $this->section = $section;
         $this->lesson = new Lesson();
-        $this->platforms = Platform::get();
     }
 
     public function render()
     {
+        $this->platforms = Platform::get();
+
         return view('livewire.escuela.instructor.courses-lesson');
     }
 

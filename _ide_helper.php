@@ -23060,7 +23060,7 @@
                     /**
          * 
          *
-         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBootInactive()
+         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBoot()
          * @param string|null $monitorSlug
          * @param int|null $checkInMargin
          * @param int|null $maxRuntime
