@@ -239,7 +239,7 @@ class Empleado extends Model implements Auditable
     public static function getreportesAll()
     {
         return Cache::remember('empleados_reportes_all', 3600 * 24, function () {
-            return self::select('id', 'antiguedad', 'puesto_id', 'area_id', 'name', 'estatus')->get();
+            return self::select('id', 'antiguedad', 'puesto_id', 'area_id', 'name', 'estatus', 'antiguedad')->get();
         });
     }
 
