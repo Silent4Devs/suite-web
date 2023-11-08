@@ -49,7 +49,6 @@ class ReportesRegistros extends Component
     public function mount()
     {
         $this->estatus = null;
-        $this->areas = Area::getAll();
         // $this->emp = Empleado::alta()->orderBy('name', 'ASC')->get();
     }
 
@@ -112,11 +111,12 @@ class ReportesRegistros extends Component
 
     public function render()
     {
+        $this->areas = Area::getIdNameAll();
         //Query para obtener los timesheet y filtrarlo
         if ($this->area_id == 0) {
-            $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
+            $this->emp = Empleado::getIdNameAll();
         } else {
-            $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']])->where('area_id', $this->area_id)->where('estatus', 'alta');
+            $this->emp = Empleado::getIdNameAll()->where('area_id', $this->area_id);
         }
         $empleados = $this->emp;
 
