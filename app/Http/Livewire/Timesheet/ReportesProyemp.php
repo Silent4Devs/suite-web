@@ -75,6 +75,7 @@ class ReportesProyemp extends Component
 
     public function render()
     {
+
         $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')->withwhereHas('timesheet', function ($query) {
             if ($this->emp_id != 0) {
                 $query->where('empleado_id', $this->emp_id);
@@ -89,9 +90,7 @@ class ReportesProyemp extends Component
         });
 
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->paginate($this->perPage);
-
-        $this->emit('scriptTabla');
+        $times = $query->fastPaginate($this->perPage);
 
         return view('livewire.timesheet.reportes-proyemp', compact('times'));
     }
