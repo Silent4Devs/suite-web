@@ -41,7 +41,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function render()
     {
-        $this->proyecto = TimesheetProyecto::find($this->proyecto_id);
+        $this->proyecto = TimesheetProyecto::getAll()->find($this->proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $this->proyecto_id)->get();
         $this->empleados = Empleado::getAltaEmpleados();
 
