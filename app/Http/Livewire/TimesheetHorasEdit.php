@@ -37,7 +37,6 @@ class TimesheetHorasEdit extends Component
         $this->tareas = $tareas;
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;
-        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
     }
 
     public function removerFila($id, $tr)
@@ -57,6 +56,7 @@ class TimesheetHorasEdit extends Component
 
     public function render()
     {
+        $this->horas = TimesheetHoras::getData()->where('timesheet_id', $this->timesheet_id);
         $this->timesheet = Timesheet::find($this->timesheet_id);
 
         $this->emit('calcularSumatoriasFacturables');
