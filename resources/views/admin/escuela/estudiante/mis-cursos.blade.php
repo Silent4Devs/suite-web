@@ -119,7 +119,7 @@
             <div class="card card-body mi-curso">
                         <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}">
                             <div class="caja-img-mi-curso">
-                                <img src="{{ asset(Storage::url($cu->cursos->image->url)) }}" alt="">
+                                <img src="{{ asset($cu->cursos->image->url) }}" alt="">
                             </div>
                         </a>
                     </div>

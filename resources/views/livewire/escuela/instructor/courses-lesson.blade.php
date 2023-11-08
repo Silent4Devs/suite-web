@@ -1,7 +1,8 @@
 <div class="px-4 py-3">
     @forelse ($section->lessons as $item)
 
-        <div class="card shadow-none" id="card{{$item->id}}">
+        <div class="card shadow-none test" id="card{{$item->id}}">
+
             <div class="card-header row" style="border: 1px solid #D8D8D8;">
                 <div class="col-11 d-flex align-items-center" style="padding: 0px;">
                     <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;" id="link{{$item->id}}">
@@ -63,8 +64,23 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                                        @livewire('escuela.instructor.lesson-resources', ['lesson' => $item], key('lesson-resource' . $item->id))
-                                    </div>
+                        {{-- @if($item->resource) --}}
+                            @livewire('escuela.instructor.lesson-resources', ['lesson' => $item], key('lesson-resource' . $item->id))
+
+                        {{-- @else
+                        <div class="col-12">
+                            <div class="mt-4 pl-4 d-flex justify-content-start align-items-center" style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
+                                <input wire:model="file" type="file" class="flex-1 form-input">
+                            </div>
+                            <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="file">
+                                Cargando ...
+                            </div>
+                            @error('file')
+                                <span class="text-xs text-red-500">{{$message}}</span>
+                            @enderror
+                        </div> --}}
+                        {{-- @endif --}}
+                    </div>
                     <div class="d-flex justify-content-end mt-4">
                         <button type="submit" class="btn btn-outline-primary"
                             style="min-width:140px;">Actualizar</button>
@@ -81,11 +97,15 @@
     @include('livewire.escuela.instructor.add-new-lesson')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            const bladeElements = document.querySelectorAll('.test');
+            console.log(bladeElements);
             document.addEventListener('click', function(event) {
                 if (event.target.classList.contains('openCollapse')) {
                     let targetId = event.target.getAttribute('data-id');
                     let collapse = document.querySelector(targetId);
+                    console.log("collapse",targetId);
                     collapse.classList.toggle('collapse');
+
                 }
             });
         });

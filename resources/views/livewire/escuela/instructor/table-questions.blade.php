@@ -72,7 +72,7 @@
                 </tbody>
             </table>
 
-            <a class="btn advance mb-3" href="{{ url()->previous() }}" role="button">REGRESAR</a>
+            <a class="btn advance mb-3" href="{{ route('admin.courses.edit', $course) }}" role="button">REGRESAR</a>
 
         {{-- </x-table-responsive> --}}
         {{-- @push('js')

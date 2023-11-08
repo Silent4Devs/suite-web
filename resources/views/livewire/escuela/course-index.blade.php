@@ -32,7 +32,7 @@
         @foreach ($courses as $c)
             <div class="card card-body mi-curso">
                 <div class="caja-img-mi-curso" style="margin-top: 15px;">
-                    <img src="{{ asset(Storage::url($c->image->url)) }}" alt="">
+                    <img src="{{ asset($c->image->url) }}" alt="">
                 </div>
                 <div class="caja-info-card-mc">
                     <p style="font-size: 18px;"><strong>{{ $c->title }}</strong></p>
