@@ -21,12 +21,12 @@ class TablaMisRegistros extends Component
 
     public function mount()
     {
-        $this->times = Timesheet::getPersonalTimesheet();
+
     }
 
     public function render()
     {
-
+        $this->times = Timesheet::getPersonalTimesheet();
         $this->todos_contador = $this->times->count();
         $this->borrador_contador = $this->times->where('estatus', 'papelera')->count();
         $this->pendientes_contador = $this->times->where('estatus', 'pendiente')->count();
