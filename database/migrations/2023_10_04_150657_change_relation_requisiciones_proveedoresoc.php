@@ -10,11 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('requisiciones', function (Blueprint $table) {
+        /*Schema::table('requisiciones', function (Blueprint $table) {
             //
             $table->dropForeign(['proveedor_id']);
             $table->foreign('proveedor_id')->references('id')->on('proveedor_o_c_s');
-        });
+        });*/
     }
 
     /**
