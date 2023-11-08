@@ -67,6 +67,11 @@
                                     title="Exportar Excel"></i>
                                 Exportar Excel
                             </button>
+                            <button id="" class="btn-sm rounded pr-2"
+                            style="background-color:#b9eeb9; border: #fff" wire:click="refreshComponent">
+                            <i class="fas fa-search" style="font-size: 1.1rem;"></i>
+                            &nbsp;&nbsp; Buscar
+                        </button>
                         </div>
                     </div>
                 </div>
