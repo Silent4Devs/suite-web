@@ -11,7 +11,11 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Exports\ReporteColaboradorTarea;
+use App\Mail\SendFileEmail;
+use Auth;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use Storage;
 
 class ReportesProyemp extends Component
 {
@@ -70,11 +74,19 @@ class ReportesProyemp extends Component
         $this->proy_id = $value;
     }
 
-    public function render()
+
+    public function refreshComponent()
     {
-        //$this->areas = Area::getAll();
+        $this->areas = Area::getAll();
         $this->emp = Empleado::getIdNameAll();
         $this->proy = TimesheetProyecto::getIdNameAll();
+    }
+
+
+
+    public function render()
+    {
+        $this->refreshComponent();
 
         $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')->withwhereHas('timesheet', function ($query) {
             if ($this->emp_id != 0) {
@@ -90,7 +102,7 @@ class ReportesProyemp extends Component
         });
 
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->fastPaginate($this->perPage);
+        $times = $query->Paginate($this->perPage);
 
         return view('livewire.timesheet.reportes-proyemp', compact('times'));
     }
