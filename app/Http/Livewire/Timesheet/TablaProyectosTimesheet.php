@@ -50,12 +50,12 @@ class TablaProyectosTimesheet extends Component
     {
         $this->tipos = TimesheetProyecto::TIPOS;
         $this->tipo = $this->tipos['Interno'];
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
-        $this->timesheetproyectoquery = TimesheetProyecto::getAll();
     }
 
     public function render()
     {
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
+        $this->timesheetproyectoquery = TimesheetProyecto::getAll();
         $this->proceso_count = $this->timesheetproyectoquery->where('estatus', 'proceso')->count();
         $this->cancelado_count = $this->timesheetproyectoquery->where('estatus', 'cancelado')->count();
         $this->terminado_count = $this->timesheetproyectoquery->where('estatus', 'terminado')->count();
