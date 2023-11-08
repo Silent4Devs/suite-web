@@ -36,13 +36,15 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function mount($proyecto_id)
     {
-        $this->proyecto = TimesheetProyecto::getAll()->find($proyecto_id);
-        $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
-        $this->empleados = Empleado::getAltaEmpleados();
+        $this->proyecto_id = $proyecto_id;
     }
 
     public function render()
     {
+        $this->proyecto = TimesheetProyecto::find($this->proyecto_id);
+        $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $this->proyecto_id)->get();
+        $this->empleados = Empleado::getAltaEmpleados();
+
         $emp_proy = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
 
         foreach ($emp_proy as $ep) {
