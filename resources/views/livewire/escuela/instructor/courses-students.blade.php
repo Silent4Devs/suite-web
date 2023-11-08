@@ -30,7 +30,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="d-flex align-items-center d-inline">
                                     <div class="circulo-kaans">
-                                        <img src="{{ $student->profile_photo_url }}"
+                                        <img src="{{ $student->empleado->foto }}"
                                             alt="{{ $student->name }}">
                                     </div>
                                     <div class="ml-4">

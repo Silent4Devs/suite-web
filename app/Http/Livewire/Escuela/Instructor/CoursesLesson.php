@@ -57,14 +57,12 @@ class CoursesLesson extends Component
 
         $this->validate($rules);
 
-        // $urlresorce = $this->file->store('cursos');
-        // dd($urlresorce);
         $resource = Lesson::create([
             'name' => $this->name,
             'platform_id' => $this->platform_id,
             'url' => $this->url,
             'section_id' => $this->section->id,
-            // 'description' => $this->description,
+            'description' => $this->description,
         ]);
 
         if ($this->file) {
@@ -80,11 +78,12 @@ class CoursesLesson extends Component
 
         // dd($resource, $this->section->course_id);
         $this->render_alerta('success', 'Registro añadido exitosamente');
+
     }
 
     public function edit(Lesson $lesson)
     {
-        // dd($this->lesson, $lesson);
+        // dd($lesson->resource);
         $this->resetValidation();
         $this->lesson = $lesson;
     }
@@ -103,10 +102,16 @@ class CoursesLesson extends Component
             $this->rules['lesson.url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
         }
 
-        $this->validate($rules);
+        $this->validate();
 
         $this->lesson->save();
-        $this->lesson = new Lesson();
+        if ($this->file) {
+            $urlresorce = $this->file->store('cursos');
+            $this->lesson->resource()->create([
+                'url' => $urlresorce,
+            ]);
+        }
+        // $this->lesson = new Lesson();
 
         $this->section = Section::find($this->section->id);
         $this->render_alerta('success', 'Registro actualizado exitosamente');
