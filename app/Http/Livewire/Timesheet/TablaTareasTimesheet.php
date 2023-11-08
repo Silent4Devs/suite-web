@@ -37,7 +37,6 @@ class TablaTareasTimesheet extends Component
     public function hydrate()
     {
         $this->emit('select2');
-        Cache::flush();
     }
 
     public function mount($proyecto_id, $origen)
@@ -45,14 +44,11 @@ class TablaTareasTimesheet extends Component
         $this->origen = $origen;
         $this->proyecto_id = $proyecto_id;
         $this->area_seleccionar = null;
-        Cache::flush();
     }
 
     public function updateProyecto($value)
     {
         $this->proyecto_filtro = $value;
-
-        Cache::flush();
 
         $this->emit('updateProyecto');
     }
@@ -74,8 +70,6 @@ class TablaTareasTimesheet extends Component
             $this->tareas = TimesheetTarea::getIdTareasAll()->where('proyecto_id', $this->proyecto_id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
-
-        Cache::flush();
 
         $this->emit('scriptTabla');
 
@@ -104,8 +98,6 @@ class TablaTareasTimesheet extends Component
             'todos' => $todos,
         ]);
 
-        Cache::flush();
-
         $this->emit('tarea-actualizada', $nueva_tarea);
 
         $this->alert('success', 'Registro añadido!');
@@ -118,8 +110,6 @@ class TablaTareasTimesheet extends Component
         $tarea_actualizada->update([
             'tarea' => $value,
         ]);
-
-        Cache::flush();
 
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }
@@ -141,8 +131,6 @@ class TablaTareasTimesheet extends Component
             'todos' => $todos,
         ]);
 
-        Cache::flush();
-
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }
 
@@ -159,8 +147,6 @@ class TablaTareasTimesheet extends Component
     public function destroy($id)
     {
         TimesheetTarea::destroy($id);
-
-        Cache::flush();
 
         $this->alert('success', 'Registro eliminado!');
     }
