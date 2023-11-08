@@ -68,12 +68,12 @@ class BitacoraAccesos extends Component
     public function mount($tipoVista = 'bitacora')
     {
         $this->tipoVista = $tipoVista;
-        $this->empleados = Empleado::select('id', 'name')->alta()->get();
-        $this->areas = Area::getAll();
     }
 
     public function render()
     {
+        $this->empleados = Empleado::getIdNameAll();
+        $this->areas = Area::getAll();
         $model = $this->getQueryFilter();
         $visitantes = $model->fastPaginate($this->perPage);
         $this->total = $model->count();
