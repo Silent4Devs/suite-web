@@ -162,37 +162,43 @@
             </div>
         </div>
 
-        <div class="card card-body">
-            <div class="row">
-                <div class="col-3">
-                    <button type="submit" class="btn btn-link" wire:click="backSeccion">Regresar</button>
-                </div>
-                <div class="col-6" style="text-align: center">
-                    {{ $posicion_seccion }}/{{ $secciones }}
-                </div>
-                <div class="col-3">
-                    <button type="submit" class="btn btn-link" wire:click="nextSeccion">Siguiente</button>
+        @if ($secciones > 1 && $secciones <= 4)
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-link" wire:click="backSeccion">Regresar</button>
+                    </div>
+                    <div class="col-6" style="text-align: center">
+                        {{ $posicion_seccion }}/{{ $secciones }}
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-link" wire:click="nextSeccion">Siguiente</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
 
         @if ($secciones >= 1 && $secciones <= 4 && $posicion_seccion == 1)
             <div class="card">
                 <div class="card-header">
                     <h3>Sección 1</h3>
                 </div>
-                <div class="linea-seccion col-md-12">
-                </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-8">
+                    @if ($secciones > 1 && $secciones <= 4)
+                        <div class="row">
+                            <div class="col-md-4">
+                                Porcentaje de evaluación:
+                                <input type="number" min="0.01" max="99.99"
+                                    id="porcentaje_seccion_{{ $posicion_seccion }}">
+                            </div>
+                            <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
+                                valor
+                                total
+                                del
+                                100% entre las secciones
+                            </div>
                         </div>
-                        <div class="col-md-4" style="color:#FF0000; font-size:10px;">La evaluación debe tener un valor
-                            total
-                            del
-                            100% entre las secciones
-                        </div>
-                    </div>
+                    @endif
                     <div class="row">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion1">
                             + Agregar Pregunta
@@ -235,14 +241,15 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="pregunta_1_{{ $key }}" name="pregunta_1_{{ $key }}"
+                                    <textarea class="form-control" id="pregunta1_{{ $key }}" name="pregunta1_{{ $key }}"
                                         placeholder="Pregunta" style="height: 150px"></textarea>
-                                    <label for="pregunta_1_{{ $key }}">Pregunta</label>
+                                    <label for="pregunta1_{{ $key }}">Pregunta</label>
                                 </div>
                             </div>
                         </div>
                         <div class="my-2 col-12" style="text-align: end;">
-                            <button class="btn trash-button" wire:click="removePreguntaSeccion1({{ $key }})">
+                            <button class="btn trash-button"
+                                wire:click.prevent="removePreguntaSeccion1({{ $key }})">
                                 <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
                                     title="Eliminar"></i>
                             </button>
@@ -255,18 +262,22 @@
                 <div class="seccion col-m-2">
                     <h3>Sección 2</h3>
                 </div>
-                <div class="linea-seccion col-md-12">
-                </div>
                 <div class="card card-body">
-                    <div class="row">
-                        <div class="col-md-8">
+                    @if ($secciones > 1 && $secciones <= 4)
+                        <div class="row">
+                            <div class="col-md-4">
+                                Porcentaje de evaluación:
+                                <input type="number" min="0.01" max="99.99"
+                                    id="porcentaje_seccion_{{ $posicion_seccion }}">
+                            </div>
+                            <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
+                                valor
+                                total
+                                del
+                                100% entre las secciones
+                            </div>
                         </div>
-                        <div class="col-md-4" style="color:#FF0000; font-size:10px;">La evaluación debe tener un valor
-                            total
-                            del
-                            100% entre las secciones
-                        </div>
-                    </div>
+                    @endif
                     <div class="row">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion2">
                             + Agregar Pregunta
@@ -303,11 +314,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="pregunta_2_{{ $key }}" name="pregunta_2_{{ $key }}"
+                                    <textarea class="form-control" id="pregunta2_{{ $key }}" name="pregunta2_{{ $key }}"
                                         placeholder="Pregunta" style="height: 150px"></textarea>
-                                    <label for="pregunta_2_{{ $key }}">Pregunta</label>
+                                    <label for="pregunta2_{{ $key }}">Pregunta</label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="my-2 col-12" style="text-align: end;">
+                            <button class="btn trash-button"
+                                wire:click.prevent="removePreguntaSeccion2({{ $key }})">
+                                <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                    title="Eliminar"></i>
+                            </button>
                         </div>
                     </div>
                 @endforeach
@@ -317,18 +335,22 @@
                 <div class="seccion col-m-2">
                     <h3>Sección 3</h3>
                 </div>
-                <div class="linea-seccion col-md-12">
-                </div>
                 <div class="card card-body">
-                    <div class="row">
-                        <div class="col-md-8">
+                    @if ($secciones > 1 && $secciones <= 4)
+                        <div class="row">
+                            <div class="col-md-4">
+                                Porcentaje de evaluación:
+                                <input type="number" min="0.01" max="99.99"
+                                    id="porcentaje_seccion_{{ $posicion_seccion }}">
+                            </div>
+                            <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
+                                valor
+                                total
+                                del
+                                100% entre las secciones
+                            </div>
                         </div>
-                        <div class="col-md-4" style="color:#FF0000; font-size:10px;">La evaluación debe tener un valor
-                            total
-                            del
-                            100% entre las secciones
-                        </div>
-                    </div>
+                    @endif
                     <div class="row">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion3">
                             + Agregar Pregunta
@@ -358,6 +380,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="my-2 col-12" style="text-align: end;">
+                        <button class="btn trash-button"
+                            wire:click.prevent="removePreguntaSeccion3({{ $key }})">
+                            <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                title="Eliminar"></i>
+                        </button>
+                    </div>
                 </div>
 
                 @foreach ($preguntas_s3 as $key => $p)
@@ -365,9 +394,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="pregunta_3_{{ $key }}" name="pregunta_3_{{ $key }}"
+                                    <textarea class="form-control" id="pregunta3_{{ $key }}" name="pregunta3_{{ $key }}"
                                         placeholder="Pregunta" style="height: 150px"></textarea>
-                                    <label for="pregunta_3_{{ $key }}">Pregunta</label>
+                                    <label for="pregunta3_{{ $key }}">Pregunta</label>
                                 </div>
                             </div>
                         </div>
@@ -379,18 +408,22 @@
                 <div class="seccion col-m-2">
                     <h3>Sección 4</h3>
                 </div>
-                <div class="linea-seccion col-md-12">
-                </div>
                 <div class="card card-body">
-                    <div class="row">
-                        <div class="col-md-8">
+                    @if ($secciones > 1 && $secciones <= 4)
+                        <div class="row">
+                            <div class="col-md-4">
+                                Porcentaje de evaluación:
+                                <input type="number" min="0.01" max="99.99"
+                                    id="porcentaje_seccion_{{ $posicion_seccion }}">
+                            </div>
+                            <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
+                                valor
+                                total
+                                del
+                                100% entre las secciones
+                            </div>
                         </div>
-                        <div class="col-md-4" style="color:#FF0000; font-size:10px;">La evaluación debe tener un valor
-                            total
-                            del
-                            100% entre las secciones
-                        </div>
-                    </div>
+                    @endif
                     <div class="row">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion4">
                             + Agregar Pregunta
@@ -420,6 +453,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="my-2 col-12" style="text-align: end;">
+                        <button class="btn trash-button"
+                            wire:click.prevent="removePreguntaSeccion4({{ $key }})">
+                            <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                title="Eliminar"></i>
+                        </button>
+                    </div>
                 </div>
 
                 @foreach ($preguntas_s4 as $key => $p)
@@ -427,9 +467,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="pregunta_4_{{ $key }}" name="pregunta_4_{{ $key }}"
+                                    <textarea class="form-control" id="pregunta4_{{ $key }}" name="pregunta4_{{ $key }}"
                                         placeholder="Pregunta" style="height: 150px"></textarea>
-                                    <label for="pregunta_4_{{ $key }}">Pregunta</label>
+                                    <label for="pregunta4_{{ $key }}">Pregunta</label>
                                 </div>
                             </div>
                         </div>
@@ -437,7 +477,25 @@
                 @endforeach
             </div>
         @endif
-        <button type="submit">Submit</button>
+
+        @if ($secciones == $posicion_seccion)
+            <div class="row">
+                <button class="btn-default">Cancelar</button>
+                <button type="submit">Generar Template</button>
+            </div>
+        @else
+            <div class="row">
+                <div class="col-3">
+                    <button type="submit" class="btn btn-link" wire:click="backSeccion">Sección Anterior</button>
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-link" wire:click="nextSeccion">Siguiente Sección</button>
+                </div>
+            </div>
+        @endif
+
+
+
     </form>
 </div>
 
