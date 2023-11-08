@@ -48,9 +48,6 @@ class ReportesProyemp extends Component
     public function mount()
     {
         $this->estatus = null;
-        $this->areas = Area::getAll();
-        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']])->where('estatus', 'alta');
-        $this->proy = TimesheetProyecto::getAll();
     }
 
     public function updatedFechaInicio($value)
@@ -75,6 +72,9 @@ class ReportesProyemp extends Component
 
     public function render()
     {
+        //$this->areas = Area::getAll();
+        $this->emp = Empleado::getIdNameAll();
+        $this->proy = TimesheetProyecto::getIdNameAll();
 
         $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')->withwhereHas('timesheet', function ($query) {
             if ($this->emp_id != 0) {
