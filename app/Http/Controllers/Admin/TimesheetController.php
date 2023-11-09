@@ -120,6 +120,15 @@ class TimesheetController extends Controller
 
         $organizacion = Organizacion::getFirst();
 
+        // Verifica si la fecha actual ya está registrada en $fechasRegistradas
+        $currentDate = now()->toDateString();
+
+        if (in_array($currentDate, $fechasRegistradas)) {
+            // La fecha actual ya está registrada, puedes realizar alguna acción, por ejemplo, mostrar un mensaje de error.
+            return back()->with('error', 'La fecha actual ya ha sido registrada en el Timesheet.');
+        }
+
+        // Si la fecha no está registrada, continúa con la vista de creación.
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
     }
 
@@ -335,12 +344,12 @@ class TimesheetController extends Controller
     public function edit($id)
     {
         $empleado = Empleado::getAll()->find(User::getCurrentUser()->empleado->id);
-       
+
         // areas proyectos
         $proyectos_array = collect();
-      
+
         $proyectos_totales = TimesheetProyecto::getAll();
-      
+
         foreach ($proyectos_totales as $key => $proyecto) {
             if ($proyecto->estatus == 'proceso') {
                 foreach ($proyecto->areas as $key => $area) {
@@ -355,17 +364,17 @@ class TimesheetController extends Controller
             }
         }
         $proyectos = $proyectos_array->unique();
-       
+
         $tareas = TimesheetTarea::getAll();
-      
+
         $timesheet = Timesheet::find($id);
-       
+
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
-        
+
         $organizacion = Organizacion::getFirst();
-      
+
         $horas_count = TimesheetHoras::select('id')->where('timesheet_id', $id)->count();
-       
+
         return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
 
