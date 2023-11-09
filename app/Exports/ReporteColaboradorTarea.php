@@ -34,8 +34,8 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
             if ($this->emp_id != 0) {
                 $query->where('empleado_id', $this->emp_id);
             }
-            $query->where('fecha_dia', '>', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')
-                ->where('fecha_dia', '<', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
+            $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')
+                ->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
                 ->orderByDesc('fecha_dia');
         })->withwhereHas('proyecto', function ($query) {
             if ($this->proy_id != 0) {
