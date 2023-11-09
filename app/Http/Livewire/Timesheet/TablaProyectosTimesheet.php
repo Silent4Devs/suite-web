@@ -44,7 +44,11 @@ class TablaProyectosTimesheet extends Component
 
     public $areas;
 
+    public $clientes;
+
     public $timesheetproyectoquery;
+
+    public $estatus = 'todos';
 
     public function mount()
     {
@@ -54,11 +58,26 @@ class TablaProyectosTimesheet extends Component
 
     public function render()
     {
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
         $this->timesheetproyectoquery = TimesheetProyecto::getAll();
         $this->proceso_count = $this->timesheetproyectoquery->where('estatus', 'proceso')->count();
         $this->cancelado_count = $this->timesheetproyectoquery->where('estatus', 'cancelado')->count();
         $this->terminado_count = $this->timesheetproyectoquery->where('estatus', 'terminado')->count();
+
+        if ($this->estatus == 'procesos') {
+            $this->proyectos = TimesheetProyecto::getAllByProceso();
+        }
+
+        if ($this->estatus == 'cancelados') {
+            $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->get();
+        }
+
+        if ($this->estatus == 'terminados') {
+            $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->get();
+        }
+
+        if ($this->estatus == 'todos') {
+            $this->proyectos = TimesheetProyecto::get();
+        }
 
         $this->emit('cerrarModal');
 
@@ -118,24 +137,9 @@ class TablaProyectosTimesheet extends Component
         $this->alert('success', 'Registro añadido!');
     }
 
-    public function procesos()
+    public function actualizarEstatus($estatus)
     {
-        $this->proyectos = TimesheetProyecto::getAllByProceso();
-    }
-
-    public function cancelados()
-    {
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'cancelado');
-    }
-
-    public function terminados()
-    {
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'terminado');
-    }
-
-    public function todos()
-    {
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador();
+        $this->estatus = $estatus;
     }
 
     public function destroy($id)
