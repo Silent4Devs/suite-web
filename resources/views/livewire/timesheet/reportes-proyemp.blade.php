@@ -46,7 +46,7 @@
                                     <p class="m-0">Mostrando</p>
                                 </div>
                                 <div class="col-4 p-0">
-                                    <select name="" id="" class="form-control" wire:model.defer="perPage">
+                                    <select name="" id="" class="form-control" wire:model.lazy="perPage">
                                         <option value="5">5</option>
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -67,6 +67,11 @@
                                     title="Exportar Excel"></i>
                                 Exportar Excel
                             </button>
+                            <button id="" class="btn-sm rounded pr-2"
+                            style="background-color:#b9eeb9; border: #fff" wire:click="refreshComponent">
+                            <i class="fas fa-search" style="font-size: 1.1rem;"></i>
+                            &nbsp;&nbsp; Buscar
+                        </button>
                         </div>
                     </div>
                 </div>

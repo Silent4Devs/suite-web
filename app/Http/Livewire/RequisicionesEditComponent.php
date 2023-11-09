@@ -80,22 +80,24 @@ class RequisicionesEditComponent extends Component
 
     public function mount($requisiciondata)
     {
-        $this->sucursales = ContractManagerSucursal::where('archivo', false)->get();
-        $this->compradores = ContractManagerComprador::with('user')->where('archivo', false)->get();
-        $this->contratos = ContractManagerContrato::get();
-        $this->productos = ContractManagerProducto::where('archivo', false)->get();
-        $this->organizacion = Organizacion::first();
-        $this->proveedores = ContractManagerProveedorOC::where('estado', false)->get();
-        $this->editrequisicion = ContractManagerRequsicion::with('sucursal', 'comprador', 'contrato', 'productos_requisiciones', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'productos_requisiciones.producto')->where('archivo', false)
-            ->find($requisiciondata->id);
-
-        $this->proveedores_indistintos_count = $this->editrequisicion->provedores_indistintos_requisiciones->count();
-        $this->proveedores_count = $this->editrequisicion->provedores_requisiciones->count();
-        $this->proveedores_count_catalogo = $this->editrequisicion->provedores_requisiciones_catalogo->count();
+        $this->requisiciondata = $requisiciondata;
     }
 
     public function render()
     {
+        $this->sucursales = ContractManagerSucursal::where('archivo', false)->get();
+        $this->compradores = ContractManagerComprador::with('user')->where('archivo', false)->get();
+        $this->contratos = ContractManagerContrato::get();
+        $this->productos = ContractManagerProducto::where('archivo', false)->get();
+        $this->organizacion = Organizacion::getFirst();
+        $this->proveedores = ContractManagerProveedorOC::where('estado', false)->get();
+        $this->editrequisicion = ContractManagerRequsicion::with('sucursal', 'comprador', 'contrato', 'productos_requisiciones', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'productos_requisiciones.producto')->where('archivo', false)
+            ->find($this->requisiciondata->id);
+
+        $this->proveedores_indistintos_count = $this->editrequisicion->provedores_indistintos_requisiciones->count();
+        $this->proveedores_count = $this->editrequisicion->provedores_requisiciones->count();
+        $this->proveedores_count_catalogo = $this->editrequisicion->provedores_requisiciones_catalogo->count();
+
         return view('livewire.requisiciones-edit-component');
     }
 

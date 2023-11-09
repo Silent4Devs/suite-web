@@ -28,7 +28,7 @@ class VersionesIso extends Model implements Auditable
         $cacheKey = 'VersionesIso:First';
 
         return Cache::remember($cacheKey, now()->addHours(24), function () {
-            return self::first();
+            return self::select('id')->first();
         });
     }
 }

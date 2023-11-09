@@ -37,9 +37,6 @@ class TimesheetHorasCreateCopia extends Component
         $this->tareas = $tareas;
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;
-
-        $this->horas = TimesheetHoras::getData()->where('timesheet_id', $this->timesheet_id);
-        $this->timesheet = Timesheet::getAll()->find($this->timesheet_id);
     }
 
     public function removerFila($id, $tr)
@@ -60,6 +57,9 @@ class TimesheetHorasCreateCopia extends Component
 
     public function render()
     {
+        $this->horas = TimesheetHoras::getData()->where('timesheet_id', $this->timesheet_id);
+        $this->timesheet = Timesheet::getAll()->find($this->timesheet_id);
+
         return view('livewire.timesheet.timesheet-horas-create-copia');
     }
 }

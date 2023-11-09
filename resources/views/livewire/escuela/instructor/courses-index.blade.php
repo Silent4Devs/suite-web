@@ -51,7 +51,7 @@
                             <div class="d-flex inline">
                                 <div class="circulo-kaans">
                                     @isset($course->image)
-                                    <img  src="{{ asset(Storage::url($course->image->url)) }}"
+                                    <img  src="{{ asset($course->image->url) }}"
                                         alt="{{ $course->title }}">
                                     @else
                                     <img src="{{ asset('img/home/imagen-estudiantes.jpg') }}" id="picture" alt="Curso"
