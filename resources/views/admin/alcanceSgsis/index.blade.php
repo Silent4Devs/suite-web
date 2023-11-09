@@ -1,6 +1,26 @@
 @extends('layouts.admin')
 @section('content')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
     <style>
+        @media print {
+            .print-none {
+                display: none !important;
+            }
+        }
+
+        .boton-cancelar {
+            background-color: white;
+            border-color: #057BE2;
+            font: 14px Roboto;
+            color: #057BE2;
+            border-radius: 4px;
+            width: 148px;
+            height: 48px;
+            align-content: center;
+        }
+
         .btn-outline-success {
             background: #788bac !important;
             color: white;
@@ -139,12 +159,128 @@
         .dt-buttons.btn-group {
             display: none !important;
         }
+
+        .modal-dialog {
+            max-width: var(--bs-modal-width);
+            margin-right: 0px;
+            margin-left: 180px;
+            margin-top: 180px;
+        }
+
+        .modal-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            color: var(--bs-modal-color);
+            pointer-events: auto;
+            background-color: var(--bs-modal-bg);
+            background-clip: padding-box;
+            border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+            border-radius: 16px;
+            outline: 0;
+            margin-top: 0px;
+            margin-bottom: 100px;
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('determinacion_alcance_agregar')
         <div class="row d-flex align-items-center">
             <h5 class="col-12 titulo_general_funcion">Determinación de Alcance</h5>
+            <button type="button" class="btn boton-cancelar" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Cancelar
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
+                    style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
+                        style="color: #ffffff;"></i>
+                </button>
+                <div class="modal-dialog" style="margin-top: 0px;">
+                    <div class="modal-content" style="width:1000px;">
+                        <div class="modal-body" style="border-radius: 0px;">
+                            <div class="print-none">
+                            </div>
+                            <div class="card col-sm-12 col-md-10"
+                                style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
+                                <div class="card-body" style="">
+                                    <div class="print-none" style="text-align:right;margin-left: 750px;">
+                                        <button class="btn btn-outline-primary mt-4" style="font-size:14px;width:150px;"
+                                            onclick="javascript:window.print()">
+                                            Imprimir
+                                            <i class="fas fa-print"style="color:#057BE2;"></i>
+                                        </button>
+                                    </div>
+                                    @php
+                                        $organizacion = \App\Models\Organizacion::getFirst();
+                                        $logotipo = $organizacion->logotipo;
+                                        $empresa = $organizacion->empresa;
+                                    @endphp
+                                    <div class="card mt-5" style="width:900px;box-shadow:4px;">
+                                        <div class="row col-12 ml-0"
+                                            style="border-radius: 0px;height:147px;
+                                        padding-left: 0px;padding-right: 0px;">
+                                            <div class="col-3" style="border-left: 25px solid #2395AA">
+                                                <img src="{{ asset($logotipo) }}" class="mt-2 img-fluid" style="">
+                                            </div>
+                                            <div class="col-5 p-2 mt-3" style="text-align: left;">
+                                                <br>
+                                                <span class="" style="color:#306BA9; font-size:20px;font-weight:bold;">
+                                                    Reporte Determinación de alcance
+                                                </span>
+
+                                            </div>
+                                            <div class="col-4 pt-5 pl-5" style="background:#EEFCFF;">
+                                                <span class="" style="font-size:14px;color:#345183;background:#EEFCFF;">
+                                                    Fecha de revisión: prueba
+                                                </span>
+                                                <div class="" style="font-size:14px;color:#345183;">
+                                                    Fecha de publicación:
+                                                    prueba
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="">
+                                            <div class="col-md-11" style="padding-right:0px;">
+                                                <div class="card mb-1"
+                                                    style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
+                                                    <div class="mt-4"
+                                                        style="font-weight: bold;margin-left:55px;font-size:14px; color:#306BA9;">
+                                                        Nombre del alcance
+                                                    </div>
+                                                    <div class="px-2 mt-2 ml-5 mr-5 mb-4"
+                                                        style="font-size:14px; color:#606060;">
+                                                        nombre
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 mb-1"
+                                                style="width:65px;padding-left:0px;padding-right:0px;background-color:#295082;
+                                            ">
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 mb-3  dato_mairg" style="">
+                                            <span
+                                                style="font-size:14px; color:#306BA9;margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
+                                                Alcance
+                                            </span>
+                                            <div class="px-2 mt-2 ml-5 mr-5" style="font-size:14px; color:#606060;">
+                                                alcancesgsi
+                                            </div>
+                                        </div>
+
+                                        <div class="border-bottom" style="margin-top:800px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             <a type="button" class="col-md-2 btn btn-primary btn-lg ml-auto" style="margin-right: 14px; font-size: 14px;"
                 href="{{ route('admin.alcance-sgsis.create') }}">
                 Registrar Alcance</a>
@@ -192,6 +328,7 @@
 @endsection
 @section('scripts')
     @parent
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
@@ -244,7 +381,7 @@
                         var now = new Date();
                         var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
                         $(doc.document.body).prepend(`
-                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 0px">
                             <div class="col-2 p-2" style="border-right: 2px solid #ccc">
                                     <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
                                 </div>

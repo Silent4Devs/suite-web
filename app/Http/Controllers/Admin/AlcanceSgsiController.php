@@ -22,6 +22,8 @@ class AlcanceSgsiController extends Controller
     {
         abort_if(Gate::denies('determinacion_alcance_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $alcanceSgsi = AlcanceSgsi::get(); // Puedes ajustar esto según tu lógica
+
         if ($request->ajax()) {
             $query = AlcanceSgsi::with(['norma', 'empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
@@ -87,8 +89,10 @@ class AlcanceSgsiController extends Controller
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+        $alcanceSgsi->load('team');
+        $normas = Norma::get();
 
-        return view('admin.alcanceSgsis.index', compact('teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()

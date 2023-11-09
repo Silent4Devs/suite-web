@@ -173,16 +173,67 @@
     </form>
     </div>
     <div class="text-right form-group col-12">
-        <a type="button" href="{{ route('admin.alcance-sgsis.index') }}" class="btn boton-cancelar">
-            <div class="mt-2">Cancelar</div>
-        </a>
-        <button type="button" class="btn boton-enviar ml-1 mr-2" type="submit" style="font-size:14px;width:250px;">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn boton-cancelar" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Cancelar
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="margin-top: 150px;">
+                <div class="modal-content text-center">
+                    <div class="modal-body">
+                        <img src="{{ asset('assets/safe.jpg') }}" alt="jpg" style="width: 59px;height: 59px;"
+                            class="mt-5 mb-2 ml-2 img-fluid">
+                        <div class="mt-3 mb-3" style="font:22px Segoe UI;font-weight: bold;">
+                            ¿Estas seguro que deseas cancelar?</div>
+                        <div>
+                            <a href="{{ route('admin.alcance-sgsis.index') }}">
+                                <button type="button" class="mt-2 btn boton-cancelar">Si,
+                                    cancelar</button>
+                            </a>
+                        </div>
+                        <div>
+                            <button type="button" class="mt-1 mb-4 btn btn-link" style="font:14px Roboto;"
+                                data-bs-dismiss="modal">Regresar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <a href="{{ route('admin.alcance-sgsis.index') }}"> --}}
+        <button onclick="redirigirARuta()" type="button" class="btn boton-enviar mr-2" data-bs-toggle="modal"
+            data-bs-target="#aprobacion" style="font-size:14px;width:250px;">
             {{ trans('global.save') }} y enviar a aprobación
         </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="aprobacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="aprobacionLabel" aria-hidden="true">
+            <div class="modal-dialog" style="margin-top: 150px;">
+                <div class="modal-content text-center">
+                    <div class="modal-body">
+                        <img src="{{ asset('assets/check.png') }}" alt="png"
+                            style="margin-top:70px;width: 59px; height: 42px;" class="mb-2 ml-2 img-fluid">
+                        <div class="mt-3" style="margin-bottom:100px; font:22px Segoe UI; font-weight: bold;">
+                            ¡El Formulario ha sido creado con éxito!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @section('scripts')
+    <script>
+        function redirigirARuta() {
+            // Esperar 10 segundos antes de redirigir a la ruta de Laravel
+            setTimeout(function() {
+                window.location.href = "{{ route('admin.alcance-sgsis.index') }}";
+            }, 3000); // 10000 milisegundos (10 segundos)
+        }
+    </script>
     <script>
         $(document).ready(function() {
             {

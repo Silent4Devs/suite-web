@@ -380,14 +380,14 @@
 
         .letra-titulo-template {
             text-align: left;
-            font: 26px Roboto;
+            font: 20px Roboto;
             color: #FFFFFF;
             opacity: 1;
         }
 
         .letra-subtitulo-template {
             text-align: left;
-            font: 14px Roboto;
+            font: 12px Roboto;
             color: #FFFFFF;
             opacity: 1;
         }
@@ -420,9 +420,10 @@
                     style="margin: 9px 10px 10px 10px; width: 128px; height: 119px;">
             </div>
             <div class="col-md-10">
-                <div class="pt-2">
+                <div class="" style="margin-top:8px;margin-bottom: 8px;">
                     <p class="letra-titulo-template mt-2">Crea tu template</p>
-                    <p class="letra-subtitulo-template mb-2">Genera tus preguntas y personaliza tus campos según lo requieras
+                    <p class="letra-subtitulo-template mb-2">Genera tus preguntas y personaliza tus campos según lo
+                        requieras
                     </p>
                     <p class="letra-subtitulo-template mb-2">Elaboraremos nuestro cuestionario que nos permitirá evaluar el
                         cumplimiento de nuestra norma seleccionada.</p>
@@ -516,8 +517,8 @@
                     </div>
                     <div class="col-md-2">
                         <label for="exampleColorInput" class="form-label"></label>
-                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c"
-                            title="Choose your color">
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput"
+                            value="#563d7c" title="Choose your color">
                     </div>
                     <div class="col-md-1" style="padding: 30px 45px 0px 0px;">
                         <label for="">Color</label>

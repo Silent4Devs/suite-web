@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
-class AnalisDeBrecha2022NVController extends Controller
+class TopController extends Controller
 {
     public function index()
     {
-        return view('admin.analisisdebrecha2022nv.analisisdebrecha.index');
+        return view('admin.analisisdebrecha2022nv.top.index');
     }
 }
