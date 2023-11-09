@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('template_id');
             $table->string('estatus');
+            $table->float('valor', 8, 2);
             $table->string('color');
             $table->longText('descripcion')->nullable();
             $table->foreign('template_id')->references('id')->on('template_analisisde_brechas')->onDelete('cascade');

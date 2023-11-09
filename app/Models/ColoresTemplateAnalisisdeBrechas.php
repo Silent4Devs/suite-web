@@ -15,6 +15,7 @@ class ColoresTemplateAnalisisdeBrechas extends Model
         'template_id',
         'estatus',
         'color',
+        'valor',
         'descripcion',
     ];
 }

@@ -21,20 +21,25 @@ class SeccionesTemplate extends Component
     public $secciones = 1;
     public $posicion_seccion = 1;
     public $datos_seccion = 1;
+    public $template;
+    public $seccion;
+    public $s1;
+    public $s2;
+    public $s3;
+    public $s4;
 
     public function nextSeccion()
     {
+        $this->datos_seccion = $this->posicion_seccion;
         if ($this->secciones > 1 && $this->secciones <= 4 && $this->posicion_seccion >= 1 &&  $this->posicion_seccion < $this->secciones) {
-            // dd($this->posicion_seccion);
-            $this->datos_seccion = $this->posicion_seccion;
             $this->posicion_seccion++;
         }
     }
 
     public function backSeccion()
     {
+        $this->datos_seccion = $this->posicion_seccion;
         if ($this->secciones > 1 && $this->secciones <= 4 && $this->posicion_seccion > 1 &&  $this->posicion_seccion <= $this->secciones) {
-            $this->datos_seccion = $this->posicion_seccion;
             $this->posicion_seccion--;
         }
     }
@@ -92,6 +97,11 @@ class SeccionesTemplate extends Component
         $this->secciones = $value;
         $this->posicion_seccion = 1;
         $this->datos_seccion = 1;
+
+        $this->s1 = [];
+        $this->s2 = [];
+        $this->s3 = [];
+        $this->s4 = [];
         // dd($this->secciones);
     }
 
@@ -109,120 +119,184 @@ class SeccionesTemplate extends Component
     {
         $result = [];
         // $this->posicion_seccion++;
-        if ($this->posicion_seccion == $this->secciones) {
+        if ($this->posicion_seccion == $this->secciones && $this->datos_seccion == $this->posicion_seccion) {
 
             if ($this->secciones == 1) {
                 $porcentaje = 100;
             }
             // dd($data["descripcion_s" . $this->datos_seccion]);
 
-            $template = TemplateAnalisisdeBrechas::updateOrCreate([
+            $template = TemplateAnalisisdeBrechas::create([
                 'nombre_template' => $data["nombre_template"],
                 'norma_id' => $data["norma"],
                 'descripcion' => $data["descripcion"],
                 'no_secciones' => $this->secciones,
             ]);
 
-            $secciones = SeccionesTemplateAnalisisdeBrechas::updateOrCreate([
-                'template_id' => $template->id,
-                'numero_seccion' => $this->datos_seccion,
-                'descripcion' => $data["descripcion_s" . $this->datos_seccion],
-                'porcentaje_seccion' => $porcentaje,
-            ]);
-
             $groupedValues = $this->groupValues($data);
 
             foreach ($groupedValues as $estatus) {
                 // dd($estatus);
-                $colores = ColoresTemplateAnalisisdeBrechas::updateOrCreate([
+                $colores = ColoresTemplateAnalisisdeBrechas::create([
                     'template_id' => $template->id,
                     'estatus' => $estatus['estatus'],
-                    'color' => $estatus['valor'],
+                    'valor' => $estatus['valor'],
+                    'color' => $estatus['color'],
                     // 'descripcion' => $estatus['descripcion'],
                 ]);
             }
 
-            $numero = 1;
+            // dd($this->s1, $this->s2);
 
-            foreach ($data as $key => $value) {
-                if (preg_match('/^pregunta1/', $key, $matches) || preg_match('/^pregunta1_(\d+)$/', $key, $matches)) {
-
-                    $preguntas = PreguntasTemplateAnalisisdeBrechas::updateOrCreate([
-                        'seccion_id' => $secciones->id,
-                        'pregunta' => $value,
-                        'numero_pregunta' => $numero,
+            if ($this->secciones > 1 && $this->secciones <= 4) {
+                for ($i = 1; $i < $this->secciones; $i++) {
+                    $numeroSeccion = 's' . $i;
+                    // dd($this->$numeroSeccion["preguntas"]);
+                    // $ps = floatval($this->$numeroSeccion["seccion"]["porcentaje_seccion"]);
+                    $seccion = SeccionesTemplateAnalisisdeBrechas::create([
+                        'template_id' => $template->id,
+                        'numero_seccion' => $this->$numeroSeccion["seccion"]["numero_seccion"],
+                        'descripcion' => $this->$numeroSeccion["seccion"]["descripcion"],
+                        'porcentaje_seccion' => $this->$numeroSeccion["seccion"]["porcentaje_seccion"],
                     ]);
-                    // dd($value);
-                    // $index = intval($matches[1]);
-                    // dd($key, $value);
-                    // $result[$key] = $value;
 
-                    $numero++;
+                    $numero = 1;
+
+                    foreach ($this->$numeroSeccion["preguntas"] as $prg) {
+                        $preguntas = PreguntasTemplateAnalisisdeBrechas::create([
+                            'seccion_id' => $seccion->id,
+                            'pregunta' => $prg,
+                            'numero_pregunta' => $numero,
+                        ]);
+                        $numero++;
+                    }
+                }
+
+                $seccion = SeccionesTemplateAnalisisdeBrechas::create([
+                    'template_id' => $template->id,
+                    'numero_seccion' => $this->datos_seccion,
+                    'descripcion' => $data["descripcion_s" . $this->datos_seccion],
+                    'porcentaje_seccion' => $data["porcentaje_seccion_" . $this->datos_seccion],
+                ]);
+
+                $numero = 1;
+
+                foreach ($data as $key => $value) {
+                    if (preg_match('/^pregunta' . $this->secciones . '/', $key, $matches) || preg_match('/^pregunta' . $this->secciones . '_(\d+)$/', $key, $matches)) {
+
+                        $preguntas = PreguntasTemplateAnalisisdeBrechas::create([
+                            'seccion_id' => $seccion->id,
+                            'pregunta' => $value,
+                            'numero_pregunta' => $numero,
+                        ]);
+                        $numero++;
+                    }
+                }
+
+                return redirect(route('admin.inicio-Usuario.index'));
+            } else {
+                $seccion = SeccionesTemplateAnalisisdeBrechas::create([
+                    'template_id' => $template->id,
+                    'numero_seccion' => $this->datos_seccion,
+                    'descripcion' => $data["descripcion_s" . $this->datos_seccion],
+                    'porcentaje_seccion' => $porcentaje,
+                ]);
+
+                $numero = 1;
+
+                foreach ($data as $key => $value) {
+                    if (preg_match('/^pregunta1/', $key, $matches) || preg_match('/^pregunta1_(\d+)$/', $key, $matches)) {
+
+                        $preguntas = PreguntasTemplateAnalisisdeBrechas::create([
+                            'seccion_id' => $seccion->id,
+                            'pregunta' => $value,
+                            'numero_pregunta' => $numero,
+                        ]);
+                        // dd($value);
+                        // $index = intval($matches[1]);
+                        // dd($key, $value);
+                        // $result[$key] = $value;
+
+                        $numero++;
+                    }
                 }
             }
 
-            // dd($template, $secciones, $preguntas);
             return redirect(route('admin.inicio-Usuario.index'));
         } else {
             switch ($this->datos_seccion) {
                 case "1":
-                    dd("Seccion 1", $data);
-                    $template = TemplateAnalisisdeBrechas::updateOrCreate([
-                        'nombre_template' => $data["nombre_template"],
-                        'norma_id' => $data["norma"],
-                        'descripcion' => $data["descripcion"],
-                        'no_secciones' => $this->secciones,
-                    ]);
+                    // dd("Seccion 1", $data);
 
-                    $secciones = SeccionesTemplateAnalisisdeBrechas::updateOrCreate([
-                        'template_id' => $template->id,
+                    $seccion = [
                         'numero_seccion' => $this->datos_seccion,
                         'descripcion' => $data["descripcion_s" . $this->datos_seccion],
-                        'porcentaje_seccion' => $porcentaje,
-                    ]);
+                        'porcentaje_seccion' => $data["porcentaje_seccion_" . $this->datos_seccion],
+                    ];
 
-                    $groupedValues = $this->groupValues($data);
+                    $preguntas1 = $this->preguntas($data, 1);
 
-                    foreach ($groupedValues as $estatus) {
-                        // dd($estatus);
-                        $colores = ColoresTemplateAnalisisdeBrechas::updateOrCreate([
-                            'template_id' => $template->id,
-                            'estatus' => $estatus['estatus'],
-                            'color' => $estatus['valor'],
-                            // 'descripcion' => $estatus['descripcion'],
-                        ]);
-                    }
+                    $this->s1 = [
+                        "seccion" => $seccion,
+                        "preguntas" => $preguntas1,
+                    ];
 
-                    $numero = 1;
+                    // dd($this->s1);
 
-                    foreach ($data as $key => $value) {
-                        if (preg_match('/^pregunta1/', $key, $matches) || preg_match('/^pregunta1_(\d+)$/', $key, $matches)) {
-
-                            $preguntas = PreguntasTemplateAnalisisdeBrechas::updateOrCreate([
-                                'seccion_id' => $secciones->id,
-                                'pregunta' => $value,
-                                'numero_pregunta' => $numero,
-                            ]);
-                            // dd($value);
-                            // $index = intval($matches[1]);
-                            // dd($key, $value);
-                            // $result[$key] = $value;
-
-                            $numero++;
-                        }
-                    }
                     break;
 
                 case "2":
-                    dd("Seccion 2", $data);
+                    // dd("Seccion 2", $data);
+
+                    $seccion = [
+                        'numero_seccion' => $this->datos_seccion,
+                        'descripcion' => $data["descripcion_s" . $this->datos_seccion],
+                        'porcentaje_seccion' => $data["porcentaje_seccion_" . $this->datos_seccion],
+                    ];
+
+                    $preguntas2 = $this->preguntas($data, 2);
+
+                    $this->s2 = [
+                        "seccion" => $seccion,
+                        "preguntas" => $preguntas2,
+                    ];
+
                     break;
 
                 case "3":
-                    dd("Seccion 3 ", $data);
+                    // dd("Seccion 3 ", $data);
+
+                    $seccion = [
+                        'numero_seccion' => $this->datos_seccion,
+                        'descripcion' => $data["descripcion_s" . $this->datos_seccion],
+                        'porcentaje_seccion' => $data["porcentaje_seccion_" . $this->datos_seccion],
+                    ];
+
+                    $preguntas3 = $this->preguntas($data, 3);
+
+                    $this->s3 = [
+                        "seccion" => $seccion,
+                        "preguntas" => $preguntas3,
+                    ];
+
                     break;
 
                 case "4":
-                    dd("Seccion 4", $data);
+                    // dd("Seccion 4", $data);
+
+                    // $seccion = [
+                    //     'numero_seccion' => $this->datos_seccion,
+                    //     'descripcion' => $data["descripcion_s" . $this->datos_seccion],
+                    //     'porcentaje_seccion' => $data["porcentaje_seccion_" . $this->datos_seccion],
+                    // ];
+
+                    // $preguntas2 = $this->preguntas($data);
+
+                    // $this->s2 = [
+                    //     "seccion" => $seccion,
+                    //     "preguntas" => $preguntas2,
+                    // ];
+
                     break;
             }
         }
@@ -253,6 +327,24 @@ class SeccionesTemplate extends Component
         return $groupedValues;
     }
 
+    function preguntas($data, $seccion)
+    {
+        $result = [];
+        // $numero = 1;
+        foreach ($data as $key => $value) {
+            if (preg_match('/^pregunta' . $seccion . '/', $key, $matches) || preg_match('/^pregunta' . $seccion . '_(\d+)$/', $key, $matches)) {
+
+                // dd($value);
+                // $index = intval($matches[1]);
+                // dd($key, $value);
+                $result[$key] = $value;
+
+                // $numero++;
+            }
+        }
+
+        return $result;
+    }
 
     // public function saveDataSeccion1()
     // {

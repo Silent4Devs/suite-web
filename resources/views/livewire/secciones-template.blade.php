@@ -188,7 +188,8 @@
                         <div class="row">
                             <div class="col-md-4">
                                 Porcentaje de evaluación:
-                                <input type="number" min="0.01" max="99.99"
+                                <input type="number" min="0.01" max="99.99" step="0.01"
+                                    name="porcentaje_seccion_{{ $posicion_seccion }}"
                                     id="porcentaje_seccion_{{ $posicion_seccion }}">
                             </div>
                             <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
@@ -267,7 +268,8 @@
                         <div class="row">
                             <div class="col-md-4">
                                 Porcentaje de evaluación:
-                                <input type="number" min="0.01" max="99.99"
+                                <input type="number" min="0.01" max="99.99" step="0.01"
+                                    name="porcentaje_seccion_{{ $posicion_seccion }}"
                                     id="porcentaje_seccion_{{ $posicion_seccion }}">
                             </div>
                             <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
@@ -340,7 +342,8 @@
                         <div class="row">
                             <div class="col-md-4">
                                 Porcentaje de evaluación:
-                                <input type="number" min="0.01" max="99.99"
+                                <input type="number" min="0.01" max="99.99" step="0.01"
+                                    name="porcentaje_seccion_{{ $posicion_seccion }}"
                                     id="porcentaje_seccion_{{ $posicion_seccion }}">
                             </div>
                             <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
@@ -380,13 +383,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-2 col-12" style="text-align: end;">
-                        <button class="btn trash-button"
-                            wire:click.prevent="removePreguntaSeccion3({{ $key }})">
-                            <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
-                                title="Eliminar"></i>
-                        </button>
-                    </div>
                 </div>
 
                 @foreach ($preguntas_s3 as $key => $p)
@@ -399,6 +395,13 @@
                                     <label for="pregunta3_{{ $key }}">Pregunta</label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="my-2 col-12" style="text-align: end;">
+                            <button class="btn trash-button"
+                                wire:click.prevent="removePreguntaSeccion3({{ $key }})">
+                                <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                    title="Eliminar"></i>
+                            </button>
                         </div>
                     </div>
                 @endforeach
@@ -413,7 +416,8 @@
                         <div class="row">
                             <div class="col-md-4">
                                 Porcentaje de evaluación:
-                                <input type="number" min="0.01" max="99.99"
+                                <input type="number" min="0.01" max="99.99" step="0.01"
+                                    name="porcentaje_seccion_{{ $posicion_seccion }}"
                                     id="porcentaje_seccion_{{ $posicion_seccion }}">
                             </div>
                             <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
@@ -453,13 +457,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-2 col-12" style="text-align: end;">
-                        <button class="btn trash-button"
-                            wire:click.prevent="removePreguntaSeccion4({{ $key }})">
-                            <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
-                                title="Eliminar"></i>
-                        </button>
-                    </div>
                 </div>
 
                 @foreach ($preguntas_s4 as $key => $p)
@@ -472,6 +469,13 @@
                                     <label for="pregunta4_{{ $key }}">Pregunta</label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="my-2 col-12" style="text-align: end;">
+                            <button class="btn trash-button"
+                                wire:click.prevent="removePreguntaSeccion4({{ $key }})">
+                                <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                    title="Eliminar"></i>
+                            </button>
                         </div>
                     </div>
                 @endforeach
