@@ -11,7 +11,11 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Exports\ReporteColaboradorTarea;
+use App\Mail\SendFileEmail;
+use Auth;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use Storage;
 
 class ReportesProyemp extends Component
 {
@@ -48,9 +52,6 @@ class ReportesProyemp extends Component
     public function mount()
     {
         $this->estatus = null;
-        $this->areas = Area::getAll();
-        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']])->where('estatus', 'alta');
-        $this->proy = TimesheetProyecto::getAll();
     }
 
     public function updatedFechaInicio($value)
@@ -73,8 +74,19 @@ class ReportesProyemp extends Component
         $this->proy_id = $value;
     }
 
+
+    public function refreshComponent()
+    {
+        $this->areas = Area::getAll();
+        $this->emp = Empleado::getIdNameAll();
+        $this->proy = TimesheetProyecto::getIdNameAll();
+    }
+
+
+
     public function render()
     {
+        $this->refreshComponent();
 
         $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')->withwhereHas('timesheet', function ($query) {
             if ($this->emp_id != 0) {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -17,6 +18,17 @@ class TimesheetProyectoArea extends Model implements Auditable
         'area_id',
         'proyecto_id',
     ];
+
+    public static function getAll(array $options = [])
+    {
+        // Generate a unique cache key based on the options provided
+
+        return Cache::remember('TimesheetProyectoArea:timesheet_proyecto_area_proyecto_all', 3600 * 8, function () use ($options) {
+            $query = self::orderBy('id', 'desc')->get();
+
+            return $query;
+        });
+    }
 
     public function area()
     {

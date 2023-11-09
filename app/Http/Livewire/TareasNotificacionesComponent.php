@@ -16,11 +16,12 @@ class TareasNotificacionesComponent extends Component
 
     public function mount()
     {
-        $this->notificaciones_sin_leer = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->count();
     }
 
     public function render()
     {
+        $this->notificaciones_sin_leer = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->count();
+
         return view('livewire.tareas-notificaciones-component');
     }
 

@@ -76,16 +76,18 @@ class RequisicionesCreateComponent extends Component
 
     public function mount()
     {
+
+    }
+
+    public function render()
+    {
         $this->sucursales = KatbolSucursal::where('archivo', false)->get();
         $this->proveedores = KatbolProveedorOC::where('estado', false)->get();
         $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
         $this->contratos = KatbolContrato::get();
         $this->productos = KatbolProducto::where('archivo', false)->get();
-        $this->organizacion = Organizacion::first();
-    }
+        $this->organizacion = Organizacion::getFirst();
 
-    public function render()
-    {
         return view('livewire.requisiciones-create-component');
     }
 

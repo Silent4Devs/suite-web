@@ -86,8 +86,19 @@ class Entregablecomponent extends Component
         $this->emit('select2');
     }
 
+    public function mount($contrato_id, $show_contrato)
+    {
+        $this->contrato_id = $contrato_id;
+        $this->cumplimiento = true;
+        $this->aplica_deductiva = false;
+        $this->show_contrato = $show_contrato;
+    }
+
     public function render()
     {
+        $this->contrato = Contrato::find($this->contrato_id);
+        $this->organizacion = Organizacion::getFirst();
+
         $entregable_mensual =
             EntregaMensual::where('contrato_id', $this->contrato_id)
             ->join('entregables_files', 'entregas_mensuales.id', '=', 'entregables_files.entregable_id')
@@ -106,16 +117,6 @@ class Entregablecomponent extends Component
             'entregamensuales' => $entregable_mensual,
 
         ]);
-    }
-
-    public function mount($contrato_id, $show_contrato)
-    {
-        $this->contrato_id = $contrato_id;
-        $this->contrato = Contrato::find($contrato_id);
-        $this->cumplimiento = true;
-        $this->aplica_deductiva = false;
-        $this->show_contrato = $show_contrato;
-        $this->organizacion = Organizacion::first();
     }
 
     public function store()

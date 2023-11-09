@@ -90,13 +90,13 @@ class RegistroVisitantes extends Component
                 'serie' => '',
             ]]),
         ]);
-
-        $this->empleados = Empleado::alta()->orderBy('name')->get();
-        $this->areas = Area::orderBy('area')->get();
     }
 
     public function render()
     {
+        $this->empleados = Empleado::getAll();
+        $this->areas = Area::orderBy('area')->get();
+
         return view('livewire.visitantes.registro-visitantes');
     }
 

@@ -73,8 +73,7 @@ class ReportesProyectos extends Component
 
     public function mount()
     {
-        $this->areas = Area::getIdNameAll();
-        $this->organizacion = Organizacion::getFirst();
+
     }
 
     public function updatedAreaId($value)
@@ -140,6 +139,8 @@ class ReportesProyectos extends Component
 
     public function render()
     {
+        $this->organizacion = Organizacion::getFirst();
+
         $this->hoy = Carbon::now();
 
         $this->emit('resize');
@@ -153,7 +154,7 @@ class ReportesProyectos extends Component
         //calendario tabla
         $calendario_array = [];
 
-        $fecha_registro_timesheet = Organizacion::getFirst()->fecha_registro_timesheet;
+        $fecha_registro_timesheet = $this->organizacion->fecha_registro_timesheet;
 
         if ($this->fecha_inicio) {
             $fecha_inicio_complit_timesheet = Carbon::parse($fecha_registro_timesheet)->lt($this->fecha_inicio) ? $this->fecha_inicio : $fecha_registro_timesheet;

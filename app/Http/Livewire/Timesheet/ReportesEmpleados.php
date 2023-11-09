@@ -41,15 +41,6 @@ class ReportesEmpleados extends Component
     public $fecha_fin_empleado;
     public $empleadosQuery;
 
-    public function mount()
-    {
-        $this->areas = Area::getAll();
-        $this->empleados_estatus = 'alta';
-        $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
-        $this->fecha_fin = Carbon::now()->format('Y-m-d');
-        $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
-    }
-
     public function updatedAreaId($value)
     {
         $this->area_id = $value;
@@ -112,6 +103,12 @@ class ReportesEmpleados extends Component
 
     public function render()
     {
+        $this->areas = Area::getAll();
+        $this->empleados_estatus = 'alta';
+        $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
+        $this->fecha_fin = Carbon::now()->format('Y-m-d');
+        $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
+
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
@@ -351,9 +348,7 @@ class ReportesEmpleados extends Component
                 'id' => $empleado_list->id,
                 'avatar_ruta' => $empleado_list->avatar_ruta,
                 'estatus' => $empleado_list->estatus,
-
                 'horas_totales' => $horas_totales_empleado_calendar,
-
                 'name' => $empleado_list->name,
                 'area' => $empleado_list->area ? $empleado_list->area->area : '',
                 'puesto' => $empleado_list->puesto,
