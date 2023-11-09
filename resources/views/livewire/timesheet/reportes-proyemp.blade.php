@@ -52,7 +52,7 @@
                                         <option value="20">20</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
-                                        <option value="-1">Todos</option>
+                                        <option value="10">Todos</option>
                                     </select>
                                 </div>
                                 <div class="col-5 p-0" style="font-size: 11px;align-self: center;text-align: end">
