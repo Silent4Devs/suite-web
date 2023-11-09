@@ -22,6 +22,7 @@ use App\Models\Sugerencias;
 use App\Models\MatrizRiesgo;
 use App\Models\Organizacion;
 use App\Models\PoliticaSgsi;
+use App\Models\TimesheetProyectoArea;
 use App\Models\VersionesIso;
 use App\Events\RecursosEvent;
 use App\Models\QuejasCliente;
@@ -54,6 +55,7 @@ use App\Observers\ActivosObserver;
 use App\Observers\MejorasObserver;
 use App\Observers\ModelosObserver;
 use App\Observers\PuestosObserver;
+use App\Observers\TimesheetProyectoAreaObserver;
 use App\Observers\RecursoObserver;
 use App\Observers\SectionObserver;
 use App\Events\AuditoriaAnualEvent;
@@ -208,5 +210,6 @@ class EventServiceProvider extends ServiceProvider
         AuditoriaInterna::observe(AuditoriaInternaObserver::class);
         RevisionDocumento::observe(RevisionDocumentoObserver::class);
         EvidenciasDocumentosEmpleados::observe(EvidenciasDocumentosEmpleadosObserver::class);
+        TimesheetProyectoArea::observe(TimesheetProyectoAreaObserver::class);
     }
 }
