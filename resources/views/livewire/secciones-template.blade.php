@@ -144,14 +144,15 @@
         </div>
 
         <div class="card card-body">
-            <div class="form-row" style="">
+            <div class="form-row" style="align-items: center;">
                 <div class="col-md-10 titulo-card-template" style="font:roboto;color:#306BA9; font-size:16px;">
                     Define cuantas secciones tendrá tu cuestionario
                 </div>
                 <div class="col-m-1" style="font:roboto;color:#306BA9; font-size:14px; ">
                     <div class="">Añadir Sección</div>
                 </div>
-                <div class="col-m-1 " style="">
+                {{-- Establece cuantas secciones habra --}}
+                <div class="col-m-1" style="">
                     <select id="secciones" name="secciones" wire:model.lazy="secciones" class="form-control">
                         <option value=1 selected>1</option>
                         <option value=2>2</option>
@@ -162,6 +163,7 @@
             </div>
         </div>
 
+        {{-- Dice en que seccion esta  y nos deja desplazarnos entre ellas --}}
         @if ($secciones > 1 && $secciones <= 4)
             <div class="card card-body">
                 <div class="row">
@@ -178,12 +180,14 @@
             </div>
         @endif
 
+        {{-- Cual es la seccion visible --}}
         @if ($secciones >= 1 && $secciones <= 4 && $posicion_seccion == 1)
             <div class="card">
-                <div class="card-header">
-                    <h3>Sección 1</h3>
+                <div class="card-header encabezado">
+                    <h3 class="mb-0">Sección 1</h3>
                 </div>
                 <div class="card-body">
+                    {{-- El porcentaje de evaluación solo esta activo si es mas de 1 seccion --}}
                     @if ($secciones > 1 && $secciones <= 4)
                         <div class="row">
                             <div class="col-md-4">
@@ -192,19 +196,23 @@
                                     name="porcentaje_seccion_{{ $posicion_seccion }}"
                                     id="porcentaje_seccion_{{ $posicion_seccion }}">
                             </div>
-                            <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
+                            {{-- <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
                                 valor
                                 total
                                 del
                                 100% entre las secciones
-                            </div>
+                            </div> --}}
                         </div>
                     @endif
-                    <div class="row">
-                        <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion1">
-                            + Agregar Pregunta
-                        </button>
+                    <div class="row" style="justify-content: right;">
+                        <div class="col-2">
+                            <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion1">
+                                Añadir Pregunta
+                                <i class="bi bi-plus-circle"></i>
+                            </button>
+                        </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-floating mb-3">
@@ -222,10 +230,19 @@
                 </div>
             </div>
 
+            {{-- Libreria para realizar el drag and drop establece el espacio donde se podran mover --}}
             <div id="sortable-container">
-
+                {{-- Sortable item establece que es lo que se va a mover --}}
                 <div class="card card-body sortable-item">
-                    <div class="drag-handle">Drag me</div>
+                    <div class="d-flex justify-content-end align-items-end">
+                        {{-- Drag Handle establece el area desde donde se podra mover o "arrastrar" el item --}}
+                        <div class="drag-handle">
+                            <div class="flex-column">
+                                <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                            </div>
+                        </div>
+                    </div><br><br>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-floating mb-3">
@@ -236,9 +253,17 @@
                     </div>
                 </div>
 
+                {{-- Arreglo de preguntas, al presionar el boton de añadir se agregan mas a la seccion --}}
                 @foreach ($preguntas_s1 as $key => $p)
                     <div class="card card-body sortable-item">
-                        <div class="drag-handle">Drag me</div>
+                        <div class="d-flex justify-content-end align-items-end">
+                            <div class="drag-handle">
+                                <div class="flex-column">
+                                    <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                    <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                </div>
+                            </div>
+                        </div><br><br>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
@@ -248,6 +273,8 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- Cada pregunta agregada cuenta con boton de eliminacion, el key indica cual posicion tiene
+                            en el arreglo y la elimina  --}}
                         <div class="my-2 col-12" style="text-align: end;">
                             <button class="btn trash-button"
                                 wire:click.prevent="removePreguntaSeccion1({{ $key }})">
@@ -259,31 +286,32 @@
                 @endforeach
             </div>
         @elseif ($secciones >= 2 && $secciones <= 4 && $posicion_seccion == 2)
-            <div>
-                <div class="seccion col-m-2">
-                    <h3>Sección 2</h3>
+            <div class="card">
+                <div class="card-header encabezado">
+                    <h3 class="mb-0">Sección 2</h3>
                 </div>
-                <div class="card card-body">
-                    @if ($secciones > 1 && $secciones <= 4)
-                        <div class="row">
-                            <div class="col-md-4">
-                                Porcentaje de evaluación:
-                                <input type="number" min="0.01" max="99.99" step="0.01"
-                                    name="porcentaje_seccion_{{ $posicion_seccion }}"
-                                    id="porcentaje_seccion_{{ $posicion_seccion }}">
-                            </div>
-                            <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
-                                valor
-                                total
-                                del
-                                100% entre las secciones
-                            </div>
-                        </div>
-                    @endif
+                <div class="card-body">
                     <div class="row">
-                        <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion2">
-                            + Agregar Pregunta
-                        </button>
+                        <div class="col-md-4">
+                            Porcentaje de evaluación:
+                            <input type="number" min="0.01" max="99.99" step="0.01"
+                                name="porcentaje_seccion_{{ $posicion_seccion }}"
+                                id="porcentaje_seccion_{{ $posicion_seccion }}">
+                        </div>
+                        <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
+                            valor
+                            total
+                            del
+                            100% entre las secciones
+                        </div>
+                    </div>
+                    <div class="row" style="justify-content: right;">
+                        <div class="col-2">
+                            <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion2">
+                                Añadir Pregunta
+                                <i class="bi bi-plus-circle"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -300,45 +328,63 @@
                         <hr style="">
                     </div>
                 </div>
-                <div class="card card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="pregunta2" name="pregunta2" placeholder="Pregunta" style="height: 150px"></textarea>
-                                <label for="pregunta2">Pregunta</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                @foreach ($preguntas_s2 as $key => $p)
-                    <div class="card card-body">
+                <div id="sortable-container">
+
+                    <div class="card card-body sortable-item">
+                        <div class="d-flex justify-content-end align-items-end">
+                            <div class="drag-handle">
+                                <div class="flex-column">
+                                    <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                    <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                </div>
+                            </div>
+                        </div><br><br>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="pregunta2_{{ $key }}" name="pregunta2_{{ $key }}"
-                                        placeholder="Pregunta" style="height: 150px"></textarea>
-                                    <label for="pregunta2_{{ $key }}">Pregunta</label>
+                                    <textarea class="form-control" id="pregunta2" name="pregunta2" placeholder="Pregunta" style="height: 150px"></textarea>
+                                    <label for="pregunta2">Pregunta</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="my-2 col-12" style="text-align: end;">
-                            <button class="btn trash-button"
-                                wire:click.prevent="removePreguntaSeccion2({{ $key }})">
-                                <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
-                                    title="Eliminar"></i>
-                            </button>
-                        </div>
                     </div>
-                @endforeach
-            </div>
-        @elseif ($secciones >= 3 && $secciones <= 4 && $posicion_seccion == 3)
-            <div>
-                <div class="seccion col-m-2">
-                    <h3>Sección 3</h3>
+
+                    @foreach ($preguntas_s2 as $key => $p)
+                        <div class="card card-body sortable-item">
+                            <div class="d-flex justify-content-end align-items-end">
+                                <div class="drag-handle">
+                                    <div class="flex-column">
+                                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div><br><br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="pregunta2_{{ $key }}" name="pregunta2_{{ $key }}"
+                                            placeholder="Pregunta" style="height: 150px"></textarea>
+                                        <label for="pregunta2_{{ $key }}">Pregunta</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-2 col-12" style="text-align: end;">
+                                <button class="btn trash-button"
+                                    wire:click.prevent="removePreguntaSeccion2({{ $key }})">
+                                    <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                        title="Eliminar"></i>
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-                <div class="card card-body">
-                    @if ($secciones > 1 && $secciones <= 4)
+            @elseif ($secciones >= 3 && $secciones <= 4 && $posicion_seccion == 3)
+                <div class="card">
+                    <div class="card-header encabezado">
+                        <h3 class="mb-0">Sección 3</h3>
+                    </div>
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
                                 Porcentaje de evaluación:
@@ -346,146 +392,202 @@
                                     name="porcentaje_seccion_{{ $posicion_seccion }}"
                                     id="porcentaje_seccion_{{ $posicion_seccion }}">
                             </div>
-                            <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
+                            <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe
+                                tener un
                                 valor
                                 total
                                 del
                                 100% entre las secciones
                             </div>
                         </div>
-                    @endif
-                    <div class="row">
-                        <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion3">
-                            + Agregar Pregunta
-                        </button>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="descripcion_s3" name="descripcion_s3" placeholder="Descripcion"
-                                    style="height: 150px"></textarea>
-                                <label for="descripcion_s3">Descripción</label>
+                        <div class="row" style="justify-content: right;">
+                            <div class="col-2">
+                                <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion3">
+                                    Añadir Pregunta
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="card card-body mt-5">
-                    <div style="color:#306BA9; font-size:16px;">Formulario
-                        <hr style="">
-                    </div>
-                </div>
-                <div class="card card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="pregunta3" name="pregunta3" placeholder="Pregunta" style="height: 150px"></textarea>
-                                <label for="pregunta3">Pregunta</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @foreach ($preguntas_s3 as $key => $p)
-                    <div class="card card-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="pregunta3_{{ $key }}" name="pregunta3_{{ $key }}"
-                                        placeholder="Pregunta" style="height: 150px"></textarea>
-                                    <label for="pregunta3_{{ $key }}">Pregunta</label>
+                                    <textarea class="form-control" id="descripcion_s3" name="descripcion_s3" placeholder="Descripcion"
+                                        style="height: 150px"></textarea>
+                                    <label for="descripcion_s3">Descripción</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="my-2 col-12" style="text-align: end;">
-                            <button class="btn trash-button"
-                                wire:click.prevent="removePreguntaSeccion3({{ $key }})">
-                                <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
-                                    title="Eliminar"></i>
-                            </button>
+                    </div>
+                    <div class="card card-body mt-5">
+                        <div style="color:#306BA9; font-size:16px;">Formulario
+                            <hr style="">
                         </div>
                     </div>
-                @endforeach
-            </div>
-        @elseif ($secciones == 4 && $posicion_seccion == 4)
-            <div>
-                <div class="seccion col-m-2">
-                    <h3>Sección 4</h3>
-                </div>
-                <div class="card card-body">
-                    @if ($secciones > 1 && $secciones <= 4)
-                        <div class="row">
-                            <div class="col-md-4">
-                                Porcentaje de evaluación:
-                                <input type="number" min="0.01" max="99.99" step="0.01"
-                                    name="porcentaje_seccion_{{ $posicion_seccion }}"
-                                    id="porcentaje_seccion_{{ $posicion_seccion }}">
-                            </div>
-                            <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe tener un
-                                valor
-                                total
-                                del
-                                100% entre las secciones
-                            </div>
-                        </div>
-                    @endif
-                    <div class="row">
-                        <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion4">
-                            + Agregar Pregunta
-                        </button>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="descripcion_s4" name="descripcion_s4" placeholder="Descripcion"
-                                    style="height: 150px"></textarea>
-                                <label for="descripcion_s4">Descripción</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-body mt-5">
-                    <div style="color:#306BA9; font-size:16px;">Formulario
-                        <hr style="">
-                    </div>
-                </div>
-                <div class="card card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="pregunta4" name="pregunta4" placeholder="Pregunta" style="height: 150px"></textarea>
-                                <label for="pregunta4">Pregunta</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <div id="sortable-container">
 
-                @foreach ($preguntas_s4 as $key => $p)
-                    <div class="card card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="pregunta4_{{ $key }}" name="pregunta4_{{ $key }}"
-                                        placeholder="Pregunta" style="height: 150px"></textarea>
-                                    <label for="pregunta4_{{ $key }}">Pregunta</label>
+                        <div class="card card-body sortable-item">
+                            <div class="d-flex justify-content-end align-items-end">
+                                <div class="drag-handle">
+                                    <div class="flex-column">
+                                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div><br><br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="pregunta3" name="pregunta3" placeholder="Pregunta" style="height: 150px"></textarea>
+                                        <label for="pregunta3">Pregunta</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="my-2 col-12" style="text-align: end;">
-                            <button class="btn trash-button"
-                                wire:click.prevent="removePreguntaSeccion4({{ $key }})">
-                                <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
-                                    title="Eliminar"></i>
-                            </button>
+
+                        @foreach ($preguntas_s3 as $key => $p)
+                            <div class="card card-body sortable-item">
+                                <div class="d-flex justify-content-end align-items-end">
+                                    <div class="drag-handle">
+                                        <div class="flex-column">
+                                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div><br><br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="pregunta3_{{ $key }}" name="pregunta3_{{ $key }}"
+                                                placeholder="Pregunta" style="height: 150px"></textarea>
+                                            <label for="pregunta3_{{ $key }}">Pregunta</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-2 col-12" style="text-align: end;">
+                                    <button class="btn trash-button"
+                                        wire:click.prevent="removePreguntaSeccion3({{ $key }})">
+                                        <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                            title="Eliminar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @elseif ($secciones == 4 && $posicion_seccion == 4)
+                    <div class="card">
+                        <div class="card-header encabezado">
+                            <h3 class="mb-0">Sección 4</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Porcentaje de evaluación:
+                                    <input type="number" min="0.01" max="99.99" step="0.01"
+                                        name="porcentaje_seccion_{{ $posicion_seccion }}"
+                                        id="porcentaje_seccion_{{ $posicion_seccion }}">
+                                </div>
+                                <div class="col-md-6" style="color:#FF0000; font-size:10px;">La evaluación debe
+                                    tener un
+                                    valor
+                                    total
+                                    del
+                                    100% entre las secciones
+                                </div>
+                            </div>
+                            <div class="row" style="justify-content: right;">
+                                <div class="col-2">
+                                    <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion4">
+                                        Añadir Pregunta
+                                        <i class="bi bi-plus-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="descripcion_s4" name="descripcion_s4" placeholder="Descripcion"
+                                            style="height: 150px"></textarea>
+                                        <label for="descripcion_s4">Descripción</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-body mt-5">
+                            <div style="color:#306BA9; font-size:16px;">Formulario
+                                <hr style="">
+                            </div>
+                        </div>
+                        <div id="sortable-container">
+
+                            <div class="card card-body sortable-item">
+                                <div class="d-flex justify-content-end align-items-end">
+                                    <div class="drag-handle">
+                                        <div class="flex-column">
+                                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div><br><br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="pregunta4" name="pregunta4" placeholder="Pregunta" style="height: 150px"></textarea>
+                                            <label for="pregunta4">Pregunta</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @foreach ($preguntas_s4 as $key => $p)
+                                <div class="card card-body sortable-item">
+                                    <div class="d-flex justify-content-end align-items-end">
+                                        <div class="drag-handle">
+                                            <div class="flex-column">
+                                                <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                                <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                                            </div>
+                                        </div>
+                                    </div><br><br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3">
+                                                <textarea class="form-control" id="pregunta4_{{ $key }}" name="pregunta4_{{ $key }}"
+                                                    placeholder="Pregunta" style="height: 150px"></textarea>
+                                                <label for="pregunta4_{{ $key }}">Pregunta</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-2 col-12" style="text-align: end;">
+                                        <button class="btn trash-button"
+                                            wire:click.prevent="removePreguntaSeccion4({{ $key }})">
+                                            <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                                title="Eliminar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                @endforeach
-            </div>
         @endif
 
         @if ($secciones == $posicion_seccion)
             <div class="row">
-                <button class="btn-default">Cancelar</button>
-                <button type="submit">Generar Template</button>
+                @if ($secciones > 1 && $secciones <= 4)
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-link" wire:click="backSeccion">Sección
+                            Anterior</button>
+                    </div>
+                @else
+                    <div class="col-3"></div>
+                @endif
+                <div class="col-5">
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-outline-primary btn-block">Cancelar</button>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary btn-block" type="submit">Generar Template</button>
+                </div>
             </div>
         @else
             <div class="row">

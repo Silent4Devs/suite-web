@@ -14,9 +14,22 @@
 </head>
 
 @section('content')
-    <h5 class="titulo">Construir Evaluación para medir el cumplimiento del Análisis de Brechas</h5>
+    <style>
+        .instrucciones {
+            background-color: rgb(52, 117, 178);
+            color: white;
+        }
 
-    <div class="card card-body">
+        .encabezado {
+            background-color: rgb(43, 102, 157);
+            color: white;
+            margin-top: -10px;
+        }
+    </style>
+
+    <h5 class="col-12 titulo_general_funcion">Análisis de Brechas - Template</h5>
+
+    <div class="card card-body instrucciones">
         <div class="row">
             <div class="col-md-2">
                 <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}"
@@ -24,7 +37,7 @@
             </div>
             <div class="col-md-10">
                 <div class="pt-2">
-                    <p class="letra-titulo-template mt-2">Crea tu template</p>
+                    <h5>Crea tu template</h5>
                     <p class="letra-subtitulo-template mb-2">Genera tus preguntas y personaliza tus campos según lo
                         requieras
                     </p>

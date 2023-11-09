@@ -152,7 +152,7 @@ class SeccionesTemplate extends Component
                 for ($i = 1; $i < $this->secciones; $i++) {
                     $numeroSeccion = 's' . $i;
                     // dd($this->$numeroSeccion["preguntas"]);
-                    // $ps = floatval($this->$numeroSeccion["seccion"]["porcentaje_seccion"]);
+                    $this->$numeroSeccion["seccion"]["porcentaje_seccion"];
                     $seccion = SeccionesTemplateAnalisisdeBrechas::create([
                         'template_id' => $template->id,
                         'numero_seccion' => $this->$numeroSeccion["seccion"]["numero_seccion"],
