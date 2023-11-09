@@ -22,23 +22,21 @@ class PlanesAccionController extends Controller
      */
     public function index(Request $request)
     {
-        $iso2007 = Cache::remember('plan_implementacion_all', 3600 * 24, function () {
+        $iso2007 = Cache::remember('PlanImplementacion:plan_implementacion_all_where_false', 3600 * 8, function () {
             return PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->get();
         });
-        $original = new Collection($iso2007);
-        $iso9001 = Cache::remember('plan_implementacion_9001_all', 3600 * 24, function () {
-            return PlanItemIplementacion9001::with('elaborador')->get();
-        });
-        $latest = new Collection($iso9001);
-        // dd($iso9001);
-        $merged = $original->concat($latest);
-        // $merged = $original->union($latest);
-        // dd($merged);
+
+        // $iso9001 = Cache::remember('PlanImplementacion:plan_implementacion_9001_all', 3600 * 8, function () {
+        //     return PlanItemIplementacion9001::with('elaborador')->get();
+        // });
+
+        // $isoMerged = Cache::remember('PlanImplementacion:plan_implementacion_merged', 3600 * 2, function () {
+        //     return PlanItemIplementacion9001::with('elaborador')->get();
+        // });
+        // $merged = $iso2007->concat($iso9001);
 
         if ($request->ajax()) {
-            $planesImplementacion = $merged;
-
-            return datatables()->of($planesImplementacion)->toJson();
+            return datatables()->of($iso2007)->toJson();
         }
 
         return view('admin.planesDeAccion.index');

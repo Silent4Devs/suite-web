@@ -167,9 +167,10 @@
                         let elaborador =
                             '<span class="badge badge-primary">Elaborado por el sistema</span>';
                         if (data) {
-                            elaborador = `
-                            <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(21px at 50% 50%);height: 42px;" />
-                            `;
+                            //elaborador = `
+                            //<img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(21px at 50% 50%);height: 42px;" />
+                            //`;
+                            elaborador = `<span class="badge badge-primary">${data.name}</span>`;
                         }
                         return elaborador;
                     }
