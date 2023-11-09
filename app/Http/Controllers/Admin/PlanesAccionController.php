@@ -22,11 +22,12 @@ class PlanesAccionController extends Controller
      */
     public function index(Request $request)
     {
-        $iso2007 = Cache::remember('plan_implementacion_all', 3600 * 24, function () {
+        dd("asd");
+        $iso2007 = Cache::remember('PlanImplementacion:plan_implementacion_all', 3600 * 8, function () {
             return PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->get();
         });
         $original = new Collection($iso2007);
-        $iso9001 = Cache::remember('plan_implementacion_9001_all', 3600 * 24, function () {
+        $iso9001 = Cache::remember('PlanImplementacion:plan_implementacion_9001_all', 3600 * 8, function () {
             return PlanItemIplementacion9001::with('elaborador')->get();
         });
         $latest = new Collection($iso9001);
