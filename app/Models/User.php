@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
-use App\Notifications\MyResetPassword;
+use Hash;
 use Carbon\Carbon;
 use DateTimeInterface;
-use Hash;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
+use App\Notifications\MyResetPassword;
+use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Auditable
 {
     use SoftDeletes, Notifiable, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     public $table = 'users';
 
@@ -35,6 +37,7 @@ class User extends Authenticatable implements Auditable
     ];
 
     protected $fillable = [
+        'id',
         'name',
         'n_empleado',
         'email',
@@ -60,10 +63,24 @@ class User extends Authenticatable implements Auditable
     ];
 
     //Redis methods
+    public static function getExists()
+    {
+        return Cache::remember('Users:users_exists', 3600 * 12, function () {
+            return DB::table('users')->orderBy('id')->first()->empleado_id != null ? true : false;
+        });
+    }
+
     public static function getAll()
     {
         return Cache::remember('Users:users_all', 3600 * 13, function () {
             return self::select('name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')->get();
+        });
+    }
+
+    public static function getUserWithRole()
+    {
+        return Cache::remember('Users:user_with_role', 3600 * 12, function () {
+            return self::with('roles', 'empleado.puesto', 'organizacion')->get();
         });
     }
 

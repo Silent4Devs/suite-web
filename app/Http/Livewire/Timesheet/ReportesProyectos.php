@@ -73,7 +73,7 @@ class ReportesProyectos extends Component
 
     public function mount()
     {
-        $this->areas = Area::getAll();
+        $this->areas = Area::getIdNameAll();
         $this->organizacion = Organizacion::getFirst();
     }
 
@@ -146,14 +146,14 @@ class ReportesProyectos extends Component
 
         $this->emit('scriptTabla');
 
-        $this->areas = Area::getAll();
+        $this->areas = Area::getIdNameAll();
 
         $this->horas_totales_todos_proyectos = 0;
 
         //calendario tabla
         $calendario_array = [];
 
-        $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+        $fecha_registro_timesheet = Organizacion::getFirst()->fecha_registro_timesheet;
 
         if ($this->fecha_inicio) {
             $fecha_inicio_complit_timesheet = Carbon::parse($fecha_registro_timesheet)->lt($this->fecha_inicio) ? $this->fecha_inicio : $fecha_registro_timesheet;
@@ -236,15 +236,15 @@ class ReportesProyectos extends Component
 
         $proyectos_array = collect();
         if ($this->area_id) {
-            $this->proyectos = TimesheetProyecto::get()->filter(function ($item) {
-                return $item->areas->contains(Area::select('id', 'area')->find($this->area_id));
+            $this->proyectos = TimesheetProyecto::getIdNameAll()->filter(function ($item) {
+                return $item->areas->contains(Area::getIdNameAll()->find($this->area_id));
             });
         } else {
-            $this->proyectos = TimesheetProyecto::getAll();
+            $this->proyectos = TimesheetProyecto::getIdNameAll();
         }
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
-            $registro_horas_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->get();
+            $registro_horas_proyecto = TimesheetHoras::getAll()->where('proyecto_id', $proyecto->id);
 
             // registro de horas en calendario
             $times_registro_horas_array = collect();
@@ -262,13 +262,13 @@ class ReportesProyectos extends Component
                             $fecha_dia_domingo = Carbon::parse($fecha_dia_domingo)->format('Y-m-d');
 
                             if ($fecha_dia_domingo == $domingo_semana) {
-                                $horas_proyecto_times += $registro_horas->horas_lunes;
-                                $horas_proyecto_times += $registro_horas->horas_martes;
-                                $horas_proyecto_times += $registro_horas->horas_miercoles;
-                                $horas_proyecto_times += $registro_horas->horas_jueves;
-                                $horas_proyecto_times += $registro_horas->horas_viernes;
-                                $horas_proyecto_times += $registro_horas->horas_sabado;
-                                $horas_proyecto_times += $registro_horas->horas_domingo;
+                                $horas_proyecto_times += floatval($registro_horas->horas_lunes);
+                                $horas_proyecto_times += floatval($registro_horas->horas_martes);
+                                $horas_proyecto_times += floatval($registro_horas->horas_miercoles);
+                                $horas_proyecto_times += floatval($registro_horas->horas_jueves);
+                                $horas_proyecto_times += floatval($registro_horas->horas_viernes);
+                                $horas_proyecto_times += floatval($registro_horas->horas_sabado);
+                                $horas_proyecto_times += floatval($registro_horas->horas_domingo);
                             }
                         }
 
@@ -319,7 +319,7 @@ class ReportesProyectos extends Component
 
     public function genrarReporte($id)
     {
-        $this->proyecto_reporte = TimesheetProyecto::getAll()->find($id);
+        $this->proyecto_reporte = TimesheetProyecto::getIdNameAll()->find($id);
 
         // $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
         $this->cliente_proyecto = TimesheetCliente::getAll()->find($this->proyecto_reporte->cliente_id);
@@ -338,24 +338,24 @@ class ReportesProyectos extends Component
 
         $this->total_horas_proyecto = 0;
         foreach ($tareas as $tarea) {
-            $horas = TimesheetHoras::where('tarea_id', $tarea->id)->get();
+            $horas = TimesheetHoras::getData()->where('tarea_id', $tarea->id)->get();
             $empleados = collect();
             $h_total_tarea = 0;
             $h_total_tarea_total = 0;
             foreach ($horas as $hora) {
                 $h_total_tarea = 0;
 
-                $h_total_tarea += $hora->horas_lunes;
-                $h_total_tarea += $hora->horas_martes;
-                $h_total_tarea += $hora->horas_miercoles;
-                $h_total_tarea += $hora->horas_jueves;
-                $h_total_tarea += $hora->horas_viernes;
-                $h_total_tarea += $hora->horas_sabado;
-                $h_total_tarea += $hora->horas_domingo;
+                $h_total_tarea += floatval($hora->horas_lunes);
+                $h_total_tarea += floatval($hora->horas_martes);
+                $h_total_tarea += floatval($hora->horas_miercoles);
+                $h_total_tarea += floatval($hora->horas_jueves);
+                $h_total_tarea += floatval($hora->horas_viernes);
+                $h_total_tarea += floatval($hora->horas_sabado);
+                $h_total_tarea += floatval($hora->horas_domingo);
 
                 $h_total_tarea_total += $h_total_tarea;
 
-                $empleado = Empleado::find($hora->timesheet->empleado_id);
+                $empleado = Empleado::getAll()->find($hora->timesheet->empleado_id);
 
                 if (!$empleados->contains('id', $empleado->id)) {
                     $empleados->push([

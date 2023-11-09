@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Comprador;
 use App\Models\Empleado;
 use Gate;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class CompradoresController extends Controller
@@ -59,15 +61,25 @@ class CompradoresController extends Controller
      */
     public function store(Request $request)
     {
-        $empledo = Empleado::where('id', $request->nombre)->first();
-        $compradores = new Comprador();
-        $compradores->clave = $request->clave;
-        $compradores->id_user = $request->nombre;
-        $compradores->estado = $request->estado;
-        $compradores->nombre = $empledo->name;
-        $compradores->save();
 
-        return redirect('/contract_manager/compradores');
+        try {
+            DB::beginTransaction();
+
+            $empledo = Empleado::where('id', $request->nombre)->first();
+            $compradores = new Comprador();
+            $compradores->clave = $request->clave;
+            $compradores->id_user = $request->nombre;
+            $compradores->estado = $request->estado;
+            $compradores->nombre = $empledo->name;
+            $compradores->save();
+
+            DB::commit();
+
+            return redirect('/contract_manager/compradores');
+        } catch (QueryException $e) {
+            DB::rollback();
+            return "Error al insertar el producto: " . $e->getMessage();
+        }
     }
 
     /**

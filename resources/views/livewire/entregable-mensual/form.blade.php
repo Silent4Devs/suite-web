@@ -75,8 +75,8 @@
                     </label>
                 </div> --}}
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" wire:model="cumplimiento" class="custom-control-input" id="cumplimiento"
-                        name="cumplimiento">
+                    <input type="checkbox" wire:model.debounce.800ms="cumplimiento" class="custom-control-input"
+                        id="cumplimiento" name="cumplimiento">
                     <label class="custom-control-label" for="cumplimiento">No/Sí</label>
                 </div>
             </div>

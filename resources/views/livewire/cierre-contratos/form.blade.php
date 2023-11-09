@@ -16,7 +16,7 @@
                 <label for="" class="txt-tamaño">Cumple<font class="asterisco">*</font></label>
                 <br>
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" wire:model="cumple" class="custom-control-input" id="cumple"
+                    <input type="checkbox" wire:model.lazy="cumple" class="custom-control-input" id="cumple"
                         name="cumple">
                     <label class="custom-control-label" for="cumple">No/Sí</label>
                 </div>

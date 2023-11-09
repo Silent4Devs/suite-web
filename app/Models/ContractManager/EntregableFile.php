@@ -2,13 +2,14 @@
 
 namespace App\Models\ContractManager;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EntregableFile extends Model
 {
-    use HasFactory,softDeletes;
+    use HasFactory, softDeletes, ClearsResponseCache;
 
     public $table = 'entregables_files';
 

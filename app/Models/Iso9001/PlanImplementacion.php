@@ -2,16 +2,17 @@
 
 namespace App\Models\Iso9001;
 
-use App\Models\Empleado;
 use App\Models\Role;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Empleado;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PlanImplementacion extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, ClearsResponseCache;
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'plan_implementacion_9001';

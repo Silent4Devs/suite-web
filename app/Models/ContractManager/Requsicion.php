@@ -2,13 +2,16 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Requsicion extends Model
+class Requsicion extends Model implements Auditable
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'fecha',

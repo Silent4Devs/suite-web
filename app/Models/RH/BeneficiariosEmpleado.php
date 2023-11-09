@@ -2,13 +2,14 @@
 
 namespace App\Models\RH;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BeneficiariosEmpleado extends Model implements Auditable
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'beneficiarios_empleados';

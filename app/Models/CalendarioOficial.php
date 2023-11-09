@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CalendarioOficial extends Model implements Auditable
 {
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     public $table = 'calendarioOficial';
 
@@ -57,4 +59,11 @@ class CalendarioOficial extends Model implements Auditable
     /*
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
+
+    public static function getAll()
+    {
+        return Cache::remember('Calendario:calendario_oficial_all', 3600 * 12, function () {
+            return self::get();
+        });
+    }
 }

@@ -39,7 +39,6 @@
         width: 100%;
         display: flex;
     }
-
 </style>
 
 
@@ -84,14 +83,14 @@
 
 <div class="datatable-fix" style="width: 100%;">
     <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/seguridad')}}">Crear reporte</a>
+        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
     </div>
 
     <table class="table tabla_incidentes_seguridad">
         <thead>
             <tr>
                 {{-- <th>ID</th> --}}
-                <th style="min-width: 100px;">Folio</th>
+                <th style="min-width: 250px;">Folio</th>
                 <th style="min-width: 250px;">Título</th>
                 <th style="min-width: 250px;">Sede</th>
                 <th style="min-width: 250px;">Ubicación</th>
@@ -229,7 +228,7 @@
             // let btnAgregar = {
             //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
             //     titleAttr: 'Agregar empleado',
-            //     url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
+            //     url: "{{ asset('admin/inicioUsuario/reportes/seguridad') }}",
             //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
             //     action: function(e, dt, node, config) {
             //     let {
@@ -244,7 +243,6 @@
                     ajax: '/admin/desk/seguridad',
                     buttons: dtButtons,
                     columns: [
-                        // {data: 'id'},
                         {
                             data: 'folio'
                         },
@@ -282,21 +280,22 @@
                             data: 'fecha_creacion'
                         },
                         {
-                            data: 'id',
+                            data: 'name',
                             render: function(data, type, row, meta) {
-                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto?.avatar}" title="${row.reporto?.name}"></img>`;
+                                let html =
+                                    `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto?.avatar}" title="${row.reporto?.name}"></img>`;
 
                                 return html;
                             }
                         },
                         {
-                            data: 'id',
+                            data: 'email',
                             render: function(data, type, row, meta) {
                                 return `${row.reporto?.email}`;
                             }
                         },
                         {
-                            data: 'id',
+                            data: 'telefono',
                             render: function(data, type, row, meta) {
                                 return `${row.reporto?.telefono}`;
                             }
@@ -311,11 +310,12 @@
                             data: 'fecha_cerrado'
                         },
                         {
-                            data: 'id',
+                            data: 'name',
                             render: function(data, type, row, meta) {
 
 
-                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.asignado?.avatar}" title="${row.asignado?.name}"></img>`;
+                                let html =
+                                    `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.asignado?.avatar}" title="${row.asignado?.name}"></img>`;
 
                                 return `${row.asignado ? html: 'sin asignar'}`;
                             }
@@ -348,7 +348,7 @@
                                 return html;
                             }
                         },
-                    ],  
+                    ],
                     createdRow: (row, data, dataIndex, cells) => {
                         let fondo = "green";
                         let letras = "white";
@@ -372,15 +372,15 @@
                             fondo = "#FF417B";
                             letras = "white";
                         }
-                        if(data.estatus !=null){
+                        if (data.estatus != null) {
                             $(cells[12]).css('background-color', fondo)
                             $(cells[12]).css('color', letras)
                         }
-                      
+
                     },
-                        order:[
-                            [0,'desc']
-                        ]
+                    order: [
+                        [0, 'desc']
+                    ]
                 });
             }
 

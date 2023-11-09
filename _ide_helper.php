@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.28.0.
+ * Generated for Laravel 10.30.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -435,6 +435,18 @@
         {
                         /** @var \Illuminate\Foundation\Application $instance */
                         return $instance->runningInConsole();
+        }
+                    /**
+         * Determine if the application is running any of the given console commands.
+         *
+         * @param string|array $commands
+         * @return bool 
+         * @static 
+         */ 
+        public static function runningConsoleCommand(...$commands)
+        {
+                        /** @var \Illuminate\Foundation\Application $instance */
+                        return $instance->runningConsoleCommand(...$commands);
         }
                     /**
          * Determine if the application is running unit tests.
@@ -5403,6 +5415,18 @@
                         return $instance->pretend($callback);
         }
                     /**
+         * Execute the given callback without "pretending".
+         *
+         * @param \Closure $callback
+         * @return mixed 
+         * @static 
+         */ 
+        public static function withoutPretending($callback)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        return $instance->withoutPretending($callback);
+        }
+                    /**
          * Bind values to their parameters in the given statement.
          *
          * @param \PDOStatement $statement
@@ -6328,6 +6352,18 @@
         {
                         /** @var \Illuminate\Events\Dispatcher $instance */
                         return $instance->setQueueResolver($resolver);
+        }
+                    /**
+         * Set the database transaction manager resolver implementation.
+         *
+         * @param callable $resolver
+         * @return \Illuminate\Events\Dispatcher 
+         * @static 
+         */ 
+        public static function setTransactionManagerResolver($resolver)
+        {
+                        /** @var \Illuminate\Events\Dispatcher $instance */
+                        return $instance->setTransactionManagerResolver($resolver);
         }
                     /**
          * Gets the raw, unprepared listeners.
@@ -14102,16 +14138,16 @@
                         return $instance->getAllTypes();
         }
                     /**
-         * Get the column listing for a given table.
+         * Get the columns for a given table.
          *
          * @param string $table
          * @return array 
          * @static 
          */ 
-        public static function getColumnListing($table)
+        public static function getColumns($table)
         {
                         /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getColumnListing($table);
+                        return $instance->getColumns($table);
         }
                     /**
          * Set the default string length for migrations.
@@ -14226,13 +14262,26 @@
          *
          * @param string $table
          * @param string $column
+         * @param bool $fullDefinition
          * @return string 
          * @static 
          */ 
-        public static function getColumnType($table, $column)
+        public static function getColumnType($table, $column, $fullDefinition = false)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
                         /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getColumnType($table, $column);
+                        return $instance->getColumnType($table, $column, $fullDefinition);
+        }
+                    /**
+         * Get the column listing for a given table.
+         *
+         * @param string $table
+         * @return array 
+         * @static 
+         */ 
+        public static function getColumnListing($table)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getColumnListing($table);
         }
                     /**
          * Modify a table on the schema.
@@ -14408,6 +14457,28 @@
         {
                         /** @var \Illuminate\Session\SessionManager $instance */
                         return $instance->blockDriver();
+        }
+                    /**
+         * Get the maximum number of seconds the session lock should be held for.
+         *
+         * @return int 
+         * @static 
+         */ 
+        public static function defaultRouteBlockLockSeconds()
+        {
+                        /** @var \Illuminate\Session\SessionManager $instance */
+                        return $instance->defaultRouteBlockLockSeconds();
+        }
+                    /**
+         * Get the maximum number of seconds to wait while attempting to acquire a route block session lock.
+         *
+         * @return int 
+         * @static 
+         */ 
+        public static function defaultRouteBlockWaitSeconds()
+        {
+                        /** @var \Illuminate\Session\SessionManager $instance */
+                        return $instance->defaultRouteBlockWaitSeconds();
         }
                     /**
          * Get the session configuration.
@@ -21571,13 +21642,9 @@
                         return $instance->captureLastError($hint);
         }
                     /**
-         * 
+         * {@inheritdoc}
          *
-         * @param string $slug Identifier of the Monitor
-         * @param \Sentry\CheckInStatus $status The status of the check-in
-         * @param int|float|null $duration The duration of the check-in
-         * @param \Sentry\MonitorConfig|null $monitorConfig Configuration of the Monitor
-         * @param string|null $checkInId A check-in ID from the previous check-in
+         * @param int|float|null $duration
          * @static 
          */ 
         public static function captureCheckIn($slug, $status, $duration = null, $monitorConfig = null, $checkInId = null)
@@ -22083,42 +22150,104 @@
      
 }
 
-    namespace Spatie\SignalAwareCommand\Facades { 
+    namespace Spatie\ResponseCache\Facades { 
             /**
      * 
      *
-     * @see \Spatie\SignalAwareCommand\Signal
      */ 
-        class Signal {
+        class ResponseCache {
                     /**
          * 
          *
          * @static 
          */ 
-        public static function handle($signal, $callable)
+        public static function enabled($request)
         {
-                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
-                        return $instance->handle($signal, $callable);
+                        /** @var \Spatie\ResponseCache\ResponseCache $instance */
+                        return $instance->enabled($request);
         }
                     /**
          * 
          *
          * @static 
          */ 
-        public static function executeSignalHandlers($signal, $command)
+        public static function shouldCache($request, $response)
         {
-                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
-                        return $instance->executeSignalHandlers($signal, $command);
+                        /** @var \Spatie\ResponseCache\ResponseCache $instance */
+                        return $instance->shouldCache($request, $response);
         }
                     /**
          * 
          *
          * @static 
          */ 
-        public static function clearHandlers($signal = null)
+        public static function shouldBypass($request)
         {
-                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
-                        return $instance->clearHandlers($signal);
+                        /** @var \Spatie\ResponseCache\ResponseCache $instance */
+                        return $instance->shouldBypass($request);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function cacheResponse($request, $response, $lifetimeInSeconds = null, $tags = [])
+        {
+                        /** @var \Spatie\ResponseCache\ResponseCache $instance */
+                        return $instance->cacheResponse($request, $response, $lifetimeInSeconds, $tags);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function hasBeenCached($request, $tags = [])
+        {
+                        /** @var \Spatie\ResponseCache\ResponseCache $instance */
+                        return $instance->hasBeenCached($request, $tags);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getCachedResponseFor($request, $tags = [])
+        {
+                        /** @var \Spatie\ResponseCache\ResponseCache $instance */
+                        return $instance->getCachedResponseFor($request, $tags);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function clear($tags = [])
+        {
+                        /** @var \Spatie\ResponseCache\ResponseCache $instance */
+                        return $instance->clear($tags);
+        }
+                    /**
+         * 
+         *
+         * @param string|array $uris
+         * @param string[] $tags
+         * @return \Spatie\ResponseCache\ResponseCache 
+         * @static 
+         */ 
+        public static function forget($uris, $tags = [])
+        {
+                        /** @var \Spatie\ResponseCache\ResponseCache $instance */
+                        return $instance->forget($uris, $tags);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function selectCachedItems()
+        {
+                        /** @var \Spatie\ResponseCache\ResponseCache $instance */
+                        return $instance->selectCachedItems();
         }
          
     }
@@ -26842,7 +26971,7 @@ namespace  {
             class LogViewer extends \Opcodes\LogViewer\Facades\LogViewer {}
             class Sentry extends \Sentry\Laravel\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
-            class Signal extends \Spatie\SignalAwareCommand\Facades\Signal {}
+            class ResponseCache extends \Spatie\ResponseCache\Facades\ResponseCache {}
             class DataTables extends \Yajra\DataTables\Facades\DataTables {}
      
 }

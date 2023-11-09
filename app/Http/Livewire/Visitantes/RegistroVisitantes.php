@@ -141,8 +141,8 @@ class RegistroVisitantes extends Component
         $this->showStepByCurrent();
         $this->emit('increaseStepVisitantes', $this->currentStep);
         if ($this->currentStep == 4) {
-            $this->castEmpleado = Empleado::find($this->empleado_id);
-            $this->castArea = Area::find($this->area_id);
+            $this->castEmpleado = Empleado::getAll()->find($this->empleado_id);
+            $this->castArea = Area::getAll()->find($this->area_id);
         }
         if ($this->currentStep > $this->totalSteps) {
             $this->emit('finalizarRegistroVisitante');

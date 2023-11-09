@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Empleado;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -31,7 +32,11 @@ class RequisicionesEmail extends Mailable
         $this->organizacion = $organizacion;
         $this->tipo_firma = $tipo_firma;
 
-        $this->supervisor = User::getCurrentUser()->empleado->supervisor->name;
+        $user = User::where('id',   $this->requisicion->id_user)->first();
+
+        $empleado = $user->empleado;
+
+        $this->supervisor =   $empleado->supervisor->name;
 
         // requisiciones
         if ($tipo_firma === 'firma_solicitante') {

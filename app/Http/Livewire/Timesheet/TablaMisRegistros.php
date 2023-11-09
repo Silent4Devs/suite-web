@@ -26,11 +26,12 @@ class TablaMisRegistros extends Component
 
     public function render()
     {
-        $this->todos_contador = Timesheet::getPersonalTimesheet()->count();
-        $this->borrador_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'papelera')->count();
-        $this->pendientes_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'pendiente')->count();
-        $this->aprobados_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'aprobado')->count();
-        $this->rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
+
+        $this->todos_contador = $this->times->count();
+        $this->borrador_contador = $this->times->where('estatus', 'papelera')->count();
+        $this->pendientes_contador = $this->times->where('estatus', 'pendiente')->count();
+        $this->aprobados_contador = $this->times->where('estatus', 'aprobado')->count();
+        $this->rechazos_contador = $this->times->where('estatus', 'rechazado')->count();
 
         return view('livewire.timesheet.tabla-mis-registros');
     }

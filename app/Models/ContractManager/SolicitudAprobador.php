@@ -3,12 +3,13 @@
 namespace App\Models\ContractManager;
 
 use App\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SolicitudAprobador extends Model
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
 
     public $table = 'solicitudes_aprobadores';
 

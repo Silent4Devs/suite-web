@@ -273,4 +273,11 @@ class EntendimientoOrganizacionController extends Controller
 
     //     return response(null, Response::HTTP_NO_CONTENT);
     // }
+
+    public function cardFoda()
+    {
+        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+
+        return view('admin.entendimientoOrganizacions.cardFoda', compact('query'));
+    }
 }

@@ -3,12 +3,13 @@
 namespace App\Models\ContractManager;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Facturacion.
@@ -40,7 +41,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class Factura extends Model implements Auditable
 {
-    use HasFactory, softDeletes;
+    use HasFactory, softDeletes, ClearsResponseCache;
     use AuditableTrait;
 
     public $table = 'facturacion';

@@ -111,7 +111,7 @@ class EmpleadoController extends Controller
         $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
-        $documentos = EvidenciasDocumentosEmpleados::get();
+        $documentos = EvidenciasDocumentosEmpleados::getAll();
         $certificaciones = CertificacionesEmpleados::get();
         $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::get();
@@ -902,7 +902,7 @@ class EmpleadoController extends Controller
         $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
         $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
-        $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
+        $expedientes = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', intval($id));
         $empleado = Empleado::getaltaAll();
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
@@ -917,17 +917,17 @@ class EmpleadoController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado = Empleado::find(intval($id));
+        $empleado = Empleado::getAll()->find(intval($id));
         $empleados = Empleado::getaltaAll();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::getAll();
-        $area = Area::find($empleado->area_id);
+        $area = $areas->find($empleado->area_id);
         $sedes = Sede::getAll();
         $sede = Sede::getbyId($empleado->sede_id);
         $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
-        $documentos = EvidenciasDocumentosEmpleados::get();
+        $documentos = EvidenciasDocumentosEmpleados::getAll();
         $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
@@ -944,9 +944,9 @@ class EmpleadoController extends Controller
         // dd($idiomas);
         // dd(Empleado::find(63));
         $id_empleado = $id;
-        $empleado = Empleado::find($id_empleado);
+        $empleado = Empleado::getAll()->find($id_empleado);
         $lista_docs = $this->getListaDocumentos($id_empleado);
-        $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('archivado', false)->get();
+        $docs_empleado = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', $id_empleado)->where('archivado', false);
         // expediente ------------------------------------------------------------
 
         $organizacion = Organizacion::getFirst();
@@ -961,7 +961,7 @@ class EmpleadoController extends Controller
         $lista_docs = collect();
         $documento_versiones = '';
         foreach ($lista_docs_model as $doc) {
-            $documentos_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
+            $documentos_empleado = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
             if ($documentos_empleado) {
                 $doc_empleado_id = $documentos_empleado->id;
                 $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
@@ -1075,7 +1075,7 @@ class EmpleadoController extends Controller
         ]);
 
         $this->validateDynamicForms($request);
-        $empleado = Empleado::find($id);
+        $empleado = Empleado::getAll()->find($id);
         $image = $empleado->foto;
         if ($request->snap_foto && $request->file('foto')) {
             if ($request->snap_foto) {
@@ -1484,7 +1484,7 @@ class EmpleadoController extends Controller
 
     public function getDocumentos(Empleado $empleado)
     {
-        $documentos = EvidenciasDocumentosEmpleados::where('empleado_id', $empleado->id)->get();
+        $documentos = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', $empleado->id);
 
         return datatables()->of($documentos)->toJson();
         // return response()->json(['documentos' => $documentos]);
@@ -1533,7 +1533,7 @@ class EmpleadoController extends Controller
         $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
         $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
-        $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
+        $expedientes = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', intval($id));
         $empleado = Empleado::getaltaAll();
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
@@ -1570,7 +1570,7 @@ class EmpleadoController extends Controller
     //     $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
     //     $certificados = CertificacionesEmpleados::where('empleado_id', $id)->get();
     //     $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
-    //     $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
+    //     $expedientes = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', intval($id));
     //     $empleado = Empleado::getAll();
 
     //     $pdf = PDF::loadView('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'contactos','dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes', 'empleado'))->setOptions(['defaultFont' => 'sans-serif'])->render();;

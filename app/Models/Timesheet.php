@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use EloquentFilter\Filterable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Timesheet extends Model implements Auditable
 {
     use HasFactory;
     use Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'timesheet';
 
@@ -35,14 +36,14 @@ class Timesheet extends Model implements Auditable
 
     public static function getPersonalTimesheet()
     {
-        return Cache::remember('timesheet-' . auth()->user()->empleado->id, now()->addHours(2), function () {
+        return Cache::remember('Timesheet:timesheet-' . auth()->user()->empleado->id, now()->addHours(3), function () {
             return self::where('empleado_id', auth()->user()->empleado->id)->get();
         });
     }
 
     public static function getAll()
     {
-        return Cache::remember('timesheet-all', now()->addHours(2), function () {
+        return Cache::remember('Timesheet:timesheet_all', now()->addHours(4), function () {
             return self::get();
         });
     }
@@ -210,13 +211,13 @@ class Timesheet extends Model implements Auditable
         $total_horas = 0;
         $horas_time = TimesheetHoras::where('timesheet_id', $this->id)->get();
         foreach ($horas_time as $key => $horas) {
-            $total_horas += $horas->horas_lunes;
-            $total_horas += $horas->horas_martes;
-            $total_horas += $horas->horas_miercoles;
-            $total_horas += $horas->horas_jueves;
-            $total_horas += $horas->horas_viernes;
-            $total_horas += $horas->horas_sabado;
-            $total_horas += $horas->horas_domingo;
+            $total_horas += floatval($horas->horas_lunes);
+            $total_horas += floatval($horas->horas_martes);
+            $total_horas += floatval($horas->horas_miercoles);
+            $total_horas += floatval($horas->horas_jueves);
+            $total_horas += floatval($horas->horas_viernes);
+            $total_horas += floatval($horas->horas_sabado);
+            $total_horas += floatval($horas->horas_domingo);
         }
 
         return $total_horas;

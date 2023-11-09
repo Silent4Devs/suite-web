@@ -108,8 +108,8 @@
                         <label for="" class="txt-tamaño">
                             Días de crédito proveedor
                         </label>
-                        <input type="number" required name="dias_credito" min="0" max="1000000000"
-                            class="browser-default" value="{{ $requisicion->dias_credito }}">
+                        <input type="text" required name="dias_credito" class="browser-default"
+                            value="{{ $requisicion->dias_credito }}">
                     </div>
                 </div>
                 <div class="row">
@@ -117,7 +117,7 @@
                         <label for="" class="txt-tamaño">
                             Moneda: <font class="asterisco">*</font>
                         </label>
-                        <select name="moneda" id="" class="browser-default" required>
+                        <select name="moneda" class="browser-default" required>
                             <option disabled selected></option>
                             @foreach ($monedas as $moneda)
                                 <option value="{{ $moneda->nombre }}"
@@ -131,7 +131,7 @@
                         <label for="" class="txt-tamaño">
                             Tipo de cambio: <font class="asterisco"></font>
                         </label>
-                        <input type="number" min="0" max="1000000000" name="cambio" class="browser-default"
+                        <input type="text" name="cambio" class="browser-default"
                             value="{{ $requisicion->cambio }}">
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                         <label for="" class="txt-tamaño">
                             Proveedor <font class="asterisco">*</font>
                         </label>
-                        <select name="proveedor_id" id="proveedor_id" class="browser-default">
+                        <select name="proveedor_id" id="proveedor_id" class="browser-default" required>
                             @if ($requisicion->proveedor_id)
                                 <option value="{{ $requisicion->proveedor_id }}" selected
                                     data-nombre="{{ $requisicion->proveedor->nombre }}"
@@ -225,8 +225,8 @@
                         <label for="" class="txt-tamaño">
                             Crédito disponible
                         </label>
-                        <input type="number" min="0" max="1000000000" step="any"
-                            value="{{ $proveedor->credito }}" name="credito_proveedor" class="browser-default">
+                        <input type="text" value="{{ $proveedor->credito }}" name="credito_proveedor"
+                            class="browser-default">
                     </div>
                 </div>
             </div>
@@ -252,7 +252,7 @@
                                 <label for="" class="txt-tamaño">
                                     Cantidad <font class="asterisco">*</font>
                                 </label>
-                                <input type="number" name="cantidad{{ $count }}" min="0"
+                                <input type="text" name="cantidad{{ $count }}"
                                     class="browser-default mod-cantidad" value="{{ $producto->cantidad }}">
                             </div>
                             <div class="col s12 l8 ">
@@ -319,8 +319,8 @@
             <label for="" class="txt-tamaño">
                 No. de Personas
             </label>
-            <input type="number" name="no_personas{{ $count }}" min="0" max="100000000"
-                class="browser-default mod-no_personas" value="{{ $producto->no_personas }}">
+            <input type="text" name="no_personas{{ $count }}" class="browser-default mod-no_personas"
+                value="{{ $producto->no_personas }}">
         </div>
 </div>
 <div class="row">
@@ -328,7 +328,7 @@
         <label for="" class="txt-tamaño">
             Porcentaje de involucramiento
         </label>
-        <input type="number" name="porcentaje_involucramiento{{ $count }}" min="0" max="100000000"
+        <input type="text" name="porcentaje_involucramiento{{ $count }}"
             class="browser-default mod-porcentaje_involucramiento"
             value="{{ $producto->porcentaje_involucramiento }}">
     </div>
@@ -345,9 +345,8 @@
             Sub total <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="sub_total{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-sub_total browser-default" required
-                value="{{ $producto->sub_total }}">
+            <input type="text" name="sub_total{{ $count }}" data-count="{{ $count }}"
+                class="mod-sub_total browser-default" required value="{{ $producto->sub_total }}">
         </div>
     </div>
     <div class="col s12 l3 ">
@@ -355,8 +354,8 @@
             IVA <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="iva{{ $count }}" data-count="{{ $count }}" step="any"
-                min="0" class="mod-iva browser-default" required value="{{ $producto->iva }}">
+            <input type="text" name="iva{{ $count }}" data-count="{{ $count }}"
+                class="mod-iva browser-default" required value="{{ $producto->iva }}">
         </div>
     </div>
     <div class="col s12 l3 ">
@@ -364,9 +363,8 @@
             IVA retenido
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="iva_retenido{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-iva_retenido browser-default"
-                value="{{ $producto->iva_retenido }}">
+            <input type="text" name="iva_retenido{{ $count }}" data-count="{{ $count }}"
+                class="mod-iva_retenido browser-default" value="{{ $producto->iva_retenido }}">
         </div>
     </div>
 </div>
@@ -376,9 +374,8 @@
             Descuento
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="descuento{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-descuento browser-default"
-                value="{{ $producto->descuento }}">
+            <input type="text" name="descuento{{ $count }}" data-count="{{ $count }}"
+                class="mod-descuento browser-default" value="{{ $producto->descuento }}">
         </div>
     </div>
     <div class="col s12 l3 ">
@@ -386,9 +383,8 @@
             Otro impuesto
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="otro_impuesto{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-otro_impuesto browser-default"
-                value="{{ $producto->otro_impuesto }}">
+            <input type="text" name="otro_impuesto{{ $count }}" data-count="{{ $count }}"
+                class="mod-otro_impuesto browser-default" value="{{ $producto->otro_impuesto }}">
         </div>
     </div>
     <div class="col s12 l3 ">
@@ -396,9 +392,8 @@
             ISR retenido
         </label>
         <div class="caja-input-dinero">
-            <input type="number" name="isr_retenido{{ $count }}" data-count="{{ $count }}"
-                step="any" min="0" class="mod-isr_retenido browser-default"
-                value="{{ $producto->isr_retenido }}">
+            <input type="text" name="isr_retenido{{ $count }}" data-count="{{ $count }}"
+                class="mod-isr_retenido browser-default" value="{{ $producto->isr_retenido }}">
         </div>
     </div>
     <div class="col s12 l3 ">
@@ -406,9 +401,9 @@
             Total <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input id="input-total-serv{{ $count }}" type="number" name="total{{ $count }}"
-                data-count="{{ $count }}" step="any" min="0" class="mod-total browser-default"
-                required value="{{ $producto->total }}" readonly>
+            <input id="input-total-serv{{ $count }}" type="text" name="total{{ $count }}"
+                data-count="{{ $count }}" class="mod-total browser-default" required
+                value="{{ $producto->total }}" readonly>
         </div>
     </div>
 </div>
@@ -431,9 +426,8 @@
                     Sub total
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="sub_total_calculado" name="sub_total" step="any" min="0"
-                        class="browser-default" required value="{{ $requisicion->sub_total }}"
-                        style="background: rgb(250, 249, 249);" readonly>
+                    <input type="text" id="sub_total_calculado" name="sub_total" class="browser-default" required
+                        value="{{ $requisicion->sub_total }}" style="background: rgb(250, 249, 249);" readonly>
                 </div>
             </div>
         </div>
@@ -443,9 +437,8 @@
                     IVA
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="iva_calculado" name="iva" step="any" min="0"
-                        class="browser-default" required value="{{ $requisicion->iva }}"
-                        style="background: rgb(250, 249, 249);" readonly>
+                    <input type="text" id="iva_calculado" name="iva" class="browser-default" required
+                        value="{{ $requisicion->iva }}" style="background: rgb(250, 249, 249);" readonly>
                 </div>
             </div>
         </div>
@@ -455,9 +448,9 @@
                     IVA retenido
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="iva_retenido_calculado" name="iva_retenido" step="any"
-                        min="0" class="browser-default" required value="{{ $requisicion->iva_retenido }}"
-                        style="background: rgb(250, 249, 249);" readonly>
+                    <input type="text" id="iva_retenido_calculado" name="iva_retenido" class="browser-default"
+                        required value="{{ $requisicion->iva_retenido }}" style="background: rgb(250, 249, 249);"
+                        readonly>
                 </div>
             </div>
         </div>
@@ -467,9 +460,9 @@
                     ISR retenido
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="isr_retenido_calculado" name="isr_retenido" step="any"
-                        min="0" class="browser-default" required value="{{ $requisicion->isr_retenido }}"
-                        style="background: rgb(250, 249, 249);" readonly>
+                    <input type="text" id="isr_retenido_calculado" name="isr_retenido" class="browser-default"
+                        required value="{{ $requisicion->isr_retenido }}" style="background: rgb(250, 249, 249);"
+                        readonly>
                 </div>
             </div>
         </div>
@@ -479,16 +472,15 @@
                     Total
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="number" id="total_calculado" name="total" step="any" min="1"
-                        class="browser-default" required value="{{ $requisicion->total }}"
-                        style="background: rgb(250, 249, 249);" readonly>
+                    <input type="text" id="total_calculado" name="total" class="browser-default" required
+                        value="{{ $requisicion->total }}" style="background: rgb(250, 249, 249);" readonly>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
-    <a href="http://tabantaj.test/contract_manager/orden-compra" class="btn"
+    <a href="{{ route('contract_manager.orden-compra') }}" class="btn"
         style="background: #959595 !important">Regresar</a>
     <button class="btn btn-primary" onclick="mensaje()">Guardar</button>
 </div>
@@ -533,16 +525,19 @@
         if (e.target.parentNode.classList.contains('caja-input-dinero')) {
             let count_serv = e.target.name.split('')[e.target.name.length - 1];
 
+            let total_serv = parseFloat(document.querySelector('.productos-info .mod-sub_total[data-count="' +
+                count_serv + '"]').value === "" ? 0 : document.querySelector(
+                '.productos-info .mod-sub_total[data-count="' + count_serv + '"]').value) + parseFloat(
+                document.querySelector('.productos-info .mod-iva[data-count="' + count_serv + '"]')
+                .value === "" ? 0 : document.querySelector('.productos-info .mod-iva[data-count="' +
+                    count_serv + '"]').value) - Array.from(document.querySelectorAll(
+                '.productos-info .caja-input-dinero input[data-count="' + count_serv +
+                '"]:not(.mod-total, .mod-sub_total, .mod-iva)')).reduce((acumulador, elemento) =>
+                acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)), 0);
+
+
             $('#input-total-serv' + count_serv).val(
-                parseFloat(document.querySelector('.productos-info .mod-sub_total[data-count="' +
-                    count_serv + '"]').value === "" ? 0 : document.querySelector(
-                    '.productos-info .mod-sub_total[data-count="' + count_serv + '"]').value) + parseFloat(
-                    document.querySelector('.productos-info .mod-iva[data-count="' + count_serv + '"]')
-                    .value === "" ? 0 : document.querySelector('.productos-info .mod-iva[data-count="' +
-                        count_serv + '"]').value) - Array.from(document.querySelectorAll(
-                    '.productos-info .caja-input-dinero input[data-count="' + count_serv +
-                    '"]:not(.mod-total, .mod-sub_total, .mod-iva)')).reduce((acumulador, elemento) =>
-                    acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)), 0)
+                parseFloat(total_serv).toFixed(4)
             );
 
             $('#sub_total_calculado').val(Array.from(document.querySelectorAll('.mod-sub_total')).reduce((

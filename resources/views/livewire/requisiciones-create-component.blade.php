@@ -24,9 +24,9 @@
                 Productos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link disable" id="profile-tab"
-                data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"
-                style="pointer-events: none"><i class="number-icon">2</i> Proveedores</a>
+            <a class="nav-link disable" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                aria-controls="profile" aria-selected="false" style="pointer-events: none"><i class="number-icon">2</i>
+                Proveedores</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link disable" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
@@ -378,7 +378,7 @@
                                                         <input type="file" required
                                                             class="modal-cotizacion form-control-file"
                                                             name="cotizacion_{{ $i }}"
-                                                            wire:model="cotizaciones.{{ $i }}"
+                                                            wire:model.lazy="cotizaciones.{{ $i }}"
                                                             data-count="{{ $i }}"
                                                             accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\CentroCosto;
 use Gate;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class CentroCostosController extends Controller
@@ -56,12 +58,21 @@ class CentroCostosController extends Controller
      */
     public function store(Request $request)
     {
-        $centro = new CentroCosto();
-        $centro->descripcion = $request->descripcion;
-        $centro->clave = $request->clave;
-        $centro->save();
+        try {
+            DB::beginTransaction();
 
-        return redirect('/contract_manager/centro-costos');
+            $centro = new CentroCosto();
+            $centro->descripcion = $request->descripcion;
+            $centro->clave = $request->clave;
+            $centro->save();
+
+            DB::commit();
+
+            return redirect('/contract_manager/centro-costos');
+        } catch (QueryException $e) {
+            DB::rollback();
+            return "Error al insertar el producto: " . $e->getMessage();
+        }
     }
 
     /**

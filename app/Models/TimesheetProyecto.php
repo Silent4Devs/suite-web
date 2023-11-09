@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use EloquentFilter\Filterable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TimesheetProyecto extends Model implements Auditable
 {
     use HasFactory;
     use Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
     protected $table = 'timesheet_proyectos';
 
     protected $appends = ['areas'];
@@ -38,12 +39,25 @@ class TimesheetProyecto extends Model implements Auditable
     public static function getAll($proyecto_id = null)
     {
         if (is_null($proyecto_id)) {
-            return Cache::remember('timesheetproyecto_all', 3600 * 4, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_all', 3600 * 4, function () {
                 return self::orderBy('proyecto')->get();
             });
         } else {
-            return Cache::remember('timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
                 return self::orderBy('proyecto')->get();
+            });
+        }
+    }
+
+    public static function getIdNameAll($proyecto_id = null)
+    {
+        if (is_null($proyecto_id)) {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_all', 3600 * 4, function () {
+                return self::select('id', 'identificador', 'proyecto', 'cliente_id')->orderBy('proyecto')->get();
+            });
+        } else {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+                return self::select('id', 'identificador', 'proyecto', 'cliente_id')->orderBy('proyecto')->get();
             });
         }
     }

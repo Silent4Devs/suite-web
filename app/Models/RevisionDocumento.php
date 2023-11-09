@@ -3,15 +3,17 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RevisionDocumento extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     const ARCHIVADO = '1';
 
@@ -31,6 +33,13 @@ class RevisionDocumento extends Model implements Auditable
     protected $appends = [
         'fecha_solicitud', 'before_level_all_answered', 'estatus_revisiones_formateado', 'color_revisiones_estatus',
     ];
+
+    public static function getAllWithDocumento()
+    {
+        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos_' . User::getCurrentUser()->empleado->id, 3600 * 8, function () {
+            return self::with('documento')->where('empleado_id', User::getCurrentUser()->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
+        });
+    }
 
     public function getBeforeLevelAllAnsweredAttribute()
     {

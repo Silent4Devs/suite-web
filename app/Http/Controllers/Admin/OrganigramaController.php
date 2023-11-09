@@ -19,7 +19,7 @@ class OrganigramaController extends Controller
     {
         abort_if(Gate::denies('organigrama_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // La construccion del arbol necesita un primer nodo (NULL)
-        $organizacionTree = Empleado::exists();
+        $organizacionTree = Empleado::getExists();
         if ($request->ajax()) {
             if ($request->area_filter == 'true') {
                 $treeByArea = Area::with(['lider' => function ($query) {

@@ -38,7 +38,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $this->proyecto = TimesheetProyecto::getAll()->find($proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
-        $this->empleados = Empleado::getaltaAll();
+        $this->empleados = Empleado::getAltaEmpleados();
     }
 
     public function render()
@@ -46,19 +46,28 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $emp_proy = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
 
         foreach ($emp_proy as $ep) {
-            $times = TimesheetHoras::where('proyecto_id', '=', $ep->proyecto_id)
-                ->where('empleado_id', '=', $ep->empleado_id)
-                ->get();
+            $times = TimesheetHoras::getData()->where('proyecto_id', '=', $ep->proyecto_id)
+                ->where('empleado_id', '=', $ep->empleado_id);
 
             $tot_horas_proyecto = 0;
 
-            $sumalun = $times->sum('horas_lunes');
-            $sumamar = $times->sum('horas_martes');
-            $sumamie = $times->sum('horas_miercoles');
-            $sumajue = $times->sum('horas_jueves');
-            $sumavie = $times->sum('horas_viernes');
-            $sumasab = $times->sum('horas_sabado');
-            $sumadom = $times->sum('horas_domingo');
+            $sumalun = 0;
+            $sumamar = 0;
+            $sumamie = 0;
+            $sumajue = 0;
+            $sumavie = 0;
+            $sumasab = 0;
+            $sumadom = 0;
+
+            foreach ($times as $time) {
+                $sumalun += floatval($time->horas_lunes);
+                $sumamar += floatval($time->horas_martes);
+                $sumamie += floatval($time->horas_miercoles);
+                $sumajue += floatval($time->horas_jueves);
+                $sumavie += floatval($time->horas_viernes);
+                $sumasab += floatval($time->horas_sabado);
+                $sumadom += floatval($time->horas_domingo);
+            }
 
             $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
 
@@ -89,15 +98,15 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function addEmpleado()
     {
-        $empleado_add_proyecto = Empleado::find($this->empleado_añadido);
+        $empleado_add_proyecto = Empleado::select('id', 'area_id')->find($this->empleado_añadido);
+        // dd($empleado_add_proyecto);
+
         if ($this->proyecto->tipo === 'Externo') {
             $this->validate([
                 'horas_asignadas' => ['required'],
                 'costo_hora' => ['required'],
             ]);
-        }
 
-        if ($this->proyecto->tipo === 'Externo') {
             $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,
@@ -139,7 +148,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
                 return null;
             } else {
-                $emp_upd_proyecto = Empleado::find($datos['empleado_editado']);
+                $emp_upd_proyecto = Empleado::select('id', 'area_id')->find($datos['empleado_editado']);
                 // dd($emp_upd_proyecto);
                 $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
                 $empleado_edit_proyecto->update([
@@ -150,7 +159,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 ]);
             }
         } else { //Internos
-            $emp_upd_proyecto = Empleado::find($datos['empleado_editado']);
+            $emp_upd_proyecto = Empleado::select('id', 'area_id')->find($datos['empleado_editado']);
             // dd($emp_upd_proyecto);
             $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
             $empleado_edit_proyecto->update([
@@ -195,6 +204,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ]);
         }
         // dd($emp_bloq->usuario_bloqueado);
+
     }
 
     public function empleadoProyectoRemove($id)

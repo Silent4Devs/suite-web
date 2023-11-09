@@ -54,6 +54,7 @@ class RequisicionesEditComponent extends Component
     public $proveedores_show;
 
     // tasbs
+    //jenkis prueba
     public $habilitar_firma = false;
     public $habilitar_proveedores = false;
     public $habilitar_alerta = false;
@@ -119,12 +120,7 @@ class RequisicionesEditComponent extends Component
             'sucursal_id' => $data['sucursal_id'],
         ]);
 
-        $productos_existentes = ContractManagerProductoRequisicion::where('requisiciones_id', $this->editar_requisicion->id)->get();
-        if ($productos_existentes->count() > 0) {
-            foreach ($productos_existentes as $product) {
-                $product->delete();
-            }
-        }
+        ContractManagerProductoRequisicion::where('requisiciones_id', $this->editar_requisicion->id)->delete();
 
         for ($i = 1; $i <= $this->products_servs_count; $i++) {
             if (isset($data['cantidad_' . $i])) {

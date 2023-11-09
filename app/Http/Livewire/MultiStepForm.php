@@ -704,8 +704,9 @@ class MultiStepForm extends Component
         foreach ($evaluadores as $evaluador) {
             $evaluados = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
                 ->where('evaluador_id', $evaluador)->pluck('evaluado_id')->unique()->toArray();
-            $evaluados = Empleado::find($evaluados);
-            $evaluador_model = Empleado::find($evaluador);
+            $empleados = Empleado::getAll();
+            $evaluados = $empleados->find($evaluados);
+            $evaluador_model = $empleados->find($evaluador);
             $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
             if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
                 if (env('MAIL_HOST') == 'smtp.mailtrap.io') {

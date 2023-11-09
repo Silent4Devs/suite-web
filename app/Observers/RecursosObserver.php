@@ -27,7 +27,7 @@ class RecursosObserver
     {
         // $recurso->participantes()->sync($this->request->input('participantes', []));
         $recurso->empleados()->sync($this->request->input('participantes', []));
-        $empleados = Empleado::find($this->request->input('participantes', []));
+        $empleados = Empleado::getAll()->find($this->request->input('participantes', []));
         if ($this->request->estatus == 'Draft') {
             // Code..
         } elseif ($recurso->estatus == 'Enviado') {
@@ -48,7 +48,7 @@ class RecursosObserver
      */
     public function updated(Recurso $recurso)
     {
-        $empleados = Empleado::find($this->request->input('participantes', []));
+        $empleados = Empleado::getAll()->find($this->request->input('participantes', []));
 
         if (count($this->request->input('participantes', [])) > 0) {
             // $recurso->empleados()->detach();
