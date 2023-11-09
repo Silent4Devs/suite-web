@@ -29,11 +29,13 @@ class ConfiguracionVisitantes extends Component
 
     public function mount()
     {
-        $this->empleados = Empleado::select('id', 'name')->orderBy('name')->get();
+
     }
 
     public function render()
     {
+        $this->empleados = Empleado::select('id', 'name')->orderBy('name')->get();
+
         $this->responsableVisitante = ResponsableVisitantes::first();
 
         if ($this->responsableVisitante != null) {
