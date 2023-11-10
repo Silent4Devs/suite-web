@@ -335,16 +335,16 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        $empleado = Empleado::getAll()->find(Auth::user()->empleado->id);
+        $empleado = Empleado::find(Auth::user()->empleado->id);
         // areas proyectos
         $proyectos_array = collect();
 
         $proyectos_totales = TimesheetProyecto::getAll();
 
         foreach ($proyectos_totales as $key => $proyecto) {
-            if ($proyecto->estatus === 'proceso') {
+            if ($proyecto->estatus == 'proceso') {
                 foreach ($proyecto->areas as $key => $area) {
-                    if ($area['id'] === $empleado->area_id) {
+                    if ($area['id'] == $empleado->area_id) {
                         $proyectos_array->push([
                             'id' => $proyecto->id,
                             'identificador' => $proyecto->identificador,
@@ -365,10 +365,6 @@ class TimesheetController extends Controller
         $organizacion = Organizacion::getFirst();
 
         $horas_count = TimesheetHoras::select('id')->where('timesheet_id', $id)->count();
-
-        Artisan::call('config:clear');
-        Artisan::call('route:clear');
-        Artisan::call('view:clear');
 
         return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
