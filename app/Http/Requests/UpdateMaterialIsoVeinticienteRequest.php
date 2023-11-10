@@ -20,7 +20,7 @@ class UpdateMaterialIsoVeinticienteRequest extends FormRequest
                 'required',
             ],
             'fechacreacion_actualizacion' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
         ];

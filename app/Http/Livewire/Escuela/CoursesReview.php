@@ -11,7 +11,9 @@ use Livewire\Component;
 class CoursesReview extends Component
 {
     public $course_id;
+
     public $comment;
+
     public $rating = 5;
 
     public function mount(Course $course)

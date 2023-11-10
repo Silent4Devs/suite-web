@@ -131,7 +131,7 @@ class PlanaccionCorrectivaController extends Controller
         Flash::success('Se ha registrado correctamente la actividad del plan de acción');
 
         //return redirect()->route('admin.accionCorrectivas.edit');
-        return redirect('admin/plan-correctiva?param=' . $id);
+        return redirect('admin/plan-correctiva?param='.$id);
         //return view('admin.accionCorrectivas.plan_accion')->with('ids', $id)->with('users', $users);
     }
 

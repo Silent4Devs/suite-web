@@ -178,11 +178,11 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsis = PoliticaSgsi::getAll();
         foreach ($politicaSgsis as $polsgsis) {
-            if (!isset($polsgsis->reviso)) {
+            if (! isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
-                $polsgsis->estemp = "baja";
+                $polsgsis->estemp = 'baja';
             } else {
-                $polsgsis->estemp = "alta";
+                $polsgsis->estemp = 'alta';
             }
         }
         $organizacions = Organizacion::getFirst();

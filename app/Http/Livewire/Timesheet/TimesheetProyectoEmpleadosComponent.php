@@ -85,7 +85,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
         //     $ep->sobrepasadas = $sobre;
         // }
 
-
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }
 

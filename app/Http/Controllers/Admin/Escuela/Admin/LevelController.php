@@ -34,7 +34,6 @@ class LevelController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -74,14 +73,13 @@ class LevelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  Level $level
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Level $level)
     {
         $request->validate([
-            'name' => 'required|unique:levels,name,' . $level->id,
+            'name' => 'required|unique:levels,name,'.$level->id,
         ]);
 
         $level->update($request->all());

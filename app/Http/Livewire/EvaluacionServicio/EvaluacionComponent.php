@@ -14,7 +14,7 @@ use Livewire\WithPagination;
 
 class EvaluacionComponent extends Component
 {
-    use WithPagination, WithFileUploads, LivewireAlert;
+    use LivewireAlert, WithFileUploads, WithPagination;
 
     public $nivel_id;
 
@@ -136,7 +136,7 @@ class EvaluacionComponent extends Component
 
         //$this->validate();
 
-        if (!is_null($this->eval_id)) {
+        if (! is_null($this->eval_id)) {
             $evalservicio = EvaluacionServicio::find($this->eval_id);
 
             $evalservicio->update([

@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
+use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
 use EloquentFilter\Filterable;
-use Illuminate\Support\Facades\DB;
-use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Area.
@@ -38,8 +38,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Area extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory, Filterable;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use Filterable, HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     protected $table = 'areas';
 

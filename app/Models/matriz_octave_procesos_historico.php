@@ -8,7 +8,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class matriz_octave_procesos_historico extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+
     protected $table = 'matriz_octave_procesos';
 
     protected $casts = [

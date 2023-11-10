@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class VisualizarLogsComponent extends Component
 {
     use WithPagination;
+
     public $search = '';
 
     protected $paginationTheme = 'bootstrap';

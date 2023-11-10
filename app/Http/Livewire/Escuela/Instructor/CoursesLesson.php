@@ -16,12 +16,19 @@ class CoursesLesson extends Component
     use WithFileUploads;
 
     public $section;
+
     public $lesson;
+
     public $platforms;
+
     public $name;
+
     public $platform_id = 1;
+
     public $url;
+
     public $description;
+
     public $file;
 
     protected $rules = [

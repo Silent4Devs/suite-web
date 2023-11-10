@@ -12,7 +12,9 @@ class CoursesCurriculum extends Component
     use LivewireAlert;
 
     public $course;
+
     public $section;
+
     public $name;
 
     protected $rules = [
@@ -40,14 +42,14 @@ class CoursesCurriculum extends Component
         // ]);
         if ($count == 0) {
             Section::create([
-                'name'          => 'Seccion 1',
-                'course_id'     => $this->course->id,
+                'name' => 'Seccion 1',
+                'course_id' => $this->course->id,
             ]);
         } else {
             $count = $count + 1;
             Section::create([
-                'name'          => 'Seccion ' . $count,
-                'course_id'     => $this->course->id,
+                'name' => 'Seccion '.$count,
+                'course_id' => $this->course->id,
             ]);
         }
 

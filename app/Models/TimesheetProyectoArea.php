@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TimesheetProyectoArea extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+
     protected $table = 'timesheet_proyectos_areas';
 
     protected $fillable = [
@@ -23,7 +24,7 @@ class TimesheetProyectoArea extends Model implements Auditable
     {
         // Generate a unique cache key based on the options provided
 
-        return Cache::remember('TimesheetProyectoArea:timesheet_proyecto_area_proyecto_all', 3600 * 8, function () use ($options) {
+        return Cache::remember('TimesheetProyectoArea:timesheet_proyecto_area_proyecto_all', 3600 * 8, function () {
             $query = self::orderBy('id', 'desc')->get();
 
             return $query;
