@@ -23,7 +23,7 @@ class PlanesAccionController extends Controller
     public function index(Request $request)
     {
         $planImplementacions = Cache::remember('PlanImplementacion:plan_implementacion_all_where_false', 3600 * 8, function () {
-            return PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->get();
+            return PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->fastPaginate();
         });
 
         // $iso9001 = Cache::remember('PlanImplementacion:plan_implementacion_9001_all', 3600 * 8, function () {
