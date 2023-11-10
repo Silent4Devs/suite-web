@@ -23,12 +23,14 @@ use App\Models\TimesheetTarea;
 use App\Models\User;
 use App\Services\TimesheetService;
 use App\Traits\ObtenerOrganizacion;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
+use Illuminate\Support\Facades\Artisan;
 
 class TimesheetController extends Controller
 {
@@ -119,14 +121,6 @@ class TimesheetController extends Controller
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
 
         $organizacion = Organizacion::getFirst();
-
-        // Verifica si la fecha actual ya está registrada en $fechasRegistradas
-        $currentDate = now()->toDateString();
-
-        if (in_array($currentDate, $fechasRegistradas)) {
-            // La fecha actual ya está registrada, puedes realizar alguna acción, por ejemplo, mostrar un mensaje de error.
-            return back()->with('error', 'La fecha actual ya ha sido registrada en el Timesheet.');
-        }
 
         // Si la fecha no está registrada, continúa con la vista de creación.
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
@@ -233,7 +227,6 @@ class TimesheetController extends Controller
                         );
                     }
                 } else {
-                    // dd($hora);
                     if (
                         $hora['lunes'] != null ||
                         $hora['martes'] != null ||
@@ -257,7 +250,6 @@ class TimesheetController extends Controller
                 }
             }
         }
-        // dd($organizacion_semana->dia_timesheet);
         $usuario = User::getCurrentUser();
         $timesheet_nuevo = Timesheet::create([
             'fecha_dia' => $request->fecha_dia,
@@ -343,17 +335,16 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        $empleado = Empleado::getAll()->find(User::getCurrentUser()->empleado->id);
-
+        $empleado = Empleado::getAll()->find(Auth::user()->empleado->id);
         // areas proyectos
         $proyectos_array = collect();
 
         $proyectos_totales = TimesheetProyecto::getAll();
 
         foreach ($proyectos_totales as $key => $proyecto) {
-            if ($proyecto->estatus == 'proceso') {
+            if ($proyecto->estatus === 'proceso') {
                 foreach ($proyecto->areas as $key => $area) {
-                    if ($area['id'] == $empleado->area_id) {
+                    if ($area['id'] === $empleado->area_id) {
                         $proyectos_array->push([
                             'id' => $proyecto->id,
                             'identificador' => $proyecto->identificador,
@@ -374,6 +365,10 @@ class TimesheetController extends Controller
         $organizacion = Organizacion::getFirst();
 
         $horas_count = TimesheetHoras::select('id')->where('timesheet_id', $id)->count();
+
+        Artisan::call('config:clear');
+        Artisan::call('route:clear');
+        Artisan::call('view:clear');
 
         return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
