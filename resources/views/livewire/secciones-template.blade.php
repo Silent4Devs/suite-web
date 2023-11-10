@@ -270,7 +270,7 @@
                                 <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                             </div>
                         </div>
-                    </div><br><br>
+                    </div><br>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-floating mb-3">
@@ -291,7 +291,7 @@
                                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                                 </div>
                             </div>
-                        </div><br><br>
+                        </div><br>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
@@ -376,7 +376,7 @@
                                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                                 </div>
                             </div>
-                        </div><br><br>
+                        </div><br>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
@@ -396,7 +396,7 @@
                                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                                     </div>
                                 </div>
-                            </div><br><br>
+                            </div><br>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-floating mb-3">
@@ -479,7 +479,7 @@
                                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                                     </div>
                                 </div>
-                            </div><br><br>
+                            </div><br>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-floating mb-3">
@@ -499,7 +499,7 @@
                                             <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                                         </div>
                                     </div>
-                                </div><br><br>
+                                </div><br>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-floating mb-3">
@@ -582,7 +582,7 @@
                                             <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                                         </div>
                                     </div>
-                                </div><br><br>
+                                </div><br>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-floating mb-3">
@@ -602,7 +602,7 @@
                                                 <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                                             </div>
                                         </div>
-                                    </div><br><br>
+                                    </div><br>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-floating mb-3">
