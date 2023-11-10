@@ -41,11 +41,11 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function render()
     {
-        $this->proyecto = TimesheetProyecto::getAll()->find($this->proyecto_id);
-        $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $this->proyecto_id)->get();
+        $this->proyecto = TimesheetProyecto::getIdNameAll()->find($this->proyecto_id);
+        $this->areasempleado = TimesheetProyectoArea::getAll()->where('proyecto_id', $this->proyecto_id);
         $this->empleados = Empleado::getAltaEmpleados();
 
-        $emp_proy = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
+        $this->proyecto_empleados = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
 
         // foreach ($emp_proy as $ep) {
         //     $times = TimesheetHoras::getData()->where('proyecto_id', '=', $ep->proyecto_id)
@@ -85,15 +85,18 @@ class TimesheetProyectoEmpleadosComponent extends Component
         //     $ep->sobrepasadas = $sobre;
         // }
 
-        $this->proyecto_empleados = $emp_proy;
-        // dd($this->proyecto_empleados);
 
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }
 
+    public function hydrate()
+    {
+        $this->emit('scriptTabla');
+    }
+
     private function resetInput()
     {
-        // $this->empleado_añadido = null;
+        $this->empleado_añadido = null;
         $this->horas_asignadas = null;
         $this->costo_hora = null;
     }
