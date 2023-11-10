@@ -36,6 +36,7 @@ class TablaTareasTimesheet extends Component
     public function hydrate()
     {
         $this->emit('select2');
+        $this->emit('scriptTabla');
     }
 
     public function mount($proyecto_id, $origen)
@@ -58,19 +59,18 @@ class TablaTareasTimesheet extends Component
             $this->proyectos = TimesheetProyecto::getIdNameAll();
 
             if ($this->proyecto_filtro) {
-                $this->tareas = TimesheetTarea::getIdTareasAll()->where('proyecto_id', $this->proyecto_filtro);
+                $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_filtro);
             } else {
-                $this->tareas = TimesheetTarea::getIdTareasAll();
+                $this->tareas = TimesheetTarea::getAll();
             }
         }
 
         if ($this->origen == 'tareas-proyectos') {
             $this->proyecto_seleccionado = TimesheetProyecto::getIdNameAll()->find($this->proyecto_id);
-            $this->tareas = TimesheetTarea::getIdTareasAll()->where('proyecto_id', $this->proyecto_id);
+            $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
 
-        $this->emit('scriptTabla');
 
         return view('livewire.timesheet.tabla-tareas-timesheet');
     }
@@ -104,7 +104,7 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarNameTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::getIdTareasAll()->find($id);
+        $tarea_actualizada = TimesheetTarea::getAll()->find($id);
 
         $tarea_actualizada->update([
             'tarea' => $value,
@@ -115,7 +115,7 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarAreaTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::getIdTareasAll()->find($id);
+        $tarea_actualizada = TimesheetTarea::getAll()->find($id);
 
         if ($value == 0) {
             $area_id = null;
