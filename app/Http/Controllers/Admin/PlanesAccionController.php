@@ -23,7 +23,7 @@ class PlanesAccionController extends Controller
     public function index(Request $request)
     {
         $iso2007 = Cache::remember('PlanImplementacion:plan_implementacion_all_where_false', 3600 * 8, function () {
-            return PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->get();
+            return PlanImplementacion::select('id', 'tasks', 'parent', 'norma', 'modulo_origen', 'objetivo', 'elaboro_id', 'es_plan_trabajo_base')->where('es_plan_trabajo_base', false)->with('elaborador')->get();
         });
 
         // $iso9001 = Cache::remember('PlanImplementacion:plan_implementacion_9001_all', 3600 * 8, function () {
@@ -35,11 +35,11 @@ class PlanesAccionController extends Controller
         // });
         // $merged = $iso2007->concat($iso9001);
 
-        if ($request->ajax()) {
-            return datatables()->of($iso2007)->toJson();
-        }
+        // if ($request->ajax()) {
+        //     return datatables()->of($iso2007)->toJson();
+        // }
 
-        return view('admin.planesDeAccion.index');
+        return view('admin.planesDeAccion.index', compact('iso2007'));
     }
 
     /**
