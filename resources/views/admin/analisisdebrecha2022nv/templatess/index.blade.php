@@ -18,6 +18,7 @@
         .instrucciones {
             background-color: rgb(52, 117, 178);
             color: white;
+            border-radius: 8px;
         }
 
         .encabezado {
