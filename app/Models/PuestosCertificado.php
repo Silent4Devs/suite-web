@@ -19,7 +19,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class PuestosCertificado extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+
     protected $table = 'puestos_certificados';
 
     protected $fillable = [

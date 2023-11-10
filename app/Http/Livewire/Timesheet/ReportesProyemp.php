@@ -2,20 +2,15 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Exports\ReporteColaboradorTarea;
 use App\Models\Area;
 use App\Models\Empleado;
-use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Exports\ReporteColaboradorTarea;
-use App\Mail\SendFileEmail;
-use Auth;
-use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
-use Storage;
 
 class ReportesProyemp extends Component
 {
@@ -74,15 +69,12 @@ class ReportesProyemp extends Component
         $this->proy_id = $value;
     }
 
-
     public function refreshComponent()
     {
         $this->areas = Area::getAll();
         $this->emp = Empleado::getIdNameAll();
         $this->proy = TimesheetProyecto::getIdNameAll();
     }
-
-
 
     public function render()
     {
@@ -110,6 +102,7 @@ class ReportesProyemp extends Component
     public function exportExcel()
     {
         $export = new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id);
+
         return Excel::download($export, 'reporte_colaborador_tarea.xlsx');
     }
 

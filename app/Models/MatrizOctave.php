@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -34,7 +34,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class MatrizOctave extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
 
     protected $table = 'matriz_octave';
 

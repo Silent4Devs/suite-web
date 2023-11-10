@@ -207,61 +207,61 @@ class DashboardController extends Controller
         foreach ($clientes as $cliente) {
             $sec1 = '
 
-                    <h4 class="card-title graficas_titulos graficas_titulo1">' . $cliente->nombre . '</h4>
+                    <h4 class="card-title graficas_titulos graficas_titulo1">'.$cliente->nombre.'</h4>
                     <div class="row">
                         <div class="col m6">
-                            <strong>ID: </strong>' . $cliente->id . '
+                            <strong>ID: </strong>'.$cliente->id.'
                         </div>
                         <div class="col m6">
-                            <strong>Razón social: </strong>' . $cliente->razon_social . '
+                            <strong>Razón social: </strong>'.$cliente->razon_social.'
                         </div>
                     </div>
                     <div class="row">
                         <div class="col m6">
-                            <strong>Nombre comercial: </strong>' . $cliente->nombre . '
+                            <strong>Nombre comercial: </strong>'.$cliente->nombre.'
                         </div>
                         <div class="col m6">
-                            <strong>RFC: </strong>' . $cliente->rfc . '
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col m6">
-                            <strong>Dirección: </strong>' . $cliente->calle . ', ' . $cliente->colonia . ', ' . $cliente->ciudad . '
-                        </div>
-                        <div class="col m6">
-                            <strong>Código postal: </strong>' . $cliente->codigo_postal . '
+                            <strong>RFC: </strong>'.$cliente->rfc.'
                         </div>
                     </div>
                     <div class="row">
                         <div class="col m6">
-                            <strong>Teléfono: </strong>' . $cliente->telefono . '
+                            <strong>Dirección: </strong>'.$cliente->calle.', '.$cliente->colonia.', '.$cliente->ciudad.'
                         </div>
                         <div class="col m6">
-                            <strong>Página web: </strong>' . $cliente->pagina_web . '
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col m6">
-                            <strong>Nombre completo: </strong>' . $cliente->nombre_completo . '
-                        </div>
-                        <div class="col m6">
-                            <strong>Puesto: </strong>' . $cliente->puesto . '
+                            <strong>Código postal: </strong>'.$cliente->codigo_postal.'
                         </div>
                     </div>
                     <div class="row">
                         <div class="col m6">
-                            <strong>Correo: </strong>' . $cliente->correo . '
+                            <strong>Teléfono: </strong>'.$cliente->telefono.'
                         </div>
                         <div class="col m6">
-                            <strong>Celular: </strong>' . $cliente->celular . '
+                            <strong>Página web: </strong>'.$cliente->pagina_web.'
                         </div>
                     </div>
                     <div class="row">
                         <div class="col m6">
-                            <strong>Descripción: </strong>' . $cliente->objeto_descripcion . '
+                            <strong>Nombre completo: </strong>'.$cliente->nombre_completo.'
                         </div>
                         <div class="col m6">
-                            <strong>Cobertura: </strong>' . $cliente->cobertura . '
+                            <strong>Puesto: </strong>'.$cliente->puesto.'
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m6">
+                            <strong>Correo: </strong>'.$cliente->correo.'
+                        </div>
+                        <div class="col m6">
+                            <strong>Celular: </strong>'.$cliente->celular.'
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m6">
+                            <strong>Descripción: </strong>'.$cliente->objeto_descripcion.'
+                        </div>
+                        <div class="col m6">
+                            <strong>Cobertura: </strong>'.$cliente->cobertura.'
                         </div>
                     </div>
 
@@ -291,7 +291,7 @@ class DashboardController extends Controller
         $res .= $sec3;
         foreach ($clientesContratos as $clienteContrato) {
             $sec4 =
-                '<option value="' . $clienteContrato->id . '">Contrato: ' . $clienteContrato->no_contrato . ' ' . $clienteContrato->nombre_servicio . ' </option>
+                '<option value="'.$clienteContrato->id.'">Contrato: '.$clienteContrato->no_contrato.' '.$clienteContrato->nombre_servicio.' </option>
                 ';
             $res .= $sec4;
         }

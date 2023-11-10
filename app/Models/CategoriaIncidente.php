@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoriaIncidente extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'categorias_incidentes';
 

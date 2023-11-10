@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Documento extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory, SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     //REVISION DE DOCUMENTOS ESTATUS
     const SOLICITUD_REVISION = 1;
@@ -82,7 +81,7 @@ class Documento extends Model implements Auditable
 
     public static function getWithMacroproceso($empleado_id)
     {
-        return Cache::remember('Documentos:Documentos_all_macroprocesos_' . $empleado_id, 3600 * 4, function () use ($empleado_id) {
+        return Cache::remember('Documentos:Documentos_all_macroprocesos_'.$empleado_id, 3600 * 4, function () use ($empleado_id) {
             return self::where('elaboro_id', $empleado_id)->get();
         });
     }
@@ -184,7 +183,7 @@ class Documento extends Model implements Auditable
                 break;
         }
 
-        return asset($path_documento . '/' . $this->archivo);
+        return asset($path_documento.'/'.$this->archivo);
     }
 
     //Relacion uno a muchos inversa

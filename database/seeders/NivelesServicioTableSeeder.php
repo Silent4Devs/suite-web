@@ -17,7 +17,7 @@ class NivelesServicioTableSeeder extends Seeder
 
         \DB::table('niveles_servicio')->insert([
             0 => [
-                            'contrato_id' => 2,
+                'contrato_id' => 2,
                 'nombre' => 'Servicio Administrativo del Centro de Operaciones  de Seguridad (SOC)',
                 'metrica' => 'Es el tiempo que transcurre desde que se atiende el reporte hasta que se solucionará. El tiempo de respuesta máximo es de 3 hrs a partir que se recibe la primera respuesta.',
                 'meta' => '100',
@@ -38,7 +38,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             1 => [
-                            'contrato_id' => 2,
+                'contrato_id' => 2,
                 'nombre' => 'Gestión de incidentes de seguridad',
                 'metrica' => 'Es el tiempo que transcurre desde que se atiende el reporte hasta que se solucione.',
                 'meta' => '100',
@@ -56,7 +56,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             2 => [
-                            'contrato_id' => 4,
+                'contrato_id' => 4,
                 'nombre' => 'Gestión de Cambios',
                 'metrica' => 'Tiempo de aplicación de cambios',
                 'meta' => '100',
@@ -73,7 +73,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             3 => [
-                            'contrato_id' => 4,
+                'contrato_id' => 4,
                 'nombre' => 'Gestión de Incidentes',
                 'metrica' => 'Envio de notificación si la actividad sospechosa que se haya presentado sobre la infraestructura',
                 'meta' => '100',
@@ -90,7 +90,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             4 => [
-                            'contrato_id' => 4,
+                'contrato_id' => 4,
                 'nombre' => 'Atención y Solución de las incidencias o problemas con prioridad Alta.',
                 'metrica' => 'No de incidentes solucionados en tiempo/total de incidentes presentados x 100',
                 'meta' => '100',
@@ -107,7 +107,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             5 => [
-                            'contrato_id' => 4,
+                'contrato_id' => 4,
                 'nombre' => 'Disponibilidad de la Infraestructura',
                 'metrica' => 'Disponibilidad de los servicios asociados a los componentes habilitadores del servicio',
                 'meta' => '100',
@@ -124,7 +124,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             6 => [
-                            'contrato_id' => 4,
+                'contrato_id' => 4,
                 'nombre' => 'Entregables',
                 'metrica' => 'Entrega oportuna de los reportes mensuales',
                 'meta' => '100',
@@ -141,7 +141,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             7 => [
-                            'contrato_id' => 8,
+                'contrato_id' => 8,
                 'nombre' => 'Servicio Administrado de Centro de Operaciones de Seguridad. Tiempo de atención',
                 'metrica' => '1ra. respuesta vía telefónica 5 min y 20 min 1ra. respuesta vía correo electrónico ',
                 'meta' => '100',
@@ -158,7 +158,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             8 => [
-                            'contrato_id' => 8,
+                'contrato_id' => 8,
                 'nombre' => 'Servicio Administrado de Centro de Operaciones de Seguridad (SOC) Tiempo de solución.',
                 'metrica' => 'Tiempo máximo 3hrs a partir de que se recibe la 1ra. respuesta',
                 'meta' => '100',

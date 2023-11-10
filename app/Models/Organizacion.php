@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
 
 // use App\Models\Schedule;
 
@@ -38,8 +38,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Organizacion extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'organizacions';
 
@@ -125,7 +125,7 @@ class Organizacion extends Model implements Auditable
     {
         $logotipo = asset('img/logo_policromatico_2.png');
         if ($value) {
-            $logotipo = asset('storage/images/' . $value);
+            $logotipo = asset('storage/images/'.$value);
         }
 
         return $logotipo;

@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Jenssegers\Date\Date;
-use App\Traits\DateTranslator;
 use App\Traits\ClearsResponseCache;
+use App\Traits\DateTranslator;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Jenssegers\Date\Date;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class CursosDiplomasEmpleados extends Model implements Auditable
 {
-    use SoftDeletes;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use DateTranslator;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use SoftDeletes;
 
     protected $table = 'cursos_diplomados_empleados';
 
@@ -71,7 +71,7 @@ class CursosDiplomasEmpleados extends Model implements Auditable
 
     public function getRutaDocumentoAttribute()
     {
-        return asset('storage/cursos_empleados/') . '/' . $this->file;
+        return asset('storage/cursos_empleados/').'/'.$this->file;
     }
 
     public function getYearYmdAttribute()

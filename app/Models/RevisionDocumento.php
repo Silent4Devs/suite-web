@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class RevisionDocumento extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory, SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     const ARCHIVADO = '1';
 
@@ -36,7 +36,7 @@ class RevisionDocumento extends Model implements Auditable
 
     public static function getAllWithDocumento()
     {
-        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos_' . User::getCurrentUser()->empleado->id, 3600 * 8, function () {
+        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos_'.User::getCurrentUser()->empleado->id, 3600 * 8, function () {
             return self::with('documento')->where('empleado_id', User::getCurrentUser()->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
         });
     }

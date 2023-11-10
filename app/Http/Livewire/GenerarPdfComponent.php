@@ -45,7 +45,7 @@ class GenerarPdfComponent extends Component
         $logotipo = '';
         if (isset($organizacion)) {
             if ($organizacion->logotipo != null) {
-                $logotipo = 'images/' . $organizacion->logotipo;
+                $logotipo = 'images/'.$organizacion->logotipo;
             } else {
                 $logotipo = 'img/Silent4Business-Logo-Color.png';
             }
@@ -53,7 +53,7 @@ class GenerarPdfComponent extends Component
             $logotipo = 'img/Silent4Business-Logo-Color.png';
         }
 
-        if (!$organizacion) {
+        if (! $organizacion) {
             $this->emit('showErrorAlert', 'Aún no has registrado tu organización');
 
             return response()->noContent();
@@ -61,7 +61,7 @@ class GenerarPdfComponent extends Component
 
         $matriz_requisitos_legales = MatrizRequisitoLegale::get();
         $foda = EntendimientoOrganizacion::first();
-        if (!$foda) {
+        if (! $foda) {
             $this->emit('showErrorAlert', 'Aún no has realizado en análisis FODA');
 
             return response()->noContent();
@@ -72,13 +72,13 @@ class GenerarPdfComponent extends Component
         switch ($valor) {
             case 'Contexto de la organización':
                 $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
-                if (!$control_documento) {
-                    $this->emit('showErrorAlert', 'No existe el control de documento:' . $control_documento->nombre);
+                if (! $control_documento) {
+                    $this->emit('showErrorAlert', 'No existe el control de documento:'.$control_documento->nombre);
 
                     return response()->noContent();
                 } else {
                     if (is_null($control_documento->clave) || is_null($control_documento->fecha_creacion) || is_null($control_documento->elaboro_id) || is_null($control_documento->reviso_id)) {
-                        $this->emit('showErrorAlert', 'Tienes que llenar los campos faltantes del control de documento: ' . $control_documento->nombre);
+                        $this->emit('showErrorAlert', 'Tienes que llenar los campos faltantes del control de documento: '.$control_documento->nombre);
 
                         return response()->noContent();
                     }
@@ -86,13 +86,13 @@ class GenerarPdfComponent extends Component
                         'version' => $control_documento->version + 1,
                         'estado_id' => 4,
                     ]);
-                    $file = 'Contexto de la organización v' . $control_documento->version . '.pdf';
+                    $file = 'Contexto de la organización v'.$control_documento->version.'.pdf';
 
                     $pdf = App::make('dompdf.wrapper');
                     $pdf->loadView('PDF.contexto.contexto', compact('control_documento', 'logotipo', 'organizacion', 'matriz_requisitos_legales', 'foda', 'partes_interesadas', 'pdf'));
                     $content = $pdf->download()->getOriginalContent();
-                    Storage::disk('Iso27001')->put('/' . $file, $content);
-                    $filename = 'Contexto de la organización v' . $control_documento->version . '.docx';
+                    Storage::disk('Iso27001')->put('/'.$file, $content);
+                    $filename = 'Contexto de la organización v'.$control_documento->version.'.docx';
                     $this->generarWord('contexto', $filename, $organizacion, $logotipo, $matriz_requisitos_legales, $foda, $partes_interesadas, $control_documento);
 
                     $this->emit('showSuccessAlert', 'Documento PDF y Word generados con éxito');
@@ -103,7 +103,7 @@ class GenerarPdfComponent extends Component
                 $this->emit('showSuccessAlert', 'En construcción');
                 break;
             default:
-                $this->emit('showErrorAlert', 'Algo salió, no existe el control de documento con el nombre: ' . $this->nombre_documento);
+                $this->emit('showErrorAlert', 'Algo salió, no existe el control de documento con el nombre: '.$this->nombre_documento);
                 break;
         }
 
@@ -115,14 +115,14 @@ class GenerarPdfComponent extends Component
         switch ($valor) {
             case 'contexto':
                 $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
-                if (!$control_documento) {
+                if (! $control_documento) {
                     session()->flash('error_control_documento', 'No existe el control de documento: Contexto de la organización');
 
                     return response()->noContent();
                 } else {
                     $documento = $this->generarEstudioContexto($file_name, $organizacion, $logotipo, $matriz_requisitos_legales, $foda, $partes_interesadas, $control_documento);
                     $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');
-                    $objWriter->save(storage_path('app/public/Normas/ISO27001/') . $file_name);
+                    $objWriter->save(storage_path('app/public/Normas/ISO27001/').$file_name);
                     // session()->flash('success', 'Archivo Word Generado con éxito');
                     $this->emit('showSuccessAlert', 'Archivo Word Generado con éxito');
                 }
@@ -143,8 +143,8 @@ class GenerarPdfComponent extends Component
         //     return response()->noContent();
         // }
 
-        $texto_encabezado = $control_documento->clave . self::NUEVA_LINEA . self::NUEVA_LINEA . 'Versión: '
-            . $control_documento->version . self::NUEVA_LINEA . self::NUEVA_LINEA .
+        $texto_encabezado = $control_documento->clave.self::NUEVA_LINEA.self::NUEVA_LINEA.'Versión: '
+            .$control_documento->version.self::NUEVA_LINEA.self::NUEVA_LINEA.
             Carbon::now()->format('d-m-Y');
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -157,7 +157,7 @@ class GenerarPdfComponent extends Component
         $propiedades->setTitle('Estudio de Contexto');
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-        header('Content-Disposition: attachment; filename=' . $filename);
+        header('Content-Disposition: attachment; filename='.$filename);
 
         $texto_negrita = ['bold' => true, 'color' => '000000'];
         $texto_alinear_centro = ['alignment' => Jc::CENTER];
@@ -230,13 +230,13 @@ class GenerarPdfComponent extends Component
         // INTRODUCCION
         $section->addPageBreak();
         $section->addTitle('Introducción', 1);
-        $texto_introduccion = $organizacion->empresa . ' determinará a través de este documento las cuestiones externas e internas que son pertinentes para su propósito y que afectan su capacidad para lograr los resultados previstos de su Sistema de Gestión de Seguridad de la Información (SGSI) para entender su contexto en las dos perspectivas mencionadas.';
+        $texto_introduccion = $organizacion->empresa.' determinará a través de este documento las cuestiones externas e internas que son pertinentes para su propósito y que afectan su capacidad para lograr los resultados previstos de su Sistema de Gestión de Seguridad de la Información (SGSI) para entender su contexto en las dos perspectivas mencionadas.';
         $section->addText($texto_introduccion, null, $texto_justificado);
 
         //OBJETIVO
         $section->addTextBreak(1);
         $section->addTitle('Objetivo', 1);
-        $texto_objetivo = 'Establecer en' . $organizacion->empresa . ' el contexto del SGSI en cumplimiento de los requisitos de la norma ISO 27001 recogidos en la cláusula 4 de la Norma.';
+        $texto_objetivo = 'Establecer en'.$organizacion->empresa.' el contexto del SGSI en cumplimiento de los requisitos de la norma ISO 27001 recogidos en la cláusula 4 de la Norma.';
         $section->addText($texto_objetivo, null, $texto_justificado);
 
         // DEFINICIONES
@@ -257,7 +257,7 @@ class GenerarPdfComponent extends Component
         $table_definiciones->addCell(4000, $secundario_tabla)->addText('Contexto Externo');
         $contexto_externo_it = $table_definiciones->addCell(10000);
         $contexto_externo_it
-            ->addText('Entorno externo en el que la organización busca alcanzar sus objetivos.' . self::NUEVA_LINEA . '
+            ->addText('Entorno externo en el que la organización busca alcanzar sus objetivos.'.self::NUEVA_LINEA.'
                                                  El contexto externo puede incluir:', null, $texto_justificado);
         $contexto_externo_it->addListItem('El entorno cultural, social, político, jurídico, reglamentario, financiero, tecnológico, económico, natural y competitivo, ya sea internacional, nacional, regional o local.');
         $contexto_externo_it->addListItem('Influencias y tendencias clave que tienen impacto en los objetivos de la organización.');
@@ -319,7 +319,7 @@ class GenerarPdfComponent extends Component
         $table_generales->addCell(9000)->addText($organizacion->servicios, null, $texto_justificado);
 
         $section->addTitle('Antecedentes', 2);
-        $section->addText('En este apartado describiremos los antecedentes de ' . $organizacion->empresa, null, $texto_justificado);
+        $section->addText('En este apartado describiremos los antecedentes de '.$organizacion->empresa, null, $texto_justificado);
         $section->addText($organizacion->antecedentes, null, $texto_justificado);
         $section->addTitle('Misión', 2);
         $section->addText($organizacion->mision, null, $texto_justificado);
@@ -329,7 +329,7 @@ class GenerarPdfComponent extends Component
         // MARCO LEGAL Y REGULATORIO
         $section->addTextBreak(1);
         $section->addTitle('Marco Legal y Regulatorio', 1);
-        $section->addText('A continuación, se enlistan los requisitos legales, regulatorios y de otros tipos aplicables para establecer, implantar y mantener el SGSI en ' . $organizacion->empresa, null, $texto_justificado);
+        $section->addText('A continuación, se enlistan los requisitos legales, regulatorios y de otros tipos aplicables para establecer, implantar y mantener el SGSI en '.$organizacion->empresa, null, $texto_justificado);
         $phpWord->addTableStyle('tabla_marco_legal', $tableStyle, $encabezado_tabla);
         $table_marco_legal = $section->addTable('tabla_marco_legal');
         $table_marco_legal->addRow();
@@ -373,7 +373,7 @@ class GenerarPdfComponent extends Component
         // Factores Internos y Externos
         $section->addTextBreak(1);
         $section->addTitle('Factores Internos y Externos', 1);
-        $section->addText($organizacion->empresa . ' determina las cuestiones externas e internas que son pertinentes para su propósito y que afectan su capacidad para lograr los resultados previstos en su Sistema de Gestión de Seguridad de la Información (SGSI). Para este fin se emplea la metodología FODA.', null, $texto_justificado);
+        $section->addText($organizacion->empresa.' determina las cuestiones externas e internas que son pertinentes para su propósito y que afectan su capacidad para lograr los resultados previstos en su Sistema de Gestión de Seguridad de la Información (SGSI). Para este fin se emplea la metodología FODA.', null, $texto_justificado);
         $phpWord->addTableStyle('tabla_foda', $tableStyle);
         $table_foda = $section->addTable('tabla_foda');
         $table_foda->addRow();
@@ -400,7 +400,7 @@ class GenerarPdfComponent extends Component
         // Determinación de las partes interesadas
         $section->addTextBreak(1);
         $section->addTitle('Determinación de las partes interesadas', 1);
-        $section->addText($organizacion->empresa . ' determina las partes interesadas que son relevantes para el SGSI, tomando en cuenta los requisitos de cumplimiento legal y regulatorio, así como obligaciones contractuales.', null, $texto_justificado);
+        $section->addText($organizacion->empresa.' determina las partes interesadas que son relevantes para el SGSI, tomando en cuenta los requisitos de cumplimiento legal y regulatorio, así como obligaciones contractuales.', null, $texto_justificado);
         $phpWord->addTableStyle('tabla_partes_interesadas', $tableStyle);
         $table_partes_interesadas = $section->addTable('tabla_partes_interesadas');
         $table_partes_interesadas->addRow();
@@ -427,7 +427,7 @@ class GenerarPdfComponent extends Component
         $section->addTextBreak(1);
         $section->addTitle('Determinación del alcance del Sistema de Gestión de la Seguridad de la Información', 1);
         $section->addText(
-            $organizacion->empresa . ' determina los límites y la aplicabilidad del Sistema de Gestión de la Seguridad de la Información para establecer su alcance:',
+            $organizacion->empresa.' determina los límites y la aplicabilidad del Sistema de Gestión de la Seguridad de la Información para establecer su alcance:',
             null,
             $texto_justificado
         );

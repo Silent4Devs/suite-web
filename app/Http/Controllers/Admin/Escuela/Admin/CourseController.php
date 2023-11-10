@@ -21,7 +21,7 @@ class CourseController extends Controller
 
     public function approved(Course $course)
     {
-        if (!$course->lessons || !$course->goals || !$course->requirements || !$course->image) {
+        if (! $course->lessons || ! $course->goals || ! $course->requirements || ! $course->image) {
             return back()->with('info', 'No se puede publicar un curso que no este completo');
         }
 
