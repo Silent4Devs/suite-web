@@ -60,7 +60,7 @@ for service_name in $(docker compose config --services); do
         continue
     fi
     image_id=$(docker compose images -q "$service_name")
-    image_name=$(docker image inspect --format '{{json .RepoTags}}' "$image_id" | jq -r '.[0]')
+    # image_name=$(docker image inspect --format '{{json .RepoTags}}' "$image_id" | jq -r '.[0]')
     container_id=$(docker compose ps -q "$service_name")
 
     service_dir="$backup_dir/$service_name"
@@ -68,8 +68,8 @@ for service_name in $(docker compose config --services); do
     mkdir -p "$service_dir"
 
     # save image
-    echo "    - Saving $image_name image to ./$service_name/image.tar"
-    docker save --output "$service_dir/image.tar" "$image_id"
+    # echo "    - Saving $image_name image to ./$service_name/image.tar"
+    # docker save --output "$service_dir/image.tar" "$image_id"
 
     if [[ -z "$container_id" ]]; then
         echo "    - Warning: $service_name has no container yet."
