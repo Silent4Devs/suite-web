@@ -159,7 +159,6 @@
                     </tbody>
                 </table>
             </div>
-            {{ $planImplementacions->links() }}
         </div>
     </div>
 @endsection
