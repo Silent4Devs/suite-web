@@ -30,7 +30,8 @@
                             <td>{{ $plan->objetivo }}</td>
                             <td>
                                 @if ($plan->elaboro_id)
-                                    {{ $plan->elaboro->name }}
+                                    {{--  {{ $plan->elaboro->name }}  --}}
+                                    <span class="badge badge-primary">Elaborado por: {{ $plan->elaboro_id }}</span>
                                 @else
                                     <span class="badge badge-primary">Elaborado por el sistema</span>
                                 @endif
