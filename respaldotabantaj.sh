@@ -59,15 +59,15 @@ for service_name in $(docker compose config --services); do
     if [ "$service_name" == "elastic-search-tabantaj" ] || [ "$service_name" == "elasticsearch-logs-tabantaj" ] || [ "$service_name" == "pgadmin-tabantaj" ] || [ "$service_name" == "redis-tabantaj" ] || [ "$service_name" == "rdadmin-tabantaj" ] || [ "$service_name" == "prometheus-tabantaj" ] || [ "$service_name" == "prometheus-node-exporter-tabantaj" ] || [ "$service_name" == "redis-exporter-tabantaj" ] || [ "$service_name" == "nginx-exporter-tabantaj" ] || [ "$service_name" == "postgres-exporter-tabantaj" ] || [ "$service_name" == "grafana-tabantaj" ] || [ "$service_name" == "elastic-search-tabantaj" ] || [ "$service_name" == "logstash-tabantaj" ]; then
         continue
     fi
-    image_id=$(docker compose images -q "$service_name")
-    # image_name=$(docker image inspect --format '{{json .RepoTags}}' "$image_id" | jq -r '.[0]')
-    container_id=$(docker compose ps -q "$service_name")
+    # image_id=$(docker compose images -q "$service_name")
+    # # image_name=$(docker image inspect --format '{{json .RepoTags}}' "$image_id" | jq -r '.[0]')
+    # container_id=$(docker compose ps -q "$service_name")
 
     service_dir="$backup_dir/$service_name"
-    echo "[*] Backing up ${project_name}__${service_name} to ./$service_name..."
-    mkdir -p "$service_dir"
+    # echo "[*] Backing up ${project_name}__${service_name} to ./$service_name..."
+    # mkdir -p "$service_dir"
 
-    # save image
+    # # save image
     # echo "    - Saving $image_name image to ./$service_name/image.tar"
     # docker save --output "$service_dir/image.tar" "$image_id"
 
