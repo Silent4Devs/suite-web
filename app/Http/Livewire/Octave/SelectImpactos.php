@@ -26,19 +26,19 @@ class SelectImpactos extends Component
 
     public function mount($operacionalId, $cumplimientoId, $legalId, $reputacionalId, $tecnologicoId)
     {
-        if (!is_null($operacionalId)) {
+        if (! is_null($operacionalId)) {
             $this->operacionalId = $operacionalId;
         }
-        if (!is_null($cumplimientoId)) {
+        if (! is_null($cumplimientoId)) {
             $this->cumplimientoId = $cumplimientoId;
         }
-        if (!is_null($legalId)) {
+        if (! is_null($legalId)) {
             $this->legalId = $legalId;
         }
-        if (!is_null($reputacionalId)) {
+        if (! is_null($reputacionalId)) {
             $this->reputacionalId = $reputacionalId;
         }
-        if (!is_null($tecnologicoId)) {
+        if (! is_null($tecnologicoId)) {
             $this->tecnologicoId = $tecnologicoId;
         }
         $this->calcularValor();

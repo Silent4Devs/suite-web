@@ -6,11 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProveedoresRequest;
 use App\Models\ContractManager\Fiscale;
 use App\Models\ContractManager\Proveedores;
-use App\Models\Organizacion;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Traits\ObtenerOrganizacion;
 
 class ProveedoresController extends Controller
 {

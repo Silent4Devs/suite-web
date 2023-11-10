@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 class CursoEstudiante extends Controller
 {
     public $category_id;
+
     public $level_id;
 
     /**

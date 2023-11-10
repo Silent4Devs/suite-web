@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Http\Livewire\ISO31000\ActivosInformacion;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use App\Http\Livewire\ISO31000\ActivosInformacion;
 
 class MatrizOctaveProceso extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
 
     protected $table = 'matriz_octave_procesos';
 

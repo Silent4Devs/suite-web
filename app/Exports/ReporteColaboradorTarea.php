@@ -3,19 +3,21 @@
 namespace App\Exports;
 
 use App\Models\TimesheetHoras;
-use Cache;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Carbon\Carbon;
-
 
 class ReporteColaboradorTarea implements FromCollection, WithHeadings
 {
-    public  $fecha_inicio;
-    public  $fecha_fin;
-    public  $area_id;
-    public  $emp_id;
-    public  $proy_id;
+    public $fecha_inicio;
+
+    public $fecha_fin;
+
+    public $area_id;
+
+    public $emp_id;
+
+    public $proy_id;
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -43,7 +45,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
             }
         })->get()->map(function ($timesheetHora) {
             return [
-                'Fecha Día' =>  \Carbon\Carbon::parse($timesheetHora->timesheet->fecha_dia)->format('d/m/Y'),
+                'Fecha Día' => \Carbon\Carbon::parse($timesheetHora->timesheet->fecha_dia)->format('d/m/Y'),
                 'Empleado' => $timesheetHora->timesheet->empleado->name,
                 'Supervisor' => $timesheetHora->timesheet->aprobador->name,
                 'Proyecto' => $timesheetHora->proyecto->proyecto,
@@ -53,7 +55,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
             ];
         });
 
-        return  $query;
+        return $query;
     }
 
     public function headings(): array

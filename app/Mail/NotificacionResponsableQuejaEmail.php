@@ -34,6 +34,6 @@ class NotificacionResponsableQuejaEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.accioncorrectiva.notificacion-responsable')->subject('Solicitud de atención de la queja con folio ' . $this->quejas->folio);
+        return $this->view('mails.accioncorrectiva.notificacion-responsable')->subject('Solicitud de atención de la queja con folio '.$this->quejas->folio);
     }
 }

@@ -225,7 +225,7 @@ class PuestosController extends Controller
         abort_if(Gate::denies('puestos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto->update($request->all());
         $request->validate([
-            'puesto' => 'required|unique:puestos,puesto,' . $puesto->id,
+            'puesto' => 'required|unique:puestos,puesto,'.$puesto->id,
         ]);
         // $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
         // $this->saveOrUpdateLanguage($request, $puesto);
@@ -284,7 +284,7 @@ class PuestosController extends Controller
 
     public function saveOrUpdateLanguage($languajes, $puesto)
     {
-        if (!is_null($languajes)) {
+        if (! is_null($languajes)) {
             foreach ($languajes as $languaje) {
                 // dd($languaje);
                 // dd(PuestoResponsabilidade::exists($languaje['id']));
@@ -320,7 +320,7 @@ class PuestosController extends Controller
 
     public function saveUpdateResponsabilidades($responsabilidades, $puesto)
     {
-        if (!is_null($responsabilidades)) {
+        if (! is_null($responsabilidades)) {
             foreach ($responsabilidades as $responsabilidad) {
                 // dd($responsabilidad);
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
@@ -355,7 +355,7 @@ class PuestosController extends Controller
 
     public function saveUpdateCertificados($certificados, $puesto)
     {
-        if (!is_null($certificados)) {
+        if (! is_null($certificados)) {
             foreach ($certificados as $certificado) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (PuestosCertificado::find($certificado['id']) != null) {
@@ -385,7 +385,7 @@ class PuestosController extends Controller
 
     public function saveUpdateHerramientas($herramientas, $puesto)
     {
-        if (!is_null($herramientas)) {
+        if (! is_null($herramientas)) {
             foreach ($herramientas as $herramienta) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (HerramientasPuestos::find($herramienta['id']) != null) {
@@ -415,7 +415,7 @@ class PuestosController extends Controller
 
     public function saveUpdateContactos($contactos, $puesto)
     {
-        if (!is_null($contactos)) {
+        if (! is_null($contactos)) {
             foreach ($contactos as $contacto) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (PuestoContactos::find($contacto['id']) != null) {
@@ -445,7 +445,7 @@ class PuestosController extends Controller
 
     public function saveUpdateContactosExternos($externos, $puesto)
     {
-        if (!is_null($externos)) {
+        if (! is_null($externos)) {
             foreach ($externos as $externo) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (ContactosExternosPuestos::find($externo['id']) != null) {

@@ -3,20 +3,23 @@
 namespace App\Models\Escuela;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model
 {
-    use SoftDeletes, ClearsResponseCache;
+    use ClearsResponseCache, SoftDeletes;
     use HasFactory;
 
     protected $guarded = ['id', 'status'];
+
     protected $withCount = ['students', 'reviews'];
 
     const BORRADOR = 1;
+
     const REVISION = 2;
+
     const PUBLICADO = 3;
 
     // Calificación del curso

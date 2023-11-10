@@ -8,7 +8,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class DocumentoComunicacionSgis extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+
     public $table = 'documentos_comunicacion_sgis';
 
     protected $dates = [

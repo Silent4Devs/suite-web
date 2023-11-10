@@ -10,7 +10,6 @@ class PoliticaSgsiObserver
     /**
      * Handle the PoliticaSgsi "created" event.
      *
-     * @param  \App\Models\PoliticaSgsi  $politicaSgsi
      * @return void
      */
     public function created(PoliticaSgsi $politicaSgsi)
@@ -21,7 +20,6 @@ class PoliticaSgsiObserver
     /**
      * Handle the PoliticaSgsi "updated" event.
      *
-     * @param  \App\Models\PoliticaSgsi  $politicaSgsi
      * @return void
      */
     public function updated(PoliticaSgsi $politicaSgsi)
@@ -32,7 +30,6 @@ class PoliticaSgsiObserver
     /**
      * Handle the PoliticaSgsi "deleted" event.
      *
-     * @param  \App\Models\PoliticaSgsi  $politicaSgsi
      * @return void
      */
     public function deleted(PoliticaSgsi $politicaSgsi)
@@ -43,7 +40,6 @@ class PoliticaSgsiObserver
     /**
      * Handle the PoliticaSgsi "restored" event.
      *
-     * @param  \App\Models\PoliticaSgsi  $politicaSgsi
      * @return void
      */
     public function restored(PoliticaSgsi $politicaSgsi)
@@ -54,7 +50,6 @@ class PoliticaSgsiObserver
     /**
      * Handle the PoliticaSgsi "force deleted" event.
      *
-     * @param  \App\Models\PoliticaSgsi  $politicaSgsi
      * @return void
      */
     public function forceDeleted(PoliticaSgsi $politicaSgsi)

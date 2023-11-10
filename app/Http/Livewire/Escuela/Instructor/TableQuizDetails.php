@@ -9,12 +9,19 @@ use Livewire\Component;
 class TableQuizDetails extends Component
 {
     public $course;
+
     public $students;
+
     public $evaluations;
+
     public $evaluation = null;
+
     public $evaluation_id;
+
     public $user_id;
+
     public $user;
+
     protected $listeners = ['render'];
 
     public function mount($course_id)

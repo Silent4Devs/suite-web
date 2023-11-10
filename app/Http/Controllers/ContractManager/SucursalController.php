@@ -53,7 +53,6 @@ class SucursalController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -72,7 +71,7 @@ class SucursalController extends Controller
             $file = $request->file('mylogo');
 
             if ($file != null) {
-                $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
+                $nombre = uniqid().'.'.$file->getClientOriginalExtension();
                 $file->move(base_path('public/razon_social'), $nombre);
                 $sucursales->mylogo = $nombre;
                 $sucursales->save();
@@ -82,7 +81,8 @@ class SucursalController extends Controller
             return redirect('/contract_manager/sucursales');
         } catch (QueryException $e) {
             DB::rollback();
-            return "Error al insertar el proveedor: " . $e->getMessage();
+
+            return 'Error al insertar el proveedor: '.$e->getMessage();
         }
     }
 
@@ -114,7 +114,6 @@ class SucursalController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -134,7 +133,7 @@ class SucursalController extends Controller
         $file = $request->file('mylogo');
 
         if ($file != null) {
-            $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
+            $nombre = uniqid().'.'.$file->getClientOriginalExtension();
             $file->move(base_path('public/razon_social'), $nombre);
 
             $sucursal->update([
@@ -143,9 +142,9 @@ class SucursalController extends Controller
                 'empresa' => $request->empresa,
                 'cuenta_contable' => $request->cuenta_contable,
                 'estado' => $request->estado,
-                'zona' =>  $request->zona,
-                'direccion' =>  $request->direccion,
-                'mylogo' =>   $nombre,
+                'zona' => $request->zona,
+                'direccion' => $request->direccion,
+                'mylogo' => $nombre,
             ]);
         }
 
