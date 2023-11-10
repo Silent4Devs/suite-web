@@ -35,9 +35,9 @@ class PlanesAccionController extends Controller
         // });
         // $merged = $iso2007->concat($iso9001);
 
-        // if ($request->ajax()) {
-        //     return datatables()->of($iso2007)->toJson();
-        // }
+        if ($request->ajax()) {
+            return datatables()->of($iso2007)->toJson();
+        }
 
         return view('admin.planesDeAccion.index', compact('iso2007'));
     }
