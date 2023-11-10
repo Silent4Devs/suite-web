@@ -21,29 +21,53 @@
         }
 
         .encabezado {
-            background-color: rgb(43, 102, 157);
+            background: #306BA9 0% 0% no-repeat padding-box;
+            border-radius: 10px 10px 0px 0px;
+            opacity: 1;
             color: white;
-            margin-top: -10px;
+        }
+
+        .card {
+            border-radius: 14px;
+            box-shadow: 0px 1px 4px #0000000F;
+            opacity: 1;
+        }
+
+        .form-control {
+            background: #F8FAFC 0% 0% no-repeat padding-box;
+        }
+
+        .color-picker {
+            margin-top: 10px;
+        }
+
+        .titulo {
+            font: #2567AE normal 600 18px/#2567AE Segoe UI;
+            letter-spacing: var(--unnamed-character-spacing-0);
+            text-align: left;
+            font: normal normal 600 18px/24px Segoe UI;
+            letter-spacing: 0px;
+            color: #2567AE;
+            opacity: 1;
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Análisis de Brechas - Template</h5>
+    <h5 class="col-12 titulo">Análisis de Brechas - Template</h5>
 
     <div class="card card-body instrucciones">
-        <div class="row">
+        <div class="row no-gutters">
             <div class="col-md-2">
                 <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}"
-                    style="margin: 9px 10px 10px 10px; width: 128px; height: 119px;">
+                    style="width: 128px;
+                height: 119px;">
             </div>
             <div class="col-md-10">
-                <div class="pt-2">
-                    <h5>Crea tu template</h5>
-                    <p class="letra-subtitulo-template mb-2">Genera tus preguntas y personaliza tus campos según lo
-                        requieras
-                    </p>
-                    <p class="letra-subtitulo-template mb-2">Elaboraremos nuestro cuestionario que nos permitirá evaluar el
-                        cumplimiento de nuestra norma seleccionada.</p>
-                </div>
+                <h5>Crea tu template</h5>
+                <p class="letra-subtitulo-template mb-2">Genera tus preguntas y personaliza tus campos según lo
+                    requieras
+                </p>
+                <p class="letra-subtitulo-template mb-2">Elaboraremos nuestro cuestionario que nos permitirá evaluar el
+                    cumplimiento de nuestra norma seleccionada.</p>
             </div>
         </div>
     </div>
