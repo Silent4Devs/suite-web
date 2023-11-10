@@ -34,9 +34,9 @@ class PlanesAccionController extends Controller
         //     return PlanItemIplementacion9001::with('elaborador')->get();
         // });
         // $merged = $$planImplementacions->concat($iso9001);
-        if ($request->ajax()) {
-            return datatables()->of($planImplementacions)->toJson();
-        }
+        // if ($request->ajax()) {
+        //     return datatables()->of($planImplementacions)->toJson();
+        // }
 
         return view('admin.planesDeAccion.index', compact('planImplementacions'));
     }
