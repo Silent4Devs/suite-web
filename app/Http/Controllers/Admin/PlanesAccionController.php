@@ -34,7 +34,6 @@ class PlanesAccionController extends Controller
         //     return PlanItemIplementacion9001::with('elaborador')->get();
         // });
         // $merged = $iso2007->concat($iso9001);
-
         if ($request->ajax()) {
             return datatables()->of($iso2007)->toJson();
         }
