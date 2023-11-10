@@ -22,7 +22,7 @@ class PlanesAccionController extends Controller
      */
     public function index(Request $request)
     {
-        $$planImplementacions = Cache::remember('PlanImplementacion:plan_implementacion_all_where_false', 3600 * 8, function () {
+        $planImplementacions = Cache::remember('PlanImplementacion:plan_implementacion_all_where_false', 3600 * 8, function () {
             return PlanImplementacion::select('id', 'tasks', 'parent', 'norma', 'modulo_origen', 'objetivo', 'elaboro_id', 'es_plan_trabajo_base')->where('es_plan_trabajo_base', false)->with('elaborador')->get();
         });
 
