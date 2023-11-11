@@ -61,7 +61,7 @@
                             <td>
                                 @if ($plan->elaboro_id)
                                     <span class="badge badge-primary">Elaborado por:
-                                        {{ $plan->elaborador->name }}</span>
+                                        {{ $plan->elaborador }}</span>
                                 @else
                                     <span class="badge badge-primary">Elaborado por el sistema</span>
                                 @endif
