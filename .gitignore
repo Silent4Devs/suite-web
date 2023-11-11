@@ -23,7 +23,6 @@ bootstrap/cache/config.php
 composer.lock
 bootstrap/cache/
 storage/debugbar/
-storage/app/public/gantt/
 .php-cs-fixer.cache
 storage/logs/laravel.log
 *.cache
