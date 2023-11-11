@@ -159,7 +159,7 @@
                                     $urlEditarPlanAccion = route('admin.planes-de-accion.edit', $plan);
                                 }
                                 
-                                $urlEliminarPlanAccion = route('admin.planes-de-accion.destroy', $plan);
+                                $urlEliminarPlanAccion = route('admin.planes-de-accion.destroy', $plan->id);
                                 $urlVerPlanAccion = $plan->id == 1 ? route('admin.planTrabajoBase.index') : route('admin.planes-de-accion.show', $plan->id);
                                 ?>
 
