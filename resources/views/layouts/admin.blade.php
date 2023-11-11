@@ -1115,6 +1115,9 @@
 
     @php
         use App\Models\Organizacion;
+        use App\Models\User;
+
+        $usuario = User::getCurrentUser();
 
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
