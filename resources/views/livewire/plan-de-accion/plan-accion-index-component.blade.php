@@ -22,11 +22,11 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
+                    {{--  <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
                         wire:click="exportExcel()">
                         <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                         Exportar Excel
-                    </button>
+                    </button>  --}}
                     <a href="{{ route('admin.planes-de-accion.create') }}" id=""
                         class="btn btn-xs btn-primary">
                         Agregar nuevo </a>
@@ -154,11 +154,11 @@
                                 <?php
                                 $urlVerPlanAccion = '';
                                 $urlEditarPlanAccion = route('admin.planes-de-accion.edit', $plan);
-                                
+
                                 if ($plan->norma == 'ISO 27001') {
                                     $urlEditarPlanAccion = route('admin.planes-de-accion.edit', $plan);
                                 }
-                                
+
                                 $urlEliminarPlanAccion = route('admin.planes-de-accion.destroy', $plan->id);
                                 $urlVerPlanAccion = $plan->id == 1 ? route('admin.planTrabajoBase.index') : route('admin.planes-de-accion.show', $plan->id);
                                 ?>
