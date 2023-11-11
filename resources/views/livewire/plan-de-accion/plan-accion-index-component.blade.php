@@ -27,11 +27,8 @@
                         <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                         Exportar Excel
                     </button>
-                    <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
-                        wire:click="refreshComponent">
-                        <i class="fas fa-search" style="font-size: 1.1rem;"></i>
-                        &nbsp;&nbsp; Buscar
-                    </button>
+                    <a href="{{ route('admin.planes-de-accion.create') }}" id=""
+                        class="btn-xs btn-outline-success rounded ml-2 pr-3"> Agregar nuevo </a>
                 </div>
             </div>
         </div>
