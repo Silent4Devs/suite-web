@@ -71,7 +71,6 @@ class TablaTareasTimesheet extends Component
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
 
-
         return view('livewire.timesheet.tabla-tareas-timesheet');
     }
 
