@@ -59,12 +59,14 @@
                             <td>{{ $plan->modulo_origen }}</td>
                             <td>{{ $plan->objetivo }}</td>
                             <td>
-                                @if (!$plan->elaboro_id)
-                                    <span class="badge badge-primary">Elaborado por el sistema</span>
-                                @else
+                                @isset($plan->elaboro_id)
                                     <span class="badge badge-primary">Elaborado por:
                                         {{ $plan->elaborador->name }}</span>
-                                @endif
+                                @endisset
+
+                                @empty($plan->elaboro_id)
+                                    <span class="badge badge-primary">Elaborado por el sistema</span>
+                                @endempty
                             </td>
                             <td>
                                 @if (isset($plan->tasks) && count($plan->tasks) > 0)
