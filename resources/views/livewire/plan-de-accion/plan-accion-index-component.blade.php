@@ -1,10 +1,10 @@
 <div>
     <div class="row w-100 mt-4" style="align-items: end">
-        <div class="col-6">
+        <div class="col-12">
             <div class="row">
-                <div class="col-6">
-                    <div class="row" style="justify-content: center">
-                        <div class="col-3 p-0" style="font-size: 11px;align-self: center">
+                <div class="col-4">
+                    <div class="row" style="justify-content: right">
+                        <div class="p-0" style="font-size: 11px;align-self: right">
                             <p class="m-0">Mostrando</p>
                         </div>
                         <div class="col-4 p-0">
@@ -28,7 +28,8 @@
                         Exportar Excel
                     </button>
                     <a href="{{ route('admin.planes-de-accion.create') }}" id=""
-                        class="btn-xs btn-outline-success rounded ml-2 pr-3"> Agregar nuevo </a>
+                        class="btn btn-xs btn-primary">
+                        Agregar nuevo </a>
                 </div>
             </div>
         </div>
@@ -59,11 +60,12 @@
                             <td>{{ $plan->objetivo }}</td>
                             <td>
                                 @if ($plan->elaboro_id)
-                                    {{--  {{ $plan->elaboro->name }}  --}}
-                                    <span class="badge badge-primary">Elaborado por: {{ $plan->elaboro_id }}</span>
+                                    <span class="badge badge-primary">Elaborado por:
+                                        {{ $plan->elaborador->name ?? 'No disponible' }}</span>
                                 @else
                                     <span class="badge badge-primary">Elaborado por el sistema</span>
                                 @endif
+
                             </td>
                             <td>
                                 @if (isset($plan->tasks) && count($plan->tasks) > 0)
@@ -151,10 +153,10 @@
                             <td>
                                 <?php
                                 $urlVerPlanAccion = '';
-                                $urlEditarPlanAccion = route('admin.planes-de-accion.edit', $plan->id);
+                                $urlEditarPlanAccion = route('admin.planes-de-accion.edit', $plan);
                                 
                                 if ($plan->norma == 'ISO 27001') {
-                                    $urlEditarPlanAccion = route('admin.planes-de-accion.edit', $plan->id);
+                                    $urlEditarPlanAccion = route('admin.planes-de-accion.edit', $plan);
                                 }
                                 
                                 $urlEliminarPlanAccion = route('admin.planes-de-accion.destroy', $plan->id);
