@@ -21,9 +21,6 @@ class PlanesAccionController extends Controller
      */
     public function index(Request $request)
     {
-        $planImplementacions = Cache::remember('PlanImplementacion:plan_implementacion_all_where_false', 3600 * 8, function () {
-            return PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->paginate(20);
-        });
 
         // $iso9001 = Cache::remember('PlanImplementacion:plan_implementacion_9001_all', 3600 * 8, function () {
         //     return PlanItemIplementacion9001::with('elaborador')->get();
@@ -37,7 +34,7 @@ class PlanesAccionController extends Controller
         //     return datatables()->of($planImplementacions)->toJson();
         // }
 
-        return view('admin.planesDeAccion.index', compact('planImplementacions'));
+        return view('admin.planesDeAccion.index');
     }
 
     /**
