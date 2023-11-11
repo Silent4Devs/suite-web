@@ -1115,12 +1115,14 @@
 
     @php
         use App\Models\Organizacion;
+
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
         } else {
             $logotipo = 'logotipo-tabantaj.png';
         }
+
         $hoy_format_global = \Carbon\Carbon::now()->format('d/m/Y');
     @endphp
 
@@ -1225,19 +1227,19 @@
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
-                                @if (auth()->user()->empleado)
+                                @if ($usuario->empleado)
                                     <div style="width: 40px; overflow:hidden;" class="mr-2">
 
                                         <img class="img_empleado" style=""
-                                            src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                            alt="{{ auth()->user()->empleado->name }}">
+                                            src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
+                                            alt="{{ $usuario->empleado->name }}">
                                     </div>
                                     <div class="d-mobile-none">
                                         <span class="mr-2" style="font-weight: bold;">
-                                            {{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->name)[0] : '' }}
+                                            {{ $usuario->empleado ? explode(' ', $usuario->empleado->name)[0] : '' }}
                                         </span>
                                         <p class="m-0" style="font-size: 8px">
-                                            {{ auth()->user()->empleado ? Str::limit(auth()->user()->empleado->puesto, 30, '...') : '' }}
+                                            {{ $usuario->empleado ? Str::limit($usuario->empleado->puesto, 30, '...') : '' }}
                                         </p>
                                     </div>
                                 @else
@@ -1246,7 +1248,7 @@
                             </div>
                         </a>
 
-                        @if (auth()->user()->empleado == null)
+                        @if ($usuario->empleado == null)
                             <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
                                 style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                                 <div class="px-3 mt-1 d-flex justify-content-center">
@@ -1258,9 +1260,9 @@
                                     <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
                                         style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                                         <div class="p-2">
-                                            @if (auth()->user()->empleado)
+                                            @if ($usuario->empleado)
                                                 <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
-                                                    <strong>{{ auth()->user()->empleado->name }}</strong>
+                                                    <strong>{{ $usuario->empleado->name }}</strong>
                                                 </p>
                                             @else
                                                 <i class="fas fa-user-circle iconos_cabecera"
@@ -1443,8 +1445,8 @@
 
     {{-- daterangepicker --}}
     <script>
-        @if (auth()->user()->empleado)
-            window.NotificationUser = {!! json_encode(['user' => auth()->check() ? auth()->user()->empleado->id : null]) !!};
+        @if ($usuario->empleado)
+            window.NotificationUser = {!! json_encode(['user' => auth()->check() ? $usuario->empleado->id : null]) !!};
         @else
             window.NotificationUser = 1
         @endif
@@ -1457,14 +1459,11 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('js')
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
-    {{--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  --}}
     {{-- #lazyload --}}
     {{--  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js">  --}}
     </script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
@@ -1538,12 +1537,6 @@
             $('.c-sidebar-nav').delay(1000).scrollTop(900);
         });
     </script>
-    {{-- lazyload
-          <script>
-        $(function() {
-            $('img').Lazy();
-        });
-    </script>  --}}
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>

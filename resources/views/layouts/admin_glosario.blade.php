@@ -1060,13 +1060,13 @@
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
-                                @if (auth()->user()->empleado)
+                                @if ($usuario->empleado)
                                     <span class="mr-2" style="font-weight: bold;">
-                                        {!! auth()->user()->empleado->saludo !!}
+                                        {!! $usuario->empleado->saludo !!}
                                     </span>
                                     <img class="img_empleado" style=""
-                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                        alt="{{ auth()->user()->empleado->name }}">
+                                        src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
+                                        alt="{{ $usuario->empleado->name }}">
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
@@ -1075,13 +1075,13 @@
                         <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
                             style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                             <div class="p-2">
-                                @if (auth()->user()->empleado)
+                                @if ($usuario->empleado)
                                     {{-- <img class="shadow rounded-circle"
                                         style="max-width: 65px;clip-path: circle(50% at 50% 50%);"
-                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                        src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
                                         alt="" srcset=""> --}}
                                     <p class="m-0 mt-2 text-muted" style="font-size:14px">
-                                        Hola, <strong>{{ auth()->user()->empleado->name }}</strong></p>
+                                        Hola, <strong>{{ $usuario->empleado->name }}</strong></p>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
@@ -1202,7 +1202,7 @@
 
     <script>
         window.Laravel.user = {!! json_encode([
-            'user' => auth()->check() ? auth()->user()->id : null,
+            'user' => auth()->check() ? $usuario->id : null,
         ]) !!};
     </script>
     <script src="//unpkg.com/alpinejs" defer></script>
