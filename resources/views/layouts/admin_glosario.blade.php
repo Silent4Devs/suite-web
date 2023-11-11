@@ -958,6 +958,12 @@
     @livewireStyles
 </head>
 
+@php
+    use App\Models\User;
+
+    $usuario = User::getCurrentUser();
+@endphp
+
 <body class="">
     @include('partials.menu')
     <div class=" c-wrapper">
