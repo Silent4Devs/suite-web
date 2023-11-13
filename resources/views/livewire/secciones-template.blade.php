@@ -8,7 +8,7 @@
                     <div class="form-floating mb-3 ">
                         <input type="text" class="form-control" placeholder="Nombre del Template" id="nombre_template"
                             name="nombre_template" required>
-                        <label for="nombre_template">Nombre del Template</label>
+                        <label for="nombre_template">Nombre del Template <sup>*</sup></label>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -53,20 +53,20 @@
                         <div class="form-floating mb-3 ">
                             <input type="text" id="estatus_1" name="estatus_1" class="form-control"
                                 placeholder="Estatus" required>
-                            <label for="estatus_1">Estatus</label>
+                            <label for="estatus_1">Estatus<sup>*</sup></label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-floating mb-3 ">
                             <input type="number" id="valor_estatus_1" name="valor_estatus_1" class="form-control"
                                 placeholder="Valor" required>
-                            <label for="valor_estatus_1">Valor</label>
+                            <label for="valor_estatus_1">Valor<sup>*</sup></label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-floating mb-3 ">
                             <input type="text" id="descripcion_parametros_1" name="descripcion_parametros_1"
-                                class="form-control" placeholder="Descripción" required>
+                                class="form-control" placeholder="Descripción">
                             <label for="descripcion_parametros_1">Descripción</label>
                         </div>
                     </div>
@@ -82,20 +82,20 @@
                         <div class="form-floating mb-3 ">
                             <input type="text" id="estatus_2" name="estatus_2" class="form-control"
                                 placeholder="Estatus" required>
-                            <label for="estatus_2">Estatus</label>
+                            <label for="estatus_2">Estatus <sup>*</sup></label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-floating mb-3 ">
                             <input type="number" id="valor_estatus_2" name="valor_estatus_2" class="form-control"
                                 placeholder="Valor" required>
-                            <label for="valor_estatus_2">Valor</label>
+                            <label for="valor_estatus_2">Valor <sup>*</sup></label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-floating mb-3 ">
                             <input type="text" id="descripcion_parametros_2" name="descripcion_parametros_2"
-                                class="form-control" placeholder="Descripción" required>
+                                class="form-control" placeholder="Descripción">
                             <label for="descripcion_parametros_2">Descripción</label>
                         </div>
                     </div>
@@ -237,7 +237,7 @@
                         </div>
                     @endif
                     <div class="row" style="justify-content: right;">
-                        <div class="col-2">
+                        <div class="col-3">
                             <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion1">
                                 Añadir Pregunta
                                 <i class="bi bi-plus-circle"></i>
@@ -250,7 +250,7 @@
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="descripcion_s1" name="descripcion_s1" placeholder="Descripcion"
                                     style="height: 150px"></textarea>
-                                <label for="descripcion_s1">Descripción</label>
+                                <label for="descripcion_s1">Descripción <sup>*</sup></label>
                             </div>
                         </div>
                     </div>
@@ -280,7 +280,7 @@
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="pregunta1" name="pregunta1" placeholder="Pregunta" style="height: 76px;"
                                     required></textarea>
-                                <label for="pregunta1">Pregunta</label>
+                                <label for="pregunta1">Pregunta <sup>*</sup><label>
                             </div>
                         </div>
                     </div>
@@ -351,7 +351,7 @@
                         </div> --}}
                     </div>
                     <div class="row" style="justify-content: right;">
-                        <div class="col-2">
+                        <div class="col-3">
                             <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion2">
                                 Añadir Pregunta
                                 <i class="bi bi-plus-circle"></i>
@@ -363,7 +363,7 @@
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="descripcion_s2" name="descripcion_s2" placeholder="Descripcion"
                                     style="height: 150px"></textarea>
-                                <label for="descripcion_s2">Descripción</label>
+                                <label for="descripcion_s2">Descripción<sup>*</sup></label>
                             </div>
                         </div>
                     </div>
@@ -391,7 +391,7 @@
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="pregunta2" name="pregunta2" placeholder="Pregunta" style="height: 76px;"
                                     required></textarea>
-                                <label for="pregunta2">Pregunta</label>
+                                <label for="pregunta2">Pregunta<sup>*</sup></label>
                             </div>
                         </div>
                     </div>
@@ -460,7 +460,7 @@
                         </div> --}}
                     </div>
                     <div class="row" style="justify-content: right;">
-                        <div class="col-2">
+                        <div class="col-3">
                             <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion3">
                                 Añadir Pregunta
                                 <i class="bi bi-plus-circle"></i>
@@ -472,7 +472,7 @@
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="descripcion_s3" name="descripcion_s3" placeholder="Descripcion"
                                     style="height: 150px"></textarea>
-                                <label for="descripcion_s3">Descripción</label>
+                                <label for="descripcion_s3">Descripción<sup>*</sup></label>
                             </div>
                         </div>
                     </div>
@@ -500,7 +500,7 @@
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="pregunta3" name="pregunta3" placeholder="Pregunta" style="height: 76px;"
                                     required></textarea>
-                                <label for="pregunta3">Pregunta</label>
+                                <label for="pregunta3">Pregunta<sup>*</sup></label>
                             </div>
                         </div>
                     </div>
@@ -569,7 +569,7 @@
                         </div> --}}
                     </div>
                     <div class="row" style="justify-content: right;">
-                        <div class="col-2">
+                        <div class="col-3">
                             <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion4">
                                 Añadir Pregunta
                                 <i class="bi bi-plus-circle"></i>
@@ -581,7 +581,7 @@
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="descripcion_s4" name="descripcion_s4" placeholder="Descripcion"
                                     style="height: 150px"></textarea>
-                                <label for="descripcion_s4">Descripción</label>
+                                <label for="descripcion_s4">Descripción<sup>*</sup></label>
                             </div>
                         </div>
                     </div>
@@ -609,7 +609,7 @@
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="pregunta4" name="pregunta4" placeholder="Pregunta" style="height: 76px;"
                                     required></textarea>
-                                <label for="pregunta4">Pregunta</label>
+                                <label for="pregunta4">Pregunta<sup>*</sup></label>
                             </div>
                         </div>
                     </div>
@@ -653,15 +653,13 @@
                         <button type="submit" class="btn btn-link" wire:click="backSeccion">Sección
                             Anterior</button>
                     </div>
-                @else
-                    <div class="col-3"></div>
                 @endif
-                <div class="col-5">
+                <div class="col-6">
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <button class="btn btn-outline-primary btn-block">Cancelar</button>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <button class="btn btn-primary btn-block" type="submit">Generar Template</button>
                 </div>
             </div>
