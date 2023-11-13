@@ -2,35 +2,35 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
-use Throwable;
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\User;
-use App\Models\Empleado;
-use App\Models\Timesheet;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Jobs\NuevoProyectoJob;
-use App\Models\TimesheetHoras;
-use App\Models\TimesheetTarea;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetProyecto;
-use App\Services\TimesheetService;
-use Illuminate\Support\Facades\DB;
-use App\Traits\ObtenerOrganizacion;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
-use App\Models\TimesheetProyectoArea;
-use App\Models\ContractManager\Fiscale;
+use App\Jobs\NuevoProyectoJob;
 use App\Mail\TimesheetHorasSobrepasadas;
+use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
+use App\Models\Area;
+use App\Models\ContractManager\Fiscale;
+use App\Models\Empleado;
+use App\Models\Organizacion;
+use App\Models\Sede;
+use App\Models\Timesheet;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
-use App\Mail\TimesheetHorasSolicitudAprobacion;
+use App\Models\TimesheetTarea;
+use App\Models\User;
+use App\Services\TimesheetService;
+use App\Traits\ObtenerOrganizacion;
+use Auth;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Throwable;
 
 class TimesheetController extends Controller
 {
@@ -50,7 +50,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
+        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
         $times = Timesheet::getPersonalTimesheet();
 
@@ -325,6 +325,7 @@ class TimesheetController extends Controller
         // catch exception and rollback transaction
         catch (Throwable $e) {
             DB::rollback();
+
             // throw $e;
             return response()->json(['status' => 400]);
         }
@@ -666,11 +667,11 @@ class TimesheetController extends Controller
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_' . $id)->where('timesheet_proyectos.id', $id)
+        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
             ->get('sedes.sede');
 
-        $clientes = TimesheetProyecto::getAll('clientes_' . $id)->where('timesheet_proyectos.id', $id)
+        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
             ->get('timesheet_clientes.nombre');
 
@@ -744,7 +745,7 @@ class TimesheetController extends Controller
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto = TimesheetProyecto::getAll('tareas_' . $proyecto_id)->find($proyecto_id);
+        $proyecto = TimesheetProyecto::getAll('tareas_'.$proyecto_id)->find($proyecto_id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1078,7 +1079,7 @@ class TimesheetController extends Controller
 
     public function proyectosEmpleados($id)
     {
-        $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1089,7 +1090,7 @@ class TimesheetController extends Controller
 
     public function proyectosExternos($id)
     {
-        $proyecto = TimesheetProyecto::getAll('externos_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;

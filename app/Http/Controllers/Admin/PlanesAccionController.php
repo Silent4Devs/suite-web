@@ -269,19 +269,19 @@ class PlanesAccionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $planImplementacionId)
-{
-    abort_if(Gate::denies('planes_de_accion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    {
+        abort_if(Gate::denies('planes_de_accion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $planImplementacion = PlanImplementacion::find($planImplementacionId);
+        $planImplementacion = PlanImplementacion::find($planImplementacionId);
 
-    if ($planImplementacion) {
-        $eliminado = $planImplementacion->delete();
-        return redirect()->route('admin.planes-de-accion.index')->with('success', "Eliminado exitosamente");
-    } else {
-        return redirect()->route('admin.planes-de-accion.index')->with('error', "No se encontró el Plan de Acción para eliminar");
+        if ($planImplementacion) {
+            $eliminado = $planImplementacion->delete();
+
+            return redirect()->route('admin.planes-de-accion.index')->with('success', 'Eliminado exitosamente');
+        } else {
+            return redirect()->route('admin.planes-de-accion.index')->with('error', 'No se encontró el Plan de Acción para eliminar');
+        }
     }
-}
-
 
     public function saveProject(Request $request, $plan)
     {
