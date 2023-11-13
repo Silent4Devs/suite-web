@@ -50,7 +50,6 @@ class ReportesProyectos extends Component
 
     public $hoy_format;
 
-    // public $proyectos_array;
     public $area_id;
 
     public $fecha_inicio;
@@ -63,18 +62,11 @@ class ReportesProyectos extends Component
 
     public $fecha_fin_proyecto;
 
-    public $horas_totales_todos_proyectos = 0;
-
     public $semanas_totales_calendario = 0;
 
     public $calendario_tabla;
 
     public $organizacion;
-
-    public function mount()
-    {
-
-    }
 
     public function updatedAreaId($value)
     {
@@ -148,8 +140,6 @@ class ReportesProyectos extends Component
         $this->emit('scriptTabla');
 
         $this->areas = Area::getIdNameAll();
-
-        $this->horas_totales_todos_proyectos = 0;
 
         //calendario tabla
         $calendario_array = [];
@@ -246,6 +236,7 @@ class ReportesProyectos extends Component
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
             $registro_horas_proyecto = TimesheetHoras::getAll()->where('proyecto_id', $proyecto->id);
+            // dd('list');
 
             // registro de horas en calendario
             $times_registro_horas_array = collect();
@@ -272,8 +263,6 @@ class ReportesProyectos extends Component
                                 $horas_proyecto_times += floatval($registro_horas->horas_domingo);
                             }
                         }
-
-                        $this->horas_totales_todos_proyectos += $horas_proyecto_times;
 
                         if ($horas_proyecto_times > 0) {
                             array_push($calendario_tabla_proyectos, $horas_proyecto_times);
