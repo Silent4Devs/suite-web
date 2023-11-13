@@ -604,10 +604,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');
 
+        //Template Analisis de Brechas
+        Route::get('templates', 'TemplateController@index')->name('templates');
+        Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+
+
         //Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
             //Route::resource('analisis-brechas', 'AnalisisBController');
-            Route::get('/templates', 'TemplateController@index')->name('templates');
             Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
             Route::get('analisis-brechas/{id}', 'AnalisisBController@index')->name('analisis-brechas');
             Route::post('analisis-brechas/update', 'AnalisisBController@update');
@@ -620,7 +624,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             //Analisis brechas 2022
             Route::get('/top', 'TopController@index')->name('top');
             Route::get('/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
-            Route::get('/templates', 'TemplateController@index')->name('templates');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
             Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
@@ -640,6 +643,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
             Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
         });
+
+
 
         Route::group(['middleware' => ['version_iso_2013']], function () {
             // Declaracion de Aplicabilidad
