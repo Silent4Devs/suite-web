@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\User;
 use App\Models\Recurso;
+use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
 class RecursoObserver
@@ -61,6 +61,6 @@ class RecursoObserver
     private function forgetCache()
     {
         Cache::forget('Recursos:recursos_all');
-        Cache::forget('Recursos:recursos_' . User::getCurrentUser()->id);
+        Cache::forget('Recursos:recursos_'.User::getCurrentUser()->id);
     }
 }

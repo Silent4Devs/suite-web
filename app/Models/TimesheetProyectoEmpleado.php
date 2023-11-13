@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class TimesheetProyectoEmpleado extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'timesheet_proyectos_empleados';
 
@@ -34,7 +34,7 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
     public static function getIdAreaTimeProy($proyecto_id)
     {
         return
-            Cache::remember('TimesheetProyectoEmpleado:getIdAreaTimeProy_' . $proyecto_id, 3600 * 2, function () use ($proyecto_id) {
+            Cache::remember('TimesheetProyectoEmpleado:getIdAreaTimeProy_'.$proyecto_id, 3600 * 2, function () {
                 return self::select('id', 'area_id')->orderBy('id')->get();
             });
     }
@@ -42,7 +42,7 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
     public static function getAllByEmpleadoIdNoBloqueado($empleado_id)
     {
         return
-            Cache::remember('GetAllByEmpleadoId_' . $empleado_id, 3600 * 1, function () use ($empleado_id) {
+            Cache::remember('GetAllByEmpleadoId_'.$empleado_id, 3600 * 1, function () use ($empleado_id) {
                 return self::with('empleado')->where('empleado_id', $empleado_id)->where('usuario_bloqueado', false)->get();
             });
     }
@@ -50,7 +50,7 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
     public static function getAllByEmpleadoIdExistsNoBloqueado($empleado_id)
     {
         return
-            Cache::remember('GetAllByEmpleadoIdExists_' . $empleado_id, 3600 * 1, function () use ($empleado_id) {
+            Cache::remember('GetAllByEmpleadoIdExists_'.$empleado_id, 3600 * 1, function () use ($empleado_id) {
                 return self::where('empleado_id', $empleado_id)->where('usuario_bloqueado', false)->exists();
             });
     }

@@ -40,6 +40,6 @@ class TimesheetHorasSolicitudAprobacion extends Mailable
         $fecha = explode('al', $this->timesheet_nuevo->semana_text);
         $fecha_fin = $fecha[1];
 
-        return $this->view('mails.timesheet.timesheet_solicitud_aprobacion')->subject('Timesheet - Solicitud de aprobación de registro de actividades al' . $fecha_fin);
+        return $this->view('mails.timesheet.timesheet_solicitud_aprobacion')->subject('Timesheet - Solicitud de aprobación de registro de actividades al'.$fecha_fin);
     }
 }

@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use EloquentFilter\Filterable;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class TimesheetHoras extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use Filterable;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use HasFactory;
+
     protected $table = 'timesheet_horas';
 
     protected $fillable = [
@@ -46,6 +47,13 @@ class TimesheetHoras extends Model implements Auditable
             return self::select('id', 'proyecto_id', 'tarea_id', 'timesheet_id', 'horas_lunes', 'horas_martes', 'horas_miercoles', 'horas_jueves', 'horas_viernes', 'horas_sabado', 'horas_domingo', 'descripcion')->orderBy('id', 'asc')->get();
         });
     }
+
+    // public static function getDataCount()
+    // {
+    //     return Cache::remember('TimesheetHoras:timesheet_data_all_count', 3600 * 2, function () {
+    //         return self::select('id')->orderBy('id', 'asc')->count();
+    //     });
+    // }
 
     public static function getDataProyTarea()
     {

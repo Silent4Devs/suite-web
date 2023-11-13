@@ -18,7 +18,7 @@ class UpdateObjetivosseguridadRequest extends FormRequest
                 'nullable',
             ],
             'anio' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
         ];

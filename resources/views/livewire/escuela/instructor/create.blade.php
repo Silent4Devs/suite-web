@@ -15,7 +15,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label>Descripción<span style="color:red">*</span></label>
+                    <label>Descripción</label>
                     <input class="form-control" type="text" value="" id="title"
                         wire:model.defer="explanation">
                     @error('explanation')

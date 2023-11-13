@@ -36,62 +36,66 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function mount($proyecto_id)
     {
-        $this->proyecto = TimesheetProyecto::getAll()->find($proyecto_id);
-        $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
-        $this->empleados = Empleado::getAltaEmpleados();
+        $this->proyecto_id = $proyecto_id;
     }
 
     public function render()
     {
-        $emp_proy = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
+        $this->proyecto = TimesheetProyecto::getIdNameAll()->find($this->proyecto_id);
+        $this->areasempleado = TimesheetProyectoArea::getAll()->where('proyecto_id', $this->proyecto_id);
+        $this->empleados = Empleado::getAltaEmpleados();
 
-        foreach ($emp_proy as $ep) {
-            $times = TimesheetHoras::getData()->where('proyecto_id', '=', $ep->proyecto_id)
-                ->where('empleado_id', '=', $ep->empleado_id);
+        $this->proyecto_empleados = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
 
-            $tot_horas_proyecto = 0;
+        // foreach ($emp_proy as $ep) {
+        //     $times = TimesheetHoras::getData()->where('proyecto_id', '=', $ep->proyecto_id)
+        //         ->where('empleado_id', '=', $ep->empleado_id);
 
-            $sumalun = 0;
-            $sumamar = 0;
-            $sumamie = 0;
-            $sumajue = 0;
-            $sumavie = 0;
-            $sumasab = 0;
-            $sumadom = 0;
+        //     $tot_horas_proyecto = 0;
 
-            foreach ($times as $time) {
-                $sumalun += floatval($time->horas_lunes);
-                $sumamar += floatval($time->horas_martes);
-                $sumamie += floatval($time->horas_miercoles);
-                $sumajue += floatval($time->horas_jueves);
-                $sumavie += floatval($time->horas_viernes);
-                $sumasab += floatval($time->horas_sabado);
-                $sumadom += floatval($time->horas_domingo);
-            }
+        //     $sumalun = 0;
+        //     $sumamar = 0;
+        //     $sumamie = 0;
+        //     $sumajue = 0;
+        //     $sumavie = 0;
+        //     $sumasab = 0;
+        //     $sumadom = 0;
 
-            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
+        //     foreach ($times as $time) {
+        //         $sumalun += floatval($time->horas_lunes);
+        //         $sumamar += floatval($time->horas_martes);
+        //         $sumamie += floatval($time->horas_miercoles);
+        //         $sumajue += floatval($time->horas_jueves);
+        //         $sumavie += floatval($time->horas_viernes);
+        //         $sumasab += floatval($time->horas_sabado);
+        //         $sumadom += floatval($time->horas_domingo);
+        //     }
 
-            $resta = $tot_horas_proyecto - $ep->horas_asignadas;
+        //     $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
 
-            if ($resta > 0) {
-                $sobre = $resta;
-            } else {
-                $sobre = 'No se han excedido';
-            }
+        //     $resta = $tot_horas_proyecto - $ep->horas_asignadas;
 
-            $ep->totales = $tot_horas_proyecto;
-            $ep->sobrepasadas = $sobre;
-        }
-        $this->proyecto_empleados = $emp_proy;
-        // dd($this->proyecto_empleados);
-        $this->emit('scriptTabla');
+        //     if ($resta > 0) {
+        //         $sobre = $resta;
+        //     } else {
+        //         $sobre = 'No se han excedido';
+        //     }
+
+        //     $ep->totales = $tot_horas_proyecto;
+        //     $ep->sobrepasadas = $sobre;
+        // }
 
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }
 
+    public function hydrate()
+    {
+        $this->emit('scriptTabla');
+    }
+
     private function resetInput()
     {
-        // $this->empleado_añadido = null;
+        $this->empleado_añadido = null;
         $this->horas_asignadas = null;
         $this->costo_hora = null;
     }

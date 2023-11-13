@@ -4,9 +4,20 @@ namespace App\Exports;
 
 use App\Models\TimesheetHoras;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ReporteColaboradorTarea implements FromCollection
+class ReporteColaboradorTarea implements FromCollection, WithHeadings
 {
+    public $fecha_inicio;
+
+    public $fecha_fin;
+
+    public $area_id;
+
+    public $emp_id;
+
+    public $proy_id;
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -21,30 +32,28 @@ class ReporteColaboradorTarea implements FromCollection
 
     public function collection()
     {
-        // return TimesheetHoras::all();
-        $query = TimesheetHoras::with('tarea.areaData')
-            ->select('timesheet_horas.*', 'areaData.your_field_name AS area_data_field')
-            ->join('tareas', 'timesheet_horas.tarea_id', '=', 'tareas.id')
-            ->join('area_data_table', 'tareas.areaData_id', '=', 'area_data_table.id')
-            ->withwhereHas('timesheet', function ($query) {
-                if ($this->emp_id == 0) {
-                    return $query;
-                } else {
-                    $query->where('empleado_id', $this->emp_id);
-                }
-            })
-            ->withwhereHas('timesheet', function ($query) {
-                $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia');
-            })
-            ->withwhereHas('proyecto', function ($query) {
-                if ($this->proy_id == 0) {
-                    return $query;
-                } else {
-                    $query->where('proyecto_id', $this->proy_id);
-                }
-            })->get();
-
-        dd($query);
+        $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')->withwhereHas('timesheet', function ($query) {
+            if ($this->emp_id != 0) {
+                $query->where('empleado_id', $this->emp_id);
+            }
+            $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')
+                ->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
+                ->orderByDesc('fecha_dia');
+        })->withwhereHas('proyecto', function ($query) {
+            if ($this->proy_id != 0) {
+                $query->where('id', $this->proy_id);
+            }
+        })->get()->map(function ($timesheetHora) {
+            return [
+                'Fecha Día' => \Carbon\Carbon::parse($timesheetHora->timesheet->fecha_dia)->format('d/m/Y'),
+                'Empleado' => $timesheetHora->timesheet->empleado->name,
+                'Supervisor' => $timesheetHora->timesheet->aprobador->name,
+                'Proyecto' => $timesheetHora->proyecto->proyecto,
+                'Tarea' => $timesheetHora->tarea->tarea,
+                'Descripción' => $timesheetHora->descripcion,
+                'Total de Horas' => (floatval($timesheetHora->horas_lunes) + floatval($timesheetHora->horas_martes) + floatval($timesheetHora->horas_miercoles) + floatval($timesheetHora->horas_jueves) + floatval($timesheetHora->horas_viernes) + floatval($timesheetHora->horas_sabado) + floatval($timesheetHora->horas_domingo)),
+            ];
+        });
 
         return $query;
     }
@@ -52,19 +61,26 @@ class ReporteColaboradorTarea implements FromCollection
     public function headings(): array
     {
         return [
+            'Fecha Dia',
+            'Empleado',
+            'Supervisor',
+            'Proyecto',
+            'Tarea',
+            'Descripción',
+            'Total de Horas',
+        ];
+    }
 
-            'ID',
-
-            'Promesa',
-
-            'Pagado',
-
-            'Cliente',
-
-            'Fecha Promesa',
-
-            'Fecha Pago',
-
+    public function headingsStyle(): array
+    {
+        return [
+            'font' => [
+                'color' => ['rgb' => 'FFFFFF'], // Color del texto (blanco)
+            ],
+            'fill' => [
+                'fillType' => 'solid',
+                'startColor' => ['rgb' => '00FF00'], // Color de fondo (verde)
+            ],
         ];
     }
 }

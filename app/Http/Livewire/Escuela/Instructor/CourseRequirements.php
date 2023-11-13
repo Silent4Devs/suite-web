@@ -10,10 +10,12 @@ use Livewire\Component;
 
 class CourseRequirements extends Component
 {
-    use LivewireAlert, AuthorizesRequests;
+    use AuthorizesRequests, LivewireAlert;
 
     public Requirement $requirement;
+
     public $course;
+
     public $name;
 
     protected $rules = [

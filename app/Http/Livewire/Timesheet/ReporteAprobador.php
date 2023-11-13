@@ -84,10 +84,6 @@ class ReporteAprobador extends Component
     public function mount()
     {
         $this->habilitarTodos = false;
-        $this->areas = Area::getAll();
-
-        $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
-        $this->fecha_fin = Carbon::now()->format('Y-m-d');
     }
 
     public function updatedAreaId($value)
@@ -114,7 +110,7 @@ class ReporteAprobador extends Component
     {
         $this->fecha_fin = $value;
         if ($this->fecha_fin < $this->fecha_inicio) {
-            $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( ' . $this->fecha_inicio . ' )', [
+            $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( '.$this->fecha_inicio.' )', [
                 'position' => 'top-end',
                 'timer' => 3000,
                 'toast' => true,
@@ -153,7 +149,12 @@ class ReporteAprobador extends Component
 
     public function render()
     {
+        $this->areas = Area::getAll();
+
         $this->hoy = Carbon::now();
+        $this->fecha_inicio = $this->hoy->endOfMonth()->subMonth(2)->format('Y-m-d');
+        $this->fecha_fin = $this->hoy->format('Y-m-d');
+
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
 
@@ -183,7 +184,7 @@ class ReporteAprobador extends Component
                 $previous_month = Carbon::create()->day(1)->month(intval($previous_month))->format('F');
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
-                if (!($this->buscarKeyEnArray($year, $calendario_array))) {
+                if (! ($this->buscarKeyEnArray($year, $calendario_array))) {
                     $calendario_array["{$year}"] = [
                         'year' => $year,
                         'total_weeks' => 0,
@@ -198,19 +199,19 @@ class ReporteAprobador extends Component
                     if ($month == 'January') {
                         $previous_year = $year - 1;
                         if (array_key_exists($previous_year, $calendario_array)) {
-                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
+                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         }
                     }
                 } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
-                        if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
+                        if (! in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         } else {

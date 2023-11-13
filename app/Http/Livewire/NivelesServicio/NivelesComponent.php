@@ -14,7 +14,7 @@ use Livewire\WithPagination;
 
 class NivelesComponent extends Component
 {
-    use WithPagination, WithFileUploads, LivewireAlert;
+    use LivewireAlert, WithFileUploads, WithPagination;
 
     public $contrato_id;
 
@@ -54,15 +54,21 @@ class NivelesComponent extends Component
         'triggerDeleteNiveles' => 'confirmDelete',
     ];
 
+    public function mount($contrato_id, $show_contrato)
+    {
+        $this->contrato_id = $contrato_id;
+        $this->show_contrato = $show_contrato;
+    }
+
     public function render()
     {
         $niveles_servicio = NivelesServicio::select('id', 'nombre', 'metrica', 'unidad', 'info_consulta', 'meta', 'periodo_evaluacion', 'revisiones', 'area', 'descripcion')
             ->where('contrato_id', '=', $this->contrato_id)
             ->where(function ($query) {
-                $query->where('nombre', 'like', '%' . $this->search . '%')
-                    ->orWhere('descripcion', 'like', '%' . $this->search . '%')
-                    ->orWhere('id', 'like', '%' . $this->search . '%')
-                    ->orWhere('area', 'like', '%' . $this->search . '%');
+                $query->where('nombre', 'like', '%'.$this->search.'%')
+                    ->orWhere('descripcion', 'like', '%'.$this->search.'%')
+                    ->orWhere('id', 'like', '%'.$this->search.'%')
+                    ->orWhere('area', 'like', '%'.$this->search.'%');
             })
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->pagination);
@@ -72,12 +78,6 @@ class NivelesComponent extends Component
         return view('livewire.niveles-servicio.niveles-component', [
             'nivelesServicio' => $niveles_servicio,
         ]);
-    }
-
-    public function mount($contrato_id, $show_contrato)
-    {
-        $this->contrato_id = $contrato_id;
-        $this->show_contrato = $show_contrato;
     }
 
     public function store()

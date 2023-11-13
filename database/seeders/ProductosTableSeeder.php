@@ -17,7 +17,7 @@ class ProductosTableSeeder extends Seeder
 
         \DB::table('productos')->insert([
             0 => [
-                        'descripcion' => 'Servicio de administración telefónica',
+                'descripcion' => 'Servicio de administración telefónica',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -25,7 +25,7 @@ class ProductosTableSeeder extends Seeder
                 'clave' => '1',
             ],
             1 => [
-                        'descripcion' => 'Educación y Capacitación',
+                'descripcion' => 'Educación y Capacitación',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -33,7 +33,7 @@ class ProductosTableSeeder extends Seeder
                 'clave' => '2',
             ],
             2 => [
-                        'descripcion' => 'Gestión de eventos',
+                'descripcion' => 'Gestión de eventos',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -41,7 +41,7 @@ class ProductosTableSeeder extends Seeder
                 'clave' => '3',
             ],
             3 => [
-                        'descripcion' => 'Papeleria',
+                'descripcion' => 'Papeleria',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -49,7 +49,7 @@ class ProductosTableSeeder extends Seeder
                 'clave' => '4',
             ],
             4 => [
-                        'descripcion' => 'Servicio de mensajeria y transporte',
+                'descripcion' => 'Servicio de mensajeria y transporte',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -57,7 +57,7 @@ class ProductosTableSeeder extends Seeder
                 'clave' => '5',
             ],
             5 => [
-                        'descripcion' => 'Servicios de mantenimiento',
+                'descripcion' => 'Servicios de mantenimiento',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -65,7 +65,7 @@ class ProductosTableSeeder extends Seeder
                 'clave' => '6',
             ],
             6 => [
-                        'descripcion' => 'Membresías',
+                'descripcion' => 'Membresías',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -73,7 +73,7 @@ class ProductosTableSeeder extends Seeder
                 'clave' => '7',
             ],
             7 => [
-                        'descripcion' => 'Ferias de empleo',
+                'descripcion' => 'Ferias de empleo',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -81,7 +81,7 @@ class ProductosTableSeeder extends Seeder
                 'clave' => '8',
             ],
             8 => [
-                        'descripcion' => 'Reclutamiento',
+                'descripcion' => 'Reclutamiento',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,

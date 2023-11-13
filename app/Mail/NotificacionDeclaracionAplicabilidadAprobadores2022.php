@@ -39,6 +39,6 @@ class NotificacionDeclaracionAplicabilidadAprobadores2022 extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadAprobadores')->subject('Solicitud de atención del control ' . $this->aplicabilidad->gapdos->control_iso);
+        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadAprobadores')->subject('Solicitud de atención del control '.$this->aplicabilidad->gapdos->control_iso);
     }
 }

@@ -459,7 +459,7 @@ class MatrizRiesgosController extends Controller
         $matrizRequisitoLegal = $id;
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
     }
 
     public function ControlesGet()
@@ -931,7 +931,7 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'controles_id' => 'required',
-            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,' . $matrizRiesgo . ',id,deleted_at,NULL',
+            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,'.$matrizRiesgo.',id,deleted_at,NULL',
         ]);
 
         // dd($matrizRiesgo);
@@ -1437,10 +1437,10 @@ class MatrizRiesgosController extends Controller
 
     public function saveUpdateActivosOctave($activosoctave, $matrizRiesgoOctave)
     {
-        if (!is_null($activosoctave)) {
+        if (! is_null($activosoctave)) {
             foreach ($activosoctave as $activoctave) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if (!is_null(MatrizoctaveActivosInfo::find($activoctave['id']))) {
+                if (! is_null(MatrizoctaveActivosInfo::find($activoctave['id']))) {
                     MatrizoctaveActivosInfo::find($activoctave['id'])->update([
                         'nombre_ai' => $activoctave['nombre_ai'],
                         'valor_criticidad' => $activoctave['valor_criticidad'],
@@ -1480,7 +1480,7 @@ class MatrizRiesgosController extends Controller
 
     public function saveUpdateMatriz31000ActivosInfo($activosmatriz31000, $matrizRiesgo31000)
     {
-        if (!is_null($activosmatriz31000)) {
+        if (! is_null($activosmatriz31000)) {
             foreach ($activosmatriz31000 as $activomatriz31000) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (Matriz31000ActivosInfo::find($activomatriz31000['id']) != null) {

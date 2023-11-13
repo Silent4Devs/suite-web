@@ -1,4 +1,5 @@
 <div class="w-100">
+    <x-loading-indicator />
     <h5 class="d-flex justify-content-between">Asignar Empleado a Proyecto</h5>
     <div class="row">
         <div class="form-group col-12 text-right">
@@ -14,7 +15,6 @@
         </div>
     </div>
     <form wire:submit.prevent="addEmpleado" wire:ignore>
-        {{-- <x-loading-indicator /> --}}
         <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
@@ -116,7 +116,6 @@
     @foreach ($proyecto_empleados as $proyect_empleado)
         <div class="modal fade" id="modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}" tabindex="-1"
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
-            <x-loading-indicator />
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">

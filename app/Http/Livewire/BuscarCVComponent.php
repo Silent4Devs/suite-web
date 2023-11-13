@@ -114,14 +114,16 @@ class BuscarCVComponent extends Component
 
     public function mount()
     {
-        if (!$this->isPersonal) {
-            $this->empleados = Empleado::getAltaEmpleados();
-        }
+
     }
 
     public function render()
     {
-        $cacheKey = 'empleadosCV_data_' . Auth::user()->id;
+        if (! $this->isPersonal) {
+            $this->empleados = Empleado::getAltaEmpleados();
+        }
+
+        $cacheKey = 'empleadosCV_data_'.Auth::user()->id;
 
         $empleadosCV = Empleado::alta()
             ->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')

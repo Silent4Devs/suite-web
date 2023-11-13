@@ -30,7 +30,7 @@
     </style>
     <x-loading-indicator />
     @can('timesheet_administrador_tareas_proyectos_create')
-        <form wire:submit.prevent="create()"  class="form-group w-100">
+        <form wire:submit.prevent="create()" class="form-group w-100">
             <div class="d-flex justify-content-center w-100">
                 <div class="form-group w-100 mr-4 ">
                     <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>
@@ -196,7 +196,12 @@
 
             Livewire.on('select2', () => {
                 initSelect2();
-            })
+            });
+
+            Livewire.on('scriptTabla', () => {
+                tablaLivewire('tabla_time_tareas');
+            });
+
             $('#proyectos_select').on('select2:select', function(e) {
                 var data = e.params.data;
                 let proyecto_id = data.id;
@@ -209,10 +214,6 @@
                 let proyecto_id = data.id;
                 console.log(proyecto_id);
                 @this.updateProyecto(proyecto_id);
-            });
-
-            Livewire.on('scriptTabla', () => {
-                tablaLivewire('tabla_time_tareas');
             });
 
             document.getElementById('tarea_name')?.addEventListener('keyup', (e) => {
