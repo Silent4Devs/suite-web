@@ -18,7 +18,9 @@
         .instrucciones {
             background-color: rgb(52, 117, 178);
             color: white;
-            border-radius: 8px;
+            border-radius: 8px !important;
+            padding: 15px;
+            margin-bottom: 20px;
         }
 
         .encabezado {
@@ -29,6 +31,8 @@
         }
 
         .card {
+            margin-top: 0px !important;
+            margin-bottom: 20px !important;
             border-radius: 14px;
             box-shadow: 0px 1px 4px #0000000F;
             opacity: 1;
@@ -57,18 +61,13 @@
 
     <div class="card card-body instrucciones">
         <div class="row no-gutters">
-            <div class="col-md-2">
-                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}"
-                    style="width: 128px;
-                height: 119px;">
+            <div class="col-md-auto"> <!-- Use col-md-auto to let Bootstrap determine the width based on content -->
+                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" style="width: 128px; height: 119px;">
             </div>
-            <div class="col-md-10">
-                <h5>Crea tu template</h5>
-                <p class="letra-subtitulo-template mb-2">Genera tus preguntas y personaliza tus campos según lo
-                    requieras
-                </p>
-                <p class="letra-subtitulo-template mb-2">Elaboraremos nuestro cuestionario que nos permitirá evaluar el
-                    cumplimiento de nuestra norma seleccionada.</p>
+            <div class="col-md-10" style="margin-left: 10px;">
+                <h3>Crea tu template</h3>
+                <h4>Genera tus preguntas y personaliza tus campos según lo requieras</h4>
+                {{-- <p class="letra-subtitulo-template mb-2">Elaboraremos nuestro cuestionario que nos permitirá evaluar el cumplimiento de nuestra norma seleccionada.</p> --}}
             </div>
         </div>
     </div>
