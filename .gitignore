@@ -21,26 +21,14 @@ npm-debug.log
 yarn-error.log
 bootstrap/cache/config.php
 composer.lock
-npm-debug.log
-yarn-error.log
 bootstrap/cache/
 storage/debugbar/
 storage/app/public/gantt/
 .php-cs-fixer.cache
 storage/logs/laravel.log
 *.cache
-infra/postgres/
-infra/postgres/*
-infra/postgres/data/
-infra/postgres/data/*
-/infra/mysql/*
-/infra/mysql
 /storage/app/public/users-avatar/*
 /storage/app/public/*
-# MySQL infra files
-/infra/mysql/data/
-/infra/mysql/data/*
-
 storage/app/public/activos/
 storage/app/livewire-tmp/
 storage/app/public/expedientes/
@@ -50,9 +38,6 @@ storage/app/public/evidencias_quejas_clientes_cerrado/
 storage/app/public/documentos_concientSgsi/
 storage/app/public/documentos_control_accesos/
 storage/app/public/documentos_material_sgsi/
-
-/infra/postgres/*
-/infra/postgres/data/*
 /respaldos/*
 /storage/app/public/Documentos\ en\ aprobacion/procedimientos/*
 /storage/app/public/Documentos\ en\ aprobacion/procesos/*
@@ -70,36 +55,10 @@ storage/app/public/documentos_material_sgsi/
 rr
 .rr.yaml
 /storage/app/backups/*
-/storage/app/backups/*
 /storage/app/Tabantaj/
-/node_modules
-/public/hot
-/public/storage
 /storage/*.key
-/vendor
-.idea
-.env.backup
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-.env
 package.json
-.php-cs-fixer.cache
 public/mix-manifest.json
-*.cache
-.php-cs-fixer.cache
 public/js/app.js
-.php-cs-fixer.cache
 /resources/views/layouts/navs
 storage/app/katbol-contratos-tmp/
-infra
-/infra/mysql/*
-/infra/mysql
-/storage/app/public/users-avatar/*
-/storage/app/public/*
-# MySQL infra files
-/infra/mysql/data/
-/infra/mysql/data/*
-

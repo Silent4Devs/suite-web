@@ -47,7 +47,7 @@ class ReportesEmpleados extends Component
         $this->empleados_estatus = 'alta';
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');
-        $this->empleadosQuery = Empleado::select('id', 'antiguedad', 'estatus', 'name', 'puesto', 'fecha_baja', 'area_id', 'foto')->with('area')->get();
+        $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
     }
 
     public function updatedAreaId($value)
@@ -129,7 +129,7 @@ class ReportesEmpleados extends Component
         //calendario tabla
         $calendario_array = [];
 
-        $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+        $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::getFechaRegistroTimesheet();
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
         $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now(), false);
         $total_months = 0;
@@ -202,7 +202,7 @@ class ReportesEmpleados extends Component
         foreach ($empleados_list as $empleado_list) {
             $horas_total_time = 0;
 
-            $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+            $fecha_registro_timesheet = Organizacion::getFechaRegistroTimesheet();
 
             if ($this->fecha_inicio) {
                 $fecha_inicio_timesheet_empleado = $this->fecha_inicio;
@@ -236,21 +236,21 @@ class ReportesEmpleados extends Component
             foreach ($times_empleado_aprobados_pendientes_list as $time) {
                 $horas_semana = 0;
                 foreach ($time->horas as $hora) {
-                    $horas_total_time += $hora->horas_lunes;
-                    $horas_total_time += $hora->horas_martes;
-                    $horas_total_time += $hora->horas_miercoles;
-                    $horas_total_time += $hora->horas_jueves;
-                    $horas_total_time += $hora->horas_viernes;
-                    $horas_total_time += $hora->horas_sabado;
-                    $horas_total_time += $hora->horas_domingo;
+                    $horas_total_time += floatval($hora->horas_lunes);
+                    $horas_total_time += floatval($hora->horas_martes);
+                    $horas_total_time += floatval($hora->horas_miercoles);
+                    $horas_total_time += floatval($hora->horas_jueves);
+                    $horas_total_time += floatval($hora->horas_viernes);
+                    $horas_total_time += floatval($hora->horas_sabado);
+                    $horas_total_time += floatval($hora->horas_domingo);
 
-                    $horas_semana += $hora->horas_lunes;
-                    $horas_semana += $hora->horas_martes;
-                    $horas_semana += $hora->horas_miercoles;
-                    $horas_semana += $hora->horas_jueves;
-                    $horas_semana += $hora->horas_viernes;
-                    $horas_semana += $hora->horas_sabado;
-                    $horas_semana += $hora->horas_domingo;
+                    $horas_semana += floatval($hora->horas_lunes);
+                    $horas_semana += floatval($hora->horas_martes);
+                    $horas_semana += floatval($hora->horas_miercoles);
+                    $horas_semana += floatval($hora->horas_jueves);
+                    $horas_semana += floatval($hora->horas_viernes);
+                    $horas_semana += floatval($hora->horas_sabado);
+                    $horas_semana += floatval($hora->horas_domingo);
 
                     $times_empleado_calendario_array[] = [
                         'id' => $time->id,

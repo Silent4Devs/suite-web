@@ -22,6 +22,8 @@ class AlcanceSgsiController extends Controller
     {
         abort_if(Gate::denies('determinacion_alcance_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $alcanceSgsi = AlcanceSgsi::get(); // Puedes ajustar esto según tu lógica
+
         if ($request->ajax()) {
             $query = AlcanceSgsi::with(['norma', 'empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
@@ -87,8 +89,10 @@ class AlcanceSgsiController extends Controller
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+        $alcanceSgsi->load('team');
+        $normas = Norma::get();
 
-        return view('admin.alcanceSgsis.index', compact('teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -134,6 +138,19 @@ class AlcanceSgsiController extends Controller
         $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
+    }
+
+    public function aprove(AlcanceSgsi $alcanceSgsi)
+    {
+        abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $alcanceSgsi->load('normas');
+        $normas_seleccionadas = $alcanceSgsi->normas->pluck('id')->toArray();
+
+        $normas = Norma::get();
+        $empleados = Empleado::alta()->with('area')->get();
+
+        return view('admin.alcanceSgsis.aprove', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
     }
 
     public function update(Request $request, AlcanceSgsi $alcanceSgsi)

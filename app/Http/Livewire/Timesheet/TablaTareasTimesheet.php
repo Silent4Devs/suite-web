@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Timesheet;
 
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
+use Illuminate\Support\Facades\Cache;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -36,6 +37,7 @@ class TablaTareasTimesheet extends Component
     public function hydrate()
     {
         $this->emit('select2');
+        Cache::flush();
     }
 
     public function mount($proyecto_id, $origen)
@@ -43,11 +45,14 @@ class TablaTareasTimesheet extends Component
         $this->origen = $origen;
         $this->proyecto_id = $proyecto_id;
         $this->area_seleccionar = null;
+        Cache::flush();
     }
 
     public function updateProyecto($value)
     {
         $this->proyecto_filtro = $value;
+
+        Cache::flush();
 
         $this->emit('updateProyecto');
     }
@@ -55,20 +60,22 @@ class TablaTareasTimesheet extends Component
     public function render()
     {
         if ($this->origen == 'tareas') {
-            $this->proyectos = TimesheetProyecto::getAll();
+            $this->proyectos = TimesheetProyecto::getIdNameAll();
 
             if ($this->proyecto_filtro) {
-                $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_filtro);
+                $this->tareas = TimesheetTarea::getIdTareasAll()->where('proyecto_id', $this->proyecto_filtro);
             } else {
-                $this->tareas = TimesheetTarea::getAll();
+                $this->tareas = TimesheetTarea::getIdTareasAll();
             }
         }
 
         if ($this->origen == 'tareas-proyectos') {
-            $this->proyecto_seleccionado = TimesheetProyecto::getAll()->find($this->proyecto_id);
-            $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_id);
+            $this->proyecto_seleccionado = TimesheetProyecto::getIdNameAll()->find($this->proyecto_id);
+            $this->tareas = TimesheetTarea::getIdTareasAll()->where('proyecto_id', $this->proyecto_id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
+
+        Cache::flush();
 
         $this->emit('scriptTabla');
 
@@ -89,12 +96,16 @@ class TablaTareasTimesheet extends Component
         } else {
             $proyecto_procesado = $this->proyecto_seleccionado->id;
         }
+
         $nueva_tarea = TimesheetTarea::create([
             'tarea' => $this->tarea_name,
             'proyecto_id' => $proyecto_procesado,
             'area_id' => $area_id,
             'todos' => $todos,
         ]);
+
+        Cache::flush();
+
         $this->emit('tarea-actualizada', $nueva_tarea);
 
         $this->alert('success', 'Registro añadido!');
@@ -102,17 +113,20 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarNameTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::find($id);
+        $tarea_actualizada = TimesheetTarea::getIdTareasAll()->find($id);
 
         $tarea_actualizada->update([
             'tarea' => $value,
         ]);
+
+        Cache::flush();
+
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }
 
     public function actualizarAreaTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::find($id);
+        $tarea_actualizada = TimesheetTarea::getIdTareasAll()->find($id);
 
         if ($value == 0) {
             $area_id = null;
@@ -126,13 +140,16 @@ class TablaTareasTimesheet extends Component
             'area_id' => $area_id,
             'todos' => $todos,
         ]);
+
+        Cache::flush();
+
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }
 
     public function llenarAreas($id)
     {
         if ($id) {
-            $this->proyecto_seleccionado = TimesheetProyecto::getAll()->find($id);
+            $this->proyecto_seleccionado = TimesheetProyecto::getIdNameAll()->find($id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         } else {
             $this->area_seleccionar = [];
@@ -142,6 +159,8 @@ class TablaTareasTimesheet extends Component
     public function destroy($id)
     {
         TimesheetTarea::destroy($id);
+
+        Cache::flush();
 
         $this->alert('success', 'Registro eliminado!');
     }

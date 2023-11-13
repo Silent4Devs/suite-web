@@ -33,9 +33,8 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
-    Route::post('/obtenerauditoria', 'DashboardAuditoriasSGIController@obtenerauditoria')->name('obtener-auditoria');
-
-    Route::get('/', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('/', 'InicioUsuarioController@index');
     Route::get('/home', 'InicioUsuarioController@index')->name('home');
     //log-viewer
     Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
@@ -46,7 +45,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('users/bloqueo/{user}/change', 'UsersController@toogleBloqueo')->name('users.toogle-bloqueo');
     Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
     Route::post('users/list/get', 'UsersController@getUsersIndex')->name('users.getUsersIndex');
-    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::get('users/destroy/{id}', 'UsersController@destroy')->name('users.destroy');
 
     Route::resource('users', 'UsersController');
 
@@ -108,7 +107,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('organizacions/{schedule}/delete-schedule', 'OrganizacionController@deleteSchedule')->name('organizacions.delete-schedule');
     Route::resource('organizacions', 'OrganizacionController');
     // Inicio usuario
-    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
 
     // Areas
     Route::get('areas/exportar', 'AreasController@exportTo')->name('areas.exportar');
@@ -624,7 +622,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::group(['middleware' => ['version_iso_2022']], function () {
             //Analisis brechas 2022
-
+            Route::get('/top', 'TopController@index')->name('top');
             Route::get('/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
@@ -817,6 +815,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController');
         Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
         Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
+        Route::get('entendimiento-organizacions/foda-timeline', 'EntendimientoOrganizacionController@cardFoda')->name('entendimiento-organizacions.card-foda');
 
         // Partes Interesadas
         Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
@@ -845,6 +844,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // Alcance Sgsis
         Route::delete('alcance-sgsis/destroy', 'AlcanceSgsiController@massDestroy')->name('alcance-sgsis.massDestroy');
         Route::resource('alcance-sgsis', 'AlcanceSgsiController');
+        Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
+
 
         // Comiteseguridads
         Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');

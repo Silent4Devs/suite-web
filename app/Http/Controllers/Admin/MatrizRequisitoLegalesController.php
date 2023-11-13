@@ -23,11 +23,12 @@ class MatrizRequisitoLegalesController extends Controller
 {
     public function index(Request $request)
     {
+
         abort_if(Gate::denies('matriz_requisitos_legales_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         if ($request->ajax()) {
-            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado', 'evaluaciones')->orderBy('id')->get();
-
+            $matrizRequisitoLegales = MatrizRequisitoLegale::select('id', 'nombrerequisito', 'formacumple', 'fechaexpedicion')->orderBy('id')->get();
+            // dd($matrizRequisitoLegales);
+            //  $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado', 'evaluaciones')->orderBy('id')->get();
             return datatables()->of($matrizRequisitoLegales)->toJson();
         }
 

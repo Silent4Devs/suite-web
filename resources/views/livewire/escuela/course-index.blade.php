@@ -9,7 +9,7 @@
         </form>
 
         <form wire:submit.prevent="categoryFilter" id="formularioC">
-            <select name="category" wire:model="selectioncategory" id="categorySelect">
+            <select name="category" wire:model.lazy="selectioncategory" id="categorySelect">
                 <option value="0" selected="true">Categorias</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" type="submit">{{ $category->name }}</option>
@@ -19,7 +19,7 @@
         </form>
 
         <form wire:submit.prevent="levelFilter" id="formularioL">
-            <select name="level" id="levelSelect" wire:model="selectionlevel">
+            <select name="level" id="levelSelect" wire:model.lazy="selectionlevel">
                 <option value="0">Niveles</option>
                 @foreach ($levels as $level)
                     <option value="{{ $level->id }}">{{ $level->name }}</option>
@@ -41,7 +41,7 @@
                         <div style="color: #E3A008; font-size: 18px;">
 
                             @for ($i = 1; $i <= $c->getRatingAttribute(); $i++)
-                            <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
                             @endfor
 
                             {{-- <i class="fa-solid fa-star"></i>
@@ -51,7 +51,7 @@
                         </div>
                         <div>
                             <i class="fa-solid fa-users"></i>
-                            {{$c->students_count}}
+                            {{ $c->students_count }}
                         </div>
                     </div>
                     <div class="text-right mt-4">
@@ -65,20 +65,18 @@
 
 @section('scripts')
     <script>
-        $("#categorySelect").on("change", function (event) {
+        $("#categorySelect").on("change", function(event) {
             document.getElementById('guardarButtonC').click();
         });
     </script>
     <script>
-        $("#levelSelect").on("change", function (event) {
+        $("#levelSelect").on("change", function(event) {
             document.getElementById('guardarButtonL').click();
         });
     </script>
     <script>
-        $("#todoSelect").on("click", function (event) {
+        $("#todoSelect").on("click", function(event) {
             document.getElementById('guardarButtonT').click();
         });
     </script>
-
 @endsection
-

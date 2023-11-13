@@ -118,12 +118,12 @@ class RequisicionesCreateComponent extends Component
             ]);
         }
 
-        $productos_existentes = KatbolProductoRequisicion::where('requisiciones_id', $this->nueva_requisicion->id)->get();
-        if ($productos_existentes->count() > 0) {
-            foreach ($productos_existentes as $product) {
-                $product->delete();
-            }
-        }
+        // $productos_existentes = KatbolProductoRequisicion::where('requisiciones_id', $this->nueva_requisicion->id)->get();
+        // if ($productos_existentes->count() > 0) {
+        //     foreach ($productos_existentes as $product) {
+        //         $product->delete();
+        //     }
+        // }
 
         for ($i = 1; $i <= $this->products_servs_count; $i++) {
             if (isset($data['especificaciones_' . $i])) {
@@ -293,9 +293,7 @@ class RequisicionesCreateComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $empleado = User::find($this->nueva_requisicion->id_user);
-
-            $supervisor = isset($empleado->empleado_id) ? User::find($this->nueva_requisicion->id_user)->empleado->supervisor->name : 'sin supervisor asignado';
+            $supervisor = User::find($this->nueva_requisicion->id_user)->empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 

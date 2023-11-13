@@ -59,7 +59,7 @@ class EV360ObjetivosController extends Controller
     {
         abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
-        $empleado = Empleado::find(intval($empleado));
+        $empleado = Empleado::getAll()->find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
             $q->with(['objetivo' => function ($query) {
                 $query->with(['tipo', 'metrica']);
@@ -239,7 +239,7 @@ class EV360ObjetivosController extends Controller
     public function editByEmpleado(Request $request, $empleado, $objetivo)
     {
         $objetivo = Objetivo::find(intval($objetivo))->load(['tipo', 'metrica']);
-        $empleado = Empleado::find(intval($empleado));
+        $empleado = Empleado::getAll()->find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
             $q->with(['objetivo' => function ($query) {
                 $query->with(['tipo', 'metrica']);
@@ -324,7 +324,7 @@ class EV360ObjetivosController extends Controller
     {
         abort_if(Gate::denies('objetivos_estrategicos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
-        $empleado = Empleado::find(intval($empleado));
+        $empleado = Empleado::getAll()->find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
             $q->with(['objetivo' => function ($query) {
                 $query->with(['tipo', 'metrica']);

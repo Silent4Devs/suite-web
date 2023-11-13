@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EvidenciasQuejasClientesCerrado extends Model implements Auditable
 {
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'evidencia_quejas_clientes_estatus_cerrado';
 

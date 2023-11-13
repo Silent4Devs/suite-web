@@ -294,7 +294,7 @@ class EV360EvaluacionesController extends Controller
             }]);
         }, 'objetivos'])->find(intval($evaluado));
 
-        $evaluador = Empleado::find(intval($evaluador));
+        $evaluador = Empleado::getAll()->find(intval($evaluador));
         $isJefeInmediato = EvaluadoEvaluador::select('tipo')
             ->where('evaluado_id', $evaluado->id)
             ->where('evaluador_id', $evaluador->id)
@@ -886,8 +886,9 @@ class EV360EvaluacionesController extends Controller
     public function reactivarPorEvaluador($evaluacion, $evaluado, $evaluador)
     {
         $evaluacion = Evaluacion::find(intval($evaluacion));
-        $evaluado = Empleado::find(intval($evaluado));
-        $evaluador = Empleado::find(intval($evaluador));
+        $empleados = Empleado::getAll();
+        $evaluado = $empleados->find(intval($evaluado));
+        $evaluador = $empleados->find(intval($evaluador));
         // dd($evaluacion->id, $evaluado->id, $evaluador->id);
 
         $reactivacion = EvaluadoEvaluador::where('evaluacion_id', '=', $evaluacion->id)
@@ -1014,7 +1015,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1041,7 +1042,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1067,7 +1068,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1093,7 +1094,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1218,7 +1219,7 @@ class EV360EvaluacionesController extends Controller
             'promedio_objetivos' => $promedio_objetivos,
             'promedio_general_objetivos' => $promedio_general_objetivos,
             'calificacion_final' => $calificacion_final,
-            'evaluadores' => Empleado::find($evaluadores->pluck('evaluador_id')),
+            'evaluadores' => Empleado::getAll()->find($evaluadores->pluck('evaluador_id')),
         ];
     }
 
@@ -1324,7 +1325,7 @@ class EV360EvaluacionesController extends Controller
 
     public function evaluacionesDelEmpleado($empleado)
     {
-        $empleado = Empleado::find($empleado);
+        $empleado = Empleado::getAll()->find($empleado);
         $evaluacione = Evaluacion::whereHas('evaluados', function ($q) use ($empleado) {
             $q->where('evaluado_id', $empleado->id);
         })->get();
@@ -1353,8 +1354,9 @@ class EV360EvaluacionesController extends Controller
                 ->pluck('evaluado_id')
                 ->unique()
                 ->toArray();
-            $evaluados = Empleado::find($evaluados);
-            $evaluador_model = Empleado::find($evaluador);
+            $empleados = Empleado::getAll();
+            $evaluados = $empleados->find($evaluados);
+            $evaluador_model = $empleados->find($evaluador);
             if (count($evaluados)) {
                 $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
                 if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
@@ -1382,8 +1384,9 @@ class EV360EvaluacionesController extends Controller
             'descripcion' => 'nullable|string',
         ]);
         $evaluacion = Evaluacion::find(intval($request->evaluacion));
-        $evaluado = Empleado::find(intval($request->evaluado));
-        $evaluador = Empleado::find(intval($request->evaluador));
+        $empleados = Empleado::getAll();
+        $evaluado = $empleados->find(intval($request->evaluado));
+        $evaluador = $empleados->find(intval($request->evaluador));
         $fecha_inicio = $request->fecha_inicio;
         $fecha_fin = $request->fecha_fin;
         $nombre = $request->nombre;

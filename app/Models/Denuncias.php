@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Denuncias extends Model implements Auditable
 {
     use HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'denuncias';
 
@@ -21,11 +22,24 @@ class Denuncias extends Model implements Auditable
 
     protected $appends = ['folio', 'fecha_creacion', 'fecha_reporte', 'fecha_de_cierre'];
 
+
+    protected $fillable = [
+        'anonimo',
+        'estatus',
+        'empleado_denuncio_id',
+        'empleado_denunciado_id',
+        'tipo',
+        'fecha',
+        'fecha_cierre',
+        'sede',
+        'ubicacion',
+    ];
+
     //Redis methods
     public static function getAll()
     {
-        //retrieve all data or can pass columns to retrieve
-        return Cache::remember('denuncias_all', 3600, function () {
+        //retrieve all data or can pass columns to retrieve resolve
+        return Cache::remember('denuncias_all', 3600 * 4, function () {
             return self::get();
         });
     }
@@ -37,7 +51,7 @@ class Denuncias extends Model implements Auditable
 
     public function denuncio()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_denuncio_id', 'id')->alta()->with('area');
+        return $this->belongsTo(Empleado::class, 'empleado_denuncio_id');
     }
 
     public function evidencias_denuncias()
@@ -47,7 +61,7 @@ class Denuncias extends Model implements Auditable
 
     public function denunciado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_denunciado_id', 'id')->alta()->with('area');
+        return $this->belongsTo(Empleado::class, 'empleado_denunciado_id');
     }
 
     public function planes()

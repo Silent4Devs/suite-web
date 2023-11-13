@@ -2,18 +2,21 @@
 
 namespace App\Models\ContractManager;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ProvedorRequisicionCatalogo extends Model
+class ProvedorRequisicionCatalogo extends Model implements Auditable
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
-    'requisicion_id',
-    'proveedor_id',
-    'fecha_inicio',
-    'fecha_fin',
+        'requisicion_id',
+        'proveedor_id',
+        'fecha_inicio',
+        'fecha_fin',
     ];
 
     protected $with = ['provedores'];

@@ -246,7 +246,7 @@ class AreasController extends Controller
         abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $numero_grupos = Grupo::count();
 
-        $areasTree = Area::exists(); //Eager loading
+        $areasTree = Area::getExists(); //Eager loading
         // dd($areasTree);
 
         $rutaImagenes = asset('storage/empleados/imagenes/');

@@ -265,7 +265,7 @@
                                 <ul>
                                     @foreach ($task->assigs as $assig)
                                         @php
-                                            $empleado = App\Models\Empleado::find(intval($assig->resourceId));
+                                            $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
                                         @endphp
                                         <li>{{ $empleado->name }}</li>
                                     @endforeach

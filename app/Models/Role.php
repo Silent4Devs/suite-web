@@ -3,15 +3,17 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Role extends Model implements Auditable
 {
     use SoftDeletes, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     public $table = 'roles';
 
@@ -27,6 +29,13 @@ class Role extends Model implements Auditable
         'updated_at',
         'deleted_at',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('Roles:roles_all', 3600 * 12, function () {
+            return self::with('permissions')->orderBy('id')->get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

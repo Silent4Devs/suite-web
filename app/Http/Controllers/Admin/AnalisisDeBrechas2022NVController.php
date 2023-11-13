@@ -23,5 +23,4 @@ class AnalisDeBrecha2022NVController extends Controller
     {
         return view('admin.analisisdebrecha2022nv.analisisdebrecha.index');
     }
-
 }
