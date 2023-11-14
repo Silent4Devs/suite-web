@@ -142,13 +142,14 @@ class ReportesRegistros extends Component
         }
         $this->totalRegistrosMostrando = $query->count();
         $times = $query->paginate($this->perPage);
+        $timesExcel = $query->paginate(10000000);
 
         //Funcion para pintar contadores en los filtros de estatus
         $this->establecerContadores();
 
         $this->emit('scriptTabla');
 
-        return view('livewire.timesheet.reportes-registros', compact('times', 'empleados'));
+        return view('livewire.timesheet.reportes-registros', compact('times', 'empleados', 'timesExcel'));
     }
 
     public function establecerContadores()

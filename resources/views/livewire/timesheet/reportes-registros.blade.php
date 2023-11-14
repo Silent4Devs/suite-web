@@ -210,7 +210,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($times as $time)
+                        @foreach ($timesExcel as $time)
                             <tr class="tr_{{ $time->estatus }}">
                                 {{-- <td>
                                     {!! $time->semana !!}
