@@ -1203,7 +1203,7 @@ class InicioUsuarioController extends Controller
         $empleado = Empleado::getAll()->find($id_empleado);
 
         $evidendiasdocumentos = EvidenciasDocumentosEmpleados::getAll();
-        $docs_empleado = $evidendiasdocumentos->where('empleado_id', $id_empleado)->get();
+        $docs_empleado = $evidendiasdocumentos->where('empleado_id', $id_empleado);
         $lista_docs_model = ListaDocumentoEmpleado::getAll();
         $lista_docs = collect();
         foreach ($lista_docs_model as $doc) {
