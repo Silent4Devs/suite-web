@@ -83,7 +83,8 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
                 'timesheet_horas.horas_viernes',
                 'timesheet_horas.horas_sabado',
                 'timesheet_horas.horas_domingo'
-            )->orderByDesc('timesheet.fecha_dia')
+            )->orderBy('timesheet.fecha_dia', 'asc')
+            ->distinct()
             ->get()
             ->map(function ($timesheetHora) {
                 return [

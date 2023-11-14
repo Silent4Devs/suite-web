@@ -36,8 +36,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
             ->join('empleados as aprobadores', 'aprobadores.id', '=', 'timesheet.aprobador_id')
             ->join('areas', 'areas.id', '=', 'timesheet_tareas.area_id')
             ->select(
-                'timesheet_proyectos.fecha_inicio',
-                'timesheet_proyectos.fecha_fin',
+                'timesheet.fecha_dia',
                 'empleados.name as empleado_name',
                 'aprobadores.name as supervisor_name',
                 'areas.area as area_name',
@@ -67,8 +66,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 // Otras condiciones que ya tenías
             })
             ->groupBy(
-                'timesheet_proyectos.fecha_inicio',
-                'timesheet_proyectos.fecha_fin',
+                'timesheet.fecha_dia',
                 'empleado_name',
                 'supervisor_name',
                 'area_name',
@@ -80,12 +78,12 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'timesheet_horas.horas_viernes',
                 'timesheet_horas.horas_sabado',
                 'timesheet_horas.horas_domingo'
-            )->orderByDesc('timesheet_proyectos.fecha_inicio')
+            )->orderBy('timesheet.fecha_dia', 'asc')
+            ->distinct()
             ->get()
             ->map(function ($timesheetHora) {
                 return [
-                    'Fecha Inicio' => \Carbon\Carbon::parse($timesheetHora->fecha_inicio)->format('d/m/Y'),
-                    'Fecha Fin' => \Carbon\Carbon::parse($timesheetHora->fecha_fin)->format('d/m/Y'),
+                    'Fecha Inicio' => \Carbon\Carbon::parse($timesheetHora->fecha_dia)->format('d/m/Y'),
                     'Empleado' => $timesheetHora->empleado_name,
                     'Supervisor' => $timesheetHora->supervisor_name,
                     'Area' => $timesheetHora->area_name,
@@ -101,7 +99,6 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
     {
         return [
             'Fecha Inicio',
-            'Fecha Fin',
             'Empleado',
             'Supervisor',
             'Area',
