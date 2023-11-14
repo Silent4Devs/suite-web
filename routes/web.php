@@ -629,7 +629,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
 
             // Gap Dos 2022
-            Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
+            //Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
             Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
 
             // Gap Tres 2022
@@ -1311,7 +1311,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::resource('gap-unos', 'GapUnoController');
 
             // Gap Dos
-            Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
+            //Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
             Route::resource('gap-dos', 'GapDosController');
 
             // Gap Tres
