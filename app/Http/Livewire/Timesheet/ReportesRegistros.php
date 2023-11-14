@@ -2,10 +2,13 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Exports\ReporteColaboradorRegistro;
+use App\Exports\ReporteColaboradorTarea;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Timesheet;
 use Carbon\Carbon;
+use Excel;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -77,7 +80,6 @@ class ReportesRegistros extends Component
     public function updatedEmpleadoId($value)
     {
         $this->emp_id = $value;
-
     }
 
     public function render()
@@ -91,18 +93,17 @@ class ReportesRegistros extends Component
         }
         $empleados = $this->emp;
 
-        $query = Timesheet::orderByDesc('fecha_dia')
-            ->select(
-                'id',
-                'fecha_dia',
-                'empleado_id',
-                'aprobador_id',
-                'estatus',
-                'comentarios',
-                'dia_semana',
-                'inicio_semana',
-                'fin_semana',
-            )
+        $query = Timesheet::select(
+            'id',
+            'fecha_dia',
+            'empleado_id',
+            'aprobador_id',
+            'estatus',
+            'comentarios',
+            'dia_semana',
+            'inicio_semana',
+            'fin_semana',
+        )
             ->whereHas('empleado', function ($query) {
                 if ($this->emp_id == 0) {
                     return $query->where('name', 'ILIKE', "%{$this->search}%");
@@ -116,20 +117,20 @@ class ReportesRegistros extends Component
                 } else {
                     $query->where('area_id', $this->area_id)->where('name', 'ILIKE', "%{$this->search}%");
                 }
-            })
-            ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
+            })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
             ->orderByDesc('fecha_dia');
+
 
         if ($this->estatus) {
             $query = $query->where('estatus', $this->estatus);
         }
         $this->totalRegistrosMostrando = $query->count();
 
-        // $times = $query->paginate($this->perPage);
-        $times = $query->paginate($this->perPage);
-        if($this->emp_id || $this->area_id || $this->fecha_fin ||$this->fecha_inicio){
+        $times = $query->fastPaginate($this->perPage);
+
+        if ($this->emp_id || $this->area_id || $this->fecha_fin || $this->fecha_inicio) {
             $timesExcel = $query->paginate($query->count());
-        }else{
+        } else {
             $timesExcel = null;
         }
 
@@ -139,6 +140,14 @@ class ReportesRegistros extends Component
         $this->emit('scriptTabla');
 
         return view('livewire.timesheet.reportes-registros', compact('timesExcel', 'times', 'empleados'));
+    }
+
+    public function exportExcel()
+    {
+
+        $export = new ReporteColaboradorRegistro($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
+
+        return Excel::download($export, 'reporte_colaborador_registro.xlsx');
     }
 
     public function establecerContadores()
@@ -161,7 +170,7 @@ class ReportesRegistros extends Component
 
         //Contador Todos los registros timesheet en penduente
         $this->pendientes_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ?
-                $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->count();
+            $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->count();
 
         //Contador Todos los registros timesheet aprobados
         $this->aprobados_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'aprobado')->count();

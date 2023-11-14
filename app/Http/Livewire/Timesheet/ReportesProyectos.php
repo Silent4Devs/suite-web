@@ -237,7 +237,7 @@ class ReportesProyectos extends Component
 
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
-            $registro_horas_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->paginate(10);
+            $registro_horas_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->get();
             // registro de horas en calendario
             $times_registro_horas_array = collect();
             $calendario_tabla_proyectos = [];
@@ -316,7 +316,7 @@ class ReportesProyectos extends Component
 
         $empleados = collect();
 
-        $tareas = TimesheetTarea::where('proyecto_id', $id)->paginate(10);
+        $tareas = TimesheetTarea::where('proyecto_id', $id)->get();
 
         $this->tareas_array = collect();
 
@@ -328,7 +328,7 @@ class ReportesProyectos extends Component
 
         $this->total_horas_proyecto = 0;
         foreach ($tareas as $tarea) {
-            $horas = TimesheetHoras::where('tarea_id', $tarea->id)->paginate(10);
+            $horas = TimesheetHoras::where('tarea_id', $tarea->id)->get();
             $empleados = collect();
             $h_total_tarea = 0;
             $h_total_tarea_total = 0;
