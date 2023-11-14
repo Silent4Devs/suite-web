@@ -124,7 +124,7 @@ class OrdenCompraController extends Controller
         $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
         $proveedores = KatbolProveedorOC::get();
         $proveedor = $proveedores->where('id', $requisicion->proveedor_id)->first();
-        $contratos = KatbolContrato::get();
+        $contratos = KatbolContrato::getAll();
         $centro_costos = KatbolCentroCosto::get();
         $monedas = KatbolMoneda::get();
         $contrato = $contratos->where('id', $requisicion->contrato_id)->first();

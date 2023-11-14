@@ -4,7 +4,7 @@ pipeline {
 
     stage('install') {
       steps {
-        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
+        git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
       }
     }
 
@@ -25,6 +25,14 @@ pipeline {
         }
       }
     }
+
+
+    // stage('test') {
+    //     steps {
+    //         sh 'docker-compose exec php ./vendor/bin/phpstan analyse'
+    //     }
+    //     }
+
 
      stage('Deploy via SSH') {
             steps {

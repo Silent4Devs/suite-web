@@ -100,7 +100,7 @@ class RequisicionesCreateComponent extends Component
         $this->sucursales = KatbolSucursal::where('archivo', false)->get();
         $this->proveedores = KatbolProveedorOC::where('estado', false)->get();
         $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
-        $this->contratos = KatbolContrato::get();
+        $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::where('archivo', false)->get();
         $this->organizacion = Organizacion::getFirst();
 

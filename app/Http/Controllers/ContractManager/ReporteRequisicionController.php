@@ -31,7 +31,7 @@ class ReporteRequisicionController extends Controller
     {
         abort_if(Gate::denies('katbol_reportes_requisicion_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proveedores = KatbolProveedores::get();
-        $contratos = Contrato::get();
+        $contratos = Contrato::getAll();
 
         $organizacion = Organizacion::getFirst();
 

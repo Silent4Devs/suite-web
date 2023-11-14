@@ -177,7 +177,7 @@ class AnswerEvaluationUser extends Component
 
     public function render()
     {
-        $this->course = Course::find($this->course_id);
+        $this->course = Course::getAll()->find($this->course_id);
         $evaluation = Evaluation::find($this->evaluacion_id);
         $this->getEvaluation($evaluation);
         $this->totalQuizQuestions = count($this->evaluation->questions);
