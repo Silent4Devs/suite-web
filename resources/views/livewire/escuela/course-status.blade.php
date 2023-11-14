@@ -35,8 +35,11 @@
                 {!! $current && $current->iframe ? $current->iframe : 'Sin registro' !!}
             </div>
 
-
-            <h4 class="mt-3">{{ $current->name }}</h4>
+            @if ($current)
+                <h4 class="mt-3">{{ $current->name }}</h4>
+            @else
+                <p>No current data available</p>
+            @endif
 
             <div class="mt-2 card">
                 <div class="card-body">
