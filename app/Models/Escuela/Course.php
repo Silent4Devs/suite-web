@@ -3,9 +3,10 @@
 namespace App\Models\Escuela;
 
 use App\Traits\ClearsResponseCache;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model
 {
@@ -21,6 +22,13 @@ class Course extends Model
     const REVISION = 2;
 
     const PUBLICADO = 3;
+
+    public static function getAll()
+    {
+        return Cache::remember('Courses:courses_all', 3600 * 8, function () {
+            return self::get();
+        });
+    }
 
     // Calificación del curso
     public function getRatingAttribute()

@@ -75,7 +75,7 @@ class CourseStatus extends Component
             $this->current->users()->attach($usuario->id);
         }
         $this->current = Lesson::find($this->current->id);
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
     }
 
     //PROPIEDADES COMPUTADAS
