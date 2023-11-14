@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Timesheet;
 
 use App\Exports\ReporteColaboradorRegistro;
-use App\Exports\ReporteColaboradorTarea;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Timesheet;
@@ -48,7 +47,6 @@ class ReportesRegistros extends Component
     public $emp;
 
     public $emp_id;
-
 
     public function mount()
     {
@@ -119,7 +117,6 @@ class ReportesRegistros extends Component
                 }
             })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
             ->orderByDesc('fecha_dia');
-
 
         if ($this->estatus) {
             $query = $query->where('estatus', $this->estatus);
