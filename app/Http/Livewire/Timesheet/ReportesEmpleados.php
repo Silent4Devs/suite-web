@@ -62,6 +62,13 @@ class ReportesEmpleados extends Component
 
     public $empleadosQuery;
 
+    function mount()
+    {
+        $this->empleados_estatus = 'alta';
+        $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
+        $this->fecha_fin = Carbon::now()->format('Y-m-d');
+    }
+
     public function updatedAreaId($value)
     {
         $this->area_id = $value;
@@ -125,9 +132,6 @@ class ReportesEmpleados extends Component
     public function render()
     {
         $this->areas = Area::getAll();
-        $this->empleados_estatus = 'alta';
-        $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
-        $this->fecha_fin = Carbon::now()->format('Y-m-d');
         $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
 
         $this->hoy = Carbon::now();
@@ -417,7 +421,9 @@ class ReportesEmpleados extends Component
                 $semanas_faltantes = $sem_falt;
             }
         }
-        Mail::to(removeUnicodeCharacters($empleado->email))->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
+
+        Mail::to(removeUnicodeCharacters($empleado->email))
+            ->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
 
         $this->alert('success', 'Correo Enviado!');
 
