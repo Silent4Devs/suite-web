@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\RevisionDocumentoController;
+use App\Http\Controllers\UsuarioBloqueadoController;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -13,12 +16,12 @@ Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'V
     Route::resource('/', 'RegistroVisitantesController');
 });
 
-Route::get('/', 'Auth\LoginController@showLoginForm');
-Route::get('/usuario-bloqueado', 'UsuarioBloqueado@usuarioBloqueado')->name('users.usuario-bloqueado');
+Route::get('/', [LoginController::class, 'showLoginForm']);
+Route::get('/usuario-bloqueado', [UsuarioBloqueadoController::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
-Route::post('/revisiones/approve', 'RevisionDocumentoController@approve')->name('revisiones.approve');
-Route::post('/revisiones/reject', 'RevisionDocumentoController@reject')->name('revisiones.reject');
-Route::get('/revisiones/{revisionDocumento}', 'RevisionDocumentoController@edit')->name('revisiones.revisar');
+Route::post('/revisiones/approve', [RevisionDocumentoController::class, 'approve'])->name('revisiones.approve');
+Route::post('/revisiones/reject', [RevisionDocumentoController::class, 'reject'])->name('revisiones.approve');
+Route::get('/revisiones/{revisionDocumento}', [RevisionDocumentoController::class, 'edit'])->name('revisiones.revisar');
 
 Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')->name('minutas.revisiones.approve');
 Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->name('minutas.revisiones.reject');
