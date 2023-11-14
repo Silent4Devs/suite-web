@@ -114,10 +114,10 @@ class EmpleadoController extends Controller
         $documentos = EvidenciasDocumentosEmpleados::getAll();
         $certificaciones = CertificacionesEmpleados::get();
         $puestos = Puesto::getAll();
-        $perfiles = PerfilEmpleado::get();
+        $perfiles = PerfilEmpleado::getAll();
         $perfiles_seleccionado = null;
         $puestos_seleccionado = null;
-        $perfiles = PerfilEmpleado::all();
+        //$perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $empleado = new Empleado;
@@ -126,7 +126,7 @@ class EmpleadoController extends Controller
         $organizacion = Organizacion::getFirst();
         $countries = $globalCountries->getCountries('ES');
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
     }
 
     public function onlyStore($request)
@@ -929,11 +929,11 @@ class EmpleadoController extends Controller
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::getAll();
         $puestos = Puesto::getAll();
-        $perfiles = PerfilEmpleado::all();
+        $perfiles = PerfilEmpleado::getAll();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $puestos = Puesto::getAll();
-        $perfiles = PerfilEmpleado::get();
+        $perfiles = PerfilEmpleado::getAll();
         $perfiles_seleccionado = $empleado->perfil_empleado_id;
         $puestos_seleccionado = $empleado->puesto_id;
         $idiomas = Language::get();

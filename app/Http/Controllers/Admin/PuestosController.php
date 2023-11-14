@@ -127,7 +127,7 @@ class PuestosController extends Controller
         $contactos = PuestoContactos::get();
         $puesto = Puesto::getAll();
         $empleados = Empleado::getaltaAll();
-        $perfiles = PerfilEmpleado::all();
+        $perfiles = PerfilEmpleado::getAll();
         $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
         // dd($idis);
