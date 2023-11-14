@@ -2,126 +2,16 @@
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
-<style type="text/css">
-    #lista_proyectos_tareas li {
-        padding-top: 13px;
-    }
-
-    @media print {
-
-        #sidebar,
-        header,
-        .nav-tabs,
-        .titulo_general_funcion,
-        .breadcrumb {
-            display: none !important;
-        }
-
-        #reporte_proyecto,
-        /* #reporte_empleado, */
-        #reporte_general {
-            width: 100% !important;
-            position: absolute;
-            top: 0;
-            margin: 0 !important;
-            margin-top: -150px !important;
-            padding: 0 !important;
-            background-color: #fff !important;
-            border: 1px solid #fff !important;
-        }
-    }
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
-</script>
+</script> --}}
 
 @livewire('timesheet.reportes-proyectos')
 
 @endsection
 @section('scripts')
     @parent
-    <script type="text/javascript">
-        $(".cde-nombre").mouseover(function() {
-            $(".cde-nombre").addClass("ver");
-        });
-        $(".cde-nombre").mouseleave(function() {
-            $(".cde-nombre").removeClass("ver");
-        });
-
-        $(".cde-puesto").mouseover(function() {
-            $(".cde-puesto").addClass("ver");
-        });
-        $(".cde-puesto").mouseleave(function() {
-            $(".cde-puesto").removeClass("ver");
-        });
-
-        $(".cde-area").mouseover(function() {
-            $(".cde-area").addClass("ver");
-        });
-        $(".cde-area").mouseleave(function() {
-            $(".cde-area").removeClass("ver");
-        });
-
-        $(".cde-estatus").mouseover(function() {
-            $(".cde-estatus").addClass("ver");
-        });
-        $(".cde-estatus").mouseleave(function() {
-            $(".cde-estatus").removeClass("ver");
-        });
-        $(".cde-fecha").mouseleave(function() {
-            $(".cde-fecha").removeClass("ver");
-        });
-
-        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").mouseover(
-            function() {
-                $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
-                    .addClass("ver");
-            });
-        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
-            .mouseleave(function() {
-                $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
-                    .removeClass("ver");
-            });
-        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").mouseover(
-            function() {
-                $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
-                    .addClass("ver");
-            });
-        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
-            .mouseleave(function() {
-                $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
-                    .removeClass("ver");
-            });
-    </script>
-    <script type="text/javascript">
-        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            setTimeout(() => {
-                $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
-            }, 300);
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const menuActive = localStorage.getItem('menu-iso27001-active');
-                $(`#tabsIso27001 [data-type="${menuActive}"]`).tab('show');
-
-                $('#tabsIso27001 a').on('click', function(event) {
-                    event.preventDefault()
-                    $(this).tab('show')
-                    const keyTab = this.getAttribute('data-type');
-                    localStorage.setItem('menu-iso27001-active', keyTab);
-                });
-            }, 100);
-        });
-    </script>
-    <script type="text/javascript">
-        function cerrarVentana(id) {
-            $('#' + id).remove();
-        }
-    </script>
 
     <script>
         let cont = 0;
@@ -254,12 +144,6 @@
                     }
                 }
             };
-
-            if ((id_tabla) == ('timesheet_empleados_lista' + cont)) {
-                $('tfoot .cde-op').innerHTML = '';
-                $('tfoot .cde-semenasf').innerHTML = '';
-                $('tfoot .cde-totalh').innerHTML = '';
-            }
 
             if (id_tabla == 'datatable_timesheet_proyectos') {
                 console.log('"bPaginate": false,');
