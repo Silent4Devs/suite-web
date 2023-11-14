@@ -147,7 +147,7 @@ class EmpleadoCreateEditComponent extends Component
         $this->areas = Area::getAll();
         $this->sedes = Sede::getAll();
         $this->puestos = Puesto::getAll();
-        $this->perfiles = PerfilEmpleado::all();
+        $this->perfiles = PerfilEmpleado::getAll();
         $this->tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description')->get();
         $this->entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
 

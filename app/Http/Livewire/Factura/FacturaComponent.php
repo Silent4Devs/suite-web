@@ -97,6 +97,16 @@ class FacturaComponent extends Component
 
     public $usuarios;
 
+    public $contrato_total;
+
+    public $ampliacion;
+
+    public $monto_total_facturas;
+
+    public $fecha_inicio_contrato;
+
+    public $fecha_fin_contrato;
+
     protected $listeners = [
         'triggerDeleteFactura' => 'confirmDelete',
     ];
@@ -115,7 +125,7 @@ class FacturaComponent extends Component
 
     public function render()
     {
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $facturas = Factura::select('facturacion.id', 'no_factura', 'fecha_recepcion', 'fecha_liberacion', 'no_revisiones', 'cumple', 'monto_factura', 'estatus', 'n_cxl', 'firma', 'conformidad', 'facturas_files.pdf', 'facturas_files.xml')
             ->join('facturas_files', 'facturacion.id', '=', 'facturas_files.factura_id')
             ->where('no_factura', 'like', '%'.$this->search.'%')

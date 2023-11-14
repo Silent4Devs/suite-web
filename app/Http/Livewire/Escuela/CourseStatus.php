@@ -82,9 +82,13 @@ class CourseStatus extends Component
     //definimos la propiedad index, lo que va hacer es calcular el indice
     public function getIndexProperty()
     {
-        // Recupere todas las lecciones de un curso
-        // El metodo pluck me recupera una coleccion a traves de una coleccion ya existente
-        return $this->course->lessons->pluck('id')->search($this->current->id);
+        // Check if $this->course exists and is not null
+        if ($this->course && $this->course->lessons) {
+            // Use optional() to safely access 'id' property of each lesson and search for $this->current->id
+            return optional($this->course->lessons->pluck('id'))->search($this->current->id);
+        }
+
+        return null; // or handle the situation based on your logic
     }
 
     //calculamos la propiedad previous
