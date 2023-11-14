@@ -71,7 +71,7 @@ class PlanaccionCorrectivaController extends Controller
             return $table->make(true);
         }
 
-        $accion_correctivas = AccionCorrectiva::get();
+        $accion_correctivas = AccionCorrectiva::getAll();
         $users = User::getAll();
         $teams = Team::get();
 

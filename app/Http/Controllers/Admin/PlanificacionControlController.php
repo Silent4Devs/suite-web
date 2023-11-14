@@ -105,7 +105,7 @@ class PlanificacionControlController extends Controller
 
         $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $alta = Empleado::alta()->with('area')->get();
+        $alta = Empleado::getAltaEmpleadosWithArea();
 
         $empleados = $alta;
 
@@ -182,7 +182,7 @@ class PlanificacionControlController extends Controller
         abort_if(Gate::denies('planificacion_y_control_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $alta = Empleado::alta()->with('area')->get();
+        $alta = Empleado::getAltaEmpleadosWithArea();
         $empleados = $alta;
 
         $planificacionControl->load('team');

@@ -69,7 +69,7 @@ class ComiteseguridadController extends Controller
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        // $empleados = Empleado::alta()->with('area')->get();
+        // $empleados = Empleado::getAltaEmpleadosWithArea();
         // return view('admin.comiteseguridads.create', compact('personaasignadas', 'empleados'));
         $id = new Comiteseguridad();
 
@@ -99,7 +99,7 @@ class ComiteseguridadController extends Controller
         $comiteseguridad = Comiteseguridad::find($comiteseguridad);
         // $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // $comiteseguridad->load('team');
-        // $empleados = Empleado::alta()->with('area')->get();
+        // $empleados = Empleado::getAltaEmpleadosWithArea();
         // return view('admin.comiteseguridads.edit', compact('personaasignadas', 'comiteseguridad', 'empleados'));
 
         return view('admin.comiteseguridads.edit', compact('comiteseguridad'));

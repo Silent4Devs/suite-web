@@ -30,7 +30,7 @@ class EV360ObjetivosController extends Controller
 
         if ($request->ajax()) {
             $usuario = User::getCurrentUser();
-            $empleados = Empleado::alta()->with(['objetivos', 'area', 'perfil'])->get();
+            $empleados = Empleado::getaltaAllWithAreaObjetivoPerfil();
             $isAdmin = in_array('Admin', $usuario->roles->pluck('title')->toArray());
             if ($usuario->empleado->children->count() > 0 && ! $isAdmin) {
                 return datatables()->of($usuario->empleado->children)->toJson();

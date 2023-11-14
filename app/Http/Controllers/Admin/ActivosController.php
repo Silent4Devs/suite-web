@@ -146,7 +146,7 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::getAll()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
         $procesos = Proceso::with('macroproceso')->get();
 
         $area = Area::getAll();
@@ -232,7 +232,7 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::getall()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         $procesos = Proceso::with('macroproceso')->get();
 
