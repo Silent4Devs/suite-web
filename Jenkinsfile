@@ -28,8 +28,8 @@ pipeline {
 
      stage('Deploy via SSH') {
             steps {
-                 script {
-                    sshagent(['/root/.ssh/id_rsa']) {
+                script {
+                   sshagent(['/root/.ssh/id_rsa']) {
                         def remoteCommand = """
                             cd /var/contenedor/tabantaj &&
                             git pull origin stagging &&
@@ -37,7 +37,6 @@ pipeline {
                         """
                         sh "ssh desarrollo@192.168.9.78 '${remoteCommand}'"
                     }
-                }
               }
           }
      }
