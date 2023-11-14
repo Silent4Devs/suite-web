@@ -33,7 +33,7 @@ class TimesheetCorreoRetraso extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_QARECEPTOR'), 'Sender Name')->
+        return $this->from(env('MAIL_QARECEPTOR'), 'Tabantaj')->
                     view('mails.timesheet.timesheet_correo_retraso');
     }
 }
