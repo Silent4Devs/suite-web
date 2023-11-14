@@ -49,6 +49,7 @@ class TimesheetHorasObserver
 
     private function forgetCache()
     {
+        Cache::forget('TimesheetHoras:registro_horas_proyecto');
         Cache::forget('TimesheetHoras:timesheethoras_all');
         Cache::forget('TimesheetHoras:timesheet_data_all');
         Cache::forget('TimesheetHoras:timesheet_data_proy_tarea');
