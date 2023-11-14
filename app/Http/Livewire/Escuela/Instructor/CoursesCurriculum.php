@@ -59,7 +59,7 @@ class CoursesCurriculum extends Component
         // ]);
 
         // $this->reset('name');
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Registro añadido exitosamente');
     }
 
@@ -75,14 +75,14 @@ class CoursesCurriculum extends Component
         $this->section->save();
         $this->section = new Section();
 
-        $this->course = Course::find($this->course->id);
-        // $this->render_alerta('success', 'Registro actualizado exitosamente');
+        $this->course = Course::getAll()->find($this->course->id);
+        $this->render_alerta('success', 'Registro actualizado exitosamente');
     }
 
     public function destroy(Section $section)
     {
         $section->delete();
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Registro eliminado exitosamente');
     }
 

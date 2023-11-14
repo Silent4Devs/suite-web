@@ -22,6 +22,8 @@ class TableQuizDetails extends Component
 
     public $user;
 
+    public $course_id;
+
     protected $listeners = ['render'];
 
     public function mount($course_id)
@@ -32,7 +34,7 @@ class TableQuizDetails extends Component
 
     public function render()
     {
-        $this->course = Course::find($this->course_id);
+        $this->course = Course::getAll()->find($this->course_id);
         $this->evaluations = Evaluation::where('course_id', $this->course_id)->get();
         // $students = $this->course->students()->where('name', 'LIKE', "%{$this->search}%")->get();
 

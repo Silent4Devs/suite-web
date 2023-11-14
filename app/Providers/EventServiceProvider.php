@@ -26,6 +26,7 @@ use App\Models\ComunicacionSgi;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Denuncias;
 use App\Models\Documento;
+use App\Models\Escuela\Course;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\Section;
 use App\Models\EvidenciasDocumentosEmpleados;
@@ -74,6 +75,7 @@ use App\Observers\AuditoriaInternaObserver;
 use App\Observers\CalendarioObserver;
 use App\Observers\CompetenciaObserver;
 use App\Observers\ComunicadoSgiObserver;
+use App\Observers\CourseObserver;
 use App\Observers\DeclaracionAplicabilidadObserver;
 use App\Observers\DenunciasObserver;
 use App\Observers\DocumentoObserver;
@@ -214,5 +216,6 @@ class EventServiceProvider extends ServiceProvider
         EvidenciasDocumentosEmpleados::observe(EvidenciasDocumentosEmpleadosObserver::class);
         TimesheetProyectoArea::observe(TimesheetProyectoAreaObserver::class);
         ComunicacionSgi::observe(ComunicadoSgiObserver::class);
+        Course::observe(CourseObserver::class);
     }
 }
