@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\AccionCorrectiva;
 use App\Events\AccionCorrectivaEvent;
+use App\Models\AccionCorrectiva;
 use Illuminate\Support\Facades\Cache;
 
 class AccionCorrectivaObserver
