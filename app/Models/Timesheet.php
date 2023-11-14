@@ -25,7 +25,6 @@ class Timesheet extends Model implements Auditable
         'aprobado',
         'empleado_id',
         'aprobador_id',
-        'aprobado',
         'rechazado',
         'estatus',
         'comentarios',
