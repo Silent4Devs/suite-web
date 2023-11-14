@@ -191,14 +191,14 @@ class Empleado extends Model implements Auditable
     public static function getEmpleadoCurriculum($id)
     {
         return
-            Cache::remember('EmpleadoCurriculum_'.$id, 3600 * 8, function () use ($id) {
+            Cache::remember('Empleados:EmpleadoCurriculum_'.$id, 3600 * 8, function () use ($id) {
                 return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
             });
     }
 
     public static function getAltaEmpleados()
     {
-        return Cache::remember('empleados_alta', 3600 * 12, function () {
+        return Cache::remember('Empleados:empleados_alta', 3600 * 12, function () {
             return self::alta()->select('id', 'area_id', 'name')->get();
         });
     }
@@ -219,15 +219,22 @@ class Empleado extends Model implements Auditable
 
     public static function getIDaltaAll()
     {
-        return Cache::remember('empleados_alta_id', 3600 * 12, function () {
+        return Cache::remember('Empleados:empleados_alta_id', 3600 * 12, function () {
             return self::alta()->with('area', 'puestoRelacionado')->select('id', 'name', 'email', 'area_id', 'puesto_id')->get();
         });
     }
 
     public static function getaltaAll()
     {
-        return Cache::remember('empleados_alta_all', 3600 * 12, function () {
+        return Cache::remember('Empleados:empleados_alta_all', 3600 * 12, function () {
             return self::alta()->get();
+        });
+    }
+
+    public static function getaltaAllWithAreaObjetivoPerfil()
+    {
+        return Cache::remember('Empleados:empleados_alta_all_area', 3600 * 12, function () {
+            return self::alta()->with(['objetivos', 'area', 'perfil'])->get();
         });
     }
 
@@ -238,7 +245,7 @@ class Empleado extends Model implements Auditable
 
     public static function getreportesAll()
     {
-        return Cache::remember('empleados_reportes_all', 3600 * 24, function () {
+        return Cache::remember('Empleados:empleados_reportes_all', 3600 * 24, function () {
             return self::select('id', 'antiguedad', 'puesto_id', 'area_id', 'name', 'estatus', 'antiguedad')->get();
         });
     }

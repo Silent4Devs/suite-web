@@ -2,8 +2,9 @@
 
 namespace App\Observers;
 
-use App\Events\AccionCorrectivaEvent;
 use App\Models\AccionCorrectiva;
+use App\Events\AccionCorrectivaEvent;
+use Illuminate\Support\Facades\Cache;
 
 class AccionCorrectivaObserver
 {
@@ -15,6 +16,7 @@ class AccionCorrectivaObserver
     public function created(AccionCorrectiva $accionCorrectiva)
     {
         event(new AccionCorrectivaEvent($accionCorrectiva, 'create', 'accion-correctiva', 'Acción Correctiva'));
+        $this->forgetCache();
     }
 
     /**
@@ -25,6 +27,7 @@ class AccionCorrectivaObserver
     public function updated(AccionCorrectiva $accionCorrectiva)
     {
         event(new AccionCorrectivaEvent($accionCorrectiva, 'update', 'accion-correctiva', 'Acción Correctiva'));
+        $this->forgetCache();
     }
 
     /**
@@ -35,6 +38,7 @@ class AccionCorrectivaObserver
     public function deleted(AccionCorrectiva $accionCorrectiva)
     {
         event(new AccionCorrectivaEvent($accionCorrectiva, 'delete', 'accion-correctiva', 'Acción Correctiva'));
+        $this->forgetCache();
     }
 
     /**
@@ -44,7 +48,7 @@ class AccionCorrectivaObserver
      */
     public function restored(AccionCorrectiva $accionCorrectiva)
     {
-        //
+        $this->forgetCache();
     }
 
     /**
@@ -54,6 +58,11 @@ class AccionCorrectivaObserver
      */
     public function forceDeleted(AccionCorrectiva $accionCorrectiva)
     {
-        //
+        $this->forgetCache();
+    }
+
+    private function forgetCache()
+    {
+        Cache::forget('AccionCorrectiva:get_all');
     }
 }
