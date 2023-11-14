@@ -106,7 +106,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
             'Supervisor',
             'Area',
             'Estatus',
-            'Total de Horas'
+            'Total de Horas',
         ];
     }
 
