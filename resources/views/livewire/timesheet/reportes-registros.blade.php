@@ -194,70 +194,66 @@
                         @endforeach
                     </tbody>
                 </table>
+
                 <table class="table w-100 datatable_timesheet_registros_reportes" id="reportes" hidden>
-                    {{-- id="datatable_timesheet" --}}
                     <thead class="w-100">
                         <tr>
                             <th>Fecha Inicio </th>
-                            <th>Fecha Fin </th>
+                            {{-- <th>Fecha Fin </th> --}}
                             <th>Empleado</th>
                             <th>Aprobador</th>
                             <th style="min-width:250px;">Area</th>
                             <th>Estatus</th>
                             <th>Horas Totales</th>
-                            <th>Opciones</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach ($timesExcel as $time)
-                            <tr class="tr_{{ $time->estatus }}">
+                        @foreach ($timesExcel as $timeEx)
+                            <tr>
+                                <td>
+                                    {{ $timeEx->fecha_dia }}
+                                </td>
                                 {{-- <td>
-                                    {!! $time->semana !!}
+                                    {!! $timeEx->finLetras !!}
                                 </td> --}}
                                 <td>
-                                    {!! $time->inicioLetras !!}
-                                </td>
-                                <td>
-                                    {!! $time->finLetras !!}
-                                </td>
-                                <td>
-                                    @if ($time->empleado)
-                                        {{ $time->empleado->name }}
+                                    @if ($timeEx->empleado)
+                                        {{ $timeEx->empleado->name }}
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($time->aprobador)
-                                        {{   $time->aprobador->name }}
+                                    @if ($timeEx->aprobador)
+                                        {{   $timeEx->aprobador->name }}
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($time->empleado)
-                                        {{ $time->empleado->area->area }}
+                                    @if ($timeEx->empleado)
+                                        {{ $timeEx->empleado->area->area }}
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($time->estatus == 'aprobado')
+                                    @if ($timeEx->estatus == 'aprobado')
                                         <span class="aprobado">Aprobada</span>
                                     @endif
 
-                                    @if ($time->estatus == 'rechazado')
+                                    @if ($timeEx->estatus == 'rechazado')
                                         <span class="rechazado">Rechazada</span>
                                     @endif
 
-                                    @if ($time->estatus == 'pendiente')
+                                    @if ($timeEx->estatus == 'pendiente')
                                         <span class="pendiente">Pendiente</span>
                                     @endif
 
-                                    @if ($time->estatus == 'papelera')
+                                    @if ($timeEx->estatus == 'papelera')
                                         <span class="papelera">Borrador</span>
                                     @endif
                                 </td>
                                 <td>
-                                    {{ $time->total_horas }}
+                                    {{ $timeEx->total_horas }}
                                 </td>
                                 <td>
-                                    <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar"
+                                    <a href="{{ asset('admin/timesheet/show') }}/{{ $timeEx->id }}" title="Visualizar"
                                         class="btn"><i class="fa-solid fa-eye"></i></a>
                                 </td>
                             </tr>
