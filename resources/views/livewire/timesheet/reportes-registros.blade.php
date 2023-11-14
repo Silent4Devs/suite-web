@@ -102,12 +102,10 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            {{-- <button onclick="exportTableToExcel('reportes', 'Reporte Timesheet')"
-                            class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
-                            <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                            Exportar Excel</button> --}}
-                            <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff" {{isset($timesExcel) ? '' : 'disabled'}} title="Se necesitan filtros">
-                                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                            <button id="" class="btn-sm rounded pr-2"
+                                style="background-color:#b9eeb9; border: #fff" wire:click="exportExcel()">
+                                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
+                                    title="Exportar Excel"></i>
                                 Exportar Excel
                             </button>
                         </div>
