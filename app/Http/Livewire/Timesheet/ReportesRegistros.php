@@ -46,36 +46,22 @@ class ReportesRegistros extends Component
 
     public $emp_id;
 
+
     public function mount()
     {
         $this->estatus = null;
-        // $this->emp = Empleado::alta()->orderBy('name', 'ASC')->get();
     }
 
     public function updatedFechaInicio($value)
     {
         $fi = Carbon::parse($value)->format('Y-m-d');
         $this->fecha_inicio = $fi;
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
     }
 
     public function updatedFechaFin($value)
     {
         $ff = Carbon::parse($value)->format('Y-m-d');
         $this->fecha_fin = $ff;
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
     }
 
     public function updatedAreaId($value)
@@ -86,27 +72,12 @@ class ReportesRegistros extends Component
         } else {
             $this->area_id = $value;
         }
-
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
     }
 
     public function updatedEmpleadoId($value)
     {
         $this->emp_id = $value;
 
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
     }
 
     public function render()
@@ -141,15 +112,17 @@ class ReportesRegistros extends Component
             $query = $query->where('estatus', $this->estatus);
         }
         $this->totalRegistrosMostrando = $query->count();
+
+        // $times = $query->paginate($this->perPage);
         $times = $query->paginate($this->perPage);
-        $timesExcel = $query->paginate(100);
+        $timesExcel = $query->paginate($query->count());
 
         //Funcion para pintar contadores en los filtros de estatus
         $this->establecerContadores();
 
         $this->emit('scriptTabla');
 
-        return view('livewire.timesheet.reportes-registros', compact('times', 'empleados', 'timesExcel'));
+        return view('livewire.timesheet.reportes-registros', compact('timesExcel', 'times', 'empleados'));
     }
 
     public function establecerContadores()
