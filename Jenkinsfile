@@ -26,6 +26,14 @@ pipeline {
       }
     }
 
+
+    // stage('test') {
+    //     steps {
+    //         sh 'docker-compose exec php ./vendor/bin/phpstan analyse'
+    //     }
+    //     }
+
+
      stage('Deploy via SSH') {
             steps {
                 script {

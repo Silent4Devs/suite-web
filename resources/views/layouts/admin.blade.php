@@ -1502,7 +1502,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
     <script src="{{ asset('js/yearpicker.js') }}"></script>
-    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
@@ -1516,7 +1515,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 
-    <link href="https://cdnout.com/flatpickr/themes/material_blue.css" rel="stylesheet" media="all">
+    {{--  https://www.udemy.com/course/kubernetes-sencillo-para-desarrolladores/learn/lecture/14674434#overview  --}}
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css"> --}}
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
