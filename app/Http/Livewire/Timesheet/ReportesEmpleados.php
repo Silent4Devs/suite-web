@@ -62,7 +62,7 @@ class ReportesEmpleados extends Component
 
     public $empleadosQuery;
 
-    function mount()
+    public function mount()
     {
         $this->empleados_estatus = 'alta';
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');

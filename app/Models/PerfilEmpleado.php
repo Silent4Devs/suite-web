@@ -6,6 +6,7 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class PerfilEmpleado extends Model implements Auditable
@@ -27,6 +28,14 @@ class PerfilEmpleado extends Model implements Auditable
         'created_at',
         'updated_at',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('PerfilEmpleado:perfiles_empleados_all', 3600 * 4, function () {
+            return self::get();
+        });
+    }
 
     public function empleados()
     {
