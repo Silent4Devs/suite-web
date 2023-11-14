@@ -101,6 +101,12 @@ class FacturaComponent extends Component
 
     public $ampliacion;
 
+    public $monto_total_facturas;
+
+    public $fecha_inicio_contrato;
+
+    public $fecha_fin_contrato;
+
     protected $listeners = [
         'triggerDeleteFactura' => 'confirmDelete',
     ];
