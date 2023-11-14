@@ -119,7 +119,7 @@ class CreateMiembrosComiteSeguridad extends Component
 
     public function render()
     {
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         return view('livewire.create-miembros-comite-seguridad', compact('empleados'));
     }

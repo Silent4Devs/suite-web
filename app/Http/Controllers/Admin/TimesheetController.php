@@ -2,35 +2,35 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
-use Throwable;
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\User;
-use App\Models\Empleado;
-use App\Models\Timesheet;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Jobs\NuevoProyectoJob;
-use App\Models\TimesheetHoras;
-use App\Models\TimesheetTarea;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetProyecto;
-use App\Services\TimesheetService;
-use Illuminate\Support\Facades\DB;
-use App\Traits\ObtenerOrganizacion;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
-use App\Models\TimesheetProyectoArea;
-use App\Models\ContractManager\Fiscale;
+use App\Jobs\NuevoProyectoJob;
 use App\Mail\TimesheetHorasSobrepasadas;
+use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
+use App\Models\Area;
+use App\Models\ContractManager\Fiscale;
+use App\Models\Empleado;
+use App\Models\Organizacion;
+use App\Models\Sede;
+use App\Models\Timesheet;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
-use App\Mail\TimesheetHorasSolicitudAprobacion;
+use App\Models\TimesheetTarea;
+use App\Models\User;
+use App\Services\TimesheetService;
+use App\Traits\ObtenerOrganizacion;
+use Auth;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Throwable;
 
 class TimesheetController extends Controller
 {
@@ -121,6 +121,14 @@ class TimesheetController extends Controller
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
 
         $organizacion = Organizacion::getFirst();
+
+        // Verifica si la fecha actual ya está registrada en $fechasRegistradas
+        $currentDate = now()->toDateString();
+
+        if (in_array($currentDate, $fechasRegistradas)) {
+            // La fecha actual ya está registrada, puedes realizar alguna acción, por ejemplo, mostrar un mensaje de error.
+            return back()->with('error', 'La fecha actual ya ha sido registrada en el Timesheet.');
+        }
 
         // Si la fecha no está registrada, continúa con la vista de creación.
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
@@ -313,11 +321,11 @@ class TimesheetController extends Controller
             DB::commit();
 
             return response()->json(['status' => 200]);
-
         }
         // catch exception and rollback transaction
         catch (Throwable $e) {
             DB::rollback();
+
             // throw $e;
             return response()->json(['status' => 400]);
         }

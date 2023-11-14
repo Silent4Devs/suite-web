@@ -57,8 +57,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
 
                 if ($this->fecha_inicio || $this->fecha_fin) {
                     $query->where('timesheet.fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
-                        ->where('timesheet.fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'))
-                        ->orderByDesc('timesheet.fecha_dia');
+                        ->where('timesheet.fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'));
                 }
 
                 if ($this->emp_id != 0) {
@@ -84,7 +83,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
                 'timesheet_horas.horas_viernes',
                 'timesheet_horas.horas_sabado',
                 'timesheet_horas.horas_domingo'
-            )
+            )->orderByDesc('timesheet.fecha_dia')
             ->get()
             ->map(function ($timesheetHora) {
                 return [

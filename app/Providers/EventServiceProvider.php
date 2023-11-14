@@ -22,6 +22,7 @@ use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
 use App\Models\Calendario;
 use App\Models\CalendarioOficial;
+use App\Models\ComunicacionSgi;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Denuncias;
 use App\Models\Documento;
@@ -72,6 +73,7 @@ use App\Observers\AuditoriaAnualObserver;
 use App\Observers\AuditoriaInternaObserver;
 use App\Observers\CalendarioObserver;
 use App\Observers\CompetenciaObserver;
+use App\Observers\ComunicadoSgiObserver;
 use App\Observers\DeclaracionAplicabilidadObserver;
 use App\Observers\DenunciasObserver;
 use App\Observers\DocumentoObserver;
@@ -211,5 +213,6 @@ class EventServiceProvider extends ServiceProvider
         RevisionDocumento::observe(RevisionDocumentoObserver::class);
         EvidenciasDocumentosEmpleados::observe(EvidenciasDocumentosEmpleadosObserver::class);
         TimesheetProyectoArea::observe(TimesheetProyectoAreaObserver::class);
+        ComunicacionSgi::observe(ComunicadoSgiObserver::class);
     }
 }
