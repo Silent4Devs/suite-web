@@ -4,7 +4,7 @@ pipeline {
 
     stage('install') {
       steps {
-        git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
+        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
       }
     }
 
@@ -32,7 +32,7 @@ pipeline {
                    sshagent(['/root/.ssh/id_rsa']) {
                         def remoteCommand = """
                             cd /var/contenedor/tabantaj &&
-                            git pull origin stagging &&
+                            git pull origin develop &&
                             docker-compose up -d --build
                         """
                         sh "ssh desarrollo@192.168.9.78 '${remoteCommand}'"
