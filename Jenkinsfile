@@ -26,20 +26,17 @@ pipeline {
       }
     }
 
-
-    // stage('test') {
-    //     steps {
-    //         sh 'docker-compose exec php ./vendor/bin/phpstan analyse'
-    //     }
-    //     }
-
-
      stage('Deploy via SSH') {
             steps {
                 script {
-                   sshagent(['/root/.ssh/id_rsa.pub']) {
-                   sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
-                  }
+                   sshagent(['/root/.ssh/id_rsa']) {
+                        def remoteCommand = """
+                            cd /var/contenedor/tabantaj &&
+                            git pull origin stagging &&
+                            docker-compose up -d --build
+                        """
+                        sh "ssh desarrollo@192.168.9.78 '${remoteCommand}'"
+                    }
               }
           }
      }
