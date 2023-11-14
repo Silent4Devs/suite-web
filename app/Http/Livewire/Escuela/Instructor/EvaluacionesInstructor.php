@@ -56,7 +56,7 @@ class EvaluacionesInstructor extends Component
     //             'course_id'=>'required'
     //             ];
     //     }
-
+    //
     // }
 
     protected $rules = [
