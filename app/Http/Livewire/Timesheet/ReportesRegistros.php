@@ -92,6 +92,17 @@ class ReportesRegistros extends Component
         $empleados = $this->emp;
 
         $query = Timesheet::orderByDesc('fecha_dia')
+            ->select(
+                'id',
+                'fecha_dia',
+                'empleado_id',
+                'aprobador_id',
+                'estatus',
+                'comentarios',
+                'dia_semana',
+                'inicio_semana',
+                'fin_semana',
+            )
             ->whereHas('empleado', function ($query) {
                 if ($this->emp_id == 0) {
                     return $query->where('name', 'ILIKE', "%{$this->search}%");
@@ -106,7 +117,8 @@ class ReportesRegistros extends Component
                     $query->where('area_id', $this->area_id)->where('name', 'ILIKE', "%{$this->search}%");
                 }
             })
-            ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia');
+            ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
+            ->orderByDesc('fecha_dia');
 
         if ($this->estatus) {
             $query = $query->where('estatus', $this->estatus);
@@ -115,7 +127,11 @@ class ReportesRegistros extends Component
 
         // $times = $query->paginate($this->perPage);
         $times = $query->paginate($this->perPage);
-        $timesExcel = $query->paginate($query->count());
+        if($this->emp_id || $this->area_id || $this->fecha_fin ||$this->fecha_inicio){
+            $timesExcel = $query->paginate($query->count());
+        }else{
+            $timesExcel = null;
+        }
 
         //Funcion para pintar contadores en los filtros de estatus
         $this->establecerContadores();

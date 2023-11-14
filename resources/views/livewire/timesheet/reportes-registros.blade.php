@@ -94,7 +94,6 @@
                                         <option value="20">20</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
-                                        <option value="-1">Todos</option>
                                     </select>
                                 </div>
                                 <div class="col-4 p-0" style="font-size: 11px;align-self: center;text-align: end">
@@ -107,7 +106,7 @@
                             class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
                             <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                             Exportar Excel</button> --}}
-                            <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
+                            <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff" {{isset($timesExcel) ? '' : 'disabled'}} title="Se necesitan filtros">
                                 <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                                 Exportar Excel
                             </button>
@@ -199,7 +198,7 @@
                     <thead class="w-100">
                         <tr>
                             <th>Fecha Inicio </th>
-                            {{-- <th>Fecha Fin </th> --}}
+                            <th>Fecha Fin </th>
                             <th>Empleado</th>
                             <th>Aprobador</th>
                             <th style="min-width:250px;">Area</th>
@@ -209,55 +208,57 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($timesExcel as $timeEx)
-                            <tr>
-                                <td>
-                                    {{ $timeEx->fecha_dia }}
-                                </td>
-                                {{-- <td>
-                                    {!! $timeEx->finLetras !!}
-                                </td> --}}
-                                <td>
-                                    @if ($timeEx->empleado)
-                                        {{ $timeEx->empleado->name }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($timeEx->aprobador)
-                                        {{   $timeEx->aprobador->name }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($timeEx->empleado)
-                                        {{ $timeEx->empleado->area->area }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($timeEx->estatus == 'aprobado')
-                                        <span class="aprobado">Aprobada</span>
-                                    @endif
+                        @if (isset($timesExcel))
+                            @foreach ($timesExcel as $timeEx)
+                                <tr>
+                                    <td>
+                                        {!! $time->inicio !!}
+                                    </td>
+                                    <td>
+                                        {!! $time->fin !!}
+                                    </td>
+                                    <td>
+                                        @if ($timeEx->empleado)
+                                            {{ $timeEx->empleado->name }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($timeEx->aprobador)
+                                            {{   $timeEx->aprobador->name }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($timeEx->empleado)
+                                            {{ $timeEx->empleado->area->area }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($timeEx->estatus == 'aprobado')
+                                            <span class="aprobado">Aprobada</span>
+                                        @endif
 
-                                    @if ($timeEx->estatus == 'rechazado')
-                                        <span class="rechazado">Rechazada</span>
-                                    @endif
+                                        @if ($timeEx->estatus == 'rechazado')
+                                            <span class="rechazado">Rechazada</span>
+                                        @endif
 
-                                    @if ($timeEx->estatus == 'pendiente')
-                                        <span class="pendiente">Pendiente</span>
-                                    @endif
+                                        @if ($timeEx->estatus == 'pendiente')
+                                            <span class="pendiente">Pendiente</span>
+                                        @endif
 
-                                    @if ($timeEx->estatus == 'papelera')
-                                        <span class="papelera">Borrador</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    {{ $timeEx->total_horas }}
-                                </td>
-                                <td>
-                                    <a href="{{ asset('admin/timesheet/show') }}/{{ $timeEx->id }}" title="Visualizar"
-                                        class="btn"><i class="fa-solid fa-eye"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
+                                        @if ($timeEx->estatus == 'papelera')
+                                            <span class="papelera">Borrador</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{ $timeEx->total_horas }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $timeEx->id }}" title="Visualizar"
+                                            class="btn"><i class="fa-solid fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
                 <div class="row">
