@@ -921,7 +921,10 @@ class EmpleadoController extends Controller
         $empleados = Empleado::getaltaAll();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::getAll();
-        $area = $areas->find($empleado->area_id);
+        $area = null;
+        if ($empleado && $empleado->area_id !== null) {
+            $area = $areas->find($empleado->area_id);
+        }
         $sedes = Sede::getAll();
         $sede = Sede::getbyId($empleado->sede_id);
         $experiencias = ExperienciaEmpleados::getAll();
