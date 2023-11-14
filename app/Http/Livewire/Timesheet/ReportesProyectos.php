@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -174,7 +173,7 @@ class ReportesProyectos extends Component
                 $previous_month = Carbon::create()->day(1)->month(intval($previous_month))->format('F');
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
-                if (!($this->buscarKeyEnArray($year, $calendario_array))) {
+                if (! ($this->buscarKeyEnArray($year, $calendario_array))) {
                     $calendario_array["{$year}"] = [
                         'year' => $year,
                         'total_weeks' => 0,
@@ -189,19 +188,19 @@ class ReportesProyectos extends Component
                     if ($month == 'January') {
                         $previous_year = $year - 1;
                         if (array_key_exists($previous_year, $calendario_array)) {
-                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
+                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         }
                     }
                 } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
-                        if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
+                        if (! in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         } else {
@@ -347,7 +346,7 @@ class ReportesProyectos extends Component
 
                 $empleado = Empleado::find($hora->timesheet->empleado_id);
 
-                if (!$empleados->contains('id', $empleado->id)) {
+                if (! $empleados->contains('id', $empleado->id)) {
                     $empleados->push([
                         'id' => $empleado->id,
                         'name' => $empleado->name,
@@ -380,7 +379,7 @@ class ReportesProyectos extends Component
 
         foreach ($this->tareas_array as $key => $tarea_em) {
             foreach ($tarea_em['empleados'] as $key => $emp_array) {
-                if (!($this->empleados_proyecto->contains('id', $emp_array['id']))) {
+                if (! ($this->empleados_proyecto->contains('id', $emp_array['id']))) {
                     $this->empleados_proyecto->push($emp_array);
                 } else {
                     $this->empleados_proyecto = $this->empleados_proyecto->map(function ($emp_item) use ($emp_array) {
