@@ -23,7 +23,7 @@ class Course extends Model
 
     const PUBLICADO = 3;
 
-    //query redis
+    //query redis cache
     public static function getAll()
     {
         return Cache::remember('Courses:courses_all', 3600 * 8, function () {
