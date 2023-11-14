@@ -26,7 +26,7 @@ class Course extends Model
     //query redis cache
     public static function getAll()
     {
-        return Cache::remember('Courses:courses_all', 3600 * 8, function () {
+        return Cache::remember('Courses:courses_all', 3600 * 7, function () {
             return self::get();
         });
     }
