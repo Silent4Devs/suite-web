@@ -22,7 +22,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $Contratos = Contrato::get();
+        $Contratos = Contrato::getAll();
         //select count(*) from cedula_cumplimiento left join contratos on cedula_cumplimiento.contrato_id = contratos.id where cedula_cumplimiento.deleted_at is null
         //and contratos.deleted_at is null;
         //contadores
@@ -78,49 +78,49 @@ class DashboardController extends Controller
         $totalCer = $cerrado->count();
         $totalRev = $renovacion->count();
         //Grafica 1
-        $fabricaDes = Contrato::where('tipo_contrato', Contrato::FabricaDesarrollo)->get();
+        $fabricaDes = $Contratos->where('tipo_contrato', Contrato::FabricaDesarrollo);
 
         $totalfabricaDes = $fabricaDes->count();
-        $fabricaPrue = Contrato::where('tipo_contrato', Contrato::FabricaPruebas)->get();
+        $fabricaPrue = $Contratos->where('tipo_contrato', Contrato::FabricaPruebas);
         $totalfabricaPrue = $fabricaPrue->count();
-        $telecom = Contrato::where('tipo_contrato', Contrato::Telecomunicaciones)->count();
-        $SeguridadInfo = Contrato::where('tipo_contrato', Contrato::SeguridadInfo)->count();
-        $Infraestructura = Contrato::where('tipo_contrato', Contrato::Infraestructura)->count();
-        $ServNube = Contrato::where('tipo_contrato', Contrato::ServNube)->count();
-        $ServCNorm = Contrato::where('tipo_contrato', Contrato::ServCNorm)->count();
-        $ArrenEqui = Contrato::where('tipo_contrato', Contrato::ArrenEqui)->count();
-        $AdqBien = Contrato::where('tipo_contrato', Contrato::AdqBien)->count();
-        $Soporte = Contrato::where('tipo_contrato', Contrato::Soporte)->count();
-        $Impresion = Contrato::where('tipo_contrato', Contrato::Impresion)->count();
-        $Licencia = Contrato::where('tipo_contrato', Contrato::Licencia)->count();
-        $Administrativo = Contrato::where('tipo_contrato', Contrato::Administrativo)->count();
-        $AdquisicionPapeleria = Contrato::where('tipo_contrato', Contrato::AdquisicionPapeleria)->count();
-        $ServiciosConsultoria = Contrato::where('tipo_contrato', Contrato::ServiciosConsultoria)->count();
-        $ServiciosMedicos = Contrato::where('tipo_contrato', Contrato::ServiciosMedicos)->count();
-        $ServicioSeguros = Contrato::where('tipo_contrato', Contrato::ServicioSeguros)->count();
-        $MantenimientoEdificio = Contrato::where('tipo_contrato', Contrato::MantenimientoEdificio)->count();
-        $SeguridadyVigilancia = Contrato::where('tipo_contrato', Contrato::SeguridadyVigilancia)->count();
-        $ServiciodeLimpieza = Contrato::where('tipo_contrato', Contrato::ServiciodeLimpieza)->count();
-        $ServiciosdeAlimentos = Contrato::where('tipo_contrato', Contrato::ServiciosdeAlimentos)->count();
-        $EducacionContinua = Contrato::where('tipo_contrato', '=', 'EducacionContinua')->count();
-        $AdquisiciónPruebasCOVID = Contrato::where('tipo_contrato', Contrato::AdquisiciónPruebasCOVID)->count();
-        $AdquisiciónMascarillas = Contrato::where('tipo_contrato', Contrato::AdquisiciónMascarillas)->count();
-        $Restauracion = Contrato::where('tipo_contrato', '=', 'Restauracion')->count();
-        $Servicio = Contrato::where('tipo_contrato', '=', 'Servicio')->count();
-        $Abastecimiento = Contrato::where('tipo_contrato', '=', 'Abastecimiento')->count();
+        $telecom = $Contratos->where('tipo_contrato', Contrato::Telecomunicaciones)->count();
+        $SeguridadInfo = $Contratos->where('tipo_contrato', Contrato::SeguridadInfo)->count();
+        $Infraestructura = $Contratos->where('tipo_contrato', Contrato::Infraestructura)->count();
+        $ServNube = $Contratos->where('tipo_contrato', Contrato::ServNube)->count();
+        $ServCNorm = $Contratos->where('tipo_contrato', Contrato::ServCNorm)->count();
+        $ArrenEqui = $Contratos->where('tipo_contrato', Contrato::ArrenEqui)->count();
+        $AdqBien = $Contratos->where('tipo_contrato', Contrato::AdqBien)->count();
+        $Soporte = $Contratos->where('tipo_contrato', Contrato::Soporte)->count();
+        $Impresion = $Contratos->where('tipo_contrato', Contrato::Impresion)->count();
+        $Licencia = $Contratos->where('tipo_contrato', Contrato::Licencia)->count();
+        $Administrativo = $Contratos->where('tipo_contrato', Contrato::Administrativo)->count();
+        $AdquisicionPapeleria = $Contratos->where('tipo_contrato', Contrato::AdquisicionPapeleria)->count();
+        $ServiciosConsultoria = $Contratos->where('tipo_contrato', Contrato::ServiciosConsultoria)->count();
+        $ServiciosMedicos = $Contratos->where('tipo_contrato', Contrato::ServiciosMedicos)->count();
+        $ServicioSeguros = $Contratos->where('tipo_contrato', Contrato::ServicioSeguros)->count();
+        $MantenimientoEdificio = $Contratos->where('tipo_contrato', Contrato::MantenimientoEdificio)->count();
+        $SeguridadyVigilancia = $Contratos->where('tipo_contrato', Contrato::SeguridadyVigilancia)->count();
+        $ServiciodeLimpieza = $Contratos->where('tipo_contrato', Contrato::ServiciodeLimpieza)->count();
+        $ServiciosdeAlimentos = $Contratos->where('tipo_contrato', Contrato::ServiciosdeAlimentos)->count();
+        $EducacionContinua = $Contratos->where('tipo_contrato', '=', 'EducacionContinua')->count();
+        $AdquisiciónPruebasCOVID = $Contratos->where('tipo_contrato', Contrato::AdquisiciónPruebasCOVID)->count();
+        $AdquisiciónMascarillas = $Contratos->where('tipo_contrato', Contrato::AdquisiciónMascarillas)->count();
+        $Restauracion = $Contratos->where('tipo_contrato', '=', 'Restauracion')->count();
+        $Servicio = $Contratos->where('tipo_contrato', '=', 'Servicio')->count();
+        $Abastecimiento = $Contratos->where('tipo_contrato', '=', 'Abastecimiento')->count();
 
-        $Otro = Contrato::where('tipo_contrato', Contrato::Otro)->count();
+        $Otro = $Contratos->where('tipo_contrato', Contrato::Otro)->count();
 
         //grafica 2
-        $renovacion = Contrato::where('fase', Contrato::renovacion)->count();
-        $solicituCont = Contrato::where('fase', Contrato::solicituCont)->count();
-        $autorizacion = Contrato::where('fase', Contrato::autorizacion)->count();
-        $negociacion = Contrato::where('fase', Contrato::negociacion)->count();
-        $aprobacion = Contrato::where('fase', Contrato::aprobacion)->count();
-        $ejecucion = Contrato::where('fase', Contrato::ejecucion)->count();
-        $gestionOb = Contrato::where('fase', Contrato::gestionOb)->count();
-        $modifCont = Contrato::where('fase', Contrato::modifCont)->count();
-        $auditRep = Contrato::where('fase', Contrato::auditRep)->count();
+        $renovacion = $Contratos->where('fase', Contrato::renovacion)->count();
+        $solicituCont = $Contratos->where('fase', Contrato::solicituCont)->count();
+        $autorizacion = $Contratos->where('fase', Contrato::autorizacion)->count();
+        $negociacion = $Contratos->where('fase', Contrato::negociacion)->count();
+        $aprobacion = $Contratos->where('fase', Contrato::aprobacion)->count();
+        $ejecucion = $Contratos->where('fase', Contrato::ejecucion)->count();
+        $gestionOb = $Contratos->where('fase', Contrato::gestionOb)->count();
+        $modifCont = $Contratos->where('fase', Contrato::modifCont)->count();
+        $auditRep = $Contratos->where('fase', Contrato::auditRep)->count();
 
         $DashboardTipoContrato = [
             'fabrica_desarrollo' => $totalfabricaDes,
