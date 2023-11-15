@@ -15,11 +15,11 @@
                     @enderror
                 </div>
                 <div>
-                    <label>Descripción<span style="color:red">*</span></label>
+                    <label>Descripción</label>
                     <input class="form-control" type="text" value="" id="description"
                         wire:model.defer="explanation">
                     @error('explanation')
-                        <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>
+                        {{--  <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>  --}}
                     @enderror
                 </div>
                 <div class="mt-4">
@@ -36,8 +36,8 @@
                             </div>
                             <div class="col-9 pl-0">
                                 <input wire:model.defer="answers.{{ $key }}.answer" name="answers[1][answer]"
-                                    value="{{ old('answers.1.answer') }}" type="text"
-                                    class="form-control" style="border: none; background-color:#CDD7E1;" />
+                                    value="{{ old('answers.1.answer') }}" type="text" class="form-control"
+                                    style="border: none; background-color:#CDD7E1;" />
                                 @error('answers.' . $key . '.answer')
                                     <small class="text-xs text-red-700">El campo respuesta es obligatorio</small>
                                 @enderror

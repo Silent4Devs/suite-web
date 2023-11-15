@@ -25,24 +25,21 @@
                 @enderror
 
 
-                    <p class="text-primary mt-4">Nombre<span style="color:red">*</span></label></p>
-                    @error('section.name')
-                        <span class="content-end float-right text-xs text-red-700">{{ $message }}</span>
-                    @enderror
-                    <input class="form-control" type="text" value="" id="title"
-                        wire:model.defer="name">
-                    @error('name')
-                        <p class="text-danger">{{ $message }}</p>
-                    @enderror
+                <p class="text-primary mt-4">Nombre<span style="color:red">*</span></label></p>
+                @error('section.name')
+                    <span class="content-end float-right text-xs text-red-700">{{ $message }}</span>
+                @enderror
+                <input class="form-control" type="text" value="" id="title" wire:model.defer="name">
+                @error('name')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
 
 
-
-                    {!! Form::label('description', 'Descripción:', ['class' => 'text-primary mt-4']) !!}
-                    <textarea class="mb-2 form-control" type="text" value="" id="title"
-                        wire:model.defer="description"></textarea>
-                    @error('description')
-                        <p class="text-danger">{{ $message }}</p>
-                    @enderror
+                {!! Form::label('description', 'Descripción:', ['class' => 'text-primary mt-4']) !!}
+                <textarea class="mb-2 form-control" type="text" value="" id="title" wire:model.defer="description"></textarea>
+                @error('description')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
 
                 <div class="d-flex justify-content-end" style="margin-top:30px">
                     @if (!$editar)
@@ -50,7 +47,8 @@
                             {{ __('CREAR EVALUACIÓN') }}
                         </button>
                     @else
-                        <button type="submit" class="btn btn-outline-primary mt-4 mb-4 ml-4" wire:click.prevent="update">
+                        <button type="submit" class="btn btn-outline-primary mt-4 mb-4 ml-4"
+                            wire:click.prevent="update">
                             {{ __('ACTUALIZAR EVALUACIÓN') }}
                         </button>
                     @endif
@@ -66,7 +64,7 @@
         @livewire('escuela.instructor.evaluations-table', ['course' => $course])
     </div>
     @section('scripts')
-    <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
     @endsection
 
 </div>
