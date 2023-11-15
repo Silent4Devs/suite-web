@@ -125,6 +125,9 @@
                     buttons: dtButtons,
                     destroy: true,
                     render: true,
+                    processing: true, // Added option: Enable processing indicator
+                    serverSide: true, // Commented out as it was causing an issue
+                    responsive: true, // Added option: Enable responsiveness
                 };
 
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
