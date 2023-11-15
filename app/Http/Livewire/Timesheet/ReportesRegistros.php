@@ -264,13 +264,13 @@ class ReportesRegistros extends Component
                 ->where('fecha_dia', $td['fecha_dia'])
                 ->get();
             $countDeleted = 0;
-            // foreach ($deletedDup as $del) {
-            //     if ($countDeleted > 0) {
-            //         $del->delete();
-            //     }
-            //     $countDeleted = $countDeleted + 1;
-            // }
-            dump($td['name'] . ' | ' . $td['inicio'] . ' | ' .  $deletedDup->count());
+            foreach ($deletedDup as $del) {
+                if ($countDeleted > 0) {
+                    $del->delete();
+                }
+                $countDeleted = $countDeleted + 1;
+            }
+            // dump($td['name'] . ' | ' . $td['inicio'] . ' | ' .  $deletedDup->count());
         }
     }
 }
