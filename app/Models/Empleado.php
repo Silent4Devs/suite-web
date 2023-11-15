@@ -163,6 +163,13 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getCeoExists()
+    {
+        return Cache::remember('Empleados:empleados_ceo_exists', 3600 * 6, function () {
+            return DB::table('empleados')->select('supervisor_id')->whereNull('supervisor_id')->exists();
+        });
+    }
+
     public static function getAll(array $options = [])
     {
         return Cache::remember('Empleados:empleados_all', 3600 * 8, function () use ($options) {
@@ -200,6 +207,13 @@ class Empleado extends Model implements Auditable
     {
         return Cache::remember('Empleados:empleados_alta', 3600 * 12, function () {
             return self::alta()->select('id', 'area_id', 'name')->get();
+        });
+    }
+
+    public static function getAltaEmpleadosWithAreaSedeSupervisor()
+    {
+        return Cache::remember('Empleados:empleados_alta_area_sede_supervisor', 3600 * 8, function () {
+            return self::with('area', 'sede', 'supervisor')->alta()->orderByDesc('id')->get();
         });
     }
 
