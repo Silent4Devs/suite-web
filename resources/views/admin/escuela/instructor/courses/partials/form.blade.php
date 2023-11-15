@@ -48,7 +48,10 @@
         <div class="col-6">
             {{-- {!! Form::label('category_id', 'Categoría') !!} --}}
             <label class="required" for="category_id">Categoría</label>
-            {!! Form::select('category_id', $categories, null, ['class' => 'form-control', 'placeholder'=>'Seleccione una opción']) !!}
+            {!! Form::select('category_id', $categories, null, [
+                'class' => 'form-control',
+                'placeholder' => 'Seleccione una opción',
+            ]) !!}
             @error('category_id')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -56,7 +59,10 @@
         <div class="col-6">
             {{-- {!! Form::label('level_id', 'Niveles') !!} --}}
             <label class="required" for="level_id">Niveles</label>
-            {!! Form::select('level_id', $levels, null, ['class' => 'form-control', 'placeholder'=>'Seleccione una opción']) !!}
+            {!! Form::select('level_id', $levels, null, [
+                'class' => 'form-control',
+                'placeholder' => 'Seleccione una opción',
+            ]) !!}
             @error('level_id')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -77,8 +83,9 @@
                     <img  src="{{ asset($course->image->url) }}"
                         id="picture" alt="" style="height:100px">
                 @else
-                <img class="object-cover object-center w-full h-64" src="{{ asset('img/escuela/home/imagen-estudiantes.jpg') }}" id="picture"
-                alt="" style="width: 200px;height: 200px;">
+                    <img class="object-cover object-center w-full h-64"
+                        src="{{ asset('img/escuela/home/imagen-estudiantes.jpg') }}" id="picture" alt=""
+                        style="width: 200px;height: 200px;">
                 @endisset
             </figure>
         </div>
