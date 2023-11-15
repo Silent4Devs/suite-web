@@ -235,4 +235,42 @@ class ReportesRegistros extends Component
         // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->orderByDesc('fecha_dia')->get();
         $this->estatus = 'rechazado';
     }
+
+    public function dropDuplicate()
+    {
+        $times = Timesheet::select('fecha_dia', 'empleado_id')
+            ->groupBy('fecha_dia', 'empleado_id')
+            ->havingRaw('COUNT(*) > 1')
+            ->orderBy('empleado_id')
+            ->get();
+
+        // dd($times->pluck('empleado_id', 'fecha_dia'));
+
+        $tiemDup = collect();
+        foreach ($times as $tf) {
+            $tiemDup->push([
+                'empleado_id' => $tf->empleado_id,
+                'name' => $tf->empleado->name,
+                'fecha_dia' => $tf->fecha_dia,
+                'inicio' => $tf->inicio,
+            ]);
+        }
+
+
+
+        foreach ($tiemDup as $td) {
+
+            $deletedDup = Timesheet::where('empleado_id', $td['empleado_id'])
+                ->where('fecha_dia', $td['fecha_dia'])
+                ->get();
+            $countDeleted = 0;
+            // foreach ($deletedDup as $del) {
+            //     if ($countDeleted > 0) {
+            //         $del->delete();
+            //     }
+            //     $countDeleted = $countDeleted + 1;
+            // }
+            dump($td['name'] . ' | ' . $td['inicio'] . ' | ' .  $deletedDup->count());
+        }
+    }
 }
