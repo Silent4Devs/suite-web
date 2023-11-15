@@ -36,6 +36,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
             ->leftJoin('timesheet_horas', 'timesheet.id', '=', 'timesheet_horas.id')
             ->leftJoin('timesheet_proyectos', 'timesheet_horas.proyecto_id', '=', 'timesheet_proyectos.id')
             ->select(
+                'timesheet.id',
                 'fecha_dia',
                 'empleados.name as empleado_name',
                 'areas.area as empleado_area',
@@ -48,7 +49,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'timesheet_horas.horas_sabado',
                 'timesheet_horas.horas_domingo',
                 'timesheet_proyectos.estatus'
-            )->with('horas')
+            )
             ->where(function ($query) {
 
                 if ($this->fecha_inicio || $this->fecha_fin) {
@@ -65,6 +66,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 }
             })
             ->groupBy(
+                'timesheet.id',
                 'fecha_dia',
                 'empleado_name',
                 'timesheet_horas.horas_lunes',
@@ -81,14 +83,25 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
             )->orderBy('fecha_dia', 'asc')
             ->distinct()
             ->get()
-            ->map(function ($timesheetHora) {
+            ->map(function ($timesheet) {
+                $total_horas = 0;
+                $horas_time = TimesheetHoras::where('timesheet_id', $timesheet->id)->get();
+                foreach ($horas_time as $key => $horas) {
+                    $total_horas += floatval($horas->horas_lunes);
+                    $total_horas += floatval($horas->horas_martes);
+                    $total_horas += floatval($horas->horas_miercoles);
+                    $total_horas += floatval($horas->horas_jueves);
+                    $total_horas += floatval($horas->horas_viernes);
+                    $total_horas += floatval($horas->horas_sabado);
+                    $total_horas += floatval($horas->horas_domingo);
+                }
                 return [
-                    'Fecha Inicio' => \Carbon\Carbon::parse($timesheetHora->fecha_dia)->format('d/m/Y'),
-                    'Empleado' => $timesheetHora->empleado_name,
-                    'Supervisor' => $timesheetHora->supervisor_name,
-                    'Area' => $timesheetHora->empleado_area,
-                    'Estatus' => $timesheetHora->estatus,
-                    'Total de Horas' => (floatval($timesheetHora->horas_lunes) + floatval($timesheetHora->horas_martes) + floatval($timesheetHora->horas_miercoles) + floatval($timesheetHora->horas_jueves) + floatval($timesheetHora->horas_viernes) + floatval($timesheetHora->horas_sabado) + floatval($timesheetHora->horas_domingo))
+                    'Fecha Inicio' => \Carbon\Carbon::parse($timesheet->fecha_dia)->format('d/m/Y'),
+                    'Empleado' => $timesheet->empleado_name,
+                    'Supervisor' => $timesheet->supervisor_name,
+                    'Area' => $timesheet->empleado_area,
+                    'Estatus' => $timesheet->estatus,
+                    'Total de Horas' =>  $total_horas,
                 ];
             });
 
