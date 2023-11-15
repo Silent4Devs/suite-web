@@ -2,7 +2,9 @@
 
 namespace App\Exports;
 
+use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
+use DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -36,8 +38,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
             ->join('timesheet_proyectos', 'timesheet_proyectos.id', '=', 'timesheet_horas.proyecto_id')
             ->join('timesheet_tareas', 'timesheet_tareas.id', '=', 'timesheet_horas.tarea_id')
             ->join('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
-            ->join('empleados as aprobadores', 'aprobadores.id', '=', 'timesheet.aprobador_id') // Asumiendo que 'aprobador_id' es el campo correcto
-
+            ->join('empleados as aprobadores', 'aprobadores.id', '=', 'timesheet.aprobador_id')
             ->select(
                 'timesheet.fecha_dia',
                 'empleados.name as empleado_name',
@@ -94,7 +95,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
                     'Proyecto' => $timesheetHora->proyecto,
                     'Tarea' => $timesheetHora->tarea,
                     'Descripción' => $timesheetHora->descripcion,
-                    'Total de Horas' => (floatval($timesheetHora->horas_lunes) + floatval($timesheetHora->horas_martes) + floatval($timesheetHora->horas_miercoles) + floatval($timesheetHora->horas_jueves) + floatval($timesheetHora->horas_viernes) + floatval($timesheetHora->horas_sabado) + floatval($timesheetHora->horas_domingo)),
+                    'Total de Horas' => (floatval($timesheetHora->horas_lunes) + floatval($timesheetHora->horas_martes) + floatval($timesheetHora->horas_miercoles) + floatval($timesheetHora->horas_jueves) + floatval($timesheetHora->horas_viernes) + floatval($timesheetHora->horas_sabado) + floatval($timesheetHora->horas_domingo))
                 ];
             });
 

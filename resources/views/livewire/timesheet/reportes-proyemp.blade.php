@@ -100,7 +100,7 @@
                                 <td>{{ $time->tarea->tarea }}</td>
                                 <td>{{ $time->descripcion }}</td>
                                 <td>
-                                    {{ (floatval($time->horas_lunes) + floatval($time->horas_martes) + floatval($time->horas_miercoles) + floatval($time->horas_jueves) + floatval($time->horas_viernes) + floatval($time->horas_sabado) + floatval($time->horas_domingo)) }}
+                                    {{ $time->timesheet->total_horas }}
                                 </td>
                             </tr>
                         @endforeach
