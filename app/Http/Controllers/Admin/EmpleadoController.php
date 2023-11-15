@@ -63,7 +63,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $ceo_exists = Empleado::getCeoExists();
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -105,7 +105,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::getaltaAll();
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $ceo_exists = Empleado::getCeoExists();
         $areas = Area::getAll();
         $sedes = Sede::getAll();
         $experiencias = ExperienciaEmpleados::getAll();
@@ -137,7 +137,7 @@ class EmpleadoController extends Controller
         $certificados = json_decode($request->certificado);
         // dd($cursos);
 
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $ceo_exists = Empleado::getCeoExists();
         $validateSupervisor = 'nullable|exists:empleados,id';
         if ($ceo_exists) {
             $validateSupervisor = 'required|exists:empleados,id';
@@ -919,7 +919,7 @@ class EmpleadoController extends Controller
         abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::getAll()->find(intval($id));
         $empleados = Empleado::getaltaAll();
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $ceo_exists = Empleado::getCeoExists();
         $areas = Area::getAll();
         $area = null;
         if ($empleado && $empleado->area_id !== null) {
@@ -1055,7 +1055,7 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $ceo_exists = Empleado::getCeoExists();
         $validateSupervisor = 'nullable|exists:empleados,id';
 
         if ($ceo_exists) {
