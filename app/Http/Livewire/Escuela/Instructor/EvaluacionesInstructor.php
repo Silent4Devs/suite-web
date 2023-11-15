@@ -90,7 +90,7 @@ class EvaluacionesInstructor extends Component
         // dd($this->is_active);
         Evaluation::create([
             'name' => $this->name,
-            // 'description' => $this->description,
+            'description' => $this->description,
             'linkedTo' => $this->linkedTo,
             'is_active' => $this->is_active,
             'course_id' => $this->course_id,
@@ -123,7 +123,7 @@ class EvaluacionesInstructor extends Component
         $evaluacion = Evaluation::find($this->evaluacion_id);
         $evaluacion->update([
             'name' => $this->name,
-            // 'description' => $this->description,
+            'description' => $this->description,
             'linkedTo' => $this->linkedTo,
             'is_active' => $this->is_active,
             'section_id' => $this->section_id,
