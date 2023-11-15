@@ -28,6 +28,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
         $this->emp_id = $emp_id;
     }
 
+
     public function collection()
     {
         $query = Timesheet::leftJoin('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
@@ -69,7 +70,6 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'timesheet.id',
                 'fecha_dia',
                 'empleado_name',
-                'timesheet_horas.horas_lunes',
                 'empleado_area',
                 'supervisor_name',
                 'timesheet_horas.horas_lunes',
