@@ -42,10 +42,9 @@ class PortalComunicacionController extends Controller
 
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
 
-        $comunicacionSgis = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Blog')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
-        // dd($comunicacionSgis);
+        $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
 
-        $comunicacionSgis_carrusel = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
+        $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
 
         $empleado_asignado = $user->n_empleado;
 

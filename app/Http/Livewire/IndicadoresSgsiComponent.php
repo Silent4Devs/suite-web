@@ -79,10 +79,6 @@ class IndicadoresSgsiComponent extends Component
         // $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)
         // ->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
 
-        $this->formula = IndicadoresSgsi::find($this->indicadoresSgsis->id);
-
-        // dd($this->formula->formula);
-
         $finish_array = [];
         // dd('Como llega?', $inpvar);
         if (array_key_exists('variables', $inpvar) === true) {
@@ -110,6 +106,7 @@ class IndicadoresSgsiComponent extends Component
 
     public function render()
     {
+        $this->formula = IndicadoresSgsi::find($this->indicadoresSgsis->id);
         $responsables = Empleado::getaltaAll();
         $procesos = Proceso::getAll();
         $evaluaciones = EvaluacionIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();

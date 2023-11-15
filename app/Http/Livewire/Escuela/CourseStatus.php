@@ -28,10 +28,6 @@ class CourseStatus extends Component
     public function mount(Course $course, $evaluacionesLeccion)
     {
         $this->course = $course;
-        //Evaluaciones para el curso en general
-        $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
-        $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
-
         //determinamos cual es la lección actual
         foreach ($course->lessons as $lesson) {
             if (! $lesson->completed) {
@@ -52,6 +48,10 @@ class CourseStatus extends Component
 
     public function render()
     {
+        //Evaluaciones para el curso en general
+        $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
+        $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+
         return view('livewire.escuela.course-status');
     }
 
@@ -75,16 +75,20 @@ class CourseStatus extends Component
             $this->current->users()->attach($usuario->id);
         }
         $this->current = Lesson::find($this->current->id);
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
     }
 
     //PROPIEDADES COMPUTADAS
     //definimos la propiedad index, lo que va hacer es calcular el indice
     public function getIndexProperty()
     {
-        // Recupere todas las lecciones de un curso
-        // El metodo pluck me recupera una coleccion a traves de una coleccion ya existente
-        return $this->course->lessons->pluck('id')->search($this->current->id);
+        // Check if $this->course exists and is not null
+        if ($this->course && $this->course->lessons) {
+            // Use optional() to safely access 'id' property of each lesson and search for $this->current->id
+            return optional($this->course->lessons->pluck('id'))->search($this->current->id);
+        }
+
+        return null; // or handle the situation based on your logic
     }
 
     //calculamos la propiedad previous

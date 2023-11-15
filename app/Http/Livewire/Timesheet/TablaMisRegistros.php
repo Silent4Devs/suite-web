@@ -26,7 +26,6 @@ class TablaMisRegistros extends Component
 
     public function render()
     {
-
         $this->todos_contador = $this->times->count();
         $this->borrador_contador = $this->times->where('estatus', 'papelera')->count();
         $this->pendientes_contador = $this->times->where('estatus', 'pendiente')->count();

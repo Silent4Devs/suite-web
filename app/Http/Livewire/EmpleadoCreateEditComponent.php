@@ -137,18 +137,20 @@ class EmpleadoCreateEditComponent extends Component
 
     public function mount()
     {
+
+    }
+
+    public function render()
+    {
         $this->empleados = Empleado::getaltaAll();
         $this->ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $this->areas = Area::getAll();
         $this->sedes = Sede::getAll();
         $this->puestos = Puesto::getAll();
-        $this->perfiles = PerfilEmpleado::all();
+        $this->perfiles = PerfilEmpleado::getAll();
         $this->tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description')->get();
         $this->entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
-    }
 
-    public function render()
-    {
         return view('livewire.empleado-create-edit-component');
     }
 

@@ -97,13 +97,35 @@ class FacturaComponent extends Component
 
     public $usuarios;
 
+    public $contrato_total;
+
+    public $ampliacion;
+
+    public $monto_total_facturas;
+
+    public $fecha_inicio_contrato;
+
+    public $fecha_fin_contrato;
+
     protected $listeners = [
         'triggerDeleteFactura' => 'confirmDelete',
     ];
 
+    public function mount($contrato_id, $show_contrato, $contrato_total)
+    {
+        $this->contrato_id = $contrato_id;
+        $this->show_contrato = $show_contrato;
+        $this->cumple = true;
+        $this->conformidad = true;
+        $this->firma = true;
+        $this->no_revisiones = 0;
+        $ampliacion = AmpliacionContrato::where('contrato_id', $contrato_id)->first();
+        $this->contrato_total = $ampliacion ? $ampliacion->monto_total_ampliado : $contrato_total;
+    }
+
     public function render()
     {
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $facturas = Factura::select('facturacion.id', 'no_factura', 'fecha_recepcion', 'fecha_liberacion', 'no_revisiones', 'cumple', 'monto_factura', 'estatus', 'n_cxl', 'firma', 'conformidad', 'facturas_files.pdf', 'facturas_files.xml')
             ->join('facturas_files', 'facturacion.id', '=', 'facturas_files.factura_id')
             ->where('no_factura', 'like', '%'.$this->search.'%')
@@ -128,18 +150,6 @@ class FacturaComponent extends Component
         $this->conformidad;
         $this->firma;
         $this->no_revisiones;
-    }
-
-    public function mount($contrato_id, $show_contrato, $contrato_total)
-    {
-        $this->contrato_id = $contrato_id;
-        $this->show_contrato = $show_contrato;
-        $this->cumple = true;
-        $this->conformidad = true;
-        $this->firma = true;
-        $this->no_revisiones = 0;
-        $ampliacion = AmpliacionContrato::where('contrato_id', $contrato_id)->first();
-        $this->contrato_total = $ampliacion ? $ampliacion->monto_total_ampliado : $contrato_total;
     }
 
     public function store(Request $request)

@@ -84,10 +84,6 @@ class ReporteAprobador extends Component
     public function mount()
     {
         $this->habilitarTodos = false;
-        $this->areas = Area::getAll();
-
-        $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
-        $this->fecha_fin = Carbon::now()->format('Y-m-d');
     }
 
     public function updatedAreaId($value)
@@ -153,7 +149,12 @@ class ReporteAprobador extends Component
 
     public function render()
     {
+        $this->areas = Area::getAll();
+
         $this->hoy = Carbon::now();
+        $this->fecha_inicio = $this->hoy->endOfMonth()->subMonth(2)->format('Y-m-d');
+        $this->fecha_fin = $this->hoy->format('Y-m-d');
+
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
 

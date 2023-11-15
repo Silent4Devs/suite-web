@@ -23,7 +23,6 @@ bootstrap/cache/config.php
 composer.lock
 bootstrap/cache/
 storage/debugbar/
-storage/app/public/gantt/
 .php-cs-fixer.cache
 storage/logs/laravel.log
 *.cache
@@ -62,3 +61,4 @@ public/mix-manifest.json
 public/js/app.js
 /resources/views/layouts/navs
 storage/app/katbol-contratos-tmp/
+dump.sql

@@ -80,7 +80,8 @@
         <div class="col-6">
             <figure class="object-fit: container; width: 250px;height: 100px; background:green;">
                 @isset($course->image->url)
-                    <img src="{{ asset($course->image->url) }}" id="picture" alt="" style="height:100px">
+                    <img  src="{{ asset($course->image->url) }}"
+                        id="picture" alt="" style="height:100px">
                 @else
                     <img class="object-cover object-center w-full h-64"
                         src="{{ asset('img/escuela/home/imagen-estudiantes.jpg') }}" id="picture" alt=""

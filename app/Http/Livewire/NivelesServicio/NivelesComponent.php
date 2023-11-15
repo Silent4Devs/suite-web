@@ -54,6 +54,12 @@ class NivelesComponent extends Component
         'triggerDeleteNiveles' => 'confirmDelete',
     ];
 
+    public function mount($contrato_id, $show_contrato)
+    {
+        $this->contrato_id = $contrato_id;
+        $this->show_contrato = $show_contrato;
+    }
+
     public function render()
     {
         $niveles_servicio = NivelesServicio::select('id', 'nombre', 'metrica', 'unidad', 'info_consulta', 'meta', 'periodo_evaluacion', 'revisiones', 'area', 'descripcion')
@@ -72,12 +78,6 @@ class NivelesComponent extends Component
         return view('livewire.niveles-servicio.niveles-component', [
             'nivelesServicio' => $niveles_servicio,
         ]);
-    }
-
-    public function mount($contrato_id, $show_contrato)
-    {
-        $this->contrato_id = $contrato_id;
-        $this->show_contrato = $show_contrato;
     }
 
     public function store()

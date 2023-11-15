@@ -52,7 +52,7 @@ class CourseRequirements extends Component
         ]);
 
         $this->reset('name');
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Requisito añadida exitosamente');
     }
 
@@ -69,14 +69,14 @@ class CourseRequirements extends Component
 
         $this->requirement = new Requirement();
 
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Requisito actualizada exitosamente');
     }
 
     public function destroy(Requirement $requirement)
     {
         $requirement->delete();
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Requisito eliminada exitosamente');
     }
 

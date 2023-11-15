@@ -50,7 +50,6 @@ class ReportesProyectos extends Component
 
     public $hoy_format;
 
-    // public $proyectos_array;
     public $area_id;
 
     public $fecha_inicio;
@@ -63,19 +62,11 @@ class ReportesProyectos extends Component
 
     public $fecha_fin_proyecto;
 
-    public $horas_totales_todos_proyectos = 0;
-
     public $semanas_totales_calendario = 0;
 
     public $calendario_tabla;
 
     public $organizacion;
-
-    public function mount()
-    {
-        $this->areas = Area::getIdNameAll();
-        $this->organizacion = Organizacion::getFirst();
-    }
 
     public function updatedAreaId($value)
     {
@@ -140,6 +131,8 @@ class ReportesProyectos extends Component
 
     public function render()
     {
+        $this->organizacion = Organizacion::getFirst();
+
         $this->hoy = Carbon::now();
 
         $this->emit('resize');
@@ -148,12 +141,10 @@ class ReportesProyectos extends Component
 
         $this->areas = Area::getIdNameAll();
 
-        $this->horas_totales_todos_proyectos = 0;
-
         //calendario tabla
         $calendario_array = [];
 
-        $fecha_registro_timesheet = Organizacion::getFirst()->fecha_registro_timesheet;
+        $fecha_registro_timesheet = $this->organizacion->fecha_registro_timesheet;
 
         if ($this->fecha_inicio) {
             $fecha_inicio_complit_timesheet = Carbon::parse($fecha_registro_timesheet)->lt($this->fecha_inicio) ? $this->fecha_inicio : $fecha_registro_timesheet;
@@ -242,10 +233,10 @@ class ReportesProyectos extends Component
         } else {
             $this->proyectos = TimesheetProyecto::getIdNameAll();
         }
+
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
-            $registro_horas_proyecto = TimesheetHoras::getAll()->where('proyecto_id', $proyecto->id);
-
+            $registro_horas_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->get();
             // registro de horas en calendario
             $times_registro_horas_array = collect();
             $calendario_tabla_proyectos = [];
@@ -271,8 +262,6 @@ class ReportesProyectos extends Component
                                 $horas_proyecto_times += floatval($registro_horas->horas_domingo);
                             }
                         }
-
-                        $this->horas_totales_todos_proyectos += $horas_proyecto_times;
 
                         if ($horas_proyecto_times > 0) {
                             array_push($calendario_tabla_proyectos, $horas_proyecto_times);
@@ -319,14 +308,14 @@ class ReportesProyectos extends Component
 
     public function genrarReporte($id)
     {
-        $this->proyecto_reporte = TimesheetProyecto::getIdNameAll()->find($id);
+        $this->proyecto_reporte = TimesheetProyecto::find($id);
 
         // $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
-        $this->cliente_proyecto = TimesheetCliente::getAll()->find($this->proyecto_reporte->cliente_id);
+        $this->cliente_proyecto = TimesheetCliente::find($this->proyecto_reporte->cliente_id);
 
         $empleados = collect();
 
-        $tareas = TimesheetTarea::getAll()->where('proyecto_id', $id);
+        $tareas = TimesheetTarea::where('proyecto_id', $id)->get();
 
         $this->tareas_array = collect();
 
@@ -338,7 +327,7 @@ class ReportesProyectos extends Component
 
         $this->total_horas_proyecto = 0;
         foreach ($tareas as $tarea) {
-            $horas = TimesheetHoras::getData()->where('tarea_id', $tarea->id)->get();
+            $horas = TimesheetHoras::where('tarea_id', $tarea->id)->get();
             $empleados = collect();
             $h_total_tarea = 0;
             $h_total_tarea_total = 0;
@@ -355,7 +344,7 @@ class ReportesProyectos extends Component
 
                 $h_total_tarea_total += $h_total_tarea;
 
-                $empleado = Empleado::getAll()->find($hora->timesheet->empleado_id);
+                $empleado = Empleado::find($hora->timesheet->empleado_id);
 
                 if (! $empleados->contains('id', $empleado->id)) {
                     $empleados->push([
