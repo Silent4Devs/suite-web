@@ -102,7 +102,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function addEmpleado()
     {
-        $empleado_add_proyecto = Empleado::select('id', 'area_id')->find($this->empleado_añadido);
+        $empleado_add_proyecto = Empleado::getAltaEmpleados()->find($this->empleado_añadido);
         // dd($empleado_add_proyecto);
 
         if ($this->proyecto->tipo === 'Externo') {
@@ -152,7 +152,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
                 return null;
             } else {
-                $emp_upd_proyecto = Empleado::select('id', 'area_id')->find($datos['empleado_editado']);
+                $emp_upd_proyecto = Empleado::getAltaEmpleados()->find($datos['empleado_editado']);
                 // dd($emp_upd_proyecto);
                 $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
                 $empleado_edit_proyecto->update([
@@ -163,7 +163,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 ]);
             }
         } else { //Internos
-            $emp_upd_proyecto = Empleado::select('id', 'area_id')->find($datos['empleado_editado']);
+            $emp_upd_proyecto = Empleado::getAltaEmpleados()->find($datos['empleado_editado']);
             // dd($emp_upd_proyecto);
             $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
             $empleado_edit_proyecto->update([
