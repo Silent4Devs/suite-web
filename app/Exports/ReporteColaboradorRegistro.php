@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -29,31 +30,30 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $query = TimesheetHoras::join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
-            ->join('timesheet_proyectos', 'timesheet_proyectos.id', '=', 'timesheet_horas.proyecto_id')
-            ->join('timesheet_tareas', 'timesheet_tareas.id', '=', 'timesheet_horas.tarea_id')
-            ->join('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
-            ->join('empleados as aprobadores', 'aprobadores.id', '=', 'timesheet.aprobador_id')
-            ->join('areas', 'areas.id', '=', 'timesheet_tareas.area_id')
+        $query = Timesheet::leftJoin('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
+            ->leftJoin('empleados as aprobadores', 'aprobadores.id', '=', 'timesheet.aprobador_id')
+            ->leftJoin('areas', 'empleados.area_id', '=', 'areas.id')
+            ->leftJoin('timesheet_horas', 'timesheet.id', '=', 'timesheet_horas.id')
+            ->leftJoin('timesheet_proyectos', 'timesheet_horas.proyecto_id', '=', 'timesheet_proyectos.id')
             ->select(
-                'timesheet.fecha_dia',
+                'fecha_dia',
                 'empleados.name as empleado_name',
+                'areas.area as empleado_area',
                 'aprobadores.name as supervisor_name',
-                'areas.area as area_name',
-                'timesheet_proyectos.estatus',
                 'timesheet_horas.horas_lunes',
                 'timesheet_horas.horas_martes',
                 'timesheet_horas.horas_miercoles',
                 'timesheet_horas.horas_jueves',
                 'timesheet_horas.horas_viernes',
                 'timesheet_horas.horas_sabado',
-                'timesheet_horas.horas_domingo'
-            )
+                'timesheet_horas.horas_domingo',
+                'timesheet_proyectos.estatus'
+            )->with('horas')
             ->where(function ($query) {
 
                 if ($this->fecha_inicio || $this->fecha_fin) {
-                    $query->where('timesheet.fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
-                        ->where('timesheet.fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'));
+                    $query->where('fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
+                        ->where('fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'));
                 }
 
                 if ($this->emp_id != 0) {
@@ -61,24 +61,24 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 }
 
                 if ($this->area_id != 0) {
-                    $query->where('timesheet_tareas.area_id', $this->area_id);
+                    $query->where('empleados.area_id', $this->area_id);
                 }
-                // Otras condiciones que ya tenías
             })
             ->groupBy(
-                'timesheet.fecha_dia',
+                'fecha_dia',
                 'empleado_name',
+                'timesheet_horas.horas_lunes',
+                'empleado_area',
                 'supervisor_name',
-                'area_name',
-                'timesheet_proyectos.estatus',
                 'timesheet_horas.horas_lunes',
                 'timesheet_horas.horas_martes',
                 'timesheet_horas.horas_miercoles',
                 'timesheet_horas.horas_jueves',
                 'timesheet_horas.horas_viernes',
                 'timesheet_horas.horas_sabado',
-                'timesheet_horas.horas_domingo'
-            )->orderBy('timesheet.fecha_dia', 'asc')
+                'timesheet_horas.horas_domingo',
+                'timesheet_proyectos.estatus'
+            )->orderBy('fecha_dia', 'asc')
             ->distinct()
             ->get()
             ->map(function ($timesheetHora) {
@@ -86,9 +86,9 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                     'Fecha Inicio' => \Carbon\Carbon::parse($timesheetHora->fecha_dia)->format('d/m/Y'),
                     'Empleado' => $timesheetHora->empleado_name,
                     'Supervisor' => $timesheetHora->supervisor_name,
-                    'Area' => $timesheetHora->area_name,
+                    'Area' => $timesheetHora->empleado_area,
                     'Estatus' => $timesheetHora->estatus,
-                    'Total de Horas' => (floatval($timesheetHora->horas_lunes) + floatval($timesheetHora->horas_martes) + floatval($timesheetHora->horas_miercoles) + floatval($timesheetHora->horas_jueves) + floatval($timesheetHora->horas_viernes) + floatval($timesheetHora->horas_sabado) + floatval($timesheetHora->horas_domingo)),
+                    'Total de Horas' => (floatval($timesheetHora->horas_lunes) + floatval($timesheetHora->horas_martes) + floatval($timesheetHora->horas_miercoles) + floatval($timesheetHora->horas_jueves) + floatval($timesheetHora->horas_viernes) + floatval($timesheetHora->horas_sabado) + floatval($timesheetHora->horas_domingo))
                 ];
             });
 
