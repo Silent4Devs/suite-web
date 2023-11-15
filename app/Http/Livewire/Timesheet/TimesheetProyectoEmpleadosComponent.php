@@ -129,12 +129,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ]);
         }
 
-        $this->proyecto = TimesheetProyecto::getIdNameAll()->find($this->proyecto_id);
-        $this->areasempleado = TimesheetProyectoArea::getAll()->where('proyecto_id', $this->proyecto_id);
-        $this->empleados = Empleado::getAltaEmpleados();
-
-        $this->proyecto_empleados = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
-
         $this->alert('success', 'Empleado agregado exitosamente', [
             'position' => 'top-end',
             'timer' => 3000,

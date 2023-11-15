@@ -4,7 +4,8 @@
 
     {{ Breadcrumbs::render('timesheet-empleados-proyecto') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de Empleados por Proyecto</font>
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de Empleados por
+            Proyecto</font>
     </h5>
 
     <div class="card card-body">
@@ -58,7 +59,7 @@
 
                             var now = new Date();
                             var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
-                            .getFullYear();
+                                .getFullYear();
                             $(doc.document.body).prepend(`
                                 <div class="row">
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
@@ -128,6 +129,8 @@
                     ],
                     destroy: true,
                     render: true,
+                    responsive: true,
+                    serverSide: true,
                 };
 
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
