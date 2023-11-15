@@ -129,8 +129,6 @@
                     ],
                     destroy: true,
                     render: true,
-                    responsive: true,
-                    serverSide: true,
                 };
 
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
