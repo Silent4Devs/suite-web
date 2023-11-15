@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ContratosExport implements FromArray, WithHeadings, ShouldAutoSize, WithStyles
+class ContratosExport implements FromArray, ShouldAutoSize, WithHeadings, WithStyles
 {
     use Exportable;
 

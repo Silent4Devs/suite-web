@@ -34,7 +34,6 @@ class PriceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -75,14 +74,13 @@ class PriceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  Price $price
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Price $price)
     {
         $request->validate([
-            'name' => 'required|unique:prices,name,' . $price->id,
+            'name' => 'required|unique:prices,name,'.$price->id,
             'value' => 'required|numeric',
         ]);
 

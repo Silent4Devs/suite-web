@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\User;
 use App\Models\RevisionDocumento;
+use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
 class RevisionDocumentoObserver
@@ -50,6 +50,6 @@ class RevisionDocumentoObserver
 
     private function forgetCache()
     {
-        Cache::forget('RevisionDocumento:revision_documentos_all_documentos_' . User::getCurrentUser()->empleado->id);
+        Cache::forget('RevisionDocumento:revision_documentos_all_documentos_'.User::getCurrentUser()->empleado->id);
     }
 }

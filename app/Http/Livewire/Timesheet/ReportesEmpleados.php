@@ -19,26 +19,47 @@ class ReportesEmpleados extends Component
     use LivewireAlert;
 
     public $hoy_format;
+
     public $empleado;
+
     public $empleados;
+
     public $timesheet;
+
     public $hoy;
+
     public $areas;
+
     public $times_empleado;
+
     public $times_empleado_horas;
+
     public $proyectos;
+
     public $proyectos_detalle;
+
     public $horas_totales = 0;
+
     public $horas_totales_filtros_empleados;
+
     public $calendario_tabla;
+
     public $times_faltantes_empleado;
+
     public $empleados_estatus;
+
     public $semanas_totales_calendario = 0;
+
     public $area_id = 0;
+
     public $fecha_inicio;
+
     public $fecha_fin;
+
     public $fecha_inicio_empleado;
+
     public $fecha_fin_empleado;
+
     public $empleadosQuery;
 
     public function mount()
@@ -74,7 +95,7 @@ class ReportesEmpleados extends Component
     {
         $this->fecha_fin = $value;
         if (intval(Carbon::parse($this->fecha_fin)->format('Y')) > intval(now()->format('Y'))) {
-            $this->alert('info', 'El año de la fecha fin no puede ser posterior al año actual ( ' . now()->format('Y') . ' )', [
+            $this->alert('info', 'El año de la fecha fin no puede ser posterior al año actual ( '.now()->format('Y').' )', [
                 'position' => 'top-end',
                 'timer' => 3000,
                 'toast' => true,
@@ -82,7 +103,7 @@ class ReportesEmpleados extends Component
             $this->fecha_fin = now()->format('Y-m-d');
         } else {
             if ($this->fecha_fin < $this->fecha_inicio) {
-                $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( ' . $this->fecha_inicio . ' )', [
+                $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( '.$this->fecha_inicio.' )', [
                     'position' => 'top-end',
                     'timer' => 3000,
                     'toast' => true,
@@ -144,7 +165,7 @@ class ReportesEmpleados extends Component
                 $previous_month = Carbon::create()->day(1)->month(intval($previous_month))->format('F');
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
-                if (!($this->buscarKeyEnArray($year, $calendario_array))) {
+                if (! ($this->buscarKeyEnArray($year, $calendario_array))) {
                     $calendario_array["{$year}"] = [
                         'year' => $year,
                         'total_weeks' => 0,
@@ -159,19 +180,19 @@ class ReportesEmpleados extends Component
                     if ($month == 'January') {
                         $previous_year = $year - 1;
                         if (array_key_exists($previous_year, $calendario_array)) {
-                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
+                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         }
                     }
                 } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
-                        if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
+                        if (! in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks'][] = $semana;
                             } else {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
@@ -273,7 +294,7 @@ class ReportesEmpleados extends Component
             } else {
                 $fecha_inicio_timesheet_faltantes_empleado = $fecha_inicio_timesheet_empleado;
             }
-            if (!$fecha_inicio_timesheet_faltantes_empleado) {
+            if (! $fecha_inicio_timesheet_faltantes_empleado) {
                 $fecha_inicio_timesheet_faltantes_empleado = $this->fecha_inicio;
             }
 

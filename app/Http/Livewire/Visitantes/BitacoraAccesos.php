@@ -14,8 +14,8 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class BitacoraAccesos extends Component
 {
-    use WithPagination;
     use LivewireAlert;
+    use WithPagination;
 
     protected $listeners = [
         'confirmarSalida',
@@ -116,7 +116,7 @@ class BitacoraAccesos extends Component
     {
         $model = $this->getQueryFilter();
 
-        return Excel::download(new VisitanteExport($model->get()), 'Reporte de Visitantes ' . now()->format('d-m-Y h:i A') . '.xlsx');
+        return Excel::download(new VisitanteExport($model->get()), 'Reporte de Visitantes '.now()->format('d-m-Y h:i A').'.xlsx');
     }
 
     public function default()

@@ -32,6 +32,6 @@ class SolicitudAprobacionObjetivo extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.objetivosEstrategicos.solicitud-aprobacion')->subject('Solicitud de aprobación de objetivo ' . $this->objetivo->nombre);
+        return $this->view('mails.objetivosEstrategicos.solicitud-aprobacion')->subject('Solicitud de aprobación de objetivo '.$this->objetivo->nombre);
     }
 }

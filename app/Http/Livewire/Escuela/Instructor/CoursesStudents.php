@@ -13,9 +13,12 @@ class CoursesStudents extends Component
 {
     use LivewireAlert;
     use WithPagination;
+
     public $course;
+
     public $search;
-    public $listeners = ['UserStore'=>'render'];
+
+    public $listeners = ['UserStore' => 'render'];
 
     public function mount(Course $course)
     {

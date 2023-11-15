@@ -18,7 +18,7 @@ use Livewire\WithPagination;
 class ConvenioModificatorioComponent extends Component
 {
     use LivewireAlert;
-    use WithPagination, WithFileUploads;
+    use WithFileUploads, WithPagination;
 
     public $contrato_id;
 
@@ -62,9 +62,9 @@ class ConvenioModificatorioComponent extends Component
         $convenios = ConveniosModificatorios::select('id', 'no_convenio', 'fecha', 'descripcion')
             ->where('contrato_id', '=', $this->contrato_id)
             ->where(function ($query) {
-                $query->where('no_convenio', 'like', '%' . $this->search . '%')
-                    ->orWhere('descripcion', 'like', '%' . $this->search . '%')
-                    ->orWhere('id', 'like', '%' . $this->search . '%');
+                $query->where('no_convenio', 'like', '%'.$this->search.'%')
+                    ->orWhere('descripcion', 'like', '%'.$this->search.'%')
+                    ->orWhere('id', 'like', '%'.$this->search.'%');
             })
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->pagination);
@@ -111,9 +111,9 @@ class ConvenioModificatorioComponent extends Component
             $convenios_filename = $this->convenios_file->getClientOriginalName();
 
             $convenioFile->update([
-                'convenios_file' => $convenios->id . $convenios_filename,
+                'convenios_file' => $convenios->id.$convenios_filename,
             ]);
-            $this->convenios_file->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/convenios/pdf', $convenios->id . $convenios_filename);
+            $this->convenios_file->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/convenios/pdf', $convenios->id.$convenios_filename);
         }
 
         // $this->default();
@@ -182,18 +182,18 @@ class ConvenioModificatorioComponent extends Component
         $date = $date->format('d-m-Y');
 
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
 
         if (isset($this->convenios_file)) {
             $convenios_filename = $this->convenios_file->getClientOriginalName();
 
             $convenioFile->update([
-                'convenios_file' => $date . $convenios->id . $convenios_filename,
+                'convenios_file' => $date.$convenios->id.$convenios_filename,
             ]);
 
-            $this->convenios_file->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/convenios/pdf', $date . $convenios->id . $convenios_filename);
+            $this->convenios_file->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/convenios/pdf', $date.$convenios->id.$convenios_filename);
         }
         // dd($convenioFile);
         $this->default();
@@ -221,7 +221,7 @@ class ConvenioModificatorioComponent extends Component
             //return Storage::disk('pdf')->download($pdf->pdf);
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
 
-            return response()->download(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/convenios/pdf/' . $convenios_file->convenios_file));
+            return response()->download(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/convenios/pdf/'.$convenios_file->convenios_file));
         }
     }
 

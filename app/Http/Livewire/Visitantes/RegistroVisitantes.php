@@ -284,7 +284,7 @@ class RegistroVisitantes extends Component
             $this->registrarDispositivos();
         }
         $this->enviarCorreoDeConfirmacion($this->correo, $this->registrarVisitante);
-        $this->alert('success', 'Bien Hecho ' . $this->nombre . ', te has registrado correctamente', [
+        $this->alert('success', 'Bien Hecho '.$this->nombre.', te has registrado correctamente', [
             'position' => 'top-end',
             'timer' => 3000,
             'toast' => true,
@@ -318,12 +318,12 @@ class RegistroVisitantes extends Component
     public function imprimirCredencialImage($dataImage)
     {
         $pdf = \PDF::loadView('visitantes.credencial.index', ['credencial' => $dataImage])->output();
-        $fileName = 'Credencial de ' . $this->registrarVisitante->nombre . ' ' . $this->registrarVisitante->apellidos . '.pdf';
+        $fileName = 'Credencial de '.$this->registrarVisitante->nombre.' '.$this->registrarVisitante->apellidos.'.pdf';
 
         return response()->streamDownload(
             function () use ($pdf) {
                 echo $pdf;
-                $this->alert('success', 'Bien Hecho ' . $this->nombre . ', se ha imprimido correctamente la credencial', [
+                $this->alert('success', 'Bien Hecho '.$this->nombre.', se ha imprimido correctamente la credencial', [
                     'position' => 'top-end',
                     'timer' => 1000,
                     'toast' => true,
@@ -333,7 +333,7 @@ class RegistroVisitantes extends Component
             $fileName,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                'Content-Disposition' => 'attachment; filename="'.$fileName.'"',
             ]
         );
     }

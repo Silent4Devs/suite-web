@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Jenssegers\Date\Date;
-use App\Traits\DateTranslator;
 use App\Traits\ClearsResponseCache;
+use App\Traits\DateTranslator;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Jenssegers\Date\Date;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class CertificacionesEmpleados extends Model implements Auditable
 {
-    use SoftDeletes;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use DateTranslator;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use SoftDeletes;
 
     protected $table = 'certificaciones_empleados';
 
@@ -51,7 +51,7 @@ class CertificacionesEmpleados extends Model implements Auditable
 
     public function getRutaDocumentoAttribute()
     {
-        return asset('storage/certificados_empleados/') . '/' . $this->documento;
+        return asset('storage/certificados_empleados/').'/'.$this->documento;
     }
 
     public function getVigenciaYmdAttribute()

@@ -10,7 +10,6 @@ class RiesgoIdentificadoObserver
     /**
      * Handle the RiesgoIdentificado "created" event.
      *
-     * @param  \App\Models\RiesgoIdentificado  $riesgoIdentificado
      * @return void
      */
     public function created(RiesgoIdentificado $riesgoIdentificado)
@@ -21,7 +20,6 @@ class RiesgoIdentificadoObserver
     /**
      * Handle the RiesgoIdentificado "updated" event.
      *
-     * @param  \App\Models\RiesgoIdentificado  $riesgoIdentificado
      * @return void
      */
     public function updated(RiesgoIdentificado $riesgoIdentificado)
@@ -32,7 +30,6 @@ class RiesgoIdentificadoObserver
     /**
      * Handle the RiesgoIdentificado "deleted" event.
      *
-     * @param  \App\Models\RiesgoIdentificado  $riesgoIdentificado
      * @return void
      */
     public function deleted(RiesgoIdentificado $riesgoIdentificado)
@@ -43,7 +40,6 @@ class RiesgoIdentificadoObserver
     /**
      * Handle the RiesgoIdentificado "restored" event.
      *
-     * @param  \App\Models\RiesgoIdentificado  $riesgoIdentificado
      * @return void
      */
     public function restored(RiesgoIdentificado $riesgoIdentificado)
@@ -54,7 +50,6 @@ class RiesgoIdentificadoObserver
     /**
      * Handle the RiesgoIdentificado "force deleted" event.
      *
-     * @param  \App\Models\RiesgoIdentificado  $riesgoIdentificado
      * @return void
      */
     public function forceDeleted(RiesgoIdentificado $riesgoIdentificado)

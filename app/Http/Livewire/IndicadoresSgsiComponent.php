@@ -139,7 +139,7 @@ class IndicadoresSgsiComponent extends Component
         $formula_final = str_replace($variables, $valores, $formula_sustitucion);
 
         try {
-            $result = eval('return ' . $formula_final . ';');
+            $result = eval('return '.$formula_final.';');
         } catch (\Throwable $th) {
             if ($th->getMessage() == 'Division by zero') {
                 $result = 0;
@@ -188,7 +188,7 @@ class IndicadoresSgsiComponent extends Component
         $formula_final = str_replace($variables, $valores, $formula_sustitucion);
         //dd($this->formSlugs, $variables, $valores, str_replace(".", "",$formula_final));
         try {
-            $result = eval('return ' . $formula_final . ';');
+            $result = eval('return '.$formula_final.';');
         } catch (\Throwable $th) {
             if ($th->getMessage() == 'Division by zero') {
                 $result = 0;

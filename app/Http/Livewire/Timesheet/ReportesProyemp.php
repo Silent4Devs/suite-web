@@ -2,25 +2,25 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Carbon\Carbon;
+use App\Exports\ReporteColaboradorTarea;
 use App\Models\Area;
-use Livewire\Component;
 use App\Models\Empleado;
 use App\Models\Timesheet;
-use Livewire\WithPagination;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
-use App\Exports\ReporteColaboradorTarea;
+use Illuminate\Support\Facades\Http;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportesProyemp extends Component
 {
-    use WithPagination;
     use LivewireAlert;
+    use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -234,7 +234,7 @@ class ReportesProyemp extends Component
 
     public function exportExcel()
     {
-        $response = Http::post(env('GOSERVICES_API') . '/api/timesheet/proyecto', [
+        $response = Http::post(env('GOSERVICES_API').'/api/timesheet/proyecto', [
             'emp_id' => $this->emp_id,
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,

@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\User;
 use App\Models\Documento;
+use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
 class DocumentoObserver
@@ -51,6 +51,6 @@ class DocumentoObserver
     private function forgetCache()
     {
         $user = User::getCurrentUser();
-        Cache::forget('Documentos:Documentos_all_macroprocesos_' . $user->empleado_id);
+        Cache::forget('Documentos:Documentos_all_macroprocesos_'.$user->empleado_id);
     }
 }

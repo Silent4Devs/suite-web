@@ -10,7 +10,6 @@ class MejorasObserver
     /**
      * Handle the Mejoras "created" event.
      *
-     * @param  \App\Models\Mejoras  $mejoras
      * @return void
      */
     public function created(Mejoras $mejoras)
@@ -21,7 +20,6 @@ class MejorasObserver
     /**
      * Handle the Mejoras "updated" event.
      *
-     * @param  \App\Models\Mejoras  $mejoras
      * @return void
      */
     public function updated(Mejoras $mejoras)
@@ -32,7 +30,6 @@ class MejorasObserver
     /**
      * Handle the Mejoras "deleted" event.
      *
-     * @param  \App\Models\Mejoras  $mejoras
      * @return void
      */
     public function deleted(Mejoras $mejoras)
@@ -43,7 +40,6 @@ class MejorasObserver
     /**
      * Handle the Mejoras "restored" event.
      *
-     * @param  \App\Models\Mejoras  $mejoras
      * @return void
      */
     public function restored(Mejoras $mejoras)
@@ -54,7 +50,6 @@ class MejorasObserver
     /**
      * Handle the Mejoras "force deleted" event.
      *
-     * @param  \App\Models\Mejoras  $mejoras
      * @return void
      */
     public function forceDeleted(Mejoras $mejoras)

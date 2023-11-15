@@ -30,7 +30,7 @@ class ExpedienteEmpleadoComponent extends Component
             'documentoIne' => 'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoIne->extension();
-        $this->documentoIne->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "INE.{$extension}");
+        $this->documentoIne->storeAs('public/expedientes/'.Str::slug($this->empleado->name).'/', "INE.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => 'INE',
             'documentos' => "INE.{$extension}",
@@ -45,7 +45,7 @@ class ExpedienteEmpleadoComponent extends Component
         ]);
         $extension = $this->documentoImss->extension();
         $nombre_documento = 'IMSS';
-        $this->documentoImss->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "{$nombre_documento}.{$extension}");
+        $this->documentoImss->storeAs('public/expedientes/'.Str::slug($this->empleado->name).'/', "{$nombre_documento}.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => $nombre_documento,
             'documentos' => "{$nombre_documento}.{$extension}",
@@ -60,7 +60,7 @@ class ExpedienteEmpleadoComponent extends Component
         ]);
         $extension = $this->documentoCurp->extension();
         $nombre_documento = 'CURP';
-        $this->documentoCurp->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "{$nombre_documento}.{$extension}");
+        $this->documentoCurp->storeAs('public/expedientes/'.Str::slug($this->empleado->name).'/', "{$nombre_documento}.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => $nombre_documento,
             'documentos' => "{$nombre_documento}.{$extension}",
@@ -75,7 +75,7 @@ class ExpedienteEmpleadoComponent extends Component
         ]);
         $extension = $this->documentoRfc->extension();
         $nombre_documento = 'RFC';
-        $this->documentoRfc->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "{$nombre_documento}.{$extension}");
+        $this->documentoRfc->storeAs('public/expedientes/'.Str::slug($this->empleado->name).'/', "{$nombre_documento}.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => $nombre_documento,
             'documentos' => "{$nombre_documento}.{$extension}",
@@ -116,7 +116,7 @@ class ExpedienteEmpleadoComponent extends Component
     public function removeDocumento($documento_id)
     {
         $evidencia = EvidenciasDocumentosEmpleados::find($documento_id);
-        Storage::disk('public')->delete('expedientes/' . Str::slug($this->empleado->name) . '/' . $evidencia->documentos);
+        Storage::disk('public')->delete('expedientes/'.Str::slug($this->empleado->name).'/'.$evidencia->documentos);
         $evidencia->delete();
         $this->checkIfDocumentExists();
     }

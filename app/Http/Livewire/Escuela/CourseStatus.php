@@ -15,9 +15,13 @@ class CourseStatus extends Component
     // use AuthorizesRequests;
     //declaramos la propiedad course y current
     public $course;
+
     public $current;
+
     public $evaluacionesGenerales;
+
     public $evaluacionesLeccion;
+
     public $evaluationsUser;
 
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
@@ -30,7 +34,7 @@ class CourseStatus extends Component
 
         //determinamos cual es la lección actual
         foreach ($course->lessons as $lesson) {
-            if (!$lesson->completed) {
+            if (! $lesson->completed) {
                 $this->current = $lesson;
                 //break para que salga del bucle
                 break;
@@ -38,7 +42,7 @@ class CourseStatus extends Component
         }
 
         // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
-        if (!$this->current) {
+        if (! $this->current) {
             $this->current = $course->lessons->last();
         }
 
@@ -122,6 +126,6 @@ class CourseStatus extends Component
     public function download()
     {
         // dd($this->current->resource);
-        return response()->download(storage_path('app/' . $this->current->resource->url));
+        return response()->download(storage_path('app/'.$this->current->resource->url));
     }
 }

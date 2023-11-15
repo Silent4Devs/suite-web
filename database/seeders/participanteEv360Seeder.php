@@ -58,8 +58,8 @@ class participanteEv360Seeder extends Seeder
                     $q->with(['competencia']);
                 }]);
             }])->find($evaluadoID);
-            $competencias = !is_null($competencias_por_puesto->puestoRelacionado) ? $competencias_por_puesto->puestoRelacionado->competencias : null;
-            if (!is_null($competencias)) {
+            $competencias = ! is_null($competencias_por_puesto->puestoRelacionado) ? $competencias_por_puesto->puestoRelacionado->competencias : null;
+            if (! is_null($competencias)) {
                 foreach ($competencias as $competencia) {
                     EvaluacionRepuesta::create([
                         'calificacion' => 0,
@@ -76,7 +76,7 @@ class participanteEv360Seeder extends Seeder
         $evaluadores_objetivos = [158, 137];
         $empleado = Empleado::with('children', 'supervisor', 'objetivos')->find($evaluadoID);
         $objetivos = $empleado->objetivos;
-        if (!is_null($objetivos)) {
+        if (! is_null($objetivos)) {
             foreach ($evaluadores_objetivos as $evaluador) {
                 foreach ($objetivos as $objetivo) {
                     ObjetivoRespuesta::create([

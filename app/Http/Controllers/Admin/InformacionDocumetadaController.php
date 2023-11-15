@@ -133,7 +133,7 @@ class InformacionDocumetadaController extends Controller
         $informacionDocumetada->politicas()->sync($request->input('politicas', []));
 
         if ($request->input('logotipo', false)) {
-            $informacionDocumetada->addMedia(storage_path('tmp/uploads/' . $request->input('logotipo')))->toMediaCollection('logotipo');
+            $informacionDocumetada->addMedia(storage_path('tmp/uploads/'.$request->input('logotipo')))->toMediaCollection('logotipo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -168,12 +168,12 @@ class InformacionDocumetadaController extends Controller
         $informacionDocumetada->politicas()->sync($request->input('politicas', []));
 
         if ($request->input('logotipo', false)) {
-            if (!$informacionDocumetada->logotipo || $request->input('logotipo') !== $informacionDocumetada->logotipo->file_name) {
+            if (! $informacionDocumetada->logotipo || $request->input('logotipo') !== $informacionDocumetada->logotipo->file_name) {
                 if ($informacionDocumetada->logotipo) {
                     $informacionDocumetada->logotipo->delete();
                 }
 
-                $informacionDocumetada->addMedia(storage_path('tmp/uploads/' . $request->input('logotipo')))->toMediaCollection('logotipo');
+                $informacionDocumetada->addMedia(storage_path('tmp/uploads/'.$request->input('logotipo')))->toMediaCollection('logotipo');
             }
         } elseif ($informacionDocumetada->logotipo) {
             $informacionDocumetada->logotipo->delete();

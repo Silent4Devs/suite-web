@@ -133,7 +133,7 @@ class ConsultaPerfilComponent extends Component
 
     public function mount()
     {
-        if (!$this->isPersonal) {
+        if (! $this->isPersonal) {
             $this->puestos = Puesto::select('id', 'id_area', 'id_reporta', 'puesto')->get();
         }
     }

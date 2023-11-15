@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use App\Traits\DateTranslator;
 use App\Traits\ClearsResponseCache;
+use App\Traits\DateTranslator;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FileCapacitacion extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use DateTranslator;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use HasFactory;
 
     protected $table = 'files_capacitaciones';
 
