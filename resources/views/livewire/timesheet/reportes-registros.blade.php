@@ -275,6 +275,7 @@
             </div>
 
         </div>
+        <button  class="d-none" wire:click='dropDuplicate()'>Eliminar Duplicados</button>
     </div>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
