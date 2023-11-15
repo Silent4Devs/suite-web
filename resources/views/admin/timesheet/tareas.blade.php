@@ -126,7 +126,7 @@
                     destroy: true,
                     render: true,
                     processing: true, // Added option: Enable processing indicator
-                    serverSide: true, // Commented out as it was causing an issue
+                    // serverSide: true, // Commented out as it was causing an issue
                     responsive: true, // Added option: Enable responsiveness
                 };
 
