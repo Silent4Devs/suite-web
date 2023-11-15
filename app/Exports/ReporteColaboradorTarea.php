@@ -40,7 +40,6 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
             ->join('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
             ->join('empleados as aprobadores', 'aprobadores.id', '=', 'timesheet.aprobador_id')
             ->select(
-                'timesheet.id',
                 'timesheet.fecha_dia',
                 'empleados.name as empleado_name',
                 'aprobadores.name as supervisor_name',
@@ -72,7 +71,6 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
                 // Otras condiciones que ya tenías
             })
             ->groupBy(
-                'timesheet.id',
                 'timesheet.fecha_dia',
                 'empleado_name',
                 'supervisor_name',
@@ -90,17 +88,6 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
             ->distinct()
             ->get()
             ->map(function ($timesheetHora) {
-                $total_horas = 0;
-                $horas_time = TimesheetHoras::where('timesheet_id', $timesheetHora->id)->get();
-                foreach ($horas_time as $key => $horas) {
-                    $total_horas += floatval($horas->horas_lunes);
-                    $total_horas += floatval($horas->horas_martes);
-                    $total_horas += floatval($horas->horas_miercoles);
-                    $total_horas += floatval($horas->horas_jueves);
-                    $total_horas += floatval($horas->horas_viernes);
-                    $total_horas += floatval($horas->horas_sabado);
-                    $total_horas += floatval($horas->horas_domingo);
-                }
                 return [
                     'Fecha Día' => \Carbon\Carbon::parse($timesheetHora->fecha_dia)->format('d/m/Y'),
                     'Empleado' => $timesheetHora->empleado_name,
@@ -108,7 +95,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
                     'Proyecto' => $timesheetHora->proyecto,
                     'Tarea' => $timesheetHora->tarea,
                     'Descripción' => $timesheetHora->descripcion,
-                    'Total de Horas' => $total_horas
+                    'Total de Horas' => (floatval($timesheetHora->horas_lunes) + floatval($timesheetHora->horas_martes) + floatval($timesheetHora->horas_miercoles) + floatval($timesheetHora->horas_jueves) + floatval($timesheetHora->horas_viernes) + floatval($timesheetHora->horas_sabado) + floatval($timesheetHora->horas_domingo))
                 ];
             });
 
