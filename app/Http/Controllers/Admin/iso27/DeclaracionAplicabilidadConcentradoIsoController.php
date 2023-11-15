@@ -39,22 +39,22 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         $gapa5 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')
             ->with('gapdos.clasificacion')
             ->whereHas('gapdos', function ($query) {
-                return $query->where('control_iso', 'LIKE', '5.' . '%');
+                return $query->where('control_iso', 'LIKE', '5.'.'%');
             })->orderBy('id', 'ASC')->get();
 
         $gapa6 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
             ->whereHas('gapdos', function ($query) {
-                return $query->where('control_iso', 'LIKE', '6.' . '%');
+                return $query->where('control_iso', 'LIKE', '6.'.'%');
             })->orderBy('id', 'ASC')->get();
 
         $gapa7 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
             ->whereHas('gapdos', function ($query) {
-                return $query->where('control_iso', 'LIKE', '7.' . '%');
+                return $query->where('control_iso', 'LIKE', '7.'.'%');
             })->orderBy('id', 'ASC')->get();
 
         $gapa8 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
             ->whereHas('gapdos', function ($query) {
-                return $query->where('control_iso', 'LIKE', '8.' . '%');
+                return $query->where('control_iso', 'LIKE', '8.'.'%');
             })->orderBy('id', 'ASC')->get();
 
         $responsables = DeclaracionAplicabilidadResponsableIso::with(['empleado' => function ($q) {
@@ -67,7 +67,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         // dd($responsables, $aprobadores);
         $ISO27001_2022_SoA_PATH = 'storage/Normas/ISO27001-2022/Analísis Inicial/';
         $path = public_path($ISO27001_2022_SoA_PATH);
-        $lista_archivos_declaracion = glob($path . 'Analisis Inicial-2022*.pdf');
+        $lista_archivos_declaracion = glob($path.'Analisis Inicial-2022*.pdf');
 
         return view('admin.declaracionaplicabilidad2022.index')
             ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
@@ -97,16 +97,16 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         // dd($conteoAprobado, $conteoNoaprobado);
 
         $gap5 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function ($query) {
-            return $query->where('control_iso', 'LIKE', '5.' . '%');
+            return $query->where('control_iso', 'LIKE', '5.'.'%');
         })->get();
         $gap6 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function ($query) {
-            return $query->where('control_iso', 'LIKE', '6.' . '%');
+            return $query->where('control_iso', 'LIKE', '6.'.'%');
         })->get();
         $gap7 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function ($query) {
-            return $query->where('control_iso', 'LIKE', '7.' . '%');
+            return $query->where('control_iso', 'LIKE', '7.'.'%');
         })->get();
         $gap8 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function ($query) {
-            return $query->where('control_iso', 'LIKE', '8.' . '%');
+            return $query->where('control_iso', 'LIKE', '8.'.'%');
         })->get();
 
         // dd($gap5, $gap6, $gap7, $gap8);
@@ -360,28 +360,28 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         $gapa5 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')
             ->with('gapdos.clasificacion')
             ->whereHas('gapdos', function ($query) {
-                return $query->where('control_iso', 'LIKE', 'A.5.' . '%');
+                return $query->where('control_iso', 'LIKE', 'A.5.'.'%');
             })
             ->with('responsables2022')
             ->orderBy('id', 'ASC')->get();
 
         $gapa6 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
             ->whereHas('gapdos', function ($query) {
-                return $query->where('control_iso', 'LIKE', 'A.6.' . '%');
+                return $query->where('control_iso', 'LIKE', 'A.6.'.'%');
             })
             ->with('responsables2022')
             ->orderBy('id', 'ASC')->get();
 
         $gapa7 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
             ->whereHas('gapdos', function ($query) {
-                return $query->where('control_iso', 'LIKE', 'A.7.' . '%');
+                return $query->where('control_iso', 'LIKE', 'A.7.'.'%');
             })
             ->with('responsables2022')
             ->orderBy('id', 'ASC')->get();
 
         $gapa8 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
             ->whereHas('gapdos', function ($query) {
-                return $query->where('control_iso', 'LIKE', 'A.8.' . '%');
+                return $query->where('control_iso', 'LIKE', 'A.8.'.'%');
             })
             ->with('responsables2022')
             ->orderBy('id', 'ASC')->get();
@@ -392,7 +392,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         $logotipo = '';
         if (isset($logo)) {
             if ($logo->logotipo != null) {
-                $logotipo = 'images/' . $logo->logotipo;
+                $logotipo = 'images/'.$logo->logotipo;
             } else {
                 $logotipo = 'img/Silent4Business-Logo-Color.png';
             }
@@ -409,9 +409,9 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
             'logotipo',
         ));
 
-        $nombre_pdf = 'Analisis Inicial-2022 ' . Carbon::now()->format('d-m-Y') . '.pdf';
+        $nombre_pdf = 'Analisis Inicial-2022 '.Carbon::now()->format('d-m-Y').'.pdf';
         $content = $pdf->download()->getOriginalContent();
-        Storage::put('public/Normas/ISO27001-2022/Analísis Inicial/' . $nombre_pdf, $content);
+        Storage::put('public/Normas/ISO27001-2022/Analísis Inicial/'.$nombre_pdf, $content);
 
         //$pdf->download(storage_path('Normas/ISO27001/Analísis Inicial/' . $nombre_pdf));
         return $pdf->setPaper('a4', 'landscape')->stream();

@@ -16,12 +16,19 @@ class CoursesLesson extends Component
     use WithFileUploads;
 
     public $section;
+
     public $lesson;
+
     public $platforms;
+
     public $name;
+
     public $platform_id = 1;
+
     public $url;
+
     public $description;
+
     public $file;
 
     protected $rules = [
@@ -64,7 +71,7 @@ class CoursesLesson extends Component
             'platform_id' => $this->platform_id,
             'url' => $this->url,
             'section_id' => $this->section->id,
-            // 'description' => $this->description,
+            'description' => $this->description,
         ]);
 
         if ($this->file) {
@@ -106,8 +113,13 @@ class CoursesLesson extends Component
         $this->validate($rules);
 
         $this->lesson->save();
-        $this->lesson = new Lesson();
-
+        if ($this->file) {
+            $urlresorce = $this->file->store('cursos');
+            $this->lesson->resource()->create([
+                'url' => $urlresorce,
+            ]);
+        }
+        // $this->lesson = new Lesson();
         $this->section = Section::find($this->section->id);
         $this->render_alerta('success', 'Registro actualizado exitosamente');
         // redirect()->route('admin.courses.edit', $this->course);

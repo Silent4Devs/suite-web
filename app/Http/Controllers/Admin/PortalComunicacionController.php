@@ -15,7 +15,6 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class PortalComunicacionController extends Controller
@@ -33,11 +32,11 @@ class PortalComunicacionController extends Controller
         $user = User::getCurrentUser();
         $authId = $user->id;
 
-        $aniversarios = Cache::remember('Portal:portal_aniversarios_' . $authId, 3600 * 2, function () use ($hoy) {
+        $aniversarios = Cache::remember('Portal:portal_aniversarios_'.$authId, 3600 * 2, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         });
 
-        $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo_' . $authId, 3600 * 2, function () use ($hoy) {
+        $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo_'.$authId, 3600 * 2, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
         });
 

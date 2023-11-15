@@ -2,20 +2,20 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
 use App\Models\Activo;
-use App\Models\Recurso;
-use Livewire\Component;
-use App\Models\Empleado;
 use App\Models\Documento;
+use App\Models\Empleado;
+use App\Models\Recurso;
 use App\Models\RevisionDocumento;
+use App\Models\User;
 use App\Traits\EmpleadoFunciones;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Cache;
+use Livewire\Component;
 
 class BajaEmpleadoComponent extends Component
 {
-    use ObtenerOrganizacion, EmpleadoFunciones;
+    use EmpleadoFunciones, ObtenerOrganizacion;
 
     public $empleado;
 
@@ -113,7 +113,7 @@ class BajaEmpleadoComponent extends Component
     public function obtenerCapacitaciones()
     {
         $empleado = $this->empleado->id;
-        $cacheKeyRecursos = 'Recursos:recursos_' . User::getCurrentUser()->id;
+        $cacheKeyRecursos = 'Recursos:recursos_'.User::getCurrentUser()->id;
         $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
             return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);

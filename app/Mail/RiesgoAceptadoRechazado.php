@@ -33,6 +33,6 @@ class RiesgoAceptadoRechazado extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.tratamientoRiesgos.riesgo-aceptado-rechazado')->subject('Respuesta a la solicitud de aprobación del riesgo ID ' . $this->tratamientoRiesgo->identificador);
+        return $this->view('mails.tratamientoRiesgos.riesgo-aceptado-rechazado')->subject('Respuesta a la solicitud de aprobación del riesgo ID '.$this->tratamientoRiesgo->identificador);
     }
 }

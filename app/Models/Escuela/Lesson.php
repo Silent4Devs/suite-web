@@ -3,13 +3,13 @@
 namespace App\Models\Escuela;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lesson extends Model
 {
-    use HasFactory, ClearsResponseCache;
+    use ClearsResponseCache, HasFactory;
     use SoftDeletes;
 
     protected $guarded = ['id'];

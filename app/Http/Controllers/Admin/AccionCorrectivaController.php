@@ -310,12 +310,12 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->update($request->all());
         if ($request->input('documentometodo', false)) {
-            if (!$accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
+            if (! $accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
                 if ($accionCorrectiva->documentometodo) {
                     $accionCorrectiva->documentometodo->delete();
                 }
 
-                $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
+                $accionCorrectiva->addMedia(storage_path('tmp/uploads/'.$request->input('documentometodo')))->toMediaCollection('documentometodo');
             }
         } elseif ($accionCorrectiva->documentometodo) {
             $accionCorrectiva->documentometodo->delete();

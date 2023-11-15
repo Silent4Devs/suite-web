@@ -16,7 +16,9 @@ class TableQuestions extends Component
     use WithPagination;
 
     public $course;
+
     public $evaluation;
+
     protected $listeners = ['QuestionEvent' => 'render', 'questionStore' => 'render', 'destroyQuestion' => 'destroy'];
 
     public function mount(Course $course, Evaluation $evaluation)

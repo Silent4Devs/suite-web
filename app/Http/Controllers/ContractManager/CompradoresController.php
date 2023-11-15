@@ -56,7 +56,6 @@ class CompradoresController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -78,7 +77,8 @@ class CompradoresController extends Controller
             return redirect('/contract_manager/compradores');
         } catch (QueryException $e) {
             DB::rollback();
-            return "Error al insertar el producto: " . $e->getMessage();
+
+            return 'Error al insertar el producto: '.$e->getMessage();
         }
     }
 
@@ -111,7 +111,6 @@ class CompradoresController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

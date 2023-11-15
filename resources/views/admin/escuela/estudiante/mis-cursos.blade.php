@@ -97,6 +97,7 @@
             font-size: 12px;
             padding: 10px 25px;
         }
+
         .btn-mas-info-c:hover {
             color: #fff;
         }
@@ -116,13 +117,13 @@
         <div class="caja-cards-mis-cursos">
 
             @foreach ($cursos_usuario as $cu)
-            <div class="card card-body mi-curso">
-                        <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}">
-                            <div class="caja-img-mi-curso">
-                                <img src="{{ asset(Storage::url($cu->cursos->image->url)) }}" alt="">
-                            </div>
-                        </a>
-                    </div>
+                <div class="card card-body mi-curso">
+                    <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}">
+                        <div class="caja-img-mi-curso">
+                            <img src="{{ asset($cu->cursos->image->url) }}" alt="">
+                        </div>
+                    </a>
+                </div>
             @endforeach
 
         </div>

@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use App\Models\Recurso;
-use App\Models\Empleado;
-use App\Models\Calendario;
-use App\Models\Organizacion;
-use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
+use App\Models\Calendario;
 use App\Models\CalendarioOficial;
-use App\Models\PlanBaseActividade;
-use App\Models\PlanImplementacion;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Cache;
-use App\Models\ContractManager\Factura;
 use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\EntregaMensual;
+use App\Models\ContractManager\Factura;
+use App\Models\Empleado;
+use App\Models\Organizacion;
+use App\Models\PlanBaseActividade;
+use App\Models\PlanImplementacion;
+use App\Models\Recurso;
+use App\Models\User;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Gate;
 
 class SystemCalendarController extends Controller
 {
@@ -69,7 +69,7 @@ class SystemCalendarController extends Controller
 
         $recursos = collect();
         if ($usuario->empleado) {
-            $cacheKeyRecursos = 'Recursos:recursos_' . $usuario->id;
+            $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
             $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
                 return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                     $query->where('empleados.id', $empleado->id);

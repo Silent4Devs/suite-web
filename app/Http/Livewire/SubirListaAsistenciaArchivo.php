@@ -30,7 +30,7 @@ class SubirListaAsistenciaArchivo extends Component
         ], [
             'lista.required' => 'Tienes que seleccionar un archivo',
         ]);
-        $archivo = 'Lista_Asistencia.' . $this->lista->extension();
+        $archivo = 'Lista_Asistencia.'.$this->lista->extension();
         $this->lista->storeAs("public/capacitaciones/listas/{$this->recurso->id}_capacitacion/", $archivo);
 
         $this->recurso->update([
@@ -41,7 +41,7 @@ class SubirListaAsistenciaArchivo extends Component
 
     public function remove()
     {
-        $eliminado = Storage::disk('capacitaciones')->delete("listas/{$this->recurso->id}_capacitacion/" . $this->recurso->lista_asistencia);
+        $eliminado = Storage::disk('capacitaciones')->delete("listas/{$this->recurso->id}_capacitacion/".$this->recurso->lista_asistencia);
         if ($eliminado) {
             $this->recurso->update([
                 'lista_asistencia' => null,

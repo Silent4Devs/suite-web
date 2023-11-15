@@ -6,10 +6,10 @@ se reflejen los cambios en ambas  -->
 
 <article class="card">
     @isset($course->image->url)
-        <img class="object-cover w-full h-36" src="{{ asset(Storage::url($course->image->url)) }}">
+        <img class="object-cover w-full h-36" src="{{ asset($course->image->url) }}">
     @else
-        <img class="object-cover w-full h-36" src="{{asset('img/home/imagen-estudiantes.jpg')}}"
-            id="picture" alt="">
+        <img class="object-cover w-full h-36" src="{{ asset('img/home/imagen-estudiantes.jpg') }}" id="picture"
+            alt="">
     @endisset
     <div class="card-body">
         <h1 class="card-title">{{ Str::limit($course->title, 40) }}</h1>

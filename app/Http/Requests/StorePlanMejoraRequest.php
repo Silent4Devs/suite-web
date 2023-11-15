@@ -16,7 +16,7 @@ class StorePlanMejoraRequest extends FormRequest
     {
         return [
             'fecha_compromiso' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
         ];

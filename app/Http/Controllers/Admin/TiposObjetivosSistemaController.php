@@ -116,7 +116,7 @@ class TiposObjetivosSistemaController extends Controller
         $request->validate([
             'nombre' => 'required|max:255',
             'descripcion' => 'nullable|max:10000',
-            'slug' => 'required|max:255|unique:tipo_objetivo_sistema,slug,' . $tiposObjetivosSistema->id,
+            'slug' => 'required|max:255|unique:tipo_objetivo_sistema,slug,'.$tiposObjetivosSistema->id,
         ], [
             'nombre.required' => 'El nombre es requerido',
             'nombre.max' => 'El nombre no puede tener más de 255 caracteres',

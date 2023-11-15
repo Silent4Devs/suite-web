@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\User;
 use App\Models\AuditoriaInterna;
+use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
 class AuditoriaInternaObserver
@@ -50,6 +50,6 @@ class AuditoriaInternaObserver
 
     private function forgetCache()
     {
-        Cache::forget('AuditoriaInterna:auditoria_internas_' . User::getCurrentUser()->id);
+        Cache::forget('AuditoriaInterna:auditoria_internas_'.User::getCurrentUser()->id);
     }
 }

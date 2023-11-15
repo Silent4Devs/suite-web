@@ -117,7 +117,7 @@ class AmpliacionComponent extends Component
 
     public function update()
     {
-        $this->importe = str_contains($this->importe, '$') ? $this->importe : '$' . $this->importe;
+        $this->importe = str_contains($this->importe, '$') ? $this->importe : '$'.$this->importe;
         $this->validate([
             'contrato_id' => 'required',
             'importe' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],

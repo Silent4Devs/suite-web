@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class MatrizOctaveEscenario extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'matriz_octave_escenarios';
 
@@ -46,7 +46,7 @@ class MatrizOctaveEscenario extends Model implements Auditable
 
     public function getNameAttribute()
     {
-        return $this->identificador_escenario . ' ' . $this->nom_escenario;
+        return $this->identificador_escenario.' '.$this->nom_escenario;
     }
 
     public function getContentAttribute()

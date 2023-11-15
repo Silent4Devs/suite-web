@@ -12,6 +12,7 @@ class LessonResources extends Component
     use WithFileUploads;
 
     public $lesson;
+
     public $file;
 
     protected $messages = [
@@ -54,6 +55,6 @@ class LessonResources extends Component
     public function download()
     {
         // dd($this->lesson->resource);
-        return response()->download(storage_path('app/' . $this->lesson->resource->url));
+        return response()->download(storage_path('app/'.$this->lesson->resource->url));
     }
 }

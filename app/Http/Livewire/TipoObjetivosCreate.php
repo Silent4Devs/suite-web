@@ -47,7 +47,7 @@ class TipoObjetivosCreate extends Component
             Storage::makeDirectory('public/perspectivas/img'); //Crear si no existe
             $route = '/public/perspectivas/img/';
             $extension = $this->fotoPerspectiva->getClientOriginalExtension();
-            $nombre_imagen = 'PERSPECTIVA' . '_' . $this->nombre . '.' . $extension;
+            $nombre_imagen = 'PERSPECTIVA'.'_'.$this->nombre.'.'.$extension;
             $this->fotoPerspectiva->storeAs($route, $nombre_imagen);
             $imagen = $nombre_imagen;
         }
@@ -58,7 +58,7 @@ class TipoObjetivosCreate extends Component
         ]);
         if ($this->fotoPerspectiva) {
             $extension = $this->fotoPerspectiva->getClientOriginalExtension();
-            $nombre_imagen = 'PERSPECTIVA' . '_' . $this->nombre . '.' . $extension;
+            $nombre_imagen = 'PERSPECTIVA'.'_'.$this->nombre.'.'.$extension;
             $tipo->update([
                 'imagen' => $nombre_imagen,
             ]);

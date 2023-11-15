@@ -39,6 +39,6 @@ class TimesheetHorasSobrepasadas extends Mailable
     public function build()
     {
         return $this->view('mails.timesheet.timesheet_horas_sobrepasadas')
-            ->subject('Timesheet - Notificacion de Horas Sobrepasadas para proyecto:' . $this->proyecto);
+            ->subject('Timesheet - Notificacion de Horas Sobrepasadas para proyecto:'.$this->proyecto);
     }
 }
