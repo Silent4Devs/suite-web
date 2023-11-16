@@ -111,11 +111,11 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Fecha Inicio',
+            'Fecha Inicio Proyecto',
             'Empleado',
             'Supervisor',
             'Area',
-            'Estatus',
+            'Estatus Proyecto',
             'Total de Horas',
         ];
     }
