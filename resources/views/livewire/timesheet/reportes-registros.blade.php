@@ -176,9 +176,6 @@
                                         <span class="pendiente">Pendiente</span>
                                     @endif
 
-                                    @if ($time->estatus == 'papelera')
-                                        <span class="papelera">Borrador</span>
-                                    @endif
                                 </td>
                                 <td>
                                     {{ $time->total_horas }}
@@ -243,9 +240,6 @@
                                             <span class="pendiente">Pendiente</span>
                                         @endif
 
-                                        @if ($timeEx->estatus == 'papelera')
-                                            <span class="papelera">Borrador</span>
-                                        @endif
                                     </td>
                                     <td>
                                         {{ $timeEx->total_horas }}
