@@ -129,6 +129,9 @@
                     ],
                     destroy: true,
                     render: true,
+                    paging: true, // Enable pagination
+                    pageLength: 10, // Set the number of records per page
+                    lengthMenu: [5, 10, 25, 50, 100], // Define available page lengths
                 };
 
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
