@@ -41,49 +41,12 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function render()
     {
-        $this->proyecto = TimesheetProyecto::getIdNameAll()->find($this->proyecto_id);
-        $this->areasempleado = TimesheetProyectoArea::getAll()->where('proyecto_id', $this->proyecto_id);
+        $proyecto_id = $this->proyecto_id;
+        $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
+        $this->areasempleado = TimesheetProyectoArea::getAll()->where('proyecto_id', $proyecto_id);
         $this->empleados = Empleado::getAltaEmpleados();
 
-        $this->proyecto_empleados = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
-
-        // foreach ($emp_proy as $ep) {
-        //     $times = TimesheetHoras::getData()->where('proyecto_id', '=', $ep->proyecto_id)
-        //         ->where('empleado_id', '=', $ep->empleado_id);
-
-        //     $tot_horas_proyecto = 0;
-
-        //     $sumalun = 0;
-        //     $sumamar = 0;
-        //     $sumamie = 0;
-        //     $sumajue = 0;
-        //     $sumavie = 0;
-        //     $sumasab = 0;
-        //     $sumadom = 0;
-
-        //     foreach ($times as $time) {
-        //         $sumalun += floatval($time->horas_lunes);
-        //         $sumamar += floatval($time->horas_martes);
-        //         $sumamie += floatval($time->horas_miercoles);
-        //         $sumajue += floatval($time->horas_jueves);
-        //         $sumavie += floatval($time->horas_viernes);
-        //         $sumasab += floatval($time->horas_sabado);
-        //         $sumadom += floatval($time->horas_domingo);
-        //     }
-
-        //     $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
-
-        //     $resta = $tot_horas_proyecto - $ep->horas_asignadas;
-
-        //     if ($resta > 0) {
-        //         $sobre = $resta;
-        //     } else {
-        //         $sobre = 'No se han excedido';
-        //     }
-
-        //     $ep->totales = $tot_horas_proyecto;
-        //     $ep->sobrepasadas = $sobre;
-        // }
+        $this->proyecto_empleados = TimesheetProyectoEmpleado::getAll()->where('proyecto_id', $this->proyecto->id);
 
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }
@@ -105,7 +68,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $empleado_add_proyecto = Empleado::getAltaEmpleados()->find($this->empleado_añadido);
         // dd($empleado_add_proyecto);
 
-        if ($this->proyecto->tipo === 'Externo') {
+        if ($this->proyecto->tipo == 'Externo') {
             $this->validate([
                 'horas_asignadas' => ['required'],
                 'costo_hora' => ['required'],
