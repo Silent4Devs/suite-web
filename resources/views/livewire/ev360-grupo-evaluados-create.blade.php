@@ -24,7 +24,7 @@
                                 <label for="nombreGrupo">Nombre del grupo: <span class="text-danger">*</span></label>
                                 <input type="text"
                                     class="form-control {{ $errors->has('nombreGrupo') ? 'is-invalid' : '' }}"
-                                    id="nombre" aria-describedby="nombre" wire:model.defer="nombreGrupo"
+                                    id="nombre" aria-describedby="nombre" wire:model="nombreGrupo"
                                     value="{{ old('nombreGrupo') }}" autocomplete="off">
                                 <small>Ingresa la definición de la metrica del objetivo</small>
                                 @if ($errors->has('nombreGrupo'))
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 col-lg-12">
-                            <select class="form-control" wire:model.defer="empleados" multiple
+                            <select class="form-control" wire:model="empleados" multiple
                                 id="empleadosPertenecientes">
                                 @foreach ($lista_empleados as $empleado)
                                     <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>

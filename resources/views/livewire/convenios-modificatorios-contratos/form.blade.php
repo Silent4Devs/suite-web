@@ -6,13 +6,13 @@
 <section id="form_entregable">
     <div>
         <!-- No Contrato Field -->
-        <input wire:model="contrato_id" type="hidden" value="{{ $contrato_id }}">
+        <input wire:model.live="contrato_id" type="hidden" value="{{ $contrato_id }}">
 
         <!-- Area Field -->
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <div class="distancia form-group col-md-6">
                 Nombre del Convenio<font class="asterisco">*</font>
-                <input type="text" maxlength="250" wire:model.debounce.800ms="no_convenio" class="form-control">
+                <input type="text" maxlength="250" wire:model.live.debounce.800ms="no_convenio" class="form-control">
                 @error('no_convenio')
                     <span class="red-text">{{ $message }}</span>
                 @enderror
@@ -21,7 +21,7 @@
             <div class="distancia form-group col-md-6" wire:ignore>
                 Fecha del Convenio:<font class="asterisco">
                     *</font>
-                <input type="date" wire:model.debounce.800ms="fecha" min="1945-01-01" class="form-control" required>
+                <input type="date" wire:model.live.debounce.800ms="fecha" min="1945-01-01" class="form-control" required>
                 @error('fecha')
                     <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
                 @enderror
@@ -36,11 +36,11 @@
                 <div class="custom-file">
                     {{-- <div class="btn"> --}}
                     <span>PDF</span>
-                    <input class="form-control" type="file" wire:model.debounce.800ms="convenios_file" accept=".pdf"
+                    <input class="form-control" type="file" wire:model.live.debounce.800ms="convenios_file" accept=".pdf"
                         id="upload {{ $iteration }}" readonly>
                     {{-- </div> --}}
                     {{-- <div class="file-path-wrapper">
-                        <input class="file-path validate" wire:model.debounce.800ms="convenios_file"
+                        <input class="file-path validate" wire:model.live.debounce.800ms="convenios_file"
                             placeholder="Elegir convenio pdf" readonly>
                     </div> --}}
                 </div>
@@ -65,7 +65,7 @@
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="input-field distancia form-group col-md-12">
             Descripción
-            <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="form-control"></textarea>
+            <textarea wire:model.live.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="form-control"></textarea>
             @error('descripcion')
                 <span class="red-text">{{ $message }}</span>
             @enderror

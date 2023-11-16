@@ -10,24 +10,24 @@
         </div>
     </div>
 
-    <form wire:submit.prevent="addExterno" wire:ignore>
+    <form wire:submit="addExterno" wire:ignore>
         <x-loading-indicator />
         <div class="row">
             <div class="form-group col-md-8">
                 <label for="">Externo<sup>*</sup>(obligatorio)</label><br>
-                <input wire:model.defer="externo_añadido" name="" id=""type="text" class="form-control"
+                <input wire:model="externo_añadido" name="" id=""type="text" class="form-control"
                     required>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="horas_tercero" name="" id="" step="0.01" type="number"
+                <input wire:model="horas_tercero" name="" id="" step="0.01" type="number"
                     min="0.01" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="costo_tercero" name="" id="" step="0.01" type="number"
+                <input wire:model="costo_tercero" name="" id="" step="0.01" type="number"
                     min="0.01" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
@@ -121,7 +121,7 @@
                                     <small>{{ $proyecto_proveedor->proveedor_tercero }}</small>
                                 </h1>
                                 <form
-                                    wire:submit.prevent="editExterno({{ $proyecto_proveedor->id }}, Object.fromEntries(new FormData($event.target)))">
+                                    wire:submit="editExterno({{ $proyecto_proveedor->id }}, Object.fromEntries(new FormData($event.target)))">
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label for="">Externo<sup>*</sup>(obligatorio)</label>

@@ -36,12 +36,12 @@
                         @endif
                     </td> --}}
                     <td style="min-width:40px;">
-                        <i class="fas fa-edit" wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})">
+                        <i class="fas fa-edit" wire:click.prevent="$dispatch('editarParteInteresada',{{ $data->id }})">
                         </i>
                         {{-- <i class="fas fa-project-diagram"
-                            wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
+                            wire:click.prevent="$dispatch('agregarNormas',{{ $data->id }})"> </i> --}}
                         <i class="fas fa-trash-alt text-danger"
-                            wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"> </i>
+                            wire:click.prevent="$dispatch('eliminarParteInteresada',{{ $data->id }})"> </i>
                     </td>
                     {{-- <td> @livewire('edit-partes-interesadas',['id_requisito'=>$data->id])</td> --}}
                 </tr>

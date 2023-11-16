@@ -5,7 +5,7 @@
 @if ($theme === 'tailwind')
     <div class="rounded-md shadow-sm">
         <input
-            wire:model.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
+            wire:model.live.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
             wire:key="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
             id="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
             type="text"
@@ -17,7 +17,7 @@
 @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
     <div class="mb-3 mb-md-0 input-group">
         <input
-            wire:model.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
+            wire:model.live.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
             wire:key="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
             id="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
             type="text"

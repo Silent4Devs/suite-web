@@ -27,7 +27,9 @@
         }
     </style>
     <ul>
-        @livewire('offline-state-component')
+        <div wire:offline>
+            This device is currently offline.
+        </div>
     </ul>
     <ul class="c-sidebar-nav dark_mode1">
 

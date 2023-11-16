@@ -103,7 +103,7 @@
                 </p>
             </small>
             <select name="estatus_revision" id="estatus_revision" class="form-control"
-                wire:model.defer="estatus_revision" style="opacity:1 !important;">
+                wire:model="estatus_revision" style="opacity:1 !important;">
                 <option value="" disabled selected>Elige una opción</option>
                 <option value="recibido">Recibido</option>
                 <option value="progreso">Progreso</option>
@@ -123,7 +123,7 @@
                     </font>
                 </p>
             </small>
-            <select name="asignado_id" id="asignado_id" class="form-control" wire:model.defer="asignado_id"
+            <select name="asignado_id" id="asignado_id" class="form-control" wire:model="asignado_id"
                 style="opacity:1 !important;">
                 <option value="" disabled selected>Elige una opción</option>
                 @foreach ($usuarios as $usuario)
@@ -142,7 +142,7 @@
         </small>
         <br>
         <div class="custom-control custom-switch">
-            <input type="checkbox" wire:model="cumple_revision" class="custom-control-input" id="cumple_revision"
+            <input type="checkbox" wire:model.live="cumple_revision" class="custom-control-input" id="cumple_revision"
                 name="cumple_revision">
             <label class="custom-control-label" for="cumple_revision">No/Sí</label>
         </div>
@@ -156,7 +156,7 @@
             <p class="grey-text" style="font-size:17px;font-weight:bold;">
                 Hallazgos / Comentarios</p>
         </small>
-        <textarea class="form-control" type="text" name="hallazgos_comentarios" wire:model.defer="hallazgos_comentarios"
+        <textarea class="form-control" type="text" name="hallazgos_comentarios" wire:model="hallazgos_comentarios"
             class="text_area"></textarea>
 
         @error('hallazgos_comentarios')

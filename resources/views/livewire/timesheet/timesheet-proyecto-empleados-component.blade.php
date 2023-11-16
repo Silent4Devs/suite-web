@@ -14,11 +14,11 @@
             <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
         </div>
     </div>
-    <form wire:submit.prevent="addEmpleado" wire:ignore>
+    <form wire:submit="addEmpleado" wire:ignore>
         <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
-                <select wire:model.defer="empleado_añadido" name="" id="" class="select2" required>
+                <select wire:model="empleado_añadido" name="" id="" class="select2" required>
                     <option value="" selected readonly>Seleccione un empleado</option>
                     @foreach ($empleados as $empleado)
                         @foreach ($areasempleado as $ae)
@@ -38,7 +38,7 @@
             @if ($proyecto->tipo === 'Externo')
                 <div class="form-group col-md-4">
                     <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                    <input wire:model.defer="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number"
+                    <input wire:model="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number"
                         step="0.01" min="0.01" class="form-control">
                 </div>
                 @error('horas_asignadas')
@@ -46,7 +46,7 @@
                 @enderror
                 <div class="form-group col-md-4">
                     <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                    <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora" type="number" min="0.01"
+                    <input wire:model="costo_hora" name="costo_hora" id="costo_hora" type="number" min="0.01"
                         step="0.01" class="form-control">
                 </div>
                 @error('costo_hora')
@@ -130,7 +130,7 @@
                                 </h1>
                             </div>
                             <form
-                                wire:submit.prevent="editEmpleado({{ $proyect_empleado->id }}, Object.fromEntries(new FormData($event.target)))">
+                                wire:submit="editEmpleado({{ $proyect_empleado->id }}, Object.fromEntries(new FormData($event.target)))">
                                 <div class="row">
                                     <div class="form-group col-md-8">
                                         <label for="">Empleado<sup>*</sup>(obligatorio)</label>

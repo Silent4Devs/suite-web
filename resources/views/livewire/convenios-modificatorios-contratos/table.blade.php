@@ -1,7 +1,7 @@
 <div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
         <label for="search">Busca un número de convenio</label>
-        <input type="text" wire:model.debounce.800ms="search" class="form-control"
+        <input type="text" wire:model.live.debounce.800ms="search" class="form-control"
             placeholder="Busca un número de convenio">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
@@ -9,7 +9,7 @@
         style="margin-bottom: 0; margin-top: 1.87rem; display: flex; align-items: center; justify-content: center">
         <div class="col l3" style="margin: 0; text-align: end"><span>Mostrar</span></div>
         <div class="col l3" style="margin: 0">
-            <select class="select_pagination" wire:model="pagination">
+            <select class="select_pagination" wire:model.live="pagination">
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="20">20</option>

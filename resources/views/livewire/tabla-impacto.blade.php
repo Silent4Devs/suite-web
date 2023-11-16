@@ -79,7 +79,7 @@
                 <div class="row">
                     <div class="form-group col-8">
                         <label for="recipient-name" class="col-form-label required">Nivel:</label>
-                        <input type="number" class="form-control" id="niveles" wire:model.defer="nivelImpacto">
+                        <input type="number" class="form-control" id="niveles" wire:model="nivelImpacto">
                         @error('nivelImpacto')
                         <p class="text-danger">
                             {{$message}}
@@ -88,13 +88,13 @@
                     </div>
                     <div class="form-group col-4">
                         <label for="recipient-name" class="col-form-label required">Color:</label>
-                        <input class="form-control" id="color" type="color"  wire:model.defer="colorImpacto">
+                        <input class="form-control" id="color" type="color"  wire:model="colorImpacto">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label required">Clasificación:</label>
-                        <input type="text" class="form-control" id="clasificacion" wire:model.defer="clasificacionImpacto">
+                        <input type="text" class="form-control" id="clasificacion" wire:model="clasificacionImpacto">
                         @error('clasificacionImpacto')
                         <p class="text-danger">
                             {{$message}}
@@ -125,17 +125,17 @@
               <form>
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label">Tipo de Impacto:</label>
-                        <input type="text" class="form-control" id="nombre_impacto" wire:model.defer="nombreImpacto">
+                        <input type="text" class="form-control" id="nombre_impacto" wire:model="nombreImpacto">
                         <span class="text-danger" id="nombre_impacto_error"  class="nombre_impacto_error"></span>
                     </div>
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label">Criterio:</label>
-                        <textarea class="form-control" id="criterio" type="text" wire:model.defer="criterioImpacto"></textarea>
+                        <textarea class="form-control" id="criterio" type="text" wire:model="criterioImpacto"></textarea>
                         <span class="text-danger" id="criterio_error" class="criterio_error"></span>
                     </div>
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label">Base:</label>
-                        <textarea type="text" class="form-control" id="base" wire:model.defer="baseImpacto"></textarea>
+                        <textarea type="text" class="form-control" id="base" wire:model="baseImpacto"></textarea>
                         <span class="text-danger" id="base_error" class="base_error"></span>
                     </div>
               </form>

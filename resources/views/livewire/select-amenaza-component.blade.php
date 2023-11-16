@@ -34,7 +34,7 @@
                     <div class="form-group col-sm-12">
                         <label for="exampleInputEmail1" class="required"> <i
                                 class="fas fa-id-card iconos-crear"></i>Nombre:</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" wire:model.defer="nombre">
+                        <input type="text" class="form-control" id="nombre" name="nombre" wire:model="nombre">
                         @error('nombre')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -44,7 +44,7 @@
                         <label for="exampleInputEmail1" class="required"><i
                                 class="fas fa-th-list iconos-crear"></i>Categoría:</label>
                         <input type="text" class="form-control" id="categoria" name="categoria"
-                            wire:model.defer="categoria">
+                            wire:model="categoria">
                         @error('categoria')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -54,7 +54,7 @@
                     <div class="form-group col-sm-12">
                         <label for="exampleInputEmail1" class="required"> <i
                                 class="fas fa-file-alt iconos-crear"></i>Descripción:</label>
-                        <textarea class="form-control" id="descripcion" name="descripcion" wire:model.defer="descripcion" rows="4">
+                        <textarea class="form-control" id="descripcion" name="descripcion" wire:model="descripcion" rows="4">
                             </textarea>
                         @error('descripcion')
                             <span class="text-danger">{{ $message }}</span>

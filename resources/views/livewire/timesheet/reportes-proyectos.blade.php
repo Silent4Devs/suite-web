@@ -102,7 +102,7 @@
             <div class="row">
                 <div class="col-md-3 form-group">
                     <label class="form-label">Área</label>
-                    <select class="form-control" wire:model="area_id">
+                    <select class="form-control" wire:model.live="area_id">
                         <option selected value="0">Todas</option>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -112,12 +112,12 @@
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de inicio</label>
                     <input id="fecha_dia_registros_inicio_proyectos" class="form-control date_librery" type="date"
-                        name="fecha_inicio" wire:model="fecha_inicio">
+                        name="fecha_inicio" wire:model.live="fecha_inicio">
                 </div>
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de fin</label>
                     <input id="fecha_dia_registros_fin_proyectos" class="form-control date_librery" type="date"
-                        name="fecha_fin" wire:model="fecha_fin">
+                        name="fecha_fin" wire:model.live="fecha_fin">
                 </div>
                 <div class="col-md-1 form-group">
                     <label class="form-label" style="width:100%;">&nbsp;</label><br>
@@ -138,7 +138,7 @@
                                             <p class="m-0">Mostrando</p>
                                         </div>
                                         <div class="col-3 p-0">
-                                            <select name="" id="" class="form-control" wire:model="perPage">
+                                            <select name="" id="" class="form-control" wire:model.live="perPage">
                                                 <option value="5">5</option>
                                                 <option value="10">10</option>
                                                 <option value="20">20</option>
@@ -160,7 +160,7 @@
                             <div class="row">
                                 <div class="col-6 p-0"></div>
                                 <div class="col-6 p-0">
-                                    <input type="text" class="form-control" placeholder="Buscar..." wire:model="search">
+                                    <input type="text" class="form-control" placeholder="Buscar..." wire:model.live="search">
                                 </div>
                             </div>
                         </div>

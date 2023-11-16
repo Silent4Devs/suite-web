@@ -7,9 +7,9 @@
                 <label><i class="fas fa-birthday-cake iconos-crear"></i> Envia tus felicitacionesa a
                     <strong>{{ $cumple->name }}</strong></label>
                 @if ($cumples_felicitados_comentarios_contador == 0)
-                    <form wire:submit.prevent="felicitarCumplesComentarios({{ $cumple->id }})">
+                    <form wire:submit="felicitarCumplesComentarios({{ $cumple->id }})">
                         <div class="form-group">
-                            <textarea class="comentario" name="comentario" wire:model.lazy="comentarios" class="form-control" data-sample-short></textarea>
+                            <textarea class="comentario" name="comentario" wire:model.blur="comentarios" class="form-control" data-sample-short></textarea>
                         </div>
                         <div class="form-group text-right">
                             <button type="submit" class="btn btn-success">Enviar</button>
@@ -17,10 +17,10 @@
                     </form>
                 @else
                     <form
-                        wire:submit.prevent="felicitarCumplesComentariosUpdate({{ $cumples_felicitados_comentarios->id }})">
+                        wire:submit="felicitarCumplesComentariosUpdate({{ $cumples_felicitados_comentarios->id }})">
                         @csrf
                         <div class="form-group">
-                            <textarea class="comentario" name="comentario" wire:model.lazy="comentarios_update" class="form-control"
+                            <textarea class="comentario" name="comentario" wire:model.blur="comentarios_update" class="form-control"
                                 data-sample-short>{{ $cumples_felicitados_comentarios->comentarios }}</textarea>
                         </div>
                         <div class="form-group text-right">

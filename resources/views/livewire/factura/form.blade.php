@@ -11,12 +11,12 @@
     <section id="form_factura">
         <div>
             <!-- No Contrato Field -->
-            <input wire:model.defer="contrato_id" type="hidden" value="{{ $contrato_id }}">
+            <input wire:model="contrato_id" type="hidden" value="{{ $contrato_id }}">
             <div class="row" style="margin-left: 10px;margin-right: 10px;">
                 <div class="distancia form-group col-md-6">
                     <label for="no_contrato" class="txt-tamaño">No.
                         factura<font class="asterisco">*</font></label>
-                    <input type="text" maxlength="50" wire:model.defer="no_factura" class="form-control" required>
+                    <input type="text" maxlength="50" wire:model="no_factura" class="form-control" required>
                     @error('no_factura')
                         <span class="red-text">{{ $message }}</span>
                     @enderror
@@ -26,7 +26,7 @@
                     {{-- Monto Factura --}}
                     <label for="no_contrato" class="txt-tamaño">Monto
                         factura<font class="asterisco">*</font></label>
-                    <input type="number" min="0" wire:model.defer="monto_factura" id="monto_factura"
+                    <input type="number" min="0" wire:model="monto_factura" id="monto_factura"
                         class="form-control" required>
                     @error('monto_factura')
                         <span class="red-text">{{ $message }}</span>
@@ -41,7 +41,7 @@
                         <label for="no_contrato" class="txt-tamaño">Fecha
                             recepción<font class="asterisco">*
                             </font></label>
-                        <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_recepcion"
+                        <input id="" type="date" min="1945-01-01" wire:model="fecha_recepcion"
                             class="form-control" style="margin-bottom: 0" required>
                     </div>
                     @error('fecha_recepcion')
@@ -54,7 +54,7 @@
                         <label for="no_contrato" class="txt-tamaño">Fecha
                             liberación<font class="asterisco">*
                             </font></label>
-                        <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_liberacion"
+                        <input id="" type="date" min="1945-01-01" wire:model="fecha_liberacion"
                             class="form-control" style="margin-bottom: 0" required>
                     </div>
                     @error('fecha_liberacion')
@@ -68,7 +68,7 @@
                     <label for="no_contrato" class="txt-tamaño">Concepto
                         <font class="asterisco">*</font>
                     </label><br>
-                    <textarea class="form-control" wire:model.defer="concepto" required></textarea>
+                    <textarea class="form-control" wire:model="concepto" required></textarea>
                     @error('concepto')
                         <span class="red-text">{{ $message }}</span>
                     @enderror
@@ -84,7 +84,7 @@
                                     </font>
                                 </p>
                             </small>
-                            <select id="estatus" name="estatus" wire:model.debounce.800ms="estatus" class="form-control select_ajax_live estatus"
+                            <select id="estatus" name="estatus" wire:model.live.debounce.800ms="estatus" class="form-control select_ajax_live estatus"
                                 style="margin-bottom: 0px">
                                 <option value="" disabled selected>Elige una opción</option>
                                 <option value="recibido">Recibido</option>
@@ -100,11 +100,11 @@
                 <div class="custom-file">
                     {{-- <div class="btn"> --}}
                     <span>PDF</span>
-                    <input class="form-control" type="file" wire:model.defer="pdf" accept=".pdf"
+                    <input class="form-control" type="file" wire:model="pdf" accept=".pdf"
                         id="upload{{ $iteration }}" readonly>
                     {{-- </div> --}}
                     {{-- <div class="file-path-wrapper">
-                        <input class="file-path validate" wire:model.defer="pdf" placeholder="Elegir factura pdf"
+                        <input class="file-path validate" wire:model="pdf" placeholder="Elegir factura pdf"
                             readonly>
                     </div> --}}
                 </div>
@@ -127,11 +127,11 @@
                 <div class="custom-file">
                     {{-- <div class="btn"> --}}
                     <span>XML</span>
-                    <input type="file" class="form-control" wire:model.defer="xml" accept=".xml, text"
+                    <input type="file" class="form-control" wire:model="xml" accept=".xml, text"
                         id="upload{{ $iteration1 }}" readonly>
                     {{-- </div> --}}
                     {{-- <div class="file-path-wrapper">
-                        <input class="file-path validate" wire:model.defer="xml" placeholder="Elegir factura xml"
+                        <input class="file-path validate" wire:model="xml" placeholder="Elegir factura xml"
                             readonly>
                     </div> --}}
                 </div>
@@ -163,7 +163,7 @@
                         <div class="switch">
                             <label>
                                 No
-                                <input type="checkbox" id="cumple" name="cumple" wire:model.debounce.800ms="cumple">
+                                <input type="checkbox" id="cumple" name="cumple" wire:model.live.debounce.800ms="cumple">
 
                                 <span class="lever"></span>
                                 Si
@@ -177,7 +177,7 @@
                                     class="fas fa-clipboard-list iconos-crear"></i>No. revisiones<font
                                     class="asterisco">* </font>
                             </p>
-                        </small> <input type="number"wire:model.debounce.800ms="no_revisiones" class="form-control" min="0">
+                        </small> <input type="number"wire:model.live.debounce.800ms="no_revisiones" class="form-control" min="0">
                         @error('no_revisiones') <span class="red-text">{​​{​​ $message }​​}​​</span> @enderror
                     </div>
                     <div class="input-field col s12 m4">
@@ -185,7 +185,7 @@
                             <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                     class="fas fa-clipboard-list iconos-crear"></i>No de CXL
                             </p>
-                        </small> <input type="number" wire:model.debounce.800ms="n_cxl" class="form-control" min="0">
+                        </small> <input type="number" wire:model.live.debounce.800ms="n_cxl" class="form-control" min="0">
                         @error('n_cxl') <span class="red-text">{​​{​​ $message }​​}​​</span> @enderror
                     </div>
                 </div>
@@ -200,7 +200,7 @@
                             <div class="switch">
                                 <label>
                                     No
-                                    <input type="checkbox" id="conformidad" name="conformidad" wire:model.debounce.800ms="conformidad">
+                                    <input type="checkbox" id="conformidad" name="conformidad" wire:model.live.debounce.800ms="conformidad">
 
                                     <span class="lever"></span>
                                     Si
@@ -217,7 +217,7 @@
                             <div class="switch">
                                 <label>
                                     No
-                                    <input type="checkbox" id="firma" name="firma" wire:model.debounce.800ms="firma">
+                                    <input type="checkbox" id="firma" name="firma" wire:model.live.debounce.800ms="firma">
 
                                     <span class="lever"></span>
                                     Si
@@ -231,7 +231,7 @@
                             <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                     class="fas fa-search iconos-crear"></i>Hallazgos / Comentarios</p>
                         </small>
-                        <textarea style="padding:15px;" type="text" maxlength="255" wire:model.debounce.800ms="hallazgos_comentarios"
+                        <textarea style="padding:15px;" type="text" maxlength="255" wire:model.live.debounce.800ms="hallazgos_comentarios"
                             class="text_area"></textarea>
                         @error('hallazgos_comentarios') <span class="red-text">{{ $message }}</span> @enderror
                     </div>

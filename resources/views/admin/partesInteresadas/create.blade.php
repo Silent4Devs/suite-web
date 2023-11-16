@@ -15,7 +15,7 @@
                     <label class="required" for="parteinteresada"> <i class="fas fa-user-tie iconos-crear"></i>
                         {{ trans('cruds.partesInteresada.fields.parteinteresada') }}</label>
                     <input class="form-control {{ $errors->has('parteinteresada') ? 'is-invalid' : '' }}" type="text"
-                        name="parteinteresada" wire:model.lazy="parteinteresada" id="parteinteresada"
+                        name="parteinteresada" wire:model.blur="parteinteresada" id="parteinteresada"
                         value="{{ old('parteinteresada', '') }}" required>
                     @if ($errors->has('parteinteresada'))
                         <div class="invalid-feedback">
@@ -33,7 +33,7 @@
                             {{ trans('cruds.partesInteresada.fields.requisitos') }}</label>
                         <textarea class="form-control {{ $errors->has('requisitos') ? 'is-invalid' : '' }}"
                             name="requisitos" id="requisitos"
-                            wire:model.lazy="requisitos">{{ old('requisitos') }}</textarea>
+                            wire:model.blur="requisitos">{{ old('requisitos') }}</textarea>
                         @if ($errors->has('requisitos'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('requisitos') }}

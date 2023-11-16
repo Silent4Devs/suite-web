@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-6 form-group" style="padding-left:0px !important;">
             <label class="form-label">Estatus</label>
-            <select class="form-control" wire:model="estatus">
+            <select class="form-control" wire:model.live="estatus">
                 <option selected value="todos">Todos</option>
                 <option value="proceso">En Proceso</option>
                 <option value="terminado">Terminados</option>
@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-6 form-group" style="padding-left:0px !important;">
         <label class="form-label">Proyecto</label>
-        <select class="form-control" wire:model="proy_id">
+        <select class="form-control" wire:model.live="proy_id">
             <option value="0" selected>Seleccione un proyecto</option>
             @foreach ($lista_proyectos as $pro)
                 <option value="{{ $pro->id }}">{{$pro->identificador}} - {{ $pro->proyecto }}</option>
@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-4 form-group" style="padding-left:0px !important;">
         <label class="form-label">Areas</label>
-        <select class="form-control" wire:model="area_id">
+        <select class="form-control" wire:model.live="area_id">
             <option value="todas">Todas</option>
             @foreach ($lista_areas as $area)
                 <option value="{{ $area->area->id }}">{{ $area->area->area }}</option>

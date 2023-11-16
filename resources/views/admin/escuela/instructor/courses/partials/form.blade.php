@@ -21,7 +21,7 @@
         </div>
     </div>
     {{-- <input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" id="title"
-        aria-describedby="title" wire:model.defer="title" value="{{ old('title') }}" autocomplete="off">
+        aria-describedby="title" wire:model="title" value="{{ old('title') }}" autocomplete="off">
         @if ($errors->has('title'))
         <span class="invalid-feedback">{{ $errors->first('title') }}</span>
         @endif

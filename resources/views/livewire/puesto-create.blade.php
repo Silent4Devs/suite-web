@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label for="puesto">Puesto: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
-                                id="puesto" aria-describedby="puesto" wire:model.defer="puesto"
+                                id="puesto" aria-describedby="puesto" wire:model="puesto"
                                 value="{{ old('puesto') }}" autocomplete="off">
                             <small>Ingresa el puesto del puesto</small>
                             @if ($errors->has('puesto'))
@@ -29,7 +29,7 @@
                             <label for="descripcion">Descripción: </label>
                             <input type="text"
                                 class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                id="descripcion" aria-describedby="descripcion" wire:model.defer="descripcion"
+                                id="descripcion" aria-describedby="descripcion" wire:model="descripcion"
                                 value="{{ old('descripcion') }}" autocomplete="off">
                             <small>Ingresa el descripción del puesto</small>
                             @if ($errors->has('descripcion'))

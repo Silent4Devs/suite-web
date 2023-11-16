@@ -39,7 +39,7 @@
         <div class="tab-pane fade show {{ $active }}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div id="home" class="tab-content">
                 <form method="POST"
-                    wire:submit.prevent="servicioStore(Object.fromEntries(new FormData($event.target)))"
+                    wire:submit="servicioStore(Object.fromEntries(new FormData($event.target)))"
                     enctype="multipart/form-data">
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
@@ -196,7 +196,7 @@
         <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div id="profile" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
                 <form id="form-proveedores"
-                    wire:submit.prevent="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
+                    wire:submit="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
                     action="POST" enctype="multipart/form-data">
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
@@ -228,7 +228,7 @@
                                             Proveedor <font class="asterisco">*</font>
                                         </label>
                                         <select class="model-producto browser-default not-select2"
-                                            wire:model.lazy='selectedInput.{{ $i }}'
+                                            wire:model.blur='selectedInput.{{ $i }}'
                                             name="proveedor_{{ $i }}" required>
                                             <option value="">Seleccione una opción</option>
                                             @foreach ($proveedores as $proveedor)
@@ -282,7 +282,7 @@
                                         <div class="row">
                                             <div class="col s12 l12">
                                                 <select class="model-producto browser-default not-select2"
-                                                    wire:model.lazy='selectOption.{{ $i }}'
+                                                    wire:model.blur='selectOption.{{ $i }}'
                                                     name="proveedor_otro{{ $i }}" required>
                                                     <option selected value="indistinto">Indistinto</option>
                                                     <option value="sugerido">Sugerido</option>
@@ -378,7 +378,7 @@
                                                         <input type="file" required
                                                             class="modal-cotizacion form-control-file"
                                                             name="cotizacion_{{ $i }}"
-                                                            wire:model.lazy="cotizaciones.{{ $i }}"
+                                                            wire:model.blur="cotizaciones.{{ $i }}"
                                                             data-count="{{ $i }}"
                                                             accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>
@@ -665,7 +665,7 @@
                             </div>
                         </div>
                     </div>
-                    <form method="POST" wire:submit.prevent="Firmar(Object.fromEntries(new FormData($event.target)))"
+                    <form method="POST" wire:submit="Firmar(Object.fromEntries(new FormData($event.target)))"
                         enctype="multipart/form-data">
                         <div class="card card-body">
                             <div class="">

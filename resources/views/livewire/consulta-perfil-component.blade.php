@@ -123,14 +123,14 @@
                     <div class="col-12 mb-3">
                         <label class="text-muted" for=""><i class="fas fa-font mr-2"></i>Palabra Clave</label>
                         <input type="text" class="form-control input-tags" id="general" data-role="tagsinput"
-                            placeholder="Búsca en todos los perfiles" wire:model.debounce.800ms="general">
+                            placeholder="Búsca en todos los perfiles" wire:model.live.debounce.800ms="general">
                     </div>
 
                     <div class="col-sm-12 col-md-12 mb-3">
                         <label class="text-muted" for="tipoactivo_id"><i
                                 class="fas fa-briefcase mr-2"></i>Puesto</label>
                         <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}"
-                            wire:model.debounce.800ms="puesto_id">
+                            wire:model.live.debounce.800ms="puesto_id">
                             <option value="">-- Seleccionar --</option>
                             @foreach ($puestos as $puesto)
                                 <option value="{{ $puesto->id }}">

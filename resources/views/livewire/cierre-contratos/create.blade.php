@@ -6,7 +6,7 @@
    </div>
 </div> --}}
 <h4 class="sub-titulo-form col s12">AGREGAR ASPECTO DE VALIDACIÓN</h4>
-<form wire:submit.prevent="store" enctype="multipart/form-data">
+<form wire:submit="store" enctype="multipart/form-data">
 
     @include('livewire.cierre-contratos.form')
 

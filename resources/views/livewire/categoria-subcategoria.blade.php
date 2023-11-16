@@ -3,7 +3,7 @@
         <div class="form-group col-md-11">
             <label class="required" for="tipoactivo_id"><i class="fas fa-layer-group iconos-crear"></i>Categoría</label>
             <select class="form-control select2 selecCategoria {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}"
-                wire:model.lazy='categoriasSeleccionado' name="tipoactivo_id" id="tipoactivo_id" required>
+                wire:model.blur='categoriasSeleccionado' name="tipoactivo_id" id="tipoactivo_id" required>
                 <option value="">Seleccionar</option>
                 @foreach ($categorias as $categoria)
                     <option value="{{ $categoria->id }}"
@@ -31,7 +31,7 @@
         <div class="form-group col-md-11">
             <label for="subtipo_id" class="required "><i class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
             <select class="form-control select2 selecSubcategoria {{ $errors->has('subtipo') ? 'is-invalid' : '' }}"
-                wire:model.lazy='subcategoria'name="subtipo_id" id="subtipo_id">
+                wire:model.blur='subcategoria'name="subtipo_id" id="subtipo_id">
                 @foreach ($subcategorias as $subcategoria)
                     <option value="{{ $subcategoria->id }}">{{ $subcategoria->subcategoria }}</option>
                 @endforeach

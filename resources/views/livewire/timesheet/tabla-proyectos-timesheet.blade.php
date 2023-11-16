@@ -7,7 +7,7 @@
         {{--  <div class="w-100">
             <h5 id="titulo_estatus">Crear Proyecto</h5>
         </div>
-        <form wire:submit.prevent="store()" class="w-100">
+        <form wire:submit="store()" class="w-100">
             <div class="row">
                 <div class="form-group col-md-2">
                     <label><i class="fas fa-list iconos-crear"></i> ID</label>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio <small>(opcional)</small></label>
-                    <input type="date" name="fecha_inicio" wire:model="fecha_inicio" class="form-control">
+                    <input type="date" name="fecha_inicio" wire:model.live="fecha_inicio" class="form-control">
                     @if ($errors->has('fecha_inicio'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_inicio') }}
@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de fin <small>(opcional)</small></label>
-                    <input type="date" name="fecha_fin" wire:model="fecha_fin" class="form-control">
+                    <input type="date" name="fecha_fin" wire:model.live="fecha_fin" class="form-control">
                     @if ($errors->has('fecha_fin'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_fin') }}
@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
-                    <select name="area_id" wire:model.defer="cliente_id" class="form-control">
+                    <select name="area_id" wire:model="cliente_id" class="form-control">
                         <option selected value="">Seleccione cliente</option>
                         @foreach ($clientes as $cliente)
                             <option value="{{ $cliente->id }}">{{ $cliente->identificador }} - {{ $cliente->nombre }}
@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group col-md-3" wire:ignore id="caja_areas_seleccionadas_create">
                     <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
-                    <select id="areas_seleccionadas" name="areas_seleccionadas" wire:model.defer="areas_seleccionadas"
+                    <select id="areas_seleccionadas" name="areas_seleccionadas" wire:model="areas_seleccionadas"
                         class="form-control select2" required multiple required>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede</label>
-                    <select class="form-control" name="sede_id" wire:model.defer="sede_id">
+                    <select class="form-control" name="sede_id" wire:model="sede_id">
                         <option selected value="">Seleccione sede</option>
                         @foreach ($sedes as $sede)
                             <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -83,7 +83,7 @@
                 <div class="form-group col-md-3">
                     <label class="form-label"><i
                             class="fa-solid fa-info-circle iconos-crear"></i>Tipo</label>
-                    <select class="form-control" name="tipo" wire:model.defer="tipo">
+                    <select class="form-control" name="tipo" wire:model="tipo">
                         @foreach ($tipos as $tipo_it)
                             <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it?'selected':'' }}>{{ $tipo_it }}</option>
                         @endforeach

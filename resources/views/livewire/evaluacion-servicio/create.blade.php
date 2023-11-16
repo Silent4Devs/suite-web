@@ -4,7 +4,7 @@
     </div>
 </div>
 
-<form wire:submit.prevent="store" enctype="multipart/form-data">
+<form wire:submit="store" enctype="multipart/form-data">
 
     @include('livewire.evaluacion-servicio.formcreate')
 

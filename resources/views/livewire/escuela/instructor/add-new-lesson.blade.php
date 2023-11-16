@@ -17,7 +17,7 @@
                         <div class="col-8">
                             <label for="name-{{ $section->id }}">Nombre</label><span style="color:red">*</span>
                             <div>
-                                <input wire:model.lazy="name" id="name-{{ $section->id }}" x-ref="lessonName" type="text"
+                                <input wire:model.blur="name" id="name-{{ $section->id }}" x-ref="lessonName" type="text"
                                     class="w-full form-control @if ($errors->has('name')) invalid @endif">
                                 @error('name')
                                     <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
@@ -27,7 +27,7 @@
                         <div class="col-4">
                             <label for="platform-{{ $section->id }}">Plataforma</label><span style="color:red">*</span>
                             <div class="md:col-span-5">
-                                <select wire:model.lazy="platform_id" id="platform-{{ $section->id }}" type="text"
+                                <select wire:model.blur="platform_id" id="platform-{{ $section->id }}" type="text"
                                     class=" w-full form-control @if ($errors->has('platform_id')) invalid @endif">
                                     @foreach ($platforms as $platform)
                                         <option value="{{ $platform->id }}">{{ $platform->name }}</option>
@@ -41,7 +41,7 @@
                         <div class="col-12 mt-4">
                             <label for="url-{{ $section->id }}">URL</label><span style="color:red">*</span>
                             <div>
-                                <input wire:model.lazy="url" id="url-{{ $section->id }}" type="text"
+                                <input wire:model.blur="url" id="url-{{ $section->id }}" type="text"
                                     class=" w-full form-control @if ($errors->has('url')) invalid @endif">
                                 @error('url')
                                     <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
@@ -51,13 +51,13 @@
                         <div class="col-12">
                             <label for="url-{{ $section->id }}">Descripción</label>
                             <div>
-                                <textarea wire:model.lazy="description" id="description-{{ $section->id }}" type="text"
+                                <textarea wire:model.blur="description" id="description-{{ $section->id }}" type="text"
                                     class=" w-full form-control @if ($errors->has('description')) invalid @endif"></textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="mt-4 pl-4 d-flex justify-content-start align-items-center" style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
-                                <input wire:model="file" type="file" class="flex-1 form-input">
+                                <input wire:model.live="file" type="file" class="flex-1 form-input">
                             </div>
                             <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="file">
                                 Cargando ...

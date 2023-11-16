@@ -34,7 +34,7 @@
                             <label for="exampleInputEmail1" class="required"> <i
                                     class="fas fa-id-card iconos-crear"></i>Nombre:</label>
                             <input type="text" class="form-control" id="nombre" name="nombre"
-                                wire:model.defer="nombre">
+                                wire:model="nombre">
                             @error('nombre')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -44,7 +44,7 @@
                         <div class="form-group col-sm-12">
                             <i class="fas fa-skull-crossbones iconos-crear"></i>{!! Form::label('id_amenaza', 'Amenaza:') !!}
                             <select class="custom-select" id="valorAmenaza" name="valorAmenaza"
-                                wire:model.defer="valorAmenaza">
+                                wire:model="valorAmenaza">
                                 <option selected value="" >Seleccione una opción</option>
                                 @forelse ($amenazas as $amenaza)
                                     <option value="{{ $amenaza->id }}">{{ $amenaza->nombre }}</option>
@@ -60,7 +60,7 @@
                         {{-- <!-- Descripcion Field --> --}}
                         <div class="form-group col-sm-12">
                             <label for="exampleInputEmail1" class="required"> <i class="fas fa-file-alt iconos-crear"></i>Descripción:</label>
-                            <textarea class="form-control" id="descripcion" name="descripcion" wire:model.defer="descripcion" rows="4">
+                            <textarea class="form-control" id="descripcion" name="descripcion" wire:model="descripcion" rows="4">
                             </textarea>
                             @error('descripcion')
                                 <span class="text-danger">{{ $message }}</span>

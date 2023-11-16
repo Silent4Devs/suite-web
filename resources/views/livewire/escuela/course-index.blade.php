@@ -1,15 +1,15 @@
 <div class="mis-c-catalogo-cursos">
     <h3 class="title-main-cursos" style="margin-top: 40px;">Catálogo de cursos</h3>
     <div class="caja-selects-catalogo">
-        <form wire:submit.prevent="resetFilters" id="todo">
+        <form wire:submit="resetFilters" id="todo">
             <select name="todo" id="todoSelect">
                 <option value="">Todos los cursos</option>
             </select>
             <button type="submit" id="guardarButtonT" style="display: none"></button>
         </form>
 
-        <form wire:submit.prevent="categoryFilter" id="formularioC">
-            <select name="category" wire:model.lazy="selectioncategory" id="categorySelect">
+        <form wire:submit="categoryFilter" id="formularioC">
+            <select name="category" wire:model.blur="selectioncategory" id="categorySelect">
                 <option value="0" selected="true">Categorias</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" type="submit">{{ $category->name }}</option>
@@ -18,8 +18,8 @@
             <button type="submit" id="guardarButtonC" style="display: none"></button>
         </form>
 
-        <form wire:submit.prevent="levelFilter" id="formularioL">
-            <select name="level" id="levelSelect" wire:model.lazy="selectionlevel">
+        <form wire:submit="levelFilter" id="formularioL">
+            <select name="level" id="levelSelect" wire:model.blur="selectionlevel">
                 <option value="0">Niveles</option>
                 @foreach ($levels as $level)
                     <option value="{{ $level->id }}">{{ $level->name }}</option>

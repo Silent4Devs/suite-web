@@ -15,7 +15,7 @@
                 <div class="form-group col-sm-6">
                     <label class="required" for="name"><i class="fas fa-street-view iconos-crear"></i>Nombre</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" id="name"
-                        wire:model.defer="name" required>
+                        wire:model="name" required>
                     @if ($errors->has('name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('name') }}
@@ -27,7 +27,7 @@
                         de
                         empleado</label>
                     <input class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}" type="text"
-                        id="n_empleado" wire:model.defer="n_empleado" required>
+                        id="n_empleado" wire:model="n_empleado" required>
                     @error('n_empleado')
                         <span class="invalid-feedback d-block" role="alert">
                             <strong>{{ $message }}</strong>
@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="form-group col-sm-{{ $ceo_exists ? '6' : '12' }}">
                     <label class="required" for="area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                    <select class="custom-select areas" id="inputGroupSelect01" wire:model.defer="area_id">
+                    <select class="custom-select areas" id="inputGroupSelect01" wire:model="area_id">
                         <option selected value="" disabled>-- Selecciona un área --</option>
                         @forelse ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -51,7 +51,7 @@
                     <label class="required" for="puesto_id"><i
                             class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                     <select class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
-                        wire:model.defer="puesto_id" id="puesto_id" required>
+                        wire:model="puesto_id" id="puesto_id" required>
                         <option value="" selected disabled>
                             -- Selecciona un puesto --
                         </option>
@@ -76,7 +76,7 @@
                         <div class="mb-3 input-group">
 
                             <select class="custom-select supervisor" id="inputGroupSelect01"
-                                wire:model.defer="supervisor_id">
+                                wire:model="supervisor_id">
                                 <option value="" disabled>-- Selecciona supervisor --</option>
                                 @forelse ($empleados as $empleado_s)
                                     <option value="{{ $empleado_s->id }}">
@@ -98,7 +98,7 @@
                     <label class="required" for="perfil_empleado_id"><i
                             class="fas fa-briefcase iconos-crear"></i>Perfil</label>
                     <select class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
-                        wire:model.defer="perfil_empleado_id" id="perfil_empleado_id" required>
+                        wire:model="perfil_empleado_id" id="perfil_empleado_id" required>
                         <option value="" selected disabled>
                             -- Selecciona un perfil --
                         </option>
@@ -117,7 +117,7 @@
                 <div class="form-group col-sm-6">
                     <label class="required" for="genero"><i class="fas fa-user iconos-crear"></i>Género</label>
                     <div class="mb-3 input-group">
-                        <select class="custom-select genero" id="genero" wire:model.defer="genero">
+                        <select class="custom-select genero" id="genero" wire:model="genero">
                             <option selected value="" disabled>-- Selecciona Género --</option>
                             <option value="H">
                                 Hombre
@@ -141,7 +141,7 @@
                 <div class="form-group col-sm-6">
                     <label class="required" for="estatus"><i
                             class="fas fa-business-time iconos-crear"></i>Estatus</label>
-                    <select class="form-control" class="validate" required="" wire:model.defer="estatus">
+                    <select class="form-control" class="validate" required="" wire:model="estatus">
                         <option value="" disabled selected>Escoga una opción</option>
                         <option value="alta">Alta
                         </option>
@@ -158,7 +158,7 @@
                     <label class="required" for="email"><i class="far fa-envelope iconos-crear"></i>Correo
                         electrónico</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="email" id="email">
+                        wire:model="email" id="email">
                     @if ($errors->has('email'))
                         <div class="invalid-feedback">
                             {{ $errors->first('email') }}
@@ -171,7 +171,7 @@
                     <label for="telefono_movil"><i class="fas fa-mobile-alt iconos-crear"></i></i>Teléfono
                         móvil</label>
                     <input class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="telefono_movil" id="telefono_movil">
+                        wire:model="telefono_movil" id="telefono_movil">
                     @if ($errors->has('telefono_movil'))
                         <div class="invalid-feedback">
                             {{ $errors->first('telefono_movil') }}
@@ -182,7 +182,7 @@
                     <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono
                         oficina</label>
                     <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="telefono" id="telefono">
+                        wire:model="telefono" id="telefono">
                     @if ($errors->has('telefono'))
                         <div class="invalid-feedback">
                             {{ $errors->first('telefono') }}
@@ -192,7 +192,7 @@
                 <div class="form-group col-sm-2">
                     <label for="extension"><i class="fas fa-phone-volume iconos-crear"></i>Ext.</label>
                     <input class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="extension" id="extension">
+                        wire:model="extension" id="extension">
                     @if ($errors->has('extension'))
                         <div class="invalid-feedback">
                             {{ $errors->first('extension') }}
@@ -202,7 +202,7 @@
                 <div class="form-group col-sm-3">
                     <label for="sede_id"><i class="fas fa-building iconos-crear"></i>Sede</label>
                     <select class="form-control select2 {{ $errors->has('sede') ? 'is-invalid' : '' }}"
-                        wire:model.defer="sede_id" id="sede_id">
+                        wire:model="sede_id" id="sede_id">
                         <option selected value="" disabled>-- Selecciona Sede --</option>
                         @foreach ($sedes as $sede)
                             <option data-direction="{{ $sede->direccion }}" value="{{ $sede->id }}">
@@ -217,7 +217,7 @@
                 </div>
                 <div class="form-group col-sm-12 col-md-3">
                     <label for="direccion"><i class="fas fa-map iconos-crear"></i>Dirección</label>
-                    <input class="form-control" type="text" wire:model.defer="direccion" id="direccion" disabled
+                    <input class="form-control" type="text" wire:model="direccion" id="direccion" disabled
                         readonly>
                 </div>
                 <div class="form-group col-sm-6">
@@ -225,7 +225,7 @@
                         de
                         ingreso</label>
                     <input class="form-control {{ $errors->has('antiguedad') ? 'is-invalid' : '' }}" type="date"
-                        wire:model.defer="antiguedad" id="antiguedad">
+                        wire:model="antiguedad" id="antiguedad">
                     @if ($errors->has('antiguedad'))
                         <div class="invalid-feedback">
                             {{ $errors->first('antiguedad') }}
@@ -237,7 +237,7 @@
                     <label class="required" for="tipo_contrato_empleados_id"><i
                             class="fas fa-briefcase iconos-crear"></i>Tipo de contrato</label>
                     <select class="form-control {{ $errors->has('tipo_contrato_empleados_id') ? 'is-invalid' : '' }}"
-                        wire:model.defer="tipo_contrato_empleados_id" id="tipo_contrato_empleados_id">
+                        wire:model="tipo_contrato_empleados_id" id="tipo_contrato_empleados_id">
                         <option value="" selected disabled>
                             -- Selecciona el tipo de contrato asignado --
                         </option>
@@ -258,7 +258,7 @@
                             class="fas fa-calendar-alt iconos-crear"></i>Fecha de terminación de
                         contrato</label>
                     <input class="form-control {{ $errors->has('terminacion_contrato') ? 'is-invalid' : '' }}"
-                        type="date" wire:model.defer="terminacion_contrato" id="terminacion_contrato">
+                        type="date" wire:model="terminacion_contrato" id="terminacion_contrato">
                     @if ($errors->has('terminacion_contrato'))
                         <div class="invalid-feedback">
                             {{ $errors->first('terminacion_contrato') }}
@@ -267,7 +267,7 @@
                 </div>
                 <div class="text-center custom-control custom-checkbox form-group col-sm-4 align-self-end">
                     <input type="checkbox" class="custom-control-input" id="renovacion_contrato"
-                        wire:model.defer="renovacion_contrato">
+                        wire:model="renovacion_contrato">
                     <label class="custom-control-label" for="renovacion_contrato">¿Renovación de
                         contrato?</label>
                 </div>
@@ -275,7 +275,7 @@
                     <label class="required" for="esquema_contratacion"><i
                             class="fas fa-briefcase iconos-crear"></i>Esquema de contratación</label>
                     <select class="form-control {{ $errors->has('esquema_contratacion') ? 'is-invalid' : '' }}"
-                        wire:model.defer="esquema_contratacion" id="esquema_contratacion">
+                        wire:model="esquema_contratacion" id="esquema_contratacion">
                         <option value="" selected disabled>
                             -- Selecciona el esquema de contratación --
                         </option>
@@ -293,7 +293,7 @@
                             class="fas fa-street-view iconos-crear"></i>Proyecto asignado
                     </label>
                     <input class="form-control {{ $errors->has('proyecto_asignado') ? 'is-invalid' : '' }}"
-                        type="text" wire:model.defer="proyecto_asignado" id="proyecto_asignado">
+                        type="text" wire:model="proyecto_asignado" id="proyecto_asignado">
                     @if ($errors->has('proyecto_asignado'))
                         <div class="invalid-feedback">
                             {{ $errors->first('proyecto_asignado') }}
@@ -311,7 +311,7 @@
                     <label class="required" for="domicilio_personal"><i
                             class="fas fa-street-view iconos-crear"></i>Domicilio Personal</label>
                     <input class="form-control {{ $errors->has('domicilio_personal') ? 'is-invalid' : '' }}"
-                        type="text" wire:model.defer="domicilio_personal" id="domicilio_personal">
+                        type="text" wire:model="domicilio_personal" id="domicilio_personal">
                     @if ($errors->has('domicilio_personal'))
                         <div class="invalid-feedback">
                             {{ $errors->first('domicilio_personal') }}
@@ -322,7 +322,7 @@
                     <label class="required" for="telefono_casa"><i
                             class="fas fa-street-view iconos-crear"></i>Teléfono de casa</label>
                     <input class="form-control {{ $errors->has('telefono_casa') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="telefono_casa" id="telefono_casa">
+                        wire:model="telefono_casa" id="telefono_casa">
                     @if ($errors->has('telefono_casa'))
                         <div class="invalid-feedback">
                             {{ $errors->first('telefono_casa') }}
@@ -333,7 +333,7 @@
                     <label class="required" for="correo_personal"><i
                             class="fas fa-street-view iconos-crear"></i>Correo Personal</label>
                     <input class="form-control {{ $errors->has('correo_personal') ? 'is-invalid' : '' }}"
-                        type="text" wire:model.defer="correo_personal" id="correo_personal">
+                        type="text" wire:model="correo_personal" id="correo_personal">
                     @if ($errors->has('correo_personal'))
                         <div class="invalid-feedback">
                             {{ $errors->first('correo_personal') }}
@@ -345,7 +345,7 @@
                             class="fas fa-briefcase iconos-crear"></i>Estado
                         civil</label>
                     <select class="form-control {{ $errors->has('estado_civil') ? 'is-invalid' : '' }}"
-                        wire:model.defer="estado_civil" id="estado_civil" value="{{ old('estado_civil', '') }}"
+                        wire:model="estado_civil" id="estado_civil" value="{{ old('estado_civil', '') }}"
                         required>
                         <option value="" selected disabled>
                             -- Selecciona el estado civil --
@@ -366,7 +366,7 @@
                 <div class="form-group col-sm-6">
                     <label class="required" for="NSS"><i class="fas fa-street-view iconos-crear"></i>NSS</label>
                     <input class="form-control {{ $errors->has('NSS') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="NSS" id="NSS">
+                        wire:model="NSS" id="NSS">
                     @if ($errors->has('NSS'))
                         <div class="invalid-feedback">
                             {{ $errors->first('NSS') }}
@@ -377,7 +377,7 @@
                     <label class="required" for="CURP"><i
                             class="fas fa-street-view iconos-crear"></i>CURP</label>
                     <input class="form-control {{ $errors->has('CURP') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="CURP" id="CURP">
+                        wire:model="CURP" id="CURP">
                     @if ($errors->has('CURP'))
                         <div class="invalid-feedback">
                             {{ $errors->first('CURP') }}
@@ -387,7 +387,7 @@
                 <div class="form-group col-sm-6">
                     <label class="required" for="RFC"><i class="fas fa-street-view iconos-crear"></i>RFC</label>
                     <input class="form-control {{ $errors->has('RFC') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="RFC" id="RFC">
+                        wire:model="RFC" id="RFC">
                     @if ($errors->has('RFC'))
                         <div class="invalid-feedback">
                             {{ $errors->first('RFC') }}
@@ -397,7 +397,7 @@
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="cumpleaños"><i class="fas fa-birthday-cake iconos-crear"></i>Cumpleaños</label>
                     <input class="form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}" type="date"
-                        wire:model.defer="cumpleaños" id="cumpleaños">
+                        wire:model="cumpleaños" id="cumpleaños">
                     @if ($errors->has('cumpleaños'))
                         <div class="invalid-feedback">
                             {{ $errors->first('cumpleaños') }}
@@ -408,7 +408,7 @@
                     <label class="required" for="lugar_nacimiento"><i
                             class="fas fa-street-view iconos-crear"></i>Lugar de nacimiento</label>
                     <input class="form-control {{ $errors->has('lugar_nacimiento') ? 'is-invalid' : '' }}"
-                        type="text" wire:model.defer="lugar_nacimiento" id="lugar_nacimiento">
+                        type="text" wire:model="lugar_nacimiento" id="lugar_nacimiento">
                     @if ($errors->has('lugar_nacimiento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('lugar_nacimiento') }}
@@ -419,7 +419,7 @@
                     <label class="required" for="nacionalidad"><i
                             class="fas fa-street-view iconos-crear"></i>Nacionalidad</label>
                     <input class="form-control {{ $errors->has('nacionalidad') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="nacionalidad" id="nacionalidad">
+                        wire:model="nacionalidad" id="nacionalidad">
                     @if ($errors->has('nacionalidad'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nacionalidad') }}
@@ -433,7 +433,7 @@
                     <label class="required" for="entidad_crediticias_id"><i
                             class="fas fa-briefcase iconos-crear"></i>Entidad crediticia</label>
                     <select class="form-control {{ $errors->has('entidad_crediticias_id') ? 'is-invalid' : '' }}"
-                        wire:model.defer="entidad_crediticias_id" id="entidad_crediticias_id">
+                        wire:model="entidad_crediticias_id" id="entidad_crediticias_id">
                         <option value="" selected disabled>
                             -- Selecciona una entidad crediticia --
                         </option>
@@ -451,7 +451,7 @@
                     <label class="required" for="numero_credito"><i
                             class="fas fa-street-view iconos-crear"></i>Número de crédito</label>
                     <input class="form-control {{ $errors->has('numero_credito') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="numero_credito" id="numero_credito">
+                        wire:model="numero_credito" id="numero_credito">
                     @if ($errors->has('numero_credito'))
                         <div class="invalid-feedback">
                             {{ $errors->first('numero_credito') }}
@@ -462,7 +462,7 @@
                     <label class="required" for="descuento"><i
                             class="fas fa-street-view iconos-crear"></i>Descuento</label>
                     <input class="form-control {{ $errors->has('descuento') ? 'is-invalid' : '' }}" type="text"
-                        wire:model.defer="descuento" id="descuento">
+                        wire:model="descuento" id="descuento">
                     @if ($errors->has('descuento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descuento') }}
@@ -510,7 +510,7 @@
                                 </label>
                             </div>
                         </div>
-                        <input wire:model="foto" type="file" accept="image/png, image/jpeg" class="form-control-file"
+                        <input wire:model.live="foto" type="file" accept="image/png, image/jpeg" class="form-control-file"
                             id="foto" hidden="">
                     </div>
                 </div>
@@ -539,7 +539,7 @@
                             class="fas fa-image"></i></button>
                 </div>
             </div>
-            <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model="snap_foto">
+            <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model.live="snap_foto">
         </div>
         <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             INFORMACIÓN FINANCIERA
@@ -548,7 +548,7 @@
             <div class="form-group col-sm-6">
                 <label class="required" for="banco"><i class="fas fa-street-view iconos-crear"></i>Banco</label>
                 <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text"
-                    wire:model.defer="banco" id="banco">
+                    wire:model="banco" id="banco">
                 @if ($errors->has('banco'))
                     <div class="invalid-feedback">
                         {{ $errors->first('banco') }}
@@ -560,7 +560,7 @@
                         class="fas fa-street-view iconos-crear"></i>Cuenta
                     Bancaria</label>
                 <input class="form-control {{ $errors->has('cuenta_bancaria') ? 'is-invalid' : '' }}" type="text"
-                    wire:model.defer="cuenta_bancaria" id="cuenta_bancaria">
+                    wire:model="cuenta_bancaria" id="cuenta_bancaria">
                 @if ($errors->has('cuenta_bancaria'))
                     <div class="invalid-feedback">
                         {{ $errors->first('cuenta_bancaria') }}
@@ -571,7 +571,7 @@
                 <label class="required" for="clabe_interbancaria"><i
                         class="fas fa-street-view iconos-crear"></i>Clave Interbancaria</label>
                 <input class="form-control {{ $errors->has('clabe_interbancaria') ? 'is-invalid' : '' }}"
-                    type="text" wire:model.defer="clabe_interbancaria" id="clabe_interbancaria">
+                    type="text" wire:model="clabe_interbancaria" id="clabe_interbancaria">
                 @if ($errors->has('clabe_interbancaria'))
                     <div class="invalid-feedback">
                         {{ $errors->first('clabe_interbancaria') }}
@@ -583,7 +583,7 @@
                         class="fas fa-street-view iconos-crear"></i>Centro de
                     costos</label>
                 <input class="form-control {{ $errors->has('centro_costos') ? 'is-invalid' : '' }}" type="text"
-                    wire:model.defer="centro_costos" id="centro_costos">
+                    wire:model="centro_costos" id="centro_costos">
                 @if ($errors->has('centro_costos'))
                     <div class="invalid-feedback">
                         {{ $errors->first('centro_costos') }}
@@ -595,7 +595,7 @@
                         class="fas fa-street-view iconos-crear"></i>Salario
                     Bruto</label>
                 <input class="form-control {{ $errors->has('salario_bruto') ? 'is-invalid' : '' }}" type="text"
-                    wire:model.defer="salario_bruto" id="salario_bruto">
+                    wire:model="salario_bruto" id="salario_bruto">
                 @if ($errors->has('salario_bruto'))
                     <div class="invalid-feedback">
                         {{ $errors->first('salario_bruto') }}
@@ -607,7 +607,7 @@
                         class="fas fa-street-view iconos-crear"></i>Salario
                     Diario</label>
                 <input class="form-control {{ $errors->has('salario_diario') ? 'is-invalid' : '' }}" type="text"
-                    wire:model.defer="salario_diario" id="salario_diario">
+                    wire:model="salario_diario" id="salario_diario">
                 @if ($errors->has('salario_diario'))
                     <div class="invalid-feedback">
                         {{ $errors->first('salario_diario') }}
@@ -618,7 +618,7 @@
                 <label class="required" for="salario_diario_integrado"><i
                         class="fas fa-street-view iconos-crear"></i>Salario Diario Integrado</label>
                 <input class="form-control {{ $errors->has('salario_diario_integrado') ? 'is-invalid' : '' }}"
-                    type="text" wire:model.defer="salario_diario_integrado" id="salario_diario_integrado">
+                    type="text" wire:model="salario_diario_integrado" id="salario_diario_integrado">
                 @if ($errors->has('salario_diario_integrado'))
                     <div class="invalid-feedback">
                         {{ $errors->first('salario_diario_integrado') }}
@@ -629,7 +629,7 @@
                 <label class="required" for="salario_base_mensual"><i
                         class="fas fa-street-view iconos-crear"></i>Salario Base Mensual</label>
                 <input class="form-control {{ $errors->has('salario_base_mensual') ? 'is-invalid' : '' }}"
-                    type="text" wire:model.defer="salario_base_mensual" id="salario_base_mensual">
+                    type="text" wire:model="salario_base_mensual" id="salario_base_mensual">
                 @if ($errors->has('salario_base_mensual'))
                     <div class="invalid-feedback">
                         {{ $errors->first('salario_base_mensual') }}
@@ -640,7 +640,7 @@
                 <label class="required" for="pagadora_actual"><i
                         class="fas fa-street-view iconos-crear"></i>Pagadora Actual</label>
                 <input class="form-control {{ $errors->has('pagadora_actual') ? 'is-invalid' : '' }}" type="text"
-                    wire:model.defer="pagadora_actual" id="pagadora_actual">
+                    wire:model="pagadora_actual" id="pagadora_actual">
                 @if ($errors->has('pagadora_actual'))
                     <div class="invalid-feedback">
                         {{ $errors->first('pagadora_actual') }}
@@ -651,7 +651,7 @@
                 <label class="required" for="periodicidad_nomina"><i
                         class="fas fa-street-view iconos-crear"></i>Periodicidad de nómina</label>
                 <input class="form-control {{ $errors->has('periodicidad_nomina') ? 'is-invalid' : '' }}"
-                    type="text" wire:model.defer="periodicidad_nomina" id="periodicidad_nomina">
+                    type="text" wire:model="periodicidad_nomina" id="periodicidad_nomina">
                 @if ($errors->has('periodicidad_nomina'))
                     <div class="invalid-feedback">
                         {{ $errors->first('periodicidad_nomina') }}

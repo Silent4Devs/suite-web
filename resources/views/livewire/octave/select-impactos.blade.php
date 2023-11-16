@@ -4,7 +4,7 @@
             <label for="operacional"><i class="fas fa-project-diagram iconos-crear"></i>Operacional</label><a id="btnAgregarTipo" onclick="event.preventDefault();"
             style="font-size:12pt; float: right;"data-toggle="modal" data-target="#marcaslec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
             <select class="form-control select2 {{ $errors->has('operacional') ? 'is-invalid' : '' }}"
-                wire:model='operacionalId' name="operacional" id="operacional">
+                wire:model.live='operacionalId' name="operacional" id="operacional">
                 <option value="0" {{ $operacionalId == 0 ? 'selected' : '' }}>0 - Sin impacto</option>
                 <option value="1" {{ $operacionalId == 1 ? 'selected' : '' }}>1 - Muy Bajo</option>
                 <option value="2" {{ $operacionalId == 2 ? 'selected' : '' }}>2 - Bajo</option>
@@ -21,7 +21,7 @@
             style="font-size:12pt; float: right;"data-toggle="modal"  data-target="#modelolec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
             </a>
             <select class="form-control select2 {{ $errors->has('cumplimiento') ? 'is-invalid' : '' }}"
-                wire:model='cumplimientoId' name="cumplimiento" id="cumplimiento">
+                wire:model.live='cumplimientoId' name="cumplimiento" id="cumplimiento">
                 <option value="0" {{ $cumplimientoId == 0 ? 'selected' : '' }}>0 - Sin impacto</option>
                 <option value="1" {{ $cumplimientoId == 1 ? 'selected' : '' }}>1 - Muy Bajo</option>
                 <option value="2" {{ $cumplimientoId == 2 ? 'selected' : '' }}>2 - Bajo</option>
@@ -36,7 +36,7 @@
             <a id="btnAgregarTipo" onclick="event.preventDefault();"
             style="font-size:12pt; float: right;"data-toggle="modal"  data-target="#legalec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
             </a>
-            <select class="form-control select2 {{ $errors->has('legal') ? 'is-invalid' : '' }}" wire:model='legalId'
+            <select class="form-control select2 {{ $errors->has('legal') ? 'is-invalid' : '' }}" wire:model.live='legalId'
                 name="legal" id="legal">
                 <option value="0" {{ $legalId == 0 ? 'selected' : '' }}>0 - Sin impacto</option>
                 <option value="1" {{ $legalId == 1 ? 'selected' : '' }}>1 - Muy Bajo</option>
@@ -56,7 +56,7 @@
             style="font-size:12pt; float: right;"data-toggle="modal"  data-target="#reputacionallec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
             </a>
             <select class="form-control select2 {{ $errors->has('reputacional') ? 'is-invalid' : '' }}"
-                wire:model='reputacionalId' name="reputacional" id="reputacional">
+                wire:model.live='reputacionalId' name="reputacional" id="reputacional">
                 <option value="0" {{ $reputacionalId == 0 ? 'selected' : '' }}>0 - Sin impacto</option>
                 <option value="1" {{ $reputacionalId == 1 ? 'selected' : '' }}>1 - Muy Bajo</option>
                 <option value="2" {{ $reputacionalId == 2 ? 'selected' : '' }}>2 - Bajo</option>
@@ -74,7 +74,7 @@
             style="font-size:12pt; float: right;"data-toggle="modal"  data-target="#tecnologialec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
             </a>
             <select class="form-control select2 {{ $errors->has('tecnologico') ? 'is-invalid' : '' }}"
-                wire:model='tecnologicoId' name="tecnologico" id="tecnologico">
+                wire:model.live='tecnologicoId' name="tecnologico" id="tecnologico">
                 <option value="0" {{ $tecnologicoId == 0 ? 'selected' : '' }}>0 - Sin impacto</option>
                 <option value="1" {{ $tecnologicoId == 1 ? 'selected' : '' }}>1 - Muy Bajo</option>
                 <option value="2" {{ $tecnologicoId == 2 ? 'selected' : '' }}>2 - Bajo</option>
@@ -87,7 +87,7 @@
         <div wire:ignore.self class="form-group col-sm-12 col-md-3 col-lg-3">
             <label for="valor"><i class="fas fa-bullseye iconos-crear"></i>Valor del impacto</label>
             <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number"
-                wire:model.defer='valorId' name="valor" value="{{ old('valor', '') }}" readonly
+                wire:model='valorId' name="valor" value="{{ old('valor', '') }}" readonly
                 style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};" id="valorImpacto">
             @if ($errors->has('valor'))
                 <div class="invalid-feedback">
@@ -98,7 +98,7 @@
 
         <div  class="form-group col-sm-12 col-md-3 col-lg-3">
             <label><i class="fas fa-bullseye iconos-crear"></i>Nivel de Impacto</label>
-           <input  style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};" class="mt-2 form-control" id="nivelImpactoTxt" readonly wire:model.defer="nivelImpactoTxt"/>
+           <input  style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};" class="mt-2 form-control" id="nivelImpactoTxt" readonly wire:model="nivelImpactoTxt"/>
         </div>
 
     </div>

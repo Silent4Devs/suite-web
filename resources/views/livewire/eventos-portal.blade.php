@@ -413,7 +413,7 @@
 
                             <div>
                                 <div class="form-group">
-                                    <textarea class="comentario" name="comentario" wire:model="comentarios" class="form-control" data-sample-short></textarea>
+                                    <textarea class="comentario" name="comentario" wire:model.live="comentarios" class="form-control" data-sample-short></textarea>
                                 </div>
                                 <div class="form-group text-right">
                                 <button type="submit" id="btn_guardar" data-funcion="felicitarCumplesComentarios" data-cumple-id="${cumple_id}" class="btn btn-success">Enviar</button>
@@ -425,7 +425,7 @@
 
                             <div>
                                 <div class="form-group">
-                                    <textarea class="comentario" name="comentario" wire:model="comentarios_update" class="form-control" data-sample-short>${comentarios_comentarios}</textarea>
+                                    <textarea class="comentario" name="comentario" wire:model.live="comentarios_update" class="form-control" data-sample-short>${comentarios_comentarios}</textarea>
                                 </div>
                                 <div class="form-group text-right">
                                     <button type="submit" id="btn_actualizar" data-funcion="felicitarCumplesComentariosUpdate" data-comentario-id="${comentarios_id}" class="btn btn-success btn_almacenar">Enviar</button>

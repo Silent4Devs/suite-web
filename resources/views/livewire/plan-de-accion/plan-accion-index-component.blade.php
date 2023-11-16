@@ -8,7 +8,7 @@
                             <p class="m-0">Mostrando</p>
                         </div>
                         <div class="col-4 p-0">
-                            <select name="" id="" class="form-control" wire:model.lazy="perPage">
+                            <select name="" id="" class="form-control" wire:model.blur="perPage">
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="20">20</option>

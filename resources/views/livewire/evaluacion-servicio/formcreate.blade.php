@@ -38,24 +38,24 @@
 <section id="form_evaluacion">
     <div>
         <!-- No Contrato Field -->
-        <input wire:model="nivel_id" type="hidden" value="{{ $nivel_id }}">
+        <input wire:model.live="nivel_id" type="hidden" value="{{ $nivel_id }}">
         <div class="row">
             <div wire:ignore class="input-field col s12 m4">
                 <small class="grey-text" style="font-size:17px;font-weight:bold;">Fecha<font class="asterisco">*</font></small>
-                <input type="date" wire:model.debounce.800ms="fecha" class="form-control"
+                <input type="date" wire:model.live.debounce.800ms="fecha" class="form-control"
                 min="1945-01-01" required>
                 @error('fecha') <span class="red-text">{{ $message }}</span> @enderror
             </div>
             <!--<div class="input-field col s12 m4">
                 <small class="grey-text" style="font-size:17px;font-weight:bold;">Evaluación<font class="asterisco">*
                     </font></small>
-                <input type="text" wire:model="evaluacion" class="form-control" required>
+                <input type="text" wire:model.live="evaluacion" class="form-control" required>
                 @error('evaluacion') <span class="red-text">{{ $message }}</span> @enderror
             </div>-->
             <div class="input-field col s12 m4">
                 <small class="grey-text" style="font-size:17px;font-weight:bold;">SLA Alcanzado<font class="asterisco">*
                     </font></small>
-                <input type="number" wire:model.debounce.800ms="resultado" class="form-control" required>
+                <input type="number" wire:model.live.debounce.800ms="resultado" class="form-control" required>
                 @error('resultado') <span class="red-text">{{ $message }}</span> @enderror
             </div>
         </div>

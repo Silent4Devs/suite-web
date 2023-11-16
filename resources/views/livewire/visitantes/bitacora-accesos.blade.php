@@ -122,7 +122,7 @@
                                 <i class="fas fa-filter mr-2"></i> Filtros
                             </div>
                             <div class="col-6">
-                                <select wire:model.defer="colaborador" class="custom-select" name=""
+                                <select wire:model="colaborador" class="custom-select" name=""
                                     id="" style="position: relative">
                                     <option value="" disabled selected>Filtrar por colaborador visitado</option>
                                     @foreach ($empleados as $empleado)
@@ -134,7 +134,7 @@
                                     style="position:  absolute;top:0; right:4px; cursor: pointer;"></i>
                             </div>
                             <div class="col-6">
-                                <select wire:model.defer="area" class="custom-select" name="" id=""
+                                <select wire:model="area" class="custom-select" name="" id=""
                                     style="position: relative">
                                     <option value="" disabled selected>Filtrar por área visitada</option>
                                     @foreach ($areas as $area_it)
@@ -145,7 +145,7 @@
                                     style="position:  absolute;top:0; right:4px; cursor: pointer;"></i>
                             </div>
                             <div class="col-12 mt-2 mb-2">
-                                <input style="position: relative" wire:model.defer="rangoFechas" class="form-control"
+                                <input style="position: relative" wire:model="rangoFechas" class="form-control"
                                     type="text" id="rangoFechas" placeholder="Filtrar por rango de fechas" readonly
                                     wire:ignore>
                                 <i title="Limpiar Filtro" class="fas fa-times-circle"
@@ -223,7 +223,7 @@
             <div class="row print-none">
                 <div class="col-3">
                     <label for="perPage">Por página</label>
-                    <select class="custom-select" name="" id="perPage" wire:model="perPage">
+                    <select class="custom-select" name="" id="perPage" wire:model.live="perPage">
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
@@ -240,7 +240,7 @@
                 <div class="col-8"></div>
                 <div class="col-4" style="text-align: end">
                     <label for="search"><i class="fas fa-search"></i> Buscar</label>
-                    <input type="text" class="form-control" id="search" wire:model="search">
+                    <input type="text" class="form-control" id="search" wire:model.live="search">
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-6">
         <label for="nombre" class="form-label">Nombre(s) <sup class="text-danger">*</sup></label>
-        <input wire:model.defer="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror"
+        <input wire:model="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror"
             id="nombre" placeholder="--" required>
         @error('nombre')
             <div class="invalid-feedback">
@@ -15,7 +15,7 @@
     </div>
     <div class="col-md-6">
         <label for="apellidos" class="form-label">Apellido(s) <sup class="text-danger">*</sup></label>
-        <input wire:model.defer="apellidos" type="text" class="form-control @error('apellidos') is-invalid @enderror"
+        <input wire:model="apellidos" type="text" class="form-control @error('apellidos') is-invalid @enderror"
             id="apellidos" placeholder="--" required>
         @error('apellidos')
             <div class="invalid-feedback">
@@ -25,7 +25,7 @@
     </div>
     <div class="col-md-6">
         <label for="correo" class="form-label">Correo <sup class="text-danger">*</sup></label>
-        <input wire:model.defer="correo" type="text" class="form-control @error('correo') is-invalid @enderror"
+        <input wire:model="correo" type="text" class="form-control @error('correo') is-invalid @enderror"
             id="correo" placeholder="--" required>
         @error('correo')
             <div class="invalid-feedback">
@@ -35,7 +35,7 @@
     </div>
     <div class="col-md-6">
         <label for="celular" class="form-label">Teléfono / Celular</label>
-        <input wire:model.defer="celular" type="text" class="form-control @error('celular') is-invalid @enderror"
+        <input wire:model="celular" type="text" class="form-control @error('celular') is-invalid @enderror"
             id="celular" placeholder="--">
         @error('celular')
             <div class="invalid-feedback">
@@ -45,7 +45,7 @@
     </div>
     {{-- <div class="col-md-12">
         <label for="empresa" class="form-label">Empresa</label>
-        <input wire:model.defer="empresa" type="text" class="form-control @error('empresa') is-invalid @enderror"
+        <input wire:model="empresa" type="text" class="form-control @error('empresa') is-invalid @enderror"
             id="empresa" placeholder="--">
         @error('empresa')
             <div class="invalid-feedback">
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-4 mb-3">
                     <label for="dispositivo{{ $key }}" class="form-label">Dispositivo Eléctrónico</label>
-                    <input wire:model.defer="dispositivos.{{ $key }}.dispositivo" type="text"
+                    <input wire:model="dispositivos.{{ $key }}.dispositivo" type="text"
                         class="form-control @error('dispositivos.' . $key . '.dispositivo') is-invalid @enderror"
                         id="dispositivo{{ $key }}" placeholder="--" required>
                     @error('dispositivos.' . $key . '.dispositivo')
@@ -74,7 +74,7 @@
                 </div>
                 <div class="col-3 mb-3">
                     <label for="marca{{ $key }}" class="form-label">Marca</label>
-                    <input wire:model.defer="dispositivos.{{ $key }}.marca" type="text"
+                    <input wire:model="dispositivos.{{ $key }}.marca" type="text"
                         class="form-control @error('dispositivos.' . $key . '.marca') is-invalid @enderror"
                         id="marca{{ $key }}" placeholder="--" required>
                     @error('dispositivos.' . $key . '.marca')
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-3 mb-3">
                     <label for="serie{{ $key }}" class="form-label">No. de Serie o Badge</label>
-                    <input wire:model.defer="dispositivos.{{ $key }}.serie" type="text"
+                    <input wire:model="dispositivos.{{ $key }}.serie" type="text"
                         class="form-control @error('dispositivos.' . $key . '.serie') is-invalid @enderror"
                         id="serie{{ $key }}" placeholder="--" required>
                     @error('dispositivos.' . $key . '.serie')
@@ -112,7 +112,7 @@
             @endforeach
             <div class="col-12">
                 <label for="motivo">Motivo de la visita <sup class="text-danger">*</sup></label>
-                <textarea wire:model.defer="motivo" class="form-control @error('motivo') is-invalid @enderror" placeholder="--"
+                <textarea wire:model="motivo" class="form-control @error('motivo') is-invalid @enderror" placeholder="--"
                     id="motivo" name="motivo" style="height: 150px"></textarea>
             </div>
         </div>

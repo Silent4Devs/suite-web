@@ -1406,7 +1406,7 @@ Route::group(['prefix' => 'iso9001'], function () {
 //### NOTIFICACIONES ###
 //#####################
 
-// Route::get('/notificaciones', [\App\Http\Livewire\NotificacionesComponent::class, '__invoke'])->name('notificaciones');
+// Route::get('/notificaciones', [\App\Livewire\NotificacionesComponent::class, '__invoke'])->name('notificaciones');
 Route::get('/notificaciones', 'NotificacionesController@index')->name('notificaciones');
 Route::get('/tareas', 'TareasNotificacionesController@index')->name('tareas');
 

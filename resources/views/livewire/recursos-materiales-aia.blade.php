@@ -46,10 +46,10 @@
 
                             <td style="min-width:40px;">
                                 <i class="fas fa-edit"
-                                    wire:click.prevent="$emit('editarMateriales',{{ $data->id }})">
+                                    wire:click.prevent="$dispatch('editarMateriales',{{ $data->id }})">
                                 </i>
                                 <i class="fas fa-trash-alt text-danger"
-                                    wire:click.prevent="$emit('eliminarMateriales',{{ $data->id }})"> </i>
+                                    wire:click.prevent="$dispatch('eliminarMateriales',{{ $data->id }})"> </i>
                             </td>
                         </tr>
                     @endforeach

@@ -8,7 +8,7 @@
                     <div class="col-6 px-4 pt-4">
                         <label>Alumno:</label>
                         <select class="form-control  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
-                            name="user_id" id="user_id" wire:model.defer="user_id">
+                            name="user_id" id="user_id" wire:model="user_id">
                             <option value="" selected>
                                 Selecciona una opción
                             </option>
@@ -22,7 +22,7 @@
                     <div class="col-6 px-4 pt-4">
                         <label>Evaluación</label>
                         <select class="form-control  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
-                            name="user_id" id="user_id" wire:model.defer="evaluation_id">
+                            name="user_id" id="user_id" wire:model="evaluation_id">
                             <option value="" selected>
                                 Selecciona una opción
                             </option>

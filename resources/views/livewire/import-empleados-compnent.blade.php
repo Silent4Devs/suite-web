@@ -121,7 +121,7 @@
         x-on:livewire-upload-progress="progress = $event.detail.progress">
         <!-- File Input -->
         <div class="custom-file" wire:ignore>
-            <input type="file" class="custom-file-input" wire:model="file" id="file">
+            <input type="file" class="custom-file-input" wire:model.live="file" id="file">
             <label class="custom-file-label" for="file">Selecciona un archivo de
                 importación</label>
         </div>

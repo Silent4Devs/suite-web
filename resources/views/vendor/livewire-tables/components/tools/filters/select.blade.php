@@ -5,7 +5,7 @@
 @if ($theme === 'tailwind')
     <div class="rounded-md shadow-sm">
         <select
-            wire:model.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
+            wire:model.live.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
             wire:key="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
             id="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
             class="block w-full border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-800 dark:text-white dark:border-gray-600"
@@ -17,7 +17,7 @@
     </div>
 @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
     <select
-        wire:model.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
+        wire:model.live.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
         wire:key="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
         id="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
         class="form-control"

@@ -6,7 +6,7 @@
 
     <div class="mt-2">
         <label for="debilidad"><i class="fas fa-thumbs-down iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('debilidad') ? 'is-invalid' : '' }}" wire:model.defer="debilidad">
+        <input class="form-control {{ $errors->has('debilidad') ? 'is-invalid' : '' }}" wire:model="debilidad">
         @error('debilidad')
             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
         @enderror
@@ -15,7 +15,7 @@
     {{-- <div class="mt-2">
         <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Riesgo Asociado</label>
         <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}"
-            wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
+            wire:model="riesgo">{{ old('riesgo') }}</textarea>
         <small class="text-danger errores descripcion_contacto_error"></small>
     </div> --}}
 
@@ -47,7 +47,7 @@
                     <td>
                         <i wire:click="destroy({{ $debilidad->id }})" class="fas fa-trash-alt text-danger"></i>
                         <i class="fas fa-edit text-primary ml-2" wire:click="edit({{ $debilidad->id }})"></i>
-                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$debilidad->id}},'debilidad')" data-toggle="modal"
+                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$dispatch('modalRiesgoFoda',{{$debilidad->id}},'debilidad')" data-toggle="modal"
                             data-target="#marcaslec" title="Asociar un Riesgo"></i>
                     </td>
                 </tr>

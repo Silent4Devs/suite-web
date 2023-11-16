@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Livewire\ISO31000\ActivosInformacion;
+use App\Livewire\ISO31000\ActivosInformacion;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;

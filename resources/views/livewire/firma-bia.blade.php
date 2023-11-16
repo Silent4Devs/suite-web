@@ -1,5 +1,5 @@
 <div class="col-sm-6 form-group">
-    <div x-data="signaturePad(@entangle('signature'))">
+    <div x-data="signaturePad(@entangle('signature').live)">
         <h5 class="text-xl font-semibold text-gray-200 flex items-center justify-between"><span>{{$firmante}}</span></h5>
         <div>
             <canvas x-ref="signature_canvas" class="border rounded shadow">

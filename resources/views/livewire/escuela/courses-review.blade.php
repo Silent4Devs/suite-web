@@ -4,7 +4,7 @@
     @if ($enrolled)
         <article>
             @if (!$review)
-                <textarea wire:model.lazy="comment" class="form-control w-full" rows="3" placeholder="Ingrese una reseña del curso"></textarea>
+                <textarea wire:model.blur="comment" class="form-control w-full" rows="3" placeholder="Ingrese una reseña del curso"></textarea>
 
                 <div class="d-flex mt-4 mb-4">
                     <button class="btn btn-primary mr-4 " wire:click="store">Guardar</button>

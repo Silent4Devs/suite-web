@@ -30,7 +30,7 @@
     </style>
     <x-loading-indicator />
     @can('timesheet_administrador_tareas_proyectos_create')
-        <form wire:submit.prevent="create()" class="form-group w-100">
+        <form wire:submit="create()" class="form-group w-100">
             <div class="d-flex justify-content-center w-100">
                 <div class="form-group w-100 mr-4 ">
                     <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>
@@ -39,7 +39,7 @@
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id"
+                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model.live="proyecto_id"
                             required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)

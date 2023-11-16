@@ -551,7 +551,7 @@
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="proceso_id" class="required"> <i
                         class="far fa-calendar-alt iconos-crear"></i>Proceso</label>
-                <select class="form-control" id="proceso_id" name="proceso_id" wire:model.lazy="procesoId" required>
+                <select class="form-control" id="proceso_id" name="proceso_id" wire:model.blur="procesoId" required>
                     <option value="">-- Seleccionar Proceso --</option>
                     @foreach ($procesos as $proceso)
                         <option value="{{ $proceso->id }}">{{ $proceso->proceso->codigo }}-
