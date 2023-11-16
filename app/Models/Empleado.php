@@ -227,7 +227,7 @@ class Empleado extends Model implements Auditable
     public static function getSelectEmpleadosWithArea()
     {
         return Cache::remember('Empleados:empleados_select_area', 3600 * 12, function () {
-            return self::select('id', 'antiguedad', 'estatus', 'name', 'puesto', 'fecha_baja', 'area_id', 'foto')->with('area')->get();
+            return self::select('id', 'antiguedad', 'estatus', 'name', 'fecha_baja', 'area_id', 'foto', 'puesto_id')->with('area', 'puesto')->get();
         });
     }
 
