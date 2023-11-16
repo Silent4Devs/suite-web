@@ -51,5 +51,6 @@ class TimesheetProyectoAreaObserver
     {
 
         Cache::forget('TimesheetProyectoArea:timesheet_proyecto_area_proyecto_all');
+        Cache::forget('TimesheetProyectoArea:getAreaTimesheetProyectoEmpleado');
     }
 }
