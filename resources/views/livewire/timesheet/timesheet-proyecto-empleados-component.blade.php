@@ -18,7 +18,7 @@
         <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
-                <select wire:model.defer="empleado_añadido" name="" id="" class="select2" required>
+                <select wire:model.defer="empleado_añadido" name="" id="" class="select2-" required>
                     <option value="" selected readonly>Seleccione un empleado</option>
                     @foreach ($empleados as $empleado)
                         @foreach ($areasempleado as $ae)
@@ -29,10 +29,6 @@
                     @endforeach
                 </select>
             </div>
-            {{-- <div class="form-group col-md-5">
-                <label for="">Área</label>
-                <div class="form-control">Área de emp</div>
-            </div> --}}
         </div>
         <div class="row">
             @if ($proyecto->tipo === 'Externo')
@@ -222,8 +218,9 @@
             </div>
         </div>
     @endforeach
+    @section('scripts')
+        @parent
 
-    @section('js')
         <script>
             window.addEventListener('closeModal', event => {
                 $('.modal').modal('hide');
@@ -232,11 +229,6 @@
 
             })
         </script>
-    @stop
-
-
-    @section('scripts')
-        @parent
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', () => {
 
@@ -255,26 +247,5 @@
                 });
             });
         </script>
-
-
-
-        {{-- <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-
-            Livewire.on('scriptTabla', () => {
-                tablaLivewire('tabla_time_poyect_empleados');
-
-                $('.select2').select2().on('change', function (e) {
-                    var data = $(this).select2("val");
-                    @this.set('empleado_editado', data);
-                });
-            });
-
-            $('.select2').select2().on('change', function (e) {
-                var data = $(this).select2("val");
-                @this.set('empleado_editado', data);
-            });
-        });
-    </script> --}}
     @endsection
 </div>

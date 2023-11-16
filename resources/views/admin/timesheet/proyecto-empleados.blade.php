@@ -4,8 +4,11 @@
 
     {{ Breadcrumbs::render('timesheet-empleados-proyecto') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de Empleados por
-            Proyecto</font>
+    <h5 class="col-12 titulo_general_funcion">
+        TimeSheet:
+        <font style="font-weight:lighter;">
+            Asignacion de Empleados por Proyecto
+        </font>
     </h5>
 
     <div class="card card-body">

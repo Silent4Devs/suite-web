@@ -30,10 +30,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public $areasempleado;
 
-    // public $empleado_editado;
-    // public $horas_edit;
-    // public $costo_edit;
-
     public function mount($proyecto_id)
     {
         $this->proyecto_id = $proyecto_id;
@@ -43,10 +39,10 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $proyecto_id = $this->proyecto_id;
         $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
-        $this->areasempleado = TimesheetProyectoArea::getAll()->where('proyecto_id', $proyecto_id);
+        $this->areasempleado = TimesheetProyectoArea::getAreasTimesheetProyectoEmpleados()->where('proyecto_id', $proyecto_id);
         $this->empleados = Empleado::getAltaEmpleados();
 
-        $this->proyecto_empleados = TimesheetProyectoEmpleado::getAll()->where('proyecto_id', $this->proyecto->id);
+        $this->proyecto_empleados = TimesheetProyectoEmpleado::getProyectosEmpleadosTimesheetProyectosEmpleados()->where('proyecto_id', $this->proyecto->id);
 
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }
@@ -82,7 +78,9 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 'costo_hora' => $this->costo_hora,
             ]);
             $this->resetInput();
-        } else {
+        }
+
+        if($this->proyecto->tipo != 'Externo') {
             $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,

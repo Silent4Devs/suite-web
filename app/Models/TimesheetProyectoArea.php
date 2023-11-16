@@ -31,6 +31,14 @@ class TimesheetProyectoArea extends Model implements Auditable
         });
     }
 
+    public static function getAreasTimesheetProyectoEmpleados()
+    {
+        return
+            Cache::remember('TimesheetProyectoArea:getAreaTimesheetProyectoEmpleado', 3600 * 2, function () {
+                return self::select('id', 'area_id', 'proyecto_id')->orderBy('id')->get();
+            });
+    }
+
     public function area()
     {
         return $this->belongsTo(Area::class, 'area_id', 'id');
