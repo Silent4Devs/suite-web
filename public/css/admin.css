@@ -16,10 +16,6 @@
     border-top-right-radius: 5px;
 }
 
-.caja_botones_menu a:first-child {}
-
-.caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {}
-
 .caja_botones_menu a i {
     margin-right: 7px;
     font-size: 15pt;
@@ -727,7 +723,7 @@ table.dataTable tr th {
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     color: #ffffff;
     background-color: #4a89dc;
-    // border: 1px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 2px;
     cursor: default;
     float: left;
@@ -894,7 +890,7 @@ table.dataTable tr th {
 
 
 .table td {
-    {{--  text-align: justify !important;  --}}
+    /* text-align: justify !important; */
 }
 
 .titulo_general_funcion {
