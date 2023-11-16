@@ -65,10 +65,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
         // dd($empleado_add_proyecto);
 
         if ($this->proyecto->tipo == 'Externo') {
-            $this->validate([
-                'horas_asignadas' => ['required'],
-                'costo_hora' => ['required'],
-            ]);
 
             $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                 'proyecto_id' => $this->proyecto->id,
