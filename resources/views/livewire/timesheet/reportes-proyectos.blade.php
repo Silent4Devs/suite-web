@@ -159,9 +159,9 @@
                         <div class="col-6 p-0" style="text-align: end">
                             <div class="row">
                                 <div class="col-6 p-0"></div>
-                                {{-- <div class="col-6 p-0">
+                                <div class="col-6 p-0">
                                     <input type="text" class="form-control" placeholder="Buscar..." wire:model="search">
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                     </div>
