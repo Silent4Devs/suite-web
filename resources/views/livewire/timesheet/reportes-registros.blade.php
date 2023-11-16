@@ -45,14 +45,14 @@
                         @endif
                         Todos
                     </button>
-                    <button class="btn btn-primary"
+                    {{-- <button class="btn btn-primary"
                         style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera"
                         wire:click="papelera">
                         @if ($borrador_contador > 0)
                             <span class="indicador_numero" style="filter: contrast(200%);">{{ $borrador_contador }}</span>
                         @endif
                         Borrador
-                    </button>
+                    </button> --}}
                     <button class="btn btn-primary"
                         style="background-color: #F48C16; border:none !important; position: relative;" id="btn_pendiente"
                         wire:click="pendientes">
