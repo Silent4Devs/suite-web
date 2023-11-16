@@ -100,7 +100,7 @@
                                 <td>{{ $time->tarea->tarea }}</td>
                                 <td>{{ $time->descripcion }}</td>
                                 <td>
-                                    {{ $time->timesheet->total_horas }}
+                                    {{ $time->horas_totales_tarea }} h
                                 </td>
                             </tr>
                         @endforeach
