@@ -80,7 +80,9 @@ class ReportesProyemp extends Component
     {
         $this->refreshComponent();
 
-        $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')->withwhereHas('timesheet', function ($query) {
+        $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')
+        ->withwhereHas('timesheet', function ($query) {
+            $query->where('estatus', '!=', 'papelera');
             if ($this->emp_id != 0) {
                 $query->where('empleado_id', $this->emp_id);
             }
