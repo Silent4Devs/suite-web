@@ -222,6 +222,7 @@ class ReportesEmpleados extends Component
         }
         $this->horas_totales_filtros_empleados = 0;
         foreach ($empleados_list as $empleado_list) {
+
             $horas_total_time = 0;
 
             $fecha_registro_timesheet = Organizacion::getFechaRegistroTimesheet();
@@ -323,7 +324,6 @@ class ReportesEmpleados extends Component
 
                 $times_atrasados = count($this->times_faltantes_empleado);
             }
-
             $fecha_ing = Carbon::parse($empleado_list->antiguedad);
             $fecha_ingre = date('Y-m-d', strtotime($fecha_ing));
 
