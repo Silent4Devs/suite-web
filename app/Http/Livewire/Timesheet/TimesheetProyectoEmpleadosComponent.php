@@ -15,19 +15,12 @@ class TimesheetProyectoEmpleadosComponent extends Component
     use LivewireAlert;
 
     public $proyecto;
-
     public $empleados;
-
     public $proyecto_empleados;
-
     public $proyecto_id;
-
     public $empleado_añadido;
-
     public $horas_asignadas;
-
     public $costo_hora;
-
     public $areasempleado;
 
     public function mount($proyecto_id)
@@ -41,7 +34,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::getAreasTimesheetProyectoEmpleados()->where('proyecto_id', $proyecto_id);
         $this->empleados = Empleado::getAltaEmpleados();
-
         $this->proyecto_empleados = TimesheetProyectoEmpleado::getProyectosEmpleadosTimesheetProyectosEmpleados()->where('proyecto_id', $this->proyecto->id);
 
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
@@ -62,18 +54,18 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
         $empleado_add_proyecto = Empleado::getAltaEmpleados()->find($this->empleado_añadido);
-        // dd($empleado_add_proyecto);
 
         if ($this->proyecto->tipo == 'Externo') {
-
-            $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
-                'proyecto_id' => $this->proyecto->id,
-                'empleado_id' => $empleado_add_proyecto->id,
-                'area_id' => $empleado_add_proyecto->area_id,
-                'horas_asignadas' => $this->horas_asignadas,
-                'costo_hora' => $this->costo_hora,
-            ]);
-            $this->resetInput();
+            if(isset($this->horas_asignadas) && isset($this->costo_hora)){
+                $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
+                    'proyecto_id' => $this->proyecto->id,
+                    'empleado_id' => $empleado_add_proyecto->id,
+                    'area_id' => $empleado_add_proyecto->area_id,
+                    'horas_asignadas' => $this->horas_asignadas,
+                    'costo_hora' => $this->costo_hora,
+                ]);
+                $this->resetInput();
+            }else{$this->dehydrate();}
         }
 
         if($this->proyecto->tipo != 'Externo') {
@@ -98,8 +90,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         if ($this->proyecto->tipo === 'Externo') {
             if (empty($datos['horas_edit']) || empty($datos['costo_edit']) || empty($datos['empleado_editado'])) {
-                // dd('Llega nulo');
-                // $this->dispatchBrowserEvent('closeModal');
                 $this->alert('error', 'No debe contener datos vacios', [
                     'position' => 'top-end',
                     'timer' => 3000,
@@ -110,7 +100,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 return null;
             } else {
                 $emp_upd_proyecto = Empleado::getAltaEmpleados()->find($datos['empleado_editado']);
-                // dd($emp_upd_proyecto);
                 $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
                 $empleado_edit_proyecto->update([
                     'empleado_id' => $datos['empleado_editado'],
@@ -121,7 +110,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
             }
         } else { //Internos
             $emp_upd_proyecto = Empleado::getAltaEmpleados()->find($datos['empleado_editado']);
-            // dd($emp_upd_proyecto);
             $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
             $empleado_edit_proyecto->update([
                 'empleado_id' => $datos['empleado_editado'],
@@ -132,7 +120,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
         }
 
         $this->dispatchBrowserEvent('closeModal');
-        // $this->resetInput();
         $this->alert('success', 'Editado exitosamente', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -164,14 +151,11 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 'timerProgressBar' => true,
             ]);
         }
-        // dd($emp_bloq->usuario_bloqueado);
-
     }
 
     public function empleadoProyectoRemove($id)
     {
         $empleado_remov = TimesheetProyectoEmpleado::find($id);
-
         $empleado_remov->delete();
     }
 }

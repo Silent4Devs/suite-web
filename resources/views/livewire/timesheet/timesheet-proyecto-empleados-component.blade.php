@@ -3,12 +3,10 @@
     <h5 class="d-flex justify-content-between">Asignar Empleado a Proyecto</h5>
     <div class="row">
         <div class="form-group col-12 text-right">
-            <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar
-                Proyecto</a>
+            <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar Proyecto</a>
             @can('asignar_externos')
                 @if ($proyecto->tipo === 'Externo')
-                    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar
-                        Proveedores/Consultores</a>
+                    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar Proveedores/Consultores</a>
                 @endif
             @endcan
             <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
@@ -34,16 +32,14 @@
             @if ($proyecto->tipo === 'Externo')
                 <div class="form-group col-md-4">
                     <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                    <input wire:model.defer="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number"
-                        step="0.01" min="0.01" class="form-control">
+                    <input wire:model.defer="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number" step="0.01" min="0.01" class="form-control">
                 </div>
                 @error('horas_asignadas')
                     <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
                 @enderror
                 <div class="form-group col-md-4">
                     <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                    <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora" type="number" min="0.01"
-                        step="0.01" class="form-control">
+                    <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora" type="number" min="0.01" step="0.01" class="form-control">
                 </div>
                 @error('costo_hora')
                     <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
@@ -71,7 +67,6 @@
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
-
             <tbody style="position:relative;">
                 @foreach ($proyecto_empleados as $proyect_empleado)
                     <tr>
@@ -86,10 +81,8 @@
                             <td>{{ $proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora ?? '0' }}</td>
                         @endif
                         <td>
-                            <button class="btn" data-toggle="modal"
-                                data-target="#modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}">
-                                <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size: 15pt;"
-                                    title="Editar"></i>
+                            <button class="btn" data-toggle="modal" data-target="#modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}">
+                                <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size: 15pt;" title="Editar"></i>
                             </button>
                             <a wire:click="bloquearEmpleado({{ $proyect_empleado->id }})" class="btn btn-sm">
                                 @if ($proyect_empleado->usuario_bloqueado == false)
@@ -108,15 +101,13 @@
             </tbody>
         </table>
     </div>
-
     @foreach ($proyecto_empleados as $proyect_empleado)
         <div class="modal fade" id="modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}" tabindex="-1"
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <button class="btn btn-tache-cerrar" data-dismiss="modal"><i
-                                class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-tache-cerrar" data-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
                         <div>
                             <div class="text-center">
                                 <i class="fa-solid fa-pen-to-square"
@@ -125,8 +116,7 @@
                                     <small>{{ $proyect_empleado->empleado->name }}</small>
                                 </h1>
                             </div>
-                            <form
-                                wire:submit.prevent="editEmpleado({{ $proyect_empleado->id }}, Object.fromEntries(new FormData($event.target)))">
+                            <form wire:submit.prevent="editEmpleado({{ $proyect_empleado->id }}, Object.fromEntries(new FormData($event.target)))">
                                 <div class="row">
                                     <div class="form-group col-md-8">
                                         <label for="">Empleado<sup>*</sup>(obligatorio)</label>
@@ -183,7 +173,6 @@
             </div>
         </div>
     @endforeach
-
     @foreach ($proyecto_empleados as $proyect_empleado)
         <div class="modal fade" id="modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}" tabindex="-1"
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -201,7 +190,6 @@
                                 <p class="parrafo">¿Desea remover a {{ $proyect_empleado->empleado->name }} del
                                     proyecto {{ $proyect_empleado->proyecto->proyecto }}?</p>
                             </div>
-
                             <div class="mt-4 d-flex justify-content-between">
                                 <button class="btn btn_cancelar" data-dismiss="modal">
                                     Cancelar
@@ -226,10 +214,8 @@
                 $('.modal').modal('hide');
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
+            });
 
-            })
-        </script>
-        <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', () => {
 
                 Livewire.on('scriptTabla', () => {
