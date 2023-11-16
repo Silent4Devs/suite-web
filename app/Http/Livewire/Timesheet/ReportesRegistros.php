@@ -116,6 +116,7 @@ class ReportesRegistros extends Component
                     $query->where('area_id', $this->area_id)->where('name', 'ILIKE', "%{$this->search}%");
                 }
             })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
+            ->where('estatus', '!=', 'papelera')
             ->orderByDesc('fecha_dia');
 
         if ($this->estatus) {
@@ -150,7 +151,6 @@ class ReportesRegistros extends Component
     public function establecerContadores()
     {
         //Contador Todos los registros timesheet
-        //$this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
         $querybase = Timesheet::whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;
@@ -162,10 +162,10 @@ class ReportesRegistros extends Component
         $this->todos_contador = $querybase
             ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->count();
 
-        //Contador Todos los registros timesheet en borrador
-        $this->borrador_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->count();
+        // //Contador Todos los registros timesheet en borrador
+        // $this->borrador_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->count();
 
-        //Contador Todos los registros timesheet en penduente
+        // //Contador Todos los registros timesheet en penduente
         $this->pendientes_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ?
             $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->count();
 
@@ -188,17 +188,17 @@ class ReportesRegistros extends Component
         $this->estatus = null;
     }
 
-    public function papelera()
-    {
-        $this->estatus = 'papelera';
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->orderByDesc('fecha_dia')->get();
-    }
+    // public function papelera()
+    // {
+    //     $this->estatus = 'papelera';
+    //     // $this->times = Timesheet::whereHas('empleado', function ($query) {
+    //     //     if ($this->area_id == 0) {
+    //     //         return $query;
+    //     //     } else {
+    //     //         $query->where('area_id', $this->area_id);
+    //     //     }
+    //     // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->orderByDesc('fecha_dia')->get();
+    // }
 
     public function pendientes()
     {

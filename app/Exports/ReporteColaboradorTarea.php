@@ -69,7 +69,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
                     $query->where('timesheet_proyectos.id', $this->proy_id);
                 }
                 // Otras condiciones que ya tenías
-            })
+            })->where('timesheet_proyectos.estatus', '!=', 'papelera')
             ->groupBy(
                 'timesheet.fecha_dia',
                 'empleado_name',

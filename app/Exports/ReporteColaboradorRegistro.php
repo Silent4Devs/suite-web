@@ -65,7 +65,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 if ($this->area_id != 0) {
                     $query->where('empleados.area_id', $this->area_id);
                 }
-            })
+            })->where('timesheet_proyectos.estatus', '!=', 'papelera')
             ->groupBy(
                 'timesheet.id',
                 'fecha_dia',
