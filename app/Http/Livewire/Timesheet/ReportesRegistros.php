@@ -151,7 +151,6 @@ class ReportesRegistros extends Component
     public function establecerContadores()
     {
         //Contador Todos los registros timesheet
-        //$this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
         $querybase = Timesheet::whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;
