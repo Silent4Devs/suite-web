@@ -29,10 +29,6 @@
                     @endforeach
                 </select>
             </div>
-            {{-- <div class="form-group col-md-5">
-                <label for="">Área</label>
-                <div class="form-control">Área de emp</div>
-            </div> --}}
         </div>
         <div class="row">
             @if ($proyecto->tipo === 'Externo')
@@ -75,7 +71,6 @@
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
-
             <tbody style="position:relative;">
                 @foreach ($proyecto_empleados as $proyect_empleado)
                     <tr>
@@ -112,7 +107,6 @@
             </tbody>
         </table>
     </div>
-
     @foreach ($proyecto_empleados as $proyect_empleado)
         <div class="modal fade" id="modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}" tabindex="-1"
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
@@ -187,7 +181,6 @@
             </div>
         </div>
     @endforeach
-
     @foreach ($proyecto_empleados as $proyect_empleado)
         <div class="modal fade" id="modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}" tabindex="-1"
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -205,7 +198,6 @@
                                 <p class="parrafo">¿Desea remover a {{ $proyect_empleado->empleado->name }} del
                                     proyecto {{ $proyect_empleado->proyecto->proyecto }}?</p>
                             </div>
-
                             <div class="mt-4 d-flex justify-content-between">
                                 <button class="btn btn_cancelar" data-dismiss="modal">
                                     Cancelar
@@ -222,22 +214,16 @@
             </div>
         </div>
     @endforeach
+    @section('scripts')
+        @parent
 
-    @section('js')
         <script>
             window.addEventListener('closeModal', event => {
                 $('.modal').modal('hide');
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
+            });
 
-            })
-        </script>
-    @stop
-
-
-    @section('scripts')
-        @parent
-        <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', () => {
 
                 Livewire.on('scriptTabla', () => {
@@ -255,26 +241,5 @@
                 });
             });
         </script>
-
-
-
-        {{-- <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-
-            Livewire.on('scriptTabla', () => {
-                tablaLivewire('tabla_time_poyect_empleados');
-
-                $('.select2').select2().on('change', function (e) {
-                    var data = $(this).select2("val");
-                    @this.set('empleado_editado', data);
-                });
-            });
-
-            $('.select2').select2().on('change', function (e) {
-                var data = $(this).select2("val");
-                @this.set('empleado_editado', data);
-            });
-        });
-    </script> --}}
     @endsection
 </div>
