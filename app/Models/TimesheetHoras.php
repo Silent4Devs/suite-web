@@ -76,4 +76,10 @@ class TimesheetHoras extends Model implements Auditable
     {
         return $this->belongsTo(TimesheetTarea::class, 'tarea_id');
     }
+
+    public function getHorasTotalesTareaAttribute() {
+        $sumaHoras = $this->horas_lunes + $this->horas_martes + $this->horas_miercoles + $this->horas_jueves + $this->horas_viernes + $this->horas_sabado + $this->horas_domingo;
+
+        return $sumaHoras;
+    }
 }
