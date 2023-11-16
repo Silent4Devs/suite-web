@@ -96,11 +96,11 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                     $total_horas += floatval($horas->horas_domingo);
                 }
                 return [
-                    'Fecha Inicio' => \Carbon\Carbon::parse($timesheet->fecha_dia)->format('d/m/Y'),
+                    'Fecha Inicio Proyecto' => \Carbon\Carbon::parse($timesheet->fecha_dia)->format('d/m/Y'),
                     'Empleado' => $timesheet->empleado_name,
                     'Supervisor' => $timesheet->supervisor_name,
                     'Area' => $timesheet->empleado_area,
-                    'Estatus' => $timesheet->estatus,
+                    'Estatus Proyecto' => $timesheet->estatus,
                     'Total de Horas' =>  $total_horas,
                 ];
             });

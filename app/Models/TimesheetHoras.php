@@ -17,6 +17,8 @@ class TimesheetHoras extends Model implements Auditable
 
     protected $table = 'timesheet_horas';
 
+    protected $appends = ['horas_totales_tarea'];
+
     protected $fillable = [
         'facturable',
         'timesheet_id',
@@ -77,8 +79,15 @@ class TimesheetHoras extends Model implements Auditable
         return $this->belongsTo(TimesheetTarea::class, 'tarea_id');
     }
 
-    public function getHorasTotalesTareaAttribute() {
-        $sumaHoras = $this->horas_lunes + $this->horas_martes + $this->horas_miercoles + $this->horas_jueves + $this->horas_viernes + $this->horas_sabado + $this->horas_domingo;
+    public function getHorasTotalesTareaAttribute()
+    {
+        $sumaHoras = (float)$this->horas_lunes +
+            (float)$this->horas_martes +
+            (float)$this->horas_miercoles +
+            (float)$this->horas_jueves +
+            (float)$this->horas_viernes +
+            (float)$this->horas_sabado +
+            (float)$this->horas_domingo;
 
         return $sumaHoras;
     }

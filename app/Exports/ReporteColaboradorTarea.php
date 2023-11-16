@@ -95,7 +95,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
                     'Proyecto' => $timesheetHora->proyecto,
                     'Tarea' => $timesheetHora->tarea,
                     'Descripción' => $timesheetHora->descripcion,
-                    'Total de Horas' => (floatval($timesheetHora->horas_lunes) + floatval($timesheetHora->horas_martes) + floatval($timesheetHora->horas_miercoles) + floatval($timesheetHora->horas_jueves) + floatval($timesheetHora->horas_viernes) + floatval($timesheetHora->horas_sabado) + floatval($timesheetHora->horas_domingo))
+                    'Total de Horas' =>  $timesheetHora->getHorasTotalesTareaAttribute()
                 ];
             });
 
