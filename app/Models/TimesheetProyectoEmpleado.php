@@ -27,7 +27,7 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
     public static function getAll()
     {
         return Cache::remember('TimesheetProyectoEmpleado:timesheetproyectoempleado_all', 3600 * 4, function () {
-            return self::get();
+            return self::orderBy('id')->get();
         });
     }
 
