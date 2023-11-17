@@ -5,10 +5,10 @@ from selenium.webdriver.common.by import By
 import time
 tiempo=1
 #driver Firefox
-driver=webdriver.Firefox(executable_path=r'C:/Users/zaid.garcia/Downloads/geckodriver-v0.33.0-win64/geckodriver.exe')
+driver=webdriver.Firefox()
 
 #Abre la pagina
-driver.get('http://tabantaj.test/')
+driver.get('https://192.168.9.78/')
 
 #maximizar Pantalla
 driver.maximize_window()
