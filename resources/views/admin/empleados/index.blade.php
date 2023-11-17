@@ -53,7 +53,7 @@
                     @foreach ($empleados as $empleado)
                         <tr>
                             @if ($empleado->avatar_ruta)
-                                <td><img src="{{ asset($empleado->avatar_ruta) }}" width="32px"
+                                <td><img src="{{ asset($empleado->avatar_ruta) }}" width="40px"
                                         alt="{{ $empleado->name }}"></td>
                             @else
                                 <td>Sin Perfil</td>
