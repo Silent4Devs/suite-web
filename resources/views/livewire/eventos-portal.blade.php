@@ -118,7 +118,7 @@
                     </a>
                 @endcan
             @endif
-            <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}">
+            <a class="btn-silent" href="{{ route('foda-organizacions') }}">
                 <i class="bi bi-flag mr-2"></i>
                 <span>FODA</span>
             </a>
