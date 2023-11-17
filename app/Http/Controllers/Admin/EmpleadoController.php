@@ -63,7 +63,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::select('id', 'n_empleado', 'name', 'email', 'telefono', 'area_id', 'puesto', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->get();
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;

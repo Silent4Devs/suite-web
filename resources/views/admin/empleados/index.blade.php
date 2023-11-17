@@ -50,18 +50,42 @@
                 <tbody>
                     @foreach ( $empleados as $empleado )
                     <tr>
-                        <td><img src="#" alt=""></td>
+                        @if ($empleado->avatar_ruta)
+                        <td><img src="{{ asset($empleado->avatar_ruta) }}" alt=""></td>
+                        @else
+                         <td>Sin Perfil</td>
+                        @endif
+                        @if ($empleado->n_empleado)
                         <td>{{$empleado->n_empleado}}</td>
+                        @else
+                         <td>Sin Registro</td>
+                        @endif
                         <td>{{$empleado->name}}</td>
                         <td>{{$empleado->email}}</td>
+                        @if ($empleado->telefono)
                         <td>{{$empleado->telefono}}</td>
+                        @else
+                         <td>Sin Registro</td>
+                        @endif
                         <td>{{$empleado->area->area}}</td>
                         <td>{{$empleado->puesto}}</td>
+                        @if (optional($empleado->supervisor)->name)
                         <td>{{ optional($empleado->supervisor)->name}}</td>
+                        @else
+                         <td>Sin Registro</td>
+                        @endif
                         <td>{{$empleado->antiguedad}}</td>
                         <td>{{$empleado->estatus }}</td>
+                        @if ( optional($empleado->sede)->sede)
                         <td>{{ optional($empleado->sede)->sede}}</td>
-                        <td>{{ $empleado->cumpleaños}}</td>
+                        @else
+                         <td>Sin Registro</td>
+                        @endif
+                        @if ($empleado->cumpleaños)
+                        <td>{{$empleado->cumpleaños}}</td>
+                        @else
+                         <td>Sin Registro</td>
+                        @endif
                         <td>
                                 <a href="{{ route('admin.empleados.edit',$empleado->id )}}"><i class="fas fa-edit"></i></a>
 
