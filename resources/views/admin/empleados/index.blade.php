@@ -52,12 +52,9 @@
                 <tbody>
                     @foreach ($empleados as $empleado)
                         <tr>
-                            @if ($empleado->avatar_ruta)
-                                <td><img src="{{ asset($empleado->avatar_ruta) }}" width="40px"
-                                        alt="{{ $empleado->name }}"></td>
-                            @else
-                                <td>Sin Perfil</td>
-                            @endif
+                            <td>
+                                <img src="{{ $empleado->avatar_ruta }}" width="40px;" alt="Avatar">
+                            </td>
                             @if ($empleado->n_empleado)
                                 <td>{{ $empleado->n_empleado }}</td>
                             @else
