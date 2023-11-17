@@ -45,7 +45,6 @@
                         <td>{{$user->email}}</td>
                         <td> @foreach ($user->roles as $role)
                             {{ $role->title }}
-                            {{-- Si deseas separar los títulos de los roles, puedes usar una coma u otro separador --}}
                             @if (!$loop->last)
                                 ,
                             @endif
@@ -54,12 +53,16 @@
                         <td>
                            @if (!is_null($user->empleado))
                            {{$user->empleado->area->area}}
+                           @else
+                            Sin Registro
                            @endif
                         </td>
 
                         <td>
                             @if (!is_null($user->empleado))
                            {{$user->empleado->puesto}}
+                           @else
+                           Sin Registro
                            @endif
                         </td>
                         <td>
