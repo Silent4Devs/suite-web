@@ -63,15 +63,11 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::with('puestoRelacionado')->select('id', 'n_empleado', 'name', 'foto', 'genero', 'email', 'telefono', 'area_id', 'puesto', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->orderBy('id', 'DESC')->get()
+        $empleados = Empleado::with('puestoRelacionado')->select('id', 'n_empleado', 'name', 'foto', 'genero', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->orderBy('id', 'DESC')->get()
         ->map(function ($empleado) {
-            if ($empleado->puestoRelacionado) {
                 $empleado['avatar_ruta'] = $empleado->avatar_ruta; // Access the computed attribute
-            } else {
-                // Handle the case where 'puestoRelacionado' is null
-                $empleado['avatar_ruta'] = ''; // Or any default value
-            }
-            return $empleado;
+
+                return $empleado;
         });
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
