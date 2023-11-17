@@ -6,6 +6,7 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Support\Facades\Cache;
 
 class IncidentesVacaciones extends Model implements Auditable
 {
@@ -21,6 +22,13 @@ class IncidentesVacaciones extends Model implements Auditable
         'efecto',
         'descripcion',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('IncidentesVacaciones:incidentes_vacaciones_all', 3600 * 12, function () {
+            return self::orderBy('id', 'desc')->get(); // Ordering by 'id' column in descending order
+        });
+    }
 
     public function empleados()
     {

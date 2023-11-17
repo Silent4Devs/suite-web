@@ -250,7 +250,7 @@
                         data: 'descripcion',
                         name: 'descripcion',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data} días</div>`;
+                            return `<div style="text-align:left">${data}</div>`;
                         }
                     },
 

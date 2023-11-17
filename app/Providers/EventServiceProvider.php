@@ -34,6 +34,7 @@ use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
+use App\Models\IncidentesVacaciones;
 use App\Models\Marca;
 use App\Models\MatrizRiesgo;
 use App\Models\MatrizRiesgosSistemaGestion;
@@ -86,6 +87,7 @@ use App\Observers\DocumentoObserver;
 use App\Observers\EvaluacionObserver;
 use App\Observers\EvidenciasDocumentosEmpleadosObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
+use App\Observers\IncidentesVacacionesObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\IncidentesSeguridadObserver;
 use App\Observers\LessonObserver;
@@ -226,5 +228,6 @@ class EventServiceProvider extends ServiceProvider
         Contrato::observe(ContratoObserver::class);
         PerfilEmpleado::observe(PerfilEmpleadoObserver::class);
         Minutasaltadireccion::observe(MinutasAltaDireccionObserver::class);
+        IncidentesVacaciones::observe(IncidentesVacacionesObserver::class);
     }
 }

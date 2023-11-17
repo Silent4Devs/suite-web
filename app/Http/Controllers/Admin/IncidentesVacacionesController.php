@@ -19,7 +19,8 @@ class IncidentesVacacionesController extends Controller
     {
         abort_if(Gate::denies('incidentes_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = IncidentesVacaciones::with('empleados')->orderByDesc('id')->get();
+            //Se le quito la relacion a empleados porque no es necesaria
+            $query = IncidentesVacaciones::getAll();
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -73,7 +74,7 @@ class IncidentesVacacionesController extends Controller
     {
         abort_if(Gate::denies('incidentes_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new IncidentesVacaciones();
-        $empleados = Empleado::getAll();
+        $empleados = Empleado::getAltaEmpleados();
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
 
         return view('admin.incidentesVacaciones.create', compact('vacacion', 'empleados', 'empleados_seleccionados'));
@@ -82,6 +83,7 @@ class IncidentesVacacionesController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('incidentes_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        dd($request->all());
         $request->validate([
             'nombre' => 'required|string',
             'dias_aplicados' => 'required|int',
