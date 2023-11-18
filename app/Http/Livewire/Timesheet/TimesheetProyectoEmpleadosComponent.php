@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Empleado;
-use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
@@ -15,12 +14,19 @@ class TimesheetProyectoEmpleadosComponent extends Component
     use LivewireAlert;
 
     public $proyecto;
+
     public $empleados;
+
     public $proyecto_empleados;
+
     public $proyecto_id;
+
     public $empleado_añadido;
+
     public $horas_asignadas;
+
     public $costo_hora;
+
     public $areasempleado;
 
     public function mount($proyecto_id)
@@ -56,7 +62,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $empleado_add_proyecto = Empleado::getAltaEmpleados()->find($this->empleado_añadido);
 
         if ($this->proyecto->tipo == 'Externo') {
-            if(isset($this->horas_asignadas) && isset($this->costo_hora)){
+            if (isset($this->horas_asignadas) && isset($this->costo_hora)) {
                 $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                     'proyecto_id' => $this->proyecto->id,
                     'empleado_id' => $empleado_add_proyecto->id,
@@ -65,10 +71,12 @@ class TimesheetProyectoEmpleadosComponent extends Component
                     'costo_hora' => $this->costo_hora,
                 ]);
                 $this->resetInput();
-            }else{$this->dehydrate();}
+            } else {
+                $this->dehydrate();
+            }
         }
 
-        if($this->proyecto->tipo != 'Externo') {
+        if ($this->proyecto->tipo != 'Externo') {
             $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,
