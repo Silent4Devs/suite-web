@@ -39,6 +39,7 @@
         "sentry/sentry-laravel": "^3.8",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/calendar-links": "^1.6",
+        "spatie/fork": "^1.2",
         "spatie/geocoder": "^3.10",
         "spatie/laravel-medialibrary": "^10.0",
         "spatie/laravel-permission": "^5.11",
