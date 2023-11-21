@@ -41,7 +41,7 @@ class MatrizRequisitoLegalesController extends Controller
     {
         abort_if(Gate::denies('matriz_requisitos_legales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         return view('admin.matrizRequisitoLegales.create', compact('planes_implementacion', 'empleados'));
     }
@@ -97,7 +97,7 @@ class MatrizRequisitoLegalesController extends Controller
             }
         }
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         $matrizRequisitoLegale->load('team');
 
@@ -238,12 +238,12 @@ class MatrizRequisitoLegalesController extends Controller
 
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
     }
 
     public function evaluar(MatrizRequisitoLegale $id)
     {
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
         $requisito = $id;
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
 

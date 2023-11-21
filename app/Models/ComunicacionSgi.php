@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
-use Spatie\MediaLibrary\HasMedia;
 use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class ComunicacionSgi extends Model implements HasMedia, Auditable
+class ComunicacionSgi extends Model implements Auditable, HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, InteractsWithMedia, MultiTenantModelTrait, SoftDeletes;
 
     public $table = 'comunicacion_sgis';
 
@@ -56,6 +58,28 @@ class ComunicacionSgi extends Model implements HasMedia, Auditable
         'fecha_programable',
         'fecha_programable_fin',
     ];
+
+    //Redis methods
+    public static function getAllwithImagenes()
+    {
+        return Cache::remember('ComunicacionSGI:get_all_with_imagenes', 3600 * 10, function () {
+            return self::with('imagenes_comunicacion')->get();
+        });
+    }
+
+    public static function getAllwithImagenesBlog()
+    {
+        return Cache::remember('Portal:get_all_with_imagenes_blog', 3600 * 10, function () {
+            return self::with('imagenes_comunicacion')->where('publicar_en', '=', 'Blog')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
+        });
+    }
+
+    public static function getAllwithImagenesCarrousel()
+    {
+        return Cache::remember('Portal:get_all_with_imagenes_carrousel', 3600 * 10, function () {
+            return self::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

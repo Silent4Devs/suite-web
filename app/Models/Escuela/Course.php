@@ -3,21 +3,33 @@
 namespace App\Models\Escuela;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 
 class Course extends Model
 {
-    use SoftDeletes, ClearsResponseCache;
+    use ClearsResponseCache, SoftDeletes;
     use HasFactory;
 
     protected $guarded = ['id', 'status'];
+
     protected $withCount = ['students', 'reviews'];
 
     const BORRADOR = 1;
+
     const REVISION = 2;
+
     const PUBLICADO = 3;
+
+    //query redis cache
+    public static function getAll()
+    {
+        return Cache::remember('Courses:courses_all', 3600 * 7, function () {
+            return self::get();
+        });
+    }
 
     // Calificación del curso
     public function getRatingAttribute()

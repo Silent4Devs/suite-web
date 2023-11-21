@@ -58,7 +58,7 @@
 
                             var now = new Date();
                             var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
-                            .getFullYear();
+                                .getFullYear();
                             $(doc.document.body).prepend(`
                                 <div class="row">
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
@@ -123,9 +123,6 @@
                 };
                 let dtOverrideGlobals = {
                     buttons: dtButtons,
-                    order: [
-                        [0, 'desc']
-                    ],
                     destroy: true,
                     render: true,
                 };
@@ -136,7 +133,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 tablaLivewire('tabla_time_tareas');
-            }, 100);
+            }, 500);
         });
     </script>
 

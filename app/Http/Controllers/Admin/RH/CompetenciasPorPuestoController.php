@@ -97,7 +97,7 @@ class CompetenciasPorPuestoController extends Controller
         $exists = CompetenciaPuesto::where('puesto_id', '=', intval($puesto))
             ->where('competencia_id', '=', $request->competencia_id)
             ->exists();
-        if (!$exists) {
+        if (! $exists) {
             $puestoCompetencia = CompetenciaPuesto::create([
                 'puesto_id' => intval($puesto),
                 'competencia_id' => $request->competencia_id,

@@ -21,7 +21,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ConcientizacionSgiController extends Controller
 {
-    use ObtenerOrganizacion, MediaUploadingTrait;
+    use MediaUploadingTrait, ObtenerOrganizacion;
 
     public function index(Request $request)
     {

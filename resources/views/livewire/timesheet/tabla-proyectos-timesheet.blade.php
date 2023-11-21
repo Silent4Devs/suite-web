@@ -110,7 +110,7 @@
         <div class="btn_estatus_caja">
             <button class="btn btn-primary ml-3"
                 style="background-color: #F48C16; border:none !important; position: relative;" id="btn_todos"
-                wire:click="procesos">
+                wire:click="actualizarEstatus('procesos')">
                 @if ($proceso_count > 0)
                     <span class="indicador_numero" style="filter: contrast(200%);">{{ $proceso_count }}</span>
                 @endif
@@ -118,7 +118,7 @@
             </button>
             <button class="btn btn-primary ml-3"
                 style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera"
-                wire:click="cancelados">
+                wire:click="actualizarEstatus('cancelados')">
                 @if ($cancelado_count > 0)
                     <span class="indicador_numero" style="filter: contrast(200%);">{{ $cancelado_count }}</span>
                 @endif
@@ -126,7 +126,7 @@
             </button>
             <button class="btn btn-primary ml-3"
                 style="background-color: #61CB5C; border:none !important; position: relative;" id="btn_pendiente"
-                wire:click="terminados">
+                wire:click="actualizarEstatus('terminados')">
                 @if ($terminado_count > 0)
                     <span class="indicador_numero" style="filter: contrast(200%);">{{ $terminado_count }}</span>
                 @endif
@@ -134,7 +134,7 @@
             </button>
             <button class="btn btn-primary ml-3"
                 style="background-color: #1E88D7; border:none !important; position: relative;" id="btn_pendiente"
-                wire:click="todos">
+                wire:click="actualizarEstatus('todos')">
                 <span class="indicador_numero"
                     style="filter: contrast(200%);">{{ $terminado_count + $proceso_count + $cancelado_count }}</span>
                 Todos
@@ -176,7 +176,7 @@
                         </td>
                         <td>{{ $proyecto->sede_id ? $proyecto->sede->sede : '' }} </td>
                         <td>{{ $proyecto->estatus }} </td>
-                        <td>{{ $proyecto->tipo??'No Definido' }} </td>
+                        <td>{{ $proyecto->tipo ?? 'No Definido' }} </td>
                         <td>
                             @can('timesheet_administrador_proyectos_delete')
                                 @php
@@ -196,7 +196,7 @@
                                 @endif
                                 <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn">
                                     <i class="fa-solid fa-pen-to-square" style="font-size:15pt;"
-                                    title="Editar proyecto: {{ $proyecto->proyecto }}"></i>
+                                        title="Editar proyecto: {{ $proyecto->proyecto }}"></i>
                                 </a>
                             @endcan
                             @can('timesheet_administrador_tareas_proyectos_access')
@@ -227,7 +227,8 @@
                             <div class="text-center">
                                 <i class="fa-solid fa-signal" style="color: #61CB5C; font-size:60pt;"></i>
                                 <h1 class="my-4" style="font-size:14pt;">Cambiar Estatus de Proyecto:
-                                    <small>{{ $proyecto->proyecto }}</small></h1>
+                                    <small>{{ $proyecto->proyecto }}</small>
+                                </h1>
                                 <p class="parrafo">Seleccione el estatus del proyecto</p>
                             </div>
 
@@ -271,7 +272,8 @@
                             <div class="text-center">
                                 <i class="fa-solid fa-trash-can" style="color: #E34F4F; font-size:60pt;"></i>
                                 <h1 class="my-4" style="font-size:14pt;">Eliminar Proyecto:
-                                    <small>{{ $proyecto->proyecto }}</small></h1>
+                                    <small>{{ $proyecto->proyecto }}</small>
+                                </h1>
                                 <p class="parrafo">¿Desea eliminar el proyecto {{ $proyecto->proyecto }}?</p>
                             </div>
 
@@ -418,7 +420,7 @@
                 Livewire.on('scriptTabla', () => {
                     tablaLivewire('datatable_timesheet_proyectos');
                     $('.select2').select2({
-                        'theme' : 'bootstrap4',
+                        'theme': 'bootstrap4',
                     });
                 });
                 document.getElementById('identificador_proyect').addEventListener('keyup', (e) => {

@@ -44,6 +44,11 @@ class PanelinicioComponent extends Component
 
     public function mount()
     {
+
+    }
+
+    public function render()
+    {
         $this->panel = PanelInicioRule::get()->first();
         $this->nombre_id = $this->panel->nombre;
         $this->nempleado_id = $this->panel->n_empleado;
@@ -59,10 +64,7 @@ class PanelinicioComponent extends Component
         $this->sede_id = $this->panel->sede;
         $this->dire_id = $this->panel->direccion;
         $this->cumpleanos_id = $this->panel->cumpleaños;
-    }
 
-    public function render()
-    {
         return view('livewire.panelinicio-component');
     }
 

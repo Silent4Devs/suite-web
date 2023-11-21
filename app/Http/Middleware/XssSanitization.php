@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class XssSanitization
 {
@@ -20,6 +19,7 @@ class XssSanitization
             $input = strip_tags($input);
         });
         $request->merge($input);
+
         return $next($request);
     }
 }

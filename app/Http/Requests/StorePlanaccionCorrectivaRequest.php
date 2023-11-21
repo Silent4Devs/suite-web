@@ -20,7 +20,7 @@ class StorePlanaccionCorrectivaRequest extends FormRequest
                 'required',
             ],
             'fechacompromiso' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
         ];

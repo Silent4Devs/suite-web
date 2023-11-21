@@ -135,7 +135,7 @@ class SolicitudVacacionesController extends Controller
 
                 return redirect(route('admin.solicitud-vacaciones.index'));
             }
-            // Inician vacaciones a los 6 meses
+        // Inician vacaciones a los 6 meses
         } else {
             $tipo_conteo = null;
             $fecha_limite = Vacaciones::where('inicio_conteo', '=', $año)->pluck('fin_conteo')->first();
@@ -187,7 +187,7 @@ class SolicitudVacacionesController extends Controller
             } else {
                 $mostrar_reclamo = false;
             }
-            //    dd($mostrar_reclamo);
+        //    dd($mostrar_reclamo);
         } else {
             $mostrar_reclamo = false;
             $periodo_vencido = 0;

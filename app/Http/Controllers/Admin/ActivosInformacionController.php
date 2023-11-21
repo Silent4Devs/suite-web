@@ -26,7 +26,7 @@ class ActivosInformacionController extends Controller
 
     public function create($matriz)
     {
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
         $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $area = Area::getAll();
         $procesos = Proceso::with('macroproceso')->get();
@@ -58,7 +58,7 @@ class ActivosInformacionController extends Controller
     public function edit(Request $request, $activos, $matriz)
     {
         $activos = ActivoInformacion::find($activos);
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
         $procesos = Proceso::with('macroproceso')->get();
         $confidencials = activoConfidencialidad::getAll();
         $integridads = activoIntegridad::get();

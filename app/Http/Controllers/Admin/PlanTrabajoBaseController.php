@@ -175,7 +175,7 @@ class PlanTrabajoBaseController extends Controller
             Storage::disk('public')->put('gantt/tmp/ganttTemporal.json', $proyecto);
             $gantt_path = 'storage/gantt/';
             $path = public_path($gantt_path);
-            $files = glob($path . 'gantt_inicial*.json');
+            $files = glob($path.'gantt_inicial*.json');
             $archivos_gantt = [];
 
             sort($files, SORT_NATURAL | SORT_FLAG_CASE);
@@ -183,12 +183,12 @@ class PlanTrabajoBaseController extends Controller
                 array_push($archivos_gantt, $valor);
             }
 
-            $current_gantt = $path . 'gantt_inicial.json';
-            $tmp_gantt = json_decode(file_get_contents($path . 'tmp/ganttTemporal.json'));
+            $current_gantt = $path.'gantt_inicial.json';
+            $tmp_gantt = json_decode(file_get_contents($path.'tmp/ganttTemporal.json'));
             $old_gant = json_decode(file_get_contents($current_gantt));
             $notExistsChanges = $tmp_gantt == $old_gant;
 
-            if (!$notExistsChanges) {
+            if (! $notExistsChanges) {
                 return response()->json(['existsChanges' => true]);
             } else {
                 return response()->json(['notExistsChanges' => true]);

@@ -10,7 +10,6 @@ class SugerenciasObserver
     /**
      * Handle the Sugerencias "created" event.
      *
-     * @param  \App\Models\Sugerencias  $sugerencias
      * @return void
      */
     public function created(Sugerencias $sugerencias)
@@ -21,7 +20,6 @@ class SugerenciasObserver
     /**
      * Handle the Sugerencias "updated" event.
      *
-     * @param  \App\Models\Sugerencias  $sugerencias
      * @return void
      */
     public function updated(Sugerencias $sugerencias)
@@ -32,7 +30,6 @@ class SugerenciasObserver
     /**
      * Handle the Sugerencias "deleted" event.
      *
-     * @param  \App\Models\Sugerencias  $sugerencias
      * @return void
      */
     public function deleted(Sugerencias $sugerencias)
@@ -43,7 +40,6 @@ class SugerenciasObserver
     /**
      * Handle the Sugerencias "restored" event.
      *
-     * @param  \App\Models\Sugerencias  $sugerencias
      * @return void
      */
     public function restored(Sugerencias $sugerencias)
@@ -54,7 +50,6 @@ class SugerenciasObserver
     /**
      * Handle the Sugerencias "force deleted" event.
      *
-     * @param  \App\Models\Sugerencias  $sugerencias
      * @return void
      */
     public function forceDeleted(Sugerencias $sugerencias)

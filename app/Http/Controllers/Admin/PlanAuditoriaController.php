@@ -157,7 +157,7 @@ class PlanAuditoriaController extends Controller
             'objetivo' => 'required',
             'alcance' => 'required',
             'criterios' => 'required',
-            'id_auditoria' => 'nullable|unique:plan_auditoria,id_auditoria,' . $planAuditorium->id . ',id,deleted_at,NULL',
+            'id_auditoria' => 'nullable|unique:plan_auditoria,id_auditoria,'.$planAuditorium->id.',id,deleted_at,NULL',
 
         ]);
 
@@ -207,7 +207,7 @@ class PlanAuditoriaController extends Controller
 
     public function saveUpdateAuditados($auditados, $planAuditorium)
     {
-        if (!is_null($auditados)) {
+        if (! is_null($auditados)) {
             foreach ($auditados as $auditado) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (ActividadesPlanAuditorium::find($auditado['id']) != null) {

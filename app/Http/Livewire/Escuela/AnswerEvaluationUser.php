@@ -13,23 +13,41 @@ use Livewire\Component;
 class AnswerEvaluationUser extends Component
 {
     public $answer;
+
     public $userEvaluationId;
+
     public $course;
+
     public $evaluation;
+
     public $currentQuestion;
+
     public $count = 0;
+
     public $totalQuizQuestions;
+
     public $setupQuiz = true;
+
     public $userAnswered = [];
+
     public $isDisabled = true;
+
     public $currectQuizAnswers;
+
     public $learningMode = false;
+
     public $quizInProgress = false;
+
     public $answeredQuestions = [];
+
     public $questionsTaken;
+
     public $showResults = false;
+
     public $quizPercentage;
+
     public $correctQuestions;
+
     public $percentageEvaluationUser;
 
     protected $rules = [
@@ -42,13 +60,8 @@ class AnswerEvaluationUser extends Component
 
     public function mount($course_id, $evaluacion_id)
     {
-        $this->course = Course::find($course_id);
-        $evaluation = Evaluation::find($evaluacion_id);
-        $this->getEvaluation($evaluation);
-        $this->totalQuizQuestions = count($this->evaluation->questions);
-        $this->startQuiz();
-        $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', auth()->id())->pluck('question_id')->toArray();
-        $this->count = count($this->answeredQuestions) + 1;
+        $this->course_id = $course_id;
+        $this->evaluacion_id = $evaluacion_id;
     }
 
     public function getNextQuestion()
@@ -89,7 +102,7 @@ class AnswerEvaluationUser extends Component
         // Keep the instance in $this->quizid veriable for later updates to quiz.
         // $this->validate();
         $userEvaluationExist = UserEvaluation::where('user_id', auth()->id())->where('evaluation_id', $this->evaluation->id)->exists();
-        if (!$userEvaluationExist) {
+        if (! $userEvaluationExist) {
             $this->userEvaluationId = UserEvaluation::create([
                 'user_id' => auth()->id(),
                 'quiz_size' => $this->totalQuizQuestions,
@@ -164,6 +177,14 @@ class AnswerEvaluationUser extends Component
 
     public function render()
     {
+        $this->course = Course::getAll()->find($this->course_id);
+        $evaluation = Evaluation::find($this->evaluacion_id);
+        $this->getEvaluation($evaluation);
+        $this->totalQuizQuestions = count($this->evaluation->questions);
+        $this->startQuiz();
+        $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', auth()->id())->pluck('question_id')->toArray();
+        $this->count = count($this->answeredQuestions) + 1;
+
         return view('livewire.escuela.answer-evaluation-user');
     }
 }

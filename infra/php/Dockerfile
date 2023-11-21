@@ -52,9 +52,9 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     opcache \
     sockets \
     sodium \
-    excimer
-<<<<<<< HEAD
-=======
+    excimer \
+    pcntl \
+    posix
 
 # Enable phpredis extension
 #RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini

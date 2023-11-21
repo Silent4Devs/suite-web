@@ -15,8 +15,11 @@ class CourseIndex extends Component
     use WithPagination;
 
     public $category_id;
+
     public $level_id;
+
     public $selectioncategory;
+
     public $selectionlevel;
 
     public function render()

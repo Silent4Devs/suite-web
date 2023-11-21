@@ -14,7 +14,6 @@ class EditPartesInteresadas extends Component
         $id_requisito = ParteInteresadaExpectativaNecesidad::find($id);
 
         return $this->id_requisito;
-        dd($id_requisito);
     }
 
     public function render()

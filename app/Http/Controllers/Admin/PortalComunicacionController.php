@@ -15,8 +15,8 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Spatie\Fork\Fork;
 
 class PortalComunicacionController extends Controller
 {
@@ -30,28 +30,57 @@ class PortalComunicacionController extends Controller
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();
         $hoy->toDateString();
-        $user = User::getCurrentUser();
-        $authId = $user->id;
 
-        $aniversarios = Cache::remember('Portal:portal_aniversarios_' . $authId, 3600 * 2, function () use ($hoy) {
+        $results = Fork::new()
+            ->run(
+                function () {
+                    $user = User::getCurrentUser();
+
+                    return $user;
+                },
+                function () {
+                    $politica_existe = PoliticaSgsi::getAll()->count();
+
+                    return $politica_existe;
+                },
+                function () {
+                    $comite_existe = Comiteseguridad::getAll()->count();
+
+                    return $comite_existe;
+                },
+                function () {
+                    $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+
+                    return $documentos_publicados;
+                },
+
+                function () {
+                    $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
+
+                    return $comunicacionSgis;
+                },
+                function () {
+                    $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
+
+                    return $comunicacionSgis_carrusel;
+                },
+            );
+
+        $empleado_asignado = $results[0]->n_empleado;
+        $authId = $results[0]->id;
+        $politica_existe = $results[1];
+        $comite_existe = $results[2];
+        $documentos_publicados = $results[3];
+        $comunicacionSgis = $results[4];
+        $comunicacionSgis_carrusel = $results[5];
+
+        $aniversarios = Cache::remember('Portal:portal_aniversarios_'.$authId, 3600 * 2, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         });
 
-        $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo_' . $authId, 3600 * 2, function () use ($hoy) {
+        $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo_'.$authId, 3600 * 2, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
         });
-
-        $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-
-        $comunicacionSgis = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Blog')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
-        // dd($comunicacionSgis);
-
-        $comunicacionSgis_carrusel = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
-
-        $empleado_asignado = $user->n_empleado;
-
-        $politica_existe = PoliticaSgsi::getAll()->count();
-        $comite_existe = Comiteseguridad::getAll()->count();
 
         return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe'));
     }

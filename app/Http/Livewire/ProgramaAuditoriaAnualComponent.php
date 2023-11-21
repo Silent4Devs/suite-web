@@ -10,7 +10,7 @@ use Livewire\WithFileUploads;
 
 class ProgramaAuditoriaAnualComponent extends Component
 {
-    use WithFileUploads, LivewireAlert;
+    use LivewireAlert, WithFileUploads;
 
     public $documento;
 
@@ -37,8 +37,8 @@ class ProgramaAuditoriaAnualComponent extends Component
         $extension = $this->documento->extension();
 
         $nombreAuditoria = str_replace(' ', '_', $auditoriaAnual->nombre);
-        $nombreArchivo = $this->auditoriaAnualId . $nombreAuditoria . ".{$extension}";
-        $documentoAuditoria = $this->documento->storeAs('public/programaAnualAuditoria/documentos/' . $this->auditoriaAnualId . '/', $nombreArchivo);
+        $nombreArchivo = $this->auditoriaAnualId.$nombreAuditoria.".{$extension}";
+        $documentoAuditoria = $this->documento->storeAs('public/programaAnualAuditoria/documentos/'.$this->auditoriaAnualId.'/', $nombreArchivo);
         AuditoriaAnualDocumento::updateOrCreate([
             'id_auditoria_anuals' => $this->auditoriaAnualId,
         ], [

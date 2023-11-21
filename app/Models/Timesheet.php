@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use EloquentFilter\Filterable;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Timesheet extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use Filterable;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use HasFactory;
 
     protected $table = 'timesheet';
 
@@ -25,7 +25,6 @@ class Timesheet extends Model implements Auditable
         'aprobado',
         'empleado_id',
         'aprobador_id',
-        'aprobado',
         'rechazado',
         'estatus',
         'comentarios',
@@ -36,7 +35,7 @@ class Timesheet extends Model implements Auditable
 
     public static function getPersonalTimesheet()
     {
-        return Cache::remember('Timesheet:timesheet-' . auth()->user()->empleado->id, now()->addHours(3), function () {
+        return Cache::remember('Timesheet:timesheet-'.auth()->user()->empleado->id, now()->addHours(3), function () {
             return self::where('empleado_id', auth()->user()->empleado->id)->get();
         });
     }
@@ -75,7 +74,7 @@ class Timesheet extends Model implements Auditable
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
 
         $semana_rango = '
-            <font style="font-weight: lighter !important;"> Del </font><font style="font-weight: bolder !important;">' . $inicio_dia . '</font><font style="font-weight: lighter !important;"> al </font><font style="font-weight: bolder !important;">' . $fin_dia . '</font>';
+            <font style="font-weight: lighter !important;"> Del </font><font style="font-weight: bolder !important;">'.$inicio_dia.'</font><font style="font-weight: lighter !important;"> al </font><font style="font-weight: bolder !important;">'.$fin_dia.'</font>';
 
         return $semana_rango;
     }
@@ -127,7 +126,7 @@ class Timesheet extends Model implements Auditable
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")->format('d/m/Y');
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
 
-        $semana_rango = ' del ' . $inicio_dia . ' al ' . $fin_dia;
+        $semana_rango = ' del '.$inicio_dia.' al '.$fin_dia;
 
         return $semana_rango;
     }
@@ -141,7 +140,7 @@ class Timesheet extends Model implements Auditable
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify('last Monday')->format('Y-m-d');
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify('next Sunday')->format('Y-m-d');
 
-        $semana_rango = $inicio_dia . '|' . $fin_dia;
+        $semana_rango = $inicio_dia.'|'.$fin_dia;
 
         return $semana_rango;
     }

@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Empleado;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -14,9 +13,13 @@ class RequisicionesEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $requisicion;
+
     public $organizacion;
+
     public $tipo_firma;
+
     public $tipo_firma_siguiente;
+
     public $supervisor;
 
     /**
@@ -32,11 +35,11 @@ class RequisicionesEmail extends Mailable
         $this->organizacion = $organizacion;
         $this->tipo_firma = $tipo_firma;
 
-        $user = User::where('id',   $this->requisicion->id_user)->first();
+        $user = User::where('id', $this->requisicion->id_user)->first();
 
         $empleado = $user->empleado;
 
-        $this->supervisor =   $empleado->supervisor->name;
+        $this->supervisor = $empleado->supervisor->name;
 
         // requisiciones
         if ($tipo_firma === 'firma_solicitante') {
@@ -75,18 +78,18 @@ class RequisicionesEmail extends Mailable
         try {
             $img_route = $url;
             $logo_base = file_get_contents($img_route);
-            $img = 'data:image/png;base64,' . base64_encode($logo_base);
+            $img = 'data:image/png;base64,'.base64_encode($logo_base);
 
             return $img;
         } catch (\Exception $e) {
             try {
                 $img_route = $url;
                 $logo_base = Storage::get($img_route);
-                $img = 'data:image/png;base64,' . base64_encode($logo_base);
+                $img = 'data:image/png;base64,'.base64_encode($logo_base);
 
                 return $img;
             } catch (\Throwable $th) {
-                $img = 'data:image/png;base64,' . '';
+                $img = 'data:image/png;base64,'.'';
 
                 return $img;
             }
@@ -102,7 +105,7 @@ class RequisicionesEmail extends Mailable
     {
         return $this->from(env('MAIL_QARECEPTOR'), 'Sender Name')
             ->view('emails.requisiciones', [
-                'supervisor' =>  $this->supervisor,
+                'supervisor' => $this->supervisor,
                 'requisicion' => $this->requisicion,
                 'organizacion' => $this->organizacion,
                 'tipo_firma' => $this->tipo_firma,

@@ -127,12 +127,12 @@ class AccionCorrectivaController extends Controller
         $puestos = Puesto::getAll();
         $teams = Team::get();
 
-        $total_AC = AccionCorrectiva::get()->count();
-        $nuevos_AC = AccionCorrectiva::where('estatus', 'Sin atender')->get()->count();
-        $en_curso_AC = AccionCorrectiva::where('estatus', 'En curso')->get()->count();
-        $en_espera_AC = AccionCorrectiva::where('estatus', 'En espera')->get()->count();
-        $cerrados_AC = AccionCorrectiva::where('estatus', 'Cerrado')->get()->count();
-        $cancelados_AC = AccionCorrectiva::where('estatus', 'No procedente')->get()->count();
+        $total_AC = AccionCorrectiva::getAll()->count();
+        $nuevos_AC = $total_AC->where('estatus', 'Sin atender')->count();
+        $en_curso_AC = $total_AC->where('estatus', 'En curso')->count();
+        $en_espera_AC = $total_AC->where('estatus', 'En espera')->count();
+        $cerrados_AC = $total_AC->where('estatus', 'Cerrado')->count();
+        $cancelados_AC = $total_AC->where('estatus', 'No procedente')->count();
 
         return view('admin.accionCorrectivas.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
     }
@@ -187,7 +187,7 @@ class AccionCorrectivaController extends Controller
 
         $nombre_autorizas = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         $areas = Area::getAll();
 
@@ -310,12 +310,12 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->update($request->all());
         if ($request->input('documentometodo', false)) {
-            if (!$accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
+            if (! $accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
                 if ($accionCorrectiva->documentometodo) {
                     $accionCorrectiva->documentometodo->delete();
                 }
 
-                $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
+                $accionCorrectiva->addMedia(storage_path('tmp/uploads/'.$request->input('documentometodo')))->toMediaCollection('documentometodo');
             }
         } elseif ($accionCorrectiva->documentometodo) {
             $accionCorrectiva->documentometodo->delete();
