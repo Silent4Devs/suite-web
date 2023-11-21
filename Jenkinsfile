@@ -4,9 +4,10 @@ pipeline {
 
     stage('install') {
       steps {
-        git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj/-/tree/stagging?ref_type=heads'
+        git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
       }
     }
+
 
      stage('build') {
       steps {
