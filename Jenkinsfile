@@ -36,15 +36,15 @@ pipeline {
     }
 
     stage('Deploy via SSH') {
-      steps {
-        script {
-          // Utiliza la clave privada en lugar de la clave pública
-          sshagent(['/root/.ssh/id_rsa']) {
-            // Realiza un push directo desde 'develop' a 'stagging'
-            sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push origin develop:stagging"'
-          }
+        steps {
+            script {
+                // Utiliza la clave privada en lugar de la clave pública
+                sshagent(['/root/.ssh/id_rsa']) {
+                    // Realiza un push directo desde 'develop' a 'stagging' con la URL SSH
+                    sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push git@gitlab.com:silent4business/tabantaj.git develop:stagging"'
+                }
+            }
         }
-      }
     }
   }
 }
