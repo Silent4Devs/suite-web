@@ -8,6 +8,8 @@ use App\Mail\SolicitudVacaciones as MailSolicitudVacaciones;
 use App\Models\Empleado;
 use App\Models\IncidentesVacaciones;
 use App\Models\Organizacion;
+use App\Models\Puesto;
+use App\Models\Area;
 use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\SolicitudVacaciones;
@@ -135,7 +137,7 @@ class SolicitudVacacionesController extends Controller
 
                 return redirect(route('admin.solicitud-vacaciones.index'));
             }
-        // Inician vacaciones a los 6 meses
+            // Inician vacaciones a los 6 meses
         } else {
             $tipo_conteo = null;
             $fecha_limite = Vacaciones::where('inicio_conteo', '=', $año)->pluck('fin_conteo')->first();
@@ -187,7 +189,7 @@ class SolicitudVacacionesController extends Controller
             } else {
                 $mostrar_reclamo = false;
             }
-        //    dd($mostrar_reclamo);
+            //    dd($mostrar_reclamo);
         } else {
             $mostrar_reclamo = false;
             $periodo_vencido = 0;
@@ -335,6 +337,13 @@ class SolicitudVacacionesController extends Controller
         $ingreso = $usuario->empleado->antiguedad;
         $año = Carbon::createFromDate($ingreso)->age;
 
+        $efecto = 1;
+        $this->filtrado_empleados(
+            $efecto,
+            $usuario,
+            $año
+        );
+
         if ($año == 0) {
             $medio_año = true;
             $año = 1;
@@ -366,6 +375,44 @@ class SolicitudVacacionesController extends Controller
         } else {
             return null;
         }
+    }
+
+    public function filtrado_empleados($efecto, $usuario, $año)
+    {
+        $idempleado = $usuario->empleado->id;
+        $puesto = Puesto::select('id', 'puesto')->where('id', '=', 103)->with('puesto_empleados')->get();
+        // $area = Area::select('id', 'area')->where('id', '=', 3)->with('empleados')->get();
+
+        $areaId = $usuario->empleado->area_id; // Replace this with the specific area ID you want to query
+        $puestoId = $usuario->empleado->puesto_id;
+
+        $areaWithEmpleados = Area::select('id', 'area')->where('id', $areaId)
+            ->withWhereHas('empleados', function ($query) use ($idempleado) {
+                // Replace 'field_name' with the field you want to check inside the 'empleados' relation
+                $query->select('id', 'name', 'area_id')->where('id', $idempleado);
+            })
+            ->get();
+
+        $puestoWithEmpleados = Puesto::select('id', 'puesto')->where('id', $puestoId)
+            ->withWhereHas('puesto_empleados', function ($query) use ($idempleado) {
+                // Replace 'field_name' with the field you want to check inside the 'empleados' relation
+                $query->select('id', 'name', 'puesto_id')->where('id', $idempleado);
+            })
+            ->get();
+
+        dd($areaWithEmpleados, $puestoWithEmpleados);
+
+        if ($areaWithEmpleados->isNotEmpty()) {
+            // Value exists in the collection
+            dd("vamos bien");
+        } else {
+            // Value does not exist in the collection
+            echo "Value does not exist!";
+        }
+        // dd($puesto, $area);
+        $dias_extra = IncidentesVacaciones::where('efecto', $efecto)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
+            $q->where('empleado_id', $usuario->empleado->id);
+        })->pluck('dias_aplicados')->sum();
     }
 
     public function diasDisponiblesAñopasado()

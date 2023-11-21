@@ -107,6 +107,11 @@ class Puesto extends Model implements Auditable
     //     return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
     // }
 
+    public function puesto_empleados()
+    {
+        return $this->hasMany(Empleado::class, 'puesto_id', 'id')->alta()->select('id', 'name', 'puesto_id');
+    }
+
     public function empleados()
     {
         return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id', 'id')->alta()->with('area');

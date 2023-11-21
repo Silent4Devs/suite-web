@@ -66,6 +66,48 @@
         @endif
     </div>
 </div>
+<div class="row">
+    <div class="form-group col-md-12">
+        <label for="normas_puestos" style="color:#212529;">Puestos a
+            aplicar:</label>
+        <select
+            class="form-control js-example-basic-multiple empleados-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
+            name="puestos[]" id="puestos" multiple="multiple">
+            @foreach ($puestos as $puesto)
+                <option value="{{ $puesto->id }}" data-empleado="{{ $puesto->puesto }}"
+                    {{ old('puestos', in_array($puesto->id, $puestos_seleccionados)) ? ' selected="selected"' : '' }}>
+                    {{ $puesto->puesto }}
+                </option>
+            @endforeach
+        </select>
+        @if ($errors->has('puestos'))
+            <div class="invalid-feedback">
+                {{ $errors->first('puestos') }}
+            </div>
+        @endif
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        <label for="normas_areas" style="color:#212529;">Areas a
+            aplicar:</label>
+        <select
+            class="form-control js-example-basic-multiple empleados-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
+            name="areas[]" id="areas" multiple="multiple">
+            @foreach ($areas as $area)
+                <option value="{{ $area->id }}" data-empleado="{{ $area->area }}"
+                    {{ old('areas', in_array($area->id, $areas_seleccionadas)) ? ' selected="selected"' : '' }}>
+                    {{ $area->area }}
+                </option>
+            @endforeach
+        </select>
+        @if ($errors->has('areas'))
+            <div class="invalid-feedback">
+                {{ $errors->first('areas') }}
+            </div>
+        @endif
+    </div>
+</div>
 <!-- Descripcion Field -->
 <div class="row mb-4">
     {{-- <div class="form-group col-sm-12">

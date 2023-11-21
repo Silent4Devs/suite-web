@@ -34,4 +34,40 @@ class IncidentesVacaciones extends Model implements Auditable
     {
         return $this->belongsToMany(Empleado::class, 'incidentes_vacaciones_empleados', 'incidente_id', 'empleado_id');
     }
+
+    public function puestos()
+    {
+        return $this->belongsToMany(Puesto::class, 'incidentes_vacaciones_puestos', 'incidente_id', 'puesto_id');
+    }
+
+    public function areas()
+    {
+        return $this->belongsToMany(Area::class, 'incidentes_vacaciones_areas', 'incidente_id', 'area_id');
+    }
+
+    // Inside your IncidentesVacaciones model
+    public function areIncidentsApplied($efecto, $empleadoId = null, $puestoId = null, $areaId = null)
+    {
+        $query = self::where('efecto', $efecto);
+
+        if ($empleadoId !== null) {
+            $query->whereHas('empleados', function ($q) use ($empleadoId) {
+                $q->where('empleado_id', $empleadoId);
+            });
+        }
+
+        if ($puestoId !== null) {
+            $query->whereHas('puestos', function ($q) use ($puestoId) {
+                $q->where('puesto_id', $puestoId);
+            });
+        }
+
+        if ($areaId !== null) {
+            $query->whereHas('areas', function ($q) use ($areaId) {
+                $q->where('area_id', $areaId);
+            });
+        }
+
+        return $query->exists();
+    }
 }
