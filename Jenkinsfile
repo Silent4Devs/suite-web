@@ -40,8 +40,10 @@ pipeline {
         script {
           // Utiliza la clave privada en lugar de la clave pública
           sshagent(['/root/.ssh/id_rsa']) {
-            // Hace un pull directo en la rama 'stagging' desde 'develop'
-            sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin develop:stagging"'
+            // Hace un pull en la rama 'stagging' primero
+            sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
+            // Luego, realiza el merge con la rama 'develop'
+            sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git merge origin/develop"'
           }
         }
       }
