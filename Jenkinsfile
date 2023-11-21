@@ -44,7 +44,7 @@ pipeline {
                 sh 'ssh-keyscan -H 192.168.9.78 >> ~/.ssh/known_hosts'
 
                 // Realiza un push directo desde 'develop' a 'stagging' con la URL SSH
-                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push https://gitlab.com/silent4business/tabantaj.git develop:stagging"'
+                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push develop:stagging"'
             }
         }
     }
