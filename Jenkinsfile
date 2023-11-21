@@ -36,16 +36,18 @@ pipeline {
     }
 
     stage('Deploy via SSH') {
-        steps {
-            script {
-                // Utiliza la clave privada en lugar de la clave pública
-                sshagent(['/root/.ssh/id_rsa']) {
-                    // Realiza un push directo desde 'develop' a 'stagging' con la URL SSH
-                   sh 'ssh -o StrictHostKeyChecking=no desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push git@gitlab.com:silent4business/tabantaj.git develop:stagging"'
+    steps {
+        script {
+            // Utiliza la clave privada en lugar de la clave pública
+            sshagent(['/root/.ssh/id_rsa']) {
+                // Añadir la clave del host al archivo known_hosts
+                sh 'ssh-keyscan -H 192.168.9.78 >> ~/.ssh/known_hosts'
 
-                }
+                // Realiza un push directo desde 'develop' a 'stagging' con la URL SSH
+                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push git@gitlab.com:silent4business/tabantaj.git develop:stagging"'
             }
         }
     }
+}
   }
 }
