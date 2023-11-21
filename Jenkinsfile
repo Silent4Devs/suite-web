@@ -39,8 +39,9 @@ pipeline {
       steps {
         script {
           // Utiliza la clave privada en lugar de la clave pública
-          sshagent(['CREDENTIAL_ID']) {
-            sh 'ssh -i /root/.ssh/id_rsa desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git checkout stagging && git pull origin develop"'
+          sshagent(['/root/.ssh/id_rsa']) {
+            // Configura la estrategia de pull antes de hacer el pull desde la rama 'develop'
+            sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git checkout stagging && git config pull.rebase false && git pull origin develop"'
           }
         }
       }
