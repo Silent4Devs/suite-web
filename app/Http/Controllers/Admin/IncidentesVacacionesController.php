@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\IncidentesVacaciones;
+use App\Models\Puesto;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -75,15 +77,27 @@ class IncidentesVacacionesController extends Controller
         abort_if(Gate::denies('incidentes_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new IncidentesVacaciones();
         $empleados = Empleado::getAltaEmpleados();
+        $puestos = Puesto::getAll();
+        $areas = Area::getAll();
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
+        $puestos_seleccionados = $vacacion->puestos->pluck('id')->toArray();
+        $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
 
-        return view('admin.incidentesVacaciones.create', compact('vacacion', 'empleados', 'empleados_seleccionados'));
+        return view('admin.incidentesVacaciones.create', compact(
+            'vacacion',
+            'empleados',
+            'empleados_seleccionados',
+            'puestos',
+            'puestos_seleccionados',
+            'areas',
+            'areas_seleccionadas'
+        ));
     }
 
     public function store(Request $request)
     {
         abort_if(Gate::denies('incidentes_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'nombre' => 'required|string',
             'dias_aplicados' => 'required|int',
@@ -94,8 +108,20 @@ class IncidentesVacacionesController extends Controller
         $empleados = array_map(function ($value) {
             return intval($value);
         }, $request->empleados);
+
+        $puestos = array_map(function ($value) {
+            return intval($value);
+        }, $request->puestos);
+
+        $areas = array_map(function ($value) {
+            return intval($value);
+        }, $request->areas);
+
         $vacacion = IncidentesVacaciones::create($request->all());
         $vacacion->empleados()->sync($empleados);
+        $vacacion->puestos()->sync($puestos);
+        $vacacion->areas()->sync($areas);
+
 
         Alert::success('éxito', 'Información añadida con éxito');
 
@@ -113,8 +139,10 @@ class IncidentesVacacionesController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('incidentes_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::getAll();
-        $vacacion = IncidentesVacaciones::with('empleados')->find($id);
+        $empleados = Empleado::getAltaEmpleados();
+        $puestos = Puesto::getAll();
+        $areas = Area::getAll();
+        $vacacion = IncidentesVacaciones::with('empleados', 'puestos', 'areas')->find($id);
 
         if (empty($vacacion)) {
             Alert::warning('warning', 'Data not found');
@@ -122,8 +150,18 @@ class IncidentesVacacionesController extends Controller
             return redirect(route('admin.incidentes-dayoff'));
         }
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
+        $puestos_seleccionados = $vacacion->puestos->pluck('id')->toArray();
+        $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
 
-        return view('admin.incidentesVacaciones.edit', compact('vacacion', 'empleados', 'empleados_seleccionados'));
+        return view('admin.incidentesVacaciones.edit', compact(
+            'vacacion',
+            'empleados',
+            'empleados_seleccionados',
+            'puestos',
+            'puestos_seleccionados',
+            'areas',
+            'areas_seleccionadas'
+        ));
     }
 
     public function update(Request $request, $id)
@@ -142,7 +180,18 @@ class IncidentesVacacionesController extends Controller
         $empleados = array_map(function ($value) {
             return intval($value);
         }, $request->empleados);
+
+        $puestos = array_map(function ($value) {
+            return intval($value);
+        }, $request->puestos);
+
+        $areas = array_map(function ($value) {
+            return intval($value);
+        }, $request->areas);
+
         $vacacion->empleados()->sync($empleados);
+        $vacacion->puestos()->sync($puestos);
+        $vacacion->areas()->sync($areas);
 
         Alert::success('éxito', 'Información añadida con éxito');
 
