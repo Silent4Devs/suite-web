@@ -14,7 +14,7 @@ pipeline {
             return
           }
         }
-        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
+        git branch: 'develop', url: 'git@gitlab.com:silent4business/tabantaj.git'
       }
     }
 
