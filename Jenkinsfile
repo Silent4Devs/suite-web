@@ -34,14 +34,26 @@ pipeline {
         }
       }
     }
-    
+
     stage('Deploy via SSH') {
       steps {
         script {
           // Utiliza la clave privada en lugar de la clave pública
           sshagent(['/root/.ssh/id_rsa']) {
-            // Configura la estrategia de pull antes de hacer el pull desde la rama 'develop'
-            sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git checkout stagging && git config pull.rebase false && git pull origin develop"'
+            // Hace un pull directo en la rama 'stagging' desde 'develop'
+            sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin develop:stagging"'
+          }
+        }
+      }
+    }
+
+    stage('Push to Stagging') {
+      steps {
+        script {
+          // Utiliza la clave privada en lugar de la clave pública
+          sshagent(['/root/.ssh/id_rsa']) {
+            // Realiza el push de la rama 'stagging' al repositorio remoto
+            sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push origin stagging"'
           }
         }
       }
