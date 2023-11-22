@@ -111,7 +111,7 @@
                 </div>
                 <div class="col-md-3 form-group">
                     <label class="form-label">Proyecto</label>
-                    <select class="form-control" wire:model="proyecto_id">
+                    <select class="form-control" wire:model.defer="proyecto_id">
                         <option selected value="0">
                             Mostrar todos los proyectos
                             @if ($area_id)
@@ -124,17 +124,22 @@
                             </option>
                         @endforeach
                     </select>
-                    <small>Seleccione "Mostrar todo los proyctos" para mostrar todos</small>
+                    <small>Seleccione "Mostrar todo los proyectos" para mostrar todos</small>
                 </div>
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de inicio</label>
                     <input id="fecha_dia_registros_inicio_proyectos" class="form-control date_librery" type="date"
-                        name="fecha_inicio" wire:model="fecha_inicio">
+                        name="fecha_inicio" wire:model.defer="fecha_inicio">
                 </div>
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de fin</label>
                     <input id="fecha_dia_registros_fin_proyectos" class="form-control date_librery" type="date"
-                        name="fecha_fin" wire:model="fecha_fin">
+                        name="fecha_fin" wire:model.defer="fecha_fin">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-right">
+                    <button class="btn btn-primary" wire:click="render()">Buscar</button>
                 </div>
             </div>
             <div class="row">
@@ -171,7 +176,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 p-0" style="text-align: end" hide>
+                        <div class="col-6 p-0 d-none" style="text-align: end">
                             <div class="row">
                                 <div class="col-6 p-0"></div>
                                 <div class="col-6 p-0">

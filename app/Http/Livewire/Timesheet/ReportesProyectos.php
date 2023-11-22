@@ -321,6 +321,8 @@ class ReportesProyectos extends Component
         $this->calendario_tabla = $calendario_array;
         $this->hoy_format = $this->hoy->format('d/m/Y');
 
+        // $this->proyecto_id = null;
+
         return view('livewire.timesheet.reportes-proyectos', compact('proyectos_array'));
     }
 

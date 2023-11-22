@@ -1,50 +1,52 @@
 pipeline {
   agent any
-  stages {
 
+  stages {
     stage('install') {
       steps {
-        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
+        script {
+          // Solo ejecuta el pipeline si hay cambios en la rama 'develop'
+          if (env.BRANCH_NAME == 'develop') {
+            echo "Running pipeline for branch develop"
+          } else {
+            echo "Skipping pipeline for branch ${env.BRANCH_NAME}"
+            currentBuild.result = 'ABORTED'
+            return
+          }
+        }
+        git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
       }
     }
 
-
-     stage('build') {
+    stage('build') {
       steps {
-        script{
+        script {
           try {
-                sh 'docker-compose exec php cp .env.example .env'
-                sh 'docker-compose exec php composer install --ignore-platform-reqs'
-                sh 'docker-compose exec php php artisan key:generate'
-                sh 'docker-compose exec php php artisan migrate'
-                sh 'docker-compose exec php chmod 777 -R storage'
-                sh 'docker-compose exec php php artisan optimize:clear'
-            } catch (Exception e) {
-              echo 'Exception occurred: ' + e.toString()
-            }
+            sh 'docker-compose exec php cp .env.example .env'
+            sh 'docker-compose exec php composer install --ignore-platform-reqs'
+            sh 'docker-compose exec php php artisan key:generate'
+            sh 'docker-compose exec php php artisan migrate'
+            sh 'docker-compose exec php chmod 777 -R storage'
+            sh 'docker-compose exec php php artisan optimize:clear'
+          } catch (Exception e) {
+            echo 'Exception occurred: ' + e.toString()
+          }
         }
       }
     }
 
-     stage('Deploy via SSH') {
-       steps {
-                // Despliegar el código a través de SSH en otra rama
+    stage('Deploy via SSH') {
+    steps {
+        script {
+            // Utiliza la clave privada en lugar de la clave pública
+            sshagent(['/root/.ssh/id_rsa']) {
+                // Realiza un push directo desde 'develop' a 'stagging' con la URL SSH
+                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push origin develop:stagging"'
 
-                // Instalar paquete ssh en Jenkins
-                sh 'apt-get install -y ssh'
-
-                // Copiar el contenido del directorio actual a la ubicación remota
-                sh 'scp -r ./* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
-
-                // Cambiar a la rama de destino
-                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git checkout stagging && git pull origin develop"'
-
-                // Reiniciar la aplicación en la nueva rama
-                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && ./reiniciar_aplicacion.sh"'
             }
-     }
-
-
-     }
+        }
+    }
+}
+  }
 }
 
