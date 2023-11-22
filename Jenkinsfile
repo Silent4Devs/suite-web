@@ -5,6 +5,7 @@ pipeline {
         QA_SERVER = 'desarrollo@192.168.9.78'
         QA_PASSWORD = 'S3cur3.qa'
         COMPOSE_FILE = 'docker-compose.yml'
+        DOCKER_IMAGE = 'nginx:stable-alpine'
     }
 
     stages {
