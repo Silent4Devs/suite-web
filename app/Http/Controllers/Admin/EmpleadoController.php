@@ -342,6 +342,7 @@ class EmpleadoController extends Controller
 
     public function createUserFromEmpleado($empleado)
     {
+        dd($empleado);
         $generatedPassword = $this->generatePassword();
         $user = User::create([
             'name' => $empleado->name,
