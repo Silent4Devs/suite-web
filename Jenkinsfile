@@ -11,7 +11,7 @@ pipeline {
             }
         }
 
-        stage('Desplegar en QA') {
+        stage('Desplegar en Staging') {
             environment {
                 QA_SERVER = '192.168.9.78'
                 QA_USER = 'desarrollo'
@@ -22,8 +22,8 @@ pipeline {
                 script {
                     // Utilizar sshagent para autenticarse y ejecutar comandos en el servidor QA
                     sshagent(['desarrollo@192.168.9.78']) {
-                        // Ejecutar git pull en la rama stagging en el servidor QA
-                        sh "ssh -p ${QA_PORT} ${QA_USER}@${QA_SERVER} 'cd /var/contenedor/tabantaj && git pull origin stagging'"
+                        // Ejecutar git pull en la rama staging en el servidor QA
+                        sh "ssh -p ${QA_PORT} ${QA_USER}@${QA_SERVER} 'cd /var/contenedor/tabantaj && git pull origin develop:staging'"
                     }
                 }
             }
