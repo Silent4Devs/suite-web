@@ -1,34 +1,47 @@
 pipeline {
-    agent any
+  agent any
+  stages {
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout([$class: "GitSCM",
-                    branches: [[name: 'stagging']],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [
-                        [$class: "LocalBranch", localBranch: '**'],
-                        [$class: "WipeWorkspace"],
-                        [$class: "CleanBeforeCheckout"]
-                    ],
-                    submoduleCfg: [],
-                    userRemoteConfigs: [[credentialsId: 'desarrollo@192.168.9.78', url: 'https://gitlab.com/silent4business/tabantaj.git']]
-                ])
-            }
-        }
-
-        stage('Build') {
-            steps {
-                // Realizar las tareas de construcción (por ejemplo, compilación del código, instalación de dependencias, etc.)
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh 'docker build -t tabantaj .'
-                sh 'docker run -d -p 8080:80 tabantaj:latest'
-            }
-        }
+    stage('install') {
+      steps {
+        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
+      }
     }
+
+
+     stage('build') {
+      steps {
+        script{
+          try {
+                sh 'docker-compose exec php cp .env.example .env'
+                sh 'docker-compose exec php composer install --ignore-platform-reqs'
+                sh 'docker-compose exec php php artisan key:generate'
+                sh 'docker-compose exec php php artisan migrate'
+                sh 'docker-compose exec php chmod 777 -R storage'
+                sh 'docker-compose exec php php artisan optimize:clear'
+            } catch (Exception e) {
+              echo 'Exception occurred: ' + e.toString()
+            }
+        }
+      }
+    }
+
+     stage('Deploy via SSH') {
+       steps {
+                // Despliegar el código a través de SSH en otra rama
+
+                // Instalar paquete ssh en Jenkins
+                sh 'apt-get install -y ssh'
+
+                // Copiar el contenido del directorio actual a la ubicación remota
+                // sh 'scp -r ./* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
+
+                // Cambiar a la rama de destino
+                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git checkout stagging && git pull origin stagging"'
+            }
+     }
+
+
+     }
 }
+
