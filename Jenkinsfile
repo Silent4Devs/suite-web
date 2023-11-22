@@ -1,52 +1,43 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('install') {
-      steps {
-        script {
-          // Solo ejecuta el pipeline si hay cambios en la rama 'develop'
-          if (env.BRANCH_NAME == 'develop') {
-            echo "Running pipeline for branch develop"
-          } else {
-            echo "Skipping pipeline for branch ${env.BRANCH_NAME}"
-            currentBuild.result = 'ABORTED'
-            return
-          }
-        }
-        git branch: 'stagging', url: 'git@gitlab.com:silent4business/tabantaj.git'
-      }
+    environment {
+        SSH_DEPLOY_USER = 'desarrollo'
+        SSH_DEPLOY_HOST = '192.168.9.78'
+        SSH_DEPLOY_PORT = 22
+        GIT_REPO_URL = 'https://gitlab.com/silent4business/tabantaj.git'
+        GIT_BRANCH_DEVELOP = 'develop'
+        GIT_BRANCH_STAGING = 'stagging'
     }
 
-    stage('build') {
-      steps {
-        script {
-          try {
-            sh 'docker-compose exec php cp .env.example .env'
-            sh 'docker-compose exec php composer install --ignore-platform-reqs'
-            sh 'docker-compose exec php php artisan key:generate'
-            sh 'docker-compose exec php php artisan migrate'
-            sh 'docker-compose exec php chmod 777 -R storage'
-            sh 'docker-compose exec php php artisan optimize:clear'
-          } catch (Exception e) {
-            echo 'Exception occurred: ' + e.toString()
-          }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                        checkout([$class: 'GitSCM', branches: [[name: "${GIT_BRANCH_DEVELOP}"]], userRemoteConfigs: [[url: "${GIT_REPO_URL}"]]])
+                }
+            }
         }
-      }
-    }
 
-    stage('Deploy via SSH') {
-    steps {
-        script {
-            // Utiliza la clave privada en lugar de la clave pública
-            sshagent(['/root/.ssh/id_rsa']) {
-                // Realiza un push directo desde 'develop' a 'stagging' con la URL SSH
-                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push origin develop:stagging"'
 
+        stage('Deploy to Staging') {
+            steps {
+                script {
+                    sh """
+                       cd /var/contenedor/tabantaj &&
+                        git checkout ${GIT_BRANCH_STAGING} &&
+                        git pull origin ${GIT_BRANCH_STAGING} &&
+                        git merge origin/${GIT_BRANCH_DEVELOP}
+                    """
+                }
             }
         }
     }
-}
-  }
-}
 
+    post {
+        success {
+            echo 'Deployment to staging successful!'
+        }
+    }
+}
