@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                    sshagent(['/root/.ssh/id_rsa.pub']) {
-                   sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push origin staging""'
+                   sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin staging""'
                   }
               }
           }
