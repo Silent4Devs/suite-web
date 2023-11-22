@@ -10,6 +10,7 @@ pipeline {
         GIT_BRANCH_STAGING = 'stagging'
     }
 
+
     stages {
         stage('Checkout') {
             steps {
@@ -20,6 +21,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Deploy to Staging') {
             steps {
