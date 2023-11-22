@@ -18,7 +18,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Saul') {
             steps {
                 // Realizar las tareas de construcción (por ejemplo, compilación del código, instalación de dependencias, etc.)
             }
