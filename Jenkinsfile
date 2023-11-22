@@ -8,6 +8,7 @@ pipeline {
         GIT_REPO_URL = 'https://gitlab.com/silent4business/tabantaj.git'
         GIT_BRANCH_DEVELOP = 'develop'
         GIT_BRANCH_STAGING = 'stagging' // Corregí el nombre de la rama aquí
+        DEPLOY_DIRECTORY = '/var/contenedor/tabantaj'
     }
 
     stages {
@@ -29,6 +30,17 @@ pipeline {
                         git pull origin ${GIT_BRANCH_DEVELOP} &&
                         git checkout ${GIT_BRANCH_STAGING} &&
                         git merge origin/${GIT_BRANCH_DEVELOP}
+                    """
+                }
+            }
+        }
+
+
+         stage('Deploy to Server') {
+            steps {
+                script {
+                    sh """
+                        ssh -p ${SSH_DEPLOY_PORT} ${SSH_DEPLOY_USER}@${SSH_DEPLOY_HOST} 'cd ${DEPLOY_DIRECTORY} && git pull origin ${GIT_BRANCH_STAGING}'
                     """
                 }
             }
