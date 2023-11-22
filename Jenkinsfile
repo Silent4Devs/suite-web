@@ -25,7 +25,7 @@ pipeline {
                         sh 'docker-compose exec php cp .env.example .env'
                         sh 'docker-compose exec php composer install --ignore-platform-reqs'
                         sh 'docker-compose exec php php artisan key:generate'
-                        sh 'docker-compose exec php php artisan migrate'
+                        // sh 'docker-compose exec php php artisan migrate'
                         sh 'docker-compose exec php chmod 777 -R storage'
                         sh 'docker-compose exec php php artisan optimize:clear'
                     } catch (Exception e) {
@@ -43,7 +43,7 @@ pipeline {
                     // Utiliza la clave privada en lugar de la clave pública
                     sshagent(credentials: ['/root/.ssh/id_rsa']) {
                         // Realiza un pull en lugar de un push, y maneja posibles conflictos manualmente
-                        sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin staging"'
+                        sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
                     }
                 }
             }
