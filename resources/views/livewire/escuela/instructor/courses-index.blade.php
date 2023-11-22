@@ -1,5 +1,3 @@
-{{-- @extends('layouts.admin')
-@section('content') --}}
 <div>
 
     <style>
@@ -11,7 +9,7 @@
             min-width: 200px !important;
         }
     </style>
-    @include('partials.flashMessages') --}}
+    @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Cursos Generados</h5>
     <div class="mt-5 card">
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
