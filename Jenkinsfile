@@ -13,6 +13,9 @@ pipeline {
                 sh 'git checkout develop Jenkinsfile' // Copiar el archivo de la rama develop a staging
                 sh 'git config --global user.email "saul.ramirez@silent4business.com"' // Establecer el correo electrónico del usuario
                 sh 'git config --global user.name "Saul"' // Establecer el nombre del usuario
+                sh 'git config --global credential.helper store'
+                sh 'git config --global credential.username saul.ramirez@silent4business.com'
+                sh 'git config --global credential.password GatoR123456789.'
                 sh 'git commit -m "Copiar archivo a staging"' // Realizar commit en la rama staging
                 sh 'git push origin stagging' // Subir cambios a la rama staging en el repositorio remoto
             }
