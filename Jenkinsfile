@@ -7,7 +7,6 @@ pipeline {
                 git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
             }
         }
-
         stage('Desplegar') {
             steps {
                 sshagent(['/root/.ssh/id_rsa']) {
