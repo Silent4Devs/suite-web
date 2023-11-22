@@ -22,9 +22,7 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 script {
-                    sshagent(['/root/.ssh/id_rsa']) {
                         sh "ssh -o StrictHostKeyChecking=no -p ${SSH_DEPLOY_PORT} ${SSH_DEPLOY_USER}@${SSH_DEPLOY_HOST} 'cd /var/contenedor/tabantaj && git pull origin ${GIT_BRANCH_DEVELOP} && git checkout ${GIT_BRANCH_STAGING} && git merge ${GIT_BRANCH_DEVELOP}'"
-                    }
                 }
             }
         }
