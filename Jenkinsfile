@@ -41,7 +41,8 @@ pipeline {
             // Utiliza la clave privada en lugar de la clave pública
             sshagent(['/root/.ssh/id_rsa']) {
                 // Realiza un push directo desde 'develop' a 'stagging' con la URL SSH
-                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push develop:stagging"'
+                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push origin develop:stagging"'
+
             }
         }
     }
