@@ -7,9 +7,8 @@ pipeline {
         SSH_DEPLOY_PORT = 22
         GIT_REPO_URL = 'https://gitlab.com/silent4business/tabantaj.git'
         GIT_BRANCH_DEVELOP = 'develop'
-        GIT_BRANCH_STAGING = 'stagging'
+        GIT_BRANCH_STAGING = 'staging' // Corregí el nombre de la rama aquí
     }
-
 
     stages {
         stage('Checkout') {
@@ -22,7 +21,6 @@ pipeline {
             }
         }
 
-
         stage('Deploy to Staging') {
             steps {
                 script {
@@ -30,8 +28,7 @@ pipeline {
                         cd /var/contenedor/tabantaj &&
                         git pull origin ${GIT_BRANCH_DEVELOP} &&
                         git checkout ${GIT_BRANCH_STAGING} &&
-                        git fetch origin ${GIT_BRANCH_DEVELOP} &&
-                        git merge FETCH_HEAD
+                        git merge origin/${GIT_BRANCH_DEVELOP}
                     """
                 }
             }
