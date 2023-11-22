@@ -1,7 +1,6 @@
 pipeline {
     agent any
     stages {
-
         stage('Install') {
             steps {
                 git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
@@ -29,11 +28,11 @@ pipeline {
             steps {
                 script {
                     sshagent(['/root/.ssh/id_rsa.pub']) {
-                        sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && cp -r * /var/contenedor/tabantaj"'
+                        // Assuming your Jenkins workspace contains the checked-out code
+                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
                     }
                 }
             }
         }
-
     }
 }
