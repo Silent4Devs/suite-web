@@ -8,10 +8,9 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
-
     </style>
-     @include('flash::message')
-     @include('partials.flashMessages')
+
+    @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Proveedores</h5>
     <div class="mt-5 card">
 
@@ -115,8 +114,8 @@
                 }
 
             ];
-                let btnAgregar = {
-                    @can('katbol_proveedores_ordenes_compra_agregar')
+            let btnAgregar = {
+                @can('katbol_proveedores_ordenes_compra_agregar')
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar proveedor',
                     url: "{{ route('contract_manager.proveedores.create') }}",
@@ -127,10 +126,10 @@
                         } = config;
                         window.location.href = url;
                     }
-                    @endcan
-                };
-                let btnArchivar = {
-                    @can('katbol_proveedores_ordenes_compra_archivar')
+                @endcan
+            };
+            let btnArchivar = {
+                @can('katbol_proveedores_ordenes_compra_archivar')
                     text: '<i class="fa-solid fa-box-archive"></i> Archivados',
                     titleAttr: 'Archivar proveedor',
                     url: "{{ route('contract_manager.proveedores.view_archivados') }}",
@@ -141,11 +140,11 @@
                         } = config;
                         window.location.href = url;
                     }
-                    @endcan
-                };
-                dtButtons.push(btnAgregar, btnArchivar);
-                let archivarButton = {
-                    @can('katbol_proveedores_ordenes_compra_archivar')
+                @endcan
+            };
+            dtButtons.push(btnAgregar, btnArchivar);
+            let archivarButton = {
+                @can('katbol_proveedores_ordenes_compra_archivar')
                     text: 'Archivar Registro',
                     url: "{{ route('contract_manager.proveedores.archivar', ['id' => 1]) }}",
                     className: 'btn-danger',
@@ -179,8 +178,8 @@
                                 })
                         }
                     }
-                    @endcan
-                }
+                @endcan
+            }
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -195,8 +194,7 @@
                         _token: _token
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'nombre',
                         name: 'nombre'
                     },
