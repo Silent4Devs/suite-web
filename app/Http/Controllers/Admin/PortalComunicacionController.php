@@ -16,7 +16,6 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
-use Spatie\Fork\Fork;
 
 class PortalComunicacionController extends Controller
 {
@@ -31,48 +30,50 @@ class PortalComunicacionController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        $results = Fork::new()
-            ->run(
-                function () {
-                    $user = User::getCurrentUser();
+        // $results = Fork::new()
+        //     ->run(
+        //         function () {
+        //             $user = User::getCurrentUser();
 
-                    return $user;
-                },
-                function () {
-                    $politica_existe = PoliticaSgsi::getAll()->count();
+        //             return $user;
+        //         },
+        //         function () {
+        //             $politica_existe = PoliticaSgsi::getAll()->count();
 
-                    return $politica_existe;
-                },
-                function () {
-                    $comite_existe = Comiteseguridad::getAll()->count();
+        //             return $politica_existe;
+        //         },
+        //         function () {
+        //             $comite_existe = Comiteseguridad::getAll()->count();
 
-                    return $comite_existe;
-                },
-                function () {
-                    $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+        //             return $comite_existe;
+        //         },
+        //         function () {
+        //             $documentos_publicados = Documento::getLastFiveWithMacroproceso();
 
-                    return $documentos_publicados;
-                },
+        //             return $documentos_publicados;
+        //         },
 
-                function () {
-                    $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
+        //         function () {
+        //             $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
 
-                    return $comunicacionSgis;
-                },
-                function () {
-                    $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
+        //             return $comunicacionSgis;
+        //         },
+        //         function () {
+        //             $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
 
-                    return $comunicacionSgis_carrusel;
-                },
-            );
+        //             return $comunicacionSgis_carrusel;
+        //         },
+        //     );
 
-        $empleado_asignado = $results[0]->n_empleado;
-        $authId = $results[0]->id;
-        $politica_existe = $results[1];
-        $comite_existe = $results[2];
-        $documentos_publicados = $results[3];
-        $comunicacionSgis = $results[4];
-        $comunicacionSgis_carrusel = $results[5];
+        $user = User::getCurrentUser();
+
+        $empleado_asignado = $user->n_empleado;
+        $authId = $user->id;
+        $politica_existe = PoliticaSgsi::getAll()->count();
+        $comite_existe = Comiteseguridad::getAll()->count();
+        $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+        $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
+        $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
 
         $aniversarios = Cache::remember('Portal:portal_aniversarios_'.$authId, 3600 * 2, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
