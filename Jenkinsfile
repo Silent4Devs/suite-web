@@ -7,7 +7,7 @@ pipeline {
         SSH_DEPLOY_PORT = 22
         GIT_REPO_URL = 'https://gitlab.com/silent4business/tabantaj.git'
         GIT_BRANCH_DEVELOP = 'develop'
-        GIT_BRANCH_STAGING = 'staging' // Corregí el nombre de la rama aquí
+        GIT_BRANCH_STAGING = 'stagging' // Corregí el nombre de la rama aquí
     }
 
     stages {
