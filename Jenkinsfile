@@ -1,24 +1,34 @@
 pipeline {
-    agent any
+  agent any
 
-    stages {
-        stage('Clonar repositorio') {
-            steps {
-                git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
-            }
-        }
-        stage('Copiar archivo a rama staging') {
-            steps {
-                sh 'git checkout stagging' // Cambiar a la rama staging
-                sh 'git checkout develop Jenkinsfile' // Copiar el archivo de la rama develop a staging
-                sh 'git config --global user.email "saul.ramirez@silent4business.com"' // Establecer el correo electrónico del usuario
-                sh 'git config --global user.name "Saul"' // Establecer el nombre del usuario
-                sh 'git config --global credential.helper store'
-                sh 'git config --global credential.username saul.ramirez@silent4business.com'
-                sh 'git config --global credential.password GatoR123456789.'
-                sh 'git commit -m "Copiar archivo a staging"' // Realizar commit en la rama staging
-                sh 'git push origin stagging' // Subir cambios a la rama staging en el repositorio remoto
-            }
+  stages {
+    stage('Clonar repositorio') {
+      steps {
+        git branch: 'develop', credentialsId: 'desarrollo@192.168.9.78', url: 'https://gitlab.com/silent4business/tabantaj.git'
+      }
+    }
+
+    stage('Compilar y empaquetar') {
+      steps {
+        // Agrega aquí los comandos necesarios para compilar y empaquetar tus archivos
+      }
+    }
+    stage('Desplegar en QA') {
+    environment {
+        QA_SERVER = '192.168.9.78'
+        QA_USER = 'desarrollo'
+        QA_PORT = '22'
+    }
+
+    steps {
+        sshagent(['desarrollo@192.168.9.78']) {
+        sh '''
+            ssh -p $QA_PORT $QA_USER@$QA_SERVER 'cd /var/contenedor/tabantaj && git pull origin develop'
+            ssh -p $QA_PORT $QA_USER@$QA_SERVER 'cd /var/contenedor/tabantaj && ./your_script_to_start_server.sh'
+            # Aquí puedes agregar más comandos necesarios para el despliegue en el servidor de QA
+        '''
         }
     }
+    }
+  }
 }
