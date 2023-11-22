@@ -15,23 +15,19 @@ pipeline {
             }
             steps {
                 script {
-                    // Configuración para manejo de errores y salida de comandos
-                    sh """
-                        set -e
-                        set -x
+                    def sshCmd = "sshpass -p ${QA_PASSWORD} ssh ${QA_SERVER}"
 
-                        # Loguearse en el servidor QA
-                        sshpass -p ${QA_PASSWORD} ssh ${QA_SERVER} 'cd /var/contenedor/tabantaj && git pull origin develop'
+                    // Loguearse en el servidor QA
+                    sh "${sshCmd} 'cd /var/contenedor/tabantaj && git pull origin develop'"
 
-                        # Actualizar la imagen Docker en el servidor QA
-                        sshpass -p ${QA_PASSWORD} ssh ${QA_SERVER} 'docker pull ${DOCKER_IMAGE}'
+                    // Actualizar la imagen Docker en el servidor QA
+                    sh "${sshCmd} 'docker pull ${DOCKER_IMAGE}'"
 
-                        # Detener y eliminar los contenedores existentes
-                        sshpass -p ${QA_PASSWORD} ssh ${QA_SERVER} 'docker-compose -f ${COMPOSE_FILE} down'
+                    // Detener y eliminar los contenedores existentes
+                    sh "${sshCmd} 'docker-compose -f ${COMPOSE_FILE} down'"
 
-                        # Iniciar los contenedores con Docker Compose
-                        sshpass -p ${QA_PASSWORD} ssh ${QA_SERVER} 'docker-compose -f ${COMPOSE_FILE} up -d'
-                    """
+                    // Iniciar los contenedores con Docker Compose
+                    sh "${sshCmd} 'docker-compose -f ${COMPOSE_FILE} up -d'"
                 }
             }
         }
