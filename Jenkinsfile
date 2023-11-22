@@ -17,7 +17,7 @@ pipeline {
                 sh 'docker-compose exec php php artisan key:generate'
                 // sh 'docker-compose exec php php artisan migrate'
                 sh 'docker-compose exec php chmod 777 -R storage'
-                sh 'docker-compose exec php php artisan optimize:clear'
+                // sh 'docker-compose exec php php artisan optimize:clear'
         }
       }
     }
