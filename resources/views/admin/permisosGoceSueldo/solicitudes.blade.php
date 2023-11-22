@@ -53,7 +53,7 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable datatable-vista-global-permisos tblCSV"
@@ -61,14 +61,14 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width: 200px;">
-                           Solicitante
+                            Solicitante
                         </th>
                         <th style="min-width: 200px;">
                             Nombre de permiso
-                         </th>
-                         <th style="min-width: 200px;">
+                        </th>
+                        <th style="min-width: 200px;">
                             Tipo de permiso
-                         </th>
+                        </th>
                         <th style="min-width: 110px;">
                             Días Solicitados
                         </th>
@@ -80,7 +80,7 @@
                             Fin
                         </th>
                         <th style="min-width: 75px;">
-                           Estatus
+                            Estatus
                         </th>
                         {{-- <th style="min-width: 150px;">
                             Comentarios
@@ -226,9 +226,9 @@
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
-          
+
             let dtOverrideGlobals = {
-                pageLength : 10,
+                pageLength: 10,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -356,8 +356,8 @@
                             let aprobacion = row.aprobacion;
                             let id = row.id;
                             console.log(id);
-                           
-                                return `  
+
+                            return `
                                 <div style="text-aling:center">
                                 <a href="solicitud-permiso-goce-sueldo/${row.id}/vistaGlobal"  title="Ver solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 </div>

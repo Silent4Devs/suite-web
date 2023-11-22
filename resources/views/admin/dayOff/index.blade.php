@@ -50,9 +50,10 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los lineamientos que se aplicarán a las solicitudes de Day Off de los colaboradores.
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los
+                        lineamientos que se aplicarán a las solicitudes de Day Off de los colaboradores.
                     </p>
-    
+
                 </div>
             </div>
         </div>
@@ -67,7 +68,7 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             @include('admin.dayOff.table')
@@ -320,7 +321,7 @@
                         render: function(data, type, row) {
                             return `<div style="text-align:left">${data} días</div>`;
                         }
-                        
+
                     },
 
                     // {

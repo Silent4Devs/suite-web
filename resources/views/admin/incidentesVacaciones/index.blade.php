@@ -51,9 +51,11 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá hacer ajustes en el número final de los días a otorgar por colaborador(es), incrementando o reduciendo los días según aplique.
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá hacer ajustes en el
+                        número final de los días a otorgar por colaborador(es), incrementando o reduciendo los días según
+                        aplique.
                     </p>
-    
+
                 </div>
             </div>
         </div>
@@ -68,7 +70,7 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             @include('admin.incidentesVacaciones.table')
@@ -206,7 +208,7 @@
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
-         
+
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -222,7 +224,7 @@
                         }
 
                     },
-                   
+
                     {
                         data: 'dias_aplicados',
                         name: 'dias_aplicados',

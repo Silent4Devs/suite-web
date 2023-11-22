@@ -241,7 +241,6 @@ return [
         'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Flash' => Laracasts\Flash\Flash::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Date' => Jenssegers\Date\Date::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,

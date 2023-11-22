@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
 
     <div class="mt-4 card">
@@ -9,7 +8,7 @@
         </div>
 
         @include('layouts.errors')
-        @include('flash::message')
+
 
         <div class="card-body">
             <div class="container">
@@ -82,7 +81,6 @@
 
 
     </div>
-
 @endsection
 
 
@@ -139,7 +137,6 @@
             $('#collapseplan').collapse('hide');
             $('#collapseactividad').collapse('show');
         }
-
     </script>
     <script>
         var uploadedDocumentomeToDoMap = {}
@@ -171,12 +168,13 @@
             init: function() {
                 @if (isset($accionCorrectiva) && $accionCorrectiva->documentometodo)
                     var files =
-                    {!! json_encode($accionCorrectiva->documentometodo) !!}
+                        {!! json_encode($accionCorrectiva->documentometodo) !!}
                     for (var i in files) {
-                    var file = files[i]
-                    this.options.addedfile.call(this, file)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form').append('<input type="hidden" name="documentometodo[]" value="' + file.file_name + '">')
+                        var file = files[i]
+                        this.options.addedfile.call(this, file)
+                        file.previewElement.classList.add('dz-complete')
+                        $('form').append('<input type="hidden" name="documentometodo[]" value="' + file.file_name +
+                            '">')
                     }
                 @endif
             },
@@ -197,6 +195,5 @@
                 return _results
             }
         }
-
     </script>
 @endsection
