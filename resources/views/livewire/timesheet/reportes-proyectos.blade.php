@@ -109,6 +109,22 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-md-3 form-group">
+                    <label class="form-label">Proyecto</label>
+                    <select class="form-control" wire:model="proyecto_id">
+                        <option selected value="0">
+                            Mostrar todos los proyectos
+                            @if ($area_id)
+                                del área
+                            @endif
+                        </option>
+                        @foreach ($proyectos_select as $proyect)
+                            <option value="{{ $proyect->id }}">
+                                {{ $proyect->identificador }} - {{ $proyect->proyecto }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de inicio</label>
                     <input id="fecha_dia_registros_inicio_proyectos" class="form-control date_librery" type="date"
@@ -118,10 +134,6 @@
                     <label class="form-label">Fecha de fin</label>
                     <input id="fecha_dia_registros_fin_proyectos" class="form-control date_librery" type="date"
                         name="fecha_fin" wire:model="fecha_fin">
-                </div>
-                <div class="col-md-1 form-group">
-                    <label class="form-label" style="width:100%;">&nbsp;</label><br>
-                    <a href="" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i></a>
                 </div>
             </div>
             <div class="row">
@@ -138,7 +150,8 @@
                                             <p class="m-0">Mostrando</p>
                                         </div>
                                         <div class="col-3 p-0">
-                                            <select name="" id="" class="form-control" wire:model="perPage">
+                                            <select name="" id="" class="form-control"
+                                                wire:model="perPage">
                                                 <option value="5">5</option>
                                                 <option value="10">10</option>
                                                 <option value="20">20</option>
@@ -146,7 +159,8 @@
                                                 <option value="100">100</option>
                                             </select>
                                         </div>
-                                        <div class="col-3 p-0" style="font-size: 11px;align-self: center;text-align: end">
+                                        <div class="col-3 p-0"
+                                            style="font-size: 11px;align-self: center;text-align: end">
                                             <p class="m-0">por página</p>
                                         </div>
                                     </div>
@@ -160,7 +174,8 @@
                             <div class="row">
                                 <div class="col-6 p-0"></div>
                                 <div class="col-6 p-0">
-                                    <input type="text" class="form-control" placeholder="Buscar..." wire:model="search">
+                                    <input type="text" class="form-control" placeholder="Buscar..."
+                                        wire:model="search">
                                 </div>
                             </div>
                         </div>
