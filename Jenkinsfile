@@ -2,33 +2,26 @@ pipeline {
     agent any
 
     environment {
-        SSH_DEPLOY_USER = 'desarrollo'
-        SSH_DEPLOY_HOST = '192.168.9.78'
-        SSH_DEPLOY_PORT = 22
-        GIT_REPO_URL = 'https://gitlab.com/silent4business/tabantaj.git'
-        GIT_BRANCH_DEVELOP = 'develop'
-        GIT_BRANCH_STAGING = 'stagging'
+        // Configura las credenciales SSH en Jenkins y especifica el ID aquí
+        SSH_CREDENTIALS = 'qHzfFsWSGn9fwswMH/7aaw7krOl/OcBwLw06SuxMK0c'
+        SSH_HOST = '192.168.9.78'
+        SSH_PORT = '22'  // Puerto SSH por defecto
+        SOURCE_BRANCH = 'develop'
+        TARGET_BRANCH = 'stagging'
     }
 
-
     stages {
-        stage('Checkout') {
+        stage('Clonar y Desplegar') {
             steps {
-                script {
-                        checkout([$class: 'GitSCM', branches: [[name: "${GIT_BRANCH_DEVELOP}"]], userRemoteConfigs: [[url: "${GIT_REPO_URL}"]]])
-                }
-            }
-        }
+                // Clonar el repositorio desde la rama source
+                git branch: "${env.SOURCE_BRANCH}", url: 'https://gitlab.com/silent4business/tabantaj.git'
 
-
-        stage('Deploy to Staging') {
-            steps {
-                script {
+                // Configurar las credenciales SSH
+                withCredentials([sshUserPrivateKey(credentialsId: env.SSH_CREDENTIALS, keyFileVariable: 'qHzfFsWSGn9fwswMH/7aaw7krOl/OcBwLw06SuxMK0c')]) {
+                    // Desplegar en la rama target mediante SSH
                     sh """
-                       cd /var/contenedor/tabantaj &&
-                        git checkout ${GIT_BRANCH_STAGING} &&
-                        git pull origin ${GIT_BRANCH_STAGING} &&
-                        git merge origin/${GIT_BRANCH_DEVELOP}
+                        ssh -i $KEYFILE -p ${env.SSH_PORT} desarrollo@${env.SSH_HOST} 'cd /var/contenedor/tabantaj && git checkout ${env.TARGET_BRANCH} && git pull origin ${env.SOURCE_BRANCH}'
+                        # Realizar cualquier paso de despliegue adicional necesario
                     """
                 }
             }
@@ -37,7 +30,10 @@ pipeline {
 
     post {
         success {
-            echo 'Deployment to staging successful!'
+            // Acciones a realizar si el despliegue es exitoso
+        }
+        failure {
+            // Acciones a realizar si el despliegue falla
         }
     }
 }
