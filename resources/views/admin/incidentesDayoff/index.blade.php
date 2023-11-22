@@ -51,9 +51,11 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá hacer ajustes en el número final de los días a otorgar por colaborador(es), incrementando o reduciendo los días según aplique.
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá hacer ajustes en el
+                        número final de los días a otorgar por colaborador(es), incrementando o reduciendo los días según
+                        aplique.
                     </p>
-    
+
                 </div>
             </div>
         </div>
@@ -247,14 +249,18 @@
                         data: 'efecto',
                         name: 'efecto',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data} días</div>`;
+                            if (data == 1) {
+                                return `<div style="text-align:left">Sumar días</div>`;
+                            } else {
+                                return `<div style="text-align:left">Restar días</div>`;
+                            }
                         }
                     },
                     {
                         data: 'descripcion',
                         name: 'descripcion',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data} días</div>`;
+                            return `<div style="text-align:left">${data}</div>`;
                         }
                     },
 

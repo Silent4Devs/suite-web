@@ -214,6 +214,46 @@ class SolicitudDayOffController extends Controller
         return response()->json(['status' => 200]);
     }
 
+    public function filtrado_empleados($efecto, $usuario, $año)
+    {
+        //Sacamos los ids del empleado
+        $areaId = $usuario->empleado->area_id;
+        $puestoId = $usuario->empleado->puesto_id;
+        $idempleado = $usuario->empleado->id;
+
+        //Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
+        $queryArea = IncidentesDayoff::where('efecto', $efecto)->where('aniversario', $año)
+            ->whereHas('areas', function ($query) use ($areaId) {
+                $query->where('area_id', $areaId);
+            });
+
+        $queryPuesto = IncidentesDayoff::where('efecto', $efecto)->where('aniversario', $año)
+            ->whereHas('puestos', function ($query) use ($puestoId) {
+                $query->where('puesto_id', $puestoId);
+            });
+
+        $queryEmpleado = IncidentesDayoff::where('efecto', $efecto)->where('aniversario', $año)
+            ->whereHas('empleados', function ($q) use ($idempleado) {
+                $q->where('empleado_id', $idempleado);
+            });
+
+        //Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
+        // y 3ro empleado, de no existir ninguna se manda 0
+        if (($queryArea->get())->isNotEmpty()) {
+            $dias = $queryArea->pluck('dias_aplicados')->sum();
+            return $dias;
+        } elseif (($queryPuesto->get())->isNotEmpty()) {
+            $dias = $queryPuesto->pluck('dias_aplicados')->sum();
+            return $dias;
+        } elseif (($queryEmpleado->get())->isNotEmpty()) {
+            $dias = $queryEmpleado->pluck('dias_aplicados')->sum();
+            return $dias;
+        } else {
+            $dias = 0;
+            return $dias;
+        }
+    }
+
     public function diasDisponibles()
     {
         $año = Carbon::now()->format('Y');
@@ -238,12 +278,14 @@ class SolicitudDayOffController extends Controller
             return 0;
         }
         $dias_otorgados = $regla_aplicada;
-        $dias_extra = IncidentesDayoff::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
-            $q->where('empleado_id', $usuario->empleado->id);
-        })->pluck('dias_aplicados')->sum();
-        $dias_restados = IncidentesDayoff::where('efecto', 2)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
-            $q->where('empleado_id', $usuario->empleado->id);
-        })->pluck('dias_aplicados')->sum();
+        $dias_extra = $this->filtrado_empleados(1, $usuario, $año);
+        $dias_restados = $this->filtrado_empleados(2, $usuario, $año);
+        // $dias_extra = IncidentesDayoff::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
+        //     $q->where('empleado_id', $usuario->empleado->id);
+        // })->pluck('dias_aplicados')->sum();
+        // $dias_restados = IncidentesDayoff::where('efecto', 2)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
+        //     $q->where('empleado_id', $usuario->empleado->id);
+        // })->pluck('dias_aplicados')->sum();
 
         $dias_gastados = SolicitudDayOff::where('empleado_id', $usuario->empleado->id)->where('año', '=', $año)->where(function ($query) {
             $query->where('aprobacion', '=', 1)

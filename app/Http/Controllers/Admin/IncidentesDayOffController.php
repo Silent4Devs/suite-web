@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
+use App\Models\Puesto;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Flash;
@@ -20,7 +22,7 @@ class IncidentesDayOffController extends Controller
     {
         abort_if(Gate::denies('incidentes_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = IncidentesDayoff::with('empleados')->orderByDesc('id')->get();
+            $query = IncidentesDayoff::getAll();
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -74,11 +76,24 @@ class IncidentesDayOffController extends Controller
     {
         abort_if(Gate::denies('incidentes_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new IncidentesDayOff();
-        $empleados = Empleado::getAll();
+        $empleados = Empleado::getAltaEmpleados();
+        $puestos = Puesto::getAll();
+        $areas = Area::getAll();
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
+        $puestos_seleccionados = $vacacion->puestos->pluck('id')->toArray();
+        $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
         $año = Carbon::now()->format('Y');
 
-        return view('admin.incidentesDayoff.create', compact('vacacion', 'empleados', 'empleados_seleccionados', 'año'));
+        return view('admin.incidentesDayoff.create', compact(
+            'vacacion',
+            'empleados',
+            'empleados_seleccionados',
+            'puestos',
+            'puestos_seleccionados',
+            'areas',
+            'areas_seleccionadas',
+            'año'
+        ));
     }
 
     public function store(Request $request)
@@ -91,11 +106,28 @@ class IncidentesDayOffController extends Controller
             'efecto' => 'required|int',
         ]);
 
+        // $empleados = array_map(function ($value) {
+        //     return intval($value);
+        // }, $request->empleados);
+        // $vacacion = IncidentesDayOff::create($request->all());
+        // $vacacion->empleados()->sync($empleados);
+
         $empleados = array_map(function ($value) {
             return intval($value);
         }, $request->empleados);
+
+        $puestos = array_map(function ($value) {
+            return intval($value);
+        }, $request->puestos);
+
+        $areas = array_map(function ($value) {
+            return intval($value);
+        }, $request->areas);
+
         $vacacion = IncidentesDayOff::create($request->all());
         $vacacion->empleados()->sync($empleados);
+        $vacacion->puestos()->sync($puestos);
+        $vacacion->areas()->sync($areas);
 
         Flash::success('Incidencia añadida satisfactoriamente.');
 
@@ -113,16 +145,30 @@ class IncidentesDayOffController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('incidentes_dayoff_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::getAll();
-        $vacacion = IncidentesDayoff::with('empleados')->find($id);
+        $empleados = Empleado::getAltaEmpleados();
+        $puestos = Puesto::getAll();
+        $areas = Area::getAll();
+        $vacacion = IncidentesDayoff::with('empleados', 'puestos', 'areas')->find($id);
+
         if (empty($vacacion)) {
             Flash::error('Excepción not found');
 
             return redirect(route('admin.incidentes-dayoff'));
         }
-        $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
 
-        return view('admin.incidentesDayoff.edit', compact('vacacion', 'empleados', 'empleados_seleccionados'));
+        $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
+        $puestos_seleccionados = $vacacion->puestos->pluck('id')->toArray();
+        $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
+
+        return view('admin.incidentesDayoff.edit', compact(
+            'vacacion',
+            'empleados',
+            'empleados_seleccionados',
+            'puestos',
+            'puestos_seleccionados',
+            'areas',
+            'areas_seleccionadas',
+        ));
     }
 
     public function update(Request $request, $id)
