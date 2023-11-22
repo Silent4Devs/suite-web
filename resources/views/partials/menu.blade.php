@@ -199,13 +199,6 @@
                 </a>
             </li>
         @endcan
-        <li class="c-sidebar-nav-item">
-            <a href="{{ url('/chatify') }}" class="c-sidebar-nav-link  }}" target="_blank">
-                <i class="bi bi-chat iconos_menu letra_blanca"></i>
-                <font class="letra_blanca">Chat
-                </font>
-            </a>
-        </li>
         {{-- @can('glosario_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.glosarios.render') }}"

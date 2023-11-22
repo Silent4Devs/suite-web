@@ -183,7 +183,6 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
-        \Chatify\ChatifyServiceProvider::class,
     ],
 
     /*
@@ -246,7 +245,6 @@ return [
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Redis' => Illuminate\Support\Facades\Redis::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-        'Chatify' => Chatify\Facades\ChatifyMessenger::class,
     ],
 
 ];
