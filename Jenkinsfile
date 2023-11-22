@@ -2,29 +2,29 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'nginx:stable-alpine'
-        STAGING_ENV_FILE = '.env.stagging'
+        SSH_DEPLOY_USER = 'desarrollo'
+        SSH_DEPLOY_HOST = '192.168.9.78'
+        SSH_DEPLOY_PORT = 22
+        GIT_REPO_URL = 'https://gitlab.com/silent4business/tabantaj.git'
+        GIT_BRANCH_DEVELOP = 'develop'
+        GIT_BRANCH_STAGING = 'staging'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                script {
+                    checkout([$class: 'GitSCM', branches: [[name: "${GIT_BRANCH_DEVELOP}"]], userRemoteConfigs: [[url: "${GIT_REPO_URL}"]]])
+                }
             }
         }
 
         stage('Deploy to Staging') {
             steps {
                 script {
-                    // Configuración del entorno de Staging
-                    sh "cp ${STAGING_ENV_FILE} .env"
-
-                    // Construir y subir la imagen Docker
-                    sh "docker build -t ${DOCKER_IMAGE} ."
-                    sh "docker push ${DOCKER_IMAGE}"
-
-                    // Desplegar en el entorno de Staging
-                    sh "docker-compose -f docker-compose.yml up -d"
+                    sshagent(['/root/.ssh/id_rsa']) {
+                        sh "ssh -o StrictHostKeyChecking=no -p ${SSH_DEPLOY_PORT} ${SSH_DEPLOY_USER}@${SSH_DEPLOY_HOST} 'cd /var/contenedor/tabantaj && git pull origin ${GIT_BRANCH_DEVELOP} && git checkout ${GIT_BRANCH_STAGING} && git merge ${GIT_BRANCH_DEVELOP}'"
+                    }
                 }
             }
         }
@@ -32,10 +32,7 @@ pipeline {
 
     post {
         success {
-            echo 'Despliegue a Staging exitoso!'
-        }
-        failure {
-            echo 'Fallo en el despliegue a Staging.'
+            echo 'Deployment to staging successful!'
         }
     }
 }
