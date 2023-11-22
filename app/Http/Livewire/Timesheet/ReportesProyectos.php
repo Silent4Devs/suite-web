@@ -54,6 +54,10 @@ class ReportesProyectos extends Component
 
     public $area_id;
 
+    public $proyecto_id;
+
+    public $proyectos_select;
+
     public $fecha_inicio;
 
     public $fecha_fin;
@@ -228,12 +232,16 @@ class ReportesProyectos extends Component
         }
 
         $proyectos_array = collect();
-        if ($this->area_id) {
+        if ($this->area_id && !$this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll()->filter(function ($item) {
                 return $item->areas->contains(Area::getIdNameAll()->find($this->area_id));
             });
-        } else {
+            $this->proyectos_select = $this->proyectos;
+        } elseif ($this->proyecto_id) {
+            $this->proyectos = TimesheetProyecto::getIdNameAll()->where('id', $this->proyecto_id);
+        } elseif (!$this->area_id && !$this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll();
+            $this->proyectos_select = $this->proyectos;
         }
 
         foreach ($this->proyectos as $proyecto) {

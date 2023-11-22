@@ -1,52 +1,50 @@
-
 pipeline {
-    agent any
+  agent any
+  stages {
 
-    parameters {
-        string(name: 'SSH_KEY', description: 'Nombre de la clave SSH en Jenkins', defaultValue: '/root/.ssh/id_rsa')
-        string(name: 'USER', description: 'Usuario del servidor SSH', defaultValue: 'desarrollo')
-        string(name: 'SERVER', description: 'Dirección del servidor SSH', defaultValue: '192.168.9.78')
-        string(name: 'DEPLOY_PATH', description: 'Ruta de despliegue en el servidor', defaultValue: '/var/contenedor/tabantaj')
+    stage('install') {
+      steps {
+        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
+      }
     }
 
-    stages {
-         stage('install') {
-            steps {
-                git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
-            }
-          }
 
-        stage('Build') {
-            steps {
-                // Puedes agregar comandos de construcción aquí
-                // Por ejemplo: sh 'npm install' o 'mvn clean install'
+     stage('build') {
+      steps {
+        script{
+          try {
+                sh 'docker-compose exec php cp .env.example .env'
+                sh 'docker-compose exec php composer install --ignore-platform-reqs'
+                sh 'docker-compose exec php php artisan key:generate'
+                sh 'docker-compose exec php php artisan migrate'
+                sh 'docker-compose exec php chmod 777 -R storage'
+                sh 'docker-compose exec php php artisan optimize:clear'
+            } catch (Exception e) {
+              echo 'Exception occurred: ' + e.toString()
             }
         }
-
-        stage('Deploy') {
-            steps {
-                script {
-                    sshagent(['${params.SSH_KEY}']) {
-                        def remoteCommand = """
-                            cd ${params.DEPLOY_PATH} &&
-                            git pull origin stagging &&
-                            docker-compose up -d --build
-                        """
-                        sh "ssh ${params.USER}@${params.SERVER} '${remoteCommand}'"
-                    }
-                }
-            }
-        }
+      }
     }
 
-    post {
-        success {
-            // Notificar éxito del despliegue, por ejemplo, enviar correo electrónico
-            echo 'El despliegue fue exitoso'
-        }
-        failure {
-            // Notificar fallo del despliegue, por ejemplo, enviar correo electrónico
-            echo 'El despliegue falló'
-        }
-    }
+     stage('Deploy via SSH') {
+       steps {
+                // Despliegar el código a través de SSH en otra rama
+
+                // Instalar paquete ssh en Jenkins
+                sh 'apt-get install -y ssh'
+
+                // Copiar el contenido del directorio actual a la ubicación remota
+                sh 'scp -r ./* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
+
+                // Cambiar a la rama de destino
+                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git checkout stagging && git pull origin develop"'
+
+                // Reiniciar la aplicación en la nueva rama
+                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && ./reiniciar_aplicacion.sh"'
+            }
+     }
+
+
+     }
 }
+
