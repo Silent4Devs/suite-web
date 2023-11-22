@@ -12,7 +12,7 @@
     word-wrap: break-word
     }
     </style>
-    <h5 class="col-12 titulo_general_funcion">Prueba 2 jenis saul</h5>
+    <h5 class="col-12 titulo_general_funcion">Prueba 2 jenis sa</h5>
     <div class="mt-5 card">
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
             <div class="p-2">
