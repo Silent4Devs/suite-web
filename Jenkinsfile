@@ -1,52 +1,35 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('install') {
-      steps {
-        script {
-          // Solo ejecuta el pipeline si hay cambios en la rama 'develop'
-          if (env.BRANCH_NAME == 'develop') {
-            echo "Running pipeline for branch develop"
-          } else {
-            echo "Skipping pipeline for branch ${env.BRANCH_NAME}"
-            currentBuild.result = 'ABORTED'
-            return
-          }
-        }
-        git branch: 'stagging', url: 'git@gitlab.com:silent4business/tabantaj.git'
-      }
+    environment {
+        SSH_KEY = credentials('frqkaGqX977wGgEBKYFA')
     }
 
-    stage('build') {
-      steps {
-        script {
-          try {
-            sh 'docker-compose exec php cp .env.example .env'
-            sh 'docker-compose exec php composer install --ignore-platform-reqs'
-            sh 'docker-compose exec php php artisan key:generate'
-            sh 'docker-compose exec php php artisan migrate'
-            sh 'docker-compose exec php chmod 777 -R storage'
-            sh 'docker-compose exec php php artisan optimize:clear'
-          } catch (Exception e) {
-            echo 'Exception occurred: ' + e.toString()
-          }
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    checkout scm
+                }
+            }
         }
-      }
-    }
 
-    stage('Deploy via SSH') {
-    steps {
-        script {
-            // Utiliza la clave privada en lugar de la clave pública
-            sshagent(['/root/.ssh/id_rsa']) {
-                // Realiza un push directo desde 'develop' a 'stagging' con la URL SSH
-                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push origin develop:stagging"'
+        stage('Build') {
+            steps {
+                // Agrega aquí los pasos de construcción de tu aplicación
+            }
+        }
 
+        stage('Deploy via SSH') {
+            steps {
+                script {
+                    // Configura las credenciales SSH
+                    withCredentials([sshUserPrivateKey(credentialsId: 'frqkaGqX977wGgEBKYFA', keyFileVariable: 'frqkaGqX977wGgEBKYFA')]) {
+                        // Aquí puedes usar la variable de entorno SSH_KEY
+                        sh 'ssh -i $SSH_KEY desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push origin develop:stagging"'
+                    }
+                }
             }
         }
     }
 }
-  }
-}
-
