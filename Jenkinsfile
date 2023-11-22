@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                    sshagent(['/root/.ssh/id_rsa.pub']) {
-                   sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git stash && git clean -fd && git pull origin stagging && git stash pop"'
+                   sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git stash drop && git pull origin stagging"'
                   }
               }
           }
