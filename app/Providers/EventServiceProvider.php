@@ -32,6 +32,7 @@ use App\Models\Escuela\Lesson;
 use App\Models\Escuela\Section;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
+use App\Models\IncidentesDayoff;
 use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\IncidentesVacaciones;
@@ -87,6 +88,7 @@ use App\Observers\DocumentoObserver;
 use App\Observers\EvaluacionObserver;
 use App\Observers\EvidenciasDocumentosEmpleadosObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
+use App\Observers\IncidentesDayoffObserver;
 use App\Observers\IncidentesVacacionesObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\IncidentesSeguridadObserver;
@@ -229,5 +231,6 @@ class EventServiceProvider extends ServiceProvider
         PerfilEmpleado::observe(PerfilEmpleadoObserver::class);
         Minutasaltadireccion::observe(MinutasAltaDireccionObserver::class);
         IncidentesVacaciones::observe(IncidentesVacacionesObserver::class);
+        IncidentesDayoff::observe(IncidentesDayoffObserver::class);
     }
 }
