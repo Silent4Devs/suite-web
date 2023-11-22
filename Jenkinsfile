@@ -12,7 +12,7 @@ pipeline {
      stage('build') {
       steps {
         script{
-                // sh 'docker-compose exec php cp .env.example .env'
+                sh 'docker-compose exec php cp .env.example .env'
                 sh 'docker-compose exec php composer install --ignore-platform-reqs'
                 sh 'docker-compose exec php php artisan key:generate'
                 // sh 'docker-compose exec php php artisan migrate'
