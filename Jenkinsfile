@@ -7,9 +7,12 @@ pipeline {
                 git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
             }
         }
-        stage('Desplegar') {
+        stage('Copiar archivo a rama staging') {
             steps {
-                sh 'scp Jenkinsfile desarrollo@192.168.9.78:/var/contenedor/tabantaj'
+                sh 'git checkout staging' // Cambiar a la rama staging
+                sh 'git checkout develop Jenkinsfile' // Copiar el archivo de la rama develop a staging
+                sh 'git commit -m "Copiar archivo a staging"' // Realizar commit en la rama staging
+                sh 'git push origin staging' // Subir cambios a la rama staging en el repositorio remoto
             }
         }
     }
