@@ -33,7 +33,7 @@ class CheckifmailexistsComponent extends Component
                 'showConfirmButton' => true,
                 'onConfirmed' => '',
                 'confirmButtonText' => 'lo cambiare',
-                'text' => 'Cambie a un correo no existente',
+                'text' => 'Cambie a un correo diferente',
                ]);
 
             $this->reset(['email']);
