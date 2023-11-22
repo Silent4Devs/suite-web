@@ -33,7 +33,7 @@ pipeline {
                 // Instalar paquete ssh en Jenkins
                 sh 'apt-get install -y ssh'
 
-                // Copiar el contenido del directorio actual a la ubicación remota
+
                 // sh 'scp -r ./* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
 
                 // Cambiar a la rama de destino
