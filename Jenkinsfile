@@ -2,31 +2,40 @@ pipeline {
     agent any
 
     environment {
-        SSH_KEY = credentials('frqkaGqX977wGgEBKYFA')
+        DOCKER_IMAGE = 'nginx:stable-alpine'
+        STAGING_ENV_FILE = '.env.stagging'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    checkout scm
-                }
+                checkout scm
             }
         }
 
-        stage('Build') {
-            steps {
-                // Agrega aquí los pasos de construcción de tu aplicación
-            }
-        }
-
-        stage('Deploy via SSH') {
+        stage('Deploy to Staging') {
             steps {
                 script {
-                        // Aquí puedes usar la variable de entorno SSH_KEY
-                        sh 'ssh -i $SSH_KEY desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git push origin develop:stagging"'
+                    // Configuración del entorno de Staging
+                    sh "cp ${STAGING_ENV_FILE} .env"
+
+                    // Construir y subir la imagen Docker
+                    sh "docker build -t ${DOCKER_IMAGE} ."
+                    sh "docker push ${DOCKER_IMAGE}"
+
+                    // Desplegar en el entorno de Staging
+                    sh "docker-compose -f docker-compose.yml up -d"
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Despliegue a Staging exitoso!'
+        }
+        failure {
+            echo 'Fallo en el despliegue a Staging.'
         }
     }
 }
