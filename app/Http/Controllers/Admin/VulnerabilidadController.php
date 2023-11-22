@@ -9,10 +9,10 @@ use App\Models\Amenaza;
 use App\Models\Vulnerabilidad;
 use App\Repositories\VulnerabilidadRepository;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class VulnerabilidadController extends AppBaseController
@@ -104,7 +104,7 @@ class VulnerabilidadController extends AppBaseController
 
         $vulnerabilidad = $this->vulnerabilidadRepository->create($input);
 
-        Flash::success('Vulnerabilidad añadida satistactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.vulnerabilidads.index'));
     }
@@ -125,7 +125,7 @@ class VulnerabilidadController extends AppBaseController
         $vulnerabilidad = $this->vulnerabilidadRepository->find($id);
 
         if (empty($vulnerabilidad)) {
-            Flash::error('Vulnerabilidad not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('vulnerabilidads.index'));
         }
@@ -141,14 +141,14 @@ class VulnerabilidadController extends AppBaseController
         $vulnerabilidad = $this->vulnerabilidadRepository->find($id);
 
         if (empty($vulnerabilidad)) {
-            Flash::error('Vulnerabilidad not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.vulnerabilidads.index'));
         }
 
         $vulnerabilidad = $this->vulnerabilidadRepository->update($request->all(), $id);
 
-        Flash::success('Vulnerabilidad actualizada satistactoriamente.');
+        Alert::success('éxito', 'Información actualizada con éxito');
 
         return redirect(route('admin.vulnerabilidads.index'));
     }
@@ -159,14 +159,14 @@ class VulnerabilidadController extends AppBaseController
         $vulnerabilidad = $this->vulnerabilidadRepository->find($id);
 
         if (empty($vulnerabilidad)) {
-            Flash::error('Vulnerabilidad not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.vulnerabilidads.index'));
         }
 
         $this->vulnerabilidadRepository->delete($id);
 
-        Flash::success('Vulnerabilidad eliminada satistactoriamente.');
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return redirect(route('admin.vulnerabilidads.index'));
     }

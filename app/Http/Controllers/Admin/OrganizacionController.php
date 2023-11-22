@@ -11,11 +11,11 @@ use App\Models\Organizacion;
 use App\Models\PanelOrganizacion;
 use App\Models\Schedule;
 use Carbon\Carbon;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -68,8 +68,6 @@ class OrganizacionController extends Controller
             $tamanoEmpresa = 'Grande (más de 1000 empleados)';
         }
 
-        // dd($tamanoEmpresa);
-
         $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
         $count = Organizacion::getAll()->count();
@@ -78,7 +76,7 @@ class OrganizacionController extends Controller
 
             return view('admin.organizacions.create')->with('countEmpleados', $countEmpleados)->with('tamanoEmpresa', $tamanoEmpresa)->with('dias', $dias);
         } else {
-            Flash::warning("<h5 align='center'>Ya existe un registro en la base de datos</h5>");
+            Alert::warning('atención', 'Ya existe un registro en la base de datos');
 
             return redirect()->route('admin.organizacions.index');
         }
@@ -181,7 +179,6 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->update($request->all());
-        // dd($organizacion);
 
         if ($request->hasFile('logotipo')) {
             $this->validate($request, [
@@ -199,9 +196,10 @@ class OrganizacionController extends Controller
             $organizacions->save();
         }
         $this->saveOrUpdateSchedule($request, $organizacion);
-        toast('Editado con éxito','success');
+        // example:
+        Alert::success('éxito', 'Registro actualizado con éxito');
 
-        return redirect()->route('admin.organizacions.index')->with('success', 'Editado con éxito');
+        return redirect()->route('admin.organizacions.index');
     }
 
     public function show(Organizacion $organizacion)

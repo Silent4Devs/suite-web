@@ -238,7 +238,7 @@
         <div>
             2023
             <font style="margin: 0px 20px;"> | </font>
-            Version: 4.34.10
+            Version: 4.46.14
         </div>
     </footer>
     </div>
@@ -435,16 +435,15 @@
             $('.c-sidebar-nav').delay(1000).scrollTop(900);
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @include('sweetalert::alert')
+    @livewireScripts
+
+    <x-livewire-alert::scripts />
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
-    @livewireScripts
 
-    {{--  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  --}}
-
-    @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11'])
-
-    <x-livewire-alert::scripts />
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
     <!-- x-editable -->
     <script>
