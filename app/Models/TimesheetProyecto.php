@@ -70,6 +70,13 @@ class TimesheetProyecto extends Model implements Auditable
         });
     }
 
+    public static function getAllWithCliente()
+    {
+        return Cache::remember('TimesheetProyecto:timesheetproyecto_all_with_cliente', 3600 * 3, function () {
+            return self::with('cliente')->orderBy('identificador', 'desc')->get();
+        });
+    }
+
     public static function getAllByProceso()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_proceso', 3600 * 4, function () {
