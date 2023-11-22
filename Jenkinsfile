@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-        DOCKER_IMAGE = 'nombre_del_contenedor:latest'
+        DOCKER_IMAGE = 'nginx-tabantaj:latest'
         SSH_DEPLOY_USER = 'desarrollo'
         SSH_DEPLOY_HOST = '192.168.9.78'
         SSH_DEPLOY_PORT = 22
