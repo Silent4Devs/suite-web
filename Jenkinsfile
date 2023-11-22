@@ -25,11 +25,10 @@ pipeline {
             steps {
                 script {
                     sh """
-                        cd /var/contenedor/tabantaj &&
-                        git pull origin ${GIT_BRANCH_DEVELOP} &&
+                       cd /var/contenedor/tabantaj &&
                         git checkout ${GIT_BRANCH_STAGING} &&
-                        git fetch origin ${GIT_BRANCH_DEVELOP} &&
-                        git merge FETCH_HEAD
+                        git pull origin ${GIT_BRANCH_STAGING} &&
+                        git merge origin/${GIT_BRANCH_DEVELOP}
                     """
                 }
             }
