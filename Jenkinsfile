@@ -37,7 +37,7 @@ pipeline {
                 // sh 'scp -r ./* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
 
                 // Cambiar a la rama de destino
-                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git checkout stagging && git pull origin stagging"'
+                sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git checkout stagging && git pull origin develop"'
             }
      }
 
