@@ -124,7 +124,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <small>Seleccione "Mostrar todo los proyctos" para mostrar todos</small>
+                    <small>Seleccione "Mostrar todo los proyectos" para mostrar todos</small>
                 </div>
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de inicio</label>
