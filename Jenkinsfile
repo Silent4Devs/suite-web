@@ -20,6 +20,15 @@ pipeline {
             }
         }
 
+        stage('Build Docker Image') {
+        steps {
+                script {
+                    sh 'docker build -t nginx-tabantaj:latest -f docker/Dockerfile .'
+                }
+            }
+        }
+
+
         stage('Construir Contenedor Docker') {
             steps {
                 script {
