@@ -92,7 +92,7 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             @include('admin.solicitudGoceSueldo.table')
@@ -353,15 +353,16 @@
                             let id = row.id;
                             console.log(id);
                             if (aprobacion == 3) {
-                                return `  
+                                return `
                                 <div style="text-aling:center">
                                 <a href="solicitud-permiso-goce-sueldo/${row.id}/show"  title="Ver solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 </div>
                                `;
 
                             } else {
-                                let urlEliminar = '{{ route('admin.solicitud-permiso-goce-sueldo.destroy') }}'
-                                return `     
+                                let urlEliminar =
+                                    '{{ route('admin.solicitud-permiso-goce-sueldo.destroy') }}'
+                                return `
                                 <div style="text-aling:center">
                                 <a href="solicitud-permiso-goce-sueldo/${row.id}/show"  title="Ver solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>

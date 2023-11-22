@@ -232,14 +232,14 @@ class ReportesProyectos extends Component
         }
 
         $proyectos_array = collect();
-        if ($this->area_id && !$this->proyecto_id) {
+        if ($this->area_id && ! $this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll()->filter(function ($item) {
                 return $item->areas->contains(Area::getIdNameAll()->find($this->area_id));
             });
             $this->proyectos_select = $this->proyectos;
         } elseif ($this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll()->where('id', $this->proyecto_id);
-        } elseif (!$this->area_id && !$this->proyecto_id) {
+        } elseif (! $this->area_id && ! $this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll();
             $this->proyectos_select = $this->proyectos;
         }

@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.32.1.
+ * Generated for Laravel 10.33.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -3518,6 +3518,18 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
                         $instance->assertDispatchedWithoutChain($command, $callback);
+        }
+                    /**
+         * Create a new assertion about a chained batch.
+         *
+         * @param \Closure $callback
+         * @return \Illuminate\Support\Testing\Fakes\ChainedBatchTruthTest 
+         * @static 
+         */ 
+        public static function chainedBatch($callback)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        return $instance->chainedBatch($callback);
         }
                     /**
          * Assert if a batch was dispatched based on a truth-test callback.
@@ -8230,6 +8242,18 @@
                         $instance->load($namespace, $group, $locale);
         }
                     /**
+         * Register a callback that is responsible for handling missing translation keys.
+         *
+         * @param callable|null $callback
+         * @return static 
+         * @static 
+         */ 
+        public static function handleMissingKeysUsing($callback)
+        {
+                        /** @var \Illuminate\Translation\Translator $instance */
+                        return $instance->handleMissingKeysUsing($callback);
+        }
+                    /**
          * Add a new namespace to the loader.
          *
          * @param string $namespace
@@ -10502,6 +10526,25 @@
             /**
      * 
      *
+     * @method static void createSubscription(array|string $channels, \Closure $callback, string $method = 'subscribe')
+     * @method static \Illuminate\Redis\Limiters\ConcurrencyLimiterBuilder funnel(string $name)
+     * @method static \Illuminate\Redis\Limiters\DurationLimiterBuilder throttle(string $name)
+     * @method static mixed client()
+     * @method static void subscribe(array|string $channels, \Closure $callback)
+     * @method static void psubscribe(array|string $channels, \Closure $callback)
+     * @method static mixed command(string $method, array $parameters = [])
+     * @method static void listen(\Closure $callback)
+     * @method static string|null getName()
+     * @method static \Illuminate\Redis\Connections\Connection setName(string $name)
+     * @method static \Illuminate\Contracts\Events\Dispatcher getEventDispatcher()
+     * @method static void setEventDispatcher(\Illuminate\Contracts\Events\Dispatcher $events)
+     * @method static void unsetEventDispatcher()
+     * @method static void macro(string $name, object|callable $macro)
+     * @method static void mixin(object $mixin, bool $replace = true)
+     * @method static bool hasMacro(string $name)
+     * @method static void flushMacros()
+     * @method static mixed macroCall(string $method, array $parameters)
+     * @see \Illuminate\Redis\RedisManager
      */ 
         class Redis {
                     /**
@@ -19759,159 +19802,6 @@
      
 }
 
-    namespace Laracasts\Flash { 
-            /**
-     * 
-     *
-     */ 
-        class Flash {
-                    /**
-         * Flash an information message.
-         *
-         * @param string|null $message
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function info($message = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->info($message);
-        }
-                    /**
-         * Flash a success message.
-         *
-         * @param string|null $message
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function success($message = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->success($message);
-        }
-                    /**
-         * Flash an error message.
-         *
-         * @param string|null $message
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function error($message = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->error($message);
-        }
-                    /**
-         * Flash a warning message.
-         *
-         * @param string|null $message
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function warning($message = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->warning($message);
-        }
-                    /**
-         * Flash a general message.
-         *
-         * @param string|null $message
-         * @param string|null $level
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function message($message = null, $level = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->message($message, $level);
-        }
-                    /**
-         * Flash an overlay modal.
-         *
-         * @param string|null $message
-         * @param string $title
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function overlay($message = null, $title = 'Notice')
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->overlay($message, $title);
-        }
-                    /**
-         * Add an "important" flash to the session.
-         *
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function important()
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->important();
-        }
-                    /**
-         * Clear all registered messages.
-         *
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function clear()
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->clear();
-        }
-                    /**
-         * Register a custom macro.
-         *
-         * @param string $name
-         * @param object|callable $macro
-         * @return void 
-         * @static 
-         */ 
-        public static function macro($name, $macro)
-        {
-                        \Laracasts\Flash\FlashNotifier::macro($name, $macro);
-        }
-                    /**
-         * Mix another object into the class.
-         *
-         * @param object $mixin
-         * @param bool $replace
-         * @return void 
-         * @throws \ReflectionException
-         * @static 
-         */ 
-        public static function mixin($mixin, $replace = true)
-        {
-                        \Laracasts\Flash\FlashNotifier::mixin($mixin, $replace);
-        }
-                    /**
-         * Checks if macro is registered.
-         *
-         * @param string $name
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasMacro($name)
-        {
-                        return \Laracasts\Flash\FlashNotifier::hasMacro($name);
-        }
-                    /**
-         * Flush the existing macros.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function flushMacros()
-        {
-                        \Laracasts\Flash\FlashNotifier::flushMacros();
-        }
-         
-    }
-     
-}
-
     namespace Jenssegers\Date { 
             /**
      * 
@@ -20907,141 +20797,6 @@
         public static function flushMacros()
         {
                         \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager::flushMacros();
-        }
-         
-    }
-     
-}
-
-    namespace Laravel\Octane\Facades { 
-            /**
-     * 
-     *
-     * @see \Laravel\Octane\Octane
-     */ 
-        class Octane {
-                    /**
-         * Get a Swoole table instance.
-         *
-         * @static 
-         */ 
-        public static function table($table)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->table($table);
-        }
-                    /**
-         * Format an exception to a string that should be returned to the client.
-         *
-         * @static 
-         */ 
-        public static function formatExceptionForClient($e, $debug = false)
-        {
-                        return \Laravel\Octane\Octane::formatExceptionForClient($e, $debug);
-        }
-                    /**
-         * Concurrently resolve the given callbacks via background tasks, returning the results.
-         * 
-         * Results will be keyed by their given keys - if a task did not finish, the tasks value will be "false".
-         *
-         * @return array 
-         * @throws \Laravel\Octane\Exceptions\TaskException
-         * @throws \Laravel\Octane\Exceptions\TaskTimeoutException
-         * @static 
-         */ 
-        public static function concurrently($tasks, $waitMilliseconds = 3000)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->concurrently($tasks, $waitMilliseconds);
-        }
-                    /**
-         * Get the task dispatcher.
-         *
-         * @return \Laravel\Octane\Contracts\DispatchesTasks 
-         * @static 
-         */ 
-        public static function tasks()
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->tasks();
-        }
-                    /**
-         * Get the listeners that will prepare the Laravel application for a new request.
-         *
-         * @static 
-         */ 
-        public static function prepareApplicationForNextRequest()
-        {
-                        return \Laravel\Octane\Octane::prepareApplicationForNextRequest();
-        }
-                    /**
-         * Get the listeners that will prepare the Laravel application for a new operation.
-         *
-         * @static 
-         */ 
-        public static function prepareApplicationForNextOperation()
-        {
-                        return \Laravel\Octane\Octane::prepareApplicationForNextOperation();
-        }
-                    /**
-         * Get the container bindings / services that should be pre-resolved by default.
-         *
-         * @static 
-         */ 
-        public static function defaultServicesToWarm()
-        {
-                        return \Laravel\Octane\Octane::defaultServicesToWarm();
-        }
-                    /**
-         * Register a Octane route.
-         *
-         * @static 
-         */ 
-        public static function route($method, $uri, $callback)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->route($method, $uri, $callback);
-        }
-                    /**
-         * Determine if a route exists for the given method and URI.
-         *
-         * @static 
-         */ 
-        public static function hasRouteFor($method, $uri)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->hasRouteFor($method, $uri);
-        }
-                    /**
-         * Invoke the route for the given method and URI.
-         *
-         * @static 
-         */ 
-        public static function invokeRoute($request, $method, $uri)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->invokeRoute($request, $method, $uri);
-        }
-                    /**
-         * Get the registered Octane routes.
-         *
-         * @static 
-         */ 
-        public static function getRoutes()
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->getRoutes();
-        }
-                    /**
-         * Register a callback to be called every N seconds.
-         *
-         * @return \Laravel\Octane\Swoole\InvokeTickCallable 
-         * @static 
-         */ 
-        public static function tick($key, $callback, $seconds = 1, $immediate = true)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->tick($key, $callback, $seconds, $immediate);
         }
          
     }
@@ -23052,7 +22807,7 @@
                     /**
          * 
          *
-         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBootInactive()
+         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBoot()
          * @param string|null $monitorSlug
          * @param int|null $checkInMargin
          * @param int|null $maxRuntime
@@ -27073,13 +26828,11 @@ namespace  {
             class Geocoder extends \Spatie\Geocoder\Facades\Geocoder {}
             class Form extends \Collective\Html\FormFacade {}
             class Html extends \Collective\Html\HtmlFacade {}
-            class Flash extends \Laracasts\Flash\Flash {}
             class Date extends \Jenssegers\Date\Date {}
             class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode {}
             class Alert extends \RealRashid\SweetAlert\Facades\Alert {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
-            class Octane extends \Laravel\Octane\Facades\Octane {}
             class Livewire extends \Livewire\Livewire {}
             class LogViewer extends \Opcodes\LogViewer\Facades\LogViewer {}
             class Sentry extends \Sentry\Laravel\Facade {}
