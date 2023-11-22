@@ -22,12 +22,7 @@ pipeline {
 
     steps {
         sshagent(['desarrollo@192.168.9.78']) {
-        sh '''
-            ssh -p $QA_PORT $QA_USER@$QA_SERVER 'cd /var/contenedor/tabantaj && git pull origin develop'
-            ssh -p $QA_PORT $QA_USER@$QA_SERVER 'cd /var/contenedor/tabantaj && ./your_script_to_start_server.sh'
-            # Aquí puedes agregar más comandos necesarios para el despliegue en el servidor de QA
-        '''
-        }
+        sh "ssh -p ${QA_PORT} ${QA_USER}@${QA_SERVER} 'git pull origin stagging'"
     }
     }
   }
