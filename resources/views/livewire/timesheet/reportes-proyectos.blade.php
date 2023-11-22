@@ -124,6 +124,7 @@
                             </option>
                         @endforeach
                     </select>
+                    <small>Seleccione "Mostrar todo los proyctos" para mostrar todos</small>
                 </div>
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de inicio</label>
@@ -170,7 +171,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 p-0" style="text-align: end">
+                        <div class="col-6 p-0" style="text-align: end" hide>
                             <div class="row">
                                 <div class="col-6 p-0"></div>
                                 <div class="col-6 p-0">
