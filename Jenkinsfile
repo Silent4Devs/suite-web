@@ -14,11 +14,6 @@ pipeline {
       }
     }
 
-    stage('test') {
-      steps {
-      }
-    }
-
     stage('build') {
       steps {
         dir('docker-compose.yml') {
