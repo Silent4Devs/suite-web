@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout([$class: "GitSCM",
-                    branches: [[name: 'staging']],
+                    branches: [[name: 'stagging']],
                     doGenerateSubmoduleConfigurations: false,
                     extensions: [
                         [$class: "LocalBranch", localBranch: '**'],
