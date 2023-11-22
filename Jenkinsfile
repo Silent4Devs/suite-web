@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     sshagent(['/root/.ssh/id_rsa.pub']) {
-                        sh 'ssh desarrollo@192.168.9.78 "cd tabantaj/ && cp -r * /var/contenedor/tabantaj"'
+                        sh 'ssh desarrollo@192.168.9.78 "cd tabantaj && cp -r * /var/contenedor/tabantaj"'
                     }
                 }
             }
