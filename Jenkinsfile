@@ -23,30 +23,13 @@ pipeline {
         stage('Build Docker Image') {
         steps {
                  script {
-                    // Montar el socket de Docker
-                    def dockerSocket = '/var/run/docker.sock'
-                    def dockerCommand = 'docker'
-
-                    // Verificar si estamos en un sistema Linux
-                    if (isUnix()) {
-                    // Cambiar a usuario root
-                    sh 'docker build -t nginx-tabantaj:latest -f docker/Dockerfile .'
-                    }
-
-                    // Construir la imagen Docker
-                    sh "${dockerCommand} build -t nginx-tabantaj:latest -f docker/Dockerfile ."
+                    sh 'docker-compose up --build'
                 }
             }
         }
 
 
-        stage('Construir Contenedor Docker') {
-            steps {
-                script {
-                    docker.build DOCKER_IMAGE, "-f docker/Dockerfile ."
-                }
-            }
-        }
+
 
         stage('Desplegar en Docker Compose') {
             steps {
