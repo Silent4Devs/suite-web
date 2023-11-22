@@ -29,9 +29,10 @@ pipeline {
      stage('Deploy via SSH') {
             steps {
                 script {
-                   sshagent(['/root/.ssh/id_rsa.pub']) {
-                   sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
-                  }
+                  sshagent(['/root/.ssh/id_rsa.pub']) {
+                    sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull --no-rebase origin stagging"'
+                }
+
               }
           }
      }
