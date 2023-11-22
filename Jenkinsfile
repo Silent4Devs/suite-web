@@ -29,7 +29,8 @@ pipeline {
 
                     // Verificar si estamos en un sistema Linux
                     if (isUnix()) {
-                        dockerCommand = "sudo ${dockerCommand}"
+                    // Cambiar a usuario root
+                    sh 'docker build -t nginx-tabantaj:latest -f docker/Dockerfile .'
                     }
 
                     // Construir la imagen Docker
