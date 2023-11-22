@@ -29,11 +29,7 @@ pipeline {
             steps {
                 script {
                     sshagent(['/root/.ssh/id_rsa.pub']) {
-                        sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull --no-rebase origin staging"'
-
-                        // Add additional steps for file reflection
                         sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && cp /var/contenedor/tabantaj /laragon/www/tabantaj/"'
-                        // You can add more file reflection steps as needed
                     }
                 }
             }
