@@ -26,7 +26,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker build -t tabantaj.'
+                sh 'docker build -t tabantaj .'
                 sh 'docker run -d -p 8080:80 tabantaj:latest'
             }
         }
