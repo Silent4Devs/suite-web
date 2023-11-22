@@ -29,8 +29,6 @@ pipeline {
         }
 
 
-
-
         stage('Desplegar en Docker Compose') {
             steps {
                 script {
