@@ -2,46 +2,38 @@ pipeline {
     agent any
 
     environment {
+        DOCKER_COMPOSE_FILE = 'docker-compose.yml'
+        DOCKER_IMAGE = 'nombre_del_contenedor:latest'
         SSH_DEPLOY_USER = 'desarrollo'
         SSH_DEPLOY_HOST = '192.168.9.78'
         SSH_DEPLOY_PORT = 22
         GIT_REPO_URL = 'https://gitlab.com/silent4business/tabantaj.git'
         GIT_BRANCH_DEVELOP = 'develop'
-        GIT_BRANCH_STAGING = 'stagging' // Corregí el nombre de la rama aquí
+        GIT_BRANCH_STAGING = 'stagging'
         DEPLOY_DIRECTORY = '/var/contenedor/tabantaj'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clonar Repositorio') {
+            steps {
+                git branch: GIT_BRANCH_DEVELOP, url: GIT_REPO_URL
+            }
+        }
+
+        stage('Construir Contenedor Docker') {
             steps {
                 script {
-                    dir('/var/contenedor/tabantaj') {
-                        checkout([$class: 'GitSCM', branches: [[name: "${GIT_BRANCH_DEVELOP}"]], userRemoteConfigs: [[url: "${GIT_REPO_URL}"]]])
-                    }
+                    docker.build DOCKER_IMAGE, "-f docker/Dockerfile ."
                 }
             }
         }
 
-        stage('Deploy to Staging') {
+        stage('Desplegar en Docker Compose') {
             steps {
                 script {
-                    sh """
-                        cd /var/contenedor/tabantaj &&
-                        git pull origin ${GIT_BRANCH_DEVELOP} &&
-                        git checkout ${GIT_BRANCH_STAGING} &&
-                        git merge origin/${GIT_BRANCH_DEVELOP}
-                    """
-                }
-            }
-        }
-
-
-         stage('Deploy to Server') {
-            steps {
-                script {
-                    sh """
-                        ssh -p ${SSH_DEPLOY_PORT} ${SSH_DEPLOY_USER}@${SSH_DEPLOY_HOST} 'cd ${DEPLOY_DIRECTORY} && git pull origin ${GIT_BRANCH_STAGING}'
-                    """
+                    sh "scp -o StrictHostKeyChecking=no -P ${SSH_DEPLOY_PORT} docker-compose.yml ${SSH_DEPLOY_USER}@${SSH_DEPLOY_HOST}:${DEPLOY_DIRECTORY}/"
+                    sh "scp -o StrictHostKeyChecking=no -P ${SSH_DEPLOY_PORT} .env ${SSH_DEPLOY_USER}@${SSH_DEPLOY_HOST}:${DEPLOY_DIRECTORY}/"
+                    sh "ssh -o StrictHostKeyChecking=no -p ${SSH_DEPLOY_PORT} ${SSH_DEPLOY_USER}@${SSH_DEPLOY_HOST} 'cd ${DEPLOY_DIRECTORY} && docker-compose pull && docker-compose up -d'"
                 }
             }
         }
@@ -49,7 +41,10 @@ pipeline {
 
     post {
         success {
-            echo 'Deployment to staging successful!'
+            echo 'Despliegue exitoso!'
+        }
+        failure {
+            echo 'Error en el despliegue. Revisar los registros para más detalles.'
         }
     }
 }
