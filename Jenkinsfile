@@ -1,44 +1,32 @@
 pipeline {
     agent any
 
+    environment {
+        QA_SERVER = 'desarrollo@192.168.9.78'
+        QA_PASSWORD = 'S3cur3.qa'
+        COMPOSE_FILE = 'docker-compose.yml'
+    }
+
     stages {
-        stage('Clonar repositorio') {
+        // ... otras etapas ...
+
+        stage('Deploy to QA') {
+            when {
+                branch 'develop'
+            }
             steps {
                 script {
-                    // Clonar el repositorio desde la rama develop
-                    git branch: 'develop', credentialsId: 'desarrollo@192.168.9.78', url: 'https://gitlab.com/silent4business/tabantaj.git'
-                }
-            }
-        }
+                    // Loguearse en el servidor QA
+                    sh "sshpass -p ${QA_PASSWORD} ssh ${QA_SERVER} 'cd /var/contenedor/tabantaj && git pull origin develop'"
 
-        stage('Desplegar en Staging') {
-            environment {
-                QA_SERVER = '192.168.9.78'
-                QA_USER = 'desarrollo'
-                QA_PORT = '22'
-            }
+                    // Actualizar la imagen Docker en el servidor QA
+                    sh "sshpass -p ${QA_PASSWORD} ssh ${QA_SERVER} 'docker pull ${DOCKER_IMAGE}'"
 
-            steps {
-                script {
-                    // Actualizar la rama develop local antes de realizar cualquier acción en el servidor
-                    git checkout develop
-                    git pull origin develop
-                }
+                    // Detener y eliminar los contenedores existentes
+                    sh "sshpass -p ${QA_PASSWORD} ssh ${QA_SERVER} 'docker-compose -f ${COMPOSE_FILE} down'"
 
-                script {
-                    // Utilizar sshagent para autenticarse y ejecutar comandos en el servidor QA
-                    sshagent(['desarrollo@192.168.9.78']) {
-                        // Revisar los cambios en la rama stagging en el servidor antes de fusionar
-                        sh "git fetch origin stagging"
-                        sh "git diff develop..origin/stagging"
-                    }
-                }
-
-                script {
-                    // Fusionar los cambios de develop en la rama stagging en el servidor
-                    sshagent(['desarrollo@192.168.9.78']) {
-                        sh "ssh -p ${QA_PORT} ${QA_USER}@${QA_SERVER} 'cd /var/contenedor/tabantaj && git pull origin develop:stagging'"
-                    }
+                    // Iniciar los contenedores con Docker Compose
+                    sh "sshpass -p ${QA_PASSWORD} ssh ${QA_SERVER} 'docker-compose -f ${COMPOSE_FILE} up -d'"
                 }
             }
         }
