@@ -20,9 +20,23 @@ pipeline {
 
             steps {
                 script {
+                    // Actualizar la rama develop local antes de realizar cualquier acción en el servidor
+                    git checkout develop
+                    git pull origin develop
+                }
+
+                script {
                     // Utilizar sshagent para autenticarse y ejecutar comandos en el servidor QA
                     sshagent(['desarrollo@192.168.9.78']) {
-                        // Ejecutar git pull en la rama staging en el servidor QA
+                        // Revisar los cambios en la rama stagging en el servidor antes de fusionar
+                        sh "git fetch origin stagging"
+                        sh "git diff develop..origin/stagging"
+                    }
+                }
+
+                script {
+                    // Fusionar los cambios de develop en la rama stagging en el servidor
+                    sshagent(['desarrollo@192.168.9.78']) {
                         sh "ssh -p ${QA_PORT} ${QA_USER}@${QA_SERVER} 'cd /var/contenedor/tabantaj && git pull origin develop:stagging'"
                     }
                 }
