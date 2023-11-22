@@ -11,7 +11,7 @@ pipeline {
         stage('Desplegar') {
             steps {
                 sshagent(['/root/.ssh/id_rsa']) {
-                sh 'scp Jenkinsfile desarrollo@192.168.9.78:/var/contenedor/tabantaj' // O cualquier otro comando necesario para desplegar tu artefacto en un servidor remoto
+                sh 'scp Jenkinsfile desarrollo@192.168.9.78:/var/contenedor/tabantaj'
                 }
             }
         }
