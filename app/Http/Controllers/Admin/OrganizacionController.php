@@ -11,7 +11,7 @@ use App\Models\Organizacion;
 use App\Models\PanelOrganizacion;
 use App\Models\Schedule;
 use Carbon\Carbon;
-use Flash;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -199,6 +199,7 @@ class OrganizacionController extends Controller
             $organizacions->save();
         }
         $this->saveOrUpdateSchedule($request, $organizacion);
+        toast('Editado con éxito','success');
 
         return redirect()->route('admin.organizacions.index')->with('success', 'Editado con éxito');
     }
