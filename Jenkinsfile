@@ -22,8 +22,18 @@ pipeline {
 
         stage('Build Docker Image') {
         steps {
-                script {
-                    sh 'docker build -t nginx-tabantaj:latest -f docker/Dockerfile .'
+                 script {
+                    // Montar el socket de Docker
+                    def dockerSocket = '/var/run/docker.sock'
+                    def dockerCommand = 'docker'
+
+                    // Verificar si estamos en un sistema Linux
+                    if (isUnix()) {
+                        dockerCommand = "sudo ${dockerCommand}"
+                    }
+
+                    // Construir la imagen Docker
+                    sh "${dockerCommand} build -t nginx-tabantaj:latest -f docker/Dockerfile ."
                 }
             }
         }
