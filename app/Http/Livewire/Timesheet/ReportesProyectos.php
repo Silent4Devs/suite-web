@@ -246,8 +246,7 @@ class ReportesProyectos extends Component
 
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
-            $registro_horas_proyecto = Cache::remember('TimesheetHoras:timesheethoras_index'.$proyecto->id, 3600 * 3600, function () use ($proyecto) {
-                return DB::table('timesheet_horas')
+                $registro_horas_proyecto = DB::table('timesheet_horas')
                     ->select([
                         'timesheet_horas.id',
                         'timesheet_horas.horas_lunes',
@@ -262,7 +261,7 @@ class ReportesProyectos extends Component
                     ->join('timesheet', 'timesheet_horas.timesheet_id', '=', 'timesheet.id')
                     ->where('proyecto_id', $proyecto->id)
                     ->get();
-            });
+
             // registro de horas en calendario
             $times_registro_horas_array = collect();
             $calendario_tabla_proyectos = [];
