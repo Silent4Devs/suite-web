@@ -9,6 +9,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -96,6 +97,14 @@ class AccionCorrectiva extends Model implements Auditable, HasMedia
         'otros',
         'comentarios_aprobacion',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('AccionCorrectiva:get_all', 3600 * 10, function () {
+            return self::get();
+        });
+    }
 
     public function getFolioAttribute()
     {

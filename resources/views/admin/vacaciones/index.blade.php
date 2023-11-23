@@ -42,7 +42,7 @@
     <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
 
     <div class="card">
-        
+
         <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -52,9 +52,10 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los lineamientos que se aplicarán a las solicitudes de vacaciones de los colaboradores.
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los
+                        lineamientos que se aplicarán a las solicitudes de vacaciones de los colaboradores.
                     </p>
-    
+
                 </div>
             </div>
         </div>
@@ -69,7 +70,7 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             @include('admin.vacaciones.table')
@@ -320,7 +321,7 @@
                     //         }else{
                     //             return `<div style="text-align:left">0 días</div>`;
                     //         }
-                           
+
                     //     }
                     // },
                     {
@@ -356,7 +357,7 @@
                         render: function(data, type, row) {
                             const afectados = row.afectados;
                             const areas = row.areas;
-                           
+
                             switch (afectados) {
                                 case 1:
                                     return `
@@ -366,21 +367,21 @@
                                     `;
                                     break;
                                 case 2:
-                                   
+
                                     // let HTML = `<ul>`
                                     // areas.forEach(element => {
                                     //     HTML += `<li>${element.areas}</li>`
                                     // });
                                     // HTML += `</ul>`
                                     // return HTML;
-                                   
+
                                     let areas_seleccionadas = `<ul>`;
                                     areas.forEach(area => {
-                                        areas_seleccionadas +=`<li>${area.area}</li>`
-                                      
+                                        areas_seleccionadas += `<li>${area.area}</li>`
+
                                     });
                                     areas_seleccionadas += "</ul>"
-                                    return  areas_seleccionadas;
+                                    return areas_seleccionadas;
                                     break;
 
 

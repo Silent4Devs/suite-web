@@ -30,7 +30,7 @@ class CursoEstudiante extends Controller
     {
         $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', User::getCurrentUser()->id)->get();
         // dd($cursos_usuario);
-        // $cursos = Course::get();
+        // $cursos = Course::getAll();
         // $categories = Category::all();
         // $levels = Level::all();
         // $courses = Course::where('status', 3)

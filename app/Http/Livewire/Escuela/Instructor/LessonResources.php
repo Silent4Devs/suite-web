@@ -31,7 +31,6 @@ class LessonResources extends Component
 
     public function save()
     {
-        // dd($this->file);
         $this->validate([
             'file' => 'required',
         ]);

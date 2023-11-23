@@ -46,12 +46,12 @@ class EventosPortal extends Component
     {
         $this->hoy = Carbon::now();
         $this->hoy->toDateString();
-
-        $this->empleado_asignado = User::getCurrentUser()->n_empleado;
     }
 
     public function render()
     {
+        $this->empleado_asignado = User::getCurrentUser()->n_empleado;
+
         $hoy = Carbon::now();
         $hoy->toDateString();
         $authId = Auth::user()->id;

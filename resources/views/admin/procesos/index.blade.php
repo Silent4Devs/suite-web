@@ -2,11 +2,11 @@
 @section('content')
     @can('procesos_agregar')
         <h5 class="col-12 titulo_general_funcion">Procesos</h5>
-        @include('flash::message')
+
         <div class="mt-5 card">
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Procesos</strong></h3>
-                @include('flash::message')
+
             </div> --}}
         @endcan
         <div class="card-body datatable-fix">
@@ -111,14 +111,16 @@
 
             @can('procesos_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar proceso',
-                url: "{{ route('admin.procesos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar proceso',
+                    url: "{{ route('admin.procesos.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan

@@ -1,11 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
     <h5 class="col-12 titulo_general_funcion">Registrar: Acción Correctiva</h5>
     <div class="mt-4 card">
         @include('layouts.errors')
-        @include('flash::message')
+
         <div class="card-body">
 
             <div class="container">
@@ -60,11 +59,9 @@
 
 
                 </div>
-
             @endsection
 
             @section('scripts')
-
                 <script>
                     $("#acollapseExample").click(function() {
 
@@ -197,8 +194,7 @@
 
                     });
 
-                    function recortarTexto(texto, length = 30)
-                    {
+                    function recortarTexto(texto, length = 30) {
                         let trimmedString = texto?.length > length ?
                             texto.substring(0, length - 3) + "..." :
                             texto;
@@ -237,8 +233,7 @@
                             document.getElementById('autorizo_area').innerHTML = recortarTexto(area);
                         })
 
-                        function recortarTexto(texto, length = 30)
-                        {
+                        function recortarTexto(texto, length = 30) {
                             let trimmedString = texto?.length > length ?
                                 texto.substring(0, length - 3) + "..." :
                                 texto;
@@ -400,6 +395,4 @@
 
                     });
                 </script>
-
-
             @endsection

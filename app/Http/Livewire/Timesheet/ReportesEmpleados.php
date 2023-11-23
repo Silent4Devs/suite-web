@@ -64,11 +64,9 @@ class ReportesEmpleados extends Component
 
     public function mount()
     {
-        $this->areas = Area::getAll();
         $this->empleados_estatus = 'alta';
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');
-        $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
     }
 
     public function updatedAreaId($value)
@@ -133,6 +131,9 @@ class ReportesEmpleados extends Component
 
     public function render()
     {
+        $this->areas = Area::getAll();
+        $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
+
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
@@ -221,6 +222,7 @@ class ReportesEmpleados extends Component
         }
         $this->horas_totales_filtros_empleados = 0;
         foreach ($empleados_list as $empleado_list) {
+
             $horas_total_time = 0;
 
             $fecha_registro_timesheet = Organizacion::getFechaRegistroTimesheet();
@@ -322,7 +324,6 @@ class ReportesEmpleados extends Component
 
                 $times_atrasados = count($this->times_faltantes_empleado);
             }
-
             $fecha_ing = Carbon::parse($empleado_list->antiguedad);
             $fecha_ingre = date('Y-m-d', strtotime($fecha_ing));
 
@@ -372,9 +373,7 @@ class ReportesEmpleados extends Component
                 'id' => $empleado_list->id,
                 'avatar_ruta' => $empleado_list->avatar_ruta,
                 'estatus' => $empleado_list->estatus,
-
                 'horas_totales' => $horas_totales_empleado_calendar,
-
                 'name' => $empleado_list->name,
                 'area' => $empleado_list->area ? $empleado_list->area->area : '',
                 'puesto' => $empleado_list->puesto,
@@ -422,7 +421,9 @@ class ReportesEmpleados extends Component
                 $semanas_faltantes = $sem_falt;
             }
         }
-        Mail::to(removeUnicodeCharacters($empleado->email))->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
+
+        Mail::to(removeUnicodeCharacters($empleado->email))
+            ->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
 
         $this->alert('success', 'Correo Enviado!');
 

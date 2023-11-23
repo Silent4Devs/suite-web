@@ -123,6 +123,7 @@
                     let collapse = document.querySelector(targetId);
                     console.log("collapse", targetId);
                     collapse.classList.toggle('collapse');
+
                 }
             });
         });

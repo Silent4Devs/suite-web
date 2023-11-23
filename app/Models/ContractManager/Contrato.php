@@ -7,6 +7,7 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -242,6 +243,14 @@ class Contrato extends Model implements Auditable
     protected $appends = [
         'nameproveedor',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Contratos:contratos_all', 3600 * 4, function () {
+            return self::get();
+        });
+    }
 
     //Relaciones
     public function ampliaciones()

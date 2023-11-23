@@ -29,9 +29,10 @@
         <div class="col-12">
             <div class="card shadow-sm mb-3" style="max-width: auto;">
                 <div class="row no-gutters">
-                    <div class="col-8 contenedor">
-                        @isset($course->image->url)
-                            <img src="{{ asset($course->image->url) }} " id="picture" alt="">
+                  <div class="col-8 contenedor">
+                    @isset($course->image->url)
+                            <img src="{{ asset($course->image->url) }} "
+                                id="picture" alt="">
                         @else
                             <img src="{{ asset('img/home/imagen-estudiantes.jpg') }}" id="picture" alt=""
                                 style="width: 100%; heigth:100%">

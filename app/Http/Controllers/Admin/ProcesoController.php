@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Laracasts\Flash\Flash;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProcesoController extends Controller
@@ -101,6 +101,7 @@ class ProcesoController extends Controller
             ],
         );
         Proceso::create($request->all());
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.procesos.index');
     }
@@ -133,7 +134,7 @@ class ProcesoController extends Controller
             ],
         );
         $proceso->update($request->all());
-        Flash::success('<h5 class="text-center">Proceso actualizado satisfactoriamente</h5>');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.procesos.index');
     }
@@ -143,7 +144,7 @@ class ProcesoController extends Controller
         abort_if(Gate::denies('procesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proceso = Proceso::find($proceso);
         $proceso->delete();
-        Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return response()->json(['success' => true]);
     }

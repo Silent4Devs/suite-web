@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Price;
+use App\Models\Escuela\Price;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 

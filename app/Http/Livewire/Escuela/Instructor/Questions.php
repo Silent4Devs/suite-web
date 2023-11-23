@@ -43,7 +43,6 @@ class Questions extends Component
         return [
             'answers' => 'required',
             'question' => 'required',
-            'explanation' => 'required',
             'answers.*.answer' => 'required',
             'answers' => [new AnswersValidationRule()],
         ];
