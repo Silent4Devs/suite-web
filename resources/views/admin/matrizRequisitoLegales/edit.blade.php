@@ -110,7 +110,7 @@
                             </div>
                         @endif
                         <label class="" for="nombrerequisito">Nombre del requisito legal, regulatorio, contractual o
-                            estatutario</label>
+                            estatutario*</label>
                     </div>
                 </div>
 
@@ -121,7 +121,8 @@
                             value="{{ old('formacumple', $matrizRequisitoLegale->formacumple) }}"
                             placeholder="Cláusula, sección o
                         apartado
-                        aplicable*">
+                        aplicable*"
+                        required>
                         @if ($errors->has('formacumple'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('formacumple') }}
@@ -140,14 +141,14 @@
                             <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
                                 type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
                                 value="{{ old('fechaexpedicion', $matrizRequisitoLegale->fechaexpedicion ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion)->format('Y-m-d') : null) }}"
-                                placeholder="Fecha de expedición">
+                                placeholder="Fecha de expedición" required>
                             @if ($errors->has('fechaexpedicion'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('fechaexpedicion') }}
                                 </div>
                             @endif
                             <label
-                                for="fechaexpedicion">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion') }}</label>
+                                for="fechaexpedicion">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion') }}*</label>
                             <span
                                 class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
                         </div>
@@ -158,14 +159,14 @@
                             <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
                                 type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
                                 value="{{ old('fechavigor', $matrizRequisitoLegale->fechavigor ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor)->format('Y-m-d') : null) }}"
-                                placeholder="Fecha de entrada en vigor" style="">
+                                placeholder="Fecha de entrada en vigor" style="" required>
                             @if ($errors->has('fechavigor'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('fechavigor') }}
                                 </div>
                             @endif
                             <label for="fechavigor"
-                                style="">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
+                                style="">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}*</label>
                             <span
                                 class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
                         </div>
@@ -183,7 +184,7 @@
                             </div>
                         @endif
                         <label class="required" for="requisitoacumplir">Requisito(s) a
-                            cumplir</label>
+                            cumplir*</label>
                         <span
                             class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}</span>
                     </div>
