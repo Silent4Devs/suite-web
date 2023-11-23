@@ -2,17 +2,20 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\User;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class CheckifmailexistsComponent extends Component
 {
     use LivewireAlert;
 
     public $email;
+
     public $empleadoemail;
-    public $disponiblemessage = "";
+
+    public $disponiblemessage = '';
+
     public $isEmailRegistered = false;
 
     public function mount($empleadoemail)
@@ -34,14 +37,15 @@ class CheckifmailexistsComponent extends Component
                 'onConfirmed' => '',
                 'confirmButtonText' => 'lo cambiare',
                 'text' => 'Cambie a un correo diferente',
-               ]);
+            ]);
 
             $this->reset(['email']);
             $this->disponiblemessage = 'Este email no esta disponible';
-        }else{
+        } else {
             $this->disponiblemessage = 'Este email esta disponible';
         }
     }
+
     public function render()
     {
         return view('livewire.checkifmailexists-component');

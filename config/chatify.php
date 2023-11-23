@@ -23,7 +23,7 @@ return [
     */
     'routes' => [
         'prefix' => env('CHATIFY_ROUTES_PREFIX', 'chatify'),
-        'middleware' => env('CHATIFY_ROUTES_MIDDLEWARE', ['web','auth']),
+        'middleware' => env('CHATIFY_ROUTES_MIDDLEWARE', ['web', 'auth']),
         'namespace' => env('CHATIFY_ROUTES_NAMESPACE', 'Chatify\Http\Controllers'),
     ],
     'api_routes' => [
@@ -73,7 +73,7 @@ return [
     'gravatar' => [
         'enabled' => true,
         'image_size' => 200,
-        'imageset' => 'identicon'
+        'imageset' => 'identicon',
     ],
 
     /*
@@ -84,8 +84,8 @@ return [
     'attachments' => [
         'folder' => 'attachments',
         'download_route_name' => 'attachments.download',
-        'allowed_images' => (array) ['png','jpg','jpeg','gif'],
-        'allowed_files' => (array) ['zip','rar','txt'],
+        'allowed_images' => (array) ['png', 'jpg', 'jpeg', 'gif'],
+        'allowed_files' => (array) ['zip', 'rar', 'txt'],
         'max_upload_size' => env('CHATIFY_MAX_FILE_SIZE', 150), // MB
     ],
 
@@ -119,5 +119,5 @@ return [
         'enabled' => true,
         'public_path' => 'sounds/chatify',
         'new_message' => 'new-message-sound.mp3',
-    ]
+    ],
 ];
