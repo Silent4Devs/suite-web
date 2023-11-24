@@ -8,30 +8,40 @@ use App\Models\AuditoriaInternasHallazgos;
 use App\Models\AuditoriaInternasReportes;
 use App\Models\ClasificacionesAuditorias;
 use App\Models\Proceso;
-use Livewire\Component;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class EditReporteIndividual extends Component
 {
     use LivewireAlert;
 
     protected $listeners = ['render' => 'render'];
+
     public $pagination = 5;
+
     public $clasificaciones;
+
     public $clausulas;
+
     public $id_auditoria;
 
     public $c_id;
+
     public $c_edit_id;
 
     public $descripcion;
+
     public $proceso;
+
     public $area;
+
     public $clasificacion_id;
+
     public $incumplimiento_requisito;
+
     public $no_tipo;
+
     public $titulo;
 
     public $comentarios;
@@ -44,7 +54,7 @@ class EditReporteIndividual extends Component
 
     public $currentReportIndex;
 
-    public $view = "create";
+    public $view = 'create';
 
     public function mount($clasificaciones, $clausulas, $id_auditoria)
     {
@@ -53,8 +63,8 @@ class EditReporteIndividual extends Component
         $this->id_auditoria = $id_auditoria;
 
         $audit = AuditoriaInterna::find($this->id_auditoria);
-        $this->reporte = AuditoriaInternasReportes::where("id_auditoria", "=", $audit->id)
-            ->where("lider_id", "=", $audit->lider->id);
+        $this->reporte = AuditoriaInternasReportes::where('id_auditoria', '=', $audit->id)
+            ->where('lider_id', '=', $audit->lider->id);
 
         if ($this->reporte->exists()) {
             $this->reporte = $this->reporte->first();
@@ -63,14 +73,13 @@ class EditReporteIndividual extends Component
         }
     }
 
-
     public function render()
     {
         $procesos = Proceso::getAll();
-        $this->reportes_audit = AuditoriaInternasReportes::select('id')->where("id_auditoria", "=", $this->id_auditoria)->get();
+        $this->reportes_audit = AuditoriaInternasReportes::select('id')->where('id_auditoria', '=', $this->id_auditoria)->get();
         // dd($reportes_audit->count());
         $datas = AuditoriaInternasHallazgos::where('auditoria_internas_id', '=', $this->id_auditoria)
-            ->where("reporte_id", "=", $this->reporte->id)
+            ->where('reporte_id', '=', $this->reporte->id)
             ->paginate($this->pagination);
 
         $clasificacionIds = $this->clasificaciones->pluck('id');
@@ -92,7 +101,6 @@ class EditReporteIndividual extends Component
 
         $this->comentarios = $this->reporte->comentarios;
 
-
         return view('livewire.edit-reporte-individual', compact('procesos', 'datas', 'cuentas'))
             ->with('clasificaciones', $this->clasificaciones)
             ->with('clausulas', $this->clausulas)
@@ -104,6 +112,7 @@ class EditReporteIndividual extends Component
         $ids = $this->reportes_audit->pluck('id');
         $position = $ids->search($searchId);
         $position++;
+
         return $position !== false ? $position : 'Value not found';
     }
 
@@ -166,9 +175,9 @@ class EditReporteIndividual extends Component
         // dd($audit);
 
         $this->reporte = AuditoriaInternasReportes::create([
-            "id_auditoria" => $audit->id,
-            "empleado_id" => auth()->user()->empleado->id,
-            "lider_id" => $audit->lider->id,
+            'id_auditoria' => $audit->id,
+            'empleado_id' => auth()->user()->empleado->id,
+            'lider_id' => $audit->lider->id,
         ]);
     }
 
