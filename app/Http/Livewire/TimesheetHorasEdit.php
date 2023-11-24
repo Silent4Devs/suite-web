@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
+use DB;
 use Livewire\Component;
 
 class TimesheetHorasEdit extends Component
@@ -44,6 +45,7 @@ class TimesheetHorasEdit extends Component
         if ($id != null) {
             TimesheetHoras::find($id)->delete();
         }
+
         $this->emit('removeTr', $tr);
     }
 
@@ -54,7 +56,10 @@ class TimesheetHorasEdit extends Component
 
     public function render()
     {
-        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
+        $this->horas = DB::table('timesheet_horas')
+            ->where('timesheet_id', $this->timesheet_id)
+            ->get();
+
         $this->timesheet = Timesheet::find($this->timesheet_id);
 
         $this->emit('calcularSumatoriasFacturables');

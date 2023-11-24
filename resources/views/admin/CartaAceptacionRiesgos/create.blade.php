@@ -275,8 +275,8 @@
                                 class="far fa-file-alt iconos-crear"></i>Descripción del
                             Impacto al Negocio
                         </label>
-                        <textarea class="form-control {{ $errors->has('descripcion_negocio') ? 'is-invalid' : '' }}"
-                            name="descripcion_negocio" id="descripcion_negocio" required>
+                        <textarea class="form-control {{ $errors->has('descripcion_negocio') ? 'is-invalid' : '' }}" name="descripcion_negocio"
+                            id="descripcion_negocio" required>
                             {{ old('descripcion_negocio') }}</textarea>
                         @if ($errors->has('descripcion_negocio'))
                             <div class="invalid-feedback">
@@ -369,8 +369,8 @@
                         <label for="hallazgos_auditoria"><i class="fas fa-lock iconos-crear"></i>Hallazgos de auditoría
                             interna / externa
                         </label>
-                        <textarea class="form-control {{ $errors->has('hallazgos_auditoria') ? 'is-invalid' : '' }}"
-                            name="hallazgos_auditoria" id="hallazgos_auditoria">
+                        <textarea class="form-control {{ $errors->has('hallazgos_auditoria') ? 'is-invalid' : '' }}" name="hallazgos_auditoria"
+                            id="hallazgos_auditoria">
                             {{ old('hallazgos_auditoria') }}</textarea>
                         @if ($errors->has('hallazgos_auditoria'))
                             <div class="invalid-feedback">
@@ -797,55 +797,73 @@
             let empleadoSeleccionado = $("#director_resp_id option:selected").val();
             $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'director_resp_id');
-            $('#vp_responsable_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#vp_responsable_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#vp_responsable_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#vp_responsable_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
 
             $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'director_resp_id');
-            $('#vice_operaciones_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#vice_operaciones_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#vice_operaciones_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#vice_operaciones_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
 
 
             $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'director_resp_id');
-            $('#presidencia_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#presidencia_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#presidencia_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr(
+                'disabled', false);
+            $('#presidencia_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr(
+                'data-o', '');
         });
 
         $(document).on('change', '#vp_responsable_id', function(event) {
             let empleadoSeleccionado = $("#vp_responsable_id option:selected").val();
             $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vp_responsable_id');
-            $('#vice_operaciones_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#vice_operaciones_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#vice_operaciones_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#vice_operaciones_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
 
             $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vp_responsable_id');
-            $('#director_resp_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#director_resp_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#director_resp_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#director_resp_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
 
             $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vp_responsable_id');
-            $('#presidencia_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#presidencia_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#presidencia_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#presidencia_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
         });
 
         $(document).on('change', '#presidencia_id', function(event) {
             let empleadoSeleccionado = $("#presidencia_id option:selected").val();
             $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'presidencia_id');
-            $('#vice_operaciones_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#vice_operaciones_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#vice_operaciones_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#vice_operaciones_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
 
             $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'presidencia_id');
-            $('#director_resp_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#director_resp_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#director_resp_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr(
+                'disabled', false);
+            $('#director_resp_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr(
+                'data-o', '');
 
             $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'presidencia_id');
-            $('#vp_responsable_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#vp_responsable_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#vp_responsable_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#vp_responsable_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
 
         });
 
@@ -853,18 +871,24 @@
             let empleadoSeleccionado = $("#vice_operaciones_id option:selected").val();
             $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vice_operaciones_id');
-            $('#presidencia_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#presidencia_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#presidencia_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#presidencia_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
 
             $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vice_operaciones_id');
-            $('#director_resp_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#director_resp_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#director_resp_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#director_resp_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
 
             $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
             $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vice_operaciones_id');
-            $('#vp_responsable_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
-            $('#vp_responsable_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+            $('#vp_responsable_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('disabled', false);
+            $('#vp_responsable_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])')
+                .attr('data-o', '');
         });
     </script>
 @endsection

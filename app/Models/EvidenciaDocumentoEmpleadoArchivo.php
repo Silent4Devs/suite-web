@@ -29,7 +29,7 @@ class EvidenciaDocumentoEmpleadoArchivo extends Model implements Auditable
             if ($this->evidencia->empleados_documentos->id) {
                 $empleado = Empleado::select('id', 'name')->find($this->evidencia->empleados_documentos->id);
 
-                return asset('storage/expedientes/' . Str::slug($empleado->name) . '/' . $this->documento);
+                return asset('storage/expedientes/'.Str::slug($empleado->name).'/'.$this->documento);
             } else {
                 return null;
             }
@@ -42,7 +42,7 @@ class EvidenciaDocumentoEmpleadoArchivo extends Model implements Auditable
     {
         $empleado = Empleado::select('id', 'name')->find($this->evidencia->empleados_documentos->id);
 
-        return 'expedientes/' . Str::slug($empleado->name) . '/' . $this->documento;
+        return 'expedientes/'.Str::slug($empleado->name).'/'.$this->documento;
     }
 
     public function evidencia()
