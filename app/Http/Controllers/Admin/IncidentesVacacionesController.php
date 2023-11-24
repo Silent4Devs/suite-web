@@ -105,17 +105,39 @@ class IncidentesVacacionesController extends Controller
             'efecto' => 'required|int',
         ]);
 
-        $empleados = array_map(function ($value) {
-            return intval($value);
-        }, $request->empleados);
+        $empleados = $request->has('empleados') ? $request->empleados : [];
+        $puestos = $request->has('puestos') ? $request->puestos : [];
+        $areas = $request->has('areas') ? $request->areas : [];
 
-        $puestos = array_map(function ($value) {
-            return intval($value);
-        }, $request->puestos);
+        // Check if at least one array has data
+        if (empty($empleados) && empty($puestos) && empty($areas)) {
+            $errorMessage = 'Debe seleccionar al menos una opción sobre a quien aplicara la excepción.';
 
-        $areas = array_map(function ($value) {
-            return intval($value);
-        }, $request->areas);
+            // Manually add error message to $errors bag
+            $errors = new \Illuminate\Support\MessageBag();
+            $errors->add('custom_error', $errorMessage);
+
+            // Redirect back with the input data and errors
+            return redirect()->back()->withErrors($errors)->withInput();
+        }
+
+        if (!empty($empleados)) {
+            $empleados = array_map(function ($value) {
+                return intval($value);
+            }, $request->empleados);
+        }
+
+        if (!empty($puestos)) {
+            $puestos = array_map(function ($value) {
+                return intval($value);
+            }, $request->puestos);
+        }
+
+        if (!empty($areas)) {
+            $areas = array_map(function ($value) {
+                return intval($value);
+            }, $request->areas);
+        }
 
         $vacacion = IncidentesVacaciones::create($request->all());
         $vacacion->empleados()->sync($empleados);
@@ -174,20 +196,42 @@ class IncidentesVacacionesController extends Controller
             'efecto' => 'required|int',
         ]);
 
+        $empleados = $request->has('empleados') ? $request->empleados : [];
+        $puestos = $request->has('puestos') ? $request->puestos : [];
+        $areas = $request->has('areas') ? $request->areas : [];
+
+        // Check if at least one array has data
+        if (empty($empleados) && empty($puestos) && empty($areas)) {
+            $errorMessage = 'Debe seleccionar al menos una opción sobre a quien aplicara la excepción.';
+
+            // Manually add error message to $errors bag
+            $errors = new \Illuminate\Support\MessageBag();
+            $errors->add('custom_error', $errorMessage);
+
+            // Redirect back with the input data and errors
+            return redirect()->back()->withErrors($errors)->withInput();
+        }
+
         $vacacion = IncidentesVacaciones::find($id);
 
         $vacacion->update($request->all());
-        $empleados = array_map(function ($value) {
-            return intval($value);
-        }, $request->empleados);
+        if (!empty($empleados)) {
+            $empleados = array_map(function ($value) {
+                return intval($value);
+            }, $request->empleados);
+        }
 
-        $puestos = array_map(function ($value) {
-            return intval($value);
-        }, $request->puestos);
+        if (!empty($puestos)) {
+            $puestos = array_map(function ($value) {
+                return intval($value);
+            }, $request->puestos);
+        }
 
-        $areas = array_map(function ($value) {
-            return intval($value);
-        }, $request->areas);
+        if (!empty($areas)) {
+            $areas = array_map(function ($value) {
+                return intval($value);
+            }, $request->areas);
+        }
 
         $vacacion->empleados()->sync($empleados);
         $vacacion->puestos()->sync($puestos);
