@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -246,21 +245,21 @@ class ReportesProyectos extends Component
 
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
-                $registro_horas_proyecto = DB::table('timesheet_horas')
-                    ->select([
-                        'timesheet_horas.id',
-                        'timesheet_horas.horas_lunes',
-                        'timesheet_horas.horas_martes',
-                        'timesheet_horas.horas_miercoles',
-                        'timesheet_horas.horas_jueves',
-                        'timesheet_horas.horas_viernes',
-                        'timesheet_horas.horas_sabado',
-                        'timesheet_horas.horas_domingo',
-                        'timesheet.fecha_dia',
-                    ])
-                    ->join('timesheet', 'timesheet_horas.timesheet_id', '=', 'timesheet.id')
-                    ->where('proyecto_id', $proyecto->id)
-                    ->get();
+            $registro_horas_proyecto = DB::table('timesheet_horas')
+                ->select([
+                    'timesheet_horas.id',
+                    'timesheet_horas.horas_lunes',
+                    'timesheet_horas.horas_martes',
+                    'timesheet_horas.horas_miercoles',
+                    'timesheet_horas.horas_jueves',
+                    'timesheet_horas.horas_viernes',
+                    'timesheet_horas.horas_sabado',
+                    'timesheet_horas.horas_domingo',
+                    'timesheet.fecha_dia',
+                ])
+                ->join('timesheet', 'timesheet_horas.timesheet_id', '=', 'timesheet.id')
+                ->where('proyecto_id', $proyecto->id)
+                ->get();
 
             // registro de horas en calendario
             $times_registro_horas_array = collect();
