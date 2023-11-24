@@ -118,14 +118,15 @@
                     </a>
                 @endcan
             @endif
+            <a class="btn-silent" href="{{ route('foda-organizacions') }}">
+                <i class="bi bi-flag mr-2"></i>
+                <span>FODA</span>
+            </a>
         </div>
 
     </div>
     <div class="col-lg-12">
         <div class="card card-body cuadro_empleados scroll_estilo" style="padding:0px !important;">
-
-
-
 
             @can('portal_comunicacion_mostrar_nuevos_ingresos')
                 <div x-data="{ active: 1 }" class="acordeon_separado">
@@ -236,26 +237,26 @@
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', true)
                                                     ->count();
-                                                
+
                                                 $cumples_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', true)
                                                     ->count();
-                                                
+
                                                 $cumples_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', true)
                                                     ->first();
-                                                
+
                                                 $cumples_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', false)
                                                     ->where('comentarios', '!=', null)
                                                     ->count();
-                                                
+
                                                 $cumples_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))

@@ -25,6 +25,11 @@ class AuditoriaInternasHallazgos extends Model implements Auditable
         'created_at',
         'updated_at',
         'deleted_at',
+        'no_tipo',
+        'titulo',
+        'clasificacion_id',
+        'clausula_id',
+        'reporte_id',
     ];
 
     public function auditoriaInterna()
@@ -40,5 +45,15 @@ class AuditoriaInternasHallazgos extends Model implements Auditable
     public function areas()
     {
         return $this->belongsTo(Area::class, 'area_id');
+    }
+
+    public function clasificacion()
+    {
+        return $this->belongsTo(ClasificacionesAuditorias::class, 'clasificacion_id');
+    }
+
+    public function clausula()
+    {
+        return $this->belongsTo(ClausulasAuditorias::class, 'clausula_id');
     }
 }

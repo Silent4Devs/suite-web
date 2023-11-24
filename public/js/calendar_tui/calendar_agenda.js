@@ -143,6 +143,17 @@ function hexToRGBA(hex) {
     addCalendar(calendar);
 
 
+    // calendar = new CalendarInfo();
+    // id += 1;
+    // calendar.id = String(id);
+    // calendar.name = 'Auditorias';
+    // calendar.color = '#171717';
+    // calendar.bgColor = '#0312FC';
+    // calendar.dragBgColor = '#0312FC';
+    // calendar.borderColor = '#0312FC';
+    // addCalendar(calendar);
+
+
 
 
 

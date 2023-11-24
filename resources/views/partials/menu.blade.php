@@ -570,6 +570,34 @@
                 </li>
             @endcan --}}
 
+            @if (auth()->user()->can('clausulas_auditorias_acceder') ||
+                    auth()->user()->can('clasificaciones_auditorias_acceder'))
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
+                        <i class="bi bi-folder iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca"> Catalogos SG </font>
+                    </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        @can('clausulas_auditorias_acceder')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.auditoria-clasificacion') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
+                                    <font class="letra_blanca">Clasificación</font>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('clasificaciones_auditorias_acceder')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.auditoria-clausula') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
+                                    <font class="letra_blanca">Cláusula</font>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
+
             @can('configurar_organizacion_acceder')
                 <li class="c-sidebar-nav-dropdown">
                     <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
