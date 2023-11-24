@@ -5,7 +5,7 @@
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.incidentes-vacaciones.index') !!}">Excepciones DayOff</a>
+            <a href="{!! route('admin.incidentes-dayoff.index') !!}">Excepciones DayOff</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
@@ -19,10 +19,10 @@
                 </div>
                 <div class="col-10">
                     <h5>¿Qué es? Lineamientos DayOff</h5>
-                    <p>Los Lineamientos de vacaciones son documentos normativos que establecen las reglas y condiciones para
+                    <p>Los Lineamientos de dayoff son documentos normativos que establecen las reglas y condiciones para
                         el
-                        otorgamiento y disfrute de las vacaciones de los trabajadores. Estos nuevos lineamientos de
-                        vacaciones
+                        otorgamiento y disfrute de las dayoff de los trabajadores. Estos nuevos lineamientos de
+                        dayoff
                         tienen
                         como objetivo garantizar que los trabajadores tengan tiempo suficiente para descansar y reponer
                         energías,
