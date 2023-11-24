@@ -44,8 +44,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EmpleadoController extends Controller
 {
-    use ObtenerOrganizacion;
     use GeneratePassword;
+    use ObtenerOrganizacion;
 
     public function getListaEmpleadosIndex()
     {
@@ -63,13 +63,17 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $empleados = Empleado::with('puestoRelacionado')->select('id', 'n_empleado', 'name', 'foto', 'genero', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->orderBy('id', 'DESC')->alta()->get()
+            ->map(function ($empleado) {
+                $empleado['avatar_ruta'] = $empleado->avatar_ruta; // Access the computed attribute
 
+                return $empleado;
+            });
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.empleados.index', compact('ceo_exists', 'logo_actual', 'empresa_actual'));
+        return view('admin.empleados.index', compact('empleados', 'logo_actual', 'empresa_actual'));
     }
 
     public function getCertificaciones($empleado)
@@ -105,7 +109,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::getaltaAll();
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $ceo_exists = Empleado::getCeoExists();
         $areas = Area::getAll();
         $sedes = Sede::getAll();
         $experiencias = ExperienciaEmpleados::getAll();
@@ -114,10 +118,10 @@ class EmpleadoController extends Controller
         $documentos = EvidenciasDocumentosEmpleados::getAll();
         $certificaciones = CertificacionesEmpleados::get();
         $puestos = Puesto::getAll();
-        $perfiles = PerfilEmpleado::get();
+        $perfiles = PerfilEmpleado::getAll();
         $perfiles_seleccionado = null;
         $puestos_seleccionado = null;
-        $perfiles = PerfilEmpleado::all();
+        //$perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $empleado = new Empleado;
@@ -126,7 +130,7 @@ class EmpleadoController extends Controller
         $organizacion = Organizacion::getFirst();
         $countries = $globalCountries->getCountries('ES');
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
     }
 
     public function onlyStore($request)
@@ -137,7 +141,7 @@ class EmpleadoController extends Controller
         $certificados = json_decode($request->certificado);
         // dd($cursos);
 
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $ceo_exists = Empleado::getCeoExists();
         $validateSupervisor = 'nullable|exists:empleados,id';
         if ($ceo_exists) {
             $validateSupervisor = 'required|exists:empleados,id';
@@ -919,9 +923,12 @@ class EmpleadoController extends Controller
         abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::getAll()->find(intval($id));
         $empleados = Empleado::getaltaAll();
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $ceo_exists = Empleado::getCeoExists();
         $areas = Area::getAll();
-        $area = $areas->find($empleado->area_id);
+        $area = null;
+        if ($empleado && $empleado->area_id !== null) {
+            $area = $areas->find($empleado->area_id);
+        }
         $sedes = Sede::getAll();
         $sede = Sede::getbyId($empleado->sede_id);
         $experiencias = ExperienciaEmpleados::getAll();
@@ -929,11 +936,11 @@ class EmpleadoController extends Controller
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::getAll();
         $puestos = Puesto::getAll();
-        $perfiles = PerfilEmpleado::all();
+        $perfiles = PerfilEmpleado::getAll();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $puestos = Puesto::getAll();
-        $perfiles = PerfilEmpleado::get();
+        $perfiles = PerfilEmpleado::getAll();
         $perfiles_seleccionado = $empleado->perfil_empleado_id;
         $puestos_seleccionado = $empleado->puesto_id;
         $idiomas = Language::get();
@@ -1052,7 +1059,7 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
-        $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $ceo_exists = Empleado::getCeoExists();
         $validateSupervisor = 'nullable|exists:empleados,id';
 
         if ($ceo_exists) {

@@ -88,6 +88,8 @@ class OrganizacionesController extends Controller
     public function update(UpdateOrganizacioneRequest $request, Organizacione $organizacione)
     {
         $organizacione->update($request->all());
+        // example:
+        alert()->success('Post Created', 'Successfully')->toToast();
 
         return redirect()->route('admin.organizaciones.index');
     }

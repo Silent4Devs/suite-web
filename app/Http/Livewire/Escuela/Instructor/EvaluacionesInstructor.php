@@ -13,16 +13,27 @@ class EvaluacionesInstructor extends Component
     use LivewireAlert;
 
     public $course;
+
     public $sections;
+
     public $name;
+
     public $description;
+
     public $is_active = 1;
+
     public $linkedTo = 1;
+
     public $idLinkedTo;
+
     public $section_id = '';
+
     public $editar = false;
+
     public $evaluacion_id;
+
     public $showlessons = true;
+
     public $course_id;
 
     // protected function rules(){
@@ -45,7 +56,7 @@ class EvaluacionesInstructor extends Component
     //             'course_id'=>'required'
     //             ];
     //     }
-
+    //
     // }
 
     protected $rules = [
@@ -54,12 +65,12 @@ class EvaluacionesInstructor extends Component
     ];
 
     protected $messages = [
-        'name.required'=>'El campo nombre es obligatorio',
-        'section_id.required'=>'El campo sección del curso es obligatorio',
-        'name.max'=> 'El campo nombre no debe de ser mayor a 255 caracteres',
+        'name.required' => 'El campo nombre es obligatorio',
+        'section_id.required' => 'El campo sección del curso es obligatorio',
+        'name.max' => 'El campo nombre no debe de ser mayor a 255 caracteres',
     ];
 
-    protected $listeners = ['editarEvaluacion'=>'editar', 'evaluationDestroy'];
+    protected $listeners = ['editarEvaluacion' => 'editar', 'evaluationDestroy'];
 
     public function hydrate()
     {
@@ -70,7 +81,6 @@ class EvaluacionesInstructor extends Component
     {
         $this->course = $course;
         $this->course_id = $course->id;
-        $this->sections = Section::where('course_id', $course->id)->get();
     }
 
     public function save()
@@ -78,13 +88,13 @@ class EvaluacionesInstructor extends Component
         $this->validate();
         // dd($this->is_active);
         Evaluation::create([
-        'name' => $this->name,
-        'description' => $this->description,
-        'linkedTo' => $this->linkedTo,
-        'is_active' => $this->is_active,
-        'course_id'=>$this->course_id,
-        'section_id'=>$this->section_id,
-    ]);
+            'name' => $this->name,
+            'description' => $this->description,
+            'linkedTo' => $this->linkedTo,
+            'is_active' => $this->is_active,
+            'course_id' => $this->course_id,
+            'section_id' => $this->section_id,
+        ]);
         $this->emit('evaluationStore');
         $this->render_alerta('success', 'El registro se ha agregado exitosamente');
         $this->default();
@@ -115,7 +125,7 @@ class EvaluacionesInstructor extends Component
             'description' => $this->description,
             'linkedTo' => $this->linkedTo,
             'is_active' => $this->is_active,
-            'section_id'=>$this->section_id,
+            'section_id' => $this->section_id,
         ]);
         $this->emit('evaluationStore');
         $this->render_alerta('success', 'Actualizado con éxito');
@@ -134,6 +144,8 @@ class EvaluacionesInstructor extends Component
 
     public function render()
     {
+        $this->sections = Section::where('course_id', $this->course->id)->get();
+
         return view('livewire.escuela.instructor.evaluaciones-instructor')->with('course', $this->course);
     }
 

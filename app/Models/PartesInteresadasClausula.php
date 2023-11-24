@@ -19,7 +19,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class PartesInteresadasClausula extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
 
     protected $table = 'partes_interesadas_clausula';
 

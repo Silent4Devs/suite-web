@@ -85,7 +85,7 @@ class AlcanceSgsiController extends Controller
         }
 
         $teams = Team::get();
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -135,7 +135,7 @@ class AlcanceSgsiController extends Controller
         $normas_seleccionadas = $alcanceSgsi->normas->pluck('id')->toArray();
 
         $normas = Norma::get();
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
     }

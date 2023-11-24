@@ -3,12 +3,13 @@
 namespace App\Models\Escuela;
 
 use App\Traits\ClearsResponseCache;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class UsuariosCursos extends Model
 {
-    use HasFactory, ClearsResponseCache;
+    use ClearsResponseCache, HasFactory;
+
     protected $table = 'course_user';
 
     protected $fillable = [

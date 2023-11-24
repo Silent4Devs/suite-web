@@ -2,19 +2,22 @@
 
 namespace App\Models;
 
-use EloquentFilter\Filterable;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class TimesheetHoras extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use Filterable;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use HasFactory;
+
     protected $table = 'timesheet_horas';
+
+    protected $appends = ['horas_totales_tarea'];
 
     protected $fillable = [
         'facturable',
@@ -47,6 +50,13 @@ class TimesheetHoras extends Model implements Auditable
         });
     }
 
+    // public static function getDataCount()
+    // {
+    //     return Cache::remember('TimesheetHoras:timesheet_data_all_count', 3600 * 2, function () {
+    //         return self::select('id')->orderBy('id', 'asc')->count();
+    //     });
+    // }
+
     public static function getDataProyTarea()
     {
         return Cache::remember('TimesheetHoras:timesheet_data_proy_tarea', 3600, function () {
@@ -67,5 +77,18 @@ class TimesheetHoras extends Model implements Auditable
     public function tarea()
     {
         return $this->belongsTo(TimesheetTarea::class, 'tarea_id');
+    }
+
+    public function getHorasTotalesTareaAttribute()
+    {
+        $sumaHoras = (float) $this->horas_lunes +
+            (float) $this->horas_martes +
+            (float) $this->horas_miercoles +
+            (float) $this->horas_jueves +
+            (float) $this->horas_viernes +
+            (float) $this->horas_sabado +
+            (float) $this->horas_domingo;
+
+        return $sumaHoras;
     }
 }

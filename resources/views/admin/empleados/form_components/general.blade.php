@@ -174,16 +174,7 @@
         @endif
     </div> --}}
     <div class="form-group col-sm-12">
-        <label class="required" for="email"><i class="far fa-envelope iconos-crear"></i>Correo
-            electrónico</label>
-        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="email"
-            placeholder="example@tabantaj.com" id="email" value="{{ old('email', $empleado->email) }}" required>
-        <small id="error_email" class="text-danger errores"></small>
-        @if ($errors->has('email'))
-            <div class="invalid-feedback">
-                {{ $errors->first('email') }}
-            </div>
-        @endif
+        @livewire('checkifmailexists-component', ['empleadoemail' => $empleado->email])
     </div>
 </div>
 <div class="row">

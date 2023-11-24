@@ -41,7 +41,6 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -75,7 +74,8 @@ class CourseController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             // Storage::putFileAs('public/cursos', $image);
-            $url = Storage::put('public/cursos', $image);
+            Storage::put('public/cursos', $image);
+            $url = '/storage/cursos/'.$image->hashName();
 
             $course->image()->create([
                 'url' => $url,
@@ -117,7 +117,6 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  Course $course
      * @return \Illuminate\Http\Response
      */
@@ -146,7 +145,8 @@ class CourseController extends Controller
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
-            $url = Storage::put('public/cursos', $image);
+            Storage::put('public/cursos', $image);
+            $url = '/storage/cursos/'.$image->hashName();
 
             if ($course->image) {
                 Storage::delete($course->image->url);

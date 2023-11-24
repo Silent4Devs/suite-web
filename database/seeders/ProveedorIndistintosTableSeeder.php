@@ -44,7 +44,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             3 => [
-                            'requisicion_id' => 102,
+                'requisicion_id' => 102,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-08',
                 'fecha_fin' => '2023-09-21',
@@ -53,7 +53,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             4 => [
-                            'requisicion_id' => 102,
+                'requisicion_id' => 102,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-08',
                 'fecha_fin' => '2023-09-21',
@@ -62,7 +62,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             5 => [
-                            'requisicion_id' => 103,
+                'requisicion_id' => 103,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-18',
                 'fecha_fin' => '2023-09-29',
@@ -71,7 +71,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             6 => [
-                            'requisicion_id' => 103,
+                'requisicion_id' => 103,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-18',
                 'fecha_fin' => '2023-09-30',

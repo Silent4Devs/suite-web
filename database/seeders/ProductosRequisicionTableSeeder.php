@@ -17,7 +17,7 @@ class ProductosRequisicionTableSeeder extends Seeder
 
         \DB::table('productos_requisicion')->insert([
             0 => [
-                        'espesificaciones' => 'test',
+                'espesificaciones' => 'test',
                 'cantidad' => 1,
                 'producto_id' => 16,
                 'requisiciones_id' => 3,
@@ -37,7 +37,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             1 => [
-                        'espesificaciones' => 'Para poder participar en licitaciones, se requieren de 2 certificaciones Tenable Security Center Specialist. Para lo anterior es importante que cada ingeniero tome el curso y además presente los 2 exámenes que competen (escrito y práctico)',
+                'espesificaciones' => 'Para poder participar en licitaciones, se requieren de 2 certificaciones Tenable Security Center Specialist. Para lo anterior es importante que cada ingeniero tome el curso y además presente los 2 exámenes que competen (escrito y práctico)',
                 'cantidad' => 2,
                 'producto_id' => 2,
                 'requisiciones_id' => 2,
@@ -57,7 +57,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             2 => [
-                        'espesificaciones' => 'Certificación GPEN de GIAC para Iván David Aguirre',
+                'espesificaciones' => 'Certificación GPEN de GIAC para Iván David Aguirre',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 9,
@@ -77,7 +77,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             3 => [
-                        'espesificaciones' => 'Boucher para examen de certificación GPEN del GIAC para Iván David Aguirre',
+                'espesificaciones' => 'Boucher para examen de certificación GPEN del GIAC para Iván David Aguirre',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 10,
@@ -97,7 +97,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             4 => [
-                        'espesificaciones' => '-Curso y Examen de Certificación ISO 27001 Auditor Líder.
+                'espesificaciones' => '-Curso y Examen de Certificación ISO 27001 Auditor Líder.
 -Material digital en español
 -Examen de certificación avalado por CertiProf disponible en español
 -Segundo intento de examen de certificación SIN costo adicional
@@ -121,7 +121,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             5 => [
-                        'espesificaciones' => '-Curso y Examen de Certificación
+                'espesificaciones' => '-Curso y Examen de Certificación
 -Material digital en español
 -Examen de certificación avalado por CertiProf disponible en español
 -Segundo intento de examen de certificación SIN costo adicional
@@ -145,7 +145,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             6 => [
-                        'espesificaciones' => 'Envío de documento de alcance y objetivos: DSI-HE23-0008 Auditoria de cumplimiento para Meebox – Sistema de captura para censos en DCM (Móvil).',
+                'espesificaciones' => 'Envío de documento de alcance y objetivos: DSI-HE23-0008 Auditoria de cumplimiento para Meebox – Sistema de captura para censos en DCM (Móvil).',
                 'cantidad' => 1,
                 'producto_id' => 24,
                 'requisiciones_id' => 15,
@@ -165,7 +165,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             7 => [
-                        'espesificaciones' => 'Para la renovación del licenciamiento del proyecto de CONEVAL, se requiere por parte del fabricante Trellix, lo siguiente:
+                'espesificaciones' => 'Para la renovación del licenciamiento del proyecto de CONEVAL, se requiere por parte del fabricante Trellix, lo siguiente:
 
 1.- Network Security NX Edition (Enterprise)Subscription LicenseSupport RenewalStart Date 18/07/2023 End date 30/08/2024 (cantidad 250)
 2.- Email Security Cloud AntiVirus/AntiSpam EditionSubscription LicenseSupport RenewalStart Date 01/07/2023 End date 30/08/2024 (cantidad 230)
@@ -193,7 +193,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '69950.27',
             ],
             8 => [
-                        'espesificaciones' => 'Fianza de Cumplimiento No.162090182231552, que ampara al Anexo B.III.2 del proyecto 224 BESTEL-IMSS SERVICIOS DE SEGURIDAD',
+                'espesificaciones' => 'Fianza de Cumplimiento No.162090182231552, que ampara al Anexo B.III.2 del proyecto 224 BESTEL-IMSS SERVICIOS DE SEGURIDAD',
                 'cantidad' => 1,
                 'producto_id' => 16,
                 'requisiciones_id' => 4,
@@ -213,7 +213,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '14714.369999999999',
             ],
             9 => [
-                        'espesificaciones' => 'Fianza de Cumplimiento No. 162090182231551, que ampara al Anexo B.III.1 del proyecto 224. BESTEL-IMSS SERVICIOS DE SEGURIDAD',
+                'espesificaciones' => 'Fianza de Cumplimiento No. 162090182231551, que ampara al Anexo B.III.1 del proyecto 224. BESTEL-IMSS SERVICIOS DE SEGURIDAD',
                 'cantidad' => 1,
                 'producto_id' => 16,
                 'requisiciones_id' => 1,
@@ -233,7 +233,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '110367.43',
             ],
             10 => [
-                        'espesificaciones' => '11 Exámenes de inglés 2022-agosto 2023',
+                'espesificaciones' => '11 Exámenes de inglés 2022-agosto 2023',
                 'cantidad' => 1,
                 'producto_id' => 9,
                 'requisiciones_id' => 5,
@@ -253,7 +253,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '3190',
             ],
             11 => [
-                        'espesificaciones' => 'Para cumplir con licitaciones, se requiere que mínimo 3 colaboradores obtengan la certificación en materia de Prevención de Operaciones con Recursos de Procedencia Ilícita y Financiamiento al Terrorismo de la CNBV.',
+                'espesificaciones' => 'Para cumplir con licitaciones, se requiere que mínimo 3 colaboradores obtengan la certificación en materia de Prevención de Operaciones con Recursos de Procedencia Ilícita y Financiamiento al Terrorismo de la CNBV.',
                 'cantidad' => 3,
                 'producto_id' => 25,
                 'requisiciones_id' => 12,
@@ -273,7 +273,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '55234.56',
             ],
             12 => [
-                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 17,
@@ -293,7 +293,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             13 => [
-                        'espesificaciones' => '1',
+                'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 17,
@@ -313,7 +313,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             14 => [
-                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 18,
@@ -333,7 +333,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             15 => [
-                        'espesificaciones' => '1',
+                'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 18,
@@ -353,7 +353,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             16 => [
-                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 19,
@@ -373,7 +373,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             17 => [
-                        'espesificaciones' => '1',
+                'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 19,
@@ -393,7 +393,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             18 => [
-                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 20,
@@ -413,7 +413,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             19 => [
-                        'espesificaciones' => '1',
+                'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 20,
@@ -433,7 +433,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             20 => [
-                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 21,
@@ -453,7 +453,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             21 => [
-                        'espesificaciones' => '1',
+                'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 21,
@@ -473,7 +473,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             22 => [
-                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 22,
@@ -493,7 +493,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             23 => [
-                        'espesificaciones' => '1',
+                'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 22,
@@ -513,7 +513,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             24 => [
-                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 23,

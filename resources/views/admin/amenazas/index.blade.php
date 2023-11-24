@@ -38,6 +38,7 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
+
         .agregar {
             margin-right: 15px;
         }
@@ -57,7 +58,7 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             @include('admin.amenazas.table')

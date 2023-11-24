@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TimesheetCliente extends Model implements Auditable
-// implements Auditable
+class TimesheetCliente extends Model
+    // implements Auditable
 {
-    use HasFactory, ClearsResponseCache;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, HasFactory;
+    // use \OwenIt\Auditing\Auditable;
 
     protected $table = 'timesheet_clientes';
 
@@ -51,7 +51,7 @@ class TimesheetCliente extends Model implements Auditable
 
     public static function getAllOrderBy($value)
     {
-        return Cache::remember('TimesheetCliente:timesheetcliente_order_by_' . $value, 3600, function () use ($value) {
+        return Cache::remember('TimesheetCliente:timesheetcliente_order_by_'.$value, 3600, function () use ($value) {
             return self::orderBy($value)->get();
         });
     }

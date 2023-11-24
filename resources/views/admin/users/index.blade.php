@@ -41,37 +41,38 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                        <tr>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                @foreach ($user->roles as $role)
-                                    {{ $role->title }}
-                                    {{-- Si deseas separar los títulos de los roles, puedes usar una coma u otro separador --}}
-                                    @if (!$loop->last)
-                                        ,
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>{{ $user->name }}</td>
-                            <td>
-                                @if (!is_null($user->empleado))
-                                    {{ $user->empleado->area->area }}
-                                @endif
-                            </td>
+                    <tr>
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->email}}</td>
+                        <td> @foreach ($user->roles as $role)
+                            {{ $role->title }}
+                            @if (!$loop->last)
+                                ,
+                            @endif
+                        @endforeach</td>
+                        <td>{{$user->name}}</td>
+                        <td>
+                           @if (!is_null($user->empleado))
+                           {{$user->empleado->area->area}}
+                           @else
+                            Sin Registro
+                           @endif
+                        </td>
 
-                            <td>
-                                @if (!is_null($user->empleado))
-                                    {{ $user->empleado->puesto }}
-                                @endif
-                            </td>
-                            <td>
+                        <td>
+                            @if (!is_null($user->empleado))
+                           {{$user->empleado->puesto}}
+                           @else
+                           Sin Registro
+                           @endif
+                        </td>
+                        <td>
 
                                 <a href="{{ url('/admin/users/' . $user->id . '/edit') }}"><i class="fas fa-edit"></i></a>
 
                                 <a href="{{ url('/admin/users/' . $user->id . '') }}"><i class="fas fa-eye"></i></a>
 
-                                <a href="{{ url('/admin/users/vincular') }}"> <i class="fas fa-user-tag"></i></a>
+                                <a  onclick="mostrarAlertaVinculacion('{{ url('/admin/users') }}');"> <i class="fas fa-user-tag"></i></a>
 
                                 <a href="{{ url('/admin/users/bloqueo/' . $user->id . '/change') }}"> <i
                                         class="fas fa-lock"></i></a>
@@ -116,7 +117,24 @@
                     window.location.href = url;
                 }
             });
-        }
+    }
+
+    function mostrarAlertaVinculacion(url) {
+        Swal.fire({
+                title: '¿Vincular?',
+                text: 'No podrás deshacer esta acción',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, vincular',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Vinculado!', 'El elemento ha sido vinculado.', 'success');
+                    console.log(url);
+                    window.location.href = url;
+                }
+            });
+    }
     </script>
 
 

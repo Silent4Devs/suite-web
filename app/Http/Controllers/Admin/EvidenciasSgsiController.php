@@ -95,7 +95,7 @@ class EvidenciasSgsiController extends Controller
         abort_if(Gate::denies('evidencia_asignacion_recursos_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
         $areas = Area::getAll();
 
         return view('admin.evidenciasSgsis.create', compact('responsables', 'empleados', 'areas'));
@@ -135,7 +135,7 @@ class EvidenciasSgsiController extends Controller
         abort_if(Gate::denies('evidencia_asignacion_recursos_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
         $areas = Area::getAll();
         $evidenciasSgsi->load('responsable', 'team');
 

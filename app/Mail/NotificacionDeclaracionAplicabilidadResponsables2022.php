@@ -40,6 +40,6 @@ class NotificacionDeclaracionAplicabilidadResponsables2022 extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadResponsable')->subject('Aprobación/rechazo del control ' . $this->aplicabilidad->gapdos->control_iso);
+        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadResponsable')->subject('Aprobación/rechazo del control '.$this->aplicabilidad->gapdos->control_iso);
     }
 }

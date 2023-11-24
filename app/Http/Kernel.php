@@ -15,7 +15,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Cors::class,
-        \App\Http\Middleware\XFrameHeadersMiddleware::class,
+        //\App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
 
     protected $middlewareGroups = [
@@ -28,9 +28,9 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            //\App\Http\Middleware\LazyLoadImages::class,
             \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\SetLocale::class,
-            //\Spatie\ResponseCache\Middlewares\CacheResponse::class,
         ],
         'api' => [
             'throttle:60,1',
@@ -58,10 +58,12 @@ class Kernel extends HttpKernel
         'primeros.pasos' => \App\Http\Middleware\PrimerosPasos::class,
         'version_iso_2013' => \App\Http\Middleware\VersionIso2013::class,
         'version_iso_2022' => \App\Http\Middleware\VersionIso2022::class,
+        'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
+        'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
     ];
 
     protected $middlewareAliases = [
         //'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
-     ];
+    ];
 }

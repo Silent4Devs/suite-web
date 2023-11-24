@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Laracasts\Flash\Flash;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class MacroprocesoController extends Controller
@@ -94,7 +94,8 @@ class MacroprocesoController extends Controller
         );
         $macroprocesos = Macroproceso::create($request->all());
 
-        // Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
+        Alert::success('éxito', 'Información añadida con éxito');
+
         return redirect()->route('admin.macroprocesos.index')->with('success', 'Guardado con éxito');
     }
 
@@ -125,6 +126,7 @@ class MacroprocesoController extends Controller
             ],
         );
         $macroproceso->update($request->all());
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.macroprocesos.index')->with('success', 'Editado con éxito');
     }
@@ -133,6 +135,7 @@ class MacroprocesoController extends Controller
     {
         abort_if(Gate::denies('macroprocesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso->delete();
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }

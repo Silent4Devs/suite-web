@@ -10,10 +10,12 @@ use Livewire\Component;
 
 class CourseAudiences extends Component
 {
-    use LivewireAlert, AuthorizesRequests;
+    use AuthorizesRequests, LivewireAlert;
 
     public Audience $audience;
+
     public $course;
+
     public $name;
 
     protected $rules = [
@@ -50,7 +52,7 @@ class CourseAudiences extends Component
         ]);
 
         $this->reset('name');
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Audiencia añadida exitosamente');
     }
 
@@ -67,14 +69,14 @@ class CourseAudiences extends Component
 
         $this->audience = new Audience();
 
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Audiencia actualizada exitosamente');
     }
 
     public function destroy(Audience $audience)
     {
         $audience->delete();
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Audiencia eliminada exitosamente');
     }
 

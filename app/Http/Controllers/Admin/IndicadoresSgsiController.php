@@ -284,7 +284,7 @@ class IndicadoresSgsiController extends Controller
             $chars = ['$', '/', '*', '-', '+'];
             $onlyconsonants = $formula_r;
             foreach ($chars as $key => $char) {
-                $onlyconsonants = str_replace($char, '!' . $char, $onlyconsonants);
+                $onlyconsonants = str_replace($char, '!'.$char, $onlyconsonants);
             }
 
             $formula_array = explode('!', $onlyconsonants);

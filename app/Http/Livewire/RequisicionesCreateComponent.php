@@ -15,7 +15,6 @@ use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\Organizacion;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -25,21 +24,35 @@ class RequisicionesCreateComponent extends Component
     use WithFileUploads;
 
     public $sucursales;
+
     public $compradores;
+
     public $contratos;
+
     public $proveedores;
+
     public $productos;
+
     public $organizacion;
+
     public $requisicion_id;
+
     public $nueva_requisicion;
+
     public $productos_view;
+
     public $proveedores_view;
 
     public $products_servs_count;
+
     public $proveedores_count = 0;
+
     public $proveedores_catalogo;
+
     public $provedores_colllection_catalogo;
+
     public $provedores_indistinto_catalogo;
+
     public $proveedores_show;
 
     // contizaciones
@@ -49,19 +62,23 @@ class RequisicionesCreateComponent extends Component
     public $habilitar_firma = false;
 
     public $habilitar_alerta = false;
+
     public $habilitar_proveedores = false;
 
     public $habilitar_url = false;
 
     public $active = 'active';
+
     public $disabled = '';
 
     public $requisicion;
+
     public $area;
 
     public $isVisible;
 
     public $selectedInput = [];
+
     public $selectOption = [];
 
     public $provedores_colllection;
@@ -75,16 +92,17 @@ class RequisicionesCreateComponent extends Component
 
     public function mount()
     {
-        $this->sucursales = KatbolSucursal::where('archivo', false)->get();
-        $this->proveedores = KatbolProveedorOC::where('estado', false)->get();
-        $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
-        $this->contratos = KatbolContrato::get();
-        $this->productos = KatbolProducto::where('archivo', false)->get();
-        $this->organizacion = Organizacion::first();
     }
 
     public function render()
     {
+        $this->sucursales = KatbolSucursal::where('archivo', false)->get();
+        $this->proveedores = KatbolProveedorOC::where('estado', false)->get();
+        $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
+        $this->contratos = KatbolContrato::getAll();
+        $this->productos = KatbolProducto::where('archivo', false)->get();
+        $this->organizacion = Organizacion::getFirst();
+
         return view('livewire.requisiciones-create-component');
     }
 
@@ -139,7 +157,7 @@ class RequisicionesCreateComponent extends Component
         $this->requisicion_id = $this->nueva_requisicion->id;
         $id = $usuario->id;
         $this->nueva_requisicion->update([
-            'id_user' =>  $id,
+            'id_user' => $id,
         ]);
 
         $this->habilitar_proveedores = true;
@@ -165,16 +183,16 @@ class RequisicionesCreateComponent extends Component
                     if ($this->selectOption[$prove_count] === 'sugerido') {
                         // nuevo proveedor
                         $proveedor_req = new KatbolProveedorRequisicion();
-                        $proveedor_req->proveedor = $data['proveedor_' . $i];
-                        $proveedor_req->detalles = $data['detalles_' . $i];
-                        $proveedor_req->tipo = $data['tipo_' . $i];
-                        $proveedor_req->comentarios = $data['comentarios_' . $i];
-                        $proveedor_req->contacto = $data['contacto_' . $i];
-                        $proveedor_req->cel = $data['contacto_telefono_' . $i];
-                        $proveedor_req->contacto_correo = $data['contacto_correo_' . $i];
-                        $proveedor_req->url = $data['contacto_url_' . $i];
-                        $proveedor_req->fecha_inicio = $data['contacto_fecha_inicio_' . $i];
-                        $proveedor_req->fecha_fin = $data['contacto_fecha_fin_' . $i];
+                        $proveedor_req->proveedor = isset($data['proveedor_' . $i]) ? $data['proveedor_' . $i] : null;
+                        $proveedor_req->detalles = isset($data['detalles_' . $i]) ? $data['detalles_' . $i] : null;
+                        $proveedor_req->tipo = isset($data['tipo_' . $i]) ? $data['tipo_' . $i] : null;
+                        $proveedor_req->comentarios = isset($data['comentarios_' . $i]) ? $data['comentarios_' . $i] : null;
+                        $proveedor_req->contacto = isset($data['contacto_' . $i]) ? $data['contacto_' . $i] : null;
+                        $proveedor_req->cel = isset($data['contacto_telefono_' . $i]) ? $data['contacto_telefono_' . $i] : null;
+                        $proveedor_req->contacto_correo = isset($data['contacto_correo_' . $i]) ? $data['contacto_correo_' . $i] : null;
+                        $proveedor_req->url = isset($data['contacto_url_' . $i]) ? $data['contacto_url_' . $i] : null;
+                        $proveedor_req->fecha_inicio = isset($data['contacto_fecha_inicio_' . $i]) ? $data['contacto_fecha_inicio_' . $i] : null;
+                        $proveedor_req->fecha_fin = isset($data['contacto_fecha_fin_' . $i]) ? $data['contacto_fecha_fin_' . $i] : null;
                         $proveedor_req->requisiciones_id = $this->requisicion_id;
 
                         // cotizacion y validacion
@@ -206,7 +224,7 @@ class RequisicionesCreateComponent extends Component
                     } else {
                         $this->provedores_indistinto_catalogo = collect();
                         $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
-                            'requisicion_id' =>   $this->nueva_requisicion->id,
+                            'requisicion_id' => $this->nueva_requisicion->id,
                             'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
                             'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                         ]);
@@ -221,20 +239,20 @@ class RequisicionesCreateComponent extends Component
                     $this->proveedores_catalogo = KatbolProveedorOC::where('id', $this->selectedInput[$prove_count])->first();
                     $this->provedores_colllection_catalogo = collect();
                     $this->provedores_colllection_catalogo = KatbolProvedorRequisicionCatalogo::create([
-                        'requisicion_id' =>   $this->nueva_requisicion->id,
+                        'requisicion_id' => $this->nueva_requisicion->id,
                         'proveedor_id' => $this->selectedInput[$prove_count],
-                        'fecha_inicio'  => $data['contacto_fecha_inicio_' . $i],
-                        'fecha_fin'  => $data['contacto_fecha_fin_' . $i],
+                        'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
+                        'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                     ]);
 
                     $this->proveedores_catalogo->update([
-                        'fecha_inicio'  => $data['contacto_fecha_inicio_' . $i],
-                        'fecha_fin'  => $data['contacto_fecha_fin_' . $i],
+                        'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
+                        'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                     ]);
 
                     $this->nueva_requisicion->update([
-                        'proveedor_catalogo' =>  $this->proveedores_catalogo->nombre,
-                        'proveedoroc_id' =>  $this->proveedores_catalogo->id,
+                        'proveedor_catalogo' => $this->proveedores_catalogo->nombre,
+                        'proveedoroc_id' => $this->proveedores_catalogo->id,
                     ]);
 
                     $proveedores_escogidos = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->nueva_requisicion->id)->pluck('proveedor_id')->toArray();

@@ -9,7 +9,6 @@
             min-width: 200px !important;
         }
     </style>
-    @include('flash::message')
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Razones Sociales</h5>
     <div class="mt-5 card">
