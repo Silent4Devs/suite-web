@@ -56,7 +56,7 @@ class TimesheetHorasEdit extends Component
 
     public function render()
     {
-        $this->horas = TimesheetHoras::getData()->where('timesheet_id', $this->timesheet_id);
+        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
         $this->timesheet = Timesheet::find($this->timesheet_id);
 
         $this->emit('calcularSumatoriasFacturables');
