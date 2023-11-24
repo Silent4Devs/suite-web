@@ -118,10 +118,10 @@
                     </a>
                 @endcan
             @endif
-            <a class="btn-silent" href="{{ route('foda-organizacions') }}">
+            {{--  <a class="btn-silent" href="{{ route('foda-organizacions') }}">
                 <i class="bi bi-flag mr-2"></i>
                 <span>FODA</span>
-            </a>
+            </a>  --}}
         </div>
 
     </div>
