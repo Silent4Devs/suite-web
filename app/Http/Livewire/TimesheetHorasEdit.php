@@ -42,11 +42,9 @@ class TimesheetHorasEdit extends Component
     public function removerFila($id, $tr)
     {
         if ($id != null) {
-            $hora_eliminada = TimesheetHoras::find($id);
-            $hora_eliminada->delete();
-
-            $this->emit('removeTr', $tr);
+            TimesheetHoras::find($id)->delete();
         }
+        $this->emit('removeTr', $tr);
     }
 
     public function updatedContador($value)
