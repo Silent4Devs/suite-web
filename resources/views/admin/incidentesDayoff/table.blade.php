@@ -16,7 +16,7 @@
             <th style="min-width: 200px;">
                 Descripcion
             </th>
-            <th style="min-width: 50px; max-width:50px;">
+            <th style="min-width: 150px; max-width:150px;">
 
             </th>
         </tr>

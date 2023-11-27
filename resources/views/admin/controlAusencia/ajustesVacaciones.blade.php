@@ -3,6 +3,15 @@
     {{ Breadcrumbs::render('Ajustes-vacaciones') }}
     {{-- menus horizontales --}}
     <style type="text/css">
+        .interno {
+            background: #F0F2FF91 0% 0% no-repeat padding-box;
+            box-shadow: 0px 1px 4px #0000001A;
+            border: 1px solid #D2D2D2;
+            border-radius: 14px;
+            opacity: 1;
+            text-align: center;
+        }
+
         div.nav .nav-link {
             color: #345183;
         }
@@ -19,12 +28,13 @@
 
         div.tab-pane li {
             list-style: none;
-            width: 150px;
-            height: 150px;
             box-sizing: border-box;
             position: relative;
-            margin: 10px;
             display: inline-block;
+            width: 225px;
+            height: 96px;
+            border-radius: 15px;
+            opacity: 1;
         }
 
         div.tab-pane li i {
@@ -42,12 +52,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #eee;
-            color: #345183;
-            border-radius: 6px;
+            background-color: #ffffff;
+            /* color: #345183; */
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
             padding: 7px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: transparent conic-gradient(from 96deg at 50% 50%, #00ff1e 0.00%, #CE00A5 13.85%, #eb2f2f 50.36%, #80006E 100.00%) 0% 0%;
+            border-radius: 15px;
+            opacity: 1;
         }
 
         div.tab-pane a:hover {
@@ -83,44 +97,47 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"
-                    aria-labelledby="nav-empleados-tab">
-                    <ul class="mt-4">
-                        @can('reglas_vacaciones_acceder')
-                            <li>
-                                <a href="vacaciones">
-                                    <div>
-                                        <i class="fa-solid fa-book"></i>
-                                        <br>
-                                        Lineamientos
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('incidentes_vacaciones_acceder')
-                            <li>
-                                <a href="incidentes-vacaciones">
-                                    <div>
-                                        <i class="fa-solid fa-scale-unbalanced"></i><br>
-                                        Excepciones
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('reglas_vacaciones_vista_global')
-                            <li>
-                                <a href="vista-global-vacaciones">
-                                    <div>
-                                        <i class="fa-solid fa-globe"></i><br>
-                                        Vista Global
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    @endcan
+
+            <ul class="mt-4">
+                <div class="card card-body interno">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"
+                            aria-labelledby="nav-empleados-tab">
+                            @can('reglas_vacaciones_acceder')
+                                <li>
+                                    <a href="vacaciones">
+                                        <div>
+                                            <i class="fa-solid fa-book"></i>
+                                            <br>
+                                            Lineamientos
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('incidentes_vacaciones_acceder')
+                                <li>
+                                    <a href="incidentes-vacaciones">
+                                        <div>
+                                            <i class="fa-solid fa-scale-unbalanced"></i><br>
+                                            Excepciones
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('reglas_vacaciones_vista_global')
+                                <li>
+                                    <a href="vista-global-vacaciones">
+                                        <div>
+                                            <i class="fa-solid fa-globe"></i><br>
+                                            Vista Global
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </ul>
         </div>
     </div>
 @endsection
