@@ -4,7 +4,42 @@
         {{ Breadcrumbs::render('Reglas-Vacaciones') }}
     </div>
 
+    @include('admin.vacaciones.estilos')
+
     <style>
+        table {
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 1px 4px #0000000F;
+            border: 1px solid #E5E5E5;
+            border-radius: 14px !important;
+            opacity: 1;
+        }
+
+        table.dataTable thead,
+        table.table thead {
+            border-radius: 14px !important;
+            background: #FFFFFF !important;
+            color: black !important;
+        }
+
+        div.row.align-items-center.justify-content-center {
+            display: none;
+            visibility: hidden;
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid #4d4949;
+            /* Add horizontal border for cells */
+            border-top: 1px solid #4d4949;
+            /* Remove top border for cells */
+        }
+
+        .btn-group {
+            max-width: 30px !important;
+            max-block-size: 30px !important;
+        }
+
         .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
@@ -42,7 +77,7 @@
     <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
 
     <div class="card">
-        
+
         <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -52,9 +87,10 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los lineamientos que se aplicarán a las solicitudes de vacaciones de los colaboradores.
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los
+                        lineamientos que se aplicarán a las solicitudes de vacaciones de los colaboradores.
                     </p>
-    
+
                 </div>
             </div>
         </div>
@@ -320,7 +356,7 @@
                     //         }else{
                     //             return `<div style="text-align:left">0 días</div>`;
                     //         }
-                           
+
                     //     }
                     // },
                     {
@@ -356,7 +392,7 @@
                         render: function(data, type, row) {
                             const afectados = row.afectados;
                             const areas = row.areas;
-                           
+
                             switch (afectados) {
                                 case 1:
                                     return `
@@ -366,21 +402,21 @@
                                     `;
                                     break;
                                 case 2:
-                                   
+
                                     // let HTML = `<ul>`
                                     // areas.forEach(element => {
                                     //     HTML += `<li>${element.areas}</li>`
                                     // });
                                     // HTML += `</ul>`
                                     // return HTML;
-                                   
+
                                     let areas_seleccionadas = `<ul>`;
                                     areas.forEach(area => {
-                                        areas_seleccionadas +=`<li>${area.area}</li>`
-                                      
+                                        areas_seleccionadas += `<li>${area.area}</li>`
+
                                     });
                                     areas_seleccionadas += "</ul>"
-                                    return  areas_seleccionadas;
+                                    return areas_seleccionadas;
                                     break;
 
 

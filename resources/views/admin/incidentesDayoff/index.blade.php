@@ -11,12 +11,13 @@
             background: #FFFFFF 0% 0% no-repeat padding-box;
             box-shadow: 0px 1px 4px #0000000F;
             border: 1px solid #E5E5E5;
-            border-radius: 14px;
+            border-radius: 14px !important;
             opacity: 1;
         }
 
         table.dataTable thead,
         table.table thead {
+            border-radius: 14px !important;
             background: #FFFFFF !important;
             color: black !important;
         }
@@ -24,6 +25,19 @@
         div.row.align-items-center.justify-content-center {
             display: none;
             visibility: hidden;
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid #4d4949;
+            /* Add horizontal border for cells */
+            border-top: 1px solid #4d4949;
+            /* Remove top border for cells */
+        }
+
+        .btn-group {
+            max-width: 30px !important;
+            max-block-size: 30px !important;
         }
 
         .btn_cargar {
@@ -80,6 +94,25 @@
                 </div>
             </div>
         </div>
+
+        {{-- <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete item with ID: <span id="deleteItemId"></span>?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
 
         @include('flash::message')
         @include('partials.flashMessages')
@@ -193,67 +226,44 @@
                     },
 
                     {
-                        data: 'id',
-                        name: 'id',
-                        render: function(data, type, row, meta) {
-                            let html = `
-                            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
-                                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <form action="{{ route('admin.incidentes-dayoff.destroy', ['incidentes_dayoff' => 13]) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                        <!-- Modal Body -->
-                                        <div class="modal-body">
-                                            <p>Are you sure you want to delete item with ID:?</p>
-                                        </div>
-                                        <!-- Modal Footer -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-danger" id="confirmDelete">Delete</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
 
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button"
-                                        data-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ url('admin/incidentes-dayoff/${row.id}') }}">
-                                            <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>                            
-                                        <a class="dropdown-item" href="{{ url('admin/incidentes-dayoff/${row.id}/edit') }}">
-                                            <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                        `;
 
-                            html += `
-                            <a class="dropdown-item delete-item" href="#" data-id="${row.id}" data-toggle="modal" data-target="#deleteConfirmationModal">
-    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
-</a>
-                                        `;
-                            // if (row.borrado === false) {
-                            // } else {
-                            //     html += `
-                        //         <a class="dropdown-item disabled" href="#">
-                        //             <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (En uso)</a>
-                        //     `;
-                            // }
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}'
 
-                            html += `</div></div>`;
+                        // data: 'id',
+                        // name: 'id',
+                        // render: function(data, type, row, meta) {
+                        //     let html = `
+                    //         <div class="dropdown">
+                    //             <button class="btn dropdown-toggle" type="button"
+                    //                 data-toggle="dropdown" aria-expanded="false">
+                    //                 <i class="fa-solid fa-ellipsis-vertical"></i>
+                    //             </button>
+                    //             <div class="dropdown-menu">
+                    //                 <a class="dropdown-item" href="{{ url('admin/incidentes-dayoff/${row.id}') }}">
+                    //                     <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>
+                    //                 <a class="dropdown-item" href="{{ url('admin/incidentes-dayoff/${row.id}/edit') }}">
+                    //                     <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                    //                 `;
 
-                            return html;
+                        //     html += `
+                    //     <a class="dropdown-item delete-item"
+                    //     href="#"
+                    //     data-id="${row.id}"
+                    //     data-url="{{ url('admin/incidentes-dayoff/${row.id}') }}"
+                    //     data-bs-toggle="modal"
+                    //     data-bs-target="#deleteConfirmationModal">
+                    //         <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
+                    //     </a>
+                    //     `;
 
-                        },
-                    }
+                        //     html += `</div > `;
+
+                        //     return html;
+
+                    },
+
                 ],
                 orderCellsTop: true,
                 order: [
@@ -261,16 +271,7 @@
                 ],
             };
             let table = $('.datatable-incidentes-dayoff').DataTable(dtOverrideGlobals);
-            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
-                let titulo_tabla = `
-                <h5>
-                    <strong>
-                        Exepciones Day Off
-                    </strong>
-                </h5>
-            `;
-                imprimirTabla('datatable-incidentes-dayoff', titulo_tabla);
-            });
+
 
         });
     </script>
