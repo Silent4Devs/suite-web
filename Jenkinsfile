@@ -24,6 +24,14 @@ pipeline {
             }
         }
 
+
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
+
         stage('Deploy via SSH') {
             steps {
                 script {
