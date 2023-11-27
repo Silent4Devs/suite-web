@@ -43,6 +43,10 @@ class IncidentesDayOffController extends Controller
                 ));
             });
 
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+
             $table->editColumn('nombre', function ($row) {
                 return $row->nombre ? $row->nombre : '';
             });
@@ -246,6 +250,7 @@ class IncidentesDayOffController extends Controller
 
     public function destroy($id)
     {
+        dd($id);
         abort_if(Gate::denies('incidentes_dayoff_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = IncidentesDayoff::find($id);
         $vacaciones->delete();

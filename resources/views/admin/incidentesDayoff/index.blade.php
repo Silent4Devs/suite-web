@@ -4,7 +4,28 @@
         {{ Breadcrumbs::render('Incidentes-dayoff') }}
     </div>
 
+    @include('admin.incidentesDayOff.estilos')
+
     <style>
+        table {
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 1px 4px #0000000F;
+            border: 1px solid #E5E5E5;
+            border-radius: 14px;
+            opacity: 1;
+        }
+
+        table.dataTable thead,
+        table.table thead {
+            background: #FFFFFF !important;
+            color: black !important;
+        }
+
+        div.row.align-items-center.justify-content-center {
+            display: none;
+            visibility: hidden;
+        }
+
         .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
@@ -59,21 +80,13 @@
                 </div>
             </div>
         </div>
-        @can('incidentes_dayoff_crear')
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modal', [
-                        'model' => 'Amenaza',
-                        'route' => 'admin.amenazas.parseCsvImport',
-                    ])
-                </div>
-            @endcan
-        </div>
 
 
         @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            @include('admin.incidentesDayoff.table')
+        <div class="card-body">
+            <div class="row">
+                @include('admin.incidentesDayoff.table')
+            </div>
         </div>
     </div>
 @endsection
@@ -82,104 +95,19 @@
     @parent
     <script>
         $(function() {
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
 
-                {
-                    extend: 'print',
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    // set custom header when print
-                    customize: function(doc) {
-                        let logo_actual = @json($logo_actual);
-                        let empresa_actual = @json($empresa_actual);
-                        let empleado = @json(auth()->user()->empleado->name);
-
-                        var now = new Date();
-                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
-                        $(doc.document.body).prepend(`
-                            <div class="row">
-                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
-                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
-                                </div>
-                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
-                                    <p>${empresa_actual}</p>
-                                    <strong style="color:#345183">Amenazas</strong>
-                                </div>
-                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
-                                    Fecha: ${jsDate}
-                                </div>
-                            </div>
-                        `);
-
-                        $(doc.document.body).find('table')
-                            .css('font-size', '12px')
-                            .css('margin-top', '15px')
-                        // .css('margin-bottom', '60px')
-                        $(doc.document.body).find('th').each(function(index) {
-                            $(this).css('font-size', '18px');
-                            $(this).css('color', '#fff');
-                            $(this).css('background-color', 'blue');
-                        });
-                    },
-                    title: '',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                }
-
-            ];
-
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar excepción',
-                url: "{{ route('admin.incidentes-dayoff.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar excepción',
+            //     url: "{{ route('admin.incidentes-dayoff.create') }}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+            //     action: function(e, dt, node, config) {
+            //         let {
+            //             url
+            //         } = config;
+            //         window.location.href = url;
+            //     }
+            // };
             // let btnExport = {
             //     text: '<i  class="fas fa-download"></i>',
             //     titleAttr: 'Descargar plantilla',
@@ -201,16 +129,16 @@
             //     }
             // };
 
-            @can('incidentes_dayoff_crear')
-                dtButtons.push(btnAgregar);
-            @endcan
+            // @can('incidentes_dayoff_crear')
+            //     dtButtons.push(btnAgregar);
+            // @endcan
 
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
 
             let dtOverrideGlobals = {
-                buttons: dtButtons,
+                // buttons: dtButtons,
                 processing: true,
                 serverSide: true,
                 retrieve: true,
@@ -265,8 +193,66 @@
                     },
 
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                            let html = `
+                            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+                                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="{{ route('admin.incidentes-dayoff.destroy', ['incidentes_dayoff' => 13]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                        <!-- Modal Body -->
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete item with ID:?</p>
+                                        </div>
+                                        <!-- Modal Footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-danger" id="confirmDelete">Delete</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{{ url('admin/incidentes-dayoff/${row.id}') }}">
+                                            <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>                            
+                                        <a class="dropdown-item" href="{{ url('admin/incidentes-dayoff/${row.id}/edit') }}">
+                                            <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                        `;
+
+                            html += `
+                            <a class="dropdown-item delete-item" href="#" data-id="${row.id}" data-toggle="modal" data-target="#deleteConfirmationModal">
+    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
+</a>
+                                        `;
+                            // if (row.borrado === false) {
+                            // } else {
+                            //     html += `
+                        //         <a class="dropdown-item disabled" href="#">
+                        //             <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (En uso)</a>
+                        //     `;
+                            // }
+
+                            html += `</div></div>`;
+
+                            return html;
+
+                        },
                     }
                 ],
                 orderCellsTop: true,
