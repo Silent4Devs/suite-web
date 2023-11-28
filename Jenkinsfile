@@ -28,8 +28,8 @@ pipeline {
             steps {
                 script {
                     sshagent(['/root/.ssh/id_rsa.pub']) {
-                        sh 'chmod -R 777 /var/contenedor/tabantaj/'
-                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
+                        sh 'chmod -R 777 /var/contenedor/tabantaj'
+                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
                     }
                 }
             }
