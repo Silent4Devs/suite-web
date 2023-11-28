@@ -4,7 +4,16 @@
         {{ Breadcrumbs::render('Vista-Global-Vacaciones') }}
     </div>
 
+    @include('admin.dayOff.estilos')
+
     <style>
+        table.dataTable thead,
+        table.table thead {
+            border-radius: 14px !important;
+            background: #FFFFFF !important;
+            color: black !important;
+        }
+
         .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
@@ -58,10 +67,16 @@
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable datatable-vista-global-vacaciones tblCSV"
                 id="datatable-vista-global-vacaciones">
-                <thead class="thead-dark">
+                <thead>
                     <tr>
                         <th style="min-width: 200px;">
                             Solicitante
+                        </th>
+                        <th style="min-width: 200px;">
+                            Descripción
+                        </th>
+                        <th style="min-width: 75px;">
+                            Periodo
                         </th>
                         <th style="min-width: 110px;">
                             Días Solicitados
@@ -92,6 +107,12 @@
                                 <img src="{{ $sol->empleado->avatar_ruta }}" title="{{ $sol->empleado->name }}"
                                     class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
                                 <span>{{ $sol->empleado->name }}</span>
+                            </td>
+                            <td style="min-width: 200px;">
+                                {{ $sol->descripcion }}
+                            </td>
+                            <td style="min-width: 75px;">
+                                {{ $sol->año }}
                             </td>
                             <td style="min-width: 110px;">
                                 {{ $sol->dias_solicitados }}
@@ -180,7 +201,7 @@
                                 </div>
                                 <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                     <p>${empresa_actual}</p>
-                                    <strong style="color:#345183">Amenazas</strong>
+                                    <strong style="color:#345183">Solicitudes Vacaciones</strong>
                                 </div>
                                 <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                     Fecha: ${jsDate}

@@ -63,6 +63,7 @@
             title="Año en el que empezara a aplicar las vacaciones"></i> --}}
             {!! Form::number('inicio_conteo', null, [
                 'class' => 'form-control',
+                'min' => 1,
                 'placeholder' => 'Ingrese el año en que se aplicara el beneficio...',
             ]) !!}
             <label for="inicio_conteo" class="required"> Año de inicio del beneficio</label>
@@ -76,6 +77,7 @@
             title="Año en el que empezara a aplicar las vacaciones"></i> --}}
             {!! Form::number('fin_conteo', null, [
                 'class' => 'form-control',
+                'min' => 1,
                 'placeholder' => 'Ingrese el año en que se aplicara el beneficio...',
             ]) !!}
             <label for="fin_conteo" class="required"> Año fin del beneficio</label>
@@ -91,6 +93,7 @@
         title="Días otorgados en el lapso de años seleccionados anteriormente"></i> --}}
             {!! Form::number('dias', null, [
                 'class' => 'form-control',
+                'min' => 1,
                 'max' => 24,
                 'placeholder' => 'Ingrese numero inicial de días...',
             ]) !!}

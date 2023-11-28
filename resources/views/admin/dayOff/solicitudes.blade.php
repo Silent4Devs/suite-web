@@ -4,7 +4,16 @@
         {{ Breadcrumbs::render('Vista-Global-Dayoff') }}
     </div>
 
+    @include('admin.dayOff.estilos')
+
     <style>
+        table.dataTable thead,
+        table.table thead {
+            border-radius: 14px !important;
+            background: #FFFFFF !important;
+            color: black !important;
+        }
+
         .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
@@ -58,10 +67,17 @@
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable datatable-vista-global-dayoff tblCSV"
                 id="datatable-vista-global-dayoff">
-                <thead class="thead-dark">
+                <thead>
                     <tr>
                         <th style="min-width: 200px;">
                             Solicitante
+                        </th>
+                        <th style="min-width: 110px;">
+                            Descripción
+                        </th>
+
+                        <th style="min-width: 75px;">
+                            Año
                         </th>
                         <th style="min-width: 110px;">
                             Días Solicitados
@@ -74,7 +90,7 @@
                             Fin
                         </th>
                         <th style="min-width: 75px;">
-                           Estatus
+                            Estatus
                         </th>
                         {{-- <th style="min-width: 150px;">
                             Comentarios
@@ -220,9 +236,9 @@
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
-          
+
             let dtOverrideGlobals = {
-                pageLength : 10,
+                pageLength: 10,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -240,11 +256,30 @@
                             `;
                         }
                     },
+
+                    {
+                        data: 'descripcion',
+                        name: 'descripcion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:center">${data}</div>`;
+                        }
+                    },
+
+                    {
+                        data: 'año',
+                        name: 'año',
+                        render: function(data, type, row) {
+
+                            return `<div style="text-align:center">${data}</div>`;
+                        }
+
+                    },
+
                     {
                         data: 'dias_solicitados',
                         name: 'dias_solicitados',
                         render: function(data, type, row) {
-                            
+
                             return `<div style="text-align:center">${data}</div>`;
                         }
 
@@ -257,7 +292,7 @@
                             let fecha = data.split('-');
                             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
                             return `<div style="text-align:left">${fechaDMY}</div>`;
-                            
+
                         }
                     },
                     {
@@ -318,8 +353,8 @@
                             let aprobacion = row.aprobacion;
                             let id = row.id;
                             console.log(id);
-                           
-                                return `  
+
+                            return `  
                                 <div style="text-aling:center">
                                 <a href="solicitud-dayoff/${row.id}/vistaGlobal"  title="Ver solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 </div>

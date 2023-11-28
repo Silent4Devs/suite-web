@@ -174,7 +174,7 @@ class DayOffController extends Controller
         $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
-            $query = SolicitudDayOff::with('empleado')->orderByDesc('id')->get();
+            $query = SolicitudDayOff::getAllwithEmpleados();
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -198,6 +198,10 @@ class DayOffController extends Controller
             });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
+            });
+
+            $table->editColumn('año', function ($row) {
+                return $row->año ? $row->año : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
