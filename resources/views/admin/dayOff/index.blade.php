@@ -73,8 +73,15 @@
             margin-right: 15px;
         }
     </style>
+    <div class="row">
+        <h5 class="col-12 titulo_general_funcion">Lineamientos para Days Off´s</h5>
+    </div>
 
-    <h5 class="col-12 titulo_general_funcion">Lineamientos para Days Off´s</h5>
+    <div class="row">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.dayOff.create') }}" type="button" class="btn-crear">Crear Lineamiento +</a>
+        </div>
+    </div>
 
     <div class="mt-5 card">
         <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">

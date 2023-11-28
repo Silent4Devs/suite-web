@@ -71,6 +71,86 @@
         border-radius: 4px;
     }
 
+    .btn-crear {
+        width: 157px;
+        height: 40px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 2px solid #306BA9;
+        border-radius: 4px;
+        opacity: 1;
+        color: #306BA9;
+        font: normal normal normal 14px/20px Roboto;
+        padding-top: 7px;
+        padding-left: 8px;
+        margin-bottom: 15px;
+    }
+
+    table {
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 1px 4px #0000000F;
+        border: 1px solid #E5E5E5;
+        border-radius: 14px !important;
+        opacity: 1;
+    }
+
+    table.dataTable thead,
+    table.table thead {
+        border-radius: 14px !important;
+        background: #FFFFFF !important;
+        color: black !important;
+    }
+
+    div.row.align-items-center.justify-content-center {
+        display: none;
+        visibility: hidden;
+    }
+
+    td,
+    th {
+        border-bottom: 1px solid #4d4949;
+        /* Add horizontal border for cells */
+        border-top: 1px solid #4d4949;
+        /* Remove top border for cells */
+    }
+
+    .btn-group {
+        max-width: 30px !important;
+        max-block-size: 30px !important;
+    }
+
+    .btn_cargar {
+        border-radius: 100px !important;
+        border: 1px solid #345183;
+        color: #345183;
+        text-align: center;
+        padding: 0;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 !important;
+        margin-right: 10px !important;
+    }
+
+    .btn_cargar:hover {
+        color: #fff;
+        background: #345183;
+    }
+
+    .btn_cargar i {
+        font-size: 15pt;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .agregar {
+        margin-right: 15px;
+    }
+
     h4,
     h5,
     h6 {
