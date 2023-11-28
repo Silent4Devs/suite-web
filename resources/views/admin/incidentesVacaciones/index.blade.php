@@ -4,6 +4,8 @@
         {{ Breadcrumbs::render('Incidentes-Vacaciones') }}
     </div>
 
+    @include('admin.incidentesVacaciones.estilos')
+
     <style>
         table {
             background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -72,7 +74,15 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Excepciones Vacaciones</h5>
+    <div class="row">
+        <h5 class="col-12 titulo_general_funcion">Excepciones Vacaciones</h5>
+    </div>
+
+    <div class="row">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.incidentes-vacaciones.create') }}" type="button" class="btn-crear">Crear Excepción +</a>
+        </div>
+    </div>
 
     <div class="card">
         <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">

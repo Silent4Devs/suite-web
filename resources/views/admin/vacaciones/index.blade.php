@@ -74,7 +74,14 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
+    <div class="row">
+        <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
+    </div>
+    <div class="row">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.vacaciones.create') }}" type="button" class="btn-crear">Crear Lineamiento +</a>
+        </div>
+    </div>
 
     <div class="card">
 

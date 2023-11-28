@@ -71,6 +71,19 @@
         border-radius: 4px;
     }
 
+    .btn-crear {
+        width: 157px;
+        height: 40px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 2px solid #306BA9;
+        border-radius: 4px;
+        opacity: 1;
+        color: #306BA9;
+        font: normal normal normal 14px/20px Roboto;
+        padding-top: 7px;
+        padding-left: 8px;
+    }
+
     h4,
     h5,
     h6 {
