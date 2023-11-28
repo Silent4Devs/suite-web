@@ -17,4 +17,9 @@ class SeccionesTemplateAnalisisdeBrechas extends Model
         'descripcion',
         'porcentaje_seccion',
     ];
+
+    public function preguntas()
+    {
+        return $this->hasMany(PreguntasTemplateAnalisisdeBrechas::class, 'seccion_id', 'id');
+    }
 }

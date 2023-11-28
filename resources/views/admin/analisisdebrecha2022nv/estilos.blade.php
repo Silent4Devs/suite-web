@@ -23,7 +23,7 @@
 
     .instrucciones {
         background-color: #5397D5;
-        height: 127px;
+        height: 150px;
     }
 
     .instrucciones img {
@@ -32,6 +32,7 @@
         left: 0;
         position: relative;
         width: auto;
+        margin: 3px;
     }
 
     .instrucciones h5 {
@@ -41,6 +42,7 @@
     .instrucciones p {
         font-size: 13px;
         color: #FFFFFF;
+        margin-bottom: 10px;
     }
 
     .form-control,
@@ -70,6 +72,40 @@
         background: #306BA9 0% 0% no-repeat padding-box;
         border-radius: 4px;
     }
+
+    .secciones {
+        max-height: 50px;
+    }
+
+    .link-like-select {
+        /* Set styles to remove default select appearance */
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border: none;
+        background-color: transparent;
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    /* Style options to appear as links */
+    .link-like-select option {
+        color: blue;
+        /* Change color to your desired link color */
+        text-decoration: underline;
+        /* Underline text to mimic link */
+        cursor: pointer;
+        /* Show pointer cursor on hover */
+    }
+
+    /* Hover effect on options */
+    .link-like-select option:hover {
+        color: darkblue;
+        /* Change color on hover if desired */
+        background-color: #f0f0f0;
+        /* Change background color on hover if desired */
+    }
+
 
     h4,
     h5,
