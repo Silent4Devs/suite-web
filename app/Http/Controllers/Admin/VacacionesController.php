@@ -97,11 +97,11 @@ class VacacionesController extends Controller
         abort_if(Gate::denies('reglas_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string',
-            'dias' => 'required|int',
+            'dias' => 'required|int|gte:1|lte:24',
             'afectados' => 'required|int',
             'tipo_conteo' => 'required|int',
-            'inicio_conteo' => 'required|int',
-            'fin_conteo' => 'required|int',
+            'inicio_conteo' => 'required|int|gte:1',
+            'fin_conteo' => 'required|int|gte:inicio_conteo',
             'periodo_corte' => 'required|int',
         ]);
 
@@ -151,8 +151,8 @@ class VacacionesController extends Controller
             'dias' => 'required|int',
             'afectados' => 'required|int',
             'tipo_conteo' => 'required|int',
-            'inicio_conteo' => 'required|int',
-            'fin_conteo' => 'required|int',
+            'inicio_conteo' => 'required|int|gte:1',
+            'fin_conteo' => 'required|int|gte:inicio_conteo',
             'periodo_corte' => 'required|int',
         ]);
 
@@ -188,7 +188,7 @@ class VacacionesController extends Controller
         abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser()->empleado->id;
 
-        $solVac = SolicitudVacaciones::with('empleado')->orderByDesc('id')->get();
+        $solVac = SolicitudVacaciones::getAllwithEmpleados();
         // dd($solVac);
 
         // if ($request->ajax()) {

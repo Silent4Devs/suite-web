@@ -60,6 +60,8 @@ use App\Models\RH\TipoCompetencia;
 use App\Models\RH\TipoObjetivo;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
+use App\Models\SolicitudDayOff;
+use App\Models\SolicitudVacaciones;
 use App\Models\SubcategoriaActivo;
 use App\Models\Sugerencias;
 use App\Models\Timesheet;
@@ -115,6 +117,8 @@ use App\Observers\RevisionDocumentoObserver;
 use App\Observers\RiesgoIdentificadoObserver;
 use App\Observers\SectionObserver;
 use App\Observers\SedesObserver;
+use App\Observers\SolicitudDayOffObserver;
+use App\Observers\SolicitudVacacionesObserver;
 use App\Observers\SubCategoriaActivoObserver;
 use App\Observers\SugerenciasObserver;
 use App\Observers\TimeSheetClienteObserver;
@@ -232,5 +236,7 @@ class EventServiceProvider extends ServiceProvider
         Minutasaltadireccion::observe(MinutasAltaDireccionObserver::class);
         IncidentesVacaciones::observe(IncidentesVacacionesObserver::class);
         IncidentesDayoff::observe(IncidentesDayoffObserver::class);
+        SolicitudDayOff::observe(SolicitudDayOffObserver::class);
+        SolicitudVacaciones::observe(SolicitudVacacionesObserver::class);
     }
 }
