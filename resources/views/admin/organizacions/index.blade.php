@@ -111,7 +111,7 @@
     <div class="mt-5 card ">
         <br>
         @include('layouts.errors')
-        @include('flash::message')
+
 
         @if ($empty == true)
             <div class="text-right col-lg-12" style="position:relative; z-index:1;">
@@ -338,7 +338,7 @@
                                         <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
                                                 class="fas fa-clock iconos-crear"></i>Horario Laboral Fin</label>
                                         <!-- <label class="col-md-3 col-sm-3" for="working_day"
-                                                                        style="text-align: center;"></i>Opciones</label> -->
+                                            style="text-align: center;"></i>Opciones</label> -->
                                     </div>
                                 </tbody>
                                 <tfoot></tfoot>

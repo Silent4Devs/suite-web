@@ -13,11 +13,11 @@ use App\Models\SolicitudDayOff;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SolicitudDayOffController extends Controller
 {
@@ -110,12 +110,12 @@ class SolicitudDayOffController extends Controller
                     $q->where('area_id', $usuario->empleado->area_id);
                 })->select('dias', 'tipo_conteo')->first();
             } else {
-                Flash::error('Regla de Day´s Off no asociada');
+                Alert::warning('warning', 'Regla de Day´s Off no asociada');
 
                 return redirect(route('admin.solicitud-dayoff.index'));
             }
         } else {
-            Flash::error('Regla de Day´s Off no asociada');
+            Alert::warning('warning', 'Regla de Day´s Off no asociada');
 
             return redirect(route('admin.solicitud-dayoff.index'));
         }
@@ -150,7 +150,7 @@ class SolicitudDayOffController extends Controller
         $solicitud = SolicitudDayOff::create($request->all());
         Mail::to(removeUnicodeCharacters($supervisor->email))->send(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud));
 
-        Flash::success('Solicitud creada satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.solicitud-dayoff.index');
     }
@@ -162,7 +162,7 @@ class SolicitudDayOffController extends Controller
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Day Off not found');
+            Alert::warning('warning', 'Regla de Day´s Off no asociada');
 
             return redirect(route('admin.solicitud-dayoff.index'));
         }
@@ -199,7 +199,7 @@ class SolicitudDayOffController extends Controller
         $solicitud->update($request->all());
         Mail::to(removeUnicodeCharacters($solicitante->email))->send(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
 
-        Flash::success('Respuesta enviada satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.solicitud-dayoff.aprobacion'));
     }
@@ -210,6 +210,7 @@ class SolicitudDayOffController extends Controller
         $id = $request->id;
         $vacaciones = SolicitudDayOff::find($id);
         $vacaciones->delete();
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return response()->json(['status' => 200]);
     }
@@ -304,7 +305,7 @@ class SolicitudDayOffController extends Controller
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
@@ -375,7 +376,7 @@ class SolicitudDayOffController extends Controller
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-dayoff.index'));
         }
@@ -389,7 +390,7 @@ class SolicitudDayOffController extends Controller
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-dayoff.index'));
         }

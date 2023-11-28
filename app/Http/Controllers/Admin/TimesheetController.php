@@ -122,14 +122,6 @@ class TimesheetController extends Controller
 
         $organizacion = Organizacion::getFirst();
 
-        // Verifica si la fecha actual ya está registrada en $fechasRegistradas
-        $currentDate = now()->toDateString();
-
-        if (in_array($currentDate, $fechasRegistradas)) {
-            // La fecha actual ya está registrada, puedes realizar alguna acción, por ejemplo, mostrar un mensaje de error.
-            return back()->with('error', 'La fecha actual ya ha sido registrada en el Timesheet.');
-        }
-
         // Si la fecha no está registrada, continúa con la vista de creación.
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
     }

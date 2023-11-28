@@ -12,6 +12,7 @@ class NotificacionReporteAuditoria extends Mailable
     use Queueable, SerializesModels;
 
     public $nombre_colaborador;
+
     public $url;
 
     /**
@@ -34,6 +35,6 @@ class NotificacionReporteAuditoria extends Mailable
     public function build()
     {
         return $this->view('mails.auditorias.notificacion-auditoria-lider')
-            ->subject('Reporte de auditoria: ' . $this->nombre_colaborador);
+            ->subject('Reporte de auditoria: '.$this->nombre_colaborador);
     }
 }

@@ -2,28 +2,28 @@
 
 namespace App\Http\Livewire\Dashboard;
 
-use Livewire\Component;
+use App\Models\AccionCorrectiva;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
+use App\Models\AuditoriaInternasHallazgos;
 use App\Models\Calendario;
 use App\Models\CalendarioOficial;
+use App\Models\ClasificacionesAuditorias;
 use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
 use App\Models\Empleado;
+use App\Models\Mejoras;
 use App\Models\Organizacion;
 use App\Models\PlanBaseActividade;
 use App\Models\PlanImplementacion;
 use App\Models\Recurso;
-use App\Models\Mejoras;
-use App\Models\AccionCorrectiva;
-use App\Models\AuditoriaInternasHallazgos;
-use App\Models\ClasificacionesAuditorias;
-use GuzzleHttp\Psr7\Request;
+use Livewire\Component;
 
 class AuditoriasSGI extends Component
 {
     public $tabOption = 0;
+
     public function render()
     {
         switch ($this->tabOption) {
@@ -48,7 +48,7 @@ class AuditoriasSGI extends Component
         $clashallazgos = AuditoriaInternasHallazgos::select('clasificacion_hallazgo')->get();
         // dd($clashallazgos);
         $clashallazgosaudit = AuditoriaInternasHallazgos::distinct()->pluck('incumplimiento_requisito')->map(function ($item) {
-            return ($item);
+            return $item;
         })->unique()->values()->toArray();
         // dd($clashallazgosaudit);
         // $clashallazgosnames = AuditoriaInternasHallazgos::distinct()->pluck('clasificacion_hallazgo')->map(function ($item) {
@@ -70,7 +70,7 @@ class AuditoriasSGI extends Component
         $nc1 = $clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Menor')->count();
         $nc2 = $clashallazgos->Where('clasificacion_hallazgo', 'NC Menor')->count();
         $nc3 = $clashallazgos->Where('clasificacion_hallazgo', 'NO CONFORMIDAD MENOR')->count();
-        $noconformenor = $nc1+$nc2+$nc3;
+        $noconformenor = $nc1 + $nc2 + $nc3;
         //GRAFICA DE BARRAS DE AUDITORIA
         $clausid = AuditoriaInternasHallazgos::select('clausula_id')->get();
         $contexto = $clausid->Where('clausula_id', '1')->count();
@@ -85,24 +85,22 @@ class AuditoriasSGI extends Component
         // dd($totalclasificaciones);
         // dd($totalclasificaciones);
         // dd($totalclasificaciones);
-        foreach($totalclasificaciones as $totalclasificacion){
-            $total = AuditoriaInternasHallazgos::Where('clasificacion_id',$totalclasificacion->id)->count();
+        foreach ($totalclasificaciones as $totalclasificacion) {
+            $total = AuditoriaInternasHallazgos::Where('clasificacion_id', $totalclasificacion->id)->count();
             $totalclasificacion['total'] = $total;
             // dump($totalclasificacion->id);
         }
 
-
         //CLASIFICACIONES DE AUDITORIAS
-
 
         // Obtener los nombres de las clasificaciones para los identificadores 1, 2, 3 y 4
         $nombreauditorias = AuditoriaInterna::select('nombre_auditoria')->get();
         $nombreaudits = AuditoriaInterna::distinct()->pluck('nombre_auditoria')->map(function ($item) {
-            return ($item);
+            return $item;
         })->unique()->values()->toArray();
         $tclasificaciones = ClasificacionesAuditorias::select('nombre_clasificaciones')->get();
         $clasificaciones = ClasificacionesAuditorias::distinct()->pluck('nombre_clasificaciones')->map(function ($item) {
-            return ($item);
+            return $item;
         })->unique()->values()->toArray();
 
         // dd($nombreauditorias);
@@ -172,7 +170,7 @@ class AuditoriasSGI extends Component
             })->get();
         }
 
-        $audits= AuditoriaAnual::select("fechainicio","fechafin","nombre")->get();
+        $audits = AuditoriaAnual::select('fechainicio', 'fechafin', 'nombre')->get();
         $eventos = Calendario::getAll();
         $oficiales = CalendarioOficial::get();
         $contratos = Contrato::select('nombre_servicio', 'fecha_inicio', 'fecha_fin')->get();
@@ -184,7 +182,8 @@ class AuditoriasSGI extends Component
         $cumples_aniversarios = Empleado::getaltaAll();
         $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
-        return view('livewire.dashboard.auditorias-s-g-i' ,[
+
+        return view('livewire.dashboard.auditorias-s-g-i', [
             'plan_base' => $plan_base,
             'auditorias_anual' => $auditorias_anual,
             'recursos' => $recursos,
@@ -225,7 +224,7 @@ class AuditoriasSGI extends Component
             'totalclasificaciones' => $totalclasificaciones,
             'nombreauditorias' => $nombreauditorias,
             'nombreaudits' => $nombreaudits,
-            'clasificaciones' => $clasificaciones
+            'clasificaciones' => $clasificaciones,
         ]);
     }
 }

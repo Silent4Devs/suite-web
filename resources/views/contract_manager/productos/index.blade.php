@@ -8,10 +8,9 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
-
     </style>
-     @include('flash::message')
-     @include('partials.flashMessages')
+
+    @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Productos</h5>
     <div class="mt-5 card">
 

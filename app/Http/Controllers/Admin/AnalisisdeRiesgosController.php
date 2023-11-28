@@ -10,7 +10,7 @@ use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Laracasts\Flash\Flash;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisdeRiesgosController extends Controller
@@ -113,12 +113,12 @@ class AnalisisdeRiesgosController extends Controller
         $analisis = AnalisisDeRiesgo::create($request->all());
         switch ($request->tipo) {
             case 'Seguridad de la información':
-                Flash::success('<h5 class="text-center">Análisis de riesgo agregado</h5>');
+                Alert::success('éxito', 'Información añadida con éxito');
 
                 return redirect()->route('admin.matriz-seguridad', ['id' => $analisis->id]);
                 break;
             default:
-                Flash::error('<h5 class="text-center">Ocurrio un error intente de nuevo</h5>');
+                Alert::error('error', 'Intente de nuevo');
 
                 return redirect()->route('admin.analisis-riesgos.index');
         }

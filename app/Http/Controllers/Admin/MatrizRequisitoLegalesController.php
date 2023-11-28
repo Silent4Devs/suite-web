@@ -27,6 +27,7 @@ class MatrizRequisitoLegalesController extends Controller
         abort_if(Gate::denies('matriz_requisitos_legales_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $matrizRequisitoLegales = MatrizRequisitoLegale::select('id', 'nombrerequisito', 'formacumple', 'fechaexpedicion')->orderBy('id')->get();
+
             // dd($matrizRequisitoLegales);
             //  $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado', 'evaluaciones')->orderBy('id')->get();
             return datatables()->of($matrizRequisitoLegales)->toJson();
@@ -108,18 +109,18 @@ class MatrizRequisitoLegalesController extends Controller
     {
         abort_if(Gate::denies('matriz_requisitos_legales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'nombrerequisito' => ['required', 'string'],
-            'formacumple' => ['nullable', 'string'],
-            'tipo' => ['required', 'string'],
-            'fechaexpedicion' => ['nullable'],
-            'fechavigor' => ['nullable', 'date'],
-            'periodicidad_cumplimiento' => ['required', 'string'],
-            'requisitoacumplir' => ['required'],
-            'cumplerequisito' => ['nullable', 'string'],
-            'medio' => ['nullable', 'string'],
-            'descripcion_cumplimiento' => ['nullable', 'string'],
-        ]);
+        // $request->validate([
+        //     'nombrerequisito' => ['required', 'string'],
+        //     'formacumple' => ['nullable', 'string'],
+        //     'tipo' => ['required', 'string'],
+        //     'fechaexpedicion' => ['nullable'],
+        //     'fechavigor' => ['nullable', 'date'],
+        //     'periodicidad_cumplimiento' => ['required', 'string'],
+        //     'requisitoacumplir' => ['required'],
+        //     'cumplerequisito' => ['nullable', 'string'],
+        //     'medio' => ['nullable', 'string'],
+        //     'descripcion_cumplimiento' => ['nullable', 'string'],
+        // ]);
 
         $matrizRequisitoLegale->update($request->all());
         $files = $request->file('files');

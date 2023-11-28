@@ -74,7 +74,8 @@
 
                                 <a href="{{ url('/admin/users/' . $user->id . '') }}"><i class="fas fa-eye"></i></a>
 
-                                <a href="{{ url('/admin/users/vincular') }}"> <i class="fas fa-user-tag"></i></a>
+                                <a onclick="mostrarAlertaVinculacion('{{ url('/admin/users') }}');"> <i
+                                        class="fas fa-user-tag"></i></a>
 
                                 <a href="{{ url('/admin/users/bloqueo/' . $user->id . '/change') }}"> <i
                                         class="fas fa-lock"></i></a>
@@ -115,6 +116,23 @@
                     // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                     Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
+                    console.log(url);
+                    window.location.href = url;
+                }
+            });
+        }
+
+        function mostrarAlertaVinculacion(url) {
+            Swal.fire({
+                title: '¿Vincular?',
+                text: 'No podrás deshacer esta acción',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, vincular',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Vinculado!', 'El elemento ha sido vinculado.', 'success');
                     console.log(url);
                     window.location.href = url;
                 }

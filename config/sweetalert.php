@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'timer' => env('SWEET_ALERT_TIMER', 5000),
+    'timer' => env('SWEET_ALERT_TIMER', 6000),
 
     /*
     |--------------------------------------------------------------------------
@@ -175,7 +175,7 @@ return [
 
     'button_text' => [
         'confirm' => env('SWEET_ALERT_CONFIRM_BUTTON_TEXT', 'OK'),
-        'cancel' => env('SWEET_ALERT_CANCEL_BUTTON_TEXT', 'Cancel'),
+        'cancel' => env('SWEET_ALERT_CANCEL_BUTTON_TEXT', 'Cancelar'),
     ],
 
     /*
@@ -200,7 +200,7 @@ return [
     |
     */
 
-    'timer_progress_bar' => env('SWEET_ALERT_TIMER_PROGRESS_BAR', false),
+    'timer_progress_bar' => env('SWEET_ALERT_TIMER_PROGRESS_BAR', true),
 
     /*
     |--------------------------------------------------------------------------

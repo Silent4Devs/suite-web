@@ -8,37 +8,47 @@ use App\Models\AuditoriaInternasHallazgos;
 use App\Models\AuditoriaInternasReportes;
 use App\Models\ClasificacionesAuditorias;
 use App\Models\Proceso;
-use Livewire\Component;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class ReporteIndividual extends Component
 {
     use LivewireAlert;
 
     protected $listeners = ['render' => 'render'];
+
     public $pagination = 5;
+
     public $clasificaciones;
+
     public $clausulas;
+
     public $id_auditoria;
 
     public $c_id;
+
     public $c_edit_id;
 
     public $descripcion;
+
     public $proceso;
+
     public $area;
+
     public $clasificacion_id;
+
     public $incumplimiento_requisito;
+
     public $no_tipo;
+
     public $titulo;
 
     public $reporte;
 
     public $hallazgoAuditoriaID;
 
-    public $view = "create";
+    public $view = 'create';
 
     public function mount($clasificaciones, $clausulas, $id_auditoria)
     {
@@ -47,19 +57,18 @@ class ReporteIndividual extends Component
         $this->id_auditoria = $id_auditoria;
 
         $audit = AuditoriaInterna::find($this->id_auditoria);
-        $this->reporte = AuditoriaInternasReportes::where("id_auditoria", "=", $audit->id)
-            ->where("empleado_id", "=", auth()->user()->empleado->id)
-            ->where("lider_id", "=", $audit->lider->id);
+        $this->reporte = AuditoriaInternasReportes::where('id_auditoria', '=', $audit->id)
+            ->where('empleado_id', '=', auth()->user()->empleado->id)
+            ->where('lider_id', '=', $audit->lider->id);
 
         if ($this->reporte->exists()) {
             $this->reporte = $this->reporte->first();
-            // dd($this->reporte);
+        // dd($this->reporte);
         } else {
             // dd("Crea uno nuevo");
             $this->createReporte($audit);
         }
     }
-
 
     public function render()
     {
@@ -68,7 +77,7 @@ class ReporteIndividual extends Component
         // $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $datas = AuditoriaInternasHallazgos::where('auditoria_internas_id', '=', $this->id_auditoria)
-            ->where("reporte_id", "=", $this->reporte->id)
+            ->where('reporte_id', '=', $this->reporte->id)
             ->paginate($this->pagination);
 
         // Assuming $this->clasificaciones is a collection of clasificaciones
@@ -142,9 +151,9 @@ class ReporteIndividual extends Component
         // dd($audit);
 
         $this->reporte = AuditoriaInternasReportes::create([
-            "id_auditoria" => $audit->id,
-            "empleado_id" => auth()->user()->empleado->id,
-            "lider_id" => $audit->lider->id,
+            'id_auditoria' => $audit->id,
+            'empleado_id' => auth()->user()->empleado->id,
+            'lider_id' => $audit->lider->id,
         ]);
     }
 
