@@ -96,7 +96,7 @@ class VacacionesController extends Controller
     {
         abort_if(Gate::denies('reglas_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
+            'nombre' => 'required|string|max:255',
             'dias' => 'required|int|gte:1|lte:24',
             'afectados' => 'required|int',
             'tipo_conteo' => 'required|int',
@@ -147,7 +147,7 @@ class VacacionesController extends Controller
     {
         abort_if(Gate::denies('reglas_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
+            'nombre' => 'required|string|max:255',
             'dias' => 'required|int',
             'afectados' => 'required|int',
             'tipo_conteo' => 'required|int',
