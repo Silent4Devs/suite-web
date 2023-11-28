@@ -21,6 +21,7 @@ class FormularioAnalisisBrechasController extends Controller
 {
     public function index($id)
     {
-        return view('admin.analisisdebrecha2022nv.formulario.index')->with('id');
+        // dd($id);
+        return view('admin.analisisdebrecha2022nv.formulario.index', compact('id'));
     }
 }
