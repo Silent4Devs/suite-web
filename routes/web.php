@@ -624,29 +624,38 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::delete('analisisdebrechas/destroy', 'AnalisisBrechaController@massDestroy')->name('analisisdebrechas.massDestroy');
             Route::resource('analisisdebrechas', 'AnalisisBrechaController');
             Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
+        });
 
-            // Gap Unos
-            Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
-            Route::resource('gap-unos', 'GapUnoController');
+        Route::group(['middleware' => ['version_iso_2022']], function () {
+            //Analisis brechas 2022
+            //Template Analisis de Brechas
+            Route::get('templates', 'TemplateController@index')->name('templates');
+            Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+            Route::get('/top', 'TopController@index')->name('top');
+            Route::get('evaluacion-analisis-brechas-2022/{id}', 'FormularioAnalisisBrechasController@index')->name('formulario');
+            Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
+            Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
+            Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
+            Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+            Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
+            Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
 
-            // Gap Dos
-            //Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
-            Route::resource('gap-dos', 'GapDosController');
+            // Gap Unos 2022
+            Route::delete('gap-uno-2022/destroy', 'iso27\GapUnoConcentradoIsoController@massDestroy')->name('gap-unos-2022.massDestroy');
+            Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
 
-            // Gap Tres
-            //Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
-            Route::resource('gap-tres', 'GapTresController');
+            // Gap Dos 2022
+            //Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
+            Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
 
-            //Panel declaracion
-            Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
-            Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
-            Route::post('paneldeclaracion/responsables', 'PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
-            Route::post('paneldeclaracion/enviar-correo', 'PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
-            Route::post('paneldeclaracion/aprobadores-quitar', 'PanelDeclaracionController@quitarRelacionAprobador')->name('paneldeclaracion.aprobadores.quitar');
-            Route::post('paneldeclaracion/aprobadores', 'PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
-            Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
-            Route::resource('paneldeclaracion', 'PanelDeclaracionController');
+            // Gap Tres 2022
+            //Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
+            Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
+        });
 
+
+
+        Route::group(['middleware' => ['version_iso_2013']], function () {
             // Declaracion de Aplicabilidad
             Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
             Route::get('declaracion-aplicabilidad/tabla', 'DeclaracionAplicabilidadController@tabla')->name('declaracion-aplicabilidad.tabla');
@@ -826,7 +835,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
         Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
         Route::get('entendimiento-organizacions-foda-organizacions', 'EntendimientoOrganizacionController@cardFoda')->name('foda-organizacions');
-        route::get('entendimiento-organizacions-foda-edit/{id}','EntendimientoOrganizacionController@foda')->name('foda-organizacions.edit');
+        route::get('entendimiento-organizacions-foda-edit/{id}', 'EntendimientoOrganizacionController@foda')->name('foda-organizacions.edit');
 
         // Partes Interesadas
         Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
