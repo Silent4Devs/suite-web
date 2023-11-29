@@ -44,8 +44,8 @@ pipeline {
                 script {
                     try {
                         // Copiar desde el servidor de desarrollo al servidor de respaldo
-                    sshagent(['/.ssh/known_hosts']) {
-                       sh "scp -o StrictHostKeyChecking=no -r /var/jenkins_home/workspace/Despliegue/* root@192.168.9.101:/var/backup/containers"
+                    sshagent(['/root/.ssh/id_rsa.pub']) {
+                       sh 'scp  -r $WORKSPACE/* root@192.168.9.101:/var/backup/containers'
                     }
                     } catch (Exception e) {
                         echo "Exception occurred: ${e.message}"
