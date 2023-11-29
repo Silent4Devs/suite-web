@@ -39,8 +39,7 @@ pipeline {
                 script {
                     try {
                         // Copiar desde el servidor de desarrollo al servidor de respaldo
-                        sh 'scp -i /home/desarrollo/.ssh/id_rsa -r desarrollo@192.168.9.78:/var/contenedor/tabantaj/* /tmp/tabantaj'
-                        sh 'scp -i /home/desarrollo/.ssh/id_rsa -r /tmp/tabantaj/* root@192.168.9.101:/var/backup/containers'
+                        sh 'scp -i desarrollo@192.168.9.78:/var/contenedor/tabantaj/* -r root@192.168.9.101:/var/backup/containers'
                     } catch (Exception e) {
                         echo "Exception occurred: ${e.message}"
                         currentBuild.result = 'FAILURE'
