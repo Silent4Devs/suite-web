@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exports\VistaGlobalDayOffExport;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\DayOff;
@@ -12,6 +13,7 @@ use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DayOffController extends Controller
 {
@@ -214,5 +216,12 @@ class DayOffController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.dayOff.solicitudes', compact('logo_actual', 'empresa_actual'));
+    }
+
+    public function exportExcel()
+    {
+        $export = new VistaGlobalDayOffExport();
+
+        return Excel::download($export, 'Control_Ausencias_DayOff.xlsx');
     }
 }

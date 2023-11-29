@@ -47,21 +47,21 @@
             margin-right: 15px;
         }
     </style>
+    <div class="row">
+        <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Vacaciones</h5>
+    </div>
 
-    <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Vacaciones</h5>
+    <div class="row mb-4">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
+                href="{{ route('admin.descarga-vacaciones') }}">
+                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                Exportar Excel
+            </a>
+        </div>
+    </div>
 
     <div class="card">
-        @can('amenazas_agregar')
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modal', [
-                        'model' => 'Amenaza',
-                        'route' => 'admin.amenazas.parseCsvImport',
-                    ])
-                </div>
-            @endcan
-        </div>
-
         @include('flash::message')
         @include('partials.flashMessages')
         <div class="card-body">
