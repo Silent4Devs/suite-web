@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exports\VistaGlobalVacacionesExport;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\SolicitudVacaciones;
@@ -11,6 +12,7 @@ use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class VacacionesController extends Controller
@@ -228,5 +230,12 @@ class VacacionesController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.vacaciones.solicitudes', compact('logo_actual', 'empresa_actual', 'solVac'));
+    }
+
+    public function exportExcel()
+    {
+        $export = new VistaGlobalVacacionesExport();
+
+        return Excel::download($export, 'Control_Ausencias_Vacaciones.xlsx');
     }
 }

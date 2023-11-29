@@ -179,6 +179,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'update' => 'vacaciones.update',
             'destroy' => 'vacaciones.destroy',
         ]);
+        Route::get('ExportVacaciones', 'VacacionesController@exportExcel')->name('descarga-vacaciones');
 
         Route::get('lista-distribucion', 'ListaDistribucionController@index')->name('lista-distribucion.index');
         Route::get('lista-distribucion/{id}/edit', 'ListaDistribucionController@edit')->name('lista-distribucion.edit');
@@ -196,6 +197,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'update' => 'dayOff.update',
             'destroy' => 'dayOff.destroy',
         ]);
+        Route::get('ExportDayOff', 'DayOffController@exportExcel')->name('descarga-dayOff');
 
         Route::get('vista-global-permisos-goce-sueldo', 'PermisosGoceSueldoController@vistaGlobal')->name('vista-global-permisos-goce-sueldo');
         Route::delete('permisos-goce-sueldo/destroy', 'PermisosGoceSueldoController@massDestroy')->name('permisos-goce-sueldo.massDestroy');
