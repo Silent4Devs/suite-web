@@ -27,8 +27,13 @@ pipeline {
         // stage('Deploy via SSH') {
         //     steps {
         //         script {
+        //             try {
         //             sshagent(['/root/.ssh/id_rsa.pub']) {
         //                 sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
+        //             }
+        //              } catch (Exception e) {
+        //                 echo "Exception occurred: ${e.message}"
+        //                 currentBuild.result = 'FAILURE'
         //             }
         //         }
         //     }
@@ -39,7 +44,7 @@ pipeline {
                 script {
                     try {
                         // Copiar desde el servidor de desarrollo al servidor de respaldo
-                        sh 'scp -r desarrollo@192.168.9.78:/var/contenedor/tabantaj/*  root@192.168.9.101:/var/backup/containers'
+                    sh 'scp -r $WORKSPACE/* root@192.168.9.101:/var/backup/containers'
                     } catch (Exception e) {
                         echo "Exception occurred: ${e.message}"
                         currentBuild.result = 'FAILURE'
