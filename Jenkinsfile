@@ -37,7 +37,7 @@ pipeline {
         stage('Deploy from Development Server to Produccion Server') {
             steps {
                 script {
-                       sh 'scp  -r $WORKSPACE/* desarrollo@192.168.9.78:/var/backup/containers'
+                       sh 'scp  -r $WORKSPACE/* desarrollo@192.168.9.101:/var/backup/containers'
                 }
             }
         }
