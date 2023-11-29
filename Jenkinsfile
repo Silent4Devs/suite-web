@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     sshagent(['/root/.ssh/id_rsa.pub']) {
-                       sh 'scp  -r $WORKSPACE/* root@192.168.9.101:/var/backup/containers'
+                       sh 'scp  -r $WORKSPACE/* root@192.168.9.101:/var/backup'
                     }
                 }
             }
