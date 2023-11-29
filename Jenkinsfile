@@ -33,5 +33,19 @@ pipeline {
                 }
             }
         }
+
+
+        stage('Copy from Development Server to Backup Server') {
+            steps {
+                script {
+                    sshagent(['/root/.ssh/id_rsa.pub']) {
+                        // Copiar desde el servidor de desarrollo al servidor de respaldo
+                        sh 'ssh desarrollo@192.168.9.78 "scp -r /var/contenedor/tabantaj/* root@192.168.9.101:/var/backup/containers"'
+                    }
+                }
+            }
+        }
+
+
     }
 }
