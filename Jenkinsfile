@@ -33,14 +33,5 @@ pipeline {
                 }
             }
         }
-
-
-         stage('Deploy via SSH PRODUCCION') {
-            steps {
-                script {
-                        sh 'scp -r  desarrollo@192.168.9.78:/var/contenedor/tabantaj  root@192.168.9.101:/var/bakcup/containers'
-                }
-            }
-        }
     }
 }
