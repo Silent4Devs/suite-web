@@ -64,101 +64,102 @@
 
         @include('flash::message')
         @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable datatable-vista-global-vacaciones tblCSV"
-                id="datatable-vista-global-vacaciones">
-                <thead>
-                    <tr>
-                        <th style="min-width: 200px;">
-                            Solicitante
-                        </th>
-                        <th style="min-width: 200px;">
-                            Descripción
-                        </th>
-                        <th style="min-width: 75px;">
-                            Periodo
-                        </th>
-                        <th style="min-width: 110px;">
-                            Días Solicitados
-                        </th>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table-light table-bordered" id="vista-global-vacaciones">
+                    <thead>
+                        <tr>
+                            <th style="min-width: 200px;">
+                                Solicitante
+                            </th>
+                            <th style="min-width: 200px;">
+                                Descripción
+                            </th>
+                            <th style="min-width: 75px;">
+                                Periodo
+                            </th>
+                            <th style="min-width: 110px;">
+                                Días Solicitados
+                            </th>
 
-                        <th style="min-width: 75px;">
-                            Inicio
-                        </th>
-                        <th style="min-width: 75px;">
-                            Fin
-                        </th>
-                        <th style="min-width: 75px;">
-                            Estatus
-                        </th>
-                        {{-- <th style="min-width: 150px;">
+                            <th style="min-width: 100px;">
+                                Inicio
+                            </th>
+                            <th style="min-width: 100px;">
+                                Fin
+                            </th>
+                            <th style="min-width: 75px;">
+                                Estatus
+                            </th>
+                            {{-- <th style="min-width: 150px;">
                             Comentarios
                         </th> --}}
-                        <th style="min-width: 70px;">
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
+                            <th style="min-width: 70px;">
+                                Opciones
+                            </th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    @foreach ($solVac as $sol)
-                        <tr>
-                            <td style="min-width: 200px;">
-                                <img src="{{ $sol->empleado->avatar_ruta }}" title="{{ $sol->empleado->name }}"
-                                    class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-                                <span>{{ $sol->empleado->name }}</span>
-                            </td>
-                            <td style="min-width: 200px;">
-                                {{ $sol->descripcion }}
-                            </td>
-                            <td style="min-width: 75px;">
-                                {{ $sol->año }}
-                            </td>
-                            <td style="min-width: 110px;">
-                                {{ $sol->dias_solicitados }}
-                            </td>
+                    <tbody>
+                        @foreach ($solVac as $sol)
+                            <tr>
+                                <td style="min-width: 200px;">
+                                    <img src="{{ $sol->empleado->avatar_ruta }}" title="{{ $sol->empleado->name }}"
+                                        class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                                    <span>{{ $sol->empleado->name }}</span>
+                                </td>
+                                <td style="min-width: 200px;">
+                                    {{ $sol->descripcion }}
+                                </td>
+                                <td style="min-width: 75px;">
+                                    {{ $sol->año }}
+                                </td>
+                                <td style="min-width: 110px;">
+                                    {{ $sol->dias_solicitados }}
+                                </td>
 
-                            <td style="min-width: 75px;">
-                                {{ $sol->fecha_inicio }}
-                            </td>
-                            <td style="min-width: 75px;">
-                                {{ $sol->fecha_fin }}
-                            </td>
-                            <td style="min-width: 75px;">
-                                @if ($sol->aprobacion == 1)
-                                    <div style="text-align:left">
-                                        <span class="badge badge-pill badge-warning">Pendiente</span>
-                                    </div>
-                                @elseif ($sol->aprobacion == 2)
-                                    <div style="text-align:left">
-                                        <span class="badge badge-pill badge-danger">Rechazado</span>
-                                    </div>
-                                @elseif ($sol->aprobacion == 3)
-                                    <div style="text-align:left">
-                                        <span class="badge badge-pill badge-success">Aprobado</span>
-                                    </div>
-                                @elseif (!$sol->aprobacion)
-                                    <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
-                                @endif
-                            </td>
-                            {{-- <td style="min-width: 150px;">
+                                <td style="min-width: 100px;">
+                                    {{ $sol->fecha_inicio }}
+                                </td>
+                                <td style="min-width: 100px;">
+                                    {{ $sol->fecha_fin }}
+                                </td>
+                                <td style="min-width: 75px;">
+                                    @if ($sol->aprobacion == 1)
+                                        <div style="text-align:left">
+                                            <span class="badge badge-pill badge-warning">Pendiente</span>
+                                        </div>
+                                    @elseif ($sol->aprobacion == 2)
+                                        <div style="text-align:left">
+                                            <span class="badge badge-pill badge-danger">Rechazado</span>
+                                        </div>
+                                    @elseif ($sol->aprobacion == 3)
+                                        <div style="text-align:left">
+                                            <span class="badge badge-pill badge-success">Aprobado</span>
+                                        </div>
+                                    @elseif (!$sol->aprobacion)
+                                        <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
+                                    @endif
+                                </td>
+                                {{-- <td style="min-width: 150px;">
                                 Comentarios
                             </td> --}}
-                            <td style="min-width: 70px;">
-                                <a href="solicitud-vacaciones/{{ $sol->id }}/vistaGlobal" title="Ver solicitud"><i
-                                        class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                                <td style="min-width: 70px;">
+                                    <a href="solicitud-vacaciones/{{ $sol->id }}/vistaGlobal" title="Ver solicitud"><i
+                                            class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
     @parent
-    <script>
+    {{-- <script>
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
@@ -293,7 +294,7 @@
                 processing: true,
                 retrieve: true,
             };
-            let table = $('.datatable-vista-global-vacaciones').DataTable(dtOverrideGlobals);
+            let table = $('.vista-global-vacaciones').DataTable(dtOverrideGlobals);
             $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                 <h5>
@@ -302,9 +303,9 @@
                     </strong>
                 </h5>
             `;
-                imprimirTabla('datatable-vista-global-vacaciones', titulo_tabla);
+                imprimirTabla('vista-global-vacaciones', titulo_tabla);
             });
 
         });
-    </script>
+    </script> --}}
 @endsection
