@@ -27,7 +27,7 @@ pipeline {
         // stage('Deploy via SSH') {
         //     steps {
         //         script {
-        //             sshagent(['/root/.ssh/id_rsa.pub']) {
+        //             sshagent(['/root/.ssh/id_rsa']) {
         //                 sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
         //             }
         //         }
@@ -37,7 +37,7 @@ pipeline {
         stage('Deploy from Development Server to Produccion Server') {
             steps {
                 script {
-                      sshagent(['/root/.ssh/id_rsa']) {
+                      sshagent(['/root/id_rsa']) {
                        sh 'scp  -r $WORKSPACE/* root@192.168.9.101:/var/adm'
                      }
                 }
