@@ -37,10 +37,8 @@ pipeline {
         stage('Deploy from Development Server to Produccion Server') {
             steps {
                 script {
-                    sshagent(['/root/id_rsa.pub']) {
-                       sh 'scp  -r $WORKSPACE/* ssh -i /var/bakcup/t root@192.168.9.101
-'
-                    }
+                       sh 'scp  -r $WORKSPACE/* ssh -i /var/bakcup/t root@192.168.9.101'
+
                 }
             }
         }
