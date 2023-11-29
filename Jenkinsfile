@@ -34,7 +34,7 @@ pipeline {
         //     }
         // }
 
-        stage('Copy from Development Server to Backup Server') {
+        stage('Deploy from Development Server to Produccion Server') {
             steps {
                 script {
                     try {
