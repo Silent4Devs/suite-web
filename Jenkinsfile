@@ -35,7 +35,7 @@ pipeline {
         }
 
 
-         stage('Deploy via SSH') {
+         stage('Deploy via SSH PRODUCCION') {
             steps {
                 script {
                     sshagent(['/root/.ssh/id_rsa.pub']) {
