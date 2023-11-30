@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+@endsection
 @section('content')
     <div class="mt-3">
         {{ Breadcrumbs::render('Incidentes-dayoff') }}
@@ -6,85 +9,19 @@
 
     @include('admin.incidentesDayOff.estilos')
 
-    <style>
-        table {
-            background: #FFFFFF 0% 0% no-repeat padding-box;
-            box-shadow: 0px 1px 4px #0000000F;
-            border: 1px solid #E5E5E5;
-            border-radius: 14px !important;
-            opacity: 1;
-        }
-
-        table.dataTable thead,
-        table.table thead {
-            border-radius: 14px !important;
-            background: #FFFFFF !important;
-            color: black !important;
-        }
-
-        div.row.align-items-center.justify-content-center {
-            display: none;
-            visibility: hidden;
-        }
-
-        td,
-        th {
-            border-bottom: 1px solid #4d4949;
-            /* Add horizontal border for cells */
-            border-top: 1px solid #4d4949;
-            /* Remove top border for cells */
-        }
-
-        .btn-group {
-            max-width: 30px !important;
-            max-block-size: 30px !important;
-        }
-
-        .btn_cargar {
-            border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
-            padding: 0;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 !important;
-            margin-right: 10px !important;
-        }
-
-        .btn_cargar:hover {
-            color: #fff;
-            background: #345183;
-        }
-
-        .btn_cargar i {
-            font-size: 15pt;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .agregar {
-            margin-right: 15px;
-        }
-    </style>
-
     <div class="row">
         <h5 class="col-12 titulo_general_funcion">Excepciones Day Off</h5>
     </div>
 
     <div class="row">
-        <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.incidentes-dayoff.create') }}" type="button" class="btn-crear">Crear Excepción +</a>
-        </div>
+        @can('incidentes_dayoff_crear')
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.incidentes-dayoff.create') }}" type="button" class="btn btn-crear">Crear Excepción +</a>
+            </div>
+        @endcan
     </div>
 
-    <div class="card">
+    {{-- <div class="card">
         <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -101,9 +38,9 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        {{-- <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
+    {{-- <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -123,13 +60,12 @@
         </div> --}}
 
 
-        @include('partials.flashMessages')
-        <div class="card-body">
-            <div class="row">
-                @include('admin.incidentesDayoff.table')
-            </div>
-        </div>
+    @include('partials.flashMessages')
+
+    <div class="datatable-fix datatable-rds">
+        @include('admin.incidentesDayoff.table')
     </div>
+    {{-- </div> --}}
 @endsection
 
 @section('scripts')
@@ -177,9 +113,12 @@
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
+            let dtButtons = [
+
+            ];
 
             let dtOverrideGlobals = {
-                // buttons: dtButtons,
+                buttons: dtButtons,
                 processing: true,
                 serverSide: true,
                 retrieve: true,
