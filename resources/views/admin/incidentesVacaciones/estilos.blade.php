@@ -85,25 +85,10 @@
         margin-bottom: 15px;
     }
 
-    table {
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        box-shadow: 0px 1px 4px #0000000F;
-        border: 1px solid #E5E5E5;
-        border-radius: 14px !important;
-        opacity: 1;
-    }
-
-    table.dataTable thead,
-    table.table thead {
-        border-radius: 14px !important;
-        background: #FFFFFF !important;
-        color: black !important;
-    }
-
-    div.row.align-items-center.justify-content-center {
+    /* div.row.align-items-center.justify-content-center {
         display: none;
         visibility: hidden;
-    }
+    } */
 
     td,
     th {

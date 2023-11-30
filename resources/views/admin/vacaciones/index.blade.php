@@ -2,15 +2,27 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
 @endsection
+
 @section('content')
+    @include('admin.vacaciones.estilos')
+
     {{ Breadcrumbs::render('Reglas-Vacaciones') }}
 
-    <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
-    <div class="d-flex justify-content-end">
-        <a href="{{ route('admin.vacaciones.create') }}" type="button" class="btn btn-crear">Crear Lineamiento +</a>
+    <div class="row">
+        <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
     </div>
 
-    @can('reglas_vacaciones_crear')
+    <div class="row">
+        @can('reglas_vacaciones_crear')
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.vacaciones.create') }}" type="button" class="btn btn-crear">
+                    Crear Lineamiento +
+                </a>
+            </div>
+        @endcan
+    </div>
+
+    {{-- @can('reglas_vacaciones_crear')
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
             <div class="col-lg-12">
                 @include('csvImport.modal', [
@@ -19,7 +31,7 @@
                 ])
             </div>
         </div>
-    @endcan
+    @endcan --}}
 
     @include('flash::message')
     @include('partials.flashMessages')
@@ -119,18 +131,18 @@
                 // }
             ];
 
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar Regla',
-                url: "{{ route('admin.vacaciones.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar Regla',
+            //     url: "{{ route('admin.vacaciones.create') }}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+            //     action: function(e, dt, node, config) {
+            //         let {
+            //             url
+            //         } = config;
+            //         window.location.href = url;
+            //     }
+            // };
             // let btnExport = {
             //     text: '<i  class="fas fa-download"></i>',
             //     titleAttr: 'Descargar plantilla',
@@ -152,9 +164,9 @@
             //     }
             // };
 
-            @can('reglas_vacaciones_crear')
-                // dtButtons.push(btnAgregar);
-            @endcan
+            // @can('reglas_vacaciones_crear')
+            // dtButtons.push(btnAgregar);
+            // @endcan
 
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);

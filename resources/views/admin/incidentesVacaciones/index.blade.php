@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+@endsection
 @section('content')
     <div class="mt-3">
         {{ Breadcrumbs::render('Incidentes-Vacaciones') }}
@@ -13,12 +16,15 @@
     </div>
 
     <div class="row">
-        <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.incidentes-vacaciones.create') }}" type="button" class="btn-crear">Crear Excepción +</a>
-        </div>
+        @can('incidentes_vacaciones_crear')
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.incidentes-vacaciones.create') }}" type="button" class="btn btn-crear">Crear Excepción
+                    +</a>
+            </div>
+        @endcan
     </div>
 
-    <div class="card">
+    {{-- <div class="card">
         <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -45,14 +51,15 @@
                     ])
                 </div>
             @endcan
-        </div>
+        </div> --}}
 
 
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            @include('admin.incidentesVacaciones.table')
-        </div>
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        @include('admin.incidentesVacaciones.table')
     </div>
+
+    {{-- </div> --}}
 @endsection
 
 @section('scripts')
@@ -92,6 +99,10 @@
             //     }
             // };
 
+            let dtButtons = [
+
+            ];
+
             // @can('incidentes_vacaciones_crear')
             //     dtButtons.push(btnAgregar);
             // @endcan
@@ -101,7 +112,7 @@
 
 
             let dtOverrideGlobals = {
-                // buttons: dtButtons,
+                buttons: dtButtons,
                 processing: true,
                 serverSide: true,
                 retrieve: true,
@@ -160,16 +171,16 @@
                 ],
             };
             let table = $('.datatable-incidentes-vacaciones').DataTable(dtOverrideGlobals);
-            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
-                let titulo_tabla = `
-                <h5>
-                    <strong>
-                        Vacaciones
-                    </strong>
-                </h5>
-            `;
-                imprimirTabla('datatable-incidentes-vacaciones', titulo_tabla);
-            });
+            // $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
+            //     let titulo_tabla = `
+        //     <h5>
+        //         <strong>
+        //             Vacaciones
+        //         </strong>
+        //     </h5>
+        // `;
+            //     imprimirTabla('datatable-incidentes-vacaciones', titulo_tabla);
+            // });
 
         });
     </script>

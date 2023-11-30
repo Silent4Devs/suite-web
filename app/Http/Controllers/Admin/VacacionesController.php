@@ -194,7 +194,7 @@ class VacacionesController extends Controller
         // dd($solVac);
 
         // if ($request->ajax()) {
-        //     $query = SolicitudVacaciones::with('empleado')->orderByDesc('id')->get();
+        //     $query = SolicitudVacaciones::getAllwithEmpleados();
         //     $table = datatables()::of($query);
 
         //     $table->addColumn('placeholder', '&nbsp;');
