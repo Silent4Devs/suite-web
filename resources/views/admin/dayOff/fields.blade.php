@@ -1,36 +1,55 @@
 <div class="row">
     <!-- Nombre Field -->
     <div class="form-group col-sm-6">
-        <i class="fas fa-id-card iconos-crear"></i><i
+        {{-- <i class="fas fa-id-card iconos-crear"></i><i
         class="fas fa-info-circle" style="font-size:12pt; float: right;"
-        title="Nombre del lineamiento"></i>{!! Form::label('nombre', 'Nombre:', ['class' => 'required']) !!}
-        {!! Form::text('nombre', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            'maxlength' => 255,
-            'placeholder' => 'Esciba nombre de la regla de Days Off´s...',
-        ]) !!}
+        title="Nombre del lineamiento"></i> --}}
+        <div class="form-floating">
+            {!! Form::text('nombre', null, [
+                'class' => 'form-control',
+                'maxlength' => 255,
+                'placeholder' => 'Esciba nombre de la regla de Days Off´s...',
+            ]) !!}
+            {!! Form::label('nombre', 'Nombre del lineamiento de DayOff:', ['class' => 'asterisco']) !!}
+        </div>
     </div>
     <div class="form-group col-sm-6">
-        <label for="tipo_conteo" class="required"><i class="fa-solid fa-calendar-days iconos-crear"></i>Tipo de
-            conteo</label><i
-            class="fas fa-info-circle" style="font-size:12pt; float: right;"
-            title="Tipo de discriminación de días;
+        <div class="form-floating">
+            {{-- <i class="fa-solid fa-calendar-days iconos-crear"></i> --}}
+            {{-- <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                title="Tipo de discriminación de días;
             1.- Natural (Se cuenta de Lunes a Domingo)
-            2.- Habil ((Se cuenta de Lunes a Viernes)"></i>
-        <select id="tipo_conteo" name="tipo_conteo" class="form-control">
-            <option value="1" {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
-                Día Natural</option>
-            <option value="2" {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
-                Día Hábil</option>
-            <option disabled {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
-                Seleccione...</option>
-        </select>
+            2.- Habil ((Se cuenta de Lunes a Viernes)"></i> --}}
+            <select id="tipo_conteo" name="tipo_conteo" class="form-control">
+                <option value="1" {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
+                    Día Natural</option>
+                <option value="2" {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
+                    Día Hábil</option>
+                <option disabled {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
+                    Seleccione...</option>
+            </select>
+            <label for="tipo_conteo" class="asterisco"> Tipo de
+                conteo</label>
+        </div>
     </div>
 </div>
+
+<div class="row">
+    <!-- Descripcion Field -->
+    <div class="form-group col-sm-12">
+        <div class="form-floating">
+            {{-- <i
+                class="fas fa-file-alt iconos-crear"></i> --}}
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
+            {!! Form::label('descripcion', 'Descripción:') !!}
+        </div>
+    </div>
+</div>
+
 <div class="row" x-data="{ otro: false }">
-    <div class="form-group col-sm-6">
-        <i class="fa-solid fa-calendar-check iconos-crear"></i>{!! Form::label('inicio_conteo', 'Inicio del beneficio', ['class' => 'required']) !!}
+    <div class="form-group col-sm-3">
+        {{-- <i class="fa-solid fa-calendar-check iconos-crear"></i> --}}
+        {!! Form::label('inicio_conteo', 'Inicio del beneficio', ['class' => 'required']) !!}
         {{-- <select id="inicio_conteo" name="inicio_conteo" class="form-control">
             <option value="1"
                 {{ old('inicio_conteo') == $vacacion->inicio_conteo ? ' selected="selected"' : '' }}>Al ingreso
@@ -56,54 +75,68 @@
             </label>
         </div>
     </div>
-    <div class="form-group col-sm-6 mt-4" x-show="otro">
-        <label for="meses"> <i class="fa-solid fa-calendar-day iconos-crear"></i>Inicio del beneficio en
-            meses:</label>
-        <input type="number" class="form-control" name="meses" placeholder="Ingrese numero de meses..."  x-bind:disabled="!otro">
-    </div>
 </div><br>
 
 <div class="row">
-    <!-- Categoria Field -->
-    <div class="form-group col-sm-6">
-        <i class="fa-solid fa-calendar-day iconos-crear"></i><i
-        class="fas fa-info-circle" style="font-size:12pt; float: right;"
-        title="Días otorgados por la organización"></i>{!! Form::label('dias', 'Días a gozar:', ['class' => 'required']) !!}
-        {!! Form::number('dias', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            'maxlength' => 255,
-            'placeholder' => 'Ingrese numero inicial de días...',
-        ]) !!}
+    <div class="form-group col-sm-3 mt-4" x-show="otro">
+        <div class="form-floating">
+            <label for="meses">
+                Inicio del beneficio en
+                meses:</label>
+            <input type="number" class="form-control" name="meses" placeholder="Ingrese numero de meses..."
+                x-bind:disabled="!otro">
+        </div>
     </div>
+</div>
 
+<div class="row">
+    <!-- Categoria Field -->
+    <div class="form-group col-sm-3">
+        {{-- <i class="fa-solid fa-calendar-day iconos-crear"></i><i class="fas fa-info-circle"
+            style="font-size:12pt; float: right;" title="Días otorgados por la organización"></i> --}}
+        <div class="form-floating">
+            {!! Form::number('dias', null, [
+                'class' => 'form-control',
+                'maxlength' => 255,
+                'maxlength' => 255,
+                'placeholder' => 'Ingrese numero inicial de días...',
+            ]) !!}
+            {!! Form::label('dias', 'Días a gozar:', ['class' => 'required']) !!}
+        </div>
+    </div>
     {{-- <div class="form-group col-sm-6">
         <i class="fa-solid fa-arrow-up-9-1 iconos-crear"></i>{!! Form::label('incremento_dias', 'Incremento de días:', ['class' => 'required']) !!}
         {!! Form::number('incremento_dias', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255,'placeholder' =>'Ingrese numero de días a incrementar...']) !!}
     </div> --}}
 
 
-    <div class="form-group col-sm-6">
-        <i class="fa-solid fa-calendar-plus iconos-crear"></i><i
-        class="fas fa-info-circle" style="font-size:12pt; float: right;"
-        title="Medida de tiempo para aplicar proxima regla;
+    <div class="form-group col-sm-3">
+        {{-- <i class="fa-solid fa-calendar-plus iconos-crear"></i><i class="fas fa-info-circle"
+            style="font-size:12pt; float: right;"
+            title="Medida de tiempo para aplicar proxima regla;
         1.- Aniversario (Cuando el colaborador cumpla años en la organizacíon)
-        2.- Anual (Cada inicio de año calendario)"></i>{!! Form::label('periodo_corte', 'Periodo de corte', ['class' => 'required']) !!}
-        <select id="periodo_corte" name="periodo_corte" class="form-control">
-            <option value="1"
-                {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>Aniversario
-            </option>
-            <option value="2"
-                {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>Anual</option>
-            <option disabled {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>
-                Seleccione...</option>
-        </select>
+        2.- Anual (Cada inicio de año calendario)"></i> --}}
+        <div class="form-floating">
+            <select id="periodo_corte" name="periodo_corte" class="form-control">
+                <option value="1"
+                    {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>
+                    Aniversario
+                </option>
+                <option value="2"
+                    {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>
+                    Anual</option>
+                <option disabled {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>
+                    Seleccione...</option>
+            </select>
+            {!! Form::label('periodo_corte', 'Periodo de corte', ['class' => 'required']) !!}
+        </div>
     </div>
 </div>
 <div class="row">
 
     <div class="form-group col-sm-12">
-        <label for="afectados" class="required"> <i class="fa-solid fa-people-line iconos-crear"></i>
+        <label for="afectados" class="required">
+            {{-- <i class="fa-solid fa-people-line iconos-crear"></i> --}}
             Colaboradores a los que aplica :
         </label>
 
@@ -130,7 +163,10 @@
         </div>
 
         <div class="form-group col-sm-12 mt-4" x-show="open">
-            <label for="normas"><i class="fa-solid fa-arrows-down-to-people iconos-crear"></i>Área(s) a
+            <label for="normas" class="label-select">
+                {{-- <i
+                    class="fa-solid fa-arrows-down-to-people iconos-crear"></i> --}}
+                Área(s) a
                 aplicar</label>
             <select
                 class="form-control js-example-basic-multiple areas-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
@@ -150,18 +186,10 @@
         </div>
     </div>
 </div>
-<div class="row">
 
-    <!-- Descripcion Field -->
-    <div class="form-group col-sm-12">
-        <label for="exampleFormControlTextarea1"> <i
-                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}</label>
-        <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
-    </div>
-</div>
 <!-- Submit Field -->
 <div class="text-right form-group col-12">
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+    <a href="{{ route('admin.dayOff.index') }}" class="btn btn-outline-primary">Regresar</a>
     <button class="btn btn-danger" type="submit">
         {{ trans('global.save') }}
     </button>
