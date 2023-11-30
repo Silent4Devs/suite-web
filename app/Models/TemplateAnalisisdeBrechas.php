@@ -26,6 +26,6 @@ class TemplateAnalisisdeBrechas extends Model
 
     public function parametros()
     {
-        return $this->hasMany(ColoresTemplateAnalisisdeBrechas::class, 'template_id', 'id');
+        return $this->hasMany(ParametrosTemplateAnalisisdeBrechas::class, 'template_id', 'id');
     }
 }

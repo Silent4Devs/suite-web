@@ -129,29 +129,31 @@
                     </thead>
                     <tbody>
                         @foreach ($seccion->preguntas as $key => $pregunta)
-                            <td>{{ $pregunta->numero_pregunta }}</td>
-                            <td>{{ $pregunta->pregunta }}</td>
-                            <td>
-                                <select class="link-like-select"
-                                    name="respuesta_pregunta_{{ $pregunta->numero_pregunta }}" id="">
-                                    <option value=""default>Vacio</option>
-                                    @foreach ($template->parametros as $parametro)
-                                        <option value="{{ $parametro->valor }}">{{ $parametro->estatus }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <select class="link-like-select"
-                                    name="respuesta_pregunta_{{ $pregunta->numero_pregunta }}" id="">
-                                    <option value=""default>Vacio</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="link-like-select"
-                                    name="respuesta_pregunta_{{ $pregunta->numero_pregunta }}" id="">
-                                    <option value=""default>Vacio</option>
-                                </select>
-                            </td>
+                            <tr>
+                                <td>{{ $pregunta->numero_pregunta }}</td>
+                                <td>{{ $pregunta->pregunta }}</td>
+                                <td>
+                                    <select class="link-like-select"
+                                        name="respuesta_pregunta_{{ $pregunta->numero_pregunta }}" id="">
+                                        <option value=""default>Vacio</option>
+                                        @foreach ($template->parametros as $parametro)
+                                            <option value="{{ $parametro->valor }}">{{ $parametro->estatus }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="link-like-select"
+                                        name="respuesta_pregunta_{{ $pregunta->numero_pregunta }}" id="">
+                                        <option value=""default>Vacio</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="link-like-select"
+                                        name="respuesta_pregunta_{{ $pregunta->numero_pregunta }}" id="">
+                                        <option value=""default>Vacio</option>
+                                    </select>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

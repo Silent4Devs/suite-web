@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\ColoresTemplateAnalisisdeBrechas;
+use App\Models\ParametrosTemplateAnalisisdeBrechas;
 use App\Models\Norma;
 use App\Models\PreguntasTemplateAnalisisdeBrechas;
 use App\Models\SeccionesTemplateAnalisisdeBrechas;
@@ -135,7 +135,7 @@ class SeccionesTemplate extends Component
 
             foreach ($groupedValues as $estatus) {
                 // dd($estatus);
-                $colores = ColoresTemplateAnalisisdeBrechas::create([
+                $colores = ParametrosTemplateAnalisisdeBrechas::create([
                     'template_id' => $template->id,
                     'estatus' => $estatus['estatus'],
                     'valor' => $estatus['valor'],
