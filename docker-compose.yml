@@ -1,5 +1,18 @@
 version: "3.8"
 services:
+
+deploy-task:
+    image: alpine:latest
+    command: sh -c "echo 'Realizar tareas de despliegue aquí'"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - php
+      - postgres-tabantaj
+      - redis-tabantaj
+    networks:
+      - tabantajnetwork
+
   nginx-tabantaj:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
