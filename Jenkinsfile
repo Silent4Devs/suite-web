@@ -35,5 +35,19 @@ pipeline {
                 }
             }
         }
+
+
+
+
+        stage('Deploy via SSH  PRODUCCION') {
+            steps {
+                script {
+                     sh 'ssh desarrollo@192.168.9.78 '"cd /var/contenedor/tabantaj && sudo docker-compose run --rm deploy-task'"
+                }
+            }
+        }
+
+
+
     }
 }
