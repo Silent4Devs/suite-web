@@ -2,9 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
-use DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -95,7 +93,7 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
                     'Proyecto' => $timesheetHora->proyecto,
                     'Tarea' => $timesheetHora->tarea,
                     'Descripción' => $timesheetHora->descripcion,
-                    'Total de Horas' =>  $timesheetHora->getHorasTotalesTareaAttribute()
+                    'Total de Horas' => $timesheetHora->getHorasTotalesTareaAttribute(),
                 ];
             });
 

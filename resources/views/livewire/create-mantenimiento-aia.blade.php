@@ -35,9 +35,11 @@
                         @endif
                     </div> --}}
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <label class="required" for="interno_externo"><i class="bi bi-signpost-split-fill iconos-crear"></i>Interno / Externo:</label>
-                       
-                        <select class="form-control {{ $errors->has('interno_externo') ? 'is-invalid' : '' }}"  wire:model.defer="interno_externo" >
+                        <label class="required" for="interno_externo"><i
+                                class="bi bi-signpost-split-fill iconos-crear"></i>Interno / Externo:</label>
+
+                        <select class="form-control {{ $errors->has('interno_externo') ? 'is-invalid' : '' }}"
+                            wire:model.defer="interno_externo">
                             <option selected>Seleccione</option>
                             <option value="1">Interno</option>
                             <option value="2">Externo</option>
@@ -53,8 +55,7 @@
                         <label class="required" for="nombre"> <i
                                 class="fas fa-user-tag iconos-crear"></i>Nombre:</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                           value="{{ old('nombe', '') }}"
-                            wire:model.defer="nombre" placeholder="...">
+                            value="{{ old('nombe', '') }}" wire:model.defer="nombre" placeholder="...">
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
@@ -66,8 +67,7 @@
                         <label class="required" for="puesto"> <i
                                 class="fas fa-user-tag iconos-crear"></i>Puesto:</label>
                         <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}" type="text"
-                            value="{{ old('puesto', '') }}"
-                            wire:model.defer="puesto" placeholder="...">
+                            value="{{ old('puesto', '') }}" wire:model.defer="puesto" placeholder="...">
                         @if ($errors->has('puesto'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('puesto') }}
@@ -76,10 +76,11 @@
                     </div>
 
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <label class="required" for="correo_electronico"> <i class="fas fa-user-tag iconos-crear"></i>Correo
+                        <label class="required" for="correo_electronico"> <i
+                                class="fas fa-user-tag iconos-crear"></i>Correo
                             electrónico:</label>
-                        <input class="form-control {{ $errors->has('correo_electronico') ? 'is-invalid' : '' }}" type="text"
-                            value="{{ old('correo_electronico', '') }}"
+                        <input class="form-control {{ $errors->has('correo_electronico') ? 'is-invalid' : '' }}"
+                            type="text" value="{{ old('correo_electronico', '') }}"
                             wire:model.defer="correo_electronico" placeholder="...">
                         @if ($errors->has('correo_electronico'))
                             <div class="invalid-feedback">
@@ -92,8 +93,7 @@
                         <label class="required" for="extencion"> <i
                                 class="fas fa-user-tag iconos-crear"></i>Extención:</label>
                         <input class="form-control {{ $errors->has('extencion') ? 'is-invalid' : '' }}" type="number"
-                            value="{{ old('extencion', '') }}"
-                            wire:model.defer="extencion" placeholder="...">
+                            value="{{ old('extencion', '') }}" wire:model.defer="extencion" placeholder="...">
                         @if ($errors->has('extencion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('extencion') }}
@@ -105,8 +105,7 @@
                         <label class="required" for="ubicacion"> <i
                                 class="fas fa-user-tag iconos-crear"></i>Ubicación:</label>
                         <input class="form-control {{ $errors->has('ubicacion') ? 'is-invalid' : '' }}" type="text"
-                             value="{{ old('ubicacion', '') }}"
-                            wire:model.defer="ubicacion" placeholder="...">
+                            value="{{ old('ubicacion', '') }}" wire:model.defer="ubicacion" placeholder="...">
                         @if ($errors->has('ubicacion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ubicacion') }}

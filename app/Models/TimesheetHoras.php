@@ -81,13 +81,13 @@ class TimesheetHoras extends Model implements Auditable
 
     public function getHorasTotalesTareaAttribute()
     {
-        $sumaHoras = (float)$this->horas_lunes +
-            (float)$this->horas_martes +
-            (float)$this->horas_miercoles +
-            (float)$this->horas_jueves +
-            (float)$this->horas_viernes +
-            (float)$this->horas_sabado +
-            (float)$this->horas_domingo;
+        $sumaHoras = (float) $this->horas_lunes +
+            (float) $this->horas_martes +
+            (float) $this->horas_miercoles +
+            (float) $this->horas_jueves +
+            (float) $this->horas_viernes +
+            (float) $this->horas_sabado +
+            (float) $this->horas_domingo;
 
         return $sumaHoras;
     }
