@@ -27,11 +27,25 @@ pipeline {
         stage('Deploy via SSH') {
             steps {
                 script {
-                    sshagent(['/root/.ssh/id_rsa']) {
-                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
+                    sshagent(['/root/.ssh/id_rsa.pub']) {
+                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
                     }
                 }
             }
         }
+
+
+
+
+        stage('Deploy via SSH  PRODUCCION') {
+            steps {
+                script {
+                     sh 'ssh desarrollo@192.168.9.78 '"cd /var/contenedor/tabantaj && sudo docker-compose run --rm deploy-task'"
+                }
+            }
+        }
+
+
+
     }
 }

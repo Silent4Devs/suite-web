@@ -1,5 +1,18 @@
 version: "3.8"
 services:
+
+  deploy-task:
+    image: alpine:latest
+    command: sh -c "echo 'Realizar tareas de despliegue aquí'"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - php
+      - postgres-tabantaj
+      - redis-tabantaj
+    networks:
+      - tabantajnetwork
+
   nginx-tabantaj:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
@@ -33,7 +46,7 @@ services:
         max-size: "30m"
         max-file: "1"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -176,7 +189,6 @@ services:
       #- REDIS_1_AUTH=silent11!
     networks:
       - tabantajnetwork
-
   # dd-agent:
   #   image: gcr.io/datadoghq/agent:7
   #   container_name: dd-agent
