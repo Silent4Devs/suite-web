@@ -93,15 +93,22 @@ class DayOffController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         abort_if(Gate::denies('reglas_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre' => 'required|string',
-            'dias' => 'required|int',
-            'afectados' => 'required|int',
-            'tipo_conteo' => 'required|int',
-            'inicio_conteo' => 'required|int',
-            'periodo_corte' => 'required|int',
-        ]);
+        $request->validate(
+            [
+                'nombre' => 'required|string|max:255',
+                'dias' => 'required|int|gte:1|max:24',
+                'afectados' => 'required|int',
+                'tipo_conteo' => 'required|int',
+                'inicio_conteo' => 'required|int',
+                'periodo_corte' => 'required|int',
+                'meses' => 'required_if:inicio_conteo,2',
+            ],
+            [
+                'meses.required_if' => 'Debe espicificar el numero de meses',
+            ],
+        );
 
         if ($request->afectados == 2) {
             $areas = array_map(function ($value) {
