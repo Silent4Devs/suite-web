@@ -11,11 +11,9 @@ use App\Http\Controllers\Controller;
 // use App\Models\GapDo;
 // use App\Models\GapTre;
 // use App\Models\GapUno;
-use App\Models\Norma;
 // use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Symfony\Component\HttpFoundation\Response;
+
 // use Yajra\DataTables\Facades\DataTables;
 
 class TemplateController extends Controller

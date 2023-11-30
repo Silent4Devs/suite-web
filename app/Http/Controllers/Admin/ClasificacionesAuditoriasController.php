@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\ClasificacionesAuditorias;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AuditoriaInternasHallazgos;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Gate;
+use App\Models\ClasificacionesAuditorias;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 class ClasificacionesAuditoriasController extends Controller
 {
@@ -20,6 +20,7 @@ class ClasificacionesAuditoriasController extends Controller
         //
         abort_if(Gate::denies('clasificaciones_auditorias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clasifaudit = ClasificacionesAuditorias::all();
+
         // dd($clasifaudit);
         return view('admin.clasificacionAuditorias.index', compact('clasifaudit'));
     }
@@ -27,7 +28,6 @@ class ClasificacionesAuditoriasController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-
     public function datatable(Request $request)
     {
         abort_if(Gate::denies('clasificaciones_auditorias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -78,7 +78,7 @@ class ClasificacionesAuditoriasController extends Controller
     {
         abort_if(Gate::denies('clasificaciones_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            "nombre" => "required",
+            'nombre' => 'required',
         ]);
         // dd('validacion');
         $nuevaClasificacion = ClasificacionesAuditorias::create([
@@ -106,6 +106,7 @@ class ClasificacionesAuditoriasController extends Controller
         //
         abort_if(Gate::denies('clasificaciones_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clasif = ClasificacionesAuditorias::find($id);
+
         // dd($clasif);
         return view('admin.clasificacionAuditorias.edit', compact('clasif'));
     }
@@ -117,7 +118,7 @@ class ClasificacionesAuditoriasController extends Controller
     {
         abort_if(Gate::denies('clasificaciones_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            "nombre" => "required",
+            'nombre' => 'required',
         ]);
         // dd('validacion');
         $editClasificacion = ClasificacionesAuditorias::find($id);
@@ -140,6 +141,7 @@ class ClasificacionesAuditoriasController extends Controller
         $deleteClasificacion = ClasificacionesAuditorias::find($id);
 
         $deleteClasificacion->delete();
+
         return redirect(route('admin.auditoria-clasificacion'));
     }
 }

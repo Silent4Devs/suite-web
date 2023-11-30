@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\ClausulasAuditorias;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AuditoriaInternasHallazgos;
-use App\Models\AuditoriaInternasReportes;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Gate;
+use App\Models\ClausulasAuditorias;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 class ClausulasAuditoriasController extends Controller
 {
@@ -78,7 +77,7 @@ class ClausulasAuditoriasController extends Controller
         //
         abort_if(Gate::denies('clausulas_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            "nombre" => "required",
+            'nombre' => 'required',
         ]);
 
         // dd('validacion');
@@ -107,6 +106,7 @@ class ClausulasAuditoriasController extends Controller
     {
         abort_if(Gate::denies('clausulas_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $claus = ClausulasAuditorias::find($id);
+
         // dd($clasif);
         return view('admin.clausulasAuditorias.edit', compact('claus'));
     }
@@ -119,7 +119,7 @@ class ClausulasAuditoriasController extends Controller
         //
         abort_if(Gate::denies('clausulas_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            "nombre" => "required",
+            'nombre' => 'required',
         ]);
         // dd('validacion');
         $editClausula = ClausulasAuditorias::find($id);
@@ -142,6 +142,7 @@ class ClausulasAuditoriasController extends Controller
         $deleteClausula = ClausulasAuditorias::find($id);
         // dd($deleteClausula);
         $deleteClausula->delete();
+
         return redirect(route('admin.auditoria-clausula'));
     }
 }
