@@ -1,7 +1,7 @@
 version: "3.8"
 services:
 
-deploy-task:
+  deploy-task:
     image: alpine:latest
     command: sh -c "echo 'Realizar tareas de despliegue aquí'"
     volumes:
