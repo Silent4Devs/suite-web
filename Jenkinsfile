@@ -28,10 +28,8 @@ pipeline {
             steps {
                 script {
                     sshagent(['/root/.ssh/id_rsa.pub']) {
-                        // Assuming your Jenkins workspace contains the checked-out code
                         sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
                     }
-                    // sh 'ssh desarrollo@192.168.9.78 '"cd /var/contenedor/tabantaj && docker-compose up -d'"
                 }
             }
         }
