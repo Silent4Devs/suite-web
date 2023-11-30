@@ -24,6 +24,7 @@
     @include('flash::message')
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
+        <h3 class="title-table-rds">Lineamientos para Vacaciones</h3>
         @include('admin.vacaciones.table')
     </div>
 @endsection
