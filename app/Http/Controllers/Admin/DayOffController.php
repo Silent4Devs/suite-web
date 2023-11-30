@@ -12,11 +12,8 @@ use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-<<<<<<< HEAD
 use Maatwebsite\Excel\Facades\Excel;
-=======
 use RealRashid\SweetAlert\Facades\Alert;
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
 
 class DayOffController extends Controller
 {
