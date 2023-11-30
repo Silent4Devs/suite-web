@@ -5,7 +5,6 @@
             table-layout: fixed;
             width: 600px;
         }
-
         th,
         td {
             border: 1px solid blue;
@@ -13,7 +12,7 @@
             word-wrap: break-word
         }
     </style>
-    <h5 class="col-12 titulo_general_funcion">Prueba JENKIS</h5>
+    <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
     <div class="mt-5 card">
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
             <div class="p-2">
