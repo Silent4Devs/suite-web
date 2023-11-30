@@ -9,11 +9,14 @@ use App\Models\SolicitudVacaciones;
 use App\Models\User;
 use App\Models\Vacaciones;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+<<<<<<< HEAD
 use Maatwebsite\Excel\Facades\Excel;
+=======
+use RealRashid\SweetAlert\Facades\Alert;
+>>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
 
 class VacacionesController extends Controller
 {
@@ -117,7 +120,7 @@ class VacacionesController extends Controller
             $vacacion = Vacaciones::create($request->all());
         }
 
-        Flash::success('Regla añadida satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.vacaciones.index');
     }
@@ -136,7 +139,7 @@ class VacacionesController extends Controller
         $areas = Area::getAll();
         $vacacion = Vacaciones::with('areas')->find($id);
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.vacaciones.index'));
         }
@@ -170,7 +173,7 @@ class VacacionesController extends Controller
             $vacacion->update($request->all());
         }
 
-        Flash::success('Regla de vacaciones actualizada.');
+        Alert::success('éxito', 'Información actualizada con éxito');
 
         return redirect(route('admin.vacaciones.index'));
     }
@@ -180,6 +183,7 @@ class VacacionesController extends Controller
         abort_if(Gate::denies('reglas_vacaciones_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = Vacaciones::find($id);
         $vacaciones->delete();
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }

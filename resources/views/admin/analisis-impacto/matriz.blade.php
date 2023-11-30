@@ -96,7 +96,7 @@
             Mostrar Mátriz de Impacto
 
         </div>
-        @include('flash::message')
+
         <div class="row">
             <div class="col-sm-3 offset-9 mt-3">
                 <a class="btn btn-success" href="{{ route('admin.analisis-impacto.ajustes') }}"><i class="bi bi-gear"></i>
@@ -729,7 +729,8 @@
                                                 de
                                                 Origen</th>
                                             <th scope="col" style="min-width: 100px;">Interno / Externo</th>
-                                            <th scope="col" style="min-width: 200px;">¿Quién le proporciona esta información?</th>
+                                            <th scope="col" style="min-width: 200px;">¿Quién le proporciona esta
+                                                información?</th>
                                             <th scope="col" style="min-width: 150px;">Puesto</th>
                                             <th scope="col">Correo electrónico</th>
                                             <th scope="col">Ext.</th>
@@ -743,16 +744,19 @@
                                                     <div style="text-align: left;">P00{{ $data->cuestionario->id }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->direccion }}</div>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->direccion }}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">{{ $data->cuestionario->area }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->nombre_proceso }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->cuestionario->nombre_proceso }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->subproceso ?: 'N/A' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->cuestionario->subproceso ?: 'N/A' }}</div>
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
@@ -765,25 +769,30 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->interno_externo ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->interno_externo ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->nombre ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">{{ $data->nombre ?: 'No definido' }}
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->puesto ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">{{ $data->puesto ?: 'No definido' }}
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->correo_electronico ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->correo_electronico ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->extencion ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->extencion ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->ubicacion ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->ubicacion ?: 'No definido' }}</div>
                                                 </td>
                                             </tr>
-                                         
                                         @endforeach
                                     </tbody>
                                 </table><br>
@@ -829,16 +838,19 @@
                                                     <div style="text-align: left;">P00{{ $data->cuestionario->id }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->direccion }}</div>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->direccion }}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">{{ $data->cuestionario->area }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->nombre_proceso }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->cuestionario->nombre_proceso }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->subproceso ?: 'N/A' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->cuestionario->subproceso ?: 'N/A' }}</div>
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
@@ -861,25 +873,32 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->interno_externo ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->interno_externo ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->nombre ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">{{ $data->nombre ?: 'No definido' }}
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->puesto ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">{{ $data->puesto ?: 'No definido' }}
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->correo_electronico ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->correo_electronico ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->extencion ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->extencion ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->ubicacion ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->ubicacion ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->flujo_q_10 ?: 'No definido' }}</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->cuestionario->flujo_q_10 ?: 'No definido' }}</div>
                                                 </td>
                                             </tr>
                                         @endforeach

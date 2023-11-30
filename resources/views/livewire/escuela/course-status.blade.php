@@ -32,7 +32,13 @@
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
             <!--Para que me traiga correctamente el video hay que agregar -->
             <div>
-                {!! $current && $current->iframe ? $current->iframe : 'Sin registro' !!}
+                @if ($current && $current->iframe)
+                    <div>
+                        {!! $current->iframe !!}
+                    </div>
+                @else
+                    <p>Sin registro</p>
+                @endif
             </div>
 
             @if ($current)

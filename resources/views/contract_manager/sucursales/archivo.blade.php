@@ -8,10 +8,9 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
-
     </style>
-     @include('flash::message')
-     @include('partials.flashMessages')
+
+    @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Razónes Sociales</h5>
     <div class="mt-5 card">
 
@@ -126,55 +125,55 @@
             ];
 
 
-                let btnArchivar = {
-                    text: '<i class="fa-solid fa-backward"></i> Sucursales',
-                    titleAttr: 'Archivar sucursales',
-                    url: "{{ route('contract_manager.sucursales.index') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    },
+            let btnArchivar = {
+                text: '<i class="fa-solid fa-backward"></i> Sucursales',
+                titleAttr: 'Archivar sucursales',
+                url: "{{ route('contract_manager.sucursales.index') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                },
             };
 
-                dtButtons.push(btnArchivar);
-                let archivoButton = {
-                    text: 'Archivar Registro',
-                    url: "{{ route('contract_manager.sucursales.archivar', ['id' => 1]) }}",
-                    className: 'btn-danger',
-                    action: function(e, dt, node, config) {
-                        var ids = $.map(dt.rows({
-                            selected: true
-                        }).data(), function(entry) {
-                            return entry.id
-                        });
+            dtButtons.push(btnArchivar);
+            let archivoButton = {
+                text: 'Archivar Registro',
+                url: "{{ route('contract_manager.sucursales.archivar', ['id' => 1]) }}",
+                className: 'btn-danger',
+                action: function(e, dt, node, config) {
+                    var ids = $.map(dt.rows({
+                        selected: true
+                    }).data(), function(entry) {
+                        return entry.id
+                    });
 
-                        if (ids.length === 0) {
-                            alert('undefine')
+                    if (ids.length === 0) {
+                        alert('undefine')
 
-                            return
-                        }
+                        return
+                    }
 
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'POST'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                                headers: {
+                                    'x-csrf-token': _token
+                                },
+                                method: 'POST',
+                                url: config.url,
+                                data: {
+                                    ids: ids,
+                                    _method: 'POST'
+                                }
+                            })
+                            .done(function() {
+                                location.reload()
+                            })
                     }
                 }
+            }
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -189,8 +188,7 @@
                         _token: _token
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'id',
                         name: 'id'
                     },

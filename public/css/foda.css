@@ -1,0 +1,28 @@
+.caja-cards {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card-foda {
+    width: 250px;
+    text-align: center;
+    border-radius: 16px;
+    overflow: hidden;
+    color: #606060;
+    box-shadow: 0px 1px 4px #00000024 !important;
+}
+
+.card-foda .card-header {
+    background-color: #fff;
+    color: #0489FE;
+    font-size: 14px;
+}
+
+
+.card-foda h3 {
+    padding: 0px 35px;
+    box-sizing: border-box;
+    font-size: 16px;
+}

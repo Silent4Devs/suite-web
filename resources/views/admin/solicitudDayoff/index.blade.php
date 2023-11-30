@@ -85,7 +85,8 @@
             <div class="form-group row mt-4">
                 <label for="inputEmail3" class="col-sm-2 col-form-label offset-8 ">Días disponibles:</label>
                 <div class="col-sm-2 pr-5">
-                    <input type="text"  style="text-align:center;" class="form-control" id="inputEmail3" value="{{ $dias_disponibles }}" disabled>
+                    <input type="text" style="text-align:center;" class="form-control" id="inputEmail3"
+                        value="{{ $dias_disponibles }}" disabled>
                 </div>
             </div>
             <div style="margin-bottom: 5px; margin-left:10px;" class="row">
@@ -98,7 +99,7 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             @include('admin.solicitudDayoff.table')
@@ -330,7 +331,7 @@
                             let id = row.id;
                             console.log(id);
                             if (aprobacion == 3) {
-                                return `  
+                                return `
                                 <div style="text-aling:center">
                                 <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 </div>
@@ -338,7 +339,7 @@
 
                             } else {
                                 let urlEliminar = '{{ route('admin.solicitud-dayoff.destroy') }}'
-                                return `     
+                                return `
                                 <div style="text-aling:center">
                                 <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>

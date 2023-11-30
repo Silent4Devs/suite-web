@@ -7,10 +7,10 @@ use App\Models\PermisosGoceSueldo;
 use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PermisosGoceSueldoController extends Controller
 {
@@ -83,7 +83,7 @@ class PermisosGoceSueldoController extends Controller
             'tipo_permiso' => 'required|int',
         ]);
         $vacacion = PermisosGoceSueldo::create($request->all());
-        Flash::success('Regla añadida satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.permisos-goce-sueldo.index');
     }
@@ -102,7 +102,7 @@ class PermisosGoceSueldoController extends Controller
 
         $vacacion = PermisosGoceSueldo::find($id);
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Información añadida con éxito');
 
             return redirect(route('admin.permisos-goce-sueldo.index'));
         }
@@ -123,7 +123,7 @@ class PermisosGoceSueldoController extends Controller
 
         $vacacion->update($request->all());
 
-        Flash::success('Regla actualizada con exito.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.permisos-goce-sueldo.index'));
     }
@@ -133,6 +133,8 @@ class PermisosGoceSueldoController extends Controller
         abort_if(Gate::denies('reglas_goce_sueldo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = PermisosGoceSueldo::find($id);
         $vacaciones->delete();
+
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }

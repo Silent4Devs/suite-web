@@ -17,11 +17,11 @@ use App\Models\User;
 use App\Models\Vacaciones;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SolicitudVacacionesController extends Controller
 {
@@ -133,7 +133,7 @@ class SolicitudVacacionesController extends Controller
                     $q->where('area_id', $usuario->empleado->area_id);
                 })->select('dias', 'tipo_conteo')->first();
             } else {
-                Flash::error('Regla de vacaciones no asociada');
+                Alert::warning('warning', 'Data not found');
 
                 return redirect(route('admin.solicitud-vacaciones.index'));
             }
@@ -222,7 +222,7 @@ class SolicitudVacacionesController extends Controller
                 $q->where('area_id', $usuario->empleado->area_id);
             })->select('dias', 'tipo_conteo')->first();
         } else {
-            Flash::error('Regla de vacaciones no asociada');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
@@ -263,7 +263,7 @@ class SolicitudVacacionesController extends Controller
 
         Mail::to(removeUnicodeCharacters($supervisor->email))->send(new MailSolicitudVacaciones($solicitante, $supervisor, $solicitud));
 
-        Flash::success('Solicitud creada satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.solicitud-vacaciones.index');
     }
@@ -275,7 +275,7 @@ class SolicitudVacacionesController extends Controller
         $vacacion = SolicitudVacaciones::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
@@ -309,7 +309,7 @@ class SolicitudVacacionesController extends Controller
         $solicitud->update($request->all());
 
         Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->send(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));
-        Flash::success('Respuesta enviada satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.solicitud-vacaciones.aprobacion'));
     }
@@ -320,6 +320,7 @@ class SolicitudVacacionesController extends Controller
         $id = $request->id;
         $vacaciones = SolicitudVacaciones::find($id);
         $vacaciones->delete();
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return response()->json(['status' => 200]);
     }
@@ -502,7 +503,7 @@ class SolicitudVacacionesController extends Controller
         $vacacion = SolicitudVacaciones::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
@@ -580,7 +581,7 @@ class SolicitudVacacionesController extends Controller
         $vacacion = SolicitudVacaciones::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
@@ -594,7 +595,7 @@ class SolicitudVacacionesController extends Controller
         $vacacion = SolicitudVacaciones::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-vacaciones.index'));
         }

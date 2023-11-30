@@ -8,10 +8,9 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
-
     </style>
-     @include('flash::message')
-     @include('partials.flashMessages')
+
+    @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Productos</h5>
     <div class="mt-5 card">
 
@@ -110,52 +109,52 @@
 
             ];
             let btnRegresar = {
-                    text: '<i class="fa-solid fa-backward"></i> Productos',
-                    titleAttr: 'Regresar producto',
-                    url: "{{ route('contract_manager.productos.index') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
+                text: '<i class="fa-solid fa-backward"></i> Productos',
+                titleAttr: 'Regresar producto',
+                url: "{{ route('contract_manager.productos.index') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                }
             };
             dtButtons.push(btnRegresar);
             let archivoButton = {
-                    text: 'Archivar Registro',
-                    url: "{{ route('contract_manager.productos.archivar', ['id' => 1]) }}",
-                    className: 'btn-danger',
-                    action: function(e, dt, node, config) {
-                        var ids = $.map(dt.rows({
-                            selected: true
-                        }).data(), function(entry) {
-                            return entry.id
-                        });
+                text: 'Archivar Registro',
+                url: "{{ route('contract_manager.productos.archivar', ['id' => 1]) }}",
+                className: 'btn-danger',
+                action: function(e, dt, node, config) {
+                    var ids = $.map(dt.rows({
+                        selected: true
+                    }).data(), function(entry) {
+                        return entry.id
+                    });
 
-                        if (ids.length === 0) {
-                            alert('undefine')
+                    if (ids.length === 0) {
+                        alert('undefine')
 
-                            return
-                        }
-
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'POST'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
+                        return
                     }
+
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                                headers: {
+                                    'x-csrf-token': _token
+                                },
+                                method: 'POST',
+                                url: config.url,
+                                data: {
+                                    ids: ids,
+                                    _method: 'POST'
+                                }
+                            })
+                            .done(function() {
+                                location.reload()
+                            })
+                    }
+                }
             }
 
             let dtOverrideGlobals = {

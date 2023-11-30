@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 @section('content')
     <style type="text/css">
-    table{
-    table-layout: fixed;
-    width: 600px;
-   }
-
-   th, td {
-    border: 1px solid blue;
-    width: 150px;
-    word-wrap: break-word
-    }
+        table {
+            table-layout: fixed;
+            width: 600px;
+        }
+        th,
+        td {
+            border: 1px solid blue;
+            width: 150px;
+            word-wrap: break-word
+        }
     </style>
     <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
     <div class="mt-5 card">
@@ -22,8 +22,8 @@
         </div>
         <div class="card-body datatable-fix">
             @if (!$existsVinculoEmpleadoAdmin)
-            <h5>Por favor da clic en el icono <small class="p-1 border border-primary rounded"><i
-                        class="fas fa-user-tag"></i></small> de la fila del usuario Admin</h5>
+                <h5>Por favor da clic en el icono <small class="p-1 border border-primary rounded"><i
+                            class="fas fa-user-tag"></i></small> de la fila del usuario Admin</h5>
             @endif
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
                 <thead class="thead-dark">
@@ -45,7 +45,6 @@
                         <td>{{$user->email}}</td>
                         <td> @foreach ($user->roles as $role)
                             {{ $role->title }}
-                            {{-- Si deseas separar los títulos de los roles, puedes usar una coma u otro separador --}}
                             @if (!$loop->last)
                                 ,
                             @endif
@@ -54,23 +53,28 @@
                         <td>
                            @if (!is_null($user->empleado))
                            {{$user->empleado->area->area}}
+                           @else
+                            Sin Registro
                            @endif
                         </td>
 
                         <td>
                             @if (!is_null($user->empleado))
                            {{$user->empleado->puesto}}
+                           @else
+                           Sin Registro
                            @endif
                         </td>
                         <td>
 
                                 <a href="{{ url('/admin/users/' . $user->id . '/edit') }}"><i class="fas fa-edit"></i></a>
 
-                                <a href="{{  url('/admin/users/' . $user->id . '')}}"><i class="fas fa-eye"></i></a>
+                                <a href="{{ url('/admin/users/' . $user->id . '') }}"><i class="fas fa-eye"></i></a>
 
-                                <a href="{{ url('/admin/users/vincular') }}"> <i class="fas fa-user-tag"></i></a>
+                                <a  onclick="mostrarAlertaVinculacion('{{ url('/admin/users') }}');"> <i class="fas fa-user-tag"></i></a>
 
-                                <a href="{{   url('/admin/users/bloqueo/' . $user->id . '/change')}}"> <i class="fas fa-lock"></i></a>
+                                <a href="{{ url('/admin/users/bloqueo/' . $user->id . '/change') }}"> <i
+                                        class="fas fa-lock"></i></a>
 
                                 <a onclick="mostrarAlerta('{{ url('/admin/users/destroy/' . $user->id . '') }}');">
                                     <i class="fas fa-trash text-danger"></i>
@@ -78,16 +82,14 @@
 
 
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
 
         </div>
     </div>
-
-
 @endsection
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -96,8 +98,8 @@
     @parent
 
     <script>
-       function mostrarAlerta(url) {
-        Swal.fire({
+        function mostrarAlerta(url) {
+            Swal.fire({
                 title: '¿Estás seguro?',
                 text: 'No podrás deshacer esta acción',
                 icon: 'warning',
@@ -110,6 +112,23 @@
                     // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                     Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
+                    console.log(url);
+                    window.location.href = url;
+                }
+            });
+    }
+
+    function mostrarAlertaVinculacion(url) {
+        Swal.fire({
+                title: '¿Vincular?',
+                text: 'No podrás deshacer esta acción',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, vincular',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Vinculado!', 'El elemento ha sido vinculado.', 'success');
                     console.log(url);
                     window.location.href = url;
                 }

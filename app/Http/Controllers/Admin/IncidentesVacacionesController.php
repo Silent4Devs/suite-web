@@ -8,10 +8,10 @@ use App\Models\Empleado;
 use App\Models\IncidentesVacaciones;
 use App\Models\Puesto;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class IncidentesVacacionesController extends Controller
 {
@@ -145,7 +145,7 @@ class IncidentesVacacionesController extends Controller
         $vacacion->areas()->sync($areas);
 
 
-        Flash::success('Excepción añadida satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.incidentes-vacaciones.index');
     }
@@ -167,7 +167,7 @@ class IncidentesVacacionesController extends Controller
         $vacacion = IncidentesVacaciones::with('empleados', 'puestos', 'areas')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Excepción not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.incidentes-dayoff'));
         }
@@ -237,7 +237,7 @@ class IncidentesVacacionesController extends Controller
         $vacacion->puestos()->sync($puestos);
         $vacacion->areas()->sync($areas);
 
-        Flash::success('Excepción de Vacaciones actualizada.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.incidentes-vacaciones.index'));
     }

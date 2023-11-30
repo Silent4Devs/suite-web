@@ -21,10 +21,10 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use App\Models\Tipoactivo;
 use App\Models\User;
-use Flash;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -127,12 +127,13 @@ class AccionCorrectivaController extends Controller
         $puestos = Puesto::getAll();
         $teams = Team::get();
 
-        $total_AC = AccionCorrectiva::getAll()->count();
-        $nuevos_AC = $total_AC->where('estatus', 'Sin atender')->count();
-        $en_curso_AC = $total_AC->where('estatus', 'En curso')->count();
-        $en_espera_AC = $total_AC->where('estatus', 'En espera')->count();
-        $cerrados_AC = $total_AC->where('estatus', 'Cerrado')->count();
-        $cancelados_AC = $total_AC->where('estatus', 'No procedente')->count();
+        $query_ac = AccionCorrectiva::getAll();
+        $total_AC = $query_ac->count();
+        $nuevos_AC = $query_ac->where('estatus', 'Sin atender')->count();
+        $en_curso_AC = $query_ac->where('estatus', 'En curso')->count();
+        $en_espera_AC = $query_ac->where('estatus', 'En espera')->count();
+        $cerrados_AC = $query_ac->where('estatus', 'Cerrado')->count();
+        $cancelados_AC = $query_ac->where('estatus', 'No procedente')->count();
 
         return view('admin.accionCorrectivas.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
     }
@@ -238,7 +239,7 @@ class AccionCorrectivaController extends Controller
              //$generar->Generate($request['pdf-value'], $request);
              $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
 
-        Flash::success('Registro guardado exitosamente');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         // return redirect('admin/plan-correctiva?param=' . $accionCorrectiva->id);
         return redirect()->route('admin.accion-correctivas.edit', $accionCorrectiva);
@@ -337,7 +338,7 @@ class AccionCorrectivaController extends Controller
         //     'accion_correctiva_id' => $accionCorrectiva->id,
         // ]);
 
-        Flash::success('Editado con éxito');
+        Alert::success('éxito', 'Editado con éxito');
 
         return redirect()->route('admin.accion-correctivas.index')->with('success', 'Editado con éxito');
     }
@@ -359,7 +360,7 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->delete();
 
-        Flash::success('Registro eliminado exitosamente');
+        Alert::success('éxito', 'Registro eliminado con éxito');
 
         return back();
     }

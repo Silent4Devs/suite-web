@@ -1,16 +1,17 @@
 @extends('layouts.admin')
 @section('content')
     <style type="text/css">
-    table{
-    table-layout: fixed;
-    width: 500px;
-   }
+        table {
+            table-layout: fixed;
+            width: 500px;
+        }
 
-   th, td {
-    border: 1px solid blue;
-    width: 130px;
-    word-wrap: break-word
-    }
+        th,
+        td {
+            border: 1px solid blue;
+            width: 130px;
+            word-wrap: break-word
+        }
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
     <div class="mt-5 card">
@@ -31,37 +32,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $requisiciones as $requisicion )
-                    <tr>
-                        <td>RQ-00-00-{{$requisicion->id}}</td>
-                        <td>{{$requisicion->fecha}}</td>
-                        <td>{{$requisicion->referencia}}</td>
-                        <td>{{$requisicion->proveedor_catalogo}}</td>
-                        <td>{{$requisicion->estado}}</td>
-                        <td>{{$requisicion->contrato->nombre_servicio}}</td>
-                        <td>{{$requisicion->area}}</td>
-                        <td>{{$requisicion->user}}</td>
-                        <td>
-                            <form action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}" method="GET">
-                                @method('GET')
-                                <a href="{{ route('contract_manager.requisiciones.firmarAprobadores',$requisicion->id )}}"><i class="fas fa-edit"></i></a>
-                            </form>
-                        </td>
-                    </tr>
+                    @foreach ($requisiciones as $requisicion)
+                        <tr>
+                            <td>RQ-00-00-{{ $requisicion->id }}</td>
+                            <td>{{ $requisicion->fecha }}</td>
+                            <td>{{ $requisicion->referencia }}</td>
+                            <td>{{ $requisicion->proveedor_catalogo }}</td>
+                            <td>{{ $requisicion->estado }}</td>
+                            <td>{{ $requisicion->contrato->nombre_servicio }}</td>
+                            <td>{{ $requisicion->area }}</td>
+                            <td>{{ $requisicion->user }}</td>
+                            <td>
+                                <form
+                                    action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"
+                                    method="GET">
+                                    @method('GET')
+                                    <a
+                                        href="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"><i
+                                            class="fas fa-edit"></i></a>
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-
 @endsection
 @section('scripts')
     @parent
-    @if(session('mensaje'))
-    <script>
-        alert("{{ session('mensaje') }}");
-    </script>
+    @if (session('mensaje'))
+        <script>
+            alert("{{ session('mensaje') }}");
+        </script>
     @endif
     <script type="text/javascript">
         (function() {

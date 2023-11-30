@@ -9,11 +9,14 @@ use App\Models\DayOff;
 use App\Models\SolicitudDayOff;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+<<<<<<< HEAD
 use Maatwebsite\Excel\Facades\Excel;
+=======
+use RealRashid\SweetAlert\Facades\Alert;
+>>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
 
 class DayOffController extends Controller
 {
@@ -120,7 +123,7 @@ class DayOffController extends Controller
             $vacacion = DayOff::create($request->all());
         }
 
-        Flash::success('Regla Days Off´s añadida satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.dayOff.index');
     }
@@ -139,7 +142,7 @@ class DayOffController extends Controller
         $areas = Area::getAll();
         $vacacion = DayOff::with('areas')->find($id);
         if (empty($vacacion)) {
-            Flash::error('Days Off´s not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.dayOff.index'));
         }
@@ -163,7 +166,7 @@ class DayOffController extends Controller
             $vacacion->update($request->all());
         }
 
-        Flash::success('Regla Days Off´s actualizada.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.dayOff.index'));
     }

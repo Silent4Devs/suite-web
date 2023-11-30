@@ -122,7 +122,7 @@
             </div>
         </div> --}}
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body">
             <div class="row">
