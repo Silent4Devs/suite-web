@@ -27,9 +27,7 @@ pipeline {
         stage('Deploy via SSH') {
             steps {
                 script {
-                    sshagent(['/root/.ssh/id_rsa']) {
-                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj'
-                    }
+                    sh 'ssh desarrollo@192.168.9.78 '"cd /var/contenedor/tabantaj && docker-compose up -d'"
                 }
             }
         }

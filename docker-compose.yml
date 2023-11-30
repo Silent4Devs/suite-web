@@ -33,7 +33,7 @@ services:
         max-size: "30m"
         max-file: "1"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -176,7 +176,6 @@ services:
       #- REDIS_1_AUTH=silent11!
     networks:
       - tabantajnetwork
-
   # dd-agent:
   #   image: gcr.io/datadoghq/agent:7
   #   container_name: dd-agent
@@ -371,3 +370,14 @@ volumes:
 networks:
   tabantajnetwork:
     driver: bridge
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - ssh desarrollo@192.168.9.78 'docker-compose down'
+    - scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj
+  only:
+    - develop # Solo desplegar desde la rama develop (ajusta según tu caso)
