@@ -370,13 +370,3 @@ volumes:
 networks:
   tabantajnetwork:
     driver: bridge
-
-stages:
-  - deploy
-
-deploy:
-  stage: deploy
-  script:
-    - scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj
-  only:
-    - develop # Solo desplegar desde la rama develop (ajusta según tu caso)
