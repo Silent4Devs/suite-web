@@ -99,9 +99,9 @@ class IncidentesVacacionesController extends Controller
         abort_if(Gate::denies('incidentes_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($request->all());
         $request->validate([
-            'nombre' => 'required|string',
-            'dias_aplicados' => 'required|int',
-            'aniversario' => 'required|int',
+            'nombre' => 'required|string|max:255',
+            'dias_aplicados' => 'required|int|gte:1|max:24',
+            'aniversario' => 'required|int|gte:1',
             'efecto' => 'required|int',
         ]);
 
@@ -190,9 +190,9 @@ class IncidentesVacacionesController extends Controller
     {
         abort_if(Gate::denies('incidentes_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
-            'dias_aplicados' => 'required|int',
-            'aniversario' => 'required|int',
+            'nombre' => 'required|string|max:255',
+            'dias_aplicados' => 'required|int|gte:1|max:24',
+            'aniversario' => 'required|int|gte:1',
             'efecto' => 'required|int',
         ]);
 
