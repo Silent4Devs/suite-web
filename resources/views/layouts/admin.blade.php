@@ -1933,17 +1933,16 @@
         });
     </script> --}}
     <script>
-        $(".animated-over .form-control").change(function(e){
+        $(".animated-over .form-control").change(function(e) {
             console.log(e.target);
-            if(e.target.value == ""){
+            if (e.target.value == "") {
                 $(e.target).removeClass("input-content-animated");
-            }else{
+            } else {
                 $(e.target).addClass("input-content-animated");
             }
         });
     </script>
 
 </body>
-
 
 </html>
