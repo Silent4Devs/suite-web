@@ -154,9 +154,11 @@
                         </a>
 
                         @if ($usuario->empleado === null)
-                            <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                            <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                                style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                                 <div class="px-3 mt-1 d-flex justify-content-center">
-                                    <a style="all: unset; color: #747474; cursor: pointer;" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                         <i class="bi bi-box-arrow-right"></i> Salir
                                     </a>
                                 </div>
@@ -220,26 +222,25 @@
                 @yield('content')
             </main>
         </div>
+
+        {{-- @include('partials.footer') --}}
+        <footer class="app-footer">
+            <div>
+                TABANTAJ
+                <font style="margin: 0px 20px;"> | </font>
+                SILENT4BUSINESS
+            </div>
+            <div>
+                2023
+                <font style="margin: 0px 20px;"> | </font>
+                Version: 4.34.10
+            </div>
+        </footer>
     </div>
     <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
     </form>
-    </div>
     <!-- incluir de footer -->
-    {{-- @include('partials.footer') --}}
-    <footer class="app-footer">
-        <div>
-            TABANTAJ
-            <font style="margin: 0px 20px;"> | </font>
-            SILENT4BUSINESS
-        </div>
-        <div>
-            2023
-            <font style="margin: 0px 20px;"> | </font>
-            Version: 4.34.10
-        </div>
-    </footer>
-    </div>
 
     <div id="elementos_imprimir" class="d-none">
         <div id="contenido_imprimir">
