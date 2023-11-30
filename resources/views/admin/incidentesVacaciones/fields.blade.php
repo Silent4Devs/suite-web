@@ -4,14 +4,15 @@
         <div class="col-md-6">
             <div class="form-floating">
                 <input type="text" id="nombre" name="nombre" class="form-control" maxlength="250" placeholder="Nombre"
-                    required value="{{ old('aniversario', $vacacion->nombre) }}">
+                    required value="{{ old('nombre', $vacacion->nombre) }}">
                 <label for="nombre" class="required">Nombre <sup class="asterisco-required">*</sup></label>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="number" id="dias_aplicados" name="dias_aplicados" class="form-control" max="365"
-                    placeholder="Días a aplicar" required value="{{ old('aniversario', $vacacion->dias_aplicados) }}">
+                <input type="number" id="dias_aplicados" name="dias_aplicados" class="form-control" max="24"
+                    placeholder="Días a aplicar" required min="1"
+                    value="{{ old('dias_aplicados', $vacacion->dias_aplicados) }}">
                 <label for="dias_aplicados" class="required">Días a aplicar <sup
                         class="asterisco-required">*</sup></label>
             </div>
@@ -23,9 +24,9 @@
     <div class="form-row">
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="number" id="aniversario" name="aniversario" class="form-control" max="100"
-                    placeholder="Aniversario afectado" value="{{ old('aniversario', $vacacion->aniversario) }}"
-                    required>
+                <input type="number" id="aniversario" name="aniversario" class="form-control" min="1"
+                    max="100" placeholder="Aniversario afectado"
+                    value="{{ old('aniversario', $vacacion->aniversario) }}" required>
                 <label for="aniversario" class="required">Aniversario afectado <sup
                         class="asterisco-required">*</sup></label>
             </div>

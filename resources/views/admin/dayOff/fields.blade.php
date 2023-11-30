@@ -7,8 +7,10 @@
         <div class="form-floating">
             {!! Form::text('nombre', null, [
                 'class' => 'form-control',
+                'minlength' => 1,
                 'maxlength' => 255,
                 'placeholder' => 'Esciba nombre de la regla de Days Off´s...',
+                'required',
             ]) !!}
             {!! Form::label('nombre', 'Nombre del lineamiento de DayOff:', ['class' => 'asterisco']) !!}
         </div>
@@ -20,7 +22,7 @@
                 title="Tipo de discriminación de días;
             1.- Natural (Se cuenta de Lunes a Domingo)
             2.- Habil ((Se cuenta de Lunes a Viernes)"></i> --}}
-            <select id="tipo_conteo" name="tipo_conteo" class="form-control">
+            <select id="tipo_conteo" name="tipo_conteo" class="form-control" required>
                 <option value="1" {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
                     Día Natural</option>
                 <option value="2" {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
@@ -40,25 +42,17 @@
         <div class="form-floating">
             {{-- <i
                 class="fas fa-file-alt iconos-crear"></i> --}}
-            <textarea class="form-control" id="descripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="2">
+                {{ old('descripcion', $vacacion->descripcion) }}
+            </textarea>
             {!! Form::label('descripcion', 'Descripción:') !!}
         </div>
     </div>
 </div>
 
-<div class="row" x-data="{ otro: false }">
+<div class="row" x-data="{ otro: {{ old('inicio_conteo', $vacacion->inicio_conteo) == 2 ? 'true' : 'false' }} }">
     <div class="form-group col-sm-3">
-        {{-- <i class="fa-solid fa-calendar-check iconos-crear"></i> --}}
         {!! Form::label('inicio_conteo', 'Inicio del beneficio', ['class' => 'required']) !!}
-        {{-- <select id="inicio_conteo" name="inicio_conteo" class="form-control">
-            <option value="1"
-                {{ old('inicio_conteo') == $vacacion->inicio_conteo ? ' selected="selected"' : '' }}>Al ingreso
-            </option>
-            <option value="2" x-on:change="otro = true"
-                {{ old('inicio_conteo') == $vacacion->inicio_conteo ? ' selected="selected"' : '' }}>Otro</option>
-            <option disabled {{ old('inicio_conteo') == $vacacion->inicio_conteo ? ' selected="selected"' : '' }}>
-                Seleccione...</option>
-        </select> --}}
         <div class="form-check col-12">
             <input class="form-check-input" type="radio" name="inicio_conteo" value="1" x-on:click="otro = false"
                 {{ old('inicio_conteo', $vacacion->inicio_conteo) == 1 ? 'checked' : '' }}>
@@ -75,19 +69,18 @@
             </label>
         </div>
     </div>
-</div><br>
 
-<div class="row">
-    <div class="form-group col-sm-3 mt-4" x-show="otro">
-        <div class="form-floating">
-            <label for="meses">
-                Inicio del beneficio en
-                meses:</label>
-            <input type="number" class="form-control" name="meses" placeholder="Ingrese numero de meses..."
-                x-bind:disabled="!otro">
+    <div class="row">
+        <div class="form-group col-sm-3 mt-4" x-show="otro">
+            <div class="form-floating">
+                <input type="number" class="form-control" id="meses" name="meses"
+                    value="{{ old('meses', $vacacion->meses) }}" placeholder="Ingrese numero de meses..."
+                    x-bind:disabled="!otro" required>
+                <label for="meses">Inicio del beneficio en meses:</label>
+            </div>
         </div>
     </div>
-</div>
+</div><br>
 
 <div class="row">
     <!-- Categoria Field -->
@@ -97,9 +90,10 @@
         <div class="form-floating">
             {!! Form::number('dias', null, [
                 'class' => 'form-control',
-                'maxlength' => 255,
-                'maxlength' => 255,
+                'min' => 1,
+                'max' => 365,
                 'placeholder' => 'Ingrese numero inicial de días...',
+                'required',
             ]) !!}
             {!! Form::label('dias', 'Días a gozar:', ['class' => 'required']) !!}
         </div>
@@ -117,7 +111,7 @@
         1.- Aniversario (Cuando el colaborador cumpla años en la organizacíon)
         2.- Anual (Cada inicio de año calendario)"></i> --}}
         <div class="form-floating">
-            <select id="periodo_corte" name="periodo_corte" class="form-control">
+            <select id="periodo_corte" name="periodo_corte" class="form-control" required>
                 <option value="1"
                     {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>
                     Aniversario

@@ -96,8 +96,9 @@
                  <!-- Nombre Field -->
                  <div class="col-md-12">
                      <div class="form-floating">
-                         <input type="text" id="nombre" name="nombre" class="form-control" maxlength="250"
-                             placeholder="Nombre" required value="{{ old('nombre', $vacacion->nombre) }}">
+                         <input type="text" id="nombre" name="nombre" class="form-control" minlength="1"
+                             maxlength="250" placeholder="Nombre" required
+                             value="{{ old('nombre', $vacacion->nombre) }}">
                          <label for="nombre" class="required">Nombre <sup class="asterisco-required">*</sup></label>
                      </div>
                  </div>
@@ -109,7 +110,9 @@
              <div class="form-row">
                  <div class="col-md">
                      <div class="form-floating">
-                         <textarea class="form-control" placeholder="Descripción" id="descripcion" name="descripcion" style="height: 100px">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
+                         <textarea class="form-control" placeholder="Descripción" id="descripcion" name="descripcion" style="height: 100px">
+                            {{ old('descripcion', $vacacion->descripcion) }}
+                        </textarea>
                          <label for="descripcion">Descripción</label>
                      </div>
                  </div>
@@ -122,7 +125,7 @@
                  <div class="col-md-4">
                      <div class="form-floating">
                          <input type="number" id="dias_aplicados" name="dias_aplicados" class="form-control"
-                             max="365" placeholder="Días a aplicar" required
+                             min="1" max="365" placeholder="Días a aplicar" required
                              value="{{ old('dias_aplicados', $vacacion->dias_aplicados) }}">
                          <label for="dias_aplicados" class="required">Días a aplicar <sup
                                  class="asterisco-required">*</sup></label>
@@ -131,7 +134,7 @@
 
                  <div class="col-md-4">
                      <div class="form-floating">
-                         <input type="number" id="aniversario" name="aniversario" class="form-control" max="100"
+                         <input type="number" id="aniversario" name="aniversario" class="form-control"
                              placeholder="Año a Afectar"
                              value="{{ old('aniversario', $vacacion->aniversario) ?? $año }}" required readonly>
                          <label for="aniversario" class="required">Año a Afectar <sup

@@ -4,10 +4,12 @@
         <div class="form-floating">
             {!! Form::text('nombre', null, [
                 'class' => 'form-control',
+                'minlength' => 1,
                 'maxlength' => 255,
-                'placeholder' => 'Esciba nombre de la regla de vacaciones...',
+                'placeholder' => 'Nombre',
+                'required',
             ]) !!}
-            <label for="nombre">Nombre <sup class="asterisco">*</sup></label>
+            <label for="nombre">Nombre del lineamiento de Vacaciones: <sup class="asterisco">*</sup></label>
             {{-- {!! Form::label('nombre', 'Nombre:', ['class' => 'required']) !!} --}}
         </div>
     </div>
@@ -17,7 +19,7 @@
             1.- Natural (Se cuenta de Lunes a Domingo)
             2.- Habil ((Se cuenta de Lunes a Viernes)"></i> --}}
         <div class="form-floating">
-            <select id="tipo_conteo" name="tipo_conteo" class="form-control">
+            <select id="tipo_conteo" name="tipo_conteo" class="form-control" required>
                 <option value="1" {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
                     Día Natural</option>
                 <option value="2" {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
@@ -25,8 +27,8 @@
                 <option disabled {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
                     Seleccione...</option>
             </select>
-            <label for="tipo_conteo" class="required">Tipo de
-                conteo</label>
+            <label for="tipo_conteo">Tipo de
+                conteo <sup class="asterisco">*</sup></label>
         </div>
     </div>
 </div>
@@ -37,8 +39,10 @@
         {{-- <i
         class="fas fa-file-alt iconos-crear"></i> --}}
         <div class="form-floating">
-            <textarea class="form-control" id="descripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
-            <label for="descripcion">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="2">
+                {{ old('descripcion', $vacacion->descripcion) }}
+            </textarea>
+            <label for="descripcion">Descripción <sup class="asterisco">*</sup></label>
         </div>
         {{-- <label for="exampleFormControlTextarea1"> --}}
         {{-- {!! Form::label('descripcion', 'Descripción:') !!}
@@ -65,8 +69,9 @@
                 'class' => 'form-control',
                 'min' => 1,
                 'placeholder' => 'Ingrese el año en que se aplicara el beneficio...',
+                'required',
             ]) !!}
-            <label for="inicio_conteo" class="required"> Año de inicio del beneficio</label>
+            <label for="inicio_conteo"> Año de inicio del beneficio <sup class="asterisco">*</sup></label>
             {{-- {!! Form::label('inicio_conteo', 'Año de inicio:', ['class' => 'required']) !!} --}}
         </div>
     </div>
@@ -79,8 +84,9 @@
                 'class' => 'form-control',
                 'min' => 1,
                 'placeholder' => 'Ingrese el año en que se aplicara el beneficio...',
+                'required',
             ]) !!}
-            <label for="fin_conteo" class="required"> Año fin del beneficio</label>
+            <label for="fin_conteo"> Año fin del beneficio <sup class="asterisco">*</sup></label>
             {{-- {!! Form::label('inicio_conteo', 'Año de inicio:', ['class' => 'required']) !!} --}}
         </div>
     </div>
@@ -96,8 +102,9 @@
                 'min' => 1,
                 'max' => 24,
                 'placeholder' => 'Ingrese numero inicial de días...',
+                'required',
             ]) !!}
-            {!! Form::label('dias', 'Días a gozar:', ['class' => 'required']) !!}
+            <label for="dias">Días a gozar:<sup class="asterisco">*</sup></label>
         </div>
     </div>
 
@@ -114,7 +121,7 @@
         1.- Aniversario (Cuando el colaborador cumpla años en la organización)
         2.- Anual (Cada inicio de año calendario)"></i> --}}
         <div class="form-floating">
-            <select id="periodo_corte" name="periodo_corte" class="form-control">
+            <select id="periodo_corte" name="periodo_corte" class="form-control" required>
                 <option value="1"
                     {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>
                     Aniversario
@@ -125,7 +132,7 @@
                 <option disabled {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>
                     Seleccione...</option>
             </select>
-            {!! Form::label('periodo_corte', 'Reinicio de conteo', ['class' => 'required']) !!}
+            <label for="periodo_corte">Reinicio de conteo<sup class="asterisco">*</sup></label>
         </div>
     </div>
 </div>
@@ -145,7 +152,7 @@
         <input class="form-check-input" type="radio" name="afectados" value="1" x-on:click="open = false"
             {{ old('afectados', $vacacion->afectados) == 1 ? 'checked' : '' }}>
         <label class="form-check-label" for="exampleRadios1">
-            Toda la Empresa
+            Toda la Empresa <sup class="asterisco">*</sup>
         </label>
     </div>
 
@@ -153,7 +160,7 @@
         <input class="form-check-input" type="radio" name="afectados" value="2" x-on:click="open = true"
             {{ old('afectados', $vacacion->afectados) == 2 ? 'checked' : '' }}>
         <label class="form-check-label" for="exampleRadios2">
-            Área(s) Especificas
+            Área(s) Especificas <sup class="asterisco">*</sup>
         </label>
     </div>
 
