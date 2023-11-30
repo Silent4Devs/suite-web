@@ -35,17 +35,5 @@ pipeline {
                 }
             }
         }
-
-
-
-         stage('Deploy a Produccion') {
-            steps {
-                script {
-
-                }
-            }
-        }
-
-
     }
 }
