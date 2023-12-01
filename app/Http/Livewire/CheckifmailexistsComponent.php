@@ -18,6 +18,10 @@ class CheckifmailexistsComponent extends Component
 
     public $isEmailRegistered = false;
 
+    protected $rules = [
+        'empleadoemail' => 'required|email',
+    ];
+
     public function mount($empleadoemail)
     {
         $this->empleadoemail = $empleadoemail;
@@ -25,7 +29,7 @@ class CheckifmailexistsComponent extends Component
 
     public function updatedEmail()
     {
-        $this->isEmailRegistered = User::select('email')->where('email', $this->email)->exists();
+        $this->isEmailRegistered = User::where('email', $this->email)->first();
 
         if ($this->isEmailRegistered) {
             $this->alert('info', 'Este email ya existe en el sistema', [
