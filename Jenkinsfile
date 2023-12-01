@@ -24,6 +24,15 @@ pipeline {
             }
         }
 
+
+        stage('TESTING') {
+            steps {
+                script {
+                   echo 'test.'
+                }
+            }
+        }
+
         stage('Deploy via SSH') {
             steps {
                 script {
