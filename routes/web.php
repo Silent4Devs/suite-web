@@ -1343,7 +1343,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');
         Route::resource('servicios', 'ServiciosController')->except('destroy');
 
-
         //Revisiones Documentos
         Route::get('/revisiones/archivo', 'RevisionDocumentoController@archivo')->name('revisiones.archivo');
         Route::post('/revisiones/archivar', 'RevisionDocumentoController@archivar')->name('revisiones.archivar');
