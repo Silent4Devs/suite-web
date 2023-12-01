@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.33.0.
+ * Generated for Laravel 10.34.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -4342,7 +4342,7 @@
          */ 
         public static function lock($name, $seconds = 0, $owner = null)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->lock($name, $seconds, $owner);
         }
                     /**
@@ -4355,7 +4355,7 @@
          */ 
         public static function restoreLock($name, $owner)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->restoreLock($name, $owner);
         }
                     /**
@@ -4366,54 +4366,76 @@
          */ 
         public static function flush()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->flush();
         }
                     /**
-         * Get the full path for the given cache key.
+         * Remove all expired tag set entries.
          *
-         * @param string $key
-         * @return string 
+         * @return void 
          * @static 
          */ 
-        public static function path($key)
+        public static function flushStaleTags()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->path($key);
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->flushStaleTags();
         }
                     /**
-         * Get the Filesystem instance.
+         * Get the Redis connection instance.
          *
-         * @return \Illuminate\Filesystem\Filesystem 
+         * @return \Illuminate\Redis\Connections\Connection 
          * @static 
          */ 
-        public static function getFilesystem()
+        public static function connection()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getFilesystem();
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->connection();
         }
                     /**
-         * Get the working directory of the cache.
+         * Get the Redis connection instance that should be used to manage locks.
          *
-         * @return string 
+         * @return \Illuminate\Redis\Connections\Connection 
          * @static 
          */ 
-        public static function getDirectory()
+        public static function lockConnection()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getDirectory();
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->lockConnection();
         }
                     /**
-         * Set the cache directory where locks should be stored.
+         * Specify the name of the connection that should be used to store data.
          *
-         * @param string|null $lockDirectory
-         * @return \Illuminate\Cache\FileStore 
+         * @param string $connection
+         * @return void 
          * @static 
          */ 
-        public static function setLockDirectory($lockDirectory)
+        public static function setConnection($connection)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->setLockDirectory($lockDirectory);
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->setConnection($connection);
+        }
+                    /**
+         * Specify the name of the connection that should be used to manage locks.
+         *
+         * @param string $connection
+         * @return \Illuminate\Cache\RedisStore 
+         * @static 
+         */ 
+        public static function setLockConnection($connection)
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->setLockConnection($connection);
+        }
+                    /**
+         * Get the Redis database instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */ 
+        public static function getRedis()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->getRedis();
         }
                     /**
          * Get the cache key prefix.
@@ -4423,8 +4445,20 @@
          */ 
         public static function getPrefix()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->getPrefix();
+        }
+                    /**
+         * Set the cache key prefix.
+         *
+         * @param string $prefix
+         * @return void 
+         * @static 
+         */ 
+        public static function setPrefix($prefix)
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->setPrefix($prefix);
         }
          
     }
@@ -10081,6 +10115,93 @@
                         return $instance->setConnectionName($name);
         }
                     /**
+         * Migrate the delayed jobs that are ready to the regular queue.
+         *
+         * @param string $from
+         * @param string $to
+         * @param int $limit
+         * @return array 
+         * @static 
+         */ 
+        public static function migrateExpiredJobs($from, $to)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->migrateExpiredJobs($from, $to);
+        }
+                    /**
+         * Delete a reserved job from the queue.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteReserved($queue, $job)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteReserved($queue, $job);
+        }
+                    /**
+         * Delete a reserved job from the reserved queue and release it.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @param int $delay
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteAndRelease($queue, $job, $delay)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteAndRelease($queue, $job, $delay);
+        }
+                    /**
+         * Delete all of the jobs from the queue.
+         *
+         * @param string $queue
+         * @return int 
+         * @static 
+         */ 
+        public static function clear($queue)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->clear($queue);
+        }
+                    /**
+         * Get the queue or return the default.
+         *
+         * @param string|null $queue
+         * @return string 
+         * @static 
+         */ 
+        public static function getQueue($queue)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getQueue($queue);
+        }
+                    /**
+         * Get the connection for the queue.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */ 
+        public static function getConnection()
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getConnection();
+        }
+                    /**
+         * Get the underlying Redis instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */ 
+        public static function getRedis()
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getRedis();
+        }
+                    /**
          * Get the backoff for an object-based queue handler.
          *
          * @param mixed $job
@@ -10089,7 +10210,7 @@
          */ 
         public static function getJobBackoff($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobBackoff($job);
         }
                     /**
@@ -10101,7 +10222,7 @@
          */ 
         public static function getJobExpiration($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobExpiration($job);
         }
                     /**
@@ -10113,7 +10234,7 @@
          */ 
         public static function createPayloadUsing($callback)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
+                        \Illuminate\Queue\RedisQueue::createPayloadUsing($callback);
         }
                     /**
          * Get the container instance being used by the connection.
@@ -10123,7 +10244,7 @@
          */ 
         public static function getContainer()
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getContainer();
         }
                     /**
@@ -10135,7 +10256,7 @@
          */ 
         public static function setContainer($container)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         $instance->setContainer($container);
         }
          
@@ -13059,6 +13180,7 @@
      * @method static \Illuminate\Routing\RouteRegistrar controller(string $controller)
      * @method static \Illuminate\Routing\RouteRegistrar domain(string $value)
      * @method static \Illuminate\Routing\RouteRegistrar middleware(array|string|null $middleware)
+     * @method static \Illuminate\Routing\RouteRegistrar missing(\Closure $missing)
      * @method static \Illuminate\Routing\RouteRegistrar name(string $value)
      * @method static \Illuminate\Routing\RouteRegistrar namespace(string|null $value)
      * @method static \Illuminate\Routing\RouteRegistrar prefix(string $prefix)
@@ -14107,6 +14229,30 @@
                         return $instance->hasTable($table);
         }
                     /**
+         * Get all of the table names for the database.
+         *
+         * @deprecated Will be removed in a future Laravel version.
+         * @return array 
+         * @static 
+         */ 
+        public static function getAllTables()
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getAllTables();
+        }
+                    /**
+         * Get all of the view names for the database.
+         *
+         * @deprecated Will be removed in a future Laravel version.
+         * @return array 
+         * @static 
+         */ 
+        public static function getAllViews()
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getAllViews();
+        }
+                    /**
          * Drop all tables from the database.
          *
          * @return void 
@@ -14129,39 +14275,6 @@
                         $instance->dropAllViews();
         }
                     /**
-         * Drop all types from the database.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function dropAllTypes()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        $instance->dropAllTypes();
-        }
-                    /**
-         * Get all of the table names for the database.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllTables()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getAllTables();
-        }
-                    /**
-         * Get all of the view names for the database.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllViews()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getAllViews();
-        }
-                    /**
          * Get all of the type names for the database.
          *
          * @return array 
@@ -14171,6 +14284,17 @@
         {
                         /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
                         return $instance->getAllTypes();
+        }
+                    /**
+         * Drop all types from the database.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function dropAllTypes()
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        $instance->dropAllTypes();
         }
                     /**
          * Get the columns for a given table.
@@ -14237,6 +14361,28 @@
         public static function useNativeSchemaOperationsIfPossible($value = true)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
                         \Illuminate\Database\Schema\PostgresBuilder::useNativeSchemaOperationsIfPossible($value);
+        }
+                    /**
+         * Get the tables that belong to the database.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getTables()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getTables();
+        }
+                    /**
+         * Get the views that belong to the database.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getViews()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getViews();
         }
                     /**
          * Determine if the given table has a given column.
@@ -20454,315 +20600,6 @@
      
 }
 
-    namespace Chatify\Facades { 
-            /**
-     * 
-     *
-     */ 
-        class ChatifyMessenger {
-                    /**
-         * Get max file's upload size in MB.
-         *
-         * @return int 
-         * @static 
-         */ 
-        public static function getMaxUploadSize()
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getMaxUploadSize();
-        }
-                    /**
-         * This method returns the allowed image extensions
-         * to attach with the message.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllowedImages()
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getAllowedImages();
-        }
-                    /**
-         * This method returns the allowed file extensions
-         * to attach with the message.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllowedFiles()
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getAllowedFiles();
-        }
-                    /**
-         * Returns an array contains messenger's colors
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getMessengerColors()
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getMessengerColors();
-        }
-                    /**
-         * Returns a fallback primary color.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getFallbackColor()
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getFallbackColor();
-        }
-                    /**
-         * Trigger an event using Pusher
-         *
-         * @param string $channel
-         * @param string $event
-         * @param array $data
-         * @return void 
-         * @static 
-         */ 
-        public static function push($channel, $event, $data)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        $instance->push($channel, $event, $data);
-        }
-                    /**
-         * Authentication for pusher
-         *
-         * @param \Chatify\User $requestUser
-         * @param \Chatify\User $authUser
-         * @param string $channelName
-         * @param string $socket_id
-         * @param array $data
-         * @return void 
-         * @static 
-         */ 
-        public static function pusherAuth($requestUser, $authUser, $channelName, $socket_id)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        $instance->pusherAuth($requestUser, $authUser, $channelName, $socket_id);
-        }
-                    /**
-         * Fetch & parse message and return the message card
-         * view as a response.
-         *
-         * @param \App\Models\ChMessage $prefetchedMessage
-         * @param int $id
-         * @return array 
-         * @static 
-         */ 
-        public static function parseMessage($prefetchedMessage = null, $id = null)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->parseMessage($prefetchedMessage, $id);
-        }
-                    /**
-         * Return a message card with the given data.
-         *
-         * @param \App\Models\ChMessage $data
-         * @param boolean $isSender
-         * @return string 
-         * @static 
-         */ 
-        public static function messageCard($data, $renderDefaultCard = false)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->messageCard($data, $renderDefaultCard);
-        }
-                    /**
-         * Default fetch messages query between a Sender and Receiver.
-         *
-         * @param int $user_id
-         * @return \App\Models\ChMessage|\Illuminate\Database\Eloquent\Builder 
-         * @static 
-         */ 
-        public static function fetchMessagesQuery($user_id)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->fetchMessagesQuery($user_id);
-        }
-                    /**
-         * create a new message to database
-         *
-         * @param array $data
-         * @return \App\Models\ChMessage 
-         * @static 
-         */ 
-        public static function newMessage($data)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->newMessage($data);
-        }
-                    /**
-         * Make messages between the sender [Auth user] and
-         * the receiver [User id] as seen.
-         *
-         * @param int $user_id
-         * @return bool 
-         * @static 
-         */ 
-        public static function makeSeen($user_id)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->makeSeen($user_id);
-        }
-                    /**
-         * Get last message for a specific user
-         *
-         * @param int $user_id
-         * @return \App\Models\ChMessage|\Chatify\Collection|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null 
-         * @static 
-         */ 
-        public static function getLastMessageQuery($user_id)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getLastMessageQuery($user_id);
-        }
-                    /**
-         * Count Unseen messages
-         *
-         * @param int $user_id
-         * @return \Chatify\Collection 
-         * @static 
-         */ 
-        public static function countUnseenMessages($user_id)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->countUnseenMessages($user_id);
-        }
-                    /**
-         * Get user list's item data [Contact Itme]
-         * (e.g. User data, Last message, Unseen Counter.
-         * 
-         * ..)
-         *
-         * @param int $messenger_id
-         * @param \Chatify\Collection $user
-         * @return string 
-         * @static 
-         */ 
-        public static function getContactItem($user)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getContactItem($user);
-        }
-                    /**
-         * Get user with avatar (formatted).
-         *
-         * @param \Chatify\Collection $user
-         * @return \Chatify\Collection 
-         * @static 
-         */ 
-        public static function getUserWithAvatar($user)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getUserWithAvatar($user);
-        }
-                    /**
-         * Check if a user in the favorite list
-         *
-         * @param int $user_id
-         * @return boolean 
-         * @static 
-         */ 
-        public static function inFavorite($user_id)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->inFavorite($user_id);
-        }
-                    /**
-         * Make user in favorite list
-         *
-         * @param int $user_id
-         * @param int $star
-         * @return boolean 
-         * @static 
-         */ 
-        public static function makeInFavorite($user_id, $action)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->makeInFavorite($user_id, $action);
-        }
-                    /**
-         * Get shared photos of the conversation
-         *
-         * @param int $user_id
-         * @return array 
-         * @static 
-         */ 
-        public static function getSharedPhotos($user_id)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getSharedPhotos($user_id);
-        }
-                    /**
-         * Delete Conversation
-         *
-         * @param int $user_id
-         * @return boolean 
-         * @static 
-         */ 
-        public static function deleteConversation($user_id)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->deleteConversation($user_id);
-        }
-                    /**
-         * Delete message by ID
-         *
-         * @param int $id
-         * @return boolean 
-         * @static 
-         */ 
-        public static function deleteMessage($id)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->deleteMessage($id);
-        }
-                    /**
-         * Return a storage instance with disk name specified in the config.
-         *
-         * @static 
-         */ 
-        public static function storage()
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->storage();
-        }
-                    /**
-         * Get user avatar url.
-         *
-         * @param string $user_avatar_name
-         * @return string 
-         * @static 
-         */ 
-        public static function getUserAvatarUrl($user_avatar_name)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getUserAvatarUrl($user_avatar_name);
-        }
-                    /**
-         * Get attachment's url.
-         *
-         * @param string $attachment_name
-         * @return string 
-         * @static 
-         */ 
-        public static function getAttachmentUrl($attachment_name)
-        {
-                        /** @var \Chatify\ChatifyMessenger $instance */
-                        return $instance->getAttachmentUrl($attachment_name);
-        }
-         
-    }
-     
-}
-
     namespace DaveJamesMiller\Breadcrumbs\Facades { 
             /**
      * Breadcrumbs facade - allows easy access to the Manager instance.
@@ -22995,7 +22832,7 @@
                     /**
          * 
          *
-         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBootInactive()
+         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBoot()
          * @param string|null $monitorSlug
          * @param int|null $checkInMargin
          * @param int|null $maxRuntime
@@ -27019,7 +26856,6 @@ namespace  {
             class Date extends \Jenssegers\Date\Date {}
             class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode {}
             class Alert extends \RealRashid\SweetAlert\Facades\Alert {}
-            class Chatify extends \Chatify\Facades\ChatifyMessenger {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
             class Livewire extends \Livewire\Livewire {}
