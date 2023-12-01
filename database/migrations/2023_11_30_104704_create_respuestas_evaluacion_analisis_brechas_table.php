@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('respuestas_evaluacion_analisis_brechas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pregunta_id');
-            $table->unsignedBigInteger('parametro_id');
+            $table->unsignedBigInteger('parametro_id')->nullable();
+            $table->longText('evidencia')->nullable();
+            $table->longText('recomendacion')->nullable();
 
             $table->foreign('pregunta_id')->references('id')->on('preguntas_template_analisisde_brechas')->onDelete('cascade');
             $table->foreign('parametro_id')->references('id')->on('parametros_template_analisisde_brechas')->onDelete('cascade');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 
