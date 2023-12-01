@@ -154,7 +154,7 @@ class EmpleadoController extends Controller
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
-            'email' => 'required|email',
+            // 'email' => 'required|email',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
