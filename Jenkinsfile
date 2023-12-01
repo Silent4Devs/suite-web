@@ -36,7 +36,7 @@ pipeline {
         stage('Deploy via SSH') {
             steps {
                 script {
-                    if (env.DEPLOY_ENABLED == 'true') {
+                    if (true === true) {
                         // Realiza la acción  de despliegue solo si la variable DEPLOY_ENABLED es 'true'
                         sshagent(['/root/.ssh/id_rsa.pub']) {
                             sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
