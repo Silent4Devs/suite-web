@@ -1076,7 +1076,7 @@ class EmpleadoController extends Controller
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
-            'email' => 'required|email',
+            // 'email' => 'required|email',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
@@ -1203,6 +1203,7 @@ class EmpleadoController extends Controller
             'foto' => $image,
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
+
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
         $usuario->update([
             'n_empleado' => $request->n_empleado,
