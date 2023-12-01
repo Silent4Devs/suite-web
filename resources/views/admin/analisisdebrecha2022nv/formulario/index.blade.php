@@ -1,18 +1,7 @@
 @extends('layouts.admin')
+
 @section('content')
     @include('admin.analisisdebrecha2022nv.estilos')
-    <style>
-        .titulo {
-            text-align: left;
-            font: normal normal 600 24px Segoe UI;
-            letter-spacing: 0px;
-            color: #2567AE;
-            opacity: 1;
-            margin-left: 5px;
-            margin-bottom: 12px;
-        }
-    </style>
-
     @include('partials.flashMessages')
 
     <h5 class="titulo">Formulario</h5>
@@ -40,7 +29,6 @@
             </div>
         </div>
     </div>
-
     <livewire:evaluacion-analisis-brechas :id="$id" />
     {{-- @livewire('evaluacion-analisis-brechas', ['id' => $id]) --}}
 @endsection
