@@ -24,31 +24,29 @@ pipeline {
             }
         }
 
+
+        stage('TESTING') {
+            steps {
+                script {
+                   echo 'test.'
+                }
+            }
+        }
+
         stage('Deploy via SSH') {
             steps {
                 script {
-                    sshagent(['/root/.ssh/id_rsa.pub']) {
-                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
+                    if (true) {
+                        // Realiza la acción  de despliegue solo si la variable DEPLOY_ENABLED es 'true'
+                        sshagent(['/root/.ssh/id_rsa.pub']) {
+                            sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
+                        }
+                    } else {
+                        echo 'Despliegue deshabilitado. No se realizarán acciones.'
                     }
                 }
             }
         }
-
-
-
-
-        stage('Deploy via SSH  PRODUCCION') {
-            steps {
-                script {
-                     sh 'ssh desarrollo@192.168.9.78 '"cd /var/contenedor/tabantaj && sudo docker-compose run --rm deploy-task'"
-                }
-            }
-        }
-
-
-
-
-
 
     }
 }
