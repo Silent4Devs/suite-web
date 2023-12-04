@@ -118,7 +118,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
         // dd($foda);
@@ -175,7 +175,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -289,22 +289,10 @@ class EntendimientoOrganizacionController extends Controller
         return view('admin.entendimientoOrganizacions.cardFoda', compact('query'));
     }
 
-    public function foda($entendimientoOrganizacion)
+    public function     cardFodaGeneral()
     {
-        abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::getaltaAll();
-        $foda_actual = $entendimientoOrganizacion;
-        $obtener_FODA = EntendimientoOrganizacion::where('id',$entendimientoOrganizacion)->first();
-        // dd($obtener_FODA);
-        // $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion)->get();
-        // dd($fortalezas);
-        $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion)->get();
-        $amenazas = AmenazasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion)->get();
-        $debilidades = DebilidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion)->get();
-        $organizacion_actual = $this->obtenerOrganizacion();
-        $logo_actual = $organizacion_actual->logo;
-        $empresa_actual = $organizacion_actual->empresa;
+        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
-        return view('admin.entendimientoOrganizacions.cardFodaEdit', compact('oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual','foda_actual'));
+        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query'));
     }
 }
