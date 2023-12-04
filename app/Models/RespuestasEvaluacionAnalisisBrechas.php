@@ -19,4 +19,9 @@ class RespuestasEvaluacionAnalisisBrechas extends Model
     ];
 
     public $timestamps = false;
+
+    public function parametro()
+    {
+        return $this->belongsTo(ParametrosTemplateAnalisisdeBrechas::class, 'parametro_id', 'id');
+    }
 }
