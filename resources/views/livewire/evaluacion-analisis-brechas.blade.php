@@ -5,10 +5,19 @@
                 <div class="col-3 mt-4">
                     <div class="card card-body secciones justify-content-center">
                         <div class="row align-items-center">
-                            <h5>
-                                Sección {{ $seccion->numero_seccion }}
-                            </h5>
-
+                            <div class="col-3">
+                                <button wire:click="changeSeccion({{ $seccion->id }})">Ojo</button>
+                            </div>
+                            <div class="col-6">
+                                <h5>
+                                    Sección {{ $seccion->numero_seccion }}
+                                </h5>
+                            </div>
+                            <div class="col-3">
+                                <p>
+                                    Valor {{ $seccion->porcentaje_seccion }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -16,34 +25,42 @@
         </div>
     </div>
 
-    <div class="card card-body">
-        <div class="row align-items-center">
-            <div class="col-2">
-                <p>Avance del análisis</p>
-            </div>
-            <div class="col-10">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                        aria-valuemax="100">
+    @foreach ($template->secciones as $key => $seccion)
+        <div class="card card-body">
+            <div class="row align-items-center">
+                <div class="col-2">
+                    <p>Avance del análisis</p>
+                </div>
+                <div class="col-9">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar"
+                            style="width: {{ (string) $sectionPercentages[$seccion->id]['percentage'] }}%;"
+                            aria-valuenow="{{ $sectionPercentages[$seccion->id]['percentage'] }}" aria-valuemin="0"
+                            aria-valuemax="100">
+                            {{ number_format($sectionPercentages[$seccion->id]['percentage'], 2) }}% de avance
+                        </div>
                     </div>
                 </div>
+                <div class="col-1">
+                    <p> {{ $seccion->porcentaje_seccion }}%</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <sub>La evaluación tiene un peso total del 100%</sub><br>
+                <sub>En el caso del registro de dos o mas secciones en la plantilla. "La evaluación dividira su
+                    valoración del porcentaje {{ $seccion->porcentaje_seccion }}% del 100% total"</sub>
             </div>
         </div>
-        <div class="row">
-            <sub>La evaluación tiene un peso total del 100%</sub><br>
-            <sub>En el caso del registro de dos o mas secciones en la plantilla. "La evaluación dividira su
-                valoración del porcentaje (Numero registrado)% del 100% total"</sub>
-        </div>
-    </div>
-    @foreach ($template->secciones as $key => $seccion)
+
         <div class="card">
             <div class="card-header">
-                Sección: {{ $seccion->numero_seccion }}
+                Sección: {{ $seccion->numero_seccion }}: {{ $seccion->descripcion }}
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="table-responsive">
-                        <div class="col-6">
+                    <div class="col-6">
+                        <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr class="table-secondary">
@@ -65,23 +82,31 @@
                                                 {{ $parametro->estatus }}
                                             </td>
                                             <td style="background-color: {{ $parametro->color }}">
-                                                0
+                                                {{ $cuentas[$parametro->id] ?? 0 }}
                                             </td>
                                             <td>
-                                                0
+                                                {{ $peso_parametros[$parametro->id] ?? 0 }}%
+                                                <!-- Display the calculated percentage -->
                                             </td>
                                         </tr>
                                     @endforeach
+
+                                </tbody>
+                                <tfoot>
                                     <tr class="table-primary">
                                         <td>Total</td>
-                                        <td>(Suma)</td>
-                                        <td>(Porcentaje)</td>
+                                        <td>{{ $totalCount ?? 0 }}</td>
+                                        <td>{{ $totalPorcentaje ?? 0 }}</td>
                                     </tr>
-                                </tbody>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
                     <div class="col-6">
+                        <!-- HTML structure to contain the bar chart -->
+                        <div id="contenedor-principal">
+                            <canvas id="graf-parametros" width="400" height="400"></canvas>
+                        </div>
 
                     </div>
                 </div>
@@ -137,7 +162,8 @@
                                         <select class="link-like-select"
                                             wire:model="selectedValues.{{ $pregunta->id }}.option1"
                                             wire:change="saveDataParametros('{{ $pregunta->id }}', $event.target.value)"
-                                            name="respuesta_pregunta_{{ $pregunta->id }}" id="">
+                                            name="respuesta_pregunta_{{ $pregunta->id }}"
+                                            id="respuesta_pregunta_{{ $pregunta->id }}">
                                             @foreach ($template->parametros as $parametro)
                                                 <option value="{{ $parametro->id }}">{{ $parametro->estatus }}
                                                 </option>
@@ -145,9 +171,9 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="text" wire:model="evidenciaValues.{{ $pregunta->id }}"
+                                        <input type="text" wire:model.lazy="evidenciaValues.{{ $pregunta->id }}"
                                             wire:change="saveEvidencia('{{ $pregunta->id }}')"
-                                            id="evidenciaInput_{{ $pregunta->id }}">
+                                            value="{{ isset($oldEvidenciaValues[$pregunta->id]) ? $oldEvidenciaValues[$pregunta->id] : $pregunta->respuesta->evidencia ?? '' }}">
                                     </td>
 
                                     <td>
@@ -168,14 +194,37 @@
 </div>
 
 @section('scripts')
-    {{-- Script para conservar valores que ya existen --}}
+    <!-- JavaScript code to create a bar chart -->
     <script>
-        document.addEventListener('livewire:mounted', function() {
-            @foreach ($seccion->preguntas as $pregunta)
-                var inputValue = @json($pregunta->respuesta->recomendacion ?? '');
-                var inputField = document.getElementById('recomendacionInput_{{ $pregunta->id }}');
-                inputField.value = inputValue;
-            @endforeach
+        document.addEventListener('DOMContentLoaded', function() {
+            Livewire.on('renderAreas', (cuentas) => {
+                console.log(cuentas);
+                // console.log(datos_empleados);
+
+                document.getElementById('graf-parametros').remove();
+
+                var canvas = document.createElement("canvas");
+                canvas.id = "graf-parametros";
+                document.getElementById("contenedor-principal").appendChild(canvas);
+
+                let grafica_proyectos = new Chart(document.getElementById('graf-parametros'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['A', 'B', 'C', 'D'],
+                        datasets: [{
+                            backgroundColor: "#61CB5C",
+                            label: "Horas Invertidas",
+                            data: cuentas,
+                            lineTension: 0,
+                            fill: true,
+                            options: {
+                                indexAxis: 'y',
+                            }
+                        }, ]
+                    },
+                });
+
+            });
         });
     </script>
 @endsection
