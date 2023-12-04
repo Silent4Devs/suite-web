@@ -28,7 +28,8 @@ pipeline {
         stage('TESTING') {
             steps {
                 script {
-                    sh 'pip install pytest'
+                    sh 'apt-get update && apt-get install -y python3-pip'
+                    sh 'pip3 install pytest'
                     sh 'cd  Testing/Calendario'
                     sh 'pytest test_calendario.py'
                 }
