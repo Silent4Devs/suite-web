@@ -35,3 +35,36 @@
     <livewire:evaluacion-analisis-brechas :id="$id" />
     {{-- @livewire('evaluacion-analisis-brechas', ['id' => $id]) --}}
 @endsection
+
+{{-- <script>
+    document.addEventListener('livewire:load', function() {
+
+        Livewire.on('renderAreas', (grafica_cuentas, grafica_colores) => {
+            // console.log(cuentas);
+            // console.log(colores);
+
+            document.getElementById('graf-parametros').remove();
+
+            var canvas = document.createElement("canvas");
+            canvas.id = "graf-parametros";
+            document.getElementById("contenedor-principal").appendChild(canvas);
+
+            let grafica_proyectos = new Chart(document.getElementById('graf-parametros'), {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        label: "Preguntas que cumplen esta valoración:",
+                        data: grafica_cuentas,
+                        backgroundColor: grafica_colores,
+                        lineTension: 0,
+                        fill: true,
+                        options: {
+                            indexAxis: 'y',
+                        }
+                    }, ]
+                },
+            });
+
+        });
+    });
+</script> --}}
