@@ -1,22 +1,27 @@
 pipeline {
     agent any
     stages {
+        stage('Declarative: Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Install') {
             steps {
-                git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
+                echo 'Installing dependencies...'
             }
         }
 
         stage('Build') {
             steps {
-               echo 'Build dependencies... jenkis 1'
+               echo 'Build dependencies...'
             }
         }
 
-        stage('Jenkis2') {
+        stage('Jenkis2 - Stage 1') {
             steps {
                 script {
-                    // Asegúrate de que 'Jenkinsfilev1' también tenga su propio bloque de pipeline
                     load 'Jenkinsfilev1'
                 }
             }

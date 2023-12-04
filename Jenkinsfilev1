@@ -1,21 +1,12 @@
+// Jenkinsfilev1
+
 pipeline {
     agent any
     stages {
-        stage('Install Jne 2') {
+        stage('Jenkinsfilev1 Stage') {
             steps {
-                git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
-            }
-        }
-
-        stage('Jnekis 2') {
-            steps {
-                echo 'Installing dependencies...  jenkis 2'
-            }
-        }
-
-        stage('Jnekis 2') {
-            steps {
-               echo 'Build dependencies... jenkis 2'
+                echo 'Running Jenkinsfilev1 Stage'
+                // Aquí puedes agregar los pasos específicos que deseas realizar en esta etapa
             }
         }
     }
