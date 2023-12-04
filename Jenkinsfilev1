@@ -1,21 +1,21 @@
 pipeline {
     agent any
     stages {
-        stage('Declarative: Checkout SCM') {
+        stage('Install Jne 2') {
             steps {
-                checkout scm
+                git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
             }
         }
 
-        stage('Install') {
+        stage('Jnekis 2') {
             steps {
-                echo 'Installing dependencies...'
+                echo 'Installing dependencies...  jenkis 2'
             }
         }
 
-        stage('Build') {
+        stage('Jnekis 2') {
             steps {
-               echo 'Build dependencies...'
+               echo 'Build dependencies... jenkis 2'
             }
         }
     }
