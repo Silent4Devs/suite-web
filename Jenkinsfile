@@ -37,7 +37,6 @@ pipeline {
             steps {
                 script {
                     sshagent(['/root/.ssh/id_rsa.pub']) {
-                        // Assuming your Jenkins workspace contains the checked-out code
                         sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
                     }
                 }
