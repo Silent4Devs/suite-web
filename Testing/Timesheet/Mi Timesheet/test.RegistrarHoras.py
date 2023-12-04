@@ -32,6 +32,7 @@ btn.click()
 
 
 #Registrar Horas
+
 try:
     time.sleep(tiempo_carga)
     btn = driver.find_element(By.XPATH, "//font[@class='letra_blanca'][contains(.,'Timesheet')]")
@@ -47,7 +48,9 @@ try:
     day_element.click()
     time.sleep(tiempo_carga)
 
+    def user_actions():
         #PROYECTO
+        print("Seleccionando proyecto")
 
     select_container_xpath = "//span[@class='select2-selection__rendered'][contains(@id,'proyectos1-container')][contains(.,'Seleccione proyecto')]"
     select_container = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, select_container_xpath)))
@@ -70,7 +73,7 @@ try:
     option_element = driver.find_element(By.XPATH, option_xpath)
     option_element.click()
 
-        #TAREA
+    #TAREA
 
     print("Seleccionando tarea")
     # Esperamos a que aparezca el campo de búsqueda de tareas
@@ -123,18 +126,14 @@ try:
     description=driver.find_element(By.XPATH,"//textarea[contains(@name,'timesheet[1][descripcion]')]").send_keys("北京位於華北平原的西北边缘，背靠燕山，有永定河流经老城西南，毗邻天津市、河北省，是一座有三千余年建城历史、八百六十余年建都史的历史文化名城，历史上有金、元、明、清、中华民国（北洋政府时期）等五个朝代在此定都，以及数个政权建政于此，荟萃了自元明清以来的中华文化，拥有众多历史名胜古迹和人文景观。《不列颠百科全书》将北京形容为全球最伟大的城市之一，而且断言，“这座城市是中国历史上最重要的组成部分。在中国过去的八个世纪里，不论历史是否悠久，几乎北京所有主要建筑都拥有着不可磨灭的民族和历史意义”。北京古迹众多，著名的有故宫、天坛、颐和园、圆明园、北海公园等 🔔🍺🥰😡😶‍🌫️👻😽👩🏻‍💼💷💡💖💞🕉️🆒🆗。")
     time.sleep(tiempo_espera)
 
-    #REGISTRAR
-    save_btn=driver.find_element(By.XPATH,"//label[@for='estatus_pendiente'][contains(.,'Registrar')]")
-    time.sleep(tiempo_espera)
-
-
 except TimeoutException as e:
     print(f"No se pudo seleccionar la tarea. Detalles: {e}")
 
 except TimeoutException as e:
     print(f"No se pudo seleccionar el proyecto. Detalles: {e}")
 
-
-except NoSuchElementException:
-    print("Elemento no encontrado. Verifica el selector o espera explícita.")
+# AGREGAR FILA
+addrow_btn = driver.find_element(By.XPATH, "//font[@class='d-mobile-none'][contains(.,'Agregar fila')]")
+addrow_btn.click()
+time.sleep(tiempo_espera)
 
