@@ -24,31 +24,39 @@ pipeline {
             }
         }
 
+        stage('Jenkis2') {
+             steps {
+                 script {
+                    load 'Jenkinsfilev1'
+                 }
+             }
+         }
 
-        stage('TESTING') {
-            steps {
-                script {
-                    sh 'apt-get update && apt-get install -y python3-pip'
-                    sh 'pip3 install pytest'
-                    sh 'cd  Testing/Calendario'
-                    sh 'pytest test_calendario.py'
-                }
-            }
-        }
 
-        stage('Deploy via SSH') {
-            steps {
-                script {
-                    if (true) {
-                        sshagent(['/root/.ssh/id_rsa.pub']) {
-                            sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
-                        }
-                    } else {
-                        echo 'Despliegue deshabilitado. No se realizarán acciones.'
-                    }
-                }
-            }
-        }
+        // stage('TESTING') {
+        //     steps {
+        //         script {
+        //             sh 'apt-get update && apt-get install -y python3-pip'
+        //             sh 'pip3 install pytest'
+        //             sh 'cd  Testing/Calendario'
+        //             sh 'pytest test_calendario.py'
+        //         }
+        //     }
+        // }
+
+        // stage('Deploy via SSH') {
+        //     steps {
+        //         script {
+        //             if (true) {
+        //                 sshagent(['/root/.ssh/id_rsa.pub']) {
+        //                     sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
+        //                 }
+        //             } else {
+        //                 echo 'Despliegue deshabilitado. No se realizarán acciones.'
+        //             }
+        //         }
+        //     }
+        // }
 
     }
 }
