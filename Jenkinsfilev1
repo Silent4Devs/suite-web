@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Staggin') {
+        stage('Install') {
             steps {
-              echo 'Installing dependencies...'
+                echo 'Installing dependencies...'
             }
         }
     }
