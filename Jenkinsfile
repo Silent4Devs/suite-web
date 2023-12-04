@@ -28,6 +28,7 @@ pipeline {
         stage('TESTING') {
             steps {
                 script {
+                    sh 'pip install pytest'
                     sh 'cd  Testing/Calendario'
                     sh 'pytest test_calendario.py'
                 }
