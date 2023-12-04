@@ -28,7 +28,8 @@ pipeline {
         stage('TESTING') {
             steps {
                 script {
-                   echo 'test.'
+                    sh 'cd  /Testing/Calendario'
+                    sh 'pytest test_calendario.py'
                 }
             }
         }
