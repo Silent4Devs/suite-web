@@ -9,7 +9,7 @@ use Livewire\Component;
 class EvaluacionAnalisisBrechas extends Component
 {
     public $itemId; // Renamed from $id
-    public $seccion = 1;
+    public $seccion_vista = 0;
 
     public $selectedValues;
     public $oldSelectedValues;
@@ -32,45 +32,76 @@ class EvaluacionAnalisisBrechas extends Component
             ->with('secciones')
             ->find($this->itemId);
 
-        $template = TemplateAnalisisdeBrechas::with('parametros')
-            ->withwhereHas('secciones', function ($query) {
-                return $query->with('preguntas.respuesta')->where('numero_seccion', '=', $this->seccion);
-            })
-            ->find($this->itemId);
+        if ($this->seccion_vista != 0) {
 
-        //sirve para mostrar las respuesta ya existentes, no se pudo poner en hydrate()
-        foreach ($template->secciones as $key => $seccion) {
-            foreach ($seccion->preguntas as $key => $pregunta) {
-                $this->selectedValues[$pregunta->id]['option1'] = old("selectedValues.{$pregunta->id}.option1", $pregunta->respuesta->parametro->id ?? null);
-                $this->oldSelectedValues[$pregunta->id]['option1'] = $this->selectedValues[$pregunta->id]['option1'];
+            $template = TemplateAnalisisdeBrechas::with('parametros')
+                ->withwhereHas('secciones', function ($query) {
+                    return $query->with('preguntas.respuesta')->where('numero_seccion', '=', $this->seccion_vista);
+                })
+                ->find($this->itemId);
 
-                $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->evidencia ?? '');
-                $this->oldEvidenciaValues[$pregunta->id] = $this->evidenciaValues[$pregunta->id];
+            foreach ($template->secciones as $key => $seccion) {
+                foreach ($seccion->preguntas as $key => $pregunta) {
+                    $this->selectedValues[$pregunta->id]['option1'] = old("selectedValues.{$pregunta->id}.option1", $pregunta->respuesta->parametro->id ?? null);
+                    $this->oldSelectedValues[$pregunta->id]['option1'] = $this->selectedValues[$pregunta->id]['option1'];
 
-                $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->recomendacion ?? '');
-                $this->oldRecomendacionValues[$pregunta->id] = $this->recomendacionValues[$pregunta->id];
+                    $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->evidencia ?? '');
+                    $this->oldEvidenciaValues[$pregunta->id] = $this->evidenciaValues[$pregunta->id];
+
+                    $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->recomendacion ?? '');
+                    $this->oldRecomendacionValues[$pregunta->id] = $this->recomendacionValues[$pregunta->id];
+                }
+            }
+
+            $result = $this->sumaParametrosSeccion($this->seccion_vista);
+            $this->cuentas = $result['counts'];
+            $peso_parametros = $result['porcentaje_parametros'];
+            $totalCount = $result['totalCount'];
+            $totalPorcentaje = $result['total_porcentaje'];
+
+            $sectionPercentages = $this->porcentajeSeccion($this->seccion_vista);
+
+            $grafica_cuentas = [];
+            $grafica_colores = [];
+            foreach ($template->parametros as $parametro) {
+                if (array_key_exists($parametro->id, $this->cuentas)) {
+                    $grafica_cuentas[$parametro->estatus] = $this->cuentas[$parametro->id];
+                    $grafica_colores[] = $parametro->color;
+                }
+            }
+        } else {
+            $template = $template_general;
+
+            $result = $this->sumaParametrosTotal();
+            $this->cuentas = $result['counts'];
+            $peso_parametros = $result['porcentaje_parametros'];
+            $totalCount = $result['totalCount'];
+            $totalPorcentaje = $result['total_porcentaje'];
+
+            // dd($result);
+
+            $sectionPercentages = $this->porcentajeTotal();
+
+            $grafica_cuentas = [];
+            $grafica_colores = [];
+            foreach ($template->parametros as $parametro) {
+                if (array_key_exists($parametro->id, $this->cuentas)) {
+                    $grafica_cuentas[$parametro->estatus] = $this->cuentas[$parametro->id];
+                    $grafica_colores[] = $parametro->color;
+                }
             }
         }
 
-        $parametrosEstatus = ['Status A', 'Status B', 'Status C']; // Sample array
-        $preguntasCount = [10, 20, 15]; // Sample array or collection
+        //sirve para mostrar las respuesta ya existentes, no se pudo poner en hydrate()
 
-        $result = $this->sumaParametros();
-        // dd($result);
-        $cuentas = $result['counts'];
-        $peso_parametros = $result['porcentaje_parametros'];
-        $totalCount = $result['totalCount'];
-        $totalPorcentaje = $result['total_porcentaje'];
-
-        $sectionPercentages = $this->porcentajeSeccion();
-
-        $this->cuentas = $cuentas;
-        $this->emit('renderAreas', $this->cuentas);
-
+        $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+        // $this->emit('mounted');
+        // dd($cuentas);
+        // dd($sectionPercentages);
         return view('livewire.evaluacion-analisis-brechas', compact(
             'template',
             'template_general',
-            'cuentas',
+            // 'cuentas',
             'totalCount',
             'sectionPercentages',
             'peso_parametros',
@@ -78,10 +109,12 @@ class EvaluacionAnalisisBrechas extends Component
         ));
     }
 
-    public function sumaParametros()
+    public function sumaParametrosSeccion($sec_param)
     {
         $template = TemplateAnalisisdeBrechas::with('parametros')
-            ->with(['secciones.preguntas.respuesta']) // Eager load necessary relationships
+            ->withwhereHas('secciones', function ($query) use ($sec_param) {
+                return $query->with('preguntas.respuesta')->where('numero_seccion', '=', $sec_param);
+            })
             ->find($this->itemId);
 
         $maxParametroValue = $template->parametros->max('valor'); // Find the highest value among parametros
@@ -114,6 +147,86 @@ class EvaluacionAnalisisBrechas extends Component
                     $totalCount++; // Increment total count
                 }
             }
+            $valor_seccion = $seccion->porcentaje_seccion;
+        }
+
+        foreach ($template->parametros as $parametro) {
+            $porcentaje_parametros[$parametro->id] = (($counts[$parametro->id] * $parametro->valor) / $maxPossibleValue) * $valor_seccion;
+            $total_porcentaje += $porcentaje_parametros[$parametro->id];
+        }
+
+        return ['counts' => $counts, 'totalCount' => $totalCount, 'porcentaje_parametros' => $porcentaje_parametros, 'total_porcentaje' => $total_porcentaje];
+    }
+
+    public function porcentajeSeccion($sec_porc)
+    {
+        $template = TemplateAnalisisdeBrechas::with('parametros')
+            ->withwhereHas('secciones', function ($query) use ($sec_porc) {
+                return $query->with('preguntas.respuesta')->where('numero_seccion', '=', $sec_porc);
+            })
+            ->find($this->itemId);
+
+        $sectionPercentages = [];
+
+        foreach ($template->secciones as $seccion) {
+            $answeredQuestions = 0;
+            $totalQuestionsInSection = $seccion->preguntas->count();
+
+            foreach ($seccion->preguntas as $pregunta) {
+                if ($pregunta->respuesta) {
+                    $answeredQuestions++;
+                }
+            }
+
+            $percentage = $totalQuestionsInSection > 0 ? ($answeredQuestions / $totalQuestionsInSection) *  $seccion->porcentaje_seccion : 0;
+
+            $sectionPercentages[$seccion->numero_seccion] = [
+                'answeredQuestions' => $answeredQuestions,
+                'totalQuestionsInSection' => $totalQuestionsInSection,
+                'percentage' => $percentage,
+            ];
+        }
+
+        return $sectionPercentages;
+    }
+
+    //Se comento porque sale el total de todas las preguntas de todas las secciones,
+    // y debe ser por seccion, podria ser util
+    public function sumaParametrosTotal()
+    {
+        $template = TemplateAnalisisdeBrechas::with('parametros')
+            ->with(['secciones.preguntas.respuesta']) // Eager load necessary relationships
+            ->find($this->itemId);
+
+        $maxParametroValue = $template->parametros->max('valor'); // Find the highest value among parametros
+
+        $totalPreguntas = 0;
+        foreach ($template->secciones as $seccion) {
+            $totalPreguntas += $seccion->preguntas->count(); // Count total number of preguntas across all secciones
+        }
+
+        // Calculate the maximum possible value based on highest parametro value multiplied by total preguntas
+        $maxPossibleValue = $maxParametroValue * $totalPreguntas;
+
+        $counts = []; // Array to store counts for each parameter
+        $porcentaje_parametros = [];
+        $totalCount = 0; // Total count for all parameters
+        $total_porcentaje = 0;
+
+        foreach ($template->parametros as $parametro) {
+            $counts[$parametro->id] = 0; // Initialize count for each parameter
+            $porcentaje_parametros[$parametro->id] = 0;
+        }
+
+        foreach ($template->secciones as $seccion) {
+            foreach ($seccion->preguntas as $pregunta) {
+                $respuestaParametroId = $pregunta->respuesta ? $pregunta->respuesta->parametro_id : null;
+
+                if (array_key_exists($respuestaParametroId, $counts)) {
+                    $counts[$respuestaParametroId]++;
+                    $totalCount++; // Increment total count
+                }
+            }
         }
 
         foreach ($template->parametros as $parametro) {
@@ -124,8 +237,9 @@ class EvaluacionAnalisisBrechas extends Component
         return ['counts' => $counts, 'totalCount' => $totalCount, 'porcentaje_parametros' => $porcentaje_parametros, 'total_porcentaje' => $total_porcentaje];
     }
 
-    public function porcentajeSeccion()
+    public function porcentajeTotal()
     {
+        $percentage = 0;
         $template = TemplateAnalisisdeBrechas::with('parametros')
             ->with(['secciones' => function ($query) {
                 $query->with(['preguntas' => function ($query) {
@@ -146,21 +260,27 @@ class EvaluacionAnalisisBrechas extends Component
                 }
             }
 
-            $percentage = $totalQuestionsInSection > 0 ? ($answeredQuestions / $totalQuestionsInSection) * 100 : 0;
+            // $percentage = $totalQuestionsInSection > 0 ? ($answeredQuestions / $totalQuestionsInSection) * 100 : 0;
 
-            $sectionPercentages[$seccion->id] = [
-                'answeredQuestions' => $answeredQuestions,
-                'totalQuestionsInSection' => $totalQuestionsInSection,
-                'percentage' => $percentage,
-            ];
+            $sectionPercentages[$seccion->numero_seccion] = $this->sumaParametrosSeccion($seccion->numero_seccion);
+            // dd($sectionPercentages);
+            $percentage += $sectionPercentages[$seccion->numero_seccion]["total_porcentaje"];
         }
 
+        // dd($sectionPercentages, $percentage);
+        $sectionPercentages[0] = [
+            'answeredQuestions' => $answeredQuestions,
+            'totalQuestionsInSection' => $totalQuestionsInSection,
+            'percentage' => $percentage,
+        ];
+
+        // dd($sectionPercentages);
         return $sectionPercentages;
     }
 
     public function changeSeccion($newSeccion)
     {
-        $this->seccion = $newSeccion;
+        $this->seccion_vista = $newSeccion;
     }
 
     public function saveDataParametros($preguntaID, $parametroID)
@@ -181,7 +301,6 @@ class EvaluacionAnalisisBrechas extends Component
     public function saveEvidencia($preguntaID)
     {
         $evidenciaValue = $this->evidenciaValues[$preguntaID] ?? null;
-
 
         if ($evidenciaValue !== null) {
             // Update or create based on pregunta_id
