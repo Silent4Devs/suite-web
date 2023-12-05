@@ -288,7 +288,7 @@ class EntendimientoOrganizacionController extends Controller
         return view('admin.entendimientoOrganizacions.cardFoda', compact('query'));
     }
 
-    public function     cardFodaGeneral()
+    public function cardFodaGeneral()
     {
         $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
