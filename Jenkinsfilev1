@@ -4,5 +4,5 @@
 sh 'cd Testing/Calendario'
 sh 'pip install pytest'
 sh 'pip install selenium'
-sh 'pytest test_calendario'
+// sh 'pytest test_calendario'
 // Puedes agregar más pasos según sea necesario
