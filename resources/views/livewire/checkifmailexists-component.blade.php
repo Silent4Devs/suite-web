@@ -1,9 +1,10 @@
 <div>
     <label class="required" for="email"><i class="far fa-envelope iconos-crear"></i>Correo
         electrónico</label>
-    <input class="form-control {{ $errors->has('empleadoemail') ? 'is-invalid' : '' }}" type="text" name="email"
-        wire:model.debounce.700ms="email" placeholder="example@tabantaj.com" id="email"
-        value="{{ old('email', $empleadoemail) }}" required>
+    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="email"
+        wire:model.debounce.700ms="empleadoemail" id="email" placeholder="example@tabantaj.com"
+        value="{{ $empleadoemail }}" required>
+
     <p class="text-primary errores">{{ $disponiblemessage }}</p>
 
     <div wire:loading wire:target="empleadoemail">
