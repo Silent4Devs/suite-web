@@ -16,4 +16,9 @@ class PreguntasTemplateAnalisisdeBrechas extends Model
         'pregunta',
         'numero_pregunta',
     ];
+
+    public function respuesta()
+    {
+        return $this->hasOne(RespuestasEvaluacionAnalisisBrechas::class, 'pregunta_id', 'id');
+    }
 }
