@@ -991,6 +991,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     border: solid 1px #E5E5E5;
     background-color: #fff;
     padding: 25px;
+    margin-top: 20px;
 }
 
 .title-table-rds {

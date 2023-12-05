@@ -7,15 +7,11 @@
         {{ Breadcrumbs::render('Incidentes-Vacaciones') }}
     </div>
 
-    @include('admin.incidentesVacaciones.estilos')
-
-
-
     <div class="row">
         <h5 class="col-12 titulo_general_funcion">Excepciones Vacaciones</h5>
     </div>
 
-    <div class="row">
+    <div class="text-right">
         @can('incidentes_vacaciones_crear')
             <div class="d-flex justify-content-end">
                 <a href="{{ route('admin.incidentes-vacaciones.create') }}" type="button" class="btn btn-crear">Crear Excepción
@@ -56,6 +52,7 @@
 
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
+        <h3 class="title-table-rds">Excepciones Vacaciones</h3>
         @include('admin.incidentesVacaciones.table')
     </div>
 

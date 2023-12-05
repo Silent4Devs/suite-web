@@ -5,26 +5,21 @@
         {{ Breadcrumbs::render('Vista-Global-Vacaciones') }}
     </div>
 
-    @include('admin.dayOff.estilos')
+    <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Vacaciones</h5>
 
-    <div class="row">
-        <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Vacaciones</h5>
-    </div>
-
-    <div class="row mb-4">
-        @can('reglas_vacaciones_acceder')
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
-                    href="{{ route('admin.descarga-vacaciones') }}">
-                    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                    Exportar Excel
-                </a>
-            </div>
-        @endcan
-    </div>
+    @can('reglas_vacaciones_acceder')
+        <div class="text-right">
+            <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
+                href="{{ route('admin.descarga-vacaciones') }}">
+                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                Exportar Excel
+            </a>
+        </div>
+    @endcan
 
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
+        <h3 class="title-table-rds">Vista Global de Solicitudes de Vacaciones</h3>
         <table class="datatable datatable-vista-global-vacaciones tblCSV" id="vista-global-vacaciones">
             <thead>
                 <tr>
@@ -86,18 +81,22 @@
                         <td style="min-width: 75px;">
                             @if ($sol->aprobacion == 1)
                                 <div style="text-align:left">
-                                    <span class="badge badge-pill badge-warning">Pendiente</span>
+                                    <span class="estatus-global-vac"
+                                        style="background: #FBFFBF; color: #DD8E04;">Pendiente</span>
                                 </div>
                             @elseif ($sol->aprobacion == 2)
                                 <div style="text-align:left">
-                                    <span class="badge badge-pill badge-danger">Rechazado</span>
+                                    <span class="estatus-global-vac"
+                                        style="background: #D9D9D9; color: #464646;">Rechazado</span>
                                 </div>
                             @elseif ($sol->aprobacion == 3)
                                 <div style="text-align:left">
-                                    <span class="badge badge-pill badge-success">Aprobado</span>
+                                    <span class="estatus-global-vac"
+                                        style="background: #BFFFC9; color: #008F27;">Aprobado</span>
                                 </div>
                             @elseif (!$sol->aprobacion)
-                                <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
+                                <span class="estatus-global-vac" style="background: #ffbfe5; color: #dd0483;">Sin
+                                    Seguimiento</span>
                             @endif
                         </td>
                         {{-- <td style="min-width: 150px;">
@@ -111,8 +110,6 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
-    </div>
     </div>
 @endsection
 

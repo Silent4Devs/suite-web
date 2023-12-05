@@ -2,25 +2,18 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
 @endsection
-
 @section('content')
-    @include('admin.vacaciones.estilos')
-
     {{ Breadcrumbs::render('Reglas-Vacaciones') }}
 
-    <div class="row">
-        <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
-    </div>
+    <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
 
-    <div class="row">
-        @can('reglas_vacaciones_crear')
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.vacaciones.create') }}" type="button" class="btn btn-crear">
-                    Crear Lineamiento +
-                </a>
-            </div>
-        @endcan
-    </div>
+    @can('reglas_vacaciones_crear')
+        <div class="text-right">
+            <a href="{{ route('admin.vacaciones.create') }}" type="button" class="btn btn-crear">
+                Crear Lineamiento +e
+            </a>
+        </div>
+    @endcan
 
     {{-- @can('reglas_vacaciones_crear')
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
