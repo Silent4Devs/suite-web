@@ -631,30 +631,31 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
             Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
 
-        // Route::group(['middleware' => ['version_iso_2022']], function () {
-        //Analisis brechas 2022
-        //Template Analisis de Brechas
-        Route::post('templates/store', 'TemplateController@store')->name('templates.store');
-        Route::get('/top', 'TopController@index')->name('top');
-        Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
-        Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
-        Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
-        Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
-        Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
-        Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
+            // Route::group(['middleware' => ['version_iso_2022']], function () {
+            //Analisis brechas 2022
+            //Template Analisis de Brechas
+            Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+            Route::get('/top', 'TopController@index')->name('top');
+            Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
+            Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
+            Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
+            Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+            Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
+            Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
 
-        // Gap Unos 2022
-        Route::delete('gap-uno-2022/destroy', 'iso27\GapUnoConcentradoIsoController@massDestroy')->name('gap-unos-2022.massDestroy');
-        Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
+            // Gap Unos 2022
+            Route::delete('gap-uno-2022/destroy', 'iso27\GapUnoConcentradoIsoController@massDestroy')->name('gap-unos-2022.massDestroy');
+            Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
 
-        // Gap Dos 2022
-        //Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
-        Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
+            // Gap Dos 2022
+            //Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
+            Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
 
-        // Gap Tres 2022
-        //Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
-        Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
-        // });
+            // Gap Tres 2022
+            //Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
+            Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
+            // });
+        });
 
         Route::group(['middleware' => ['version_iso_2013']], function () {
             // Declaracion de Aplicabilidad
