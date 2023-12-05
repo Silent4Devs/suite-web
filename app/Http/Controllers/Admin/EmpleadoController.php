@@ -154,6 +154,7 @@ class EmpleadoController extends Controller
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
             'email' => 'required|email',
+            'sede_id' => 'required',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
@@ -928,17 +929,27 @@ class EmpleadoController extends Controller
         if ($empleado && $empleado->area_id !== null) {
             $area = $areas->find($empleado->area_id);
         }
-        $sedes = DB::table('sedes')->get();
-        $sede = Sede::getbyId($empleado->sede_id);
-        $experiencias = DB::table('experiencia_empleados')->get();
-        $educacions = DB::table('educacion_empleados')->get();
-        $cursos = DB::table('cursos_diplomados_empleados')->get();
-        $documentos = DB::table('evidencias_documentos_empleados')->get();
-        $puestos = DB::table('puestos')->get();
-        $perfiles = DB::table('perfil_empleados')->get();
+        $sedes = Sede::getAll();
+        if (isset($empleado->sede_id)) {
+            $sede = Sede::getbyId($empleado->sede_id);
+            // dd($sede);
+        } else {
+            $sede = null;
+            // dd($sede);
+        }
+        $experiencias = ExperienciaEmpleados::getAll();
+        $educacions = EducacionEmpleados::get();
+        $cursos = CursosDiplomasEmpleados::get();
+        $documentos = EvidenciasDocumentosEmpleados::getAll();
+        $puestos = Puesto::getAll();
+        $perfiles = PerfilEmpleado::getAll();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
-        $perfiles_seleccionado = $empleado->perfil_empleado_id;
+        if (isset($empleado->perfil_empleado_id)) {
+            $perfiles_seleccionado = $empleado->perfil_empleado_id;
+        } else {
+            $perfiles_seleccionado = null;
+        }
         $puestos_seleccionado = $empleado->puesto_id;
         $idiomas = Language::get();
         $organizacion = Organizacion::getFirst();
@@ -1070,7 +1081,8 @@ class EmpleadoController extends Controller
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
-            // 'email' => 'required|email',
+            'email' => 'required|email',
+            'sede_id' => 'required',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);

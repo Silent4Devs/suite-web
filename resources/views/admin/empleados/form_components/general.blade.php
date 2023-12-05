@@ -12,8 +12,8 @@
     </div>
     <div class="form-group col-sm-6">
         <label class="required" for="name"><i class="fas fa-user-circle iconos-crear"></i>Nombre</label>
-        <input class="form-control" type="text" name="name"
-            id="name" value="{{ old('name', $empleado->name) }}" required>
+        <input class="form-control" type="text" name="name" id="name"
+            value="{{ old('name', $empleado->name) }}" required>
     </div>
     <div class="form-group col-sm-6">
         <label for="n_empleado"><i class="fas fa-id-card iconos-crear"></i>N°
@@ -167,9 +167,9 @@
         <small id="error_extension" class="text-danger errores"></small>
     </div>
     <div class="form-group col-sm-6 col-md-6 col-6">
-        <label for="sede_id"><i class="fas fa-building iconos-crear"></i>Sede</label>
+        <label for="sede_id" class="required"><i class="fas fa-building iconos-crear"></i>Sede</label>
         <select class="form-control select-search select2 {{ $errors->has('sede') ? 'is-invalid' : '' }}"
-            name="sede_id" id="sede_id">
+            name="sede_id" id="sede_id" required>
             <option selected value="" disabled>-- Selecciona Sede --</option>
             @foreach ($sedes as $sede)
                 <option data-direction="{{ $sede->direccion }}" value="{{ $sede->id }}"
