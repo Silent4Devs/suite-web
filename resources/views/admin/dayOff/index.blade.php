@@ -3,7 +3,43 @@
     <div class="mt-3">
         {{ Breadcrumbs::render('Reglas-DayOff') }}
     </div>
+
+    @include('admin.dayoff.estilos')
+
     <style>
+        table {
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 1px 4px #0000000F;
+            border: 1px solid #E5E5E5;
+            border-radius: 14px !important;
+            opacity: 1;
+        }
+
+        table.dataTable thead,
+        table.table thead {
+            border-radius: 14px !important;
+            background: #FFFFFF !important;
+            color: black !important;
+        }
+
+        div.row.align-items-center.justify-content-center {
+            display: none;
+            visibility: hidden;
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid #4d4949;
+            /* Add horizontal border for cells */
+            border-top: 1px solid #4d4949;
+            /* Remove top border for cells */
+        }
+
+        .btn-group {
+            max-width: 30px !important;
+            max-block-size: 30px !important;
+        }
+
         .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
@@ -37,8 +73,15 @@
             margin-right: 15px;
         }
     </style>
+    <div class="row">
+        <h5 class="col-12 titulo_general_funcion">Lineamientos para Days Off´s</h5>
+    </div>
 
-    <h5 class="col-12 titulo_general_funcion">Lineamientos para Days Off´s</h5>
+    <div class="row">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.dayOff.create') }}" type="button" class="btn-crear">Crear Lineamiento +</a>
+        </div>
+    </div>
 
     <div class="mt-5 card">
         <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">

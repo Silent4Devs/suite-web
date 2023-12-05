@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
+use App\Models\TimesheetTarea;
 use DB;
 use Livewire\Component;
 
@@ -56,9 +57,7 @@ class TimesheetHorasEdit extends Component
 
     public function render()
     {
-        $this->horas = DB::table('timesheet_horas')
-            ->where('timesheet_id', $this->timesheet_id)
-            ->get();
+        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
 
         $this->timesheet = Timesheet::find($this->timesheet_id);
 

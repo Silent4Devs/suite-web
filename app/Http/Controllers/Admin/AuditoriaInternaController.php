@@ -19,11 +19,11 @@ use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Mail;
-use Yajra\DataTables\Facades\DataTables;
 use Throwable;
+use Yajra\DataTables\Facades\DataTables;
 
 class AuditoriaInternaController extends Controller
 {
@@ -226,6 +226,7 @@ class AuditoriaInternaController extends Controller
             if ($idmiembro == auth()->user()->empleado->id) {
                 $clasificaciones = ClasificacionesAuditorias::all();
                 $clausulas = ClausulasAuditorias::all();
+
                 // dd($id, $clasificaciones);
                 return view('admin.auditoriaInternas.reporteIndividual')
                     ->with('clasificaciones', $clasificaciones)
@@ -252,22 +253,22 @@ class AuditoriaInternaController extends Controller
 
         $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
 
-        if (!Storage::exists('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte')) {
-            Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $reporte->id . '/' . $nombre_colaborador, 0755, true);
+        if (! Storage::exists('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte')) {
+            Storage::makeDirectory('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$reporte->id.'/'.$nombre_colaborador, 0755, true);
         }
 
-        $filename = '/audit' . $reporte->id_auditoria . 'firmaempleado' . $nombre_colaborador . '.png';
+        $filename = '/audit'.$reporte->id_auditoria.'firmaempleado'.$nombre_colaborador.'.png';
 
-        Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . "/reporte" . '/' . $reporte->id . '/' . $nombre_colaborador . $filename, $image);
+        Storage::put('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$reporte->id.'/'.$nombre_colaborador.$filename, $image);
 
-        $reporte = AuditoriaInternasReportes::where("id_auditoria", "=", $reporte->id_auditoria)
-            ->where("empleado_id", "=", auth()->user()->empleado->id)
-            ->where("lider_id", "=", $reporte->lider->id)->first();
+        $reporte = AuditoriaInternasReportes::where('id_auditoria', '=', $reporte->id_auditoria)
+            ->where('empleado_id', '=', auth()->user()->empleado->id)
+            ->where('lider_id', '=', $reporte->lider->id)->first();
         // dd($reporte);
         $reporte->update([
             // "comentarios",
-            "estado" => "enviado",
-            "firma_empleado" => $filename,
+            'estado' => 'enviado',
+            'firma_empleado' => $filename,
             // "firma_lider",
         ]);
 
@@ -276,6 +277,7 @@ class AuditoriaInternaController extends Controller
         try {
             $email = new NotificacionReporteAuditoria($nombre_colaborador, $url);
             Mail::to(removeUnicodeCharacters($reporte->lider->email))->send($email);
+
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
             return response()->json(['success' => false]);
@@ -289,8 +291,8 @@ class AuditoriaInternaController extends Controller
         $reporte = AuditoriaInternasReportes::find($reporteid);
 
         $reporte->update([
-            "comentarios" => $comentarios,
-            "estado" => "rechazado",
+            'comentarios' => $comentarios,
+            'estado' => 'rechazado',
         ]);
 
         $auditoria = $reporte->id_auditoria;
@@ -298,6 +300,7 @@ class AuditoriaInternaController extends Controller
         try {
             $email = new NotificacionRechazoReporteAuditoria($auditoria);
             Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
             return response()->json(['success' => false]);
@@ -314,26 +317,27 @@ class AuditoriaInternaController extends Controller
 
         $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
 
-        if (!Storage::exists('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte')) {
-            Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $nombre_lider, 0755, true);
+        if (! Storage::exists('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte')) {
+            Storage::makeDirectory('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$nombre_lider, 0755, true);
         }
 
-        $filename = '/audit' . $reporte->id_auditoria . 'firmalider' . $nombre_lider . '.png';
+        $filename = '/audit'.$reporte->id_auditoria.'firmalider'.$nombre_lider.'.png';
 
-        Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . "/reporte" . '/' . $reporte->id . '/' . $nombre_lider . $filename, $image);
+        Storage::put('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$reporte->id.'/'.$nombre_lider.$filename, $image);
 
-        $reporte = AuditoriaInternasReportes::where("id_auditoria", "=",  $reporte->id_auditoria)
-            ->where("lider_id", "=", $reporte->lider->id)->first();
+        $reporte = AuditoriaInternasReportes::where('id_auditoria', '=', $reporte->id_auditoria)
+            ->where('lider_id', '=', $reporte->lider->id)->first();
         // dd($reporte);
         $reporte->update([
-            "comentarios" => $request->comentarios,
-            "estado" => "aprobado",
-            "firma_lider" => $filename,
+            'comentarios' => $request->comentarios,
+            'estado' => 'aprobado',
+            'firma_lider' => $filename,
         ]);
 
         try {
             $email = new NotificacionAprobadoReporteAuditoria();
             Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
             return response()->json(['success' => false]);

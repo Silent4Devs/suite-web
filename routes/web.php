@@ -604,6 +604,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');
 
+        //Template Analisis de Brechas
+        Route::get('templates', 'TemplateController@index')->name('templates');
+        Route::post('templates/store', 'TemplateController@store')->name('templates.store');
 
         //Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
@@ -616,8 +619,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
         });
 
-        Route::get('templates', 'TemplateController@index')->name('templates');
-        Route::get('evaluacion-analisis-brechas-2022/{id}', 'FormularioAnalisisBrechasController@index')->name('formulario');
+        Route::group(['middleware' => ['version_iso_2022']], function () {
+            //Analisis brechas 2022
+            Route::get('/top', 'TopController@index')->name('top');
+            Route::get('/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
+            Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
+            Route::get('analisis-brechas-2022-inicio', 'AnalisisBrechaIsoController@inicioBrechas')->name('analisis-brechas-inicio');
+            Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
+            Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
+            Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+            Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
+            Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
 
         // Route::group(['middleware' => ['version_iso_2022']], function () {
         //Analisis brechas 2022
@@ -643,8 +655,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         //Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
         Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
         // });
-
-
 
         Route::group(['middleware' => ['version_iso_2013']], function () {
             // Declaracion de Aplicabilidad
@@ -846,7 +856,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('alcance-sgsis', 'AlcanceSgsiController');
         Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
 
-
         // Comiteseguridads
         Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
         Route::get('comiteseguridads/visualizacion', 'ComiteseguridadController@visualizacion')->name('comiteseguridads.visualizacion');
@@ -1035,22 +1044,22 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('auditoria-reportes/cards', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
 
         //Clasificacion Auditorias
-        Route::get("auditorias/clasificacion-auditorias", "ClasificacionesAuditoriasController@index")->name("auditoria-clasificacion");
-        Route::get("auditorias/clasificacion-auditorias/create", "ClasificacionesAuditoriasController@create")->name("auditoria-clasificacion.create");
-        Route::post("auditorias/clasificacion-auditorias/store", "ClasificacionesAuditoriasController@store")->name("auditoria-clasificacion.store");
-        Route::get("auditorias/clasificacion-auditorias/edit/{id}", "ClasificacionesAuditoriasController@edit")->name("auditoria-clasificacion.edit");
-        Route::post("auditorias/clasificacion-auditorias/update/{id}", "ClasificacionesAuditoriasController@update")->name("auditoria-clasificacion.update");
-        Route::get("auditorias/clasificacion-auditorias/delete/{id}", "ClasificacionesAuditoriasController@destroy")->name("auditoria-clasificacion.destroy");
-        Route::get("auditorias/clasificacion-auditorias/datatable", "ClasificacionesAuditoriasController@datatable")->name("auditoria-clasificacion.datatable");
+        Route::get('auditorias/clasificacion-auditorias', 'ClasificacionesAuditoriasController@index')->name('auditoria-clasificacion');
+        Route::get('auditorias/clasificacion-auditorias/create', 'ClasificacionesAuditoriasController@create')->name('auditoria-clasificacion.create');
+        Route::post('auditorias/clasificacion-auditorias/store', 'ClasificacionesAuditoriasController@store')->name('auditoria-clasificacion.store');
+        Route::get('auditorias/clasificacion-auditorias/edit/{id}', 'ClasificacionesAuditoriasController@edit')->name('auditoria-clasificacion.edit');
+        Route::post('auditorias/clasificacion-auditorias/update/{id}', 'ClasificacionesAuditoriasController@update')->name('auditoria-clasificacion.update');
+        Route::get('auditorias/clasificacion-auditorias/delete/{id}', 'ClasificacionesAuditoriasController@destroy')->name('auditoria-clasificacion.destroy');
+        Route::get('auditorias/clasificacion-auditorias/datatable', 'ClasificacionesAuditoriasController@datatable')->name('auditoria-clasificacion.datatable');
 
         //Clausulas Auditorias
-        Route::get("auditorias/clausulas-auditorias", "ClausulasAuditoriasController@index")->name("auditoria-clausula");
-        Route::get("auditorias/clausulas-auditorias/create", "ClausulasAuditoriasController@create")->name("auditoria-clausula.create");
-        Route::post("auditorias/clausulas-auditorias/store", "ClausulasAuditoriasController@store")->name("auditoria-clausula.store");
-        Route::get("auditorias/clausulas-auditorias/edit/{id}", "ClausulasAuditoriasController@edit")->name("auditoria-clausula.edit");
-        Route::post("auditorias/clausulas-auditorias/update/{id}", "ClausulasAuditoriasController@update")->name("auditoria-clausula.update");
-        Route::get("auditorias/clausulas-auditorias/delete/{id}", "ClausulasAuditoriasController@destroy")->name("auditoria-clausula.destroy");
-        Route::get("auditorias/clausulas-auditorias/datatable", "ClausulasAuditoriasController@datatable")->name("auditoria-clausula.datatable");
+        Route::get('auditorias/clausulas-auditorias', 'ClausulasAuditoriasController@index')->name('auditoria-clausula');
+        Route::get('auditorias/clausulas-auditorias/create', 'ClausulasAuditoriasController@create')->name('auditoria-clausula.create');
+        Route::post('auditorias/clausulas-auditorias/store', 'ClausulasAuditoriasController@store')->name('auditoria-clausula.store');
+        Route::get('auditorias/clausulas-auditorias/edit/{id}', 'ClausulasAuditoriasController@edit')->name('auditoria-clausula.edit');
+        Route::post('auditorias/clausulas-auditorias/update/{id}', 'ClausulasAuditoriasController@update')->name('auditoria-clausula.update');
+        Route::get('auditorias/clausulas-auditorias/delete/{id}', 'ClausulasAuditoriasController@destroy')->name('auditoria-clausula.destroy');
+        Route::get('auditorias/clausulas-auditorias/datatable', 'ClausulasAuditoriasController@datatable')->name('auditoria-clausula.datatable');
 
         // Revision Direccions
         Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
