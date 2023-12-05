@@ -22,24 +22,48 @@
 
     <div class="caja-cards mt-5">
         @foreach ($query as $foda)
-            <a href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}">
-                <div class="card card-foda">
-                    <div class="card-header">
-                        <strong> {{ Carbon\Carbon::parse($foda->fecha)->format('d/m/Y') }}</strong>
-                    </div>
-                    <div class="card-body">
-                        <h3>
-                            {{ $foda->analisis }}
-                        </h3>
-                        <p>
-                            <small>{{ $foda->elaboro_id ? $foda->empleado->name : 'No asignado' }}</small>
-                        </p>
-                        <p>
-                            <small>{{ $foda->estatus ?? 'No asignado' }}</small>
-                        </p>
+            {{-- <a href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}"> --}}
+            <div class="card card-foda">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-10">
+                            <strong> {{ Carbon\Carbon::parse($foda->fecha)->format('d/m/Y') }}</strong>
+                        </div>
+                        <div class="col-2">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                        href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}">
+                                        <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>
+                                    <a class="dropdown-item"
+                                        href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}/edit">
+                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                    <a class="dropdown-item delete-item" onclick="deleteItem({{ $foda->id }})">
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                                    {{-- <a class="dropdown-item disabled" href=#>
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (En uso)</a> --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </a>
+                <div class="card-body">
+                    <h3>
+                        {{ $foda->analisis }}
+                    </h3>
+                    <p>
+                        <small>{{ $foda->elaboro_id ? $foda->empleado->name : 'No asignado' }}</small>
+                    </p>
+                    <p>
+                        <small>{{ $foda->estatus ?? 'No asignado' }}</small>
+                    </p>
+                </div>
+            </div>
+            {{-- </a> --}}
         @endforeach
     </div>
 @endsection
@@ -82,5 +106,31 @@
             return parts[2] + '-' + parts[1].padStart(2, '0') + '-' + parts[0].padStart(2, '0');
         }
         return null; // Return null for invalid dates
+    }
+
+    function deleteItem(itemId) {
+        let deleteUrl = "{{ route('admin.entendimiento-organizacions.destroy', 'id') }}";
+        deleteUrl = deleteUrl.replace('id', itemId);
+
+        if (confirm('¿Seguro que deseas eliminar el Análisis FODA?')) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                type: 'POST',
+                url: deleteUrl,
+                data: {
+                    ids: [itemId],
+                    _method: 'DELETE'
+                },
+                success: function(data) {
+                    console.log('Item deleted successfully');
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error deleting item:', error);
+                }
+            });
+        }
     }
 </script>
