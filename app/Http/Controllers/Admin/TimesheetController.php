@@ -50,8 +50,6 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
-
         $times = Timesheet::getPersonalTimesheet();
 
         $todos_contador = $times->count();
@@ -293,9 +291,9 @@ class TimesheetController extends Controller
             }
 
             if ($timesheet_nuevo->estatus == 'pendiente') {
-                $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->supervisor_id);
+                $aprobador = Empleado::getDataColumns()->find($usuario->empleado->supervisor_id);
 
-                $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->id);
+                $solicitante = Empleado::getDataColumns()->find($usuario->empleado->id);
 
                 try {
                     // Enviar correo
@@ -334,7 +332,7 @@ class TimesheetController extends Controller
     public function show($id)
     {
         $timesheet = Timesheet::find($id);
-        $horas = TimesheetHoras::getAll()->where('timesheet_id', $id);
+        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
         $horas_count = $horas->count();
 
         $hoy = Carbon::now();
@@ -533,9 +531,9 @@ class TimesheetController extends Controller
         }
 
         if ($timesheet_edit->estatus == 'pendiente') {
-            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->supervisor_id);
+            $aprobador = Empleado::getDataColumns()->find($usuario->empleado->supervisor_id);
 
-            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->id);
+            $solicitante = Empleado::getDataColumns()->find($usuario->empleado->id);
 
             try {
                 // Enviar correo
@@ -659,11 +657,11 @@ class TimesheetController extends Controller
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
+        $sedes = TimesheetProyecto::getAll('sedes_' . $id)->where('timesheet_proyectos.id', $id)
             ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
             ->get('sedes.sede');
 
-        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
+        $clientes = TimesheetProyecto::getAll('clientes_' . $id)->where('timesheet_proyectos.id', $id)
             ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
             ->get('timesheet_clientes.nombre');
 
@@ -737,7 +735,7 @@ class TimesheetController extends Controller
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto = TimesheetProyecto::getAll('tareas_'.$proyecto_id)->find($proyecto_id);
+        $proyecto = TimesheetProyecto::getAll('tareas_' . $proyecto_id)->find($proyecto_id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -860,9 +858,9 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($aprobar->empleado_id);
+        $solicitante = Empleado::getDataColumns()->find($aprobar->empleado_id);
 
-        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($aprobar->aprobador_id);
+        $aprobador = Empleado::getDataColumns()->find($aprobar->aprobador_id);
 
         try {
             // Enviar correo
@@ -885,9 +883,9 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($rechazar->empleado_id);
+        $solicitante = Empleado::getDataColumns()->find($rechazar->empleado_id);
 
-        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($rechazar->aprobador_id);
+        $aprobador = Empleado::getDataColumns()->find($rechazar->aprobador_id);
 
         try {
             // Enviar correo
@@ -1071,7 +1069,7 @@ class TimesheetController extends Controller
 
     public function proyectosEmpleados($id)
     {
-        $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1082,7 +1080,7 @@ class TimesheetController extends Controller
 
     public function proyectosExternos($id)
     {
-        $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('externos_' . $id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1149,7 +1147,7 @@ class TimesheetController extends Controller
 
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
-                    $empleado_query = Empleado::select('id', 'name', 'email', 'foto')->get();
+                    $empleado_query = Empleado::getDataColumns();
 
                     $aprobador = $empleado_query->find(User::getCurrentUser()->empleado->supervisor_id);
 
