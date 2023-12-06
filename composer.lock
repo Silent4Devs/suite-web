@@ -2665,18 +2665,6 @@
         },
         {
             "name": "laravel/framework",
-<<<<<<< HEAD
-            "version": "v10.34.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/framework.git",
-                "reference": "c581caa233e380610b34cc491490bfa147a3b62b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c581caa233e380610b34cc491490bfa147a3b62b",
-                "reference": "c581caa233e380610b34cc491490bfa147a3b62b",
-=======
             "version": "v10.33.0",
             "source": {
                 "type": "git",
@@ -2687,7 +2675,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/4536872e3e5b6be51b1f655dafd12c9a4fa0cfe8",
                 "reference": "4536872e3e5b6be51b1f655dafd12c9a4fa0cfe8",
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
                 "shasum": ""
             },
             "require": {
@@ -2876,98 +2863,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-<<<<<<< HEAD
-            "time": "2023-11-28T19:06:27+00:00"
-        },
-        {
-            "name": "laravel/octane",
-            "version": "v2.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/octane.git",
-                "reference": "5237a36a51b105851f362a9013eb9f50aa008621"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/5237a36a51b105851f362a9013eb9f50aa008621",
-                "reference": "5237a36a51b105851f362a9013eb9f50aa008621",
-                "shasum": ""
-            },
-            "require": {
-                "laminas/laminas-diactoros": "^3.0",
-                "laravel/framework": "^10.10.1",
-                "laravel/serializable-closure": "^1.3.0",
-                "nesbot/carbon": "^2.66.0",
-                "php": "^8.1.0",
-                "symfony/psr-http-message-bridge": "^2.2.0"
-            },
-            "conflict": {
-                "spiral/roadrunner": "<2023.1.0",
-                "spiral/roadrunner-cli": "<2.5.0",
-                "spiral/roadrunner-http": "<3.0.1"
-            },
-            "require-dev": {
-                "guzzlehttp/guzzle": "^7.6.1",
-                "inertiajs/inertia-laravel": "^0.6.9",
-                "laravel/scout": "^10.2.1",
-                "laravel/socialite": "^5.6.1",
-                "livewire/livewire": "^2.12.3",
-                "mockery/mockery": "^1.5.1",
-                "nunomaduro/collision": "^6.4.0|^7.5.2",
-                "orchestra/testbench": "^8.5.2",
-                "phpstan/phpstan": "^1.10.15",
-                "phpunit/phpunit": "^10.1.3",
-                "spiral/roadrunner-cli": "^2.5.0",
-                "spiral/roadrunner-http": "^3.0.1"
-            },
-            "bin": [
-                "bin/roadrunner-worker",
-                "bin/swoole-server"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Laravel\\Octane\\OctaneServiceProvider"
-                    ],
-                    "aliases": {
-                        "Octane": "Laravel\\Octane\\Facades\\Octane"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laravel\\Octane\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "Supercharge your Laravel application's performance.",
-            "keywords": [
-                "laravel",
-                "octane",
-                "roadrunner",
-                "swoole"
-            ],
-            "support": {
-                "issues": "https://github.com/laravel/octane/issues",
-                "source": "https://github.com/laravel/octane"
-            },
-            "time": "2023-11-27T14:31:24+00:00"
-=======
             "time": "2023-11-21T14:49:31+00:00"
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
         },
         {
             "name": "laravel/passport",
@@ -3345,18 +3241,6 @@
         },
         {
             "name": "lcobucci/clock",
-<<<<<<< HEAD
-            "version": "2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lcobucci/clock.git",
-                "reference": "c7aadcd6fd97ed9e199114269c0be3f335e38876"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/clock/zipball/c7aadcd6fd97ed9e199114269c0be3f335e38876",
-                "reference": "c7aadcd6fd97ed9e199114269c0be3f335e38876",
-=======
             "version": "3.0.0",
             "source": {
                 "type": "git",
@@ -3367,16 +3251,11 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/lcobucci/clock/zipball/039ef98c6b57b101d10bd11d8fdfda12cbd996dc",
                 "reference": "039ef98c6b57b101d10bd11d8fdfda12cbd996dc",
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
                 "shasum": ""
             },
             "require": {
                 "php": "~8.1.0 || ~8.2.0",
-<<<<<<< HEAD
-                "stella-maris/clock": "^0.1.7"
-=======
                 "psr/clock": "^1.0"
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
             },
             "provide": {
                 "psr/clock-implementation": "1.0"
@@ -3410,11 +3289,7 @@
             "description": "Yet another clock abstraction",
             "support": {
                 "issues": "https://github.com/lcobucci/clock/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/lcobucci/clock/tree/2.3.0"
-=======
                 "source": "https://github.com/lcobucci/clock/tree/3.0.0"
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
             },
             "funding": [
                 {
@@ -3426,26 +3301,6 @@
                     "type": "patreon"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-12-19T14:38:11+00:00"
-        },
-        {
-            "name": "lcobucci/jwt",
-            "version": "4.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "55564265fddf810504110bd68ca311932324b0e9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/55564265fddf810504110bd68ca311932324b0e9",
-                "reference": "55564265fddf810504110bd68ca311932324b0e9",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-=======
             "time": "2022-12-19T15:00:24+00:00"
         },
         {
@@ -3463,7 +3318,6 @@
                 "shasum": ""
             },
             "require": {
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
                 "ext-openssl": "*",
                 "lcobucci/clock": "^2.0",
                 "php": "^7.4 || ^8.0"
@@ -3510,11 +3364,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/lcobucci/jwt/tree/4.0.4"
-=======
                 "source": "https://github.com/lcobucci/jwt/tree/5.2.0"
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
             },
             "funding": [
                 {
@@ -3526,11 +3376,7 @@
                     "type": "patreon"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2021-09-28T19:18:28+00:00"
-=======
             "time": "2023-11-20T21:17:42+00:00"
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
         },
         {
             "name": "league/commonmark",
@@ -13488,18 +13334,6 @@
         },
         {
             "name": "phpstan/phpstan",
-<<<<<<< HEAD
-            "version": "1.10.46",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "90d3d25c5b98b8068916bbf08ce42d5cb6c54e70"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/90d3d25c5b98b8068916bbf08ce42d5cb6c54e70",
-                "reference": "90d3d25c5b98b8068916bbf08ce42d5cb6c54e70",
-=======
             "version": "1.10.45",
             "source": {
                 "type": "git",
@@ -13510,7 +13344,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2f024fbb47432e2e62ad8a8032387aa2dd631c73",
                 "reference": "2f024fbb47432e2e62ad8a8032387aa2dd631c73",
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
                 "shasum": ""
             },
             "require": {
@@ -13559,11 +13392,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2023-11-28T14:57:26+00:00"
-=======
             "time": "2023-11-27T14:15:06+00:00"
->>>>>>> f79adc8c0069c36ef9ca6caf6dc33c880c1295a9
         },
         {
             "name": "phpunit/php-code-coverage",
