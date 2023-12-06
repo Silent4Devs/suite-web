@@ -1,17 +1,16 @@
 @extends('layouts.admin')
-<link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+@endsection
 @section('content')
-    <div class="mt-3">
-        {{ Breadcrumbs::render('Vista-Global-Dayoff') }}
-    </div>
+    {{ Breadcrumbs::render('Vista-Global-Dayoff') }}
 
-    @include('admin.dayOff.estilos')
 
-    <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Day OFF</h5>
+    <h5 class=" titulo_general_funcion">Vista Global de Solicitudes de Day OFF</h5>
 
-    <div class="row mb-4">
+    <div class="row">
         @can('reglas_dayoff_vista_global')
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <div class="col-12 text-right">
                 <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
                     href="{{ route('admin.descarga-dayOff') }}">
                     <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>

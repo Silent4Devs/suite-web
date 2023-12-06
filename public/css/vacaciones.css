@@ -1,5 +1,5 @@
 .card-btns-vacaciones {
-    background-color: #F0F2FF91;
+    background-color: #dce4ff;
     height: 300px;
     width: 100%;
     border-radius: 14px;
@@ -13,7 +13,7 @@
 .card-btns-vacaciones a {
     width: 225px;
     height: 95px;
-    background-color: #fff;
+    background-color: #ffffff00;
     text-decoration: none !important;
     display: flex;
     justify-content: center;
@@ -23,6 +23,15 @@
     color: #2E2E2E;
     border-radius: 15px;
     border: 2px solid purple;
+    position: relative;
+    overflow: hidden;
+}
+.card-btns-vacaciones a::before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: linear-gradient(32deg, rgba(15,222,220,1) 0%, rgba(223,23,218,1) 20%, rgba(141,31,219,1) 41%, rgba(33,154,217,1) 62%, rgba(194,39,214,1) 83%, rgba(16,202,228,1) 100%);
 }
 
 .card-btns-vacaciones a i {
@@ -53,52 +62,36 @@
     background-color: #5397D5;
     border-radius: 8px;
     color: #fff;
-    padding: 20px;
-}
-
-.form-group label {
-    position: absolute;
-    font-size: 20px;
-    pointer-events: none;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    margin: auto;
-    background-color: #000;
-    width: 140px;
-    height: 20px;
+    gap: 40px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-    transition-timing-function: ease-out;
-    border-radius: 100px;
 }
-
-.form-group label i {
-    margin-right: 10px;
+.instrucciones span{
+    font-size: 20px;
 }
-
-.form-group input {
-    width: 300px;
-    background-color: rgba(0, 0, 0, 0);
-    border: 1px solid #ffffff88;
-    outline: none;
+.instrucciones p{
+    margin-top: 15px;
+    font-size: 12px;
+}
+.btn-danger,
+.btn-primary,
+.btn-submit{
+    border-radius: 4px !important;
+    min-width: 140px !important;
+    height: 40px !important;
+}
+.btn-submit{
+    background-color: #306BA9;
     color: #fff;
-    font-size: 25px;
-    padding: 20px 30px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    transition: 0.25s;
 }
 
-.form-group input:focus,
-.form-group input:not(:placeholder-shown) {
-    border: 1px solid #fff;
+.btn-outline-primary{
+    border-radius: 4px !important;
+    min-width: 140px !important;
+    height: 40px !important;
 }
 
-.form-group input:focus+label,
-.form-group input:not(:placeholder-shown)+label {
-    transform: translateY(-35px);
+.sub-title-vac{
+    color:#306BA9;
+    font-size:18px;
 }
