@@ -1059,6 +1059,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 }
 .anima-focus .form-control{
     background-color: #00000000;
+    height: 45px !important;
     z-index: 2;
 }
 .anima-focus .form-control:focus{
