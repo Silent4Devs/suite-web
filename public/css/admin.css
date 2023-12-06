@@ -1046,42 +1046,6 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 
 /* ----------------------- */
 
-/* input google */
-.anima-focus{
-    display: grid !important;
-    grid-template-areas: "input";
-    position: relative !important;
-    margin-top: 12px;
-}
-.anima-focus label,
-.anima-focus .form-control{
-    grid-area: input;
-}
-.anima-focus .form-control{
-    background-color: #00000000;
-    height: 45px !important;
-    z-index: 2;
-}
-.anima-focus .form-control:focus{
-    background-color: #00000000;
-}
-.anima-focus label{
-    z-index: 1;
-    margin-top: 7px;
-    margin-left: 7px;
-    margin-bottom: 0px;
-    background-color: #fff;
-    width: max-content;
-    height: max-content;
-    transition: 0.3s;
-    padding: 0px 12px;
-}
-.anima-focus .form-control:focus+label,
-.anima-focus .form-control:not(:placeholder-shown)+label {
-    transform: translateY(-20px) !important;
-    z-index: 2;
-}
-
 #loading {
     position: fixed;
     display: flex;
