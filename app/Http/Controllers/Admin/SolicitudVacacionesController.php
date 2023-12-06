@@ -8,6 +8,8 @@ use App\Mail\SolicitudVacaciones as MailSolicitudVacaciones;
 use App\Models\Empleado;
 use App\Models\IncidentesVacaciones;
 use App\Models\Organizacion;
+use App\Models\Puesto;
+use App\Models\Area;
 use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\SolicitudVacaciones;
@@ -135,7 +137,7 @@ class SolicitudVacacionesController extends Controller
 
                 return redirect(route('admin.solicitud-vacaciones.index'));
             }
-        // Inician vacaciones a los 6 meses
+            // Inician vacaciones a los 6 meses
         } else {
             $tipo_conteo = null;
             $fecha_limite = Vacaciones::where('inicio_conteo', '=', $año)->pluck('fin_conteo')->first();
@@ -187,7 +189,7 @@ class SolicitudVacacionesController extends Controller
             } else {
                 $mostrar_reclamo = false;
             }
-        //    dd($mostrar_reclamo);
+            //    dd($mostrar_reclamo);
         } else {
             $mostrar_reclamo = false;
             $periodo_vencido = 0;
@@ -330,11 +332,52 @@ class SolicitudVacacionesController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
+    public function filtrado_empleados($efecto, $usuario, $año)
+    {
+        //Sacamos los ids del empleado
+        $areaId = $usuario->empleado->area_id;
+        $puestoId = $usuario->empleado->puesto_id;
+        $idempleado = $usuario->empleado->id;
+
+        //Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
+        $queryArea = IncidentesVacaciones::where('efecto', $efecto)->where('aniversario', $año)
+            ->whereHas('areas', function ($query) use ($areaId) {
+                $query->where('area_id', $areaId);
+            });
+
+        $queryPuesto = IncidentesVacaciones::where('efecto', $efecto)->where('aniversario', $año)
+            ->whereHas('puestos', function ($query) use ($puestoId) {
+                $query->where('puesto_id', $puestoId);
+            });
+
+        $queryEmpleado = IncidentesVacaciones::where('efecto', $efecto)->where('aniversario', $año)
+            ->whereHas('empleados', function ($q) use ($idempleado) {
+                $q->where('empleado_id', $idempleado);
+            });
+
+        //Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
+        // y 3ro empleado, de no existir ninguna se manda 0
+        if (($queryArea->get())->isNotEmpty()) {
+            $dias = $queryArea->pluck('dias_aplicados')->sum();
+            return $dias;
+        } elseif (($queryPuesto->get())->isNotEmpty()) {
+            $dias = $queryPuesto->pluck('dias_aplicados')->sum();
+            return $dias;
+        } elseif (($queryEmpleado->get())->isNotEmpty()) {
+            $dias = $queryEmpleado->pluck('dias_aplicados')->sum();
+            return $dias;
+        } else {
+            $dias = 0;
+            return $dias;
+        }
+    }
+
     public function diasDisponibles()
     {
         $usuario = User::getCurrentUser();
         $ingreso = $usuario->empleado->antiguedad;
         $año = Carbon::createFromDate($ingreso)->age;
+
 
         if ($año == 0) {
             $medio_año = true;
@@ -345,12 +388,17 @@ class SolicitudVacacionesController extends Controller
 
         if ($año >= 1) {
             $dias_otorgados = Vacaciones::where('inicio_conteo', '=', $año)->pluck('dias')->first();
-            $dias_extra = IncidentesVacaciones::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
-                $q->where('empleado_id', $usuario->empleado->id);
-            })->pluck('dias_aplicados')->sum();
-            $dias_restados = IncidentesVacaciones::where('efecto', 2)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
-                $q->where('empleado_id', $usuario->empleado->id);
-            })->pluck('dias_aplicados')->sum();
+
+            //Se llama a la nueva función, con los parametros de efecto(1-suma y/o 2-resta), el usuario y el año)
+            $dias_extra = $this->filtrado_empleados(1, $usuario, $año);
+            $dias_restados = $this->filtrado_empleados(2, $usuario, $año);
+            //funcion anterior
+            // $dias_extra = IncidentesVacaciones::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
+            //     $q->where('empleado_id', $usuario->empleado->id);
+            // })->pluck('dias_aplicados')->sum();
+            // $dias_restados = IncidentesVacaciones::where('efecto', 2)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
+            //     $q->where('empleado_id', $usuario->empleado->id);
+            // })->pluck('dias_aplicados')->sum();
 
             $dias_gastados = SolicitudVacaciones::where('empleado_id', $usuario->empleado->id)->where('año', '=', $año)->where(function ($query) {
                 $query->where('aprobacion', '=', 1)
@@ -378,12 +426,8 @@ class SolicitudVacacionesController extends Controller
 
         if ($año >= 1) {
             $dias_otorgados = Vacaciones::where('inicio_conteo', '=', $año)->pluck('dias')->first();
-            $dias_extra = IncidentesVacaciones::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
-                $q->where('empleado_id', $usuario->empleado->id);
-            })->pluck('dias_aplicados')->sum();
-            $dias_restados = IncidentesVacaciones::where('efecto', 2)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
-                $q->where('empleado_id', $usuario->empleado->id);
-            })->pluck('dias_aplicados')->sum();
+            $dias_extra = $this->filtrado_empleados(1, $usuario, $año);
+            $dias_restados = $this->filtrado_empleados(2, $usuario, $año);
 
             $dias_gastados = SolicitudVacaciones::where('empleado_id', $usuario->empleado->id)->where('año', '=', $año)->where(function ($query) {
                 $query->where('aprobacion', '=', 1)
