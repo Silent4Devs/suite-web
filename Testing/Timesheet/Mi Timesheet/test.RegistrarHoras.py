@@ -8,7 +8,8 @@ import time
 # Configuración de tiempos
 tiempo_modulos = 4
 tiempo_carga = 10
-tiempo_espera = 2.5
+tiempo_carga_timesheet = 35
+tiempo_espera = 2.7
 
 # Inicialización de identificadores
 identificador = 1
@@ -120,7 +121,22 @@ except TimeoutException as e:
     print(f"No se pudo seleccionar el proyecto. Detalles: {e}")
 
 #REGISTRAR
-#registrar_btn = driver.find_element(By.XPATH, "//label[@for='estatus_pendiente'][contains(.,'Registrar')]")
+time.sleep(tiempo_espera)
+registrar_btn = driver.find_element(By.XPATH, "//label[@for='estatus_pendiente'][contains(.,'Registrar')]")
+time.sleep(tiempo_espera)
+registrar_btn.click()
+time.sleep(tiempo_espera)
+aprobacion_btn = driver.find_element(By.XPATH, "//button[@data-dismiss='modal'][contains(@id,'time')][contains(.,'Enviar a Aprobación')]")
+time.sleep(tiempo_espera)
+aprobacion_btn.click()
+time.sleep(tiempo_carga_timesheet)
+
+ok_btn = driver.find_element(By.XPATH, "//button[@type='button'][contains(.,'OK')]")
+time.sleep(tiempo_espera)
+ok_btn.click()
+time.sleep(tiempo_espera)
+
+time.sleep(tiempo_espera)
 
 # Cerrar el navegador al finalizar
 driver.quit()
