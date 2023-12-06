@@ -32,7 +32,7 @@
                             {{ $foda->analisis }}
                         </h3>
                         <p>
-                            <small>{{ $foda->elaboro_id ? $foda->empleado->name : 'No asignado' }}</small>
+                            <small>{{ $foda->id_elabora ? $foda->empleadoindiscriminado->name : 'No asignado' }}</small>
                         </p>
                     </div>
                 </div>
