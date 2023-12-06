@@ -1,19 +1,16 @@
 @extends('layouts.admin')
-<link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+@endsection
 @section('content')
-    <div class="mt-3">
-        {{ Breadcrumbs::render('Reglas-DayOff') }}
-    </div>
+    {{ Breadcrumbs::render('Reglas-DayOff') }}
 
-    @include('admin.dayoff.estilos')
 
-    <div class="row">
-        <h5 class="col-12 titulo_general_funcion">Lineamientos para Days Off´s</h5>
-    </div>
+    <h5 class="titulo_general_funcion">Lineamientos para Days Off´s</h5>
 
     <div class="row">
         @can('reglas_dayoff_crear')
-            <div class="d-flex justify-content-end mb-4">
+            <div class="col-12 text-right">
                 <a href="{{ route('admin.dayOff.create') }}" type="button" class="btn btn-crear">Crear Lineamiento +</a>
             </div>
         @endcan
