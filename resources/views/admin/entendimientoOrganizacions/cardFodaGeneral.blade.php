@@ -17,7 +17,7 @@
                 <input id="input-search-fechas" type="date" class="form-control" onchange="buscadorGlobal()">
             </div>
 
-            <div class="col-md-4">
+            {{-- <div class="col-md-4">
                 <label for="">Buscar por Estatus</label>
                 <select id="input-search-estatus" class="form-control" onchange="buscadorGlobal()">
                     <option value="">Seleccionar</option>
@@ -25,7 +25,7 @@
                     <option value="aprobado">Aprobado</option>
                     <option value="rechazado">Rechazado</option>
                 </select>
-            </div>
+            </div> --}}
 
         </div>
     </div>
@@ -80,7 +80,7 @@
                     {{-- Aqui ira un switch cuando se incluyan los estatus en los foda,
                         facilitara la busqueda con los filtros, ya que la forma de arriba
                         de reemplazar valor cuando no encuentra no esta funcionando --}}
-                    <span class="status">Pendiente</span>
+                    {{-- <span class="status">Pendiente</span> --}}
                 </div>
             </div>
             {{-- </a> --}}
@@ -92,11 +92,11 @@
         var inputText, inputDate, inputEstatus, section, div, strong, p, select, i;
         inputText = document.getElementById("input-search");
         inputDate = document.getElementById("input-search-fechas");
-        inputEstatus = document.getElementById("input-search-estatus");
+        // inputEstatus = document.getElementById("input-search-estatus");
 
         var filterText = inputText.value.toUpperCase();
         var filterDate = inputDate.value;
-        var filterEstatus = inputEstatus.value.toLowerCase(); // Lowercase for easier comparison
+        // var filterEstatus = inputEstatus.value.toLowerCase(); // Lowercase for easier comparison
 
         section = document.getElementsByClassName("caja-cards")[0];
         div = section.getElementsByClassName("card-foda");
@@ -104,21 +104,24 @@
         for (i = 0; i < div.length; i++) {
             strong = div[i].getElementsByTagName("strong")[0];
             p = div[i].getElementsByTagName("p")[0]; // Get the first <p> element within each card
-            select = div[i].getElementsByClassName("status")[0]; // Get the status span within each card
+            // select = div[i].getElementsByClassName("status")[0]; // Get the status span within each card
 
-            if (strong && p && select) {
+            if (strong && p
+                //  && select
+            ) {
                 var cardDateText = strong.innerHTML.trim(); // Date from the card
                 var cardText = div[i].getElementsByTagName("h3")[0].innerText.toUpperCase(); // Text from the card
                 var paragraphText = p.innerText.toUpperCase(); // Text from the <p> element
-                var estatusText = select.innerText.toLowerCase(); // Status text from the span
+                // var estatusText = select.innerText.toLowerCase(); // Status text from the span
 
                 // Format card date to match input date format (yyyy-mm-dd)
                 var cardDateFormatted = formatDate(cardDateText);
 
                 if (
                     (filterText === '' || cardText.includes(filterText) || paragraphText.includes(filterText)) &&
-                    (filterDate === '' || filterDate === cardDateFormatted) &&
-                    (filterEstatus === '' || estatusText === filterEstatus)
+                    (filterDate === '' || filterDate === cardDateFormatted)
+                    //  &&
+                    // (filterEstatus === '' || estatusText === filterEstatus)
                 ) {
                     div[i].style.display = "";
                 } else {
