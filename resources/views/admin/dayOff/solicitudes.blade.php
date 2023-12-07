@@ -35,7 +35,7 @@
 
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
-        <table class="datatable datatable-vista-global-dayoff tblCSV" id="datatable-vista-global-dayoff">
+        <table class="datatable datatable-vista-global-dayoff tblCSV" id="vista-global-dayoff">
             <thead>
                 <tr>
                     <th style="min-width: 200px;">
@@ -209,7 +209,7 @@
 
 
             let dtOverrideGlobals = {
-                pageLength: 10,
+                pageLength: 5,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -339,16 +339,16 @@
                 ],
             };
             let table = $('.datatable-vista-global-dayoff').DataTable(dtOverrideGlobals);
-            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
-                let titulo_tabla = `
-                <h5>
-                    <strong>
-                       Vista Global Day Off
-                    </strong>
-                </h5>
-            `;
-                imprimirTabla('datatable-vista-global-dayoff', titulo_tabla);
-            });
+            // $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
+            //     let titulo_tabla = `
+        //     <h5>
+        //         <strong>
+        //            Vista Global Day Off
+        //         </strong>
+        //     </h5>
+        // `;
+            //     imprimirTabla('datatable-vista-global-dayoff', titulo_tabla);
+            // });
 
         });
     </script>
