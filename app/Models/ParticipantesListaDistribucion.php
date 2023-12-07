@@ -20,6 +20,11 @@ class ParticipantesListaDistribucion extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->select('id', 'name', 'avatar');
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->select('id', 'name', 'foto');
+    }
+
+    public function estatus()
+    {
+        return $this->hasOne(ControlListaDistribucion::class);
     }
 }

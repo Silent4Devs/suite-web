@@ -44,8 +44,8 @@ class ListaDistribucionController extends Controller
             $table->editColumn('submodulo', function ($row) {
                 return $row->submodulo ? $row->submodulo : '';
             });
-            $table->editColumn('niveles', function ($row) {
-                return $row->niveles ? $row->niveles : '';
+            $table->editColumn('participantes', function ($row) {
+                return $row->participantes ? $row->participantes : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -53,7 +53,8 @@ class ListaDistribucionController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.listadistribucion.index');
+        $data['participantes'] = ListaDistribucion::with('participantes.empleado')->get();
+        return view('admin.listadistribucion.index', $data);
     }
 
     /**

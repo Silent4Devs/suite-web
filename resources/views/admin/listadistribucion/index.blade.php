@@ -1,23 +1,15 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}">
+    @include('admin.listadistribucion.estilos')
 @endsection
 @section('content')
-    <div class="mt-3">
+    {{-- <div class="mt-3">
         {{ Breadcrumbs::render('Incidentes-Vacaciones') }}
-    </div>
+    </div> --}}
 
     <div class="row">
-        <h5 class="col-12 titulo_general_funcion">Excepciones Vacaciones</h5>
-    </div>
-
-    <div class="text-right">
-        @can('incidentes_vacaciones_crear')
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.incidentes-vacaciones.create') }}" type="button" class="btn btn-crear">Crear Excepción
-                    +</a>
-            </div>
-        @endcan
+        <h5 class="col-12 titulo_general_funcion">Lista de Distribución</h5>
     </div>
 
     {{-- <div class="card">
@@ -52,7 +44,7 @@
 
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
-        <h3 class="title-table-rds">Excepciones Vacaciones</h3>
+        <h3 class="title-table-rds">Lista de Distribución</h3>
         @include('admin.listadistribucion.table')
     </div>
 
@@ -132,17 +124,51 @@
                         }
                     },
                     {
-                        data: 'niveles',
-                        name: 'niveles',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
+                        data: 'participantes',
+                        render: function(data) {
+                            let parsedData;
+                            try {
+                                parsedData = JSON.parse(data);
+                            } catch (error) {
+                                console.error('Error parsing JSON data:', error);
+                                return '';
+                            }
+
+                            if (Array.isArray(parsedData)) {
+                                let html = '<div class="row">'; // Opening div for the data
+                                let displayedEmpleados =
+                                    0; // Counter for displayed empleados
+                                parsedData.forEach(function(participante) {
+                                    if (participante.empleado && displayedEmpleados < 3) {
+                                        html +=
+                                            `<div class="col-4">
+                                            <img src="{{ asset('storage/empleados/imagenes') }}/${participante.empleado.avatar}" class="img_empleado" title="${participante.empleado.name}">
+                                            </div>`;
+                                        displayedEmpleados++;
+                                    }
+                                    // Add more empleado fields as needed
+                                });
+                                // html +=
+                                //     `<button type = "button" class = "btn btn-primary" data - bs - toggle = "modal" data - bs - target = "#exampleModal" > Launch demo modal </button > </div >`;
+
+                                // html += ``
+                                return html;
+                            }
+                            return ''; // Return empty string if 'participantes' data is not an array
                         }
                     },
 
+                    // {
+                    //     data: 'actions',
+                    //     name: '{{ trans('global.actions') }}'
+                    // }
                     {
                         data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
+                        render: function(data, type, row, meta) {
+                            return '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal' +
+                                meta.row + '">Open Modal</button>';
+                        }
+                    },
                 ],
                 orderCellsTop: true,
                 order: [
