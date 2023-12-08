@@ -3,13 +3,9 @@
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
 @endsection
 @section('content')
-    <div class="mt-3">
-        {{ Breadcrumbs::render('Incidentes-Vacaciones') }}
-    </div>
+    {{ Breadcrumbs::render('Incidentes-Vacaciones') }}
 
-    <div class="row">
-        <h5 class="col-12 titulo_general_funcion">Excepciones Vacaciones</h5>
-    </div>
+    <h5 class="col-12 titulo_general_funcion">Excepciones Vacaciones</h5>
 
     <div class="text-right">
         @can('incidentes_vacaciones_crear')
