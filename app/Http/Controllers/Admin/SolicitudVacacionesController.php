@@ -5,11 +5,11 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaVacaciones as MailRespuestaVacaciones;
 use App\Mail\SolicitudVacaciones as MailSolicitudVacaciones;
+use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\IncidentesVacaciones;
 use App\Models\Organizacion;
 use App\Models\Puesto;
-use App\Models\Area;
 use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\SolicitudVacaciones;
@@ -137,7 +137,7 @@ class SolicitudVacacionesController extends Controller
 
                 return redirect(route('admin.solicitud-vacaciones.index'));
             }
-            // Inician vacaciones a los 6 meses
+        // Inician vacaciones a los 6 meses
         } else {
             $tipo_conteo = null;
             $fecha_limite = Vacaciones::where('inicio_conteo', '=', $año)->pluck('fin_conteo')->first();
@@ -189,7 +189,7 @@ class SolicitudVacacionesController extends Controller
             } else {
                 $mostrar_reclamo = false;
             }
-            //    dd($mostrar_reclamo);
+        //    dd($mostrar_reclamo);
         } else {
             $mostrar_reclamo = false;
             $periodo_vencido = 0;
@@ -359,15 +359,19 @@ class SolicitudVacacionesController extends Controller
         // y 3ro empleado, de no existir ninguna se manda 0
         if (($queryArea->get())->isNotEmpty()) {
             $dias = $queryArea->pluck('dias_aplicados')->sum();
+
             return $dias;
         } elseif (($queryPuesto->get())->isNotEmpty()) {
             $dias = $queryPuesto->pluck('dias_aplicados')->sum();
+
             return $dias;
         } elseif (($queryEmpleado->get())->isNotEmpty()) {
             $dias = $queryEmpleado->pluck('dias_aplicados')->sum();
+
             return $dias;
         } else {
             $dias = 0;
+
             return $dias;
         }
     }
@@ -377,7 +381,6 @@ class SolicitudVacacionesController extends Controller
         $usuario = User::getCurrentUser();
         $ingreso = $usuario->empleado->antiguedad;
         $año = Carbon::createFromDate($ingreso)->age;
-
 
         if ($año == 0) {
             $medio_año = true;
