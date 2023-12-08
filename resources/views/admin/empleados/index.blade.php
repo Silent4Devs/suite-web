@@ -61,7 +61,11 @@
                                 <td>Sin Registro</td>
                             @endif
                             <td>{{ $empleado->name }}</td>
+                            @if ($empleado->email)
                             <td>{{ $empleado->email }}</td>
+                            @else
+                                <td>Sin Registro</td>
+                            @endif
                             @if ($empleado->telefono)
                                 <td>{{ $empleado->telefono }}</td>
                             @else

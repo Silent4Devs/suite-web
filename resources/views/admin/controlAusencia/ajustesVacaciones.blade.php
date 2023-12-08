@@ -10,27 +10,19 @@
     <div class="card card-body card-btns-vacaciones">
         @can('reglas_vacaciones_acceder')
             <a href="vacaciones">
-                <div>
-                    <i class="fa-solid fa-book"></i>
-                    <br>
-                    Lineamientos
-                </div>
+                <i class="fa-solid fa-book"></i>
+                Lineamientos
             </a>
         @endcan
         @can('incidentes_vacaciones_acceder')
             <a href="incidentes-vacaciones">
-                <div>
-                    <i class="fa-solid fa-scale-unbalanced"></i><br>
-                    Excepciones
-                </div>
-            </a>
+                <i class="fa-solid fa-scale-unbalanced"></i>
+                Excepciones </a>
         @endcan
         @can('reglas_vacaciones_vista_global')
             <a href="vista-global-vacaciones">
-                <div>
-                    <i class="fa-solid fa-globe"></i><br>
-                    Vista Global
-                </div>
+                <i class="fa-solid fa-globe"></i>
+                Vista Global
             </a>
         @endcan
     </div>

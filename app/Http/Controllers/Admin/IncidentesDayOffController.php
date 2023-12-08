@@ -104,9 +104,9 @@ class IncidentesDayOffController extends Controller
     {
         abort_if(Gate::denies('incidentes_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
-            'dias_aplicados' => 'required|int',
-            'aniversario' => 'required|int',
+            'nombre' => 'required|string|max:255',
+            'dias_aplicados' => 'required|int|gte:1|max:365',
+            'aniversario' => 'required|int|gte:1',
             'efecto' => 'required|int',
         ]);
 
@@ -126,19 +126,19 @@ class IncidentesDayOffController extends Controller
             return redirect()->back()->withErrors($errors)->withInput();
         }
 
-        if (!empty($empleados)) {
+        if (! empty($empleados)) {
             $empleados = array_map(function ($value) {
                 return intval($value);
             }, $request->empleados);
         }
 
-        if (!empty($puestos)) {
+        if (! empty($puestos)) {
             $puestos = array_map(function ($value) {
                 return intval($value);
             }, $request->puestos);
         }
 
-        if (!empty($areas)) {
+        if (! empty($areas)) {
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
@@ -195,9 +195,9 @@ class IncidentesDayOffController extends Controller
     {
         abort_if(Gate::denies('incidentes_dayoff_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
-            'dias_aplicados' => 'required|int',
-            'aniversario' => 'required|int',
+            'nombre' => 'required|string|max:255',
+            'dias_aplicados' => 'required|int|gte:1|max:365',
+            'aniversario' => 'required|int|gte:1',
             'efecto' => 'required|int',
         ]);
 
@@ -220,19 +220,19 @@ class IncidentesDayOffController extends Controller
         $vacacion = IncidentesDayoff::find($id);
 
         $vacacion->update($request->all());
-        if (!empty($empleados)) {
+        if (! empty($empleados)) {
             $empleados = array_map(function ($value) {
                 return intval($value);
             }, $request->empleados);
         }
 
-        if (!empty($puestos)) {
+        if (! empty($puestos)) {
             $puestos = array_map(function ($value) {
                 return intval($value);
             }, $request->puestos);
         }
 
-        if (!empty($areas)) {
+        if (! empty($areas)) {
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
@@ -241,7 +241,6 @@ class IncidentesDayOffController extends Controller
         $vacacion->empleados()->sync($empleados);
         $vacacion->puestos()->sync($puestos);
         $vacacion->areas()->sync($areas);
-
 
         Alert::success('éxito', 'Información añadida con éxito');
 

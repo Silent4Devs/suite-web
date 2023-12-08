@@ -1299,26 +1299,25 @@
                 @yield('content')
             </main>
         </div>
+
+        {{-- @include('partials.footer') --}}
+        <footer class="app-footer">
+            <div>
+                TABANTAJ
+                <font style="margin: 0px 20px;"> | </font>
+                SILENT4BUSINESS
+            </div>
+            <div>
+                2023
+                <font style="margin: 0px 20px;"> | </font>
+                Version: 4.34.10
+            </div>
+        </footer>
     </div>
     <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
     </form>
-    </div>
     <!-- incluir de footer -->
-    {{-- @include('partials.footer') --}}
-    <footer class="app-footer">
-        <div>
-            TABANTAJ
-            <font style="margin: 0px 20px;"> | </font>
-            SILENT4BUSINESS
-        </div>
-        <div>
-            2023
-            <font style="margin: 0px 20px;"> | </font>
-            Version: 4.46.14
-        </div>
-    </footer>
-    </div>
 
     <div id="elementos_imprimir" class="d-none">
         <div id="contenido_imprimir">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exports\VistaGlobalVacacionesExport;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\SolicitudVacaciones;
@@ -11,6 +12,7 @@ use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class VacacionesController extends Controller
@@ -148,7 +150,7 @@ class VacacionesController extends Controller
         abort_if(Gate::denies('reglas_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'dias' => 'required|int',
+            'dias' => 'required|int|gte:1|lte:24',
             'afectados' => 'required|int',
             'tipo_conteo' => 'required|int',
             'inicio_conteo' => 'required|int|gte:1',
@@ -192,7 +194,7 @@ class VacacionesController extends Controller
         // dd($solVac);
 
         // if ($request->ajax()) {
-        //     $query = SolicitudVacaciones::with('empleado')->orderByDesc('id')->get();
+        //     $query = SolicitudVacaciones::getAllwithEmpleados();
         //     $table = datatables()::of($query);
 
         //     $table->addColumn('placeholder', '&nbsp;');
@@ -228,5 +230,12 @@ class VacacionesController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.vacaciones.solicitudes', compact('logo_actual', 'empresa_actual', 'solVac'));
+    }
+
+    public function exportExcel()
+    {
+        $export = new VistaGlobalVacacionesExport();
+
+        return Excel::download($export, 'Control_Ausencias_Vacaciones.xlsx');
     }
 }

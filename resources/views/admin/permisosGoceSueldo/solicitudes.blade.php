@@ -1,47 +1,13 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+@endsection
 @section('content')
-    <div class="mt-3">
-        {{ Breadcrumbs::render('Vista-Global-Permisos') }}
-    </div>
-
-    <style>
-        .btn_cargar {
-            border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
-            padding: 0;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 !important;
-            margin-right: 10px !important;
-        }
-
-        .btn_cargar:hover {
-            color: #fff;
-            background: #345183;
-        }
-
-        .btn_cargar i {
-            font-size: 15pt;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .agregar {
-            margin-right: 15px;
-        }
-    </style>
+    {{ Breadcrumbs::render('Vista-Global-Permisos') }}
 
     <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Permisos</h5>
 
-    <div class="card">
+    <div class="datatable-fix datatable-rds">
         @can('amenazas_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -52,47 +18,42 @@
                 </div>
             @endcan
         </div>
-
-
         @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable datatable-vista-global-permisos tblCSV"
-                id="datatable-vista-global-permisos">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="min-width: 200px;">
-                            Solicitante
-                        </th>
-                        <th style="min-width: 200px;">
-                            Nombre de permiso
-                        </th>
-                        <th style="min-width: 200px;">
-                            Tipo de permiso
-                        </th>
-                        <th style="min-width: 110px;">
-                            Días Solicitados
-                        </th>
+        <h3 class="title-table-rds">Vista Global de Solicitudes de Permisos</h3>
+        <table class=" w-100 datatable datatable-vista-global-permisos tblCSV" id="datatable-vista-global-permisos">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="min-width: 200px;">
+                        Solicitante
+                    </th>
+                    <th style="min-width: 200px;">
+                        Nombre de permiso
+                    </th>
+                    <th style="min-width: 200px;">
+                        Tipo de permiso
+                    </th>
+                    <th style="min-width: 110px;">
+                        Días Solicitados
+                    </th>
 
-                        <th style="min-width: 75px;">
-                            Inicio
-                        </th>
-                        <th style="min-width: 75px;">
-                            Fin
-                        </th>
-                        <th style="min-width: 75px;">
-                            Estatus
-                        </th>
-                        {{-- <th style="min-width: 150px;">
+                    <th style="min-width: 75px;">
+                        Inicio
+                    </th>
+                    <th style="min-width: 75px;">
+                        Fin
+                    </th>
+                    <th style="min-width: 75px;">
+                        Estatus
+                    </th>
+                    {{-- <th style="min-width: 150px;">
                             Comentarios
                         </th> --}}
-                        <th style="min-width: 70px;">
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-
-        </div>
+                    <th style="min-width: 70px;">
+                        Opciones
+                    </th>
+                </tr>
+            </thead>
+        </table>
     </div>
 @endsection
 

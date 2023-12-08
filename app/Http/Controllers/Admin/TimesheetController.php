@@ -50,8 +50,6 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
-
         $times = Timesheet::getPersonalTimesheet();
 
         $todos_contador = $times->count();
@@ -293,9 +291,9 @@ class TimesheetController extends Controller
             }
 
             if ($timesheet_nuevo->estatus == 'pendiente') {
-                $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->supervisor_id);
+                $aprobador = Empleado::getDataColumns()->find($usuario->empleado->supervisor_id);
 
-                $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->id);
+                $solicitante = Empleado::getDataColumns()->find($usuario->empleado->id);
 
                 try {
                     // Enviar correo
@@ -334,7 +332,7 @@ class TimesheetController extends Controller
     public function show($id)
     {
         $timesheet = Timesheet::find($id);
-        $horas = TimesheetHoras::getAll()->where('timesheet_id', $id);
+        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
         $horas_count = $horas->count();
 
         $hoy = Carbon::now();
@@ -533,9 +531,9 @@ class TimesheetController extends Controller
         }
 
         if ($timesheet_edit->estatus == 'pendiente') {
-            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->supervisor_id);
+            $aprobador = Empleado::getDataColumns()->find($usuario->empleado->supervisor_id);
 
-            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->id);
+            $solicitante = Empleado::getDataColumns()->find($usuario->empleado->id);
 
             try {
                 // Enviar correo
@@ -860,9 +858,9 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($aprobar->empleado_id);
+        $solicitante = Empleado::getDataColumns()->find($aprobar->empleado_id);
 
-        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($aprobar->aprobador_id);
+        $aprobador = Empleado::getDataColumns()->find($aprobar->aprobador_id);
 
         try {
             // Enviar correo
@@ -885,9 +883,9 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($rechazar->empleado_id);
+        $solicitante = Empleado::getDataColumns()->find($rechazar->empleado_id);
 
-        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($rechazar->aprobador_id);
+        $aprobador = Empleado::getDataColumns()->find($rechazar->aprobador_id);
 
         try {
             // Enviar correo
@@ -1149,7 +1147,7 @@ class TimesheetController extends Controller
 
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
-                    $empleado_query = Empleado::select('id', 'name', 'email', 'foto')->get();
+                    $empleado_query = Empleado::getDataColumns();
 
                     $aprobador = $empleado_query->find(User::getCurrentUser()->empleado->supervisor_id);
 
