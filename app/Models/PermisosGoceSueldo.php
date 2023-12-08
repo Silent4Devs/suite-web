@@ -6,6 +6,7 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Support\Facades\Cache;
 
 class PermisosGoceSueldo extends Model implements Auditable
 {
@@ -28,6 +29,13 @@ class PermisosGoceSueldo extends Model implements Auditable
         'dias' => 'integer',
         'tipo_permiso',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('PermisoGoceSueldo:permiso_goce_sueldo_all', 3600 * 12, function () {
+            return self::orderBy('id', 'desc')->get();
+        });
+    }
 
     // public function areas()
     // {
