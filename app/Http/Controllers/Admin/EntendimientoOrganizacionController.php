@@ -118,7 +118,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
         // dd($foda);
@@ -175,7 +175,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -284,6 +284,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function cardFoda()
     {
+        abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
         return view('admin.entendimientoOrganizacions.cardFoda', compact('query'));
@@ -306,5 +307,11 @@ class EntendimientoOrganizacionController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.entendimientoOrganizacions.cardFodaEdit', compact('oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual','foda_actual'));
+    public function cardFodaGeneral()
+    {
+        abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+
+        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query'));
     }
 }

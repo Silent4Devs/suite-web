@@ -1,23 +1,23 @@
-<table class="table table-bordered w-100 datatable datatable-incidentes-vacaciones tblCSV" id="datatable-incidentes-vacaciones">
-    <thead class="thead-dark">
+<table class="datatable datatable-incidentes-vacaciones" id="datatable-incidentes-vacaciones">
+    <thead>
         <tr>
             <th style="min-width: 140px;">
-                Nombre
+                Nombre de la regla
             </th>
             <th style="min-width: 100px;">
                 Días aplicados
             </th>
             <th style="min-width: 75px;">
-               Aniversario
+                Aniversario
             </th>
             <th style="min-width: 75px;">
-             Efecto
+                Efecto
             </th>
             <th style="min-width: 200px;">
                 Descripcion
             </th>
-            <th style="min-width: 150px;">
-                Opciones
+            <th style="min-width: 150px; max-width:150px;">
+
             </th>
         </tr>
     </thead>

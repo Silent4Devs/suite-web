@@ -5,7 +5,6 @@
             table-layout: fixed;
             width: 600px;
         }
-
         th,
         td {
             border: 1px solid blue;

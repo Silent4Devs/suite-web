@@ -631,6 +631,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
             Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
 
+            // Route::group(['middleware' => ['version_iso_2022']], function () {
+            //Analisis brechas 2022
+            //Template Analisis de Brechas
+            Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+            Route::get('/top', 'TopController@index')->name('top');
+            Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
+            Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
+            Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
+            Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+            Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
+            Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
+
             // Gap Unos 2022
             Route::delete('gap-uno-2022/destroy', 'iso27\GapUnoConcentradoIsoController@massDestroy')->name('gap-unos-2022.massDestroy');
             Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
@@ -642,6 +654,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             // Gap Tres 2022
             //Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
             Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
+            // });
         });
 
         Route::group(['middleware' => ['version_iso_2013']], function () {
@@ -815,6 +828,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
         Route::get('entendimiento-organizacions-foda-organizacions', 'EntendimientoOrganizacionController@cardFoda')->name('foda-organizacions');
         route::get('entendimiento-organizacions-foda-edit/{id}','EntendimientoOrganizacionController@foda')->name('foda-organizacions.edit');
+        Route::get('entendimiento-organizacions-foda-general', 'EntendimientoOrganizacionController@cardFodaGeneral')->name('foda-general');
 
         // Partes Interesadas
         Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
