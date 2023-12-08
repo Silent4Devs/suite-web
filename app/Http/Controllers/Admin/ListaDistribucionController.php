@@ -84,9 +84,13 @@ class ListaDistribucionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ListaDistribucion $listaDistribucion)
+    public function edit($id)
     {
         //
+        $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+
+        // dd('Llega', $id, $lista_distribucion);
+        return view('admin.listadistribucion.edit', compact('lista'));
     }
 
     /**
