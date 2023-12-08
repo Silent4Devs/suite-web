@@ -3,19 +3,14 @@
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
 @endsection
 @section('content')
-    <div class="mt-3">
-        {{ Breadcrumbs::render('Incidentes-dayoff') }}
-    </div>
+    {{ Breadcrumbs::render('Incidentes-dayoff') }}
 
-    @include('admin.incidentesDayOff.estilos')
 
-    <div class="row">
-        <h5 class="col-12 titulo_general_funcion">Excepciones Day Off</h5>
-    </div>
+    <h5 class=" titulo_general_funcion">Excepciones Day Off</h5>
 
     <div class="row">
         @can('incidentes_dayoff_crear')
-            <div class="d-flex justify-content-end">
+            <div class="col-12 text-right">
                 <a href="{{ route('admin.incidentes-dayoff.create') }}" type="button" class="btn btn-crear">Crear Excepción +</a>
             </div>
         @endcan

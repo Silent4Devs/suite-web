@@ -1,4 +1,4 @@
-<table class="table table-bordered w-100 datatable datatable-goce-sueldo tblCSV" id="datatable-goce-sueldo">
+<table class="datatable datatable-goce-sueldo tblCSV" id="datatable-goce-sueldo">
     <thead class="thead-dark">
         <tr>
             <th style="min-width: 200px;">

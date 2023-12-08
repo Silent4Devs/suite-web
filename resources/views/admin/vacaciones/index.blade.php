@@ -10,7 +10,7 @@
     @can('reglas_vacaciones_crear')
         <div class="text-right">
             <a href="{{ route('admin.vacaciones.create') }}" type="button" class="btn btn-crear">
-                Crear Lineamiento +e
+                Crear Lineamiento +
             </a>
         </div>
     @endcan
