@@ -242,15 +242,19 @@ class SolicitudDayOffController extends Controller
         // y 3ro empleado, de no existir ninguna se manda 0
         if (($queryArea->get())->isNotEmpty()) {
             $dias = $queryArea->pluck('dias_aplicados')->sum();
+
             return $dias;
         } elseif (($queryPuesto->get())->isNotEmpty()) {
             $dias = $queryPuesto->pluck('dias_aplicados')->sum();
+
             return $dias;
         } elseif (($queryEmpleado->get())->isNotEmpty()) {
             $dias = $queryEmpleado->pluck('dias_aplicados')->sum();
+
             return $dias;
         } else {
             $dias = 0;
+
             return $dias;
         }
     }

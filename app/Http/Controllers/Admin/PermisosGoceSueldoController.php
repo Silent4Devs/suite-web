@@ -20,7 +20,7 @@ class PermisosGoceSueldoController extends Controller
     {
         abort_if(Gate::denies('reglas_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = PermisosGoceSueldo::orderByDesc('id')->get();
+            $query = PermisosGoceSueldo::getAll();
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -145,7 +145,7 @@ class PermisosGoceSueldoController extends Controller
         $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
-            $query = SolicitudPermisoGoceSueldo::with('empleado')->orderByDesc('id')->get();
+            $query = SolicitudPermisoGoceSueldo::getAllwithEmpleados();
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
