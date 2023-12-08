@@ -1,5 +1,5 @@
 .card-btns-vacaciones {
-    background-color: #e8ecff;
+    background-color: #fff;
     height: 300px;
     width: 100%;
     border-radius: 14px;
@@ -47,7 +47,7 @@
 
 .card-btns-vacaciones a i {
     font-size: 40px;
-    color: purple;
+    color: #5c36a5;
 }
 
 .btn-crear {

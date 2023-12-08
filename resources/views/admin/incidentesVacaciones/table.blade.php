@@ -14,7 +14,7 @@
                 Efecto
             </th>
             <th style="min-width: 200px;">
-                Descripcion
+                Descripción
             </th>
             <th style="min-width: 150px; max-width:150px;">
 
