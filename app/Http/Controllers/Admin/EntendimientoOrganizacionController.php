@@ -307,6 +307,7 @@ class EntendimientoOrganizacionController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.entendimientoOrganizacions.cardFodaEdit', compact('oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual','foda_actual'));
+    }
     public function cardFodaGeneral()
     {
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
