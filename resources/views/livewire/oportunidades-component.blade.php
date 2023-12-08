@@ -46,10 +46,30 @@
                                         {{$oportunidad->oportunidad}}
                                     </td>
                                     <td>
-                                        <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
+                                        <div class="dropdown">
+                                            <button class="btn dropdown-toggle" type="button"
+                                            data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" wire:click="edit({{ $oportunidad->id }})">
+                                                <div class="d-flex align-items-start">
+                                                    <i class="material-icons-outlined" style="width: 24px;font-size:18px;">edit_outline</i>
+                                                    Editar
+                                                </div>
+                                            </a>
+                                            <a class="dropdown-item" wire:click="$emit('deleteO',{{$oportunidad->id}})">
+                                                <div class="d-flex align-items-start">
+                                                    <i class="material-icons-outlined" style="width: 24px;font-size:18px;">delete_outlined</i>
+                                                    Eliminar
+                                                </div>
+                                            </a>
+                                        </div>
+                                        </div>
+                                        {{-- <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
                                         <i class="fas fa-edit text-primary ml-2" wire:click="edit({{ $oportunidad->id }})"></i>
                                         <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
-                                            data-target="#marcaslec" title="Asociar un Riesgo"></i>
+                                            data-target="#marcaslec" title="Asociar un Riesgo"></i> --}}
                                     </td>
                                 </tr>
                                 @endforeach
@@ -93,6 +113,32 @@
             @endforeach
         </p>
 
+        @yield('js')
+       <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Livewire.on("deleteO", id=>{
+                Swal.fire({
+                    title: "Remover Oportunidad del foda",
+                    text: "¿Esta seguro que desea eliminar la oportunidad del FODA?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Eliminar",
+                    cancelButtonText: "Cancelar",
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('oportunidades-component','destroy',id);
+                    Swal.fire({
+                    title: "Eliminado",
+                    text: "La Oportunidad se elimino con éxito",
+                    icon: "success"
+                    });
+                }
+                });
+            })
+        });
+       </script>
 
     {{-- <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
         <span style="font-size: 17px; font-weight: bold;">

@@ -26,32 +26,48 @@
                     </div>
                     <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
                         <table class="table w-100" id="contactos_table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Fortaleza</th>
-                                    <th style="min-width:100px;">Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($fortalezas as $index => $fortaleza)
+                                <thead>
                                     <tr>
-                                        <td>
-                                            {{ $index + 1 }}
-                                        </td>
-                                        <td>
-                                            {{ $fortaleza->fortaleza }}
-                                        </td>
-                                        <td>
-                                            <i wire:click="destroy({{ $fortaleza->id }})" class="fas fa-trash-alt text-danger"></i>
-                                            <i class="fas fa-edit text-primary ml-2" wire:click="edit({{ $fortaleza->id }})"></i>
-
-
-                                        </td>
+                                        <th>ID</th>
+                                        <th>Fortaleza</th>
+                                        <th style="min-width:100px;">Opciones</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($fortalezas as $index => $fortaleza)
+                                        <tr>
+                                            <td>
+                                                {{ $index + 1 }}
+                                            </td>
+                                            <td>
+                                                {{ $fortaleza->fortaleza }}
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn dropdown-toggle" type="button"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" wire:click="edit({{ $fortaleza->id }})">
+                                                            <div class="d-flex align-items-start">
+                                                                <i class="material-icons-outlined" style="width: 24px;font-size:18px;">edit_outline</i>
+                                                                Editar
+                                                            </div>
+                                                        </a>
+                                                        <a class="dropdown-item" wire:click="$emit('delete',{{$fortaleza->id}})">
+                                                            <div class="d-flex align-items-start">
+                                                                <i class="material-icons-outlined" style="width: 24px;font-size:18px;">delete_outlined</i>
+                                                                Eliminar
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                                @endforeach
-                            </tbody>
+                                    @endforeach
+                                </tbody>
                         </table>
                     </div>
                 </div>
@@ -151,12 +167,41 @@
         </div>
     </div> --}}
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             Livewire.on('abrirModalRiegos', () => {
                 console.log('hola');
                 $('#marcaslec').modal('show');
             })
         })
-    </script>
+    </script> --}}
+
+    @yield('js')
+
+       <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Livewire.on("delete", id=>{
+                Swal.fire({
+                    title: "Remover Fortaleza del foda",
+                    text: "¿Esta seguro que desea eliminar la fortaleza del FODA?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Eliminar",
+                    cancelButtonText: "Cancelar",
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('fortalezas-component','destroy',id);
+                    Swal.fire({
+                    title: "Eliminado",
+                    text: "La Fortaleza se elimino con éxito",
+                    icon: "success"
+                    });
+                }
+                });
+            })
+        });
+       </script>
+
 </div>
