@@ -5,8 +5,6 @@ namespace App\Exports;
 use App\Models\SolicitudVacaciones;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Illuminate\Support\Facades\DB;
-
 
 class VistaGlobalVacacionesExport implements FromCollection, WithHeadings
 {
@@ -16,7 +14,6 @@ class VistaGlobalVacacionesExport implements FromCollection, WithHeadings
     public function __construct()
     {
     }
-
 
     public function collection()
     {

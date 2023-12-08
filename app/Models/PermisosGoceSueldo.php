@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class PermisosGoceSueldo extends Model implements Auditable
 {
