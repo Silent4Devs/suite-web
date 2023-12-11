@@ -28,3 +28,17 @@ pw=driver.find_element(By.XPATH,"//input[contains(@name,'password')]").send_keys
 time.sleep(tiempo_modulos)
 btn=driver.find_element(By.XPATH,"//button[@type='submit'][contains(.,'Enviar')]")
 btn.click()
+
+#Capital Humano
+cap_humano=driver.find_element(By.XPATH,"(//font[@class='letra_blanca'][contains(.,'Capital Humano')])[1]")
+time.sleep(tiempo_modulos)
+cap_humano.click()
+time.sleep(tiempo_espera)
+
+#Solictudes e Incidencias
+solicitudes_incidencias=driver.find_element(By.XPATH,"(//div[contains(.,'Solicitudes e Incidencias')])[8]")
+time.sleep(tiempo_modulos)
+solicitudes_incidencias.click()
+time.sleep(tiempo_espera)
+
+
