@@ -1,11 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Models\ListaDistribucion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Empleado;
+use App\Models\ParticipantesListaDistribucion;
 use Carbon\Carbon;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Gate;
+
 
 class ListaDistribucionController extends Controller
 {
@@ -71,6 +77,7 @@ class ListaDistribucionController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->all());
     }
 
     /**
@@ -88,17 +95,57 @@ class ListaDistribucionController extends Controller
     {
         //
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+        $empleados = Empleado::getAltaDataColumns();
 
         // dd('Llega', $id, $lista_distribucion);
-        return view('admin.listadistribucion.edit', compact('lista'));
+        // dd($empleados);
+        return view('admin.listadistribucion.edit', compact('lista', 'empleados'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ListaDistribucion $listaDistribucion)
+    public function update(Request $request, $id)
     {
         //
+        // dd($id);
+        // dd($request->niveles, $request->all());
+        $lista = ListaDistribucion::select('id')->find($id);
+        // dd($lista_id);
+        // $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->get();
+
+        $data = [];
+        for ($i = 1; $i <= $request->niveles; $i++) {
+            // dd("Entra en el for");
+            // Assuming you have arrays like $nivel1, $nivel2, ..., $nivel5
+            $nivelArrayName = 'nivel' . $i;
+            // dd("Entra en el if", $nivelArrayName, isset($nivelArrayName));
+            if (isset($nivelArrayName)) { // Check if the array exists in the controller
+                // dd($request->$nivelArrayName);
+                $data[$i] = $request->$nivelArrayName;
+                // $data[$nivelArrayName] = $nivelArrayName; // Collect data for the current nivel
+            }
+        }
+        // dd($data);
+        // dd($participantes);
+        foreach ($data as $key => $nivel) {
+            // dd($key, $nivel);
+            $i = 1;
+            foreach ($nivel as $participante) {
+                // dd($participante);
+                $participantes = ParticipantesListaDistribucion::updateOrCreate(
+                    [
+                        'modulo_id' => $lista->id,
+                        'nivel' => $key,
+                        'numero_orden' => $i,
+                        'empleado_id' => $participante,
+                    ],
+                );
+                $i++;
+            }
+        }
+
+        return redirect(route('admin.lista-distribucion.index'));
     }
 
     /**

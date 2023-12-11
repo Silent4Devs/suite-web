@@ -180,14 +180,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'destroy' => 'vacaciones.destroy',
         ]);
 
-        Route::resource('lista-distribucion', 'ListaDistribucionController')->names([
-            'create' => 'lista-distribucion.create',
-            'store' => 'lista-distribucion.store',
-            'show' => 'lista-distribucion.show',
-            'edit' => 'lista-distribucion.edit',
-            'update' => 'lista-distribucion.update',
-            'destroy' => 'lista-distribucion.destroy',
-        ]);
+        Route::get('lista-distribucion', 'ListaDistribucionController@index')->name('lista-distribucion.index');
+        Route::get('lista-distribucion/{id}/edit', 'ListaDistribucionController@edit')->name('lista-distribucion.edit');
+        Route::post('lista-distribucion/{lista}/update', 'ListaDistribucionController@update')->name('lista-distribucion.update');
+        Route::get('lista-distribucion/{id}/show', 'ListaDistribucionController@show')->name('lista-distribucion.edit');
+        // ->names([
+        //     'create' => 'lista-distribucion.create',
+        //     'store' => 'lista-distribucion.store',
+        //     'show' => 'lista-distribucion.show',
+        //     'edit' => 'lista-distribucion.edit',
+        //     'update' => 'lista-distribucion.update',
+        //     'destroy' => 'lista-distribucion.destroy',
+        // ])
 
         //Control de Ausencias- Day-Off
         Route::get('vista-global-dayoff', 'DayOffController@vistaGlobal')->name('vista-global-dayoff');
