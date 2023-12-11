@@ -75,11 +75,11 @@ class PortalComunicacionController extends Controller
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
 
-        $aniversarios = Cache::remember('Portal:portal_aniversarios_'.$authId, 3600 * 2, function () use ($hoy) {
+        $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         });
 
-        $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo_'.$authId, 3600 * 2, function () use ($hoy) {
+        $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo', 3600 * 4, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
         });
 
