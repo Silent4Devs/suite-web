@@ -10,7 +10,7 @@ from selenium.common.exceptions import TimeoutException
 import time
 tiempo_modulos=4
 tiempo_carga=10
-tiempo_espera=2.5
+tiempo_espera=2.7
 tiempo_sec=1
 element_xpath0 = "(//font[@class='letra_blanca'][contains(.,'Capital Humano')])[1]"
 element_xpath1= "//a[contains(.,'Solicitudes e Incidencias')]"
@@ -26,14 +26,18 @@ driver.maximize_window()
 time.sleep(5)
 
 #Login
+print("Ingresando Usuario")
 usr=driver.find_element(By.XPATH,"//input[contains(@name,'email')]").send_keys("zaid.garcia@becarios.silent4business.com")
 time.sleep(tiempo_modulos)
+print("Ingresando Contraseña")
 pw=driver.find_element(By.XPATH,"//input[contains(@name,'password')]").send_keys("ranas289")
 time.sleep(tiempo_modulos)
+print("Entrando a la plataforma...")
 btn=driver.find_element(By.XPATH,"//button[@type='submit'][contains(.,'Enviar')]")
 btn.click()
 
 #Capital Humano
+print("Entrando a Capital Humano...")
 element = driver.find_element(By.XPATH, element_xpath0)
 driver.execute_script("arguments[0].scrollIntoView(true);", element)
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_xpath0)))
@@ -42,6 +46,7 @@ element.click()
 time.sleep(tiempo_espera)
 
 #Solictudes e Incidencias
+print("Entrando a Solicitudes e Incidencias...")
 element1 = driver.find_element(By.XPATH, element_xpath1)
 driver.execute_script("arguments[0].scrollIntoView(true);", element1)
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_xpath1)))
@@ -50,62 +55,77 @@ element1.click()
 time.sleep(tiempo_espera)
 
 #Ajustes de Vacaciones
+print("Entrando a Ajustes de Vacaciones...")
 ajustes_vacaciones=driver.find_element(By.XPATH,"//a[contains(.,'Ajustes Vacaciones')]")
 time.sleep(tiempo_modulos)
 ajustes_vacaciones.click()
 time.sleep(tiempo_espera)
 
 #Lineamientos
+print("Entrando a Lineamientos...")
 lineamientos=driver.find_element(By.XPATH,"//a[contains(.,'Lineamientos')]")
 time.sleep(tiempo_modulos)
 lineamientos.click()
 time.sleep(tiempo_espera)
+
 #Crear linemaientos
+print("Creando Lineamiento...")
 crear_lineamientos=driver.find_element(By.XPATH,"//a[contains(.,'Crear Lineamiento +')]")
 time.sleep(tiempo_modulos)
 crear_lineamientos.click()
 time.sleep(tiempo_espera)
+
 #Nombre del lineamiento de vacaciones
+print("Ingresando nombre del lineamiento de vacaciones...")
 nombre_lineamiento=driver.find_element(By.XPATH,"//input[contains(@minlength,'1')]").send_keys("北京位於華北平原的西北边缘，背靠燕山，有永定河流经老城西南，毗邻天津市、河北省。")
 time.sleep(tiempo_espera)
 
 #Tipo de conteo
+print("Ingresando tipo de conteo...")
 tipo_de_conteo = driver.find_element(By.XPATH, "//select[@id='tipo_conteo']")
 time.sleep(tiempo_modulos)
 tipo_de_conteo.click()
         #Seleccionar tipo de conteo
+print("Seleccionando tipo de conteo...")
 select_element = Select(tipo_de_conteo)
 time.sleep(tiempo_modulos)
 select_element.select_by_visible_text('Día Natural')
 time.sleep(tiempo_espera)
 
         #Descripción
+print("Agregando descripción...")
 descripcion=driver.find_element(By.XPATH,"//textarea[contains(@class,'form-control')]").send_keys("Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache")
 
         #Año de inicio de beneficio
+print("Ingresando año de inicio de beneficio...")
 #año_de_inicio_de_beneficio = driver.find_element(By.XPATH, "//input[contains(@name,'inicio_conteo')]").send_keys("-1")
 #año_de_inicio_de_beneficio = driver.find_element(By.XPATH, "//input[contains(@name,'inicio_conteo')]").send_keys("0")
 #año_de_inicio_de_beneficio = driver.find_element(By.XPATH, "//input[contains(@name,'inicio_conteo')]").send_keys("200000000000000")
 año_de_inicio_de_beneficio = driver.find_element(By.XPATH, "//input[contains(@name,'inicio_conteo')]").send_keys("20")
 time.sleep(tiempo_espera)
         #Año fin de beneficio
+print("Ingresando año fin de beneficio...")
 año_de_fin_de_beneficio = driver.find_element(By.XPATH, "//input[contains(@name,'fin_conteo')]").send_keys("21")
 time.sleep(tiempo_espera)
+
         #Días a gozar
+print("Ingresando días a gozar...")
 dia_gozar=driver.find_element(By.XPATH,"//input[contains(@max,'24')]").send_keys("24")
 time.sleep(tiempo_espera)
         #Reinicio de conteo
+print("Seleccionando reinicio de conteo...")
 reinicio_conteo = driver.find_element(By.XPATH, "//select[contains(@id,'corte')]")
 time.sleep(tiempo_modulos)
 reinicio_conteo.click()
         #Seleccionar tipo de conteo
+print("Seleccionando tipo de conteo...")
 select_element1 = Select(reinicio_conteo)
 time.sleep(tiempo_modulos)
 select_element1.select_by_visible_text('Anual')
 time.sleep(tiempo_espera)
 
 #Colaboradores a los que aplica
-#
+print("Seleccionando colaboradores a los que aplica...")
 radio_value_to_select = "1"
 radio_button_xpath = f"//input[@type='radio' and @value='{1}']"
 
@@ -113,12 +133,14 @@ radio_button = driver.find_element(By.XPATH, radio_button_xpath)
 radio_button.click()
 
 #Guardar
+print("Guardando...")
 time.sleep(tiempo_espera)
 save_btn=driver.find_element(By.XPATH,"//button[@class='btn btn-danger'][contains(.,'Guardar')]")
 time.sleep(tiempo_sec)
 save_btn.click()
 
     #confirmación
+print("Confirmando la acción de guardado...")
 time.sleep(tiempo_espera)
 ok_btn=driver.find_element(By.XPATH,"//button[@type='button'][contains(.,'OK')]")
 ok_btn.click()
@@ -163,6 +185,7 @@ time.sleep(tiempo_espera)
 back.click()
 
 # Editar
+print("Entrando a la vita de edición...")
 time.sleep(tiempo_espera)
 click_opciones()
 edit= WebDriverWait(driver, 10).until(
@@ -175,22 +198,35 @@ driver.execute_script("arguments[0].scrollIntoView(true);", element3)
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_xpath2)))
 time.sleep(tiempo_modulos)
 element3.click()
+time.sleep(tiempo_espera)
+ok_btn=driver.find_element(By.XPATH,"//button[@type='button'][contains(text(),'OK')]")
+time.sleep(tiempo_sec)
+ok_btn.click()
 
 
 #Eliminar
+# Example logging statement
 time.sleep(tiempo_espera)
+print("Waiting for delete element to be clickable...")
 click_opciones()
-delete= WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'btn btn-sm text-danger 28 rounded')]"))
+delete=WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-trash')])[1]"))
 )
-time.sleep(tiempo_espera)
+print("Delete element is clickable. Clicking...")
 delete.click()
 
-delete_sure= driver.find_element(By.XPATH, "//button[@class='btn btn-danger']")
+time.sleep(tiempo_espera)
+delete_sure= driver.find_element(By.XPATH, "(//button[@class='eliminar btn btn-info'][contains(.,'Eliminar')])[1]")
 time.sleep(tiempo_espera)
 delete_sure.click()
 time.sleep(tiempo_espera)
+ok_btn=driver.find_element(By.XPATH,"//button[@type='button'][contains(text(),'OK')]")
+time.sleep(tiempo_sec)
+ok_btn.click()
+time.sleep(tiempo_espera)
 
+print("Test finalizado con éxito")
+time.sleep(tiempo_espera)
 #Cerrar navegador
 driver.quit()
 
