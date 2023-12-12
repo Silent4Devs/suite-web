@@ -13,6 +13,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Support\Facades\Cache;
 
 class Minutasaltadireccion extends Model implements Auditable, HasMedia
 {
@@ -64,6 +65,13 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
         'deleted_at',
         'team_id',
     ];
+
+    public static function getAllMinutasAltaDireccion()
+    {
+        return Cache::remember('MinutasAltaDireccion:minutas_alta_direccion_all', 3600 * 8, function () {
+            return self::with(['responsable', 'participantes', 'planes'])->orderByDesc('id')->get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

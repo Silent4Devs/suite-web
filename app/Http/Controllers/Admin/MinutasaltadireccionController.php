@@ -36,11 +36,18 @@ class MinutasaltadireccionController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('revision_por_direccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if ($request->ajax()) {
-            $query = Minutasaltadireccion::with(['responsable', 'participantes', 'planes'])->orderByDesc('id')->get();
+        // if ($request->ajax()) {
+        $query = Minutasaltadireccion::getAllMinutasAltaDireccion();
 
-            return datatables()->of($query)->toJson();
-        }
+        // dd($query);
+
+        //     return datatables()->of($query)->toJson();
+        // }
+        // foreach ($query as $q) {
+        //     foreach ($q->planes as $plan) {
+        //         dd($plan->id);
+        //     }
+        // }
 
         $users = User::getAll();
         //$teams = Team::get();
@@ -48,7 +55,7 @@ class MinutasaltadireccionController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.minutasaltadireccions.index', compact('users', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.minutasaltadireccions.index', compact('query', 'users', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -92,7 +99,7 @@ class MinutasaltadireccionController extends Controller
         //Creación Minuta
 
         if ($request->input('archivo', false)) {
-            $minutasaltadireccion->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
+            $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -132,7 +139,7 @@ class MinutasaltadireccionController extends Controller
         $arrParticipantes = json_decode($request->participantesExt);
         foreach ($arrParticipantes as $participante) {
             $exists = ExternosMinutaDireccion::where('minuta_id', $minutasaltadireccion->id)->where('nombreEXT', $participante->nombre)->where('emailEXT', $participante->email)->where('puestoEXT', $participante->puesto)->where('empresaEXT', $participante->empresa)->first();
-            if (! $exists) {
+            if (!$exists) {
                 ExternosMinutaDireccion::create([
                     'nombreEXT' => $participante->nombre,
                     'emailEXT' => removeUnicodeCharacters($participante->email),
@@ -173,9 +180,9 @@ class MinutasaltadireccionController extends Controller
         if (isset($request->actividades)) {
             $tasks = [
                 [
-                    'id' => 'tmp_'.(strtotime(now()) * 1000).'_1',
+                    'id' => 'tmp_' . (strtotime(now()) * 1000) . '_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Minuta - '.$request->tema_reunion,
+                    'name' => 'Minuta - ' . $request->tema_reunion,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -216,7 +223,7 @@ class MinutasaltadireccionController extends Controller
                     $id = intval($asignado);
                     // $empleado = Empleado::find($id);
                     $assigs[] = [
-                        'id' => 'tmp_'.time().'_'.$id,
+                        'id' => 'tmp_' . time() . '_' . $id,
                         'effort' => '0',
                         'roleId' => '1',
                         'resourceId' => $id,
@@ -279,9 +286,9 @@ class MinutasaltadireccionController extends Controller
         $pdf = \PDF::loadView('admin.minutasaltadireccions.pdf.minuta-pdf', compact('minutasaltadireccion', 'actividades'));
         Storage::makeDirectory('public/minutas/en aprobacion');
         Storage::makeDirectory('public/minutas/aprobadas');
-        $nombre_pdf = Str::limit($minutasaltadireccion->tema_reunion, 20, '').'_'.$minutasaltadireccion->fechareunion.'.pdf';
+        $nombre_pdf = Str::limit($minutasaltadireccion->tema_reunion, 20, '') . '_' . $minutasaltadireccion->fechareunion . '.pdf';
         $nombre = preg_replace('([^A-Za-z0-9-À-ÿ_.])', '', $nombre_pdf);
-        $pdf->save(public_path('storage/minutas/en aprobacion').'/'.$nombre);
+        $pdf->save(public_path('storage/minutas/en aprobacion') . '/' . $nombre);
 
         $minutasaltadireccion->documento = $nombre;
         $minutasaltadireccion->save();
@@ -346,12 +353,12 @@ class MinutasaltadireccionController extends Controller
         }
 
         if ($request->input('archivo', false)) {
-            if (! $minutasaltadireccion->archivo || $request->input('archivo') !== $minutasaltadireccion->archivo->file_name) {
+            if (!$minutasaltadireccion->archivo || $request->input('archivo') !== $minutasaltadireccion->archivo->file_name) {
                 if ($minutasaltadireccion->archivo) {
                     $minutasaltadireccion->archivo->delete();
                 }
 
-                $minutasaltadireccion->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
+                $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
             }
         } elseif ($minutasaltadireccion->archivo) {
             $minutasaltadireccion->archivo->delete();
@@ -364,7 +371,7 @@ class MinutasaltadireccionController extends Controller
     {
         $minutasaltadireccion = Minutasaltadireccion::find(intval($minutasaltadireccion));
         $this->processUpdate($request, $minutasaltadireccion, true);
-        $ruta_publicacion = 'public/minutas/aprobadas/'.$minutasaltadireccion->documento;
+        $ruta_publicacion = 'public/minutas/aprobadas/' . $minutasaltadireccion->documento;
 
         if (Storage::exists($ruta_publicacion)) {
             Storage::delete($ruta_publicacion);
@@ -487,6 +494,6 @@ class MinutasaltadireccionController extends Controller
         $minuta = $id;
         $minuta->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
+        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
     }
 }

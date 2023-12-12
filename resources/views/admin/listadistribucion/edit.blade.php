@@ -54,7 +54,7 @@
                             sin requerir la aprobación de los niveles seleccionados
                         </p>
 
-                        <div class="form-row">
+                        <div class="row">
                             <label for="superaprobadores">SuperAprobadores</label>
                             <select id="superaprobadores" name="superaprobadores" class="form-control" multiple="multiple">
                                 @foreach ($empleados as $empleado)
@@ -69,30 +69,31 @@
                             numero
                             de colaboradores que se requiera.</p>
 
-                        <div class="form-row">
+                        <div class="row">
                             <label for="niveles">Seleccione los niveles</label>
                             <select id="niveles" name="niveles" class="form-control">
-                                <option value="" disabled selected>Seleccione</option>
+                                <option value={{ $lista->niveles }} selected>{{ $lista->niveles }}</option>
                                 @for ($i = 1; $i < 6; $i++)
                                     <option value={{ $i }}>{{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
 
-                        <div class="form-row niveles-container" id="nivel1-container">
-                            <label for="nivel1">Nivel 1</label>
-                            <select id="nivel1" name="nivel1[]" class="form-control" multiple="multiple">
-                                <optgroup label="Nivel 1">
+                        @for ($i = 1; $i < 6; $i++)
+                            <div class="form-row nivel{{ $i }}Div" style="display: none;">
+                                <label for="nivel{{ $i }}">Nivel {{ $i }}</label>
+                                <select id="nivel{{ $i }}" name="nivel{{ $i }}" class="form-control"
+                                    multiple="multiple">
                                     @foreach ($empleados as $empleado)
                                         <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
                                             {{ $empleado->name }}
                                         </option>
                                     @endforeach
-                                </optgroup>
-                            </select>
-                        </div>
+                                </select>
+                            </div>
+                        @endfor
 
-                        <div class="form-row niveles-container" id="nivel2-container">
+                        {{-- <div class="form-row niveles-container" id="nivel2-container">
                             <label for="nivel2">Nivel 2</label>
                             <select id="nivel2" name="nivel2[]" class="form-control" multiple="multiple">
                                 <optgroup label="Nivel 2">
@@ -142,7 +143,7 @@
                                     @endforeach
                                 </optgroup>
                             </select>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <button type="submit">Guardar</button>
@@ -154,16 +155,22 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('.niveles-container').hide(); // Hide all nivel selects initially
-
             $('#niveles').change(function() {
-                var selectedNiveles = $(this).val();
-                $('.niveles-container').hide(); // Hide all nivel selects
-
-                for (var i = 1; i <= selectedNiveles; i++) {
-                    $('#nivel' + i + '-container').show(); // Show nivel selects up to the selected value
+                var selectedNivel = $(this).val();
+                $('.form-row').hide(); // Hide all select boxes initially
+                for (var i = 1; i <= selectedNivel; i++) {
+                    $('.nivel' + i + 'Div')
+                        .show(); // Show the selected nivel and preceding nivel's select boxes
+                    $('.nivel' + i + 'Div select').select2(); // Initialize select2 for the chosen select(s)
                 }
             });
+
+            var initialNivel = $('#niveles').val();
+            $('.form-row').hide(); // Hide all select boxes initially
+            for (var i = 1; i <= initialNivel; i++) {
+                $('.nivel' + i + 'Div').show(); // Show the preselected nivel and preceding nivel's select boxes
+                $('.nivel' + i + 'Div select').select2(); // Initialize select2 for the preselected select(s)
+            }
         });
     </script>
 

@@ -95,11 +95,32 @@ class ListaDistribucionController extends Controller
     {
         //
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
-        $empleados = Empleado::getAltaDataColumns();
 
+        for ($i = 1; $i <= $lista->niveles; $i++) {
+            // dd($i);
+            foreach ($lista->participantes as $participante) {
+                if ($participante->nivel == $i) {
+                    // dd('entra');
+                    $participantes_seleccionados['nivel' . $i][] =
+                        [
+                            'empleado_id' => $participante->empleado_id,
+                            'numero_orden' => $participante->numero_orden,
+                        ];
+                }
+            }
+        }
+        // dd($participantes_seleccionados);
+        // $participantes = $lista->participantes;
+
+        // $participantes_seleccionados[] = $lista->participantes->pluck('empleado_id', 'nivel', 'numero_orden')->toArray();
+
+        // $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
+        // dd($participantes_seleccionados);
+        $empleados = Empleado::getAltaDataColumns();
+        // dd($lista->participantes);
         // dd('Llega', $id, $lista_distribucion);
         // dd($empleados);
-        return view('admin.listadistribucion.edit', compact('lista', 'empleados'));
+        return view('admin.listadistribucion.edit', compact('lista', 'participantes_seleccionados', 'empleados'));
     }
 
     /**

@@ -38,6 +38,7 @@ use App\Models\Marca;
 use App\Models\MatrizRiesgo;
 use App\Models\MatrizRiesgosSistemaGestion;
 use App\Models\Mejoras;
+use App\Models\Minutasaltadireccion;
 use App\Models\Modelo;
 use App\Models\Organizacion;
 use App\Models\PerfilEmpleado;
@@ -93,6 +94,7 @@ use App\Observers\MatrizRiesgoObserver;
 use App\Observers\MatrizRiesgosSistemaGestionObserver;
 use App\Observers\MejorasObserver;
 use App\Observers\MetricasObjetivoObserver;
+use App\Observers\MinutasAltaDireccionObserver;
 use App\Observers\ModelosObserver;
 use App\Observers\OrganizacionObserver;
 use App\Observers\PerfilEmpleadoObserver;
@@ -223,5 +225,6 @@ class EventServiceProvider extends ServiceProvider
         Course::observe(CourseObserver::class);
         Contrato::observe(ContratoObserver::class);
         PerfilEmpleado::observe(PerfilEmpleadoObserver::class);
+        Minutasaltadireccion::observe(MinutasAltaDireccionObserver::class);
     }
 }
