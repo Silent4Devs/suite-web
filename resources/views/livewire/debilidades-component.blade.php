@@ -13,18 +13,19 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="mt-2">
-                            <label for="debilidad"><i class="fas fa-thumbs-down iconos-crear"></i>Nombre</label>
-                            <input class="form-control {{ $errors->has('debilidad') ? 'is-invalid' : '' }}" wire:model.defer="debilidad">
+                        <div class="mt-2 form-group anima-focus">
+                            <textarea class="form-control {{ $errors->has('debilidad') ? 'is-invalid' : '' }}" wire:model.defer="debilidad" placeholder="">
+                            </textarea>
                             @error('debilidad')
-                                <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+                            <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
                             @enderror
+                            <label for="debilidad">Agrega una debilidad</label>
                         </div>
                         <div class="mb-3 col-12 mt-4 " style="text-align: end">
                             <button type="button" wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}"
-                            class="btn btn-success">Agregar</button>
+                            class="btn btn-light text-dark border border-dark">Agregar</button>
                         </div>
-                        <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
+                        <div class="datatable-fix datatable-rds">
                             <table class="table w-100" id="contactos_table" style="width:100%">
                                 <thead>
                                     <tr>
@@ -96,7 +97,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" >Save changes</button>
+                        <button type="button" class="btn btn-light text-primary border border-primary" data-dismiss="modal" >Guardar</button>
                     </div>
                 </div>
             </div>

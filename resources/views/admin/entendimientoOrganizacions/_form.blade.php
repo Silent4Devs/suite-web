@@ -24,28 +24,27 @@
             </span>
             <hr>
         </div>
-        <div class="form-group col-sm-12 col-md-12 col-lg-12">
-            <label for="analisis" class="required">Nombre del Análisis</label>
+        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
             <input required class="form-control" type="text" name="analisis" id="analisis"
-                value="{{ old('analisis', $entendimientoOrganizacion->analisis) }}">
+            value="{{ old('analisis', $entendimientoOrganizacion->analisis) }}" placeholder="">
             @if ($errors->has('analisis'))
-                <div class="invalid-feedback  d-block">
-                    {{ $errors->first('analisis') }}
-                </div>
+            <div class="invalid-feedback  d-block">
+                {{ $errors->first('analisis') }}
+            </div>
             @endif
+            <label for="analisis" class="required">Nombre del Análisis</label>
         </div>
-        <div class="form-group col-sm-12 col-md-6 col-lg-6">
-            <label class="required" for="fecha">Fecha de Creación</label>
+        <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
             <input required class="form-control" type="date" id="fecha" name="fecha"
-                value="{{ old('fecha', $entendimientoOrganizacion->fecha) }}">
+            value="{{ old('fecha', $entendimientoOrganizacion->fecha) }}" placeholder="">
             @if ($errors->has('fecha'))
-                <div class="invalid-feedback  d-block">
-                    {{ $errors->first('fecha') }}
-                </div>
+            <div class="invalid-feedback  d-block">
+                {{ $errors->first('fecha') }}
+            </div>
             @endif
+            <label class="required" for="fecha">Fecha de Creación</label>
         </div>
-        <div class="form-group col-sm-12 col-md-6 col-lg-6">
-            <label class="required" for="id_elabora">Realizó</label>
+        <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
             <select required class="form-control  {{ $errors->has(' id_elabora') ? 'is-invalid' : '' }}" name="id_elabora"
                 id="id_elabora">
                 <option value="">Seleccione una opción</option>
@@ -55,17 +54,18 @@
                         {{ old('id_elabora', $entendimientoOrganizacion->id_elabora) == $empleado->id ? 'selected' : '' }}>
                         {{ $empleado->name }}
                     </option>
-                @endforeach
-            </select>
-            @if ($errors->has('id_elabora'))
+                    @endforeach
+                </select>
+                @if ($errors->has('id_elabora'))
                 <div class="invalid-feedback">
                     {{ $errors->first('id_elabora') }}
                 </div>
-            @endif
+                @endif
+                <label class="required" for="id_elabora">Realizó</label>
         </div>
-        <div class="form-group col-md-6">
-            <label for="id_puesto_asignada">Puesto</label>
+        <div class="form-group anima-focus col-md-6">
             <div class="form-control" id="puesto_asignada" readonly></div>
+            <label for="id_puesto_asignada">Puesto</label>
 
         </div>
 
@@ -80,42 +80,40 @@
             </span>
             <hr>
         </div>
-        <div class="form-group col-sm-12 col-md-12 col-lg-6">
-            <label for="participantes" class="required">Buscar
-                participante</label>
+        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
             <input type="hidden" id="id_empleado">
-            <input class="form-control" type="text" id="participantes_search" placeholder="Busca un empleado"
-                style="position: relative" autocomplete="off" />
+            <input class="form-control" type="text" id="participantes_search" placeholder="Buscar participante *"
+            style="position: relative" autocomplete="off" />
             <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-                style="position: absolute; top: 43px; right: 25px;"></i>
+            style="position: absolute; top: 43px; right: 25px;"></i>
             <div id="participantes_sugeridos"></div>
             @if ($errors->has('participantes'))
-                <span class="text-danger">
-                    {{ $errors->first('participantes') }}
-                </span>
+            <span class="text-danger">
+                {{ $errors->first('participantes') }}
+            </span>
             @endif
             <span class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
+
         </div>
-        <div class="form-group col-sm-12 col-md-12 col-lg-6">
+        <div class="form-group anima-focus  col-sm-12 col-md-12 col-lg-6">
+            <input class="form-control" type="text" id="email" placeholder="" readonly
+            style="cursor: not-allowed;"/>
             <label for="email">Email</label>
-            <input class="form-control" type="text" id="email" placeholder="Correo del participante" readonly
-                style="cursor: not-allowed" />
         </div>
-        <div class="form-group col-sm-12 col-md-12 col-lg-6">
+        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+            <input class="form-control" type="text" id="puesto" placeholder="" readonly
+            style="cursor: not-allowed" />
             <label for="email">Puesto</label>
-            <input class="form-control" type="text" id="puesto" placeholder="Puesto del participante" readonly
-                style="cursor: not-allowed" />
         </div>
-        <div class="form-group col-sm-12 col-md-12 col-lg-6">
+        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+            <input class="form-control" type="text" id="area" placeholder="" readonly
+            style="cursor: not-allowed" />
             <label for="area">Área</label>
-            <input class="form-control" type="text" id="area" placeholder="Área del participante" readonly
-                style="cursor: not-allowed" />
         </div>
         <div class="col-12">
-            <button id="btn-suscribir-participante" type="submit" class="mr-3 btn btn-sm btn-outline-success"
+            <button id="btn-suscribir-participante" type="submit" class="btn btn-light text-primary border border-light"
                 style="float: right; position: relative;">
-                <i class="mr-1 fas fa-plus-circle"></i>
-                Agregar Participante
+                Agregar Participante <i class="fa-solid fa-plus"></i>
             </button>
         </div>
     </div>
@@ -129,9 +127,9 @@
             </span>
             <hr>
         </div>
-        <div class="mt-3 col-12 w-100 datatable-fix">
-            <table class="table w-100" id="tbl-participantes">
-                <thead class="thead-dark">
+        <div class="datatable-fix datatable-rds">
+            <table  id="tbl-participantes">
+                <thead >
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
