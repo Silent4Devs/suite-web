@@ -109,17 +109,16 @@
                             </td>
                             <td>
                                 @foreach ($q->participantes as $index => $participante)
-                                    @if ($index < 2)
-                                        {{-- Se pone 2 porque el index empieza en 0 --}}
+                                    @if ($index < 3)
                                         <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
-                                            class="rounded-circle" alt="${participante->name}"
+                                            class="rounded-circle" alt="{{ $participante->name }}"
                                             title="{{ $participante->name }}"
                                             style="clip-path: circle(15px at 50% 50%); height: 30px;">
                                     @endif
                                 @endforeach
                                 @if ($q->participantes->count() > 3)
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#participantsModal">
+                                        data-bs-target="#participantsModal{{ $q->id }}">
                                         +{{ $q->participantes->count() - 3 }} more
                                     </button>
                                 @endif
@@ -173,29 +172,31 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="participantsModal" tabindex="-1" aria-labelledby="participantsModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="participantsModalLabel">Participantes</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Display the full list of participants here -->
-                    @foreach ($q->participantes as $index => $participante)
-                        <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
-                            class="rounded-circle" alt="${participante->name}" title="{{ $participante->name }}"
-                            style="clip-path: circle(15px at 50% 50%); height: 30px;">
-                    @endforeach
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    @foreach ($query as $q)
+        <div class="modal fade" id="participantsModal{{ $q->id }}" tabindex="-1"
+            aria-labelledby="participantsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="participantsModalLabel">Participantes</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @foreach ($q->participantes as $index => $participante)
+                            <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
+                                class="rounded-circle" alt="{{ $participante->name }}" title="{{ $participante->name }}"
+                                style="clip-path: circle(15px at 50% 50%); height: 30px;">
+                        @endforeach
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endforeach
 @endsection
+
 @section('scripts')
     @parent
     <script>

@@ -39,13 +39,11 @@ class MinutasaltadireccionController extends Controller
         // if ($request->ajax()) {
         $query = Minutasaltadireccion::getAllMinutasAltaDireccion();
 
-        // dd($query);
-
         //     return datatables()->of($query)->toJson();
         // }
         // foreach ($query as $q) {
-        //     foreach ($q->planes as $plan) {
-        //         dd($plan->id);
+        //     if ($q->id == 6) {
+        //         dd($q->participantes);
         //     }
         // }
 
