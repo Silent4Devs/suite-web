@@ -25,7 +25,10 @@ class ComiteseguridadController extends Controller
         abort_if(Gate::denies('comformacion_comite_seguridad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Comiteseguridad::with('miembros')->orderByDesc('id')->get();
+            $query = Comiteseguridad::with(['miembros' => function ($query) {
+                $query->select('name', 'foto');
+            }])->orderByDesc('id')->get();
+
             $table = Datatables::of($query);
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
@@ -122,7 +125,7 @@ class ComiteseguridadController extends Controller
     public function show(Comiteseguridad $comiteseguridad)
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($comiteseguridad);
+
         $datas = MiembrosComiteSeguridad::where('comite_id', '=', $comiteseguridad->id)->with('asignacion')->get();
 
         $comiteseguridad->load('miembros');

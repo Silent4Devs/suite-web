@@ -102,43 +102,25 @@
     </style>
 
     {{ Breadcrumbs::render('admin.comiteseguridads.index') }}
-
     @can('comformacion_comite_seguridad_agregar')
         <h5 class="col-12 titulo_general_funcion">Conformación del Comité</h5>
-        <div class="mt-5 card">
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+        <div class="text-right">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('admin.comiteseguridads.create') }}" type="button" class="btn btn-primary">Crear Comité</a>
+                </div>
+        </div>
                 <div class="col-lg-12">
                     @include('csvImport.modalcomitedeseguridad', [
                         'model' => 'Vulnerabilidad',
                         'route' => 'admin.vulnerabilidads.parseCsvImport',
                     ])
                 </div>
-            </div>
-        @endcan
-
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered datatable-Comiteseguridad" style="width: 100%">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="min-width: 150px;">
-                            Nombre del comité
-                        </th>
-                        <th style="min-width: 200px;">
-                            Miembros
-                        </th>
-                        <th style="min-width: 200px;">
-                            Descripción
-                        </th>
-                        <th style="min-width: 25px;">
-                            Opciones
-                        </th>
-                    </tr>
-                    
-                </thead>
-            </table>
-        </div>
-    </div>
+                @include('partials.flashMessages')
+                <div class="datatable-fix datatable-rds">
+                    <h3 class="title-table-rds">Comites</h3>
+                    @include('admin.comiteseguridads.table')
+                </div>
+    @endcan
 @endsection
 @section('scripts')
     @parent
@@ -366,19 +348,8 @@
                     [0, 'desc']
                 ],
             };
+
             let table = $('.datatable-Comiteseguridad').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
     </script>
 @endsection
