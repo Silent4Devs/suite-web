@@ -41,6 +41,8 @@
                 @livewire('amenazas-component', ['foda_id' => $foda_actual])
             </div>
         </div>
+
+        
     </div>
 
 @endsection
