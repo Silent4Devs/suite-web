@@ -291,6 +291,7 @@
                 dtButtons.push(btnImport);
             @endcan
             let dtOverrideGlobals = {
+                pageLength: 5,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -455,4 +456,4 @@
             }
         });
     </script>
-@endsection
+@endsection --}}
