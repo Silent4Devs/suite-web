@@ -227,6 +227,7 @@ class DayOffController extends Controller
 
     public function exportExcel()
     {
+        abort_if(Gate::denies('reglas_dayoff_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $export = new VistaGlobalDayOffExport();
 
         return Excel::download($export, 'Control_Ausencias_DayOff.xlsx');
