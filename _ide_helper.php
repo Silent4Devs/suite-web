@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.35.0.
+ * Generated for Laravel 10.37.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -6762,7 +6762,7 @@
         public static function append($path, $data)
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
-                        return $instance->append($path, $data);
+                        return $instance->append($path, $data, $lock);
         }
                     /**
          * Get or set UNIX mode of a file or directory.
@@ -14242,6 +14242,17 @@
                         return $instance->hasTable($table);
         }
                     /**
+         * Get the user-defined types that belong to the database.
+         *
+         * @return array
+         * @static
+         */
+        public static function getTypes()
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getTypes();
+        }
+                    /**
          * Get all of the table names for the database.
          *
          * @deprecated Will be removed in a future Laravel version.
@@ -14320,6 +14331,30 @@
         {
                         /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
                         return $instance->getColumns($table);
+        }
+                    /**
+         * Get the indexes for a given table.
+         *
+         * @param string $table
+         * @return array
+         * @static
+         */
+        public static function getIndexes($table)
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getIndexes($table);
+        }
+                    /**
+         * Get the foreign keys for a given table.
+         *
+         * @param string $table
+         * @return array
+         * @static
+         */
+        public static function getForeignKeys($table)
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getForeignKeys($table);
         }
                     /**
          * Set the default string length for migrations.
