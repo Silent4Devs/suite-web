@@ -12,11 +12,7 @@
         @can('reglas_dayoff_vista_global')
             <div class="col-12 text-right">
                 <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
-<<<<<<< Updated upstream
-                    href="{{ route('admin.descarga-dayOff') }}">
-=======
                     href="{{ url('admin/ExportVacaciones') }}">
->>>>>>> Stashed changes
                     <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                     Exportar Excel
                 </a>
