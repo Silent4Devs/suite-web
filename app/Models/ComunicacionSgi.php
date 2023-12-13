@@ -62,21 +62,21 @@ class ComunicacionSgi extends Model implements Auditable, HasMedia
     //Redis methods
     public static function getAllwithImagenes()
     {
-        return Cache::remember('ComunicacionSGI:get_all_with_imagenes', 3600 * 10, function () {
+        return Cache::remember('ComunicacionSGI:get_all_with_imagenes', 3600 * 8, function () {
             return self::with('imagenes_comunicacion')->get();
         });
     }
 
     public static function getAllwithImagenesBlog()
     {
-        return Cache::remember('Portal:get_all_with_imagenes_blog', 3600 * 10, function () {
+        return Cache::remember('Portal:get_all_with_imagenes_blog', 3600 * 8, function () {
             return self::with('imagenes_comunicacion')->where('publicar_en', '=', 'Blog')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
         });
     }
 
     public static function getAllwithImagenesCarrousel()
     {
-        return Cache::remember('Portal:get_all_with_imagenes_carrousel', 3600 * 10, function () {
+        return Cache::remember('Portal:get_all_with_imagenes_carrousel', 3600 * 8, function () {
             return self::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
         });
     }
@@ -86,7 +86,7 @@ class ComunicacionSgi extends Model implements Auditable, HasMedia
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);

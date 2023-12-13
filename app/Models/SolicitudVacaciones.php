@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class SolicitudVacaciones extends Model implements Auditable
 {
@@ -29,7 +29,7 @@ class SolicitudVacaciones extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id')->select('name', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->select('name', 'id', 'foto', 'area_id');
     }
 
     public static function getAllwithEmpleados()
