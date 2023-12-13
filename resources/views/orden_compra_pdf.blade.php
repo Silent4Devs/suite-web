@@ -307,6 +307,14 @@
             </tr>
             <tr>
                 <td>
+                    IVA:
+                </td>
+                <td>
+                    <strong> $ {{ $requisiciones->iva }} </strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     IVA&nbsp;retenido:
                 </td>
                 <td>
@@ -372,24 +380,6 @@
                 </td>
             </tr>
         </table>
-        {{-- <table class="encabezado" style="margin-top: 100px">
-            <tr>
-                <td class="td-img-doc">
-                    <img class="img-doc" src="{{ $organizacion->logotipo }}">
-                </td>
-                <td class="info-header">
-                    {{ $requisiciones->sucursal->empresa }}  <br>
-                    {{ $requisiciones->sucursal->rfc }}   <br>
-                    {{ $requisiciones->sucursal->direccion }} <br>
-                </td>
-                <td class="td-blue-header">
-                    <h5 style="color:#49598A;">ORDEN DE COMPRA</h5>
-                    Folio: {{ $requisiciones->folio}} <br>
-                    Fecha de solicitud: {{ date('d-m-Y', strtotime($requisiciones->fecha))  }}
-                </td>
-            </tr>
-        </table> --}}
-
         <table class="table-politicas">
             <tr>
                 <td>
