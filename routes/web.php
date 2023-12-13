@@ -838,6 +838,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
         Route::get('entendimiento-organizacions-foda-organizacions', 'EntendimientoOrganizacionController@cardFoda')->name('foda-organizacions');
         Route::get('entendimiento-organizacions-foda-general', 'EntendimientoOrganizacionController@cardFodaGeneral')->name('foda-general');
+        Route::get('entendimiento-organizacions-foda-admin/{id}','EntendimientoOrganizacionController@adminShow');
 
         // Partes Interesadas
         Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');

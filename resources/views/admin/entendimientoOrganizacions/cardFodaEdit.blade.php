@@ -13,7 +13,7 @@
             <i class="fa-solid fa-print"></i>
         </button>
     </div>
-    <div class="card card-body">
+    <div class="card card-body shadow-sm">
         <div class="d-flex justify-content-between">
             <div>
                 <h5>SILENT 4 BUSINESS</h5>
@@ -42,7 +42,12 @@
             </div>
         </div>
 
-        
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body d-flex justify-content-center">
+            <button type="button" class="btn btn-light" style="border-color: #057BE2; color:#057BE2">Solicitar aprobación</button>
+        </div>
     </div>
 
 @endsection
