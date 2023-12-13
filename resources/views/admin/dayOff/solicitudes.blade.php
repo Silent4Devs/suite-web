@@ -12,7 +12,11 @@
         @can('reglas_dayoff_vista_global')
             <div class="col-12 text-right">
                 <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
+<<<<<<< Updated upstream
                     href="{{ route('admin.descarga-dayOff') }}">
+=======
+                    href="{{ url('admin/ExportVacaciones') }}">
+>>>>>>> Stashed changes
                     <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                     Exportar Excel
                 </a>
@@ -68,6 +72,61 @@
                     </th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach ($solday as $sol)
+                    <tr>
+                        <td style="min-width: 200px;">
+                            <img src="{{ $sol->empleado->avatar_ruta }}" title="{{ $sol->empleado->name }}"
+                                class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            <span>{{ $sol->empleado->name }}</span>
+                        </td>
+                        <td style="min-width: 200px;">
+                            {{ $sol->descripcion }}
+                        </td>
+                        <td style="min-width: 75px;">
+                            {{ $sol->año }}
+                        </td>
+                        <td style="min-width: 110px;">
+                            {{ $sol->dias_solicitados }}
+                        </td>
+
+                        <td style="min-width: 100px;">
+                            {{ $sol->fecha_inicio }}
+                        </td>
+                        <td style="min-width: 100px;">
+                            {{ $sol->fecha_fin }}
+                        </td>
+                        <td style="min-width: 75px;">
+                            @if ($sol->aprobacion == 1)
+                                <div style="text-align:left">
+                                    <span class="estatus-global-vac"
+                                        style="background: #FBFFBF; color: #DD8E04;">Pendiente</span>
+                                </div>
+                            @elseif ($sol->aprobacion == 2)
+                                <div style="text-align:left">
+                                    <span class="estatus-global-vac"
+                                        style="background: #D9D9D9; color: #464646;">Rechazado</span>
+                                </div>
+                            @elseif ($sol->aprobacion == 3)
+                                <div style="text-align:left">
+                                    <span class="estatus-global-vac"
+                                        style="background: #BFFFC9; color: #008F27;">Aprobado</span>
+                                </div>
+                            @elseif (!$sol->aprobacion)
+                                <span class="estatus-global-vac" style="background: #ffbfe5; color: #dd0483;">Sin
+                                    Seguimiento</span>
+                            @endif
+                        </td>
+                        {{-- <td style="min-width: 150px;">
+                                Comentarios
+                            </td> --}}
+                        <td style="min-width: 70px;">
+                            <a href="solicitud-dayoff/{{ $sol->id }}/vistaGlobal" title="Ver solicitud"><i
+                                    class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
     {{-- </div> --}}
@@ -211,131 +270,7 @@
                 pageLength: 5,
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
                 retrieve: true,
-                aaSorting: [],
-                ajax: "{{ route('admin.vista-global-dayoff') }}",
-                columns: [{
-                        data: 'empleado',
-                        name: 'empleado',
-                        render: function(data, type, row, meta) {
-                            data = JSON.parse(data);
-                            return `
-                            <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-                            <span>${data.name}</span>
-                            `;
-                        }
-                    },
-
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:center">${data}</div>`;
-                        }
-                    },
-
-                    {
-                        data: 'año',
-                        name: 'año',
-                        render: function(data, type, row) {
-
-                            return `<div style="text-align:center">${data}</div>`;
-                        }
-
-                    },
-
-                    {
-                        data: 'dias_solicitados',
-                        name: 'dias_solicitados',
-                        render: function(data, type, row) {
-
-                            return `<div style="text-align:center">${data}</div>`;
-                        }
-
-                    },
-
-                    {
-                        data: 'fecha_inicio',
-                        name: 'fecha_inicio',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-
-                        }
-                    },
-                    {
-                        data: 'fecha_fin',
-                        name: 'fecha_fin',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-                        }
-                    },
-                    {
-                        data: 'aprobacion',
-                        name: 'aprobacion',
-                        render: function(data, type, row) {
-                            const aprobacion = row.aprobacion;
-                            console.log(aprobacion)
-                            switch (Number(aprobacion)) {
-                                case 1:
-                                    return `
-                                <div  style="text-align:left">
-                                    <span class="badge badge-pill badge-warning">Pendiente</span>
-                                </div>
-                                `;
-                                    break;
-                                case 2:
-                                    return `
-                                <div style="text-align:left">
-                                    <span class="badge badge-pill badge-danger">Rechazado</span>
-                                </div>
-                                `;
-                                    break;
-                                case 3:
-                                    return `
-                                <div style="text-align:left">
-                                    <span class="badge badge-pill badge-success">Aprobado</span>
-                                </div>
-                                `;
-                                    break;
-                                default:
-                                    return `
-                                <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
-                                `;
-                            }
-                        }
-                    },
-
-                    // {
-                    //     data: 'descripcion',
-                    //     name: 'descripcion',
-                    //     render: function(data, type, row) {
-                    //         return `<div style="text-align:left">${data}</div>`;
-                    //     }
-                    // },
-                    {
-                        data: 'opciones',
-                        render: function(data, type, row, meta) {
-                            let aprobacion = row.aprobacion;
-                            let id = row.id;
-                            console.log(id);
-
-                            return `
-                                <div style="text-aling:center">
-                                <a href="solicitud-dayoff/${row.id}/vistaGlobal"  title="Ver solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                                </div>
-                               `;
-                        }
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ],
             };
             let table = $('.datatable-vista-global-dayoff').DataTable(dtOverrideGlobals);
             // $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
