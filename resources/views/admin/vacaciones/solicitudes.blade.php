@@ -9,17 +9,11 @@
 
     @can('reglas_vacaciones_acceder')
         <div class="text-right">
-            <<<<<<< Updated upstream {{--  <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
-                href="{{ route('admin.descarga-vacaciones') }}">  --}} <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
-                title="Exportar Excel"></i>
+            <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
+                href="{{ url('admin/ExportDayOff') }}">
+                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                 Exportar Excel
-                =======
-                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
-                    href="{{ url('admin/ExportDayOff') }}">
-                    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                    Exportar Excel
-                    >>>>>>> Stashed changes
-                </a>
+            </a>
         </div>
     @endcan
 
