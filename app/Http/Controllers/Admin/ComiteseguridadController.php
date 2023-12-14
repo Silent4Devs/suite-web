@@ -120,7 +120,6 @@ class ComiteseguridadController extends Controller
             }
         }
 
-
         return redirect()->route('admin.comiteseguridads.index')->with('success', 'Editado con éxito');
     }
 
@@ -151,7 +150,6 @@ class ComiteseguridadController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-
     public function saveMember(Request $request, $id_comite)
     {
         $miebros = MiembrosComiteSeguridad::create([
@@ -165,7 +163,6 @@ class ComiteseguridadController extends Controller
 
         return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
     }
-
 
     public function deleteMember($id)
     {
