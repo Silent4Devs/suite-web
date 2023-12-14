@@ -55,8 +55,9 @@
                         </p>
 
                         <div class="row">
-                            <label for="superaprobadores">SuperAprobadores</label>
-                            <select id="superaprobadores" name="superaprobadores" class="form-control" multiple="multiple">
+                            <label for="superaprobadores">Super Aprobadores</label>
+                            <select id="superaprobadores" name="superaprobadores[]" class="form-control"
+                                multiple="multiple">
                                 @foreach ($empleados as $empleado)
                                     <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
                                         {{ $empleado->name }}</option>
@@ -79,11 +80,11 @@
                             </select>
                         </div>
 
-                        @for ($i = 1; $i < 6; $i++)
+                        {{-- @for ($i = 1; $i < 6; $i++)
                             <div class="form-row nivel{{ $i }}Div" style="display: none;">
                                 <label for="nivel{{ $i }}">Nivel {{ $i }}</label>
-                                <select id="nivel{{ $i }}" name="nivel{{ $i }}" class="form-control"
-                                    multiple="multiple">
+                                <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
+                                    class="form-control" multiple="multiple">
                                     @foreach ($empleados as $empleado)
                                         <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
                                             {{ $empleado->name }}
@@ -91,8 +92,22 @@
                                     @endforeach
                                 </select>
                             </div>
+                        @endfor --}}
+                        @for ($i = 1; $i < 6; $i++)
+                            <div class="form-row nivel{{ $i }}Div" style="display: none;">
+                                <label for="nivel{{ $i }}">Nivel {{ $i }}</label>
+                                <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
+                                    class="form-control" multiple="multiple">
+                                    @foreach ($empleados as $empleado)
+                                        <option value="{{ $empleado->id }}"
+                                            data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                            {{ in_array($empleado->id, $nivelData[$i - 1] ?? []) ? 'selected' : '' }}>
+                                            {{ $empleado->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         @endfor
-
                         {{-- <div class="form-row niveles-container" id="nivel2-container">
                             <label for="nivel2">Nivel 2</label>
                             <select id="nivel2" name="nivel2[]" class="form-control" multiple="multiple">
@@ -153,6 +168,95 @@
 @endsection
 
 @section('scripts')
+    <script>
+        var superaprobadoresSeleccionados = {!! json_encode($superaprobadores_seleccionados) !!};
+
+        // Loop through each superaprobador
+        superaprobadoresSeleccionados.forEach(function(superaprobador) {
+            var empleadoId = superaprobador.empleado_id;
+            var numeroOrden = superaprobador.numero_orden;
+
+            // Find the corresponding option based on empleadoId
+            var option = $('#superaprobadores option[value="' + empleadoId + '"]');
+
+            // If the option exists, append it to the #superaprobadores select based on numero_orden
+            if (option.length > 0) {
+                option.detach();
+                var options = $('#superaprobadores option');
+                if (options.length === 0) {
+                    $('#superaprobadores').append(option);
+                } else {
+                    options.each(function(index, element) {
+                        var currentNumeroOrden = superaprobadoresSeleccionados.find(sa => sa.empleado_id ==
+                            $(element).val()).numero_orden;
+                        if (numeroOrden < currentNumeroOrden) {
+                            option.insertBefore(element);
+                            return false; // Break the loop
+                        } else if (index === options.length - 1) {
+                            $('#superaprobadores').append(option);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
+    <script>
+        var participantesSeleccionados = {!! json_encode($participantes_seleccionados) !!};
+
+        function populateSelects() {
+            Object.keys(participantesSeleccionados).forEach(function(nivel) {
+                var nivelSelect = $('#' + nivel);
+
+                participantesSeleccionados[nivel].forEach(function(item) {
+                    if (nivelSelect.length && item.empleado_id) {
+                        var foundOption = nivelSelect.find('option[value="' + item.empleado_id + '"]');
+
+                        // Check if the option exists and select it if it does
+                        if (foundOption.length) {
+                            foundOption.attr('selected', 'selected');
+                        } else {
+                            var option = new Option(item.empleado_id, item.empleado_id);
+                            $(option).html(item
+                                .empleado_id); // Change this according to your display requirements
+
+                            nivelSelect.append(option);
+                        }
+                    }
+                });
+            });
+        }
+
+        $(document).ready(function() {
+            populateSelects();
+        });
+    </script>
+
+    <script>
+        var participantesSeleccionados = {!! json_encode($participantes_seleccionados) !!};
+
+        $(document).ready(function() {
+            // Loop through each level (nivel1, nivel2, etc.)
+            $.each(participantesSeleccionados, function(key, value) {
+                var selectElement = $('#' + key);
+                var options = $('option', selectElement);
+
+                // Sort the options based on the numero_orden property
+                options.detach().sort(function(a, b) {
+                    var aOrder = value.find(item => item.empleado_id == $(a).val())?.numero_orden ||
+                        0;
+                    var bOrder = value.find(item => item.empleado_id == $(b).val())?.numero_orden ||
+                        0;
+                    return aOrder - bOrder;
+                });
+
+                // Append the sorted options back to the select element
+                selectElement.append(options);
+            });
+        });
+    </script>
+
+
     <script>
         $(document).ready(function() {
             $('#niveles').change(function() {
@@ -225,13 +329,15 @@
     </script>
 
     <script>
-        var selectedOptions = []; // Array to store selected options in order
-
-        $('#nivel1').select2({
-            templateResult: formatAvatar, // Format avatar in options
-            templateSelection: formatAvatar, // Format avatar in selected options
-            escapeMarkup: function(m) {
-                return m;
+        $(document).ready(function() {
+            for (let i = 1; i < 6; i++) {
+                $('#nivel' + i).select2({
+                    templateResult: formatAvatar,
+                    templateSelection: formatAvatar,
+                    escapeMarkup: function(m) {
+                        return m;
+                    }
+                });
             }
         });
 
@@ -241,17 +347,24 @@
             }
 
             var avatar = $(option.element).data('avatar');
-            var avatarHtml = `<img src="{{ asset('storage/empleados/imagenes') }}/${avatar}" class="img_empleado" />`;
+            var avatarHtml = `<img src="${avatar}" class="img_empleado" />`;
             var avatarText = option.text;
 
             var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
             return formattedResult;
         }
+    </script>
+
+    <script>
+        var selectedOptions = []; // Array to store selected options in order
+
 
         $('#nivel1').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
             if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
                 $('#nivel1').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
                 selectedOptions.shift();
             }
@@ -277,31 +390,12 @@
     <script>
         var selectedOptions = []; // Array to store selected options in order
 
-        $('#nivel2').select2({
-            templateResult: formatAvatar, // Format avatar in options
-            templateSelection: formatAvatar, // Format avatar in selected options
-            escapeMarkup: function(m) {
-                return m;
-            }
-        });
-
-        function formatAvatar(option) {
-            if (!option.id) {
-                return option.text;
-            }
-
-            var avatar = $(option.element).data('avatar');
-            var avatarHtml = `<img src="{{ asset('storage/empleados/imagenes') }}/${avatar}" class="img_empleado" />`;
-            var avatarText = option.text;
-
-            var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
-            return formattedResult;
-        }
-
         $('#nivel2').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
             if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
                 $('#nivel2').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
                 selectedOptions.shift();
             }
@@ -327,31 +421,12 @@
     <script>
         var selectedOptions = []; // Array to store selected options in order
 
-        $('#nivel3').select2({
-            templateResult: formatAvatar, // Format avatar in options
-            templateSelection: formatAvatar, // Format avatar in selected options
-            escapeMarkup: function(m) {
-                return m;
-            }
-        });
-
-        function formatAvatar(option) {
-            if (!option.id) {
-                return option.text;
-            }
-
-            var avatar = $(option.element).data('avatar');
-            var avatarHtml = `<img src="{{ asset('storage/empleados/imagenes') }}/${avatar}" class="img_empleado" />`;
-            var avatarText = option.text;
-
-            var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
-            return formattedResult;
-        }
-
         $('#nivel3').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
             if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
                 $('#nivel3').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
                 selectedOptions.shift();
             }
@@ -377,31 +452,12 @@
     <script>
         var selectedOptions = []; // Array to store selected options in order
 
-        $('#nivel4').select2({
-            templateResult: formatAvatar, // Format avatar in options
-            templateSelection: formatAvatar, // Format avatar in selected options
-            escapeMarkup: function(m) {
-                return m;
-            }
-        });
-
-        function formatAvatar(option) {
-            if (!option.id) {
-                return option.text;
-            }
-
-            var avatar = $(option.element).data('avatar');
-            var avatarHtml = `<img src="{{ asset('storage/empleados/imagenes') }}/${avatar}" class="img_empleado" />`;
-            var avatarText = option.text;
-
-            var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
-            return formattedResult;
-        }
-
         $('#nivel4').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
             if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
                 $('#nivel4').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
                 selectedOptions.shift();
             }
@@ -426,32 +482,12 @@
 
     <script>
         var selectedOptions = []; // Array to store selected options in order
-
-        $('#nivel5').select2({
-            templateResult: formatAvatar, // Format avatar in options
-            templateSelection: formatAvatar, // Format avatar in selected options
-            escapeMarkup: function(m) {
-                return m;
-            }
-        });
-
-        function formatAvatar(option) {
-            if (!option.id) {
-                return option.text;
-            }
-
-            var avatar = $(option.element).data('avatar');
-            var avatarHtml = `<img src="{{ asset('storage/empleados/imagenes') }}/${avatar}" class="img_empleado" />`;
-            var avatarText = option.text;
-
-            var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
-            return formattedResult;
-        }
-
         $('#nivel5').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
             if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
                 $('#nivel5').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
                 selectedOptions.shift();
             }

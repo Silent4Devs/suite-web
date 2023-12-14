@@ -45,25 +45,42 @@
                             });
                         @endphp
 
-                        <div class="row mb-3">
-                            <div class="col-6">
-                                <h6>Nivel {{ $nivel }}</h6>
-                            </div>
-                            <div class="col-6">
-                                <div class="row">
-                                    @foreach ($participantesByLevel as $participante)
-                                        <div class="col-2">
-                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
-                                                class="img_empleado" title="{{ $participante->empleado->name }}">
-                                            <!-- Add other empleado details here -->
-                                        </div>
-                                    @endforeach
+                        @if ($nivel == 0)
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <h6>Super Aprobadores</h6>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        @foreach ($participantesByLevel as $participante)
+                                            <div class="col-2">
+                                                <img src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
+                                                    class="img_empleado" title="{{ $participante->empleado->name }}">
+                                                <!-- Add other empleado details here -->
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <h6>Nivel {{ $nivel }}</h6>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        @foreach ($participantesByLevel as $participante)
+                                            <div class="col-2">
+                                                <img src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
+                                                    class="img_empleado" title="{{ $participante->empleado->name }}">
+                                                <!-- Add other empleado details here -->
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     @endforeach
-
-                    <!-- Other modal content -->
                 </div>
             </div>
         </div>

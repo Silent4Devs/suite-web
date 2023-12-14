@@ -68,6 +68,7 @@ class MinutasaltadireccionController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($request->all());
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -76,13 +77,14 @@ class MinutasaltadireccionController extends Controller
             'hora_termino' => 'required',
             'tema_reunion' => 'required',
             'tema_tratado' => 'required',
+            'tipo_reunion' => 'required',
             'actividades' => new ActividadesPlanAccionRule,
             'participantes' => new ParticipantesMinutasAltaDireccionRule,
 
         ]);
 
         $minutasaltadireccion = Minutasaltadireccion::create($request->all());
-
+        // dd('se guardo bien tipo de reunion', $minutasaltadireccion);
         if ($request->hasFile('files')) {
             $files = $request->file('files');
             foreach ($files as $file) {
@@ -125,11 +127,28 @@ class MinutasaltadireccionController extends Controller
 
     public function vincularParticipantes($request, $minutasaltadireccion)
     {
-        $arrstrParticipantes = explode(',', $request->participantes);
-        $participantes = array_map(function ($valor) {
-            return intval($valor);
-        }, $arrstrParticipantes);
-        $minutasaltadireccion->participantes()->sync($participantes);
+        // $arrstrParticipantes = explode(',', $request->participantes);
+        // $participantes = array_map(function ($valor) {
+        //     return intval($valor);
+        // }, $arrstrParticipantes);
+
+        $participantes = json_decode($request->input('participantes'));
+        // dd($participantes);
+        if (is_array($participantes)) {
+            foreach ($participantes as $participante) {
+
+                $empleadoId = $participante->empleado_id;
+                $asistencia = $participante->asistencia;
+
+                $arrpart[] = [
+                    'empleado_id' => $empleadoId,
+                    'asistencia' => $asistencia,
+                ];
+            }
+        }
+        // dd($arrpart);
+        $minutasaltadireccion->participantes()->sync($arrpart);
+        // dd('SE guardo correctamente');
     }
 
     public function vincularParticipantesExternos($request, $minutasaltadireccion)
@@ -143,6 +162,7 @@ class MinutasaltadireccionController extends Controller
                     'emailEXT' => removeUnicodeCharacters($participante->email),
                     'puestoEXT' => $participante->puesto,
                     'empresaEXT' => $participante->empresa,
+                    'asistenciaEXT' => $participante->asistencia,
                     'minuta_id' => $minutasaltadireccion->id,
                 ]);
             }

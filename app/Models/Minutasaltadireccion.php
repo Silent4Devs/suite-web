@@ -54,6 +54,7 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
         'responsable_id',
         'arearesponsable',
         'fechareunion',
+        'tipo_reunion',
         'hora_inicio',
         'hora_termino',
         'tema_reunion',

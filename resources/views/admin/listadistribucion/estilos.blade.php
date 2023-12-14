@@ -58,6 +58,10 @@
         border-radius: 14px;
     }
 
+    .card h5 {
+        color: #306BA9;
+    }
+
     .instrucciones {
         background-color: #5397D5;
         border-radius: 8px;
@@ -65,7 +69,7 @@
         padding: 20px;
     }
 
-    .form-group label {
+    /* .form-group label {
         position: absolute;
         font-size: 20px;
         pointer-events: none;
@@ -110,5 +114,5 @@
     .form-group input:focus+label,
     .form-group input:not(:placeholder-shown)+label {
         transform: translateY(-35px);
-    }
+    } */
 </style>

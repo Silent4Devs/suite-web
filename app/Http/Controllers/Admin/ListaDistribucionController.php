@@ -96,6 +96,18 @@ class ListaDistribucionController extends Controller
         //
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
 
+        // dd($i);
+        foreach ($lista->participantes as $participante) {
+            if ($participante->nivel == 0) {
+                // dd('entra');
+                $superaprobadores_seleccionados[] =
+                    [
+                        'empleado_id' => $participante->empleado_id,
+                        'numero_orden' => $participante->numero_orden,
+                    ];
+            }
+        }
+        // dd($superaprobadores_seleccionados);
         for ($i = 1; $i <= $lista->niveles; $i++) {
             // dd($i);
             foreach ($lista->participantes as $participante) {
@@ -120,7 +132,7 @@ class ListaDistribucionController extends Controller
         // dd($lista->participantes);
         // dd('Llega', $id, $lista_distribucion);
         // dd($empleados);
-        return view('admin.listadistribucion.edit', compact('lista', 'participantes_seleccionados', 'empleados'));
+        return view('admin.listadistribucion.edit', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados'));
     }
 
     /**
@@ -134,26 +146,40 @@ class ListaDistribucionController extends Controller
         $lista = ListaDistribucion::select('id')->find($id);
         // dd($lista_id);
         // $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->get();
+        // dd($request->all());
+        $lista->update([
+            'niveles' => $request->niveles,
+        ]);
 
         $data = [];
         for ($i = 1; $i <= $request->niveles; $i++) {
-            // dd("Entra en el for");
-            // Assuming you have arrays like $nivel1, $nivel2, ..., $nivel5
             $nivelArrayName = 'nivel' . $i;
-            // dd("Entra en el if", $nivelArrayName, isset($nivelArrayName));
-            if (isset($nivelArrayName)) { // Check if the array exists in the controller
-                // dd($request->$nivelArrayName);
+            if (isset($nivelArrayName)) {
                 $data[$i] = $request->$nivelArrayName;
-                // $data[$nivelArrayName] = $nivelArrayName; // Collect data for the current nivel
+                // $data[$nivelArrayName] = $nivelArrayName;
             }
         }
-        // dd($data);
-        // dd($participantes);
+
+        if (isset($request->superaprobadores)) {
+            $superi = 1;
+            foreach ($request->superaprobadores as $superaprobador) {
+                // dd("superaprobador", $superaprobador);
+                $super = ParticipantesListaDistribucion::updateOrCreate(
+                    [
+                        'modulo_id' => $lista->id,
+                        'nivel' => 0,
+                        'numero_orden' => $superi,
+                        'empleado_id' => $superaprobador,
+                    ],
+                );
+                $i++;
+            }
+        }
+
         foreach ($data as $key => $nivel) {
-            // dd($key, $nivel);
             $i = 1;
             foreach ($nivel as $participante) {
-                // dd($participante);
+
                 $participantes = ParticipantesListaDistribucion::updateOrCreate(
                     [
                         'modulo_id' => $lista->id,
