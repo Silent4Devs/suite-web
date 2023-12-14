@@ -52,5 +52,7 @@ class ComunicadoSgiObserver
         Cache::forget('ComunicacionSGI:get_all_with_imagenes');
         Cache::forget('Portal:get_all_with_imagenes_blog');
         Cache::forget('Portal:get_all_with_imagenes_carrousel');
+        Cache::forget('Portal:portal_aniversarios');
+        Cache::forget('Portal:portal_aniversarios_contador_circulo');
     }
 }

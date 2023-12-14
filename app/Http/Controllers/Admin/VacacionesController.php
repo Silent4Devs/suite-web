@@ -234,6 +234,7 @@ class VacacionesController extends Controller
 
     public function exportExcel()
     {
+        abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $export = new VistaGlobalVacacionesExport();
 
         return Excel::download($export, 'Control_Ausencias_Vacaciones.xlsx');
