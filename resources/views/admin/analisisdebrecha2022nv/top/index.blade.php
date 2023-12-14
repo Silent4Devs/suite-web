@@ -67,10 +67,10 @@
 
         </div>
         <div class="col-md-2" style="padding-left:40px;">
-            <a href="{{ route('admin.formulario') }}">
+            {{-- <a href="{{ route('admin.formulario') }}">
                 <button type="button" class="btn btn-outline-primary"
                     style="width: 136px;color:#2567AE;background-color: white;">Regresar</button>
-            </a>
+            </a> --}}
         </div>
     </div>
 @endsection
