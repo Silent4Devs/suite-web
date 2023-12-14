@@ -307,6 +307,14 @@
             </tr>
             <tr>
                 <td>
+                    IVA:
+                </td>
+                <td>
+                    <strong> $ {{ $requisiciones->iva }} </strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     IVA&nbsp;retenido:
                 </td>
                 <td>

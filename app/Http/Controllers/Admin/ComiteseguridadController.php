@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyComiteseguridadRequest;
 use App\Http\Requests\UpdateComiteseguridadRequest;
+use App\Mail\MemberEmail;
 use App\Models\Comiteseguridad;
 use App\Models\Empleado;
 use App\Models\MiembrosComiteSeguridad;
@@ -13,6 +14,7 @@ use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
+use Mail;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -71,9 +73,6 @@ class ComiteseguridadController extends Controller
     public function create()
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        // $empleados = Empleado::getAltaEmpleadosWithArea();
-        // return view('admin.comiteseguridads.create', compact('personaasignadas', 'empleados'));
         $id = new Comiteseguridad();
 
         return view('admin.comiteseguridads.create', compact('id'));
@@ -81,17 +80,12 @@ class ComiteseguridadController extends Controller
 
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('comformacion_comite_seguridad_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $comiteseguridad = Comiteseguridad::create($request->all());
-        // // dd($comiteseguridad);
-        // return redirect()->route('admin.comiteseguridads.index')->with('success', 'Guardado con éxito');
         $request->validate([
             'nombre_comite' => 'required',
             'descripcion' => 'required',
         ]);
 
         $comiteseguridad = Comiteseguridad::create($request->all());
-        // $id = $request->id;
 
         return redirect()->route('admin.comiteseguridads.edit', ['comiteseguridad' => $comiteseguridad]);
     }
@@ -100,10 +94,6 @@ class ComiteseguridadController extends Controller
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $comiteseguridad = Comiteseguridad::find($comiteseguridad);
-        // $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        // $comiteseguridad->load('team');
-        // $empleados = Empleado::getAltaEmpleadosWithArea();
-        // return view('admin.comiteseguridads.edit', compact('personaasignadas', 'comiteseguridad', 'empleados'));
 
         return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
     }
@@ -118,6 +108,18 @@ class ComiteseguridadController extends Controller
         ]);
 
         $comiteseguridad->update($request->all());
+
+        $miembros = MiembrosComiteSeguridad::where('comite_id', '=', $comiteseguridad->id)->with('asignacion')->get();
+
+        foreach ($miembros as $miembro) {
+
+            $empleado = Empleado::where('id', $miembro->id_asignada)->first();
+
+            if ($empleado) {
+                Mail::to($empleado->email)->send(new MemberEmail($empleado->name, $comiteseguridad->nombre_comite));
+            }
+        }
+
 
         return redirect()->route('admin.comiteseguridads.index')->with('success', 'Editado con éxito');
     }
@@ -149,10 +151,43 @@ class ComiteseguridadController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
+
+    public function saveMember(Request $request, $id_comite)
+    {
+        $miebros = MiembrosComiteSeguridad::create([
+            'comite_id' => $id_comite,
+            'id_asignada' => $request->input('id_asignada'),
+            'nombrerol' => $request->input('nombrerol'),
+            'responsabilidades' => $request->input('responsabilidades'),
+        ]);
+
+        $comiteseguridad = Comiteseguridad::find($id_comite);
+
+        return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
+    }
+
+
+    public function deleteMember($id)
+    {
+
+        $miembros = MiembrosComiteSeguridad::find($id);
+        $miembros->forceDelete();
+
+        $comiteseguridad = Comiteseguridad::find($miembros->comite_id);
+
+        return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
+    }
+
     public function visualizacion(Request $request)
     {
         if ($request->ajax()) {
-            $query = Comiteseguridad::with('miembros')->orderByDesc('id')->get();
+            $query = Comiteseguridad::with(['miembros' => function ($query) {
+                $query->whereNull('miembros.deleted_at');
+            }])
+                ->whereNull('comiteseguridad.deleted_at')
+                ->orderByDesc('comiteseguridad.id')
+                ->get();
+
             $table = Datatables::of($query);
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');

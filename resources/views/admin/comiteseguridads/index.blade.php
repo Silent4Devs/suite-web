@@ -99,6 +99,11 @@
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
         }
+
+        .gris-icono {
+        color: gray; /* Puedes ajustar el color según tus preferencias (puede ser en formato de nombre, hexadecimal, rgba, etc.) */
+        }
+
     </style>
 
     {{ Breadcrumbs::render('admin.comiteseguridads.index') }}
@@ -106,15 +111,21 @@
         <h5 class="col-12 titulo_general_funcion">Conformación del Comité</h5>
         <div class="text-right">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.comiteseguridads.create') }}" type="button" class="btn btn-primary">Crear Comité</a>
+                    <a href="{{ route('admin.comiteseguridads.create') }}" type="button" class="btn btn-primary">Registrar Comité</a>
                 </div>
         </div>
-                <div class="col-lg-12">
-                    @include('csvImport.modalcomitedeseguridad', [
-                        'model' => 'Vulnerabilidad',
-                        'route' => 'admin.vulnerabilidads.parseCsvImport',
-                    ])
-                </div>
+        <br>
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="#" id="btnImport"  type="button" class="import" title="import"><img src="{{asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg')}}" alt="Importar" class="icon"></a>
+                &nbsp;  &nbsp;
+                <a href="{{ route('descarga-comite_seguridad' )}}" type="button" class="export"  title="export"><img src="{{asset('download_FILL0_wght300_GRAD0_opsz24.svg')}}" alt="Importar" class="icon"></a>
+            </div>
+            @include('csvImport.modalcomitedeseguridad', [
+                'model' => 'Vulnerabilidad',
+                'route' => 'admin.vulnerabilidads.parseCsvImport',
+            ])
+       </div>
                 @include('partials.flashMessages')
                 <div class="datatable-fix datatable-rds">
                     <h3 class="title-table-rds">Comites</h3>
@@ -124,6 +135,13 @@
 @endsection
 @section('scripts')
     @parent
+    <script>
+        $('#btnImport').on('click', function(e) {
+        e.preventDefault();
+        console.log('Clic en el botón de importación'); // Agrega esta línea para verificar
+        $('#xlsxImportModal').modal('show');
+     });
+    </script>
     <script>
         $(function() {
             let dtButtons = [{
@@ -306,31 +324,77 @@
                         }
                     },
                     {
-                        data: 'miembros',
-                        name: 'miembros',
-                        render: function(data, type, row, meta) {
-                            let miembros = data;
-                            if (type === "miembroText") {
-                                let miembrosTexto = "";
-                                miembros.forEach(miembro => {
-                                    miembrosTexto += `
-                            ${miembro.name},
-                            `;
-                                });
-                                return miembrosTexto.trim();
-                            }
-                            let html = '';
-                            miembros.forEach(miembro => {
-                                html += `
-                            <img src="{{ asset('storage/empleados/imagenes/') }}/${miembro.avatar}"
-                                        class="rounded-circle" alt="${miembro.name}"
-                                        title="${miembro.name}" style="clip-path: circle(15px at 50% 50%);height: 30px;">
-                            `
-                            });
-                            return html;
-                        }
+                            data: 'miembros',
+                            name: 'miembros',
+                            render: function (data, type, row, meta) {
+                                let miembros = data;
 
-                    },
+                                if (type === "miembroText") {
+                                    let miembrosTexto = "";
+                                    miembros.slice(0, 3).forEach(miembro => {
+                                        miembrosTexto += `${miembro.name}, `;
+                                    });
+                                    return miembrosTexto.trim();
+                                } else {
+                                    let html = '<div style="display: flex; align-items: center;">'; // Contenedor flexbox con alineación vertical centrada
+                                    const maxVisibleImages = 3;
+
+                                    miembros.slice(0, maxVisibleImages).forEach(miembro => {
+                                        html += `
+                                            <img src="{{ asset('storage/empleados/imagenes/') }}/${miembro.avatar}"
+                                                class="rounded-circle" alt="${miembro.name}"
+                                                title="${miembro.name}" style="clip-path: circle(15px at 50% 50%); height: 30px; margin-right: 5px;"> <!-- Cambiado el margin-right a un valor positivo -->
+                                        `;
+                                    });
+
+                                    if (miembros.length > maxVisibleImages) {
+                                        // Si hay más de tres imágenes, mostrar el botón de más
+                                        html += `
+                                        <button type="button" class="btn btn-primary text-white rounded-circle" data-toggle="modal" data-target="#miembrosModal">
+                                            +
+                                        </button>
+                                        `;
+
+                                        // Modal con las imágenes adicionales
+                                        html += `
+                                            <div class="modal fade" id="miembrosModal" tabindex="-1" role="dialog" aria-labelledby="miembrosModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable" role="document"> <!-- Cambiado a modal-dialog-scrollable -->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="miembrosModalLabel">Miembros Adicionales</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body" style="text-align: center; display: flex; flex-wrap: nowrap; overflow-x: auto;">
+                                        `;
+
+                                        // Mostrar las imágenes adicionales en el modal
+                                        miembros.forEach(miembro => {
+                                            html += `
+                                                <img src="{{ asset('storage/empleados/imagenes/') }}/${miembro.avatar}"
+                                                    class="rounded-circle" alt="${miembro.name}" title="${miembro.name}" style="clip-path: circle(15px at 50% 50%); height: 30px; margin-right: 5px;">
+                                            `;
+                                        });
+
+                                        // Cierre del modal y del contenedor
+                                        html += `
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }
+
+                                    html += '</div>'; // Cierre del contenedor flexbox
+                                    return html;
+                                }
+                            }
+                        },
+
                     {
                         data: 'descripcion',
                         name: 'descripcion',
