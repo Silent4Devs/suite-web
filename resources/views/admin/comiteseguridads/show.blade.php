@@ -51,39 +51,13 @@
                         </p>
                     </div><br>
                 @else
-                    <div class="form-group col-12">
-                        <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
-                            Miembros del Comité</p>
+
+                    @include('partials.flashMessages')
+                    <div class="datatable-fix datatable-rds">
+                        <h3 class="title-table-rds">Miembros  del  Comites</h3>
+                        @include('admin.comiteseguridads.table_miembros_view')
                     </div>
 
-                    <table class=table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="min-width: 150px;">Nombre del Rol</th>
-                                <th scope="col" style="min-width: 250px;">Nombre del Colaborador</th>
-                                <th scope="col" style="min-width: 150px;">Responsabilidades</th>
-                                <th scope="col" style="min-width: 100px;">Alta</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($datas as $data)
-                                <tr>
-                                    <th scope="row" style="text-align: left;"> {{ $data->nombrerol ?: 'No definido' }}</th>
-                                    @if (!empty($data->asignacion->name))
-                                        <td> {{ $data->asignacion->name}}</td>
-                                    @else
-                                        <td style="text-align: left;"> No definido </td>
-                                    @endif
-                                    @if ($data->responsabilidades)
-                                        <td style="text-align: left;">{!! $data->responsabilidades !!}</td>
-                                    @else
-                                        <td style="text-align: left;">No definido</td>
-                                    @endif
-                                    <td style="text-align: left;">{{ $data->fechavigor ?: 'No definido' }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
                 @endif
 
 
