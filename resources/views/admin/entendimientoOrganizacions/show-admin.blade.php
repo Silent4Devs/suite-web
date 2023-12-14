@@ -17,8 +17,8 @@
         <h5 class="titulo_general_funcion">Matriz FODA</h5>
     </div>
 
-    <div class="card card-body shadow-sm">
-        <div class="d-flex justify-content-between">
+    {{-- <div class="card card-body shadow-sm"> --}}
+        {{-- <div class="d-flex justify-content-between">
             <div>
                 <h5>SILENT 4 BUSINESS</h5>
                 <a class="d-inline" href="{{route('admin.entendimiento-organizacions.edit', $foda_actual)}}" style="text-decoration-line: none;">
@@ -29,7 +29,7 @@
                 </p>
             </div>
             <img src="{{ $logo_actual }}" alt="Logo de la empresa" height="150px">
-        </div>
+        </div> --}}
 
         <div class="card card-body">
             <div class="d-flex justify-content-between">
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    {{-- </div> --}}
 
     <div class="card shadow-sm">
         <div class="card-body">
