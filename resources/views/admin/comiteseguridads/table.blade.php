@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th style="min-width: 200px; max-width:200px;">
-                Nombre
+                Nombre del comité
             </th>
             <th style="min-width: 200px; max-width:200px;">
                 Miembros

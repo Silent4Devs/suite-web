@@ -36,7 +36,7 @@
         color: #FFFFFF;
         opacity: 1;
     }
-    .imgdoc{
+     .imgdoc{
         width: 140px;
         height: 140px;
         /* UI Properties */
@@ -47,6 +47,15 @@
           width: 80%;
           margin: 0 auto; /* Esto centra el div horizontalmente en la página */
         }
+    #btn_cancelar{
+
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        border: 1px solid var(--unnamed-color-057be2);
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #057BE2;
+        border-radius: 4px;
+        opacity: 1;
+    }
 </style>
 @section('content')
 
@@ -64,12 +73,11 @@
         <form method="POST" class="row" action="{{ route("admin.comiteseguridads.update", [$comiteseguridad->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                <label class="required" for="nombre_comite"><i class="fas fa-gavel iconos-crear"></i></i>Nombre del
-                    Comité</label>
+            <div class="form-group col-sm-12 col-md-12 col-lg-12  anima-focus">
                 <input class="form-control {{ $errors->has('nombre_comite') ? 'is-invalid' : '' }}" type="text"
                     name="nombre_comite" id="nombre_comite"
-                    value="{{ old('nombre_comite', $comiteseguridad->nombre_comite) }}" required>
+                    value="{{ old('nombre_comite', $comiteseguridad->nombre_comite) }}" placeholder=" " required>
+                    {!! Form::label('nombre_comite', 'Nombre del Comité*', ['class' => 'asterisco']) !!}
                 @if ($errors->has('nombre_comite'))
                     <div class="invalid-feedback">
                         {{ $errors->first('nombre_comite') }}
@@ -78,9 +86,9 @@
 
             </div>
 
-            <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                <label class="required" for="descripcion"><i class="fas fa-align-justify iconos-crear"></i>Descripción</label>
-                <textarea required class="form-control" id="descripcion" name="descripcion" rows="4">{{ old('descripcion',  $comiteseguridad->descripcion) }}</textarea>
+            <div class="form-group col-sm-12 col-md-12 col-lg-12 anima-focus">
+                <textarea required class="form-control" id="descripcion" name="descripcion"  placeholder=" " rows="4">{{ old('descripcion',  $comiteseguridad->descripcion) }}</textarea>
+                {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
                 @if ($errors->has('descripcion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('descripcion') }}
@@ -89,10 +97,9 @@
 
             </div>
 
-            @livewire('show-miembros-comite-seguridad',['id_comite'=>$comiteseguridad->id])
-            <div class="text-right form-group col-12">
-                <a href="{{ route('admin.comiteseguridads.index') }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
+            <div class="text-right form-group col-12" id="miDiv" style="display: none;">
+                <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color: 1px solid #057BE2;">Cancelar</a>
+                <button class="btn btn-primary" id="botonFormulario" type="submit">
                     {{ trans('global.save') }}
                 </button>
             </div>
@@ -100,11 +107,44 @@
     </div>
 </div>
 
+<div class="mt-4 card">
+    <div class="card-body">
+        @livewire('show-miembros-comite-seguridad',['id_comite'=>$comiteseguridad->id])
+    </div>
+</div>
+
+<div class="text-right form-group col-12" >
+    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color: 1px solid #057BE2;">Cancelar</a>
+    <button class="btn btn-primary" id="botonPrincipal" type="button">
+        Guardar y Notificar
+    </button>
+</div>
+
 
 
 @endsection
 
+
 @section('scripts')
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('miFormulario').addEventListener('submit', function(event) {
+            // Prevenir el comportamiento predeterminado del formulario (recargar la página)
+            event.preventDefault();
+
+            // Ocultar el div al hacer clic en el botón
+            document.getElementById('miDiv').style.display = 'none';
+        });
+    });
+</script>
+
+<script>
+    document.getElementById('botonPrincipal').addEventListener('click', function() {
+        // Simula el clic en el botón del formulario
+        document.getElementById('botonFormulario').click();
+    });
+</script>
 
     <script>
 
