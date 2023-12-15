@@ -1,0 +1,28 @@
+.animated-over
+{
+    position: relative;
+}
+.animated-over input,
+.animated-over .form-control,
+.animated-over label,
+.animated-over textarea,
+.animated-over select
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.2s;
+}
+.animated-over label
+{
+    top: 6px;
+    left: 12px;
+    background-color: #F8FAFC;
+    padding: 0px 5px;
+}
+.animated-over .form-control:focus + label,
+.animated-over .input-content-animated + label
+{
+    transform: scale(0.9) translateY(-20px);
+}
+

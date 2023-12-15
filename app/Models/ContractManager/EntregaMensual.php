@@ -3,18 +3,18 @@
 namespace App\Models\ContractManager;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class EntregaMensual extends Model implements Auditable
 {
     public $table = 'entregas_mensuales';
 
-    use HasFactory, softDeletes, ClearsResponseCache;
     use AuditableTrait;
+    use ClearsResponseCache, HasFactory, softDeletes;
 
     protected $dates = ['deleted_at'];
 
@@ -64,8 +64,8 @@ class EntregaMensual extends Model implements Auditable
     {
         $archivo = EntregableFile::where('entregable_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
-        $ruta = asset('storage/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/entregables/pdf');
-        $ruta = $ruta . '/' . $archivo;
+        $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato.'/entregables/pdf');
+        $ruta = $ruta.'/'.$archivo;
 
         return $ruta;
     }

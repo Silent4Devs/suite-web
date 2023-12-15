@@ -115,7 +115,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (!is_null($request->participantes)) {
+        if (! is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
@@ -172,7 +172,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (!is_null($request->participantes)) {
+        if (! is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -273,4 +273,11 @@ class EntendimientoOrganizacionController extends Controller
 
     //     return response(null, Response::HTTP_NO_CONTENT);
     // }
+
+    public function cardFoda()
+    {
+        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+
+        return view('admin.entendimientoOrganizacions.cardFoda', compact('query'));
+    }
 }

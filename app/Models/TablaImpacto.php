@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class TablaImpacto.
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class TablaImpacto extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
 
     protected $table = 'tabla_impacto';
 

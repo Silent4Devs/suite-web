@@ -8,7 +8,6 @@ use App\Models\PlanImplementacion;
 use App\Models\User;
 use Carbon\Carbon;
 use Gate;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
@@ -22,9 +21,6 @@ class PlanesAccionController extends Controller
      */
     public function index(Request $request)
     {
-        $planImplementacions = Cache::remember('PlanImplementacion:plan_implementacion_all_where_false', 3600 * 8, function () {
-            return PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->paginate(20);
-        });
 
         // $iso9001 = Cache::remember('PlanImplementacion:plan_implementacion_9001_all', 3600 * 8, function () {
         //     return PlanItemIplementacion9001::with('elaborador')->get();
@@ -38,7 +34,7 @@ class PlanesAccionController extends Controller
         //     return datatables()->of($planImplementacions)->toJson();
         // }
 
-        return view('admin.planesDeAccion.index', compact('planImplementacions'));
+        return view('admin.planesDeAccion.index');
     }
 
     /**
@@ -78,9 +74,9 @@ class PlanesAccionController extends Controller
         ]);
         $tasks = [
             [
-                'id' => 'tmp_' . (strtotime(now())) . '_1',
+                'id' => 'tmp_'.(strtotime(now())).'_1',
                 'end' => strtotime(now()) * 1000,
-                'name' => 'Plan de Accion - ' . $request->norma,
+                'name' => 'Plan de Accion - '.$request->norma,
                 'level' => 0,
                 'start' => strtotime(now()) * 1000,
                 'canAdd' => true,
@@ -99,7 +95,7 @@ class PlanesAccionController extends Controller
                 'assigs' => [],
             ],
             [
-                'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
+                'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
                 'end' => strtotime(now()) * 1000,
                 'name' => $request->norma,
                 'level' => 1,
@@ -140,17 +136,17 @@ class PlanesAccionController extends Controller
         $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de Trabajo Base' : 'Plan de Acción';
         $route = $request->es_plan_trabajo_base != null ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
 
-        return redirect()->route($route)->with('success', $mensaje . ' ' . $planImplementacion->parent . ' creado');
+        return redirect()->route($route)->with('success', $mensaje.' '.$planImplementacion->parent.' creado');
     }
 
     public function crearPlanDeAccion($modelo)
     {
-        if (!count($modelo->planes)) {
+        if (! count($modelo->planes)) {
             $tasks = [
                 [
-                    'id' => 'tmp_' . (strtotime(now())) . '_1',
+                    'id' => 'tmp_'.(strtotime(now())).'_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Plan de Accion - ' . $modelo->norma,
+                    'name' => 'Plan de Accion - '.$modelo->norma,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -169,7 +165,7 @@ class PlanesAccionController extends Controller
                     'assigs' => [],
                 ],
                 [
-                    'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
+                    'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
                     'end' => strtotime(now()) * 1000,
                     'name' => $modelo->norma,
                     'level' => 1,
@@ -201,7 +197,7 @@ class PlanesAccionController extends Controller
             $planImplementacion->changesReasonWhy = false;
             $planImplementacion->selectedRow = 0;
             $planImplementacion->zoom = '3d';
-            $planImplementacion->parent = 'Incidente - ' . $modelo->folio;
+            $planImplementacion->parent = 'Incidente - '.$modelo->folio;
             $planImplementacion->norma = 'ISO 27001';
             $planImplementacion->modulo_origen = 'Incidentes';
             $planImplementacion->objetivo = null;
@@ -272,18 +268,18 @@ class PlanesAccionController extends Controller
      * @param  \App\Models\PlanImplementacion  $planImplementacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $planImplementacion)
+    public function destroy(Request $request, $planImplementacionId)
     {
         abort_if(Gate::denies('planes_de_accion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $planImplementacion = PlanImplementacion::find($planImplementacion);
+        $planImplementacion = PlanImplementacion::find($planImplementacionId);
+
+        if ($planImplementacion) {
             $eliminado = $planImplementacion->delete();
-            if ($eliminado) {
-                return response()->json(['success', true]);
-            } else {
-                return response()->json(['error', true]);
-            }
+
+            return redirect()->route('admin.planes-de-accion.index')->with('success', 'Eliminado exitosamente');
+        } else {
+            return redirect()->route('admin.planes-de-accion.index')->with('error', 'No se encontró el Plan de Acción para eliminar');
         }
     }
 

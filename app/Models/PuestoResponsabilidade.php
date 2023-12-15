@@ -18,7 +18,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class PuestoResponsabilidade extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
 
     protected $table = 'puesto_responsabilidades';
 

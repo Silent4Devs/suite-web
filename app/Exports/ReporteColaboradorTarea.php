@@ -3,19 +3,21 @@
 namespace App\Exports;
 
 use App\Models\TimesheetHoras;
-use Cache;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Carbon\Carbon;
-
 
 class ReporteColaboradorTarea implements FromCollection, WithHeadings
 {
-    public  $fecha_inicio;
-    public  $fecha_fin;
-    public  $area_id;
-    public  $emp_id;
-    public  $proy_id;
+    public $fecha_inicio;
+
+    public $fecha_fin;
+
+    public $area_id;
+
+    public $emp_id;
+
+    public $proy_id;
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -30,30 +32,73 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $query = TimesheetHoras::with('proyecto', 'tarea', 'timesheet.empleado')->withwhereHas('timesheet', function ($query) {
-            if ($this->emp_id != 0) {
-                $query->where('empleado_id', $this->emp_id);
-            }
-            $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')
-                ->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
-                ->orderByDesc('fecha_dia');
-        })->withwhereHas('proyecto', function ($query) {
-            if ($this->proy_id != 0) {
-                $query->where('id', $this->proy_id);
-            }
-        })->get()->map(function ($timesheetHora) {
-            return [
-                'Fecha Día' =>  \Carbon\Carbon::parse($timesheetHora->timesheet->fecha_dia)->format('d/m/Y'),
-                'Empleado' => $timesheetHora->timesheet->empleado->name,
-                'Supervisor' => $timesheetHora->timesheet->aprobador->name,
-                'Proyecto' => $timesheetHora->proyecto->proyecto,
-                'Tarea' => $timesheetHora->tarea->tarea,
-                'Descripción' => $timesheetHora->descripcion,
-                'Total de Horas' => (floatval($timesheetHora->horas_lunes) + floatval($timesheetHora->horas_martes) + floatval($timesheetHora->horas_miercoles) + floatval($timesheetHora->horas_jueves) + floatval($timesheetHora->horas_viernes) + floatval($timesheetHora->horas_sabado) + floatval($timesheetHora->horas_domingo)),
-            ];
-        });
+        $query = TimesheetHoras::join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
+            ->join('timesheet_proyectos', 'timesheet_proyectos.id', '=', 'timesheet_horas.proyecto_id')
+            ->join('timesheet_tareas', 'timesheet_tareas.id', '=', 'timesheet_horas.tarea_id')
+            ->join('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
+            ->join('empleados as aprobadores', 'aprobadores.id', '=', 'timesheet.aprobador_id')
+            ->select(
+                'timesheet.fecha_dia',
+                'empleados.name as empleado_name',
+                'aprobadores.name as supervisor_name',
+                'timesheet_proyectos.proyecto',
+                'timesheet_tareas.tarea',
+                'timesheet_horas.descripcion',
+                'timesheet_horas.horas_lunes',
+                'timesheet_horas.horas_martes',
+                'timesheet_horas.horas_miercoles',
+                'timesheet_horas.horas_jueves',
+                'timesheet_horas.horas_viernes',
+                'timesheet_horas.horas_sabado',
+                'timesheet_horas.horas_domingo'
+            )
+            ->where(function ($query) {
 
-        return  $query;
+                if ($this->fecha_inicio || $this->fecha_fin) {
+                    $query->where('timesheet.fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
+                        ->where('timesheet.fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'));
+                }
+
+                if ($this->emp_id != 0) {
+                    $query->where('empleados.id', $this->emp_id);
+                }
+
+                if ($this->proy_id != 0) {
+                    $query->where('timesheet_proyectos.id', $this->proy_id);
+                }
+                // Otras condiciones que ya tenías
+            })->where('timesheet_proyectos.estatus', '!=', 'papelera')
+            ->where('timesheet.estatus', '!=', 'papelera')
+            ->groupBy(
+                'timesheet.fecha_dia',
+                'empleado_name',
+                'supervisor_name',
+                'timesheet_proyectos.proyecto',
+                'timesheet_tareas.tarea',
+                'timesheet_horas.descripcion',
+                'timesheet_horas.horas_lunes',
+                'timesheet_horas.horas_martes',
+                'timesheet_horas.horas_miercoles',
+                'timesheet_horas.horas_jueves',
+                'timesheet_horas.horas_viernes',
+                'timesheet_horas.horas_sabado',
+                'timesheet_horas.horas_domingo'
+            )->orderBy('timesheet.fecha_dia', 'asc')
+            ->distinct()
+            ->get()
+            ->map(function ($timesheetHora) {
+                return [
+                    'Fecha Día' => \Carbon\Carbon::parse($timesheetHora->fecha_dia)->format('d/m/Y'),
+                    'Empleado' => $timesheetHora->empleado_name,
+                    'Supervisor' => $timesheetHora->supervisor_name,
+                    'Proyecto' => $timesheetHora->proyecto,
+                    'Tarea' => $timesheetHora->tarea,
+                    'Descripción' => $timesheetHora->descripcion,
+                    'Total de Horas' => $timesheetHora->getHorasTotalesTareaAttribute(),
+                ];
+            });
+
+        return $query;
     }
 
     public function headings(): array

@@ -4,11 +4,12 @@ namespace App\Models\ContractManager;
 
 use App\Models\TimesheetCliente;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Auditable as AuditableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Contrato.
@@ -28,8 +29,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Contrato extends Model implements Auditable
 {
-    use HasFactory, softDeletes, ClearsResponseCache;
     use AuditableTrait;
+    use ClearsResponseCache, HasFactory, softDeletes;
 
     public $table = 'contratos';
 
@@ -229,7 +230,7 @@ class Contrato extends Model implements Auditable
      * @var array
      */
     public static $rules = [
-        /*  'no_contrato' => 'none',
+    /*  'no_contrato' => 'none',
         *'nombre_proveedor' => 'none',
        * 'area' => 'none',
         *'nombre_servicio' => 'none',
@@ -242,6 +243,14 @@ class Contrato extends Model implements Auditable
     protected $appends = [
         'nameproveedor',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Contratos:contratos_all', 3600 * 4, function () {
+            return self::get();
+        });
+    }
 
     //Relaciones
     public function ampliaciones()
@@ -281,13 +290,13 @@ class Contrato extends Model implements Auditable
         // dd($archivo);
         $ruta = asset('storage/contratos/');
         // $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato);
-        $ruta = $ruta . '/' . $archivo;
+        $ruta = $ruta.'/'.$archivo;
 
         return $ruta;
     }
 
     public function getNameProveedorAttribute()
     {
-        return $this->no_contrato . '-' . $this->nombre_servicio;
+        return $this->no_contrato.'-'.$this->nombre_servicio;
     }
 }

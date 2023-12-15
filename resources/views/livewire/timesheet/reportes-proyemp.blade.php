@@ -96,11 +96,11 @@
                                 <td>{!! $time->timesheet->fin !!}</td>
                                 <td>{{ $time->timesheet->empleado->name }}</td>
                                 <td>{{ $time->timesheet->aprobador->name }}</td>
-                                <td>{{ $time->proyecto->proyecto }}</td>
-                                <td>{{ $time->tarea->tarea }}</td>
+                                <td>{{ $time->proyecto }}</td>
+                                <td>{{ $time->tarea }}</td>
                                 <td>{{ $time->descripcion }}</td>
                                 <td>
-                                    {{ (floatval($time->horas_lunes) + floatval($time->horas_martes) + floatval($time->horas_miercoles) + floatval($time->horas_jueves) + floatval($time->horas_viernes) + floatval($time->horas_sabado) + floatval($time->horas_domingo)) }}
+                                    {{ $time->horas_totales_tarea }} h
                                 </td>
                             </tr>
                         @endforeach

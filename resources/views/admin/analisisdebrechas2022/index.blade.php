@@ -1,21 +1,21 @@
 @extends('layouts.admin')
 @section('content')
-
-
     <style>
         .btn-outline-success {
             background: #788bac !important;
             color: white;
-            border:none;
-        }
-        .btn-outline-success:focus{
-            border-color:#345183 !important;
-            box-shadow:none;
+            border: none;
         }
 
-        .btn-outline-success:active{
-            box-shadow:none !important;
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
         }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
         .btn-outline-success:hover {
             background: #788bac;
             color: white;
@@ -36,6 +36,7 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
+
         th {
             background-color: #345183;
             color: #ffff;
@@ -62,9 +63,8 @@
         .table tr td:nth-child(4) {
             text-align: center !important;
         }
-
     </style>
-     {{ Breadcrumbs::render('admin.analisisdebrechas-2022.index') }}
+    {{ Breadcrumbs::render('admin.analisisdebrechas-2022.index') }}
 
 
     @include('partials.flashMessages')
@@ -106,10 +106,6 @@
             </table>
         </div>
     </div>
-
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -216,59 +212,59 @@
 
             ];
             @can('analisis_de_brechas_eliminar')
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-            let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.analisisdebrechas-2022.massDestroy') }}",
-                className: 'btn-danger',
-                action: function(e, dt, node, config) {
-                    var ids = $.map(dt.rows({
-                        selected: true
-                    }).data(), function(entry) {
-                        return entry.id
-                    });
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.analisisdebrechas-2022.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                    if (ids.length === 0) {
-                        alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                        return
-                    }
+                            return
+                        }
 
-                    if (confirm('{{ trans('global.areYouSure') }}')) {
-                        $.ajax({
-                                headers: {
-                                    'x-csrf-token': _token
-                                },
-                                method: 'POST',
-                                url: config.url,
-                                data: {
-                                    ids: ids,
-                                    _method: 'DELETE'
-                                }
-                            })
-                            .done(function() {
-                                location.reload()
-                            })
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
                     }
                 }
-            }
             @endcan
             //dtButtons.push(deleteButton)
 
             @can('analisis_de_brechas_agregar')
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nuevo analisis de brecha',
-                url: "{{ route('admin.analisisdebrechas-2022.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            dtButtons.push(btnAgregar);
+                let btnAgregar = {
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar nuevo analisis de brecha',
+                    url: "{{ route('admin.analisisdebrechas-2022.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
+                };
+                dtButtons.push(btnAgregar);
             @endcan
 
 

@@ -2,11 +2,11 @@
 
 namespace App\Models\ContractManager;
 
-use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class AmpliacionContrato.

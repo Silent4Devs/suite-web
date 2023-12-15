@@ -8,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
 
     <title>{{ trans('panel.site_title') }}</title>
     @yield('css')
@@ -960,6 +962,7 @@
         .titulo_general_funcion {
             color: #788BAC;
             margin-bottom: 65px;
+            font-size: 20px !important;
         }
 
         .form-group label {
@@ -1100,21 +1103,42 @@
             }
         }
     </style>
+
+    <style>
+        .table-acordeon {}
+
+        .datatable-fix {
+            max-width: 100% !important;
+            overflow: auto !important;
+        }
+
+        .table-striped.table-acordeon tbody tr:nth-of-type(odd),
+        table.table.table-acordeon tbody tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0);
+        }
+
+        .btn-arrow-menu-table-rotate {
+            transform: rotate(180deg);
+        }
+
+        .tr-sec-menu td {
+            border-top: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     @yield('styles')
     @livewireStyles
 </head>
 
-<body class="">
-
+<body>
     <div id="loading">
-
         <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
-            alt="Loading..." />
+            alt="Loading...">
     </div>
-
-
     @php
         use App\Models\Organizacion;
+        use App\Models\User;
+        $usuario = User::getCurrentUser();
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
@@ -1131,15 +1155,11 @@
                 data-class="c-sidebar-show">
                 <i class="fas fa-fw fa-bars iconos_cabecera" style="color:#fff;"></i>
             </button>
-
-
             <button id="btnMenu" style="all:unset; color: #fff; cursor:pointer;" class="d-md-down-none">
                 <i class="fas fa-fw fa-bars" style=""></i>
             </button>
-
             <script>
                 const btnMenu = document.querySelector('#btnMenu');
-
                 btnMenu.addEventListener('click', () => {
                     document.body.classList.toggle('c-sidebar-lg-show');
 
@@ -1157,10 +1177,7 @@
                 }
             </script>
 
-
             <form class="form-inline col-sm-3 d-mobile-none" style="position: relative;">
-
-                {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
                 <input class="buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
                     autocomplete="off" />
                 <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
@@ -1168,7 +1185,6 @@
                     style="background-color: #fff; width:150%; position: absolute;top:50px;left:0">
                 </div>
             </form>
-
             <ul class="ml-auto c-header-nav">
                 @if (count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
@@ -1187,57 +1203,23 @@
                     </li>
                 @endif
 
-                {{-- @livewire('campana-notificaciones-component')
-                @livewire('tareas-notificaciones-component')
                 <ul class="ml-auto c-header-nav">
-                    <li class="px-2 c-header-nav-item c-d-legacy-none">
-                        <div id="btnDark">
-                            <i class="fas fa-moon iconos_cabecera"></i>
-                            </i>
-
-                        </div>
-                    </li>
-                </ul>
-                <script>
-                    const btnDark = document.querySelector('#btnDark');
-
-                    btnDark.addEventListener('click', () => {
-                        document.body.classList.toggle('c-dark-theme');
-
-                        if (document.body.classList.contains('c-dark-theme')) {
-                            localStorage.setItem('dark-mode', 'true');
-                        } else {
-                            localStorage.setItem('dark-mode', 'false');
-                        }
-                    });
-
-                    if (localStorage.getItem('dark-mode') === 'true') {
-                        document.body.classList.add('c-dark-theme');
-                    } else {
-                        document.body.classList.remove('c-dark-theme');
-                    }
-                </script> --}}
-
-
-                <ul class="ml-auto c-header-nav">
-
                     <li class="c-header-nav-item dropdown show">
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
-                                @if (auth()->user()->empleado)
+                                @if ($usuario->empleado)
                                     <div style="width: 40px; overflow:hidden;" class="mr-2">
-
                                         <img class="img_empleado" style=""
-                                            src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                            alt="{{ auth()->user()->empleado->name }}">
+                                            src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
+                                            alt="{{ $usuario->empleado->name }}">
                                     </div>
                                     <div class="d-mobile-none">
                                         <span class="mr-2" style="font-weight: bold;">
-                                            {{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->name)[0] : '' }}
+                                            {{ $usuario->empleado ? explode(' ', $usuario->empleado->name)[0] : '' }}
                                         </span>
                                         <p class="m-0" style="font-size: 8px">
-                                            {{ auth()->user()->empleado ? Str::limit(auth()->user()->empleado->puesto, 30, '...') : '' }}
+                                            {{ $usuario->empleado ? Str::limit($usuario->empleado->puesto, 30, '...') : '' }}
                                         </p>
                                     </div>
                                 @else
@@ -1246,7 +1228,7 @@
                             </div>
                         </a>
 
-                        @if (auth()->user()->empleado == null)
+                        @if ($usuario->empleado === null)
                             <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
                                 style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                                 <div class="px-3 mt-1 d-flex justify-content-center">
@@ -1254,91 +1236,86 @@
                                         onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                         <i class="bi bi-box-arrow-right"></i> Salir
                                     </a>
-                                @else
-                                    <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
-                                        style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
-                                        <div class="p-2">
-                                            @if (auth()->user()->empleado)
-                                                <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
-                                                    <strong>{{ auth()->user()->empleado->name }}</strong>
-                                                </p>
-                                            @else
-                                                <i class="fas fa-user-circle iconos_cabecera"
-                                                    style="font-size: 33px;"></i>
-                                            @endif
-                                        </div>
-                                        <div class="px-3 mt-1 d-flex justify-content-center">
-                                            @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                                                @can('profile_password_edit')
-                                                    <a style="all: unset; color: #747474; cursor: pointer;"
-                                                        class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
-                                                        href="{{ route('profile.password.edit') }}">
-                                                        <i class="bi bi-gear"></i>
-                                                        Configurar Perfil
-                                                    </a>
-                                                @endcan
-                                            @endif
-                                            &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                            </div>
+                        @else
+                            <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                                style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                                <div class="p-2">
+                                    <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
+                                        <strong>{{ $usuario->empleado->name }}</strong>
+                                    </p>
+                                </div>
+                                <div class="px-3 mt-1 d-flex justify-content-center">
+                                    @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                                        @can('profile_password_edit')
                                             <a style="all: unset; color: #747474; cursor: pointer;"
-                                                onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                                <i class="bi bi-box-arrow-right"></i> Salir
+                                                class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                                href="{{ route('profile.password.edit') }}">
+                                                <i class="bi bi-gear"></i>
+                                                Configurar Perfil
                                             </a>
+                                        @endcan
+                                    @endif
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <font style="color: #747474;">|</font>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                        <i class="bi bi-box-arrow-right"></i> Salir
+                                    </a>
+                                </div>
+                            </div>
                         @endif
-    </div>
-    </div>
-    </li>
-    </ul>
-    </ul>
-    </header>
+                    </li>
+                </ul>
+            </ul>
+        </header>
 
-    <div class="c-body">
-        <main class="c-main">
-            <div class="container-fluid" id="app">
-                @if (session('message'))
-                    <div class="mb-2 row">
-                        <div class="col-lg-12">
-                            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+        <div class="c-body">
+            <main class="c-main">
+                <div class="container-fluid" id="app">
+                    @if (session('message'))
+                        <div class="mb-2 row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+                            </div>
                         </div>
-                    </div>
-            </div>
-            @endif
-            <div id="errores_generales_admin_quitar_recursos">
-                @if ($errors->count() > 0)
-                    <div class="alert alert-danger">
-                        <ul class="list-unstyled">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+                </div>
                 @endif
+                <div id="errores_generales_admin_quitar_recursos">
+                    @if ($errors->count() > 0)
+                        <div class="alert alert-danger">
+                            <ul class="list-unstyled">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+                @yield('content')
+            </main>
+        </div>
+
+        {{-- @include('partials.footer') --}}
+        <footer class="app-footer">
+            <div>
+                TABANTAJ
+                <font style="margin: 0px 20px;"> | </font>
+                SILENT4BUSINESS
             </div>
-            @yield('content')
-
+            <div>
+                2023
+                <font style="margin: 0px 20px;"> | </font>
+                Version: 4.34.10
+            </div>
+        </footer>
     </div>
-
-
-    </main>
     <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
     </form>
-    </div>
     <!-- incluir de footer -->
-    {{-- @include('partials.footer') --}}
-    <footer class="app-footer">
-        <font>
-            TABANTAJ
-            <font style="margin: 0px 20px;"> | </font>
-            SILENT4BUSINESS
-        </font>
-        <font>
-            2023
-            <font style="margin: 0px 20px;"> | </font>
-            Version: 4.34.10
-        </font>
-    </footer>
-    </div>
 
     <div id="elementos_imprimir" class="d-none">
         <div id="contenido_imprimir">
@@ -1406,7 +1383,6 @@
             }
         };
     </script>
-
     <script>
         function imprimirElemento(elemento) {
             let elemento_seleccionado = document.getElementById(elemento);
@@ -1443,11 +1419,26 @@
 
     {{-- daterangepicker --}}
     <script>
-        @if (auth()->user()->empleado)
-            window.NotificationUser = {!! json_encode(['user' => auth()->check() ? auth()->user()->empleado->id : null]) !!};
+        @if ($usuario->empleado)
+            window.NotificationUser = {!! json_encode(['user' => auth()->check() ? $usuario->empleado->id : null]) !!};
         @else
             window.NotificationUser = 1
         @endif
+    </script>
+
+    <script src="https://js.pusher.com/7.6.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('e2eb23f0f55bcbd3ee2f', {
+            cluster: 'us2'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+        });
     </script>
     {{-- Librerías para visualizar en campo el dolar --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -1457,14 +1448,10 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('js')
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
-    {{--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  --}}
     {{-- #lazyload --}}
     {{--  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js">  --}}
-    </script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
@@ -1500,7 +1487,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
     <script src="{{ asset('js/yearpicker.js') }}"></script>
-    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
@@ -1514,7 +1500,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 
-    <link href="https://cdnout.com/flatpickr/themes/material_blue.css" rel="stylesheet" media="all">
+    {{--  https://www.udemy.com/course/kubernetes-sencillo-para-desarrolladores/learn/lecture/14674434#overview  --}}
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css"> --}}
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
@@ -1538,20 +1524,15 @@
             $('.c-sidebar-nav').delay(1000).scrollTop(900);
         });
     </script>
-    {{-- lazyload
-          <script>
-        $(function() {
-            $('img').Lazy();
-        });
-    </script>  --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @include('sweetalert::alert')
+    @livewireScripts
+
+    <x-livewire-alert::scripts />
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
-    @livewireScripts
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <x-livewire-alert::scripts />
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
     <!-- x-editable -->
     <script>
@@ -1925,8 +1906,8 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>
+    {{--  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>  --}}
     @yield('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js"
         integrity="sha512-hh4Bnn1GtJOoCXufO1cvrBF6BzRWBp7rFiQCEdSRwwxJVdCIlrp6AWeD8GJVbnLO9V1XovnJSylI5/tZGOzVAg=="
@@ -1950,6 +1931,16 @@
             });
         });
     </script> --}}
+    <script>
+        $(".animated-over .form-control").change(function(e) {
+            console.log(e.target);
+            if (e.target.value == "") {
+                $(e.target).removeClass("input-content-animated");
+            } else {
+                $(e.target).addClass("input-content-animated");
+            }
+        });
+    </script>
 
 </body>
 

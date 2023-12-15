@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class VariablesObjetivosseguridad.
@@ -20,8 +20,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class VariablesObjetivosseguridad extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'variables_objetivosseguridad';
 

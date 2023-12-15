@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
+{{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">  --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}">
 
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style=" border: none;">
@@ -8,8 +8,6 @@
         {{-- <a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a> --}}
         <div class="caja_img_logo">
             @php
-                use App\Models\Organizacion;
-                $organizacion = Organizacion::getLogo();
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {
@@ -252,12 +250,13 @@
                 <font class="letra_blanca"> Análisis de brechas</font>
             </a>
         </li> --}}
-        @if (auth()->user()->can('visitantes_acceder') ||
-                auth()->user()->can('capital_humano_acceder') ||
-                auth()->user()->can('analisis_de_riesgo_integral_acceder') ||
-                auth()->user()->can('sistema_de_gestion_acceder') ||
-                auth()->user()->can('matriz_bia_menu_acceder') ||
-                auth()->user()->can('mis_cursos_acceder'))
+        @if (
+            $usuario->can('visitantes_acceder') ||
+                $usuario->can('capital_humano_acceder') ||
+                $usuario->can('analisis_de_riesgo_integral_acceder') ||
+                $usuario->can('sistema_de_gestion_acceder') ||
+                $usuario->can('matriz_bia_menu_acceder') ||
+                $usuario->can('mis_cursos_acceder'))
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
             </li>
@@ -497,31 +496,32 @@
                 <font class="letra_blanca"> ISO 9001 </font>
             </a>
         </li> --}}
-        @if (auth()->user()->can('sistema_gestion_contratos_acceder') ||
-                auth()->user()->can('administracion_sistema_gestion_contratos_acceder') ||
-                auth()->user()->can('katbol_contratos_acceso') ||
-                auth()->user()->can('katbol_requisiciones_acceso'))
+        @if (
+            $usuario->can('sistema_gestion_contratos_acceder') ||
+                $usuario->can('administracion_sistema_gestion_contratos_acceder') ||
+                $usuario->can('katbol_contratos_acceso') ||
+                $usuario->can('katbol_requisiciones_acceso'))
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Katbol</font>
             </li>
         @endif
         @can('dashboard_gestion_contratos_acceder')
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('contract_manager.dashboard.katbol')}}"
-                class="c-sidebar-nav-link {{ request()->is('contract_manager/dashboard/katbol') ? 'active' : '' }}">
-                <i class="fas fa-chart-column iconos_menu letra_blanca"></i>
-                <font class="letra_blanca">Dashboard</font>
-            </a>
-        </li>
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('contract_manager.dashboard.katbol') }}"
+                    class="c-sidebar-nav-link {{ request()->is('contract_manager/dashboard/katbol') ? 'active' : '' }}">
+                    <i class="fas fa-chart-column iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Dashboard</font>
+                </a>
+            </li>
         @endcan
         @can('sistema_gestion_contratos_acceder')
-        <li class="c-sidebar-nav-item">
-            <a href="{{ url('contract_manager/katbol') }}"
-                class="c-sidebar-nav-link {{ request()->is('contract_manager/katbol') ? 'active' : '' }}">
-                <i class="bi bi-file-text iconos_menu letra_blanca"></i>
-                <font class="letra_blanca">Sistema de Gestion Contractual</font>
-            </a>
-        </li>
+            <li class="c-sidebar-nav-item">
+                <a href="{{ url('contract_manager/katbol') }}"
+                    class="c-sidebar-nav-link {{ request()->is('contract_manager/katbol') ? 'active' : '' }}">
+                    <i class="bi bi-file-text iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Sistema de Gestion Contractual</font>
+                </a>
+            </li>
         @endcan
         @can('katbol_contratos_acceso')
             <li class="c-sidebar-nav-item">
@@ -569,6 +569,34 @@
                     </a>
                 </li>
             @endcan --}}
+
+            @if (auth()->user()->can('clausulas_auditorias_acceder') ||
+                    auth()->user()->can('clasificaciones_auditorias_acceder'))
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
+                        <i class="bi bi-folder iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca"> Catalogos SG </font>
+                    </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        @can('clausulas_auditorias_acceder')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.auditoria-clasificacion') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
+                                    <font class="letra_blanca">Clasificación</font>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('clasificaciones_auditorias_acceder')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.auditoria-clausula') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
+                                    <font class="letra_blanca">Cláusula</font>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
 
             @can('configurar_organizacion_acceder')
                 <li class="c-sidebar-nav-dropdown">
@@ -1126,7 +1154,7 @@
         @endcan --}}
         @if (
             \Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') &&
-                \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
+                \App\Models\Team::where('owner_id', $usuario->id)->exists())
             <li class="c-sidebar-nav-item">
                 <a class="{{ request()->is('admin/team-members') || request()->is('admin/team-members/*') ? 'active' : '' }} c-sidebar-nav-link"
                     href="{{ route('admin.team-members.index') }}">

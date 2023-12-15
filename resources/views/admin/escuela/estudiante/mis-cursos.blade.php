@@ -97,6 +97,7 @@
             font-size: 12px;
             padding: 10px 25px;
         }
+
         .btn-mas-info-c:hover {
             color: #fff;
         }

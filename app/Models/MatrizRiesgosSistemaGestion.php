@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MatrizRiesgosSistemaGestion extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'matriz_riesgos_sistema_gestion';
 
@@ -129,7 +129,7 @@ class MatrizRiesgosSistemaGestion extends Model implements Auditable
     public static function getAllWithControlesPivotProceso($columns = 'id')
     {
         //retrieve all data or can pass columns to retrieve
-        return Cache::remember('matriz_riesgos_sistema_gestion_' . Auth::user()->id, 3600 * 4, function () use ($columns) {
+        return Cache::remember('matriz_riesgos_sistema_gestion_'.Auth::user()->id, 3600 * 4, function () use ($columns) {
             return self::with(['controles', 'matriz_riesgos_controles_pivots', 'proceso'])
                 ->find($columns);
         });
@@ -139,7 +139,7 @@ class MatrizRiesgosSistemaGestion extends Model implements Auditable
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
         $this->save();
     }
 

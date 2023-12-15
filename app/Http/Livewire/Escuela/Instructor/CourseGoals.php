@@ -10,10 +10,12 @@ use Livewire\Component;
 
 class CourseGoals extends Component
 {
-    use LivewireAlert, AuthorizesRequests;
+    use AuthorizesRequests, LivewireAlert;
 
     public Goal $goal;
+
     public $course;
+
     public $name;
 
     protected $rules = [
@@ -50,7 +52,7 @@ class CourseGoals extends Component
         ]);
 
         $this->reset('name');
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Meta añadida exitosamente');
     }
 
@@ -67,14 +69,14 @@ class CourseGoals extends Component
 
         $this->goal = new Goal();
 
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Meta actualizada exitosamente');
     }
 
     public function destroy(Goal $goal)
     {
         $goal->delete();
-        $this->course = Course::find($this->course->id);
+        $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Meta eliminada exitosamente');
     }
 

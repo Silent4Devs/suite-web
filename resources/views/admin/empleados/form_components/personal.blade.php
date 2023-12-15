@@ -8,11 +8,6 @@
         <input class="form-control {{ $errors->has('calle') ? 'is-invalid' : '' }}" type="text" maxlength="255"
             name="calle" id="calle" value="{{ old('calle', $empleado->calle) }}">
         <small id="error_calle" class="text-danger"></small>
-        @if ($errors->has('calle'))
-            <div class="invalid-feedback">
-                {{ $errors->first('calle') }}
-            </div>
-        @endif
     </div>
 
     <div class="form-group col-sm-3">
@@ -21,11 +16,6 @@
             maxlength="255" name="num_exterior" id="num_exterior"
             value="{{ old('num_exterior', $empleado->num_exterior) }}">
         <small id="error_num_exterior" class="text-danger"></small>
-        @if ($errors->has('num_exterior'))
-            <div class="invalid-feedback">
-                {{ $errors->first('num_exterior') }}
-            </div>
-        @endif
     </div>
 
 
@@ -36,11 +26,6 @@
             id="num_interior" value="{{ old('num_interior', $empleado->num_interior) }}" type="text" pattern="\d*"
             maxlength="255">
         <small id="error_num_interior" class="text-danger"></small>
-        @if ($errors->has('num_interior'))
-            <div class="invalid-feedback">
-                {{ $errors->first('num_interior') }}
-            </div>
-        @endif
     </div>
 
     <div class="form-group col-sm-6">
@@ -48,11 +33,6 @@
         <input class="form-control {{ $errors->has('colonia') ? 'is-invalid' : '' }}" type="text" maxlength="255"
             name="colonia" id="colonia" value="{{ old('colonia', $empleado->colonia) }}">
         <small id="error_colonia" class="text-danger"></small>
-        @if ($errors->has('colonia'))
-            <div class="invalid-feedback">
-                {{ $errors->first('colonia') }}
-            </div>
-        @endif
     </div>
 
     <div class="form-group col-sm-6">
@@ -60,11 +40,6 @@
         <input class="form-control {{ $errors->has('delegacion') ? 'is-invalid' : '' }}" type="text" maxlength="255"
             name="delegacion" id="delegacion" value="{{ old('delegacion', $empleado->delegacion) }}">
         <small id="error_delegacion" class="text-danger"></small>
-        @if ($errors->has('delegacion'))
-            <div class="invalid-feedback">
-                {{ $errors->first('delegacion') }}
-            </div>
-        @endif
     </div>
 
     <div class="form-group col-sm-4">
@@ -72,11 +47,6 @@
         <input class="form-control {{ $errors->has('estado') ? 'is-invalid' : '' }}" type="text" maxlength="255"
             name="estado" id="estado" value="{{ old('estado', $empleado->estado) }}">
         <small id="error_estado" class="text-danger"></small>
-        @if ($errors->has('estado'))
-            <div class="invalid-feedback">
-                {{ $errors->first('estado') }}
-            </div>
-        @endif
     </div>
 
     <div class="form-group col-sm-4">
@@ -84,11 +54,6 @@
         <input class="form-control {{ $errors->has('pais') ? 'is-invalid' : '' }}" type="text" maxlength="255"
             name="pais" id="pais" value="{{ old('pais', $empleado->pais) }}">
         <small id="error_pais" class="text-danger"></small>
-        @if ($errors->has('pais'))
-            <div class="invalid-feedback">
-                {{ $errors->first('pais') }}
-            </div>
-        @endif
     </div>
 
     <div class="form-group col-sm-4">
@@ -96,11 +61,6 @@
         <input class="form-control {{ $errors->has('cp') ? 'is-invalid' : '' }}" type="text" pattern="\d*"
             maxlength="255" name="cp" id="cp" value="{{ old('delegacion', $empleado->cp) }}">
         <small id="error_cp" class="text-danger"></small>
-        @if ($errors->has('cp'))
-            <div class="invalid-feedback">
-                {{ $errors->first('cp') }}
-            </div>
-        @endif
     </div>
 
 
@@ -110,11 +70,6 @@
         <input class="form-control {{ $errors->has('telefono_casa') ? 'is-invalid' : '' }}" type="text"
             name="telefono_casa" id="telefono_casa" value="{{ old('telefono_casa', $empleado->telefono_casa) }}">
         <small id="error_telefono_casa" class="text-danger"></small>
-        @if ($errors->has('telefono_casa'))
-            <div class="invalid-feedback">
-                {{ $errors->first('telefono_casa') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="correo_personal"><i class="fas fa-envelope iconos-crear"></i>Correo Personal</label>
@@ -122,11 +77,6 @@
             placeholder="example@tabantaj.com" name="correo_personal" id="correo_personal"
             value="{{ old('correo_personal', $empleado->correo_personal) }}">
         <small id="error_correo_personal" class="text-danger"></small>
-        @if ($errors->has('correo_personal'))
-            <div class="invalid-feedback">
-                {{ $errors->first('correo_personal') }}
-            </div>
-        @endif
     </div>
 
     <div class="form-group col-sm-6">
@@ -143,55 +93,30 @@
                 Soltero</option>
         </select>
         <small id="error_estado_civil" class="text-danger"></small>
-        @if ($errors->has('estado_civil'))
-            <div class="invalid-feedback">
-                {{ $errors->first('estado_civil') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="NSS"><i class="fas fa-clinic-medical iconos-crear"></i>NSS</label>
         <input class="form-control {{ $errors->has('NSS') ? 'is-invalid' : '' }}" type="text" name="NSS"
             id="NSS" value="{{ old('NSS', $empleado->NSS) }}">
         <small id="error_NSS" class="text-danger"></small>
-        @if ($errors->has('NSS'))
-            <div class="invalid-feedback">
-                {{ $errors->first('NSS') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="CURP"><i class="fas fa-address-card iconos-crear"></i>CURP</label>
         <input class="form-control {{ $errors->has('CURP') ? 'is-invalid' : '' }}" type="text" name="CURP"
             id="CURP" value="{{ old('CURP', $empleado->CURP) }}">
         <small id="error_CURP" class="text-danger"></small>
-        @if ($errors->has('CURP'))
-            <div class="invalid-feedback">
-                {{ $errors->first('CURP') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="RFC"><i class="fas fa-address-card iconos-crear"></i>RFC</label>
         <input class="form-control {{ $errors->has('RFC') ? 'is-invalid' : '' }}" type="text" name="RFC"
             id="RFC" value="{{ old('RFC', $empleado->RFC) }}">
         <small id="error_RFC" class="text-danger"></small>
-        @if ($errors->has('RFC'))
-            <div class="invalid-feedback">
-                {{ $errors->first('RFC') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-12 col-md-6">
         <label for="cumpleaños"><i class="fas fa-birthday-cake iconos-crear"></i>Fecha de nacimiento</label>
         <input class="form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}" type="date"
             name="cumpleaños" id="cumpleaños" value="{{ old('cumpleaños', $empleado->cumpleaños) }}">
         <small id="error_cumpleaños" class="text-danger"></small>
-        @if ($errors->has('cumpleaños'))
-            <div class="invalid-feedback">
-                {{ $errors->first('cumpleaños') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="lugar_nacimiento"><i class="fas fa-map-marker-alt iconos-crear"></i>Lugar de
@@ -200,11 +125,6 @@
             name="lugar_nacimiento" id="lugar_nacimiento"
             value="{{ old('lugar_nacimiento', $empleado->lugar_nacimiento) }}">
         <small id="error_lugar_nacimiento" class="text-danger"></small>
-        @if ($errors->has('lugar_nacimiento'))
-            <div class="invalid-feedback">
-                {{ $errors->first('lugar_nacimiento') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-12">
         <label for="nacionalidad"><i class="fas fa-globe-americas iconos-crear"></i>País de nacimiento</label>
@@ -218,11 +138,6 @@
             @endforeach
         </select>
         <small id="error_nacionalidad" class="text-danger"></small>
-        @if ($errors->has('nacionalidad'))
-            <div class="invalid-feedback">
-                {{ $errors->first('nacionalidad') }}
-            </div>
-        @endif
     </div>
 
     {{-- Componente contacto(s) de emergencia --}}

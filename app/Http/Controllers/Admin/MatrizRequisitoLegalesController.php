@@ -23,11 +23,13 @@ class MatrizRequisitoLegalesController extends Controller
 {
     public function index(Request $request)
     {
+
         abort_if(Gate::denies('matriz_requisitos_legales_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         if ($request->ajax()) {
-            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado', 'evaluaciones')->orderBy('id')->get();
+            $matrizRequisitoLegales = MatrizRequisitoLegale::select('id', 'nombrerequisito', 'formacumple', 'fechaexpedicion')->orderBy('id')->get();
 
+            // dd($matrizRequisitoLegales);
+            //  $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado', 'evaluaciones')->orderBy('id')->get();
             return datatables()->of($matrizRequisitoLegales)->toJson();
         }
 
@@ -40,7 +42,7 @@ class MatrizRequisitoLegalesController extends Controller
     {
         abort_if(Gate::denies('matriz_requisitos_legales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         return view('admin.matrizRequisitoLegales.create', compact('planes_implementacion', 'empleados'));
     }
@@ -96,7 +98,7 @@ class MatrizRequisitoLegalesController extends Controller
             }
         }
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         $matrizRequisitoLegale->load('team');
 
@@ -107,18 +109,18 @@ class MatrizRequisitoLegalesController extends Controller
     {
         abort_if(Gate::denies('matriz_requisitos_legales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'nombrerequisito' => ['required', 'string'],
-            'formacumple' => ['nullable', 'string'],
-            'tipo' => ['required', 'string'],
-            'fechaexpedicion' => ['nullable'],
-            'fechavigor' => ['nullable', 'date'],
-            'periodicidad_cumplimiento' => ['required', 'string'],
-            'requisitoacumplir' => ['required'],
-            'cumplerequisito' => ['nullable', 'string'],
-            'medio' => ['nullable', 'string'],
-            'descripcion_cumplimiento' => ['nullable', 'string'],
-        ]);
+        // $request->validate([
+        //     'nombrerequisito' => ['required', 'string'],
+        //     'formacumple' => ['nullable', 'string'],
+        //     'tipo' => ['required', 'string'],
+        //     'fechaexpedicion' => ['nullable'],
+        //     'fechavigor' => ['nullable', 'date'],
+        //     'periodicidad_cumplimiento' => ['required', 'string'],
+        //     'requisitoacumplir' => ['required'],
+        //     'cumplerequisito' => ['nullable', 'string'],
+        //     'medio' => ['nullable', 'string'],
+        //     'descripcion_cumplimiento' => ['nullable', 'string'],
+        // ]);
 
         $matrizRequisitoLegale->update($request->all());
         $files = $request->file('files');
@@ -237,12 +239,12 @@ class MatrizRequisitoLegalesController extends Controller
 
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
     }
 
     public function evaluar(MatrizRequisitoLegale $id)
     {
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
         $requisito = $id;
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
 

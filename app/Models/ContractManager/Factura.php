@@ -2,14 +2,14 @@
 
 namespace App\Models\ContractManager;
 
-use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Facturacion.
@@ -41,8 +41,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Factura extends Model implements Auditable
 {
-    use HasFactory, softDeletes, ClearsResponseCache;
     use AuditableTrait;
+    use ClearsResponseCache, HasFactory, softDeletes;
 
     public $table = 'facturacion';
 
@@ -128,8 +128,8 @@ class Factura extends Model implements Auditable
     {
         $archivo = FacturaFile::where('factura_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
-        $ruta = asset('storage/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/facturas/pdf');
-        $ruta = $ruta . '/' . $archivo;
+        $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato.'/facturas/pdf');
+        $ruta = $ruta.'/'.$archivo;
 
         return $ruta;
     }

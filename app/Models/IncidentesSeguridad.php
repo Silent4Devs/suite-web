@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Spatie\MediaLibrary\HasMedia;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class IncidentesSeguridad extends Model implements HasMedia, Auditable
+class IncidentesSeguridad extends Model implements Auditable, HasMedia
 {
-    use InteractsWithMedia;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
+    use InteractsWithMedia;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     const ARCHIVADO = '1';
 

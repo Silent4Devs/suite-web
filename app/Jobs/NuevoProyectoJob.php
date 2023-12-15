@@ -15,10 +15,15 @@ class NuevoProyectoJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $proyecto;
+
     public $identificador;
+
     public $cliente;
+
     public $empleado;
+
     public $email;
+
     public $id;
 
     /**

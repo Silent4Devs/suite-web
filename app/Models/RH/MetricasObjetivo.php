@@ -3,15 +3,15 @@
 namespace App\Models\RH;
 
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class MetricasObjetivo extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'ev360_metricas_objetivos';
 

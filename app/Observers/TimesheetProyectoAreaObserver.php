@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\TimesheetProyectoArea;
+use Illuminate\Support\Facades\Cache;
 
 class TimesheetProyectoAreaObserver
 {
@@ -50,5 +51,6 @@ class TimesheetProyectoAreaObserver
     {
 
         Cache::forget('TimesheetProyectoArea:timesheet_proyecto_area_proyecto_all');
+        Cache::forget('TimesheetProyectoArea:getAreaTimesheetProyectoEmpleado');
     }
 }

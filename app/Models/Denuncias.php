@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Denuncias extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'denuncias';
 
@@ -21,7 +21,6 @@ class Denuncias extends Model implements Auditable
     ];
 
     protected $appends = ['folio', 'fecha_creacion', 'fecha_reporte', 'fecha_de_cierre'];
-
 
     protected $fillable = [
         'anonimo',

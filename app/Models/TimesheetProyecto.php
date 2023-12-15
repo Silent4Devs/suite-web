@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use EloquentFilter\Filterable;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class TimesheetProyecto extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use Filterable;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use HasFactory;
+
     protected $table = 'timesheet_proyectos';
 
     protected $appends = ['areas'];
@@ -43,7 +44,7 @@ class TimesheetProyecto extends Model implements Auditable
                 return self::orderBy('proyecto')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
                 return self::orderBy('proyecto')->get();
             });
         }
@@ -53,11 +54,11 @@ class TimesheetProyecto extends Model implements Auditable
     {
         if (is_null($proyecto_id)) {
             return Cache::remember('TimesheetProyecto:timesheetproyecto_all', 3600 * 4, function () {
-                return self::select('id', 'identificador', 'proyecto', 'cliente_id','tipo')->orderBy('proyecto')->get();
+                return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('proyecto')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
-                return self::select('id', 'identificador', 'proyecto', 'cliente_id','tipo')->orderBy('proyecto')->get();
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
+                return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('proyecto')->get();
             });
         }
     }
@@ -66,6 +67,13 @@ class TimesheetProyecto extends Model implements Auditable
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_identificador', 3600, function () {
             return self::orderBy('identificador', 'asc')->get();
+        });
+    }
+
+    public static function getAllWithCliente()
+    {
+        return Cache::remember('TimesheetProyecto:timesheetproyecto_all_with_cliente', 3600 * 3, function () {
+            return self::with('cliente')->orderBy('identificador', 'desc')->get();
         });
     }
 

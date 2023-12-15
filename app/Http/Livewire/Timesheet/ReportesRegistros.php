@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Exports\ReporteColaboradorRegistro;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Timesheet;
 use Carbon\Carbon;
+use Excel;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -49,33 +51,18 @@ class ReportesRegistros extends Component
     public function mount()
     {
         $this->estatus = null;
-        // $this->emp = Empleado::alta()->orderBy('name', 'ASC')->get();
     }
 
     public function updatedFechaInicio($value)
     {
         $fi = Carbon::parse($value)->format('Y-m-d');
         $this->fecha_inicio = $fi;
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
     }
 
     public function updatedFechaFin($value)
     {
         $ff = Carbon::parse($value)->format('Y-m-d');
         $this->fecha_fin = $ff;
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
     }
 
     public function updatedAreaId($value)
@@ -86,27 +73,11 @@ class ReportesRegistros extends Component
         } else {
             $this->area_id = $value;
         }
-
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
     }
 
     public function updatedEmpleadoId($value)
     {
         $this->emp_id = $value;
-
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
     }
 
     public function render()
@@ -120,7 +91,17 @@ class ReportesRegistros extends Component
         }
         $empleados = $this->emp;
 
-        $query = Timesheet::orderByDesc('fecha_dia')
+        $query = Timesheet::select(
+            'id',
+            'fecha_dia',
+            'empleado_id',
+            'aprobador_id',
+            'estatus',
+            'comentarios',
+            'dia_semana',
+            'inicio_semana',
+            'fin_semana',
+        )
             ->whereHas('empleado', function ($query) {
                 if ($this->emp_id == 0) {
                     return $query->where('name', 'ILIKE', "%{$this->search}%");
@@ -134,27 +115,42 @@ class ReportesRegistros extends Component
                 } else {
                     $query->where('area_id', $this->area_id)->where('name', 'ILIKE', "%{$this->search}%");
                 }
-            })
-            ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia');
+            })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))
+            ->where('estatus', '!=', 'papelera')
+            ->orderByDesc('fecha_dia');
 
         if ($this->estatus) {
             $query = $query->where('estatus', $this->estatus);
         }
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->paginate($this->perPage);
+
+        $times = $query->fastPaginate($this->perPage);
+
+        if ($this->emp_id || $this->area_id || $this->fecha_fin || $this->fecha_inicio) {
+            $timesExcel = $query->paginate($query->count());
+        } else {
+            $timesExcel = null;
+        }
 
         //Funcion para pintar contadores en los filtros de estatus
         $this->establecerContadores();
 
         $this->emit('scriptTabla');
 
-        return view('livewire.timesheet.reportes-registros', compact('times', 'empleados'));
+        return view('livewire.timesheet.reportes-registros', compact('timesExcel', 'times', 'empleados'));
+    }
+
+    public function exportExcel()
+    {
+
+        $export = new ReporteColaboradorRegistro($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
+
+        return Excel::download($export, 'reporte_colaborador_registro.xlsx');
     }
 
     public function establecerContadores()
     {
         //Contador Todos los registros timesheet
-        //$this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
         $querybase = Timesheet::whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;
@@ -166,12 +162,12 @@ class ReportesRegistros extends Component
         $this->todos_contador = $querybase
             ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->count();
 
-        //Contador Todos los registros timesheet en borrador
-        $this->borrador_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->count();
+        // //Contador Todos los registros timesheet en borrador
+        // $this->borrador_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->count();
 
-        //Contador Todos los registros timesheet en penduente
+        // //Contador Todos los registros timesheet en penduente
         $this->pendientes_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ?
-                $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->count();
+            $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->count();
 
         //Contador Todos los registros timesheet aprobados
         $this->aprobados_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'aprobado')->count();
@@ -192,17 +188,17 @@ class ReportesRegistros extends Component
         $this->estatus = null;
     }
 
-    public function papelera()
-    {
-        $this->estatus = 'papelera';
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->orderByDesc('fecha_dia')->get();
-    }
+    // public function papelera()
+    // {
+    //     $this->estatus = 'papelera';
+    //     // $this->times = Timesheet::whereHas('empleado', function ($query) {
+    //     //     if ($this->area_id == 0) {
+    //     //         return $query;
+    //     //     } else {
+    //     //         $query->where('area_id', $this->area_id);
+    //     //     }
+    //     // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->orderByDesc('fecha_dia')->get();
+    // }
 
     public function pendientes()
     {
@@ -238,5 +234,41 @@ class ReportesRegistros extends Component
         //     }
         // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->orderByDesc('fecha_dia')->get();
         $this->estatus = 'rechazado';
+    }
+
+    public function dropDuplicate()
+    {
+        $times = Timesheet::select('fecha_dia', 'empleado_id')
+            ->groupBy('fecha_dia', 'empleado_id')
+            ->havingRaw('COUNT(*) > 1')
+            ->orderBy('empleado_id')
+            ->get();
+
+        // dd($times->pluck('empleado_id', 'fecha_dia'));
+
+        $tiemDup = collect();
+        foreach ($times as $tf) {
+            $tiemDup->push([
+                'empleado_id' => $tf->empleado_id,
+                'name' => $tf->empleado->name,
+                'fecha_dia' => $tf->fecha_dia,
+                'inicio' => $tf->inicio,
+            ]);
+        }
+
+        foreach ($tiemDup as $td) {
+
+            $deletedDup = Timesheet::where('empleado_id', $td['empleado_id'])
+                ->where('fecha_dia', $td['fecha_dia'])
+                ->get();
+            $countDeleted = 0;
+            foreach ($deletedDup as $del) {
+                if ($countDeleted > 0) {
+                    $del->delete();
+                }
+                $countDeleted = $countDeleted + 1;
+            }
+            // dump($td['name'] . ' | ' . $td['inicio'] . ' | ' .  $deletedDup->count());
+        }
     }
 }

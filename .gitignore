@@ -5,7 +5,7 @@
 /storage/app/public/BIA/signatures/
 /storage/app/public/tratamiento/firmas/
 /storage/app/public/FilesRevisionDireccion
-/storage/app/cursos/
+
 /vendor
 .idea
 # /public/css/app.css
@@ -23,7 +23,6 @@ bootstrap/cache/config.php
 composer.lock
 bootstrap/cache/
 storage/debugbar/
-storage/app/public/gantt/
 .php-cs-fixer.cache
 storage/logs/laravel.log
 *.cache

@@ -62,7 +62,7 @@ class RegistrarSalidaVisitante extends Component
             'firma' => $this->firma,
             'registro_salida' => true,
         ]);
-        $this->alert('success', 'Bien Hecho ' . $registroVisitante->nombre . ', has registrado tu salida correctamente', [
+        $this->alert('success', 'Bien Hecho '.$registroVisitante->nombre.', has registrado tu salida correctamente', [
             'position' => 'top-end',
             'timer' => 3000,
             'toast' => true,

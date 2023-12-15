@@ -124,10 +124,10 @@ class HomeController
                             $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
-                            $start = date('Y-m') . '-01';
+                            $start = date('Y-m').'-01';
                             break;
                         case 'year':
-                            $start = date('Y') . '-01-01';
+                            $start = date('Y').'-01-01';
                             break;
                     }
 
@@ -169,10 +169,10 @@ class HomeController
                             $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
-                            $start = date('Y-m') . '-01';
+                            $start = date('Y-m').'-01';
                             break;
                         case 'year':
-                            $start = date('Y') . '-01-01';
+                            $start = date('Y').'-01-01';
                             break;
                     }
 

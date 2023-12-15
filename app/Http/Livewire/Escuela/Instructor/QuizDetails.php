@@ -12,15 +12,25 @@ use Livewire\Component;
 class QuizDetails extends Component
 {
     public $evaluationUser;
+
     public $course;
+
     public $totalQuestions;
+
     public $percentageEvaluationUser;
+
     public $correctQuestions;
+
     public $evaluation;
+
     public $totalQuizQuestions;
+
     public $alphabet;
+
     public $userAnswers;
+
     public $user;
+
     protected $listeners = ['renderQuizDetail' => 'getQuizDetail'];
 
     public function mount(Evaluation $evaluation, Course $course, ?User $user)

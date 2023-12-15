@@ -14,10 +14,10 @@ use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use App\Rules\EmpleadoNoVinculado;
-use Flash;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -79,6 +79,7 @@ class UsersController extends Controller
 
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.users.index');
     }
@@ -107,6 +108,7 @@ class UsersController extends Controller
         abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $user->update($request->all());
         $user->roles()->sync($request->roles);
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.users.index');
     }
@@ -127,6 +129,7 @@ class UsersController extends Controller
         $registro = User::find($id); // Donde $id es el ID del registro que deseas eliminar.
 
         $registro->delete();
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.users.index');
     }
@@ -142,10 +145,10 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
-            $usuarios = User::getAll()->where('name', 'LIKE', '%' . $nombre . '%')->take(5);
+            $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
             $lista = "<ul class='list-group' id='empleados-lista'>";
             foreach ($usuarios as $usuario) {
-                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
             }
             $lista .= '</ul>';
 
@@ -187,7 +190,7 @@ class UsersController extends Controller
             $message = "Verificación por dos factores habilitada para el usuario {$user->name}";
         }
 
-        $user->two_factor = !$user->two_factor;
+        $user->two_factor = ! $user->two_factor;
 
         $user->save();
 
@@ -202,7 +205,7 @@ class UsersController extends Controller
             $message = "El usuario {$user->name} ha sido desbloqueado";
         }
 
-        $user->is_active = !$user->is_active;
+        $user->is_active = ! $user->is_active;
 
         $user->save();
 
@@ -216,11 +219,11 @@ class UsersController extends Controller
 
         if ($usuario != null) {
             $usuario = User::withTrashed()->find($id)->restore();
-            Flash::success('Usuario restablecido satisfactoriamente.');
+            Alert::success('éxito', 'Restablecido con éxito');
 
             return redirect()->route('admin.users.index');
         } else {
-            Flash::error('Usuario no encontrado');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.users.index'));
         }

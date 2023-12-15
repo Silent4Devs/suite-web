@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Tipoactivo.
@@ -25,8 +25,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Tipoactivo extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'tipoactivos';
 
