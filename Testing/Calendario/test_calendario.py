@@ -24,7 +24,7 @@ time.sleep(5)
 #Login
 usr=driver.find_element(By.XPATH,"//input[contains(@name,'email')]").send_keys("zaid.garcia@becarios.silent4business.com")
 time.sleep(tiempo_modulos)
-pw=driver.find_element(By.XPATH,"//input[contains(@name,'password')]").send_keys("$QB&kT3&R4")
+pw=driver.find_element(By.XPATH,"//input[contains(@name,'password')]").send_keys("ranas289")
 time.sleep(tiempo_modulos)
 btn=driver.find_element(By.XPATH,"//button[@type='submit'][contains(.,'Enviar')]")
 btn.click()
