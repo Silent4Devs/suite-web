@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyMinutasaltadireccionRequest;
 use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
+use App\Mail\SolicitudAprobacionMinuta;
 use App\Models\Empleado;
 use App\Models\ExternosMinutaDireccion;
 use App\Models\FilesRevisonDireccion;
@@ -68,7 +69,6 @@ class MinutasaltadireccionController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($request->all());
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -122,6 +122,9 @@ class MinutasaltadireccionController extends Controller
         // // Revisiones
         // $this->initReviews($minutasaltadireccion);
 
+
+        $this->enviarCorreosParticipantes($minutasaltadireccion);
+
         return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Guardado con éxito');
     }
 
@@ -166,6 +169,19 @@ class MinutasaltadireccionController extends Controller
                     'minuta_id' => $minutasaltadireccion->id,
                 ]);
             }
+        }
+    }
+
+    public function enviarCorreosParticipantes($minutasaltadireccion)
+    {
+        $id_minuta = $minutasaltadireccion->id;
+        $tema_minuta = $minutasaltadireccion->tema_reunion;
+        foreach ($minutasaltadireccion->participantesCorreo as $participante) {
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+        }
+
+        foreach ($minutasaltadireccion->externos as $externo) {
+            Mail::to(removeUnicodeCharacters($externo->emailEXT))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
         }
     }
 
@@ -321,9 +337,14 @@ class MinutasaltadireccionController extends Controller
             return intval($actividad->level) > 0;
         });
 
+        $participantesWithAsistencia = $minutasaltadireccion->participantes()
+            ->withPivot('asistencia')
+            ->get();
+        // dd($participantesWithAsistencia);
+
         $responsablereunions = Empleado::getaltaAll();
 
-        return view('admin.minutasaltadireccions.edit', compact('responsablereunions', 'minutasaltadireccion', 'actividades'));
+        return view('admin.minutasaltadireccions.edit', compact('responsablereunions', 'participantesWithAsistencia', 'minutasaltadireccion', 'actividades'));
     }
 
     public function processUpdate($request, Minutasaltadireccion $minutasaltadireccion, $edit = false)
@@ -332,6 +353,7 @@ class MinutasaltadireccionController extends Controller
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
             'fechareunion' => 'required',
+            'tipo_reunion' => 'required',
             'hora_inicio' => 'required',
             'hora_termino' => 'required',
             'tema_reunion' => 'required',
@@ -433,6 +455,26 @@ class MinutasaltadireccionController extends Controller
         $minutasaltadireccion->load('responsable', 'team');
 
         return view('admin.minutasaltadireccions.show', compact('minutasaltadireccion'));
+    }
+
+    public function revision($id)
+    {
+        abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $minutasaltadireccion = Minutasaltadireccion::find($id);
+        $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
+        $actividades = $minutasaltadireccion->planes->first()->tasks;
+        $actividades = array_filter($actividades, function ($actividad) {
+            return intval($actividad->level) > 0;
+        });
+
+        $participantesWithAsistencia = $minutasaltadireccion->participantes()
+            ->withPivot('asistencia')
+            ->get();
+        // dd($participantesWithAsistencia);
+
+        $responsablereunions = Empleado::getaltaAll();
+
+        return view('admin.minutasaltadireccions.revision', compact('responsablereunions', 'participantesWithAsistencia', 'minutasaltadireccion', 'actividades'));
     }
 
     public function destroy(Request $request, Minutasaltadireccion $minutasaltadireccion)

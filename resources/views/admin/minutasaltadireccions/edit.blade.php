@@ -8,99 +8,155 @@
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
     <h5 class="col-12 titulo_general_funcion">Registrar: Minutas de Sesiones de Alta Dirección</h5>
-    <div class="mt-4 card">
-        <div class="card-body">
-            <form method="POST" id="formularioEditMinutas" enctype="multipart/form-data" class="row">
-                @csrf
-                @method('PATCH')
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label class="required" for="fechareunion"><i
-                            class="fas fa-calendar-alt iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}</label>
-                    <input required class="form-control date" type="date" min="1945-01-01"
-                    name="fechareunion" id="fechareunion"
-                        value="{{ old('fechareunion', \Carbon\Carbon::parse($minutasaltadireccion->fechareunion)->format('Y-m-d')) }}">
-                    @if ($errors->has('fechareunion'))
-                        <span class="text-danger">
-                            {{ $errors->first('fechareunion') }}
-                        </span>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+    <div class="card card-body instrucciones">
+        <div class="row">
+            <div class="col-2">
+                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="Onboarding" style="width: 180px; height:180px;">
+            </div>
+            <div class="col-10">
+                <h5>¿Qué es? Revisión por Dirección.</h5>
+                <p>Proceso fundamental en el contexto de los sistemas de gestión.</p>
+                <p>Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
+                    desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar que
+                    el
+                    sistema de gestión esté funcionando de manera eficaz y que se estén cumpliendo los objetivos y metas
+                    establecidos. Como evidencia de este punto se propone la generación de una minuta.</p>
+            </div>
+        </div>
+    </div>
+
+    <form method="POST" id="formularioEditMinutas" enctype="multipart/form-data">
+        @csrf
+        @method('PATCH')
+        <div class="card">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                        <label class="required" for="responsable_id">Elaboró</label>
+                        <select required class="form-control select2" name="responsable_id" id="responsable_id">
+                            @foreach ($responsablereunions as $responsablereunion)
+                                <option value="{{ $responsablereunion->id }}"
+                                    {{ old('responsable_id', $minutasaltadireccion->responsable_id) == $responsablereunion->id ? 'selected' : '' }}>
+                                    {{ $responsablereunion->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('responsable_id'))
+                            <span class="text-danger">
+                                {{ $errors->first('responsable_id') }}
+                            </span>
+                        @endif
+                        <span
+                            class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                        <label class="required"
+                            for="fechareunion">{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}</label>
+                        <input required class="form-control date" type="date" min="1945-01-01" name="fechareunion"
+                            id="fechareunion"
+                            value="{{ old('fechareunion', \Carbon\Carbon::parse($minutasaltadireccion->fechareunion)->format('Y-m-d')) }}">
+                        @if ($errors->has('fechareunion'))
+                            <span class="text-danger">
+                                {{ $errors->first('fechareunion') }}
+                            </span>
+                        @endif
+                        <span
+                            class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+                    </div>
                 </div>
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label class="required" for="hora_inicio"><i class="fas fa-clock iconos-crear"></i>Horario de inicio</label>
-                    <input required class="form-control date" type="time" name="hora_inicio" id="hora_inicio"
-                        value="{{ old('hora_inicio', $minutasaltadireccion->hora_inicio) }}">
-                    @if ($errors->has('hora_inicio'))
-                        <span class="text-danger">
-                            {{ $errors->first('hora_inicio') }}
-                        </span>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+                <div class="form-row">
+                    <div class="form-group col-sm-12 col-md-3 col-lg-3">
+                        <label class="required" for="hora_inicio">Horario de
+                            inicio</label>
+                        <input required class="form-control date" type="time" name="hora_inicio" id="hora_inicio"
+                            value="{{ old('hora_inicio', $minutasaltadireccion->hora_inicio) }}">
+                        @if ($errors->has('hora_inicio'))
+                            <span class="text-danger">
+                                {{ $errors->first('hora_inicio') }}
+                            </span>
+                        @endif
+                        <span
+                            class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-3 col-lg-3">
+                        <label class="required" for="hora_termino">Horario de
+                            término</label>
+                        <input required class="form-control date" type="time" name="hora_termino" id="hora_termino"
+                            value="{{ old('hora_termino', $minutasaltadireccion->hora_termino) }}">
+                        @if ($errors->has('hora_termino'))
+                            <span class="text-danger">
+                                {{ $errors->first('hora_termino') }}
+                            </span>
+                        @endif
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                        <label class="required" for="tipo_reunion">Tipo de reunión<span class="text-danger">*</span></label>
+                        <select required class="form-control" name="tipo_reunion" id="tipo_reunion"
+                            value="{{ old('tipo_reunion') }}">
+                            <option value="presencial"
+                                {{ old('tipo_reunion', $minutasaltadireccion->tipo_reunion) == 'presencial' ? 'selected' : '' }}>
+                                Presencial</option>
+                            <option value="remota"
+                                {{ old('tipo_reunion', $minutasaltadireccion->tipo_reunion) == 'remota' ? 'selected' : '' }}>
+                                Remota</option>
+                            <option value="hibrida"
+                                {{ old('tipo_reunion', $minutasaltadireccion->tipo_reunion) == 'hibrida' ? 'selected' : '' }}>
+                                Hibrida</option>
+                        </select>
+                        @if ($errors->has('tipo_reunion'))
+                            <span class="text-danger">
+                                {{ $errors->first('tipo_reunion') }}
+                            </span>
+                        @endif
+                    </div>
                 </div>
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label class="required" for="responsable_id"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
-                    <select required class="form-control select2" name="responsable_id" id="responsable_id">
-                        @foreach ($responsablereunions as $responsablereunion)
-                            <option value="{{ $responsablereunion->id }}"
-                                {{ old('responsable_id', $minutasaltadireccion->responsable_id) == $responsablereunion->id ? 'selected' : '' }}>
-                                {{ $responsablereunion->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('responsable_id'))
-                        <span class="text-danger">
-                            {{ $errors->first('responsable_id') }}
-                        </span>
-                    @endif
-                    <span
-                        class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
+                <div class="form-row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <label class="required" for="tema_reunion">Tema de la
+                            reunión</label>
+                        <input required data-vincular-nombre='true' class="form-control date" type="text"
+                            name="tema_reunion" id="tema_reunion"
+                            value="{{ old('tema_reunion', $minutasaltadireccion->tema_reunion) }}">
+                        @if ($errors->has('tema_reunion'))
+                            <span class="text-danger">
+                                {{ $errors->first('tema_reunion') }}
+                            </span>
+                        @endif
+                    </div>
                 </div>
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label class="required" for="hora_termino"><i class="fas fa-clock iconos-crear"></i>Horario de término</label>
-                    <input required class="form-control date" type="time" name="hora_termino" id="hora_termino"
-                        value="{{ old('hora_termino', $minutasaltadireccion->hora_termino) }}">
-                    @if ($errors->has('hora_termino'))
-                        <span class="text-danger">
-                            {{ $errors->first('hora_termino') }}
-                        </span>
-                    @endif
+                <div class="form-row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <label class="required"
+                            for="objetivoreunion">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}</label>
+                        <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion', $minutasaltadireccion->objetivoreunion) }}</textarea>
+                        @if ($errors->has('objetivoreunion'))
+                            <span class="text-danger">
+                                {{ $errors->first('objetivoreunion') }}
+                            </span>
+                        @endif
+                        <span
+                            class="help-block">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion_helper') }}</span>
+                    </div>
                 </div>
-                <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label class="required" for="tema_reunion"><i class="fas fa-file-alt iconos-crear"></i>Tema de la reunión</label>
-                    <input required data-vincular-nombre='true' class="form-control date" type="text" name="tema_reunion"
-                        id="tema_reunion" value="{{ old('tema_reunion', $minutasaltadireccion->tema_reunion) }}">
-                    @if ($errors->has('tema_reunion'))
-                        <span class="text-danger">
-                            {{ $errors->first('tema_reunion') }}
-                        </span>
-                    @endif
-                </div>
-                <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label class="required" for="objetivoreunion"><i
-                            class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}</label>
-                    <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion', $minutasaltadireccion->objetivoreunion) }}</textarea>
-                    @if ($errors->has('objetivoreunion'))
-                        <span class="text-danger">
-                            {{ $errors->first('objetivoreunion') }}
-                        </span>
-                    @endif
-                    <span
-                        class="help-block">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion_helper') }}</span>
-                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
                 <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
                     <span class="ml-1" style="font-size: 17px; font-weight: bold;">
                         Participantes</span>
                 </div>
                 <div class="pl-3 row w-100" x-data="{ externo: {{ $minutasaltadireccion->externos ? 'true' : 'false' }} }">
                     <div class="col-12" style="text-align: end">
-                        <i class="fas fa-users bg-primary p-2 rounded text-white"></i>
+
                         <i class="fas fa-user-tag" x-bind:class="externo ? 'bg-primary p-2 rounded text-white' : ''"
                             style="color:black" @click.prevent="externo = !externo"></i>
                     </div>
                     <div class="col-12">
                         <div class="row">
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label class="required" for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
+                                <label class="required" for="participantes">Buscar
                                     participante</label>
                                 <input type="hidden" id="id_empleado">
                                 <input class="form-control" type="text" id="participantes_search"
@@ -116,25 +172,31 @@
                                 <span class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
                             </div>
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
+                                <label for="email">Email</label>
                                 <input class="form-control" type="text" id="email"
                                     placeholder="Correo del participante" readonly style="cursor: not-allowed" />
                             </div>
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="email"><i class="fas fa-at iconos-crear"></i>Puesto</label>
+                                <label for="email">Puesto</label>
                                 <input class="form-control" type="text" id="puesto"
                                     placeholder="Puesto del participante" readonly style="cursor: not-allowed" />
                             </div>
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="email"><i class="fas fa-at iconos-crear"></i>Área</label>
+                                <label for="email">Área</label>
                                 <input class="form-control" type="text" id="area"
                                     placeholder="Área del participante" readonly style="cursor: not-allowed" />
                             </div>
-
+                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                <label for="asistencia">Asistencia</label>
+                                <select class="form-control" id="asistencia" name="asistencia" placeholder="">
+                                    <option value="Si" default>Sí</option>
+                                    <option value="No">No</option>
+                                    <option value="Ausencia Justificada">Ausencia Justificada</option>
+                                </select>
+                            </div>
                             <div class="col-12">
                                 <button id="btn-suscribir-participante" type="submit"
                                     class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: relative;">
-                                    <i class="mr-1 fas fa-plus-circle"></i>
                                     Agregar Participante
                                 </button>
                             </div>
@@ -147,15 +209,17 @@
                                             <th>Puesto</th>
                                             {{-- <th scope="col">Área</th> --}}
                                             <th>Correo</th>
+                                            <th>Asistencia</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($minutasaltadireccion->participantes as $participante)
+                                        @foreach ($participantesWithAsistencia as $participante)
                                             <tr>
                                                 <td>{{ $participante->id }}</td>
                                                 <td>{{ $participante->name }}</td>
                                                 <td>{{ $participante->puesto }}</td>
                                                 <td>{{ $participante->email }}</td>
+                                                <td>{{ $participante->pivot->asistencia ?? '' }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -169,30 +233,38 @@
                             <p class="font-weight-bold col-12" style="font-size:11pt;">Participantes externos.</p>
                             <hr>
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="nombreEXT"><i class="fas fa-at iconos-crear"></i>Nombre</label>
+                                <label for="nombreEXT">Nombre</label>
                                 <input class="form-control" type="text" id="nombreEXT"
                                     placeholder="Nombre del participante" />
                             </div>
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="emailEXT"><i class="fas fa-at iconos-crear"></i>Email</label>
+                                <label for="emailEXT">Email</label>
                                 <input class="form-control" type="text" id="emailEXT"
                                     placeholder="Correo del participante" />
                             </div>
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="puestoEXT"><i class="fas fa-suitcase iconos-crear"></i></i>Puesto</label>
+                                <label for="puestoEXT">Puesto</label>
                                 <input class="form-control" type="text" id="puestoEXT"
                                     placeholder="Puesto del participante" />
                             </div>
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="empresaEXT"><i class="fas fa-user-tag iconos-crear"></i></i>Empresa u
+                                <label for="empresaEXT">Empresa u
                                     Organización</label>
                                 <input class="form-control" type="text" id="empresaEXT"
                                     placeholder="Empresa u Organización del participante" />
                             </div>
+                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                <label for="asistenciaEXT">Asistencia</label>
+                                <select class="form-control" id="asistenciaEXT" name="asistenciaEXT" placeholder="">
+                                    <option value="Si" default>Sí</option>
+                                    <option value="No">No</option>
+                                    <option value="Ausencia Justificada">Ausencia Justificada</option>
+                                </select>
+                            </div>
                             <div class="form-group col-sm-12 col-md-12 col-lg-12">
                                 <button id="btn-suscribir-participanteEXT" onclick="event.preventDefault();"
                                     class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: end;">
-                                    <i title="Agregar Participantes Externos" class="mr-1 fas fa-plus-circle"></i>
+
                                     Agregar Participante
                                 </button>
                             </div>
@@ -204,6 +276,7 @@
                                             <th>Correo</th>
                                             <th>Puesto</th>
                                             <th>Empresa u Organización</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -213,6 +286,7 @@
                                                 <td>{{ $externo->emailEXT }}</td>
                                                 <td>{{ $externo->puestoEXT }}</td>
                                                 <td>{{ $externo->empresaEXT }}</td>
+                                                <td>{{ $externo->asistenciaEXT ?? '' }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -223,15 +297,19 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="mt-3 col-sm-12 form-group">
-                    <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documento</label>
+            </div>
+        </div>
+        {{-- <div class="mt-3 col-sm-12 form-group">
+                    <label for="evidencia">Documento</label>
                     <div class="custom-file">
                         <input type="file" name="files[]" multiple class="form-control" id="evidencia">
                     </div>
                 </div> --}}
+        <div class="card">
+            <div class="card-body">
                 <div class="form-group col-sm-12 col-md-12 col-lg-12 mt-4">
-                    <label class="required" for="tema_tratado"><i class="fas fa-file-alt iconos-crear"></i>Temas tratados</label>
+                    <label class="required" for="tema_tratado">Temas
+                        tratados</label>
                     <textarea required class="form-control date" type="text" name="tema_tratado" id="temas">{{ old('tema_tratado', $minutasaltadireccion->tema_tratado) }}</textarea>
                     @if ($errors->has('tema_tratado'))
                         <span class="text-danger">
@@ -241,31 +319,30 @@
                 </div>
 
                 @livewire('file-revision-direecion-component', ['minutas' => $minutasaltadireccion])
-
-
-
-
-                {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                @include('admin.planesDeAccion.actividades.tabla', [
-                    'empleados' => $responsablereunions,
-                    'actividades' => $actividades,
-                ])
-
-                {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
-
-                <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" id="btnGuardar" type="submit">
-                        Actualizar
-                    </button>
-                    <button class="btn btn-danger" id="btnUpdateAndReview" type="submit"
-                        style="width: 230px !important;">
-                        Actualizar y enviar a revisión
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+
+        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+
+        @include('admin.planesDeAccion.actividades.tabla', [
+            'empleados' => $responsablereunions,
+            'actividades' => $actividades,
+        ])
+
+
+
+        {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
+
+        <div class="text-right form-group col-12">
+            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
+            <button class="btn btn-danger" id="btnGuardar" type="submit">
+                Actualizar
+            </button>
+            <button class="btn btn-danger" id="btnUpdateAndReview" type="submit" style="width: 230px !important;">
+                Actualizar y enviar a revisión
+            </button>
+        </div>
+    </form>
 @endsection
 
 @section('scripts')
@@ -399,7 +476,7 @@
                                 }`;
                             lista +=
                                 "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
-                                result + ")' ><i class='mr-2 fas fa-user-circle'></i>" +
+                                result + ")' >" +
                                 usuario.name + "</button>";
                         });
                         lista += "</ul>";
@@ -453,23 +530,29 @@
             //form-participantes
 
             let participantes = tblParticipantes.rows().data().toArray();
+            // console.log(tblParticipantes.rows().data().toArray());
             let arrParticipantes = [];
             participantes.forEach(participante => {
                 arrParticipantes.push(participante[0])
             });
             let id_empleado = $("#id_empleado").val();
-            if (id_empleado == '') {
-                Swal.fire('Debes de buscar un empleado', '', 'info')
+            let asistencia_if = $("#asistencia").val();
+            if (id_empleado == '' || asistencia_if == null) {
+                Swal.fire('Debes de buscar un empleado y registrar su asistencia', '', 'info')
             } else {
                 if (!arrParticipantes.includes(id_empleado)) {
                     let nombre = $("#participantes_search").val();
                     let puesto = $("#puesto").val();
                     let email = $("#email").val();
+                    let area = $("#area").val();
+                    let asistencia = $("#asistencia").val();
                     tblParticipantes.row.add([
                         id_empleado,
                         nombre,
                         puesto,
                         email,
+                        asistencia,
+                        area,
                     ]).draw();
 
                 } else {
@@ -480,6 +563,7 @@
                 $("#id_empleado").val('');
                 $("#email").val('');
                 $("#puesto").val('');
+                $("#asistencia").val('');
                 $("#area").val('');
             }
         }
@@ -487,19 +571,24 @@
         function enviarParticipantes() {
             let participantes = tblParticipantes.rows().data().toArray();
             let arrParticipantes = [];
-            participantes.forEach(participante => {
-                arrParticipantes.push(participante[0])
 
+            participantes.forEach(participante => {
+                let datos = {
+                    'empleado_id': participante[0],
+                    'asistencia': participante[4],
+                };
+                arrParticipantes.push(datos);
             });
-            document.getElementById('participantes').value = arrParticipantes;
-            console.log(arrParticipantes);
+
+            document.getElementById('participantes').value = JSON.stringify(arrParticipantes);
         }
 
         function suscribirParticipanteExterno() {
             //form-participantes
             let email = $("#emailEXT").val();
             let nombre = $("#nombreEXT").val();
-            if (email != '' && nombre != '') {
+            let asistencia_if = $("#asistenciaEXT").val();
+            if (email != '' && nombre != '' && asistencia_if != null) {
 
                 let participantes = tblParticipantesEXT.rows().data().toArray();
                 // console.log(tblParticipantes.rows().data().toArray());
@@ -511,11 +600,14 @@
                 if (!arrParticipantes.includes(email)) {
                     let puesto = $("#puestoEXT").val();
                     let empresa = $("#empresaEXT").val();
+                    let asistencia = $("#asistenciaEXT").val();
+
                     tblParticipantesEXT.row.add([
                         nombre,
                         email,
                         puesto,
                         empresa,
+                        asistencia,
                     ]).draw();
 
                 } else {
@@ -527,8 +619,9 @@
                 $("#puestoEXT").val('');
                 $("#emailEXT").val('');
                 $("#empresaEXT").val('');
+                $("#asistenciaEXT").val('');
             } else {
-                Swal.fire('Debes de llenar los campos nombre e email', '', 'info')
+                Swal.fire('Debes de llenar los campos nombre, email y asistencia', '', 'info')
             }
 
         }
@@ -542,6 +635,7 @@
                     email: participante[1],
                     puesto: participante[2],
                     empresa: participante[3],
+                    asistencia: participante[4],
                 }
                 arrParticipantes.push(objParticipantes)
             });

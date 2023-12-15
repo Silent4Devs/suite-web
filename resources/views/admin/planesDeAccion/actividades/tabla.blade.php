@@ -22,42 +22,34 @@
         <div class="row">
             <div class="col-sm-12 col-lg-12 col-md-12">
                 <div class="form-group">
-                    <div class="row">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="actividad" name="actividad" placeholder="">
-                            <label for="actividad"> Actividad <span class="text-danger">*</span></label>
-                        </div>
-                        {{-- <div class="pr-0 col-1">
+                    <label for="actividad"> Actividad <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="actividad" name="actividad" placeholder="">
+                    {{-- <div class="pr-0 col-1">
                         <button id="btnVincularNombre" class="btn btn-outline-primary btn-sm"
                             title="Vincular con nombre"></button>
                     </div> --}}
-                    </div>
-                    {{-- <small id="actividadHelp" class="form-text text-muted">Nombre de la actividad</small> --}}
-                    <small class="p-0 m-0 text-xs error_actividad errores text-danger"></small>
                 </div>
+                {{-- <small id="actividadHelp" class="form-text text-muted">Nombre de la actividad</small> --}}
+                <small class="p-0 m-0 text-xs error_actividad errores text-danger"></small>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12 col-lg-6 col-6">
                 <div class="form-group">
-                    <div class="form-floating">
-                        <input type="date" min="1945-01-01" class="form-control" id="inicio" name="inicio">
-                        {{-- <small id="inicioHelp" class="form-text text-muted">Fecha de inicio de la actividad</small> --}}
-                        <label for="inicio"> Inicio <span class="text-danger">*</span></label>
-                        <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
-                    </div>
+                    <label for="inicio"> Inicio <span class="text-danger">*</span></label>
+                    <input type="date" min="1945-01-01" class="form-control" id="inicio" name="inicio">
+                    {{-- <small id="inicioHelp" class="form-text text-muted">Fecha de inicio de la actividad</small> --}}
+                    <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
+
                 </div>
             </div>
             <div class="col-sm-12 col-lg-6 col-6">
                 <div class="form-group">
-                    <div class="form-floating">
-                        <input type="date" min="1945-01-01" class="form-control" id="finalizacion"
-                            name="finalizacion">
-                        {{-- <small id="finalizacionHelp" class="form-text text-muted">Fecha de finalización de la
+                    <label for="finalizacion"> Finalización <span class="text-danger">*</span></label>
+                    <input type="date" min="1945-01-01" class="form-control" id="finalizacion" name="finalizacion">
+                    {{-- <small id="finalizacionHelp" class="form-text text-muted">Fecha de finalización de la
                             actividad</small> --}}
-                        <small class="p-0 m-0 text-xs error_finalizacion errores text-danger"></small>
-                        <label for="finalizacion"> Finalización <span class="text-danger">*</span></label>
-                    </div>
+                    <small class="p-0 m-0 text-xs error_finalizacion errores text-danger"></small>
                 </div>
             </div>
         </div>
@@ -90,12 +82,10 @@
         <div class="row">
             <div class="col-sm-12 col-lg-12 col-md-12">
                 <div class="form-group">
-                    <div class="form-floating">
-                        <textarea class="form-control w-100" id="comentarios" name="comentarios"></textarea>
-                        {{-- <small id="comentariosHelp" class="form-text text-muted">Comentarios de la actividad</small> --}}
-                        <small class="p-0 m-0 text-xs error_comentarios errores text-danger"></small>
-                        <label for="comentarios"> Comentarios <span class="text-danger">*</span></label>
-                    </div>
+                    <label for="comentarios"> Comentarios <span class="text-danger">*</span></label>
+                    <textarea class="form-control w-100" id="comentarios" name="comentarios"></textarea>
+                    {{-- <small id="comentariosHelp" class="form-text text-muted">Comentarios de la actividad</small> --}}
+                    <small class="p-0 m-0 text-xs error_comentarios errores text-danger"></small>
                 </div>
             </div>
         </div>

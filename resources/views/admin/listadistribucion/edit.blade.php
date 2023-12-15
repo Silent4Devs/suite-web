@@ -171,35 +171,37 @@
     <script>
         var superaprobadoresSeleccionados = {!! json_encode($superaprobadores_seleccionados) !!};
 
-        // Loop through each superaprobador
-        superaprobadoresSeleccionados.forEach(function(superaprobador) {
-            var empleadoId = superaprobador.empleado_id;
-            var numeroOrden = superaprobador.numero_orden;
+        $(document).ready(function() {
+            var superaprobadoresSelect = $('#superaprobadores');
 
-            // Find the corresponding option based on empleadoId
-            var option = $('#superaprobadores option[value="' + empleadoId + '"]');
+            var options = $('option', superaprobadoresSelect);
 
-            // If the option exists, append it to the #superaprobadores select based on numero_orden
-            if (option.length > 0) {
-                option.detach();
-                var options = $('#superaprobadores option');
-                if (options.length === 0) {
-                    $('#superaprobadores').append(option);
-                } else {
-                    options.each(function(index, element) {
-                        var currentNumeroOrden = superaprobadoresSeleccionados.find(sa => sa.empleado_id ==
-                            $(element).val()).numero_orden;
-                        if (numeroOrden < currentNumeroOrden) {
-                            option.insertBefore(element);
-                            return false; // Break the loop
-                        } else if (index === options.length - 1) {
-                            $('#superaprobadores').append(option);
-                        }
-                    });
+            // Sort the options based on the numero_orden property
+            options.detach().sort(function(a, b) {
+                var aOrder = superaprobadoresSeleccionados.find(item => item.empleado_id === $(a).val())
+                    ?.numero_orden || 0;
+                var bOrder = superaprobadoresSeleccionados.find(item => item.empleado_id === $(b).val())
+                    ?.numero_orden || 0;
+                return aOrder - bOrder;
+            });
+
+            // Append the sorted options back to the select element
+            superaprobadoresSelect.append(options);
+
+            // Set the 'selected' attribute for options that match the superaprobadores_seleccionados data
+            options.each(function() {
+                var empleadoId = $(this).val();
+                var isSelected = superaprobadoresSeleccionados.some(function(item) {
+                    return item.empleado_id == empleadoId;
+                });
+
+                if (isSelected) {
+                    $(this).attr('selected', 'selected');
                 }
-            }
+            });
         });
     </script>
+
 
     <script>
         var participantesSeleccionados = {!! json_encode($participantes_seleccionados) !!};

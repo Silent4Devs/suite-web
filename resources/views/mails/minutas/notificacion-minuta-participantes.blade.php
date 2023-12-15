@@ -107,24 +107,25 @@
                                     <td style="padding:0 0 36px 0;">
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img src="{{ asset('img/auditoria-participantes.png') }}" class="mt-2 ml-4"
+                                            <img src="{{ asset('img/reunion.png') }}" class="mt-2 ml-4"
                                                 style="width:160px;">
                                         </div>
 
                                         <div style="width: 100%;">
                                             <div class="center-h">
                                                 <h3 style="text-align: center">
-                                                    Se ha añadido en el informe de auditoria <br> {Nombre de Auditoria}
+                                                    Solicitud de Aprobación
                                                 </h3>
                                             </div>
                                             <p
                                                 style="text-align: center; font-size:11pt;
                                                 color:#153643; margin-left:25px; margin-right:25px">
-                                                Favor de Ingresar al modulo para generar su reporte
+                                                Se ha enviado una Minuta para su aprobación
                                             </p>
 
                                             <br>
                                             <div style="text-align:center;">
+                                                Da click en la siguiente liga para revisarla y aprobarla
                                                 {{-- <a href="{{ config('app.url') }}"
                                                     style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                     Comenzar

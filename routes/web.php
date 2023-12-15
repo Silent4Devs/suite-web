@@ -869,6 +869,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('minutasaltadireccions/destroy', 'MinutasaltadireccionController@massDestroy')->name('minutasaltadireccions.massDestroy');
         Route::post('minutasaltadireccions/media', 'MinutasaltadireccionController@storeMedia')->name('minutasaltadireccions.storeMedia');
         Route::post('minutasaltadireccions/ckmedia', 'MinutasaltadireccionController@storeCKEditorImages')->name('minutasaltadireccions.storeCKEditorImages');
+        Route::get('minutasaltadireccions/{minuta}/revision', 'MinutasaltadireccionController@revision')->name('minutasaltadireccions.revision');
         Route::resource('minutasaltadireccions', 'MinutasaltadireccionController');
 
         // Evidencias Sgsis

@@ -212,14 +212,12 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <div class="form-floating">
-                                    <select class="form-control" id="asistencia" name="asistencia" placeholder="">
-                                        <option value="Si" default>Sí</option>
-                                        <option value="No">No</option>
-                                        <option value="Ausencia Justificada">Ausencia Justificada</option>
-                                    </select>
-                                    <label for="asistencia">Asistencia</label>
-                                </div>
+                                <label for="asistencia">Asistencia</label>
+                                <select class="form-control" id="asistencia" name="asistencia" placeholder="">
+                                    <option value="Si" default>Sí</option>
+                                    <option value="No">No</option>
+                                    <option value="Ausencia Justificada">Ausencia Justificada</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-12">
@@ -270,40 +268,39 @@
                                 placeholder="Empresa u Organización del participante" />
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                            <div class="form-floating">
-                                <select class="form-control" id="asistenciaEXT" name="asistenciaEXT" placeholder="">
-                                    <option value="Si" default>Sí</option>
-                                    <option value="No">No</option>
-                                    <option value="Ausencia Justificada">Ausencia Justificada</option>
-                                </select>
-                                <label for="asistencia">Asistencia</label>
-                            </div>
+                            <label for="asistenciaEXT">Asistencia</label>
+                            <select class="form-control" id="asistenciaEXT" name="asistenciaEXT" placeholder="">
+                                <option value="Si" default>Sí</option>
+                                <option value="No">No</option>
+                                <option value="Ausencia Justificada">Ausencia Justificada</option>
+                            </select>
                         </div>
-                        <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                            <button id="btn-suscribir-participanteEXT" onclick="event.preventDefault();"
-                                class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: end;">
-                                Agregar Participante
-                            </button>
-                        </div>
-                        <div class="mt-3 col-12 w-100 datatable-fix">
-                            <table class="table w-100" id="tbl-participantesEXT">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Correo</th>
-                                        <th>Puesto</th>
-                                        <th>Empresa u Organización</th>
-                                        <th>Asistencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                            <input type="hidden" name="participantesExt" value="" id="participantesExt">
-                        </div>
-
                     </div>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <button id="btn-suscribir-participanteEXT" onclick="event.preventDefault();"
+                            class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: end;">
+                            Agregar Participante
+                        </button>
+                    </div>
+                    <div class="mt-3 col-12 w-100 datatable-fix">
+                        <table class="table w-100" id="tbl-participantesEXT">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Puesto</th>
+                                    <th>Empresa u Organización</th>
+                                    <th>Asistencia</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <input type="hidden" name="participantesExt" value="" id="participantesExt">
+                    </div>
+
                 </div>
             </div>
+        </div>
         </div>
         {{-- </div> --}}
 
