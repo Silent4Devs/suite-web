@@ -1,8 +1,8 @@
 // Jenkinsfilev1
 
 // Este Jenkinsfilev1 no contiene un bloque pipeline adicional
-sh 'cd Testing/Calendario'
+sh 'cd Testing/Timeshet'
 sh 'pip install pytest'
 sh 'pip install selenium'
-// sh 'pytest test_calendario'
+sh 'pytest test_registrar_horas'
 // Puedes agregar más pasos según sea necesario
