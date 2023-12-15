@@ -21,18 +21,24 @@ driver.get('https://192.168.9.78/')
 driver.maximize_window()
 time.sleep(5)
 
-#Login with good credentials
+#Login
 usr=driver.find_element(By.XPATH,"//input[contains(@name,'email')]").send_keys("zaid.garcia@becarios.silent4business.com")
 time.sleep(tiempo_modulos)
 pw=driver.find_element(By.XPATH,"//input[contains(@name,'password')]").send_keys("$QB&kT3&R4")
 time.sleep(tiempo_modulos)
 btn=driver.find_element(By.XPATH,"//button[@type='submit'][contains(.,'Enviar')]")
 btn.click()
-# Esperar hasta 10 segundos para encontrar un elemento que indique un inicio de sesión exitoso
-try:
-    element = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//font[@class='letra_blanca'][contains(.,'Mi perfil')]"))
-    )
-    print("Inicio de sesión exitoso")
-except TimeoutException:
-    print("Inicio de sesión fallido")
+
+#Capital Humano
+cap_humano=driver.find_element(By.XPATH,"(//font[@class='letra_blanca'][contains(.,'Capital Humano')])[1]")
+time.sleep(tiempo_modulos)
+cap_humano.click()
+time.sleep(tiempo_espera)
+
+#Solictudes e Incidencias
+solicitudes_incidencias=driver.find_element(By.XPATH,"(//div[contains(.,'Solicitudes e Incidencias')])[8]")
+time.sleep(tiempo_modulos)
+solicitudes_incidencias.click()
+time.sleep(tiempo_espera)
+
+
