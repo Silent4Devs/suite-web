@@ -7,6 +7,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
+
+driver.add_argument('--headless')
+
+driver = webdriver.FirefoxOptions()
+
 import time
 tiempo_modulos=4
 tiempo_carga=10
