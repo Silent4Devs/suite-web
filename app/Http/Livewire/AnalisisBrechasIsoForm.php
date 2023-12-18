@@ -10,6 +10,7 @@ use App\Functions\GenerateAnalisisBIso;
 use App\Models\Iso27\GapDosConcentradoIso;
 use App\Models\Iso27\GapTresConcentradoIso;
 use App\Models\Iso27\GapUnoConcentratoIso;
+use App\Models\TemplateAnalisisdeBrechas;
 
 class AnalisisBrechasIsoForm extends Component
 {
@@ -24,8 +25,9 @@ class AnalisisBrechasIsoForm extends Component
         $this->fecha = Carbon::now()->format('d-m-y');
         $empleados = Empleado::getaltaAll();
         $analisis_brechas = AnalisisBrechasIso::get();
+        $templates = TemplateAnalisisdeBrechas::get();
         // dd($analisis_brechas);
-        return view('livewire.analisis-brechas-iso-form', compact('empleados','analisis_brechas'));
+        return view('livewire.analisis-brechas-iso-form', compact('empleados','analisis_brechas','templates'));
     }
 
     private function resetInput()

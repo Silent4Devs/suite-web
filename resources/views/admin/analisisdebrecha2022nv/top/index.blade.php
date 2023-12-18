@@ -48,20 +48,38 @@
             <div class="titulo-card">Templates generados
                 <hr>
             </div>
-            <table class="table table-striped datatable-AlcanceSgsi">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="max-width:300px !important;background-color:rgb(255, 255, 255); color:#414141;">ID</th>
-                        <th style="min-width:200px; background-color:rgb(255, 255, 255); color:#414141;">Nombre del template
-                        </th>
-                        <th style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">
-                            Fecha de creación</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">No de preguntas</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Top 8</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;"></th>
-                    </tr>
-                </thead>
-            </table>
+            <div class="datatable-rds datatable-fix">
+                <table id="datatable_analisisbrechas">
+                    <thead class="w-100">
+                        <tr>
+                            <th style="max-width:300px !important;background-color:rgb(255, 255, 255); color:#414141;">ID</th>
+                            <th style="min-width:200px; background-color:rgb(255, 255, 255); color:#414141;">Nombre del template
+                            </th>
+                            <th style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">
+                                Fecha de creación</th>
+                            <th style="background-color:rgb(255, 255, 255); color:#414141;">No de preguntas</th>
+                            <th style="background-color:rgb(255, 255, 255); color:#414141;">Top 8</th>
+                            <th style="background-color:rgb(255, 255, 255); color:#414141;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($top_analisis as $analisis )
+                            <tr>
+                                <td>
+                                    {{$analisis->id}}
+                                </td>
+                                <td>
+                                    {{$analisis->nombre_template}}
+                                </td>
+                                <td>
+                                    {{$analisis->created_at}}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
+                </table>
+            </div>
         </div>
         <div class="col-md-10">
 
