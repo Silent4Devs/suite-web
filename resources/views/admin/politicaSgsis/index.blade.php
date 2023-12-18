@@ -93,25 +93,30 @@
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
-    @can('politica_sistema_gestion_agregar')
-
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Politica</a>
+        </div>
+    </div>
+       @include('partials.flashMessages')
+       <div class="datatable-fix datatable-rds">
         <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
-        <div class="mt-5 card">
-            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Política SGSI</strong></h3>
-            </div> --}}
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modelpoliticasgsi', ['model' => 'Vulnerabilidad', 'route' =>
-                    'admin.vulnerabilidads.parseCsvImport'])
-                </div>
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="#" id="btnImport"  type="button" class="import" title="import"><img src="{{asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg')}}" alt="Importar" class="icon"></a>
+                &nbsp;  &nbsp;
+                <a href="{{ route('descarga-comite_seguridad' )}}" type="button" class="export"  title="export"><img src="{{asset('download_FILL0_wght300_GRAD0_opsz24.svg')}}" alt="Importar" class="icon"></a>
+                &nbsp;  &nbsp;
+                <a href="#" id="btpdf"  type="button" class="btpdf" title="pdf"><img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon"></a>
+                &nbsp;  &nbsp;
             </div>
-        @endcan
-
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-PoliticaSgsi" id="datatable-PoliticaSgsi">
-                <thead class="thead-dark">
+            @include('csvImport.modalcomitedeseguridad', [
+                'model' => 'Vulnerabilidad',
+                'route' => 'admin.vulnerabilidads.parseCsvImport',
+            ])
+       </div>
+             <table class="table table-bordered" id="datatable-PoliticaSgsi">
+                <thead>
                     <tr>
                         <th style="text-transform: capitalize">
                             {{ trans('cruds.politicaSgsi.fields.id') }}
@@ -123,43 +128,19 @@
                             Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión
                         </th>
                         <th>
-                            Fecha de publicación
+                            Estatus
                         </th>
                         <th>
-                            Fecha&nbsp;de&nbsp;entrada en vigor
-                        </th>
-                        <th>
-                            Revisó
-                        </th>
-                        <th>
-                            Puesto
-                        </th>
-                        <th>
-                            Área
-                        </th>
-                        <th>
-                            Fecha de revisión
+                            Mostrar
                         </th>
                         <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                            <td>
-                            </td>
-                            <td>
-                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                            </td>
-                            <td>
-                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                            </td>
-                            <td>
-                            </td>
-                        </tr> --}}
                 </thead>
             </table>
-        </div>
-    </div>
+
+      </div>
 
 @endsection
 @section('scripts')
@@ -186,22 +167,6 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-                // {
-                //     extend: 'pdfHtml5',
-                //     title: `Política SGSI ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Exportar PDF',
-                //     orientation: 'landscape',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     },
-                //     customize: function(doc) {
-                //         doc.pageMargins = [20, 60, 20, 30];
-                //         doc.styles.tableHeader.fontSize = 7.5;
-                //         doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                //     }
-                // },
                 {
                     extend: 'print',
                     title: `Política SGSI ${new Date().toLocaleDateString().trim()}`,
@@ -362,51 +327,17 @@
                         }
                     },
                     {
-                        data: 'fecha_publicacion',
-                        name: 'fecha_publicacion',
+                        data: 'estatus',
+                        name: 'estatus',
                         render: function(data, type, row) {
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
                     {
-                        data: 'fecha_entrada',
-                        name: 'fecha_entrada',
+                        data: 'mostrar',
+                        name: 'mostrar',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'reviso_politica',
-                        name: 'reviso_politica',
-                        render: function(data, type, row, config, meta) {
-                            let responsablereunion = "";
-                            if (row.reviso) {
-                                responsablereunion += `
-                            <img src="{{ asset('storage/empleados/imagenes') }}/${row.reviso.avatar}" title="${row.reviso.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-                            `;
-                            }
-                            return responsablereunion;
-                        }
-                    },
-                    {
-                        data: 'puesto_reviso',
-                        name: 'puesto_reviso',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'area_reviso',
-                        name: 'area_reviso',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'fecha_revision',
-                        name: 'fecha_revision',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
+                            return `<input type="checkbox" id="cbox2" value="second_checkbox" />`;
                         }
                     },
                     {
@@ -420,23 +351,7 @@
                 ],
             };
 
-            // let table = $('.datatable-PoliticaSgsi:not(.ajaxTable)').DataTable({
             let table = $('#datatable-PoliticaSgsi').DataTable(dtOverrideGlobals);
-
-            // buttons: dtButtons
-            // })
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
     </script>
 @endsection
