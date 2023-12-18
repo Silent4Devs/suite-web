@@ -7,11 +7,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
-
-driver.add_argument('--headless')
-
-driver = webdriver.FirefoxOptions()
-
 import time
 tiempo_modulos=4
 tiempo_carga=10
@@ -33,3 +28,13 @@ pw=driver.find_element(By.XPATH,"//input[contains(@name,'password')]").send_keys
 time.sleep(tiempo_modulos)
 btn=driver.find_element(By.XPATH,"//button[@type='submit'][contains(.,'Enviar')]")
 btn.click()
+
+#HORAS EN BORRADOR
+time.sleep(tiempo_carga)
+btn = driver.find_element(By.XPATH, "//font[@class='letra_blanca'][contains(.,'Timesheet')]")
+btn.click()
+time.sleep(tiempo_modulos)
+btn = driver.find_element(By.XPATH, "//a[contains(.,'Horas en Borrador')]")
+time.sleep(tiempo_modulos)
+btn.click()
+time.sleep(tiempo_carga)

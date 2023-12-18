@@ -170,6 +170,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         //Control de Ausencias- Vacaciones
         Route::get('vista-global-vacaciones', 'VacacionesController@vistaGlobal')->name('vista-global-vacaciones');
+        Route::get('ExportVacaciones', 'VacacionesController@exportExcel')->name('descarga-vacaciones');
         Route::delete('vacaciones/destroy', 'VacacionesController@massDestroy')->name('vacaciones.massDestroy');
         Route::resource('vacaciones', 'VacacionesController')->names([
             'create' => 'vacaciones.create',
@@ -179,10 +180,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'update' => 'vacaciones.update',
             'destroy' => 'vacaciones.destroy',
         ]);
-        Route::get('ExportVacaciones', 'VacacionesController@exportExcel')->name('descarga-vacaciones');
 
         //Control de Ausencias- Day-Off
         Route::get('vista-global-dayoff', 'DayOffController@vistaGlobal')->name('vista-global-dayoff');
+        Route::get('ExportDayOff', 'DayOffController@exportExcel')->name('descarga-dayOff');
         Route::delete('dayOff/destroy', 'DayOffController@massDestroy')->name('dayOff.massDestroy');
         Route::resource('dayOff', 'DayOffController')->names([
             'create' => 'dayOff.create',
@@ -192,7 +193,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'update' => 'dayOff.update',
             'destroy' => 'dayOff.destroy',
         ]);
-        Route::get('ExportDayOff', 'DayOffController@exportExcel')->name('descarga-dayOff');
 
         Route::get('vista-global-permisos-goce-sueldo', 'PermisosGoceSueldoController@vistaGlobal')->name('vista-global-permisos-goce-sueldo');
         Route::delete('permisos-goce-sueldo/destroy', 'PermisosGoceSueldoController@massDestroy')->name('permisos-goce-sueldo.massDestroy');
@@ -871,6 +871,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
         Route::get('comiteseguridads/visualizacion', 'ComiteseguridadController@visualizacion')->name('comiteseguridads.visualizacion');
         Route::get('comiteseguridads/{comiteseguridad}/edit', 'ComiteseguridadController@edit')->name('comiteseguridads.edit');
+        Route::post('comiteseguridads/saveMember/{id_comite}', 'ComiteseguridadController@saveMember')->name('comiteseguridads.saveMember');
+        Route::get('comiteseguridads/deleteMember/{id}', 'ComiteseguridadController@deleteMember')->name('comiteseguridads.deleteMember');
         Route::resource('comiteseguridads', 'ComiteseguridadController')->except('edit');
 
         // Minutasaltadireccions
