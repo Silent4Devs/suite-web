@@ -110,9 +110,7 @@ class PoliticaSgsiController extends Controller
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
             'fecha_publicacion' => 'required|date',
-            'fecha_entrada' => 'required|date',
             'fecha_revision' => 'required|date',
-            'id_reviso_politica' => 'required',
         ]);
 
         $politicaSgsi = PoliticaSgsi::create($request->all());
@@ -138,9 +136,6 @@ class PoliticaSgsiController extends Controller
         $request->validate([
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
-            /*            'fecha_publicacion' => 'required|date',
-           'fecha_entrada' => 'required|date',
-           'fecha_revision' => 'required|date',*/
             'id_reviso_politica' => 'required',
         ]);
 
@@ -178,7 +173,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsis = PoliticaSgsi::getAll();
         foreach ($politicaSgsis as $polsgsis) {
-            if (! isset($polsgsis->reviso)) {
+            if (!isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                 $polsgsis->estemp = 'baja';
             } else {
