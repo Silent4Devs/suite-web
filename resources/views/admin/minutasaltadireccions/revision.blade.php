@@ -67,11 +67,10 @@
 
             <div class="col-12">
                 <div class="row">
-                    <div class="mt-3 col-12 datatable-fix">
-                        <table class="table w-100" id="tbl-participantes">
+                    <div class="mt-3 col-12">
+                        <table>
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>ID</th>
                                     <th>Nombre</th>
                                     <th>Puesto/Area</th>
                                     <th>Asistencia</th>
@@ -80,10 +79,9 @@
                             <tbody>
                                 @foreach ($participantesWithAsistencia as $participante)
                                     <tr>
-                                        <td>{{ $participante->id }}</td>
                                         <td>{{ $participante->name }}</td>
-                                        <td>{{ $participante->puesto }}</td>
-                                        <td>{{ $participante->email }}</td>
+                                        <td>{{ $participante->puestoRelacionado->puesto }}/{{ $participante->area->area }}
+                                        </td>
                                         <td>{{ $participante->pivot->asistencia ?? '' }}</td>
                                     </tr>
                                 @endforeach
@@ -93,17 +91,15 @@
                 </div>
             </div>
             <div class="col-12">
-                <div class="row" x-show="externo">
+                <div class="row">
                     <p class="font-weight-bold col-12" style="font-size:11pt;">Participantes externos.</p>
                     <hr>
-                    <div class="mt-3 col-12 w-100 datatable-fix">
-                        <table class="table w-100" id="tbl-participantesEXT">
+                    <div class="mt-3 col-12 w-100">
+                        <table>
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Correo</th>
-                                    <th>Puesto</th>
-                                    <th>Empresa u Organización</th>
+                                    <th>Nombre/Apellidos</th>
+                                    <th>Puesto/Área</th>
                                     <th>Asistencia</th>
                                 </tr>
                             </thead>
@@ -111,93 +107,199 @@
                                 @foreach ($minutasaltadireccion->externos as $externo)
                                     <tr>
                                         <td>{{ $externo->nombreEXT }}</td>
-                                        <td>{{ $externo->emailEXT }}</td>
                                         <td>{{ $externo->puestoEXT }}</td>
-                                        <td>{{ $externo->empresaEXT }}</td>
                                         <td>{{ $externo->asistenciaEXT ?? '' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        <input disabled type="hidden" name="participantesExt" value="" id="participantesExt">
                     </div>
-
+                </div>
+                <div class="row">
+                    <table>
+                        <thead>
+                            <p>Temas Tratados</p>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <textarea disabled class="form-control date" type="text" name="tema_tratado" id="temas">{{ old('tema_tratado', $minutasaltadireccion->tema_tratado) }}</textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
-    </div>
-    {{-- <div class="mt-3 col-sm-12 form-group">
-                    <label for="evidencia">Documento</label>
-                    <div class="custom-file">
-                        <input disabled type="file" name="files[]" multiple class="form-control" id="evidencia">
-                    </div>
-                </div> --}}
-    <div class="card">
-        <div class="card-body">
-            <div class="form-group col-sm-12 col-md-12 col-lg-12 mt-4">
-                <label class="" for="tema_tratado">Temas
-                    tratados</label>
-                <textarea disabled class="form-control date" type="text" name="tema_tratado" id="temas">{{ old('tema_tratado', $minutasaltadireccion->tema_tratado) }}</textarea>
-                @if ($errors->has('tema_tratado'))
-                    <span class="text-danger">
-                        {{ $errors->first('tema_tratado') }}
-                    </span>
-                @endif
-            </div>
-
-            @livewire('file-revision-direecion-component', ['minutas' => $minutasaltadireccion])
         </div>
     </div>
 
     {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
 
-    @include('admin.planesDeAccion.actividades.tabla', [
-        'empleados' => $responsablereunions,
-        'actividades' => $actividades,
-    ])
+    {{-- <style>
+    .table tr th:nth-child(8) {
+        min-width: 800px !important;
+        text-align: justify !important;
+    }
+</style> --}}
 
 
+
+
+    <div class="card">
+        <div class="card-body">
+            <div class="mt-5 w-100">
+                <table class="w-100">
+                    <thead class="thead-dark">
+                        <tr>
+                            <td colspan="5">Acuerdos y Compromisos</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Actividad</th>
+                            <th scope="col">Responsable(s)</th>
+                            <th scope="col">Fecha Compromiso</th>
+                            <th scope="col">Estatus</th>
+                            <th scope="col">Comentarios</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (isset($actividades))
+                            @foreach ($actividades as $actividad)
+                                @php
+                                    $estatus = 'Completado';
+                                    $color = 'rgb(0,200,117)';
+                                    $textColor = 'white';
+                                    switch ($actividad->status) {
+                                        case 'STATUS_ACTIVE':
+                                            $estatus = 'En Progreso';
+                                            $color = 'rgb(253, 171, 61)';
+                                            break;
+                                        case 'STATUS_DONE':
+                                            $color = 'rgb(0, 200, 117)';
+                                            $estatus = 'Completado';
+                                            break;
+                                        case 'STATUS_FAILED':
+                                            $estatus = 'Con Retraso';
+                                            $color = 'rgb(226, 68, 92)';
+                                            break;
+                                        case 'STATUS_SUSPENDED':
+                                            $estatus = 'Suspendido';
+                                            $color = '#aaaaaa';
+                                            break;
+                                        case 'STATUS_WAITING':
+                                            $estatus = 'En Espera';
+                                            $color = '#F79136';
+
+                                            break;
+                                        case 'STATUS_UNDEFINED':
+                                            $estatus = 'Indefinido';
+                                            $color = '#00b1e1';
+                                            break;
+                                        default:
+                                            $estatus = 'Indefinido';
+                                            break;
+                                    }
+                                @endphp
+                                <tr>
+                                    <td>{{ $actividad->name }}</td>
+                                    <td>
+                                        <ul>
+                                            @foreach ($actividad->assigs as $assig)
+                                                @php
+                                                    $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
+                                                @endphp
+                                                {{-- <img src="{{ $empleado->avatar_ruta }}" id="res_{{ $empleado->id }}"
+                                                alt="{{ $empleado->name }}" title="{{ $empleado->name }}"
+                                                style="clip-path: circle(15px at 50% 50%);width: 45px;" />
+                                                 --}}
+
+                                                <li>{{ $empleado->name }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->end) / 1000)->toDateTimeString())->format('Y-m-d') }}
+                                    </td>
+                                    <td style="background: {{ $color }}; color:{{ $textColor }}">
+                                        {{ $estatus }}
+                                    </td>
+                                    <td>{{ $actividad->description }}</td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
 
-    <div class="card card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row" style="justify-content: center; display: flex;">
-                    <h3>Firma de Aprobación</h3>
-                </div>
-                <div class="row" style="justify-content: center; display: flex;">
-                    <button id="clear" class="btn btn-link">Limpiar Firma</button>
-                </div>
-                <div class="row" style="justify-content: center; display: flex;">
-                    <canvas id="signature-pad" class="signature-pad" width="450" height="250"
-                        style="border: 1px solid black;"></canvas>
+    @if ($accesoparticipante == true)
+        <form method="POST" id="formularioRevision" enctype="multipart/form-data">
+            @csrf
+            {{-- <div class="card card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row" style="justify-content: center; display: flex;">
+                        <h3>Firma de Aprobación</h3>
+                    </div>
+                    <div class="row" style="justify-content: center; display: flex;">
+                        <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                    </div>
+                    <div class="row" style="justify-content: center; display: flex;">
+                        <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                            style="border: 1px solid black;"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <label for="comentario">Comentario</label>
-                <textarea name="comentario" id="comentario" class="form-control"></textarea>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="comentario">Comentario</label>
+                    <textarea name="comentario" id="comentario" class="form-control"></textarea>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="text-right form-group col-12">
-                <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" id="btnGuardar" type="submit">
-                    Rechazar
-                </button>
-                <button class="btn btn-danger" id="btnUpdateAndReview" type="submit" style="width: 230px !important;">
-                    Aprobar
-                </button>
+            <div class="row">
+                <div class="text-right form-group col-12">
+                    <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" id="btnGuardar" type="submit">
+                        Rechazar
+                    </button>
+                    <button class="btn btn-danger" id="btnUpdateAndReview" type="submit" style="width: 230px !important;">
+                        Aprobar
+                    </button>
+                </div>
             </div>
-        </div>
+        </div> --}}
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="comentario">Comentario</label>
+                        <textarea name="comentario" id="comentario" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center form-group col-12">
+                        <button class="btn btn-danger" id="aprobado" type="submit" style="width: 230px !important;">
+                            Aprobar Solicitud
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center form-group col-12">
+                        <button class="btn btn-danger" id="rechazado" type="submit">
+                            Rechazar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    @endif
+    <div class="col-12">
+        <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Regresar</a>
     </div>
 @endsection
 
 @section('scripts')
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             var canvas = document.getElementById('signature-pad');
             var signaturePad = new SignaturePad(canvas);
@@ -247,20 +349,20 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('btnGuardar').addEventListener('click', function(e) {
-                let urlUpdate =
-                    "{{ route('admin.minutasaltadireccions.update', $minutasaltadireccion) }}";
-                document.getElementById('formularioEditMinutas').setAttribute('action', urlUpdate);
+            document.getElementById('aprobado').addEventListener('click', function(e) {
+                let aprobar =
+                    "{{ route('admin.minutasaltadireccions.aprobado', $minutasaltadireccion->id) }}";
+                document.getElementById('formularioRevision').setAttribute('action', aprobar);
             });
 
-            document.getElementById('btnUpdateAndReview').addEventListener('click', function(e) {
-                let urlUpdateAndReview =
-                    "{{ route('admin.minutasaltadireccions.updateAndReview', $minutasaltadireccion) }}";
-                document.getElementById('formularioEditMinutas').setAttribute('action', urlUpdateAndReview);
+            document.getElementById('rechazado').addEventListener('click', function(e) {
+                let rechazar =
+                    "{{ route('admin.minutasaltadireccions.rechazado', $minutasaltadireccion->id) }}";
+                document.getElementById('formularioRevision').setAttribute('action', rechazar);
             });
         });
     </script>
@@ -326,7 +428,7 @@
         });
     </script>
 
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         Livewire.on('planStore', () => {
             $('#planAccionModal').modal('hide');
             $('.modal-backdrop').hide();
@@ -369,5 +471,5 @@
             })
 
         });
-    </script>
+    </script> --}}
 @endsection

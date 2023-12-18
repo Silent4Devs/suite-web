@@ -126,10 +126,10 @@
                                             <br>
                                             <div style="text-align:center;">
                                                 Da click en la siguiente liga para revisarla y aprobarla
-                                                {{-- <a href="{{ config('app.url') }}"
+                                                <a href="{{ route('admin.minutasaltadireccions.show', $id_minuta) }}"
                                                     style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                    Comenzar
-                                                </a> --}}
+                                                    Revisar Minuta
+                                                </a>
                                             </div>
                                         </div>
                                     </td>

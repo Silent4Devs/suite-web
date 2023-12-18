@@ -115,24 +115,14 @@
                                         <div style="width: 100%;">
                                             <div class="center-h">
                                                 <h2 style="text-align: center;">
-                                                    Informe de Auditoria Rechazado
+                                                    Rechazada
                                                 </h2>
                                             </div>
                                             <p
                                                 style="text-align: center; font-size:11pt;
                                                 color:#153643; margin-left:25px; margin-right:25px">
-                                                Ha sido rechazado el informe de auditoria. <br>
-                                                Puedes ver los comentarios y editar tu informe en el <br>
-                                                siguiente Link:
+                                                La minuta: {{ $tema_minuta }} ha sido rechazada
                                             </p>
-
-                                            <br>
-                                            <div style="text-align:center;">
-                                                <a href="{{ route('admin.auditoria-internas.reporteIndividual', $auditoria) }}"
-                                                    style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                    Editar
-                                                </a>
-                                            </div>
                                         </div>
                                     </td>
                                 </tr>

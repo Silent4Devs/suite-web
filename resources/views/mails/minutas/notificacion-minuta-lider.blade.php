@@ -11,6 +11,7 @@
         .center-h {
             display: flex;
             justify-content: center;
+            color: red;
         }
 
         .algo {
@@ -107,28 +108,29 @@
                                     <td style="padding:0 0 36px 0;">
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img src="{{ asset('img/auditoria-aprobada.png') }}" class="mt-2 ml-4"
+                                            <img src="{{ asset('img/auditoria-rechazada.png') }}" class="mt-2 ml-4"
                                                 style="width:160px;">
                                         </div>
 
                                         <div style="width: 100%;">
                                             <div class="center-h">
-                                                <h3 style="text-align: center">
-                                                    Tienes una notificación <br>de Informe de Auditoria
-                                                </h3>
+                                                <h2 style="text-align: center;">
+                                                    Rechazada
+                                                </h2>
                                             </div>
                                             <p
-                                                style="font-size:11pt; color:#153643;text-align: left; margin-left:25px; margin-right:25px">
-                                                Se ha añadido un reporte por parte de un colaborador.
-                                                {{ $nombre_colaborador }}.
-                                                Para ingresar a revisarlo da clic en la siguiente liga:
+                                                style="text-align: center; font-size:11pt;
+                                                color:#153643; margin-left:25px; margin-right:25px">
+                                                La minuta: {{ $tema_minuta }} ha sido rechazada por el usuario:
+                                                {{ $rechazador }}<br>
+                                                Puedes ver los comentarios y editar la minuta en la siguiente liga.
                                             </p>
-
                                             <br>
                                             <div style="text-align:center;">
-                                                <a href="{{ route('admin.auditoria-internas.edit', $url) }}"
+                                                Da click en la siguiente liga para revisarla y aprobarla
+                                                <a href="{{ route('admin.minutasaltadireccions.edit', $id_minuta) }}"
                                                     style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                    Revisar
+                                                    Revisar Minuta
                                                 </a>
                                             </div>
                                         </div>
@@ -166,7 +168,5 @@
         </tr>
     </table>
 </body>
-
-
 
 </html>

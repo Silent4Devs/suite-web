@@ -8,6 +8,9 @@ use App\Http\Requests\MassDestroyMinutasaltadireccionRequest;
 use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
+use App\Mail\NotificacionMinutaAprobada;
+use App\Mail\NotificacionMinutaRechazada;
+use App\Mail\NotificacionMinutaRechazadaResponsable;
 use App\Mail\SolicitudAprobacionMinuta;
 use App\Models\Empleado;
 use App\Models\ExternosMinutaDireccion;
@@ -120,10 +123,9 @@ class MinutasaltadireccionController extends Controller
         // $this->createPDF($minutasaltadireccion, $actividades);
 
         // // Revisiones
-        // $this->initReviews($minutasaltadireccion);
+        $this->initReviews($minutasaltadireccion);
 
-
-        $this->enviarCorreosParticipantes($minutasaltadireccion);
+        // $this->enviarCorreosParticipantes($minutasaltadireccion);
 
         return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Guardado con éxito');
     }
@@ -188,7 +190,7 @@ class MinutasaltadireccionController extends Controller
     public function initReviews($minutasaltadireccion)
     {
         // Almacenamiento de revisiones vinculado a participantes y minutas
-        Mail::to(removeUnicodeCharacters($minutasaltadireccion->responsable->email))->send(new MinutaConfirmacionSolicitud($minutasaltadireccion));
+        // Mail::to(removeUnicodeCharacters($minutasaltadireccion->responsable->email))->send(new MinutaConfirmacionSolicitud($minutasaltadireccion));
         $numero_revision = RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision') ? intval(RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision')) + 1 : 1;
         //Historial#
         $historialRevisionMinuta = HistoralRevisionMinuta::create([
@@ -205,8 +207,10 @@ class MinutasaltadireccionController extends Controller
                 'no_revision' => strval($numero_revision),
                 'minuta_id' => $minutasaltadireccion->id,
             ]);
-            Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudDeAprobacion($minutasaltadireccion, $revisor, $historialRevisionMinuta));
+            // Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudDeAprobacion($minutasaltadireccion, $revisor, $historialRevisionMinuta));
         }
+
+        $this->enviarCorreosParticipantes($minutasaltadireccion);
     }
 
     public function vincularActividadesPlanDeAccion($request, $minuta, $planEdit = null, $edit = false)
@@ -448,19 +452,29 @@ class MinutasaltadireccionController extends Controller
         }
     }
 
-    public function show(Minutasaltadireccion $minutasaltadireccion)
+    // public function show(Minutasaltadireccion $minutasaltadireccion)
+    // {
+    //     abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+    //     $minutasaltadireccion->load('responsable', 'team');
+
+    //     return view('admin.minutasaltadireccions.show', compact('minutasaltadireccion'));
+    // }
+
+    public function show($id)
     {
-        abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $minutasaltadireccion->load('responsable', 'team');
-
-        return view('admin.minutasaltadireccions.show', compact('minutasaltadireccion'));
-    }
-
-    public function revision($id)
-    {
-        abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $minutasaltadireccion = Minutasaltadireccion::find($id);
+
+        $accesoparticipante = false;
+        // dd($id, $acceso->participantes);
+
+        //Revisar que sea uno de los participantes
+        if ($minutasaltadireccion->participantes->contains('id', User::getCurrentUser()->empleado->id)) {
+            $accesoparticipante = true;
+        } else {
+            $accesoparticipante = false;
+        }
+
         $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
         $actividades = $minutasaltadireccion->planes->first()->tasks;
         $actividades = array_filter($actividades, function ($actividad) {
@@ -470,12 +484,76 @@ class MinutasaltadireccionController extends Controller
         $participantesWithAsistencia = $minutasaltadireccion->participantes()
             ->withPivot('asistencia')
             ->get();
-        // dd($participantesWithAsistencia);
 
-        $responsablereunions = Empleado::getaltaAll();
-
-        return view('admin.minutasaltadireccions.revision', compact('responsablereunions', 'participantesWithAsistencia', 'minutasaltadireccion', 'actividades'));
+        return view('admin.minutasaltadireccions.revision', compact('participantesWithAsistencia', 'minutasaltadireccion', 'actividades', 'accesoparticipante'));
     }
+
+    public function aprobado($id)
+    {
+        // dd($id);
+        $revision_actual = intval(RevisionMinuta::where('minuta_id', $id)->max('no_revision'));
+        $aprobacion = RevisionMinuta::where('minuta_id', '=', $id)->where('empleado_id', '=', User::getCurrentUser()->empleado->id)
+            ->where('no_revision', '=', $revision_actual)->first();
+        // dd($aprobacion);
+        $aprobacion->update([
+            'estatus' => RevisionMinuta::APROBADO,
+        ]);
+
+        $this->confirmacionAprobacion($id, $revision_actual);
+
+        return redirect(route('admin.minutasaltadireccions.index'));
+    }
+
+    public function rechazado($id)
+    {
+        // dd($id);
+        $revision_actual = intval(RevisionMinuta::where('minuta_id', $id)->max('no_revision'));
+        $aprobacion = RevisionMinuta::where('minuta_id', '=', $id)->where('empleado_id', '=', User::getCurrentUser()->empleado->id)
+            ->where('no_revision', '=', $revision_actual)->first();
+        // dd($aprobacion);
+        $aprobacion->update([
+            'estatus' => RevisionMinuta::RECHAZADO,
+        ]);
+
+        $minuta = Minutasaltadireccion::find($id);
+
+        // $responsable = $minuta->responsable->name;
+        $emailresponsable = $minuta->responsable->email;
+        $tema_minuta = $minuta->tema_reunion;
+
+        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaRechazadaResponsable($minuta->id, $tema_minuta, User::getCurrentUser()->empleado->name));
+
+        foreach ($minuta->participantes as $participante) {
+
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionMinutaRechazada($tema_minuta));
+        }
+
+        return redirect(route('admin.minutasaltadireccions.index'));
+    }
+
+    public function confirmacionAprobacion($id, $revision_actual)
+    {
+        $confirmacion = RevisionMinuta::where('minuta_id', '=', $id)
+            ->where('no_revision', '=', $revision_actual)
+            ->get();
+
+        $isSameEstatus = $confirmacion->every(function ($record) {
+            return $record->estatus == 2; // Assuming 'estatus' is the column name
+        });
+
+        if ($isSameEstatus) {
+            $minuta = Minutasaltadireccion::select('id', 'responsable_id', 'tema_reunion')->find($id);
+            $responsable = $minuta->responsable->name;
+            $emailresponsable = $minuta->responsable->email;
+            $tema_minuta = $minuta->tema_reunion;
+            // All records in $confirmacion have 'estatus' equal to 2
+            Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaAprobada($responsable, $tema_minuta));
+        }
+        // else {
+        //     // There are records with different 'estatus' values
+        // }
+    }
+
 
     public function destroy(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {

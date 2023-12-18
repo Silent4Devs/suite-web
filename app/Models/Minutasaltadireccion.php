@@ -31,6 +31,8 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
 
     const DOCUMENTO_OBSOLETO = 5;
 
+    const APROBADO = 6;
+
     protected $appends = [
         'archivo', 'estatus_formateado', 'color_estatus',
     ];
