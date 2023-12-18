@@ -4,7 +4,7 @@
             <i class="material-icons" style="cursor: pointer;">edit</i>
         </a>
         <div class="modal fade" id="modalDebilidades"  tabindex="-1" aria-labelledby="modalDebilidadesLabel" aria-hidden="true" wire:ignore.self>
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Debilidades</h5>
