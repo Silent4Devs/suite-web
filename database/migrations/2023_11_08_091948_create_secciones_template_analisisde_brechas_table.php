@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedDecimal('porcentaje_seccion');
             $table->foreign('template_id')->references('id')->on('template_analisisde_brechas')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
