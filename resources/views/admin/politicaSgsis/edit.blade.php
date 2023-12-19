@@ -120,20 +120,6 @@
 
     <div class="mt-4 card">
         <div class="card-body">
-         <textarea class="col-12"></textarea>
-         <br>
-         <br>
-         <center>
-         <button class="btn" style="background: #00B212">Aprobar Solicitud</button>
-         <br>
-         <br>
-         <a href="#">Rechazar Solicitud</a>
-        </center>
-        </div>
-    </div>
-
-    <div class="mt-4 card">
-        <div class="card-body">
          <h5>Historial Comentarios Alta dirección</h5>
          <br>
          <h6>COMENTARIO DEL COLABORADOR</h6>
@@ -200,12 +186,6 @@
                         items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
                     },
                     '/',
-
-
-                    // {
-                    //     name: 'others',
-                    //     items: ['-']
-                    // }
                 ]
             });
 
