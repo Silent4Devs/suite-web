@@ -40,8 +40,6 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 
-//use Barryvdh\DomPDF\PDF as DomPDFPDF;
-
 class EmpleadoController extends Controller
 {
     use GeneratePassword;
@@ -63,7 +61,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::with('puestoRelacionado')->select('id', 'n_empleado', 'name', 'foto', 'genero', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->orderBy('id', 'DESC')->get()
+        $empleados = Empleado::select('id', 'n_empleado', 'name', 'foto', 'genero', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->orderBy('id', 'DESC')->alta()->get()
             ->map(function ($empleado) {
                 $empleado['avatar_ruta'] = $empleado->avatar_ruta; // Access the computed attribute
 
@@ -155,6 +153,7 @@ class EmpleadoController extends Controller
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
             'email' => 'required|email',
+            'sede_id' => 'required',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
@@ -921,16 +920,22 @@ class EmpleadoController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado = Empleado::getAll()->find(intval($id));
-        $empleados = Empleado::getaltaAll();
+        $empleado = Empleado::find($id);
+        $empleados = Empleado::get();
         $ceo_exists = Empleado::getCeoExists();
-        $areas = Area::getAll();
+        $areas = Area::get();
         $area = null;
         if ($empleado && $empleado->area_id !== null) {
             $area = $areas->find($empleado->area_id);
         }
         $sedes = Sede::getAll();
-        $sede = Sede::getbyId($empleado->sede_id);
+        if (isset($empleado->sede_id)) {
+            $sede = Sede::getbyId($empleado->sede_id);
+        // dd($sede);
+        } else {
+            $sede = null;
+            // dd($sede);
+        }
         $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
@@ -939,25 +944,24 @@ class EmpleadoController extends Controller
         $perfiles = PerfilEmpleado::getAll();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
-        $puestos = Puesto::getAll();
-        $perfiles = PerfilEmpleado::getAll();
-        $perfiles_seleccionado = $empleado->perfil_empleado_id;
+        if (isset($empleado->perfil_empleado_id)) {
+            $perfiles_seleccionado = $empleado->perfil_empleado_id;
+        } else {
+            $perfiles_seleccionado = null;
+        }
         $puestos_seleccionado = $empleado->puesto_id;
         $idiomas = Language::get();
         $organizacion = Organizacion::getFirst();
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
         $isEditAdmin = true;
-        // dd($idiomas);
-        // dd(Empleado::find(63));
         $id_empleado = $id;
-        $empleado = Empleado::getAll()->find($id_empleado);
+        $empleado = Empleado::find($id_empleado);
         $lista_docs = $this->getListaDocumentos($id_empleado);
-        $docs_empleado = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', $id_empleado)->where('archivado', false);
+        $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('archivado', false)->get();
         // expediente ------------------------------------------------------------
 
         $organizacion = Organizacion::getFirst();
-        // $lista_docs = $lista_docs->sortBy('tipo');
 
         return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion'));
     }
@@ -1077,12 +1081,13 @@ class EmpleadoController extends Controller
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
             'email' => 'required|email',
+            'sede_id' => 'required',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
 
         $this->validateDynamicForms($request);
-        $empleado = Empleado::getAll()->find($id);
+        $empleado = Empleado::find($id);
         $image = $empleado->foto;
         if ($request->snap_foto && $request->file('foto')) {
             if ($request->snap_foto) {
@@ -1203,6 +1208,7 @@ class EmpleadoController extends Controller
             'foto' => $image,
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
+
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
         $usuario->update([
             'n_empleado' => $request->n_empleado,

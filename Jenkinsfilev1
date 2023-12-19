@@ -1,0 +1,5 @@
+// Jenkinsfilev1
+
+// Este Jenkinsfilev1 no contiene un bloque pipeline adicional
+echo 'Hola mundo'
+// Puedes agregar más pasos según sea necesario

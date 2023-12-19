@@ -92,7 +92,6 @@ class RequisicionesCreateComponent extends Component
 
     public function mount()
     {
-
     }
 
     public function render()
@@ -184,16 +183,16 @@ class RequisicionesCreateComponent extends Component
                     if ($this->selectOption[$prove_count] === 'sugerido') {
                         // nuevo proveedor
                         $proveedor_req = new KatbolProveedorRequisicion();
-                        $proveedor_req->proveedor = $data['proveedor_'.$i];
-                        $proveedor_req->detalles = $data['detalles_'.$i];
-                        $proveedor_req->tipo = $data['tipo_'.$i];
-                        $proveedor_req->comentarios = $data['comentarios_'.$i];
-                        $proveedor_req->contacto = $data['contacto_'.$i];
-                        $proveedor_req->cel = $data['contacto_telefono_'.$i];
-                        $proveedor_req->contacto_correo = $data['contacto_correo_'.$i];
-                        $proveedor_req->url = $data['contacto_url_'.$i];
-                        $proveedor_req->fecha_inicio = $data['contacto_fecha_inicio_'.$i];
-                        $proveedor_req->fecha_fin = $data['contacto_fecha_fin_'.$i];
+                        $proveedor_req->proveedor = isset($data['proveedor_'.$i]) ? $data['proveedor_'.$i] : null;
+                        $proveedor_req->detalles = isset($data['detalles_'.$i]) ? $data['detalles_'.$i] : null;
+                        $proveedor_req->tipo = isset($data['tipo_'.$i]) ? $data['tipo_'.$i] : null;
+                        $proveedor_req->comentarios = isset($data['comentarios_'.$i]) ? $data['comentarios_'.$i] : null;
+                        $proveedor_req->contacto = isset($data['contacto_'.$i]) ? $data['contacto_'.$i] : null;
+                        $proveedor_req->cel = isset($data['contacto_telefono_'.$i]) ? $data['contacto_telefono_'.$i] : null;
+                        $proveedor_req->contacto_correo = isset($data['contacto_correo_'.$i]) ? $data['contacto_correo_'.$i] : null;
+                        $proveedor_req->url = isset($data['contacto_url_'.$i]) ? $data['contacto_url_'.$i] : null;
+                        $proveedor_req->fecha_inicio = isset($data['contacto_fecha_inicio_'.$i]) ? $data['contacto_fecha_inicio_'.$i] : null;
+                        $proveedor_req->fecha_fin = isset($data['contacto_fecha_fin_'.$i]) ? $data['contacto_fecha_fin_'.$i] : null;
                         $proveedor_req->requisiciones_id = $this->requisicion_id;
 
                         // cotizacion y validacion

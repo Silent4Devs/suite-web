@@ -1467,7 +1467,7 @@ class DeskController extends Controller
         }, ARRAY_FILTER_USE_KEY);
 
         $quejasproyectos = array_unique(QuejasCliente::pluck('proyectos_id')->toArray());
-        $proyectos = TimesheetProyecto::getAll()->with('cliente')->find($quejasproyectos);
+        $proyectos = TimesheetProyecto::getAllWithCliente()->find($quejasproyectos);
         $proyectosLabel = [];
         foreach ($proyectos as $proyecto) {
 

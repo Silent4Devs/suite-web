@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -53,6 +52,10 @@ class ReportesProyectos extends Component
     public $hoy_format;
 
     public $area_id;
+
+    public $proyecto_id;
+
+    public $proyectos_select;
 
     public $fecha_inicio;
 
@@ -228,33 +231,36 @@ class ReportesProyectos extends Component
         }
 
         $proyectos_array = collect();
-        if ($this->area_id) {
+        if ($this->area_id && ! $this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll()->filter(function ($item) {
                 return $item->areas->contains(Area::getIdNameAll()->find($this->area_id));
             });
-        } else {
+            $this->proyectos_select = $this->proyectos;
+        } elseif ($this->proyecto_id) {
+            $this->proyectos = TimesheetProyecto::getIdNameAll()->where('id', $this->proyecto_id);
+        } elseif (! $this->area_id && ! $this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll();
+            $this->proyectos_select = $this->proyectos;
         }
 
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
-            $registro_horas_proyecto = Cache::remember('TimesheetHoras:timesheethoras_index'.$proyecto->id, 3600 * 3600, function () use ($proyecto) {
-                return DB::table('timesheet_horas')
-                    ->select([
-                        'timesheet_horas.id',
-                        'timesheet_horas.horas_lunes',
-                        'timesheet_horas.horas_martes',
-                        'timesheet_horas.horas_miercoles',
-                        'timesheet_horas.horas_jueves',
-                        'timesheet_horas.horas_viernes',
-                        'timesheet_horas.horas_sabado',
-                        'timesheet_horas.horas_domingo',
-                        'timesheet.fecha_dia',
-                    ])
-                    ->join('timesheet', 'timesheet_horas.timesheet_id', '=', 'timesheet.id')
-                    ->where('proyecto_id', $proyecto->id)
-                    ->get();
-            });
+            $registro_horas_proyecto = DB::table('timesheet_horas')
+                ->select([
+                    'timesheet_horas.id',
+                    'timesheet_horas.horas_lunes',
+                    'timesheet_horas.horas_martes',
+                    'timesheet_horas.horas_miercoles',
+                    'timesheet_horas.horas_jueves',
+                    'timesheet_horas.horas_viernes',
+                    'timesheet_horas.horas_sabado',
+                    'timesheet_horas.horas_domingo',
+                    'timesheet.fecha_dia',
+                ])
+                ->join('timesheet', 'timesheet_horas.timesheet_id', '=', 'timesheet.id')
+                ->where('proyecto_id', $proyecto->id)
+                ->get();
+
             // registro de horas en calendario
             $times_registro_horas_array = collect();
             $calendario_tabla_proyectos = [];
@@ -312,6 +318,8 @@ class ReportesProyectos extends Component
 
         $this->calendario_tabla = $calendario_array;
         $this->hoy_format = $this->hoy->format('d/m/Y');
+
+        // $this->proyecto_id = null;
 
         return view('livewire.timesheet.reportes-proyectos', compact('proyectos_array'));
     }

@@ -137,7 +137,7 @@
                 </div>
                 <div class="col-sm-8 align-content-center">
                     @include('layouts.errors')
-                    @include('flash::message')
+
                 </div>
                 <div class="col-sm-2">
                 </div>

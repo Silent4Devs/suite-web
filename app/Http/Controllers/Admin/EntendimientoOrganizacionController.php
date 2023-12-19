@@ -17,10 +17,13 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Traits\ObtenerOrganizacion;
+
 
 class EntendimientoOrganizacionController extends Controller
 {
     use CsvImportTrait;
+    use ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -115,11 +118,11 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
-
-        return redirect()->route('admin.entendimiento-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
+        // dd($foda);
+        return redirect()->route('admin.foda-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
     }
 
     public function vincularParticipantes($participantesA, $model)
@@ -172,7 +175,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -185,12 +188,17 @@ class EntendimientoOrganizacionController extends Controller
 
         $empleados = Empleado::getaltaAll();
         $obtener_FODA = $entendimientoOrganizacion;
+        // dd($obtener_FODA);
         $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
         $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
         $amenazas = AmenazasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
         $debilidades = DebilidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
 
-        return view('admin.entendimientoOrganizacions.show', compact('fortalezas', 'oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA'));
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.entendimientoOrganizacions.show', compact('fortalezas', 'oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function destroy(EntendimientoOrganizacion $entendimientoOrganizacion)
@@ -273,4 +281,49 @@ class EntendimientoOrganizacionController extends Controller
 
     //     return response(null, Response::HTTP_NO_CONTENT);
     // }
+
+    public function cardFoda()
+    {
+        abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+
+        return view('admin.entendimientoOrganizacions.cardFoda', compact('query'));
+    }
+
+    public function foda($entendimientoOrganizacion)
+    {
+        abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleados = Empleado::getaltaAll();
+        $foda_actual = $entendimientoOrganizacion;
+        $obtener_FODA = EntendimientoOrganizacion::where('id',$entendimientoOrganizacion)->first();
+        // $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion)->get();
+        $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion)->get();
+        $amenazas = AmenazasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion)->get();
+        $debilidades = DebilidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion)->get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.entendimientoOrganizacions.cardFodaEdit', compact('oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual','foda_actual'));
+    }
+    public function cardFodaGeneral()
+    {
+        abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+
+        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query'));
+    }
+    public function adminShow($entendimientoOrganizacion)
+    {
+        abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $empleados = Empleado::getaltaAll();
+        $foda_actual = $entendimientoOrganizacion;
+        $obtener_FODA = EntendimientoOrganizacion::where('id',$entendimientoOrganizacion)->first();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+    }
 }

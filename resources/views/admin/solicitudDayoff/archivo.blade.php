@@ -53,15 +53,14 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable datatable-archivo-dayoff tblCSV"
-                id="datatable-archivo-dayoff">
+            <table class="table table-bordered w-100 datatable datatable-archivo-dayoff tblCSV" id="datatable-archivo-dayoff">
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width: 200px;">
-                           Solicitante
+                            Solicitante
                         </th>
                         <th style="min-width: 110px;">
                             Días Solicitados
@@ -217,9 +216,9 @@
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
-          
+
             let dtOverrideGlobals = {
-                pageLength : 10,
+                pageLength: 10,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -302,7 +301,7 @@
                     {
                         data: 'opciones',
                         render: function(data, type, row, meta) {
-                            return `  
+                            return `
                                 <div style="text-aling:center">
                                 <a href="${row.id}/showArchivo"  title="Ver detalles"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 </div

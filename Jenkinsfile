@@ -1,52 +1,65 @@
-
 pipeline {
     agent any
-
-    parameters {
-        string(name: 'SSH_KEY', description: 'Nombre de la clave SSH en Jenkins', defaultValue: '/root/.ssh/id_rsa')
-        string(name: 'USER', description: 'Usuario del servidor SSH', defaultValue: 'desarrollo')
-        string(name: 'SERVER', description: 'Dirección del servidor SSH', defaultValue: '192.168.9.78')
-        string(name: 'DEPLOY_PATH', description: 'Ruta de despliegue en el servidor', defaultValue: '/var/contenedor/tabantaj')
-    }
-
     stages {
-         stage('install') {
+        stage('Declarative: Checkout SCM') {
             steps {
-                git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
-            }
-          }
-
-        stage('Build') {
-            steps {
-                // Puedes agregar comandos de construcción aquí
-                // Por ejemplo: sh 'npm install' o 'mvn clean install'
+                checkout scm
             }
         }
 
-        stage('Deploy') {
+       stage('Install') {
+            steps {
+                git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
+            }
+        }
+
+
+
+        stage('Build') {
             steps {
                 script {
-                    sshagent(['${params.SSH_KEY}']) {
-                        def remoteCommand = """
-                            cd ${params.DEPLOY_PATH} &&
-                            git pull origin stagging &&
-                            docker-compose up -d --build
-                        """
-                        sh "ssh ${params.USER}@${params.SERVER} '${remoteCommand}'"
+                    try {
+                        sh 'docker-compose exec php cp .env.example .env'
+                        sh 'docker-compose exec php composer install --ignore-platform-reqs'
+                        sh 'docker-compose exec php php artisan key:generate'
+                        sh 'docker-compose exec php php artisan migrate'
+                        sh 'docker-compose exec php chmod 777 -R storage'
+                        sh 'docker-compose exec php php artisan optimize:clear'
+                    } catch (Exception e) {
+                        echo 'Exception occurred: ' + e.toString()
                     }
                 }
             }
         }
-    }
 
-    post {
-        success {
-            // Notificar éxito del despliegue, por ejemplo, enviar correo electrónico
-            echo 'El despliegue fue exitoso'
+
+        stage('Testing') {
+            steps {
+                sh 'cd Testing/Calendario'
+                sh 'pip install pytest'
+                sh 'pip install selenium'
+                sh 'pytest test_calendario.py'
+            }
         }
-        failure {
-            // Notificar fallo del despliegue, por ejemplo, enviar correo electrónico
-            echo 'El despliegue falló'
+
+
+        stage('Deploy via SSH') {
+            steps {
+                script {
+                    sshagent(['/root/.ssh/id_rsa.pub']) {
+                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/tabantaj/'
+                    }
+                }
+            }
+        }
+
+
+        stage('Jenkis2 - Stage 1') {
+            steps {
+                script {
+                    load 'Jenkinsfilev1'
+                }
+            }
         }
     }
 }

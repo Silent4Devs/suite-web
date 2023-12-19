@@ -69,46 +69,49 @@
             padding: 10px;
             border-radius: 5px;
         }
-        .caja-redes{
+
+        .caja-redes {
             display: flex;
             /* justify-content: space-between; */
             justify-content: center;
             margin-top: 10px;
 
         }
-        .redes{
+
+        .redes {
             all: unset;
             margin-left: 10px;
             color: #fff;
             transition: 0.1s;
             cursor: pointer;
 
-            background-color:#345183;
+            background-color: #345183;
             width: 50px;
             height: 50px;
             border-radius: 100px;
-            display:flex;
+            display: flex;
             align-items: center;
             justify-content: center;
         }
+
         .redes i {
             font-size: 20pt;
 
         }
-        .redes:hover{
+
+        .redes:hover {
             color: #fff;
             transform: scale(1.1);
             text-decoration: none;
         }
 
-}
-
+        }
     </style>
     <h5 class="col-12 titulo_general_funcion">Mi organización</h5>
     <div class="mt-5 card ">
         <br>
         @include('layouts.errors')
-        @include('flash::message')
+
 
         @if ($empty == true)
             <div class="text-right col-lg-12" style="position:relative; z-index:1;">
@@ -121,48 +124,54 @@
                     @endcan
                 @endif
                 @can('mi_organizacion_panel_de_control')
-                <a class="btn btn-success" style="float: left;" href="{{ route('admin.panel-organizacion.index') }}">
-                    Panel de Control
-                @endcan
-                @can('mi_organizacion_editar_organizacion')
-                    <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-danger'>
-                        Editar Organización
-                    </a>
-                @endcan
+                    <a class="btn btn-success" style="float: left;" href="{{ route('admin.panel-organizacion.index') }}">
+                        Panel de Control
+                    @endcan
+                    @can('mi_organizacion_editar_organizacion')
+                        <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-danger'>
+                            Editar Organización
+                        </a>
+                    @endcan
             </div>
 
             <div class="card-body">
                 <div class="row">
-                    @if ($panel_rules->logotipo )
-                    <div class="row col-12 justify-content-center d-flex" style="margin-top:-85px;">
-                        <div class="text-center p-5 col-sm-6">
-                            <label for="logotipo"></label>
-                            <img class="  text-center bg-light" src="{{ url($logotipo) }} " alt="Card image" style="width:200px;">
-                            <div class="caja-redes">
-                                @if ($panel_rules->pagina_web)
-                                <a class="redes" target="_blank" href='{{ $organizacion->pagina_web }}'><i class="fas fa-globe"></i></a>
-                                @endif
-                                @if ($panel_rules->linkedln)
-                                <a class="redes" target="_blank" href='{{ $organizacion->linkedln }}'><i class="fab fa-linkedin-in"></i></a>
-                                @endif
-                                @if ($panel_rules->youtube)
-                                <a class="redes" target="_blank" href='{{ $organizacion->youtube }}'><i class="fab fa-youtube"></i></a>
-                                @endif
-                                @if ($panel_rules->facebook)
-                                <a class="redes" target="_blank" href='{{ $organizacion->facebook }}'><i class="fab fa-facebook-f"></i></a>
-                                @endif
-                                @if ($panel_rules->twitter)
-                                <a class="redes" target="_blank" href='{{ $organizacion->twitter }}'><i class="fab fa-twitter"></i></a>
-                                @endif
-                            </div>
-                            @if ($errors->has('logotipo'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('logotipo') }}
+                    @if ($panel_rules->logotipo)
+                        <div class="row col-12 justify-content-center d-flex" style="margin-top:-85px;">
+                            <div class="text-center p-5 col-sm-6">
+                                <label for="logotipo"></label>
+                                <img class="  text-center bg-light" src="{{ url($logotipo) }} " alt="Card image"
+                                    style="width:200px;">
+                                <div class="caja-redes">
+                                    @if ($panel_rules->pagina_web)
+                                        <a class="redes" target="_blank" href='{{ $organizacion->pagina_web }}'><i
+                                                class="fas fa-globe"></i></a>
+                                    @endif
+                                    @if ($panel_rules->linkedln)
+                                        <a class="redes" target="_blank" href='{{ $organizacion->linkedln }}'><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                    @endif
+                                    @if ($panel_rules->youtube)
+                                        <a class="redes" target="_blank" href='{{ $organizacion->youtube }}'><i
+                                                class="fab fa-youtube"></i></a>
+                                    @endif
+                                    @if ($panel_rules->facebook)
+                                        <a class="redes" target="_blank" href='{{ $organizacion->facebook }}'><i
+                                                class="fab fa-facebook-f"></i></a>
+                                    @endif
+                                    @if ($panel_rules->twitter)
+                                        <a class="redes" target="_blank" href='{{ $organizacion->twitter }}'><i
+                                                class="fab fa-twitter"></i></a>
+                                    @endif
                                 </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
+                                @if ($errors->has('logotipo'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('logotipo') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
+                            </div>
                         </div>
-                    </div>
                     @endif
 
                     <div class="col-md-12 col-sm-12">
@@ -172,90 +181,90 @@
                     </div>
 
                     @if ($panel_rules->empresa)
-                    <div class="form-group col-sm-12 col-md-12">
-                        <label class="" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de
-                            la
-                            Empresa
-                        </label>
-                        <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
-                            name="empresa" id="empresa" value="{{ $organizacion->empresa }}" disabled>
-                        @if ($errors->has('empresa'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('empresa') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-12 col-md-12">
+                            <label class="" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de
+                                la
+                                Empresa
+                            </label>
+                            <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
+                                name="empresa" id="empresa" value="{{ $organizacion->empresa }}" disabled>
+                            @if ($errors->has('empresa'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('empresa') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span>
+                        </div>
                     @endif
                     @if ($panel_rules->direccion)
-                    <div class="form-group col-sm-12 col-md-12">
-                        <label class="" for="direccion"> <i class="fas fa-map-marker-alt iconos-crear"></i>
-                            {{ trans('cruds.organizacion.fields.direccion') }}
-                        </label>
-                        <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
-                            name="direccion" id="direccion" disabled
-                            style="min-height: 0px; max-height: 200px; height: 35px;">{{ $organizacion->direccion }}</textarea>
-                        @if ($errors->has('direccion'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('direccion') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-12 col-md-12">
+                            <label class="" for="direccion"> <i class="fas fa-map-marker-alt iconos-crear"></i>
+                                {{ trans('cruds.organizacion.fields.direccion') }}
+                            </label>
+                            <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" name="direccion" id="direccion"
+                                disabled style="min-height: 0px; max-height: 200px; height: 35px;">{{ $organizacion->direccion }}</textarea>
+                            @if ($errors->has('direccion'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('direccion') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
+                        </div>
                     @endif
                     @if ($panel_rules->razon_social)
-                    <div class="form-group col-sm-6">
-                        <label class="" for="razon_social"><i class="far fa-building iconos-crear"></i> Razón
-                            Social</label>
-                        <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text"
-                            name="razon_social" id="razon_social" value="{{ $organizacion->razon_social }}" disabled>
-                        @if ($errors->has('razon_social'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('razon_social') }}
-                            </div>
-                        @endif
-                    </div>
+                        <div class="form-group col-sm-6">
+                            <label class="" for="razon_social"><i class="far fa-building iconos-crear"></i> Razón
+                                Social</label>
+                            <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}"
+                                type="text" name="razon_social" id="razon_social"
+                                value="{{ $organizacion->razon_social }}" disabled>
+                            @if ($errors->has('razon_social'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('razon_social') }}
+                                </div>
+                            @endif
+                        </div>
                     @endif
                     @if ($panel_rules->rfc)
-                    <div class="form-group col-sm-6">
-                        <label class="" for="rfc"><i class="far fa-building iconos-crear"></i>RFC</label>
-                        <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
-                            name="rfc" id="rfc" value="{{ $organizacion->rfc }}" disabled>
-                        @if ($errors->has('rfc'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('rfc') }}
-                            </div>
-                        @endif
-                    </div>
+                        <div class="form-group col-sm-6">
+                            <label class="" for="rfc"><i class="far fa-building iconos-crear"></i>RFC</label>
+                            <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
+                                name="rfc" id="rfc" value="{{ $organizacion->rfc }}" disabled>
+                            @if ($errors->has('rfc'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('rfc') }}
+                                </div>
+                            @endif
+                        </div>
                     @endif
                     @if ($panel_rules->telefono)
-                    <div class="form-group col-sm-6 col-md-6">
-                        <label for="telefono"> <i class="fas fa-phone iconos-crear"></i> Teléfono
-                        </label>
-                        <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number"
-                            name="telefono" id="telefono" value="{{ $organizacion->telefono }}" disabled>
-                        @if ($errors->has('telefono'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('telefono') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.telefono_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-6 col-md-6">
+                            <label for="telefono"> <i class="fas fa-phone iconos-crear"></i> Teléfono
+                            </label>
+                            <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number"
+                                name="telefono" id="telefono" value="{{ $organizacion->telefono }}" disabled>
+                            @if ($errors->has('telefono'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('telefono') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.telefono_helper') }}</span>
+                        </div>
                     @endif
                     @if ($panel_rules->correo)
-                    <div class="form-group col-sm-6 col-md-6">
-                        <label for="correo"> <i class="far fa-envelope iconos-crear"></i>
-                            {{ trans('cruds.organizacion.fields.correo') }}
-                        </label>
-                        <input class="form-control {{ $errors->has('correo') ? 'is-invalid' : '' }}" type="email"
-                            name="correo" id="correo" value="{{ $organizacion->correo }}" disabled>
-                        @if ($errors->has('correo'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('correo') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-6 col-md-6">
+                            <label for="correo"> <i class="far fa-envelope iconos-crear"></i>
+                                {{ trans('cruds.organizacion.fields.correo') }}
+                            </label>
+                            <input class="form-control {{ $errors->has('correo') ? 'is-invalid' : '' }}" type="email"
+                                name="correo" id="correo" value="{{ $organizacion->correo }}" disabled>
+                            @if ($errors->has('correo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('correo') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
+                        </div>
                     @endif
                     {{-- @if ($panel_rules->pagina_web)
                     <div class="form-group col-sm-4 col-md-4">
@@ -318,23 +327,23 @@
                     </div> --}}
                     {{-- @endif --}}
                     @if ($panel_rules->schedule)
-                    <div class="form-group col-6">
-                        <table class="table" id="user_table">
-                            <tbody>
-                                <div class=" row col-12 p-0 m-0">
-                                    <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
-                                            class="fas fa-calendar-alt iconos-crear"></i>Día Laboral</label>
-                                    <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
-                                            class="fas fa-clock iconos-crear"></i>Horario Laboral Inicio</label>
-                                    <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
-                                            class="fas fa-clock iconos-crear"></i>Horario Laboral Fin</label>
-                                    <!-- <label class="col-md-3 col-sm-3" for="working_day"
-                                        style="text-align: center;"></i>Opciones</label> -->
-                                </div>
-                            </tbody>
-                            <tfoot></tfoot>
-                        </table>
-                    </div>
+                        <div class="form-group col-6">
+                            <table class="table" id="user_table">
+                                <tbody>
+                                    <div class=" row col-12 p-0 m-0">
+                                        <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
+                                                class="fas fa-calendar-alt iconos-crear"></i>Día Laboral</label>
+                                        <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
+                                                class="fas fa-clock iconos-crear"></i>Horario Laboral Inicio</label>
+                                        <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
+                                                class="fas fa-clock iconos-crear"></i>Horario Laboral Fin</label>
+                                        <!-- <label class="col-md-3 col-sm-3" for="working_day"
+                                            style="text-align: center;"></i>Opciones</label> -->
+                                    </div>
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
                     @endif
 
                     <div class="col-md-12 col-sm-12">
@@ -343,142 +352,142 @@
                         </div>
                     </div>
                     @if ($panel_rules->representante_legal)
-                    <div class="form-group  col-sm-12 col-md-6">
-                        <label class="" for="representante_legal"><i
-                                class="far fa-building iconos-crear"></i>Representante Legal</label>
-                        <input class="form-control {{ $errors->has('representante_legal') ? 'is-invalid' : '' }}"
-                            type="text" name="representante_legal" id="representante_legal"
-                            value="{{ $organizacion->representante_legal }}" disabled>
-                        @if ($errors->has('representante_legal'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('representante_legal') }}
-                            </div>
-                        @endif
-                    </div>
+                        <div class="form-group  col-sm-12 col-md-6">
+                            <label class="" for="representante_legal"><i
+                                    class="far fa-building iconos-crear"></i>Representante Legal</label>
+                            <input class="form-control {{ $errors->has('representante_legal') ? 'is-invalid' : '' }}"
+                                type="text" name="representante_legal" id="representante_legal"
+                                value="{{ $organizacion->representante_legal }}" disabled>
+                            @if ($errors->has('representante_legal'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('representante_legal') }}
+                                </div>
+                            @endif
+                        </div>
                     @endif
                     @if ($panel_rules->fecha_constitucion)
-                    <div class="form-group  col-sm-3 col-md-6">
-                        <label for="fecha_constitucion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de
-                            constitución</label>
-                        <input class="form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_constitucion" id="fecha_constitucion"
-                            value="{{ $organizacion->fecha_constitucion }}" disabled>
-                        @if ($errors->has('fecha_constitucion'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_constitucion') }}
-                            </div>
-                        @endif
-                    </div>
+                        <div class="form-group  col-sm-3 col-md-6">
+                            <label for="fecha_constitucion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+                                constitución</label>
+                            <input class="form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}"
+                                type="date" name="fecha_constitucion" id="fecha_constitucion"
+                                value="{{ $organizacion->fecha_constitucion }}" disabled>
+                            @if ($errors->has('fecha_constitucion'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('fecha_constitucion') }}
+                                </div>
+                            @endif
+                        </div>
                     @endif
                     @if ($panel_rules->num_empleados)
-                    <div class="form-group col-sm-6">
-                        <label class="" for="num_empleados"><i class="far fa-building iconos-crear"></i>Número
-                            de empleados</label>
-                        <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number"
-                            name="num_empleados" id="num_empleados" value="{{ $organizacion->num_empleados }}" disabled>
-                        @if ($errors->has('num_empleados'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('num_empleados') }}
-                            </div>
-                        @endif
-                    </div>
+                        <div class="form-group col-sm-6">
+                            <label class="" for="num_empleados"><i class="far fa-building iconos-crear"></i>Número
+                                de empleados</label>
+                            <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}"
+                                type="number" name="num_empleados" id="num_empleados"
+                                value="{{ $organizacion->num_empleados }}" disabled>
+                            @if ($errors->has('num_empleados'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('num_empleados') }}
+                                </div>
+                            @endif
+                        </div>
                     @endif
                     @if ($panel_rules->tamano)
-                    <div class="form-group  col-sm-12 col-md-6">
-                        <label class="" for="tamano"><i
-                                class="far fa-building iconos-crear"></i>Tamaño</label>
-                        <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text"
-                            name="tamano" id="tamano" value="{{ $organizacion->tamano }}" disabled>
-                        @if ($errors->has('tamano'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('tamano') }}
-                            </div>
-                        @endif
-                    </div>
+                        <div class="form-group  col-sm-12 col-md-6">
+                            <label class="" for="tamano"><i
+                                    class="far fa-building iconos-crear"></i>Tamaño</label>
+                            <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text"
+                                name="tamano" id="tamano" value="{{ $organizacion->tamano }}" disabled>
+                            @if ($errors->has('tamano'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('tamano') }}
+                                </div>
+                            @endif
+                        </div>
                     @endif
                     @if ($panel_rules->giro)
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="giro"> <i class="fas fa-briefcase iconos-crear"></i>
-                            {{ trans('cruds.organizacion.fields.giro') }}
-                        </label>
-                        <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text"
-                            name="giro" id="giro" value="{{ $organizacion->giro }}" disabled>
-                        @if ($errors->has('giro'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('giro') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.giro_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label for="giro"> <i class="fas fa-briefcase iconos-crear"></i>
+                                {{ trans('cruds.organizacion.fields.giro') }}
+                            </label>
+                            <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text"
+                                name="giro" id="giro" value="{{ $organizacion->giro }}" disabled>
+                            @if ($errors->has('giro'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('giro') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.giro_helper') }}</span>
+                        </div>
                     @endif
                     @if ($panel_rules->servicios)
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="servicios"><i class="fas fa-briefcase iconos-crear"></i>
-                            {{ trans('cruds.organizacion.fields.servicios') }}
-                        </label>
-                        <input class="form-control {{ $errors->has('servicios') ? 'is-invalid' : '' }}" type="text"
-                            name="servicios" id="servicios" value="{{ $organizacion->servicios }}" disabled>
-                        @if ($errors->has('servicios'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('servicios') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label for="servicios"><i class="fas fa-briefcase iconos-crear"></i>
+                                {{ trans('cruds.organizacion.fields.servicios') }}
+                            </label>
+                            <input class="form-control {{ $errors->has('servicios') ? 'is-invalid' : '' }}"
+                                type="text" name="servicios" id="servicios" value="{{ $organizacion->servicios }}"
+                                disabled>
+                            @if ($errors->has('servicios'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('servicios') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
+                        </div>
                     @endif
                     @if ($panel_rules->mision)
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="mision"> <i class="fas fa-flag iconos-crear"></i>
-                            {{ trans('cruds.organizacion.fields.mision') }}</label>
-                        <div class="c_text">{!! $organizacion->mision !!}</div>
-                        @if ($errors->has('mision'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('mision') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.mision_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label for="mision"> <i class="fas fa-flag iconos-crear"></i>
+                                {{ trans('cruds.organizacion.fields.mision') }}</label>
+                            <div class="c_text">{!! $organizacion->mision !!}</div>
+                            @if ($errors->has('mision'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('mision') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.mision_helper') }}</span>
+                        </div>
                     @endif
                     @if ($panel_rules->vision)
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="vision"> <i class="far fa-eye iconos-crear"></i>
-                            {{ trans('cruds.organizacion.fields.vision') }}</label>
-                        <div class="c_text">{!! $organizacion->vision !!}</div>
-                        @if ($errors->has('vision'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('vision') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.vision_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label for="vision"> <i class="far fa-eye iconos-crear"></i>
+                                {{ trans('cruds.organizacion.fields.vision') }}</label>
+                            <div class="c_text">{!! $organizacion->vision !!}</div>
+                            @if ($errors->has('vision'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('vision') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.vision_helper') }}</span>
+                        </div>
                     @endif
                     @if ($panel_rules->valores)
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="valores"> <i class="far fa-heart iconos-crear"></i>
-                            {{ trans('cruds.organizacion.fields.valores') }}
-                        </label>
-                        <div class="c_text">{!! $organizacion->valores !!}</div>
-                        @if ($errors->has('valores'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('valores') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label for="valores"> <i class="far fa-heart iconos-crear"></i>
+                                {{ trans('cruds.organizacion.fields.valores') }}
+                            </label>
+                            <div class="c_text">{!! $organizacion->valores !!}</div>
+                            @if ($errors->has('valores'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('valores') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
+                        </div>
                     @endif
                     @if ($panel_rules->antecedentes)
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i> Antecedentes
-                        </label>
-                        <div class="c_text">{!!$organizacion->antecedentes !!}</div>
-                        <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
-                    </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i> Antecedentes
+                            </label>
+                            <div class="c_text">{!! $organizacion->antecedentes !!}</div>
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
+                        </div>
                     @endif
                 </div>
             </div>
         @else
-
-
             <div class="row" style="display: flex; justify-content: center; align-items: center;">
 
                 <div class="col-md-5" style="text-align:center; border:none;">
@@ -515,7 +524,6 @@
 @endsection
 
 @section('scripts')
-
     <script>
         $(document).ready(function() {
 
@@ -527,7 +535,8 @@
                     console.log(0);
 
                     html = "<tr>";
-                    html += '<td class="col-3"><div class="form-control" type="hidden" value="0"  name="working[' + number +'][id][]"><div class="workingSelect form-control" name="working[' + number +
+                    html += '<td class="col-3"><div class="form-control" type="hidden" value="0"  name="working[' +
+                        number + '][id][]"><div class="workingSelect form-control" name="working[' + number +
                         '][day][]" id="working_day" disabled><option value="">Seleccione una opción</option>';
                     html += '<option value="Lunes" >Lunes</option>';
                     html += '<option value="Martes" >Martes</option>';
@@ -588,7 +597,8 @@
                     html += '</select></td>';
                     html += '<td class="col-3"><input class="form-control" type="time" data-model-id="' + element
                         .id + '" data-type-input="start_work_time" name="working[' + number +
-                        '][start_time][]" id="start_work_time" value="' + element.start_work_time + '" disabled></td>';
+                        '][start_time][]" id="start_work_time" value="' + element.start_work_time +
+                        '" disabled></td>';
                     html += '<td class="col-3"><input class="form-control" type="time" data-model-id="' + element
                         .id + '" data-type-input="end_work_time" name="working[' + number +
                         '][end_time][]" id="end_work_time" value="' + element.end_work_time + '" disabled></td>';
@@ -743,5 +753,4 @@
 
         });
     </script>
-
 @endsection
