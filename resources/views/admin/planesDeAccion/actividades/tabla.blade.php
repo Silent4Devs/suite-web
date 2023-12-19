@@ -8,7 +8,7 @@
 
 
 
-<div class="card">
+<div class="card card-body">
     {{-- <div class="mb-2 row">
         <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
             <span class="ml-1" style="font-size: 17px; font-weight: bold;">
@@ -18,12 +18,12 @@
     <div class="card-header">
         <h5>Acuerdos y Compromisos</h5>
     </div>
-    <div class="card-body">
+    <div class="">
         <div class="row">
             <div class="col-sm-12 col-lg-12 col-md-12">
-                <div class="form-group">
-                    <label for="actividad"> Actividad <span class="text-danger">*</span></label>
+                <div class="form-group anima-focus">
                     <input type="text" class="form-control" id="actividad" name="actividad" placeholder="">
+                    <label for="actividad"> Actividad <span class="text-danger">*</span></label>
                     {{-- <div class="pr-0 col-1">
                         <button id="btnVincularNombre" class="btn btn-outline-primary btn-sm"
                             title="Vincular con nombre"></button>
@@ -35,18 +35,18 @@
         </div>
         <div class="row">
             <div class="col-sm-12 col-lg-6 col-6">
-                <div class="form-group">
-                    <label for="inicio"> Inicio <span class="text-danger">*</span></label>
+                <div class="form-group anima-focus">
                     <input type="date" min="1945-01-01" class="form-control" id="inicio" name="inicio">
+                    <label for="inicio"> Inicio <span class="text-danger">*</span></label>
                     {{-- <small id="inicioHelp" class="form-text text-muted">Fecha de inicio de la actividad</small> --}}
                     <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
 
                 </div>
             </div>
             <div class="col-sm-12 col-lg-6 col-6">
-                <div class="form-group">
-                    <label for="finalizacion"> Finalización <span class="text-danger">*</span></label>
+                <div class="form-group anima-focus">
                     <input type="date" min="1945-01-01" class="form-control" id="finalizacion" name="finalizacion">
+                    <label for="finalizacion"> Finalización <span class="text-danger">*</span></label>
                     {{-- <small id="finalizacionHelp" class="form-text text-muted">Fecha de finalización de la
                             actividad</small> --}}
                     <small class="p-0 m-0 text-xs error_finalizacion errores text-danger"></small>
@@ -54,7 +54,7 @@
             </div>
         </div>
         {{-- <div class="col-sm-12 col-lg-4 col-4">
-            <div class="form-group">
+            <div class="form-group anima-focus">
                 <label for="progreso"> Progreso <span
                         class="text-danger">*</span></label>
                 <input type="number" class="form-control" id="progreso" name="progreso" min="0" max="100">
@@ -64,16 +64,17 @@
             </div>
         </div> --}}
         <div class="mb-3 row">
-            <div class="col-sm-12 col-lg-12 col-md-12">
-                <label for="responsables_actividad"> Responsables <span class="text-danger">*</span></label><i
-                    class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                    title="Responsables de la actividad"></i>
-                <select class="responsables_actividad" id="responsables_actividad" multiple>
+            <div class="form-group anima-focus col-sm-12 col-lg-12 col-md-12">
+                <select class="responsables_actividad form-control" id="responsables_actividad" multiple placeholder="">
                     @foreach ($empleados as $empleado)
                         <option value="{{ $empleado->id }}" avatar="{{ $empleado->avatar }}">
                             {{ $empleado->name }}</option>
                     @endforeach
                 </select>
+                <label for="responsables_actividad"> Responsables <span class="text-danger">*</span></label>
+                {{-- <i
+                    class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                    title="Responsables de la actividad"></i> --}}
                 {{-- <small id="responsables_actividadHelp" class="form-text text-muted">Responsables de la actividad</small> --}}
                 <small class="p-0 m-0 text-xs error_participantes errores text-danger"></small>
             </div>
@@ -81,9 +82,9 @@
 
         <div class="row">
             <div class="col-sm-12 col-lg-12 col-md-12">
-                <div class="form-group">
+                <div class="form-group anima-focus">
+                    <textarea class="form-control w-100" id="comentarios" name="comentarios" placeholder=""></textarea>
                     <label for="comentarios"> Comentarios <span class="text-danger">*</span></label>
-                    <textarea class="form-control w-100" id="comentarios" name="comentarios"></textarea>
                     {{-- <small id="comentariosHelp" class="form-text text-muted">Comentarios de la actividad</small> --}}
                     <small class="p-0 m-0 text-xs error_comentarios errores text-danger"></small>
                 </div>
@@ -100,9 +101,9 @@
                 {{ $errors->first('actividades') }}
             </span>
         @endif
-        <div class="mt-5 datatable-fix w-100">
-            <table id="tblActividades" class="table w-100">
-                <thead class="thead-dark">
+        <div class="mt-5 datatable-rds w-100">
+            <table id="tblActividades" class=" w-100">
+                <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Estatus</th>

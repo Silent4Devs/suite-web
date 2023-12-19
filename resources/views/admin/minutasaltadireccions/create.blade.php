@@ -28,14 +28,14 @@
 
     <form method="POST" action="{{ route('admin.minutasaltadireccions.store') }}" enctype="multipart/form-data">
         @csrf
-        <div class="card">
+        <div class="card card-body">
             <div class="card-header">
                 <h5>Minuta Revisión por Dirección</h5>
             </div>
-            <div class="card-body">
+            <div>
                 <div class="form-row">
                     <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <div class="form-floating">
+                        <div class="form-group anima-focus">
                             <select required class="form-control" name="responsable_id" id="responsable_id">
                                 <option value="">Seleccione una opción</option>
                                 @foreach ($responsablereunions as $responsablereunion)
@@ -50,13 +50,12 @@
                                     {{ $errors->first('responsable_id') }}
                                 </span>
                             @endif
-                            <label class="required" for="responsable_id">Elaboró</label>
                             <span
                                 class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <div class="form-floating">
+                        <div class="form-group anima-focus">
                             <input required class="form-control date" type="date" min="1945-01-01" name="fechareunion"
                                 id="fechareunion" value="{{ old('fechareunion') }}">
                             @if ($errors->has('fechareunion'))
@@ -73,7 +72,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-sm-12 col-md-3 col-lg-3">
-                        <div class="form-floating">
+                        <div class="form-group anima-focus">
                             <input required class="form-control date" type="time" name="hora_inicio" id="hora_inicio"
                                 value="{{ old('hora_inicio') }}">
                             <label for="hora_inicio">Horario de inicio<span class="text-danger">*</span></label>
@@ -88,7 +87,7 @@
                     </div>
 
                     <div class="form-group col-sm-12 col-md-3 col-lg-3">
-                        <div class="form-floating">
+                        <div class="form-group anima-focus">
                             <input required class="form-control date" type="time" name="hora_termino" id="hora_termino"
                                 value="{{ old('hora_termino') }}">
                             <label for="hora_termino">Horario de
@@ -102,7 +101,7 @@
                     </div>
 
                     <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <div class="form-floating">
+                        <div class="form-group anima-focus">
                             <select required class="form-control" name="tipo_reunion" id="tipo_reunion"
                                 value="{{ old('tipo_reunion') }}">
                                 <option value="presencial">Presencial</option>
@@ -121,7 +120,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-floating">
+                        <div class="form-group anima-focus">
                             <input required data-vincular-nombre='true' class="form-control date" type="text"
                                 name="tema_reunion" id="tema_reunion" value="{{ old('tema_reunion') }}" placeholder="">
                             <label for="tema_reunion">Tema de la
@@ -136,7 +135,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-floating">
+                        <div class="form-group anima-focus">
                             <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion" placeholder="">{{ old('objetivoreunion') }}</textarea>
                             <label
                                 for="objetivoreunion">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}<span
@@ -154,11 +153,11 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card card-body">
             <div class="card-header">
                 <h5>Participantes</h5>
             </div>
-            <div class="card-body">
+            <div>
                 <div class="pl-3 row w-100" x-data="muestra()">
                     {{-- <div class="col-12"> --}}
                     <small> <strong>NOTA: </strong>Para agregar participantes
@@ -171,15 +170,15 @@
                         </div>
                     </div>
                     <div class="row" x-show="interno">
-                        <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                            {{-- <div class="form-floating"> --}}
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6 mt-3">
+                            {{-- <div class="form-group anima-focus"> --}}
+                            <input type="hidden" id="id_empleado">
+                            <input class="form-control" type="text" id="participantes_search" placeholder=""
+                                style="position: relative" autocomplete="off" />
                             <label for="participantes">Buscar
                                 participante<span class="text-danger">*</span></label>
-                            <input type="hidden" id="id_empleado">
-                            <input class="form-control" type="text" id="participantes_search"
-                                placeholder="Busca un empleado" style="position: relative" autocomplete="off" />
                             <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-                                style="position: absolute; top: 43px; right: 25px;"></i>
+                                style="position: absolute; top: 15px; right: 25px;"></i>
                             <div id="participantes_sugeridos"></div>
                             @if ($errors->has('participantes'))
                                 <span class="text-danger">
@@ -190,34 +189,34 @@
                             {{-- </div> --}}
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                            <div class="form-floating">
+                            <div class="form-group anima-focus">
                                 <input class="form-control" type="text" id="email"
                                     placeholder="Correo del participante" readonly style="cursor: not-allowed" />
                                 <label for="email">Email</label>
                             </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                            <div class="form-floating">
+                            <div class="form-group anima-focus">
                                 <input class="form-control" type="text" id="puesto"
                                     placeholder="Puesto del participante" readonly style="cursor: not-allowed" />
                                 <label for="puesto">Puesto</label>
                             </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                            <div class="form-floating">
+                            <div class="form-group anima-focus">
                                 <input class="form-control" type="text" id="area"
                                     placeholder="Área del participante" readonly style="cursor: not-allowed" />
                                 <label for="area">Área</label>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="asistencia">Asistencia</label>
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
                                 <select class="form-control" id="asistencia" name="asistencia" placeholder="">
                                     <option value="Si" default>Sí</option>
                                     <option value="No">No</option>
                                     <option value="Ausencia Justificada">Ausencia Justificada</option>
                                 </select>
+                                <label for="asistencia">Asistencia</label>
                             </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-12">
@@ -226,9 +225,9 @@
                                 Agregar Participante
                             </button>
                         </div>
-                        <div class="mt-3 col-12 w-100 datatable-fix">
-                            <table class="table w-100" id="tbl-participantes">
-                                <thead class="thead-dark">
+                        <div class="mt-3 col-12 w-100 datatable-rds">
+                            <table class=" w-100" id="tbl-participantes">
+                                <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Nombre</th>
@@ -281,9 +280,9 @@
                                 Agregar Participante
                             </button>
                         </div>
-                        <div class="mt-3 col-12 w-100 datatable-fix">
-                            <table class="table w-100" id="tbl-participantesEXT">
-                                <thead class="thead-dark">
+                        <div class="mt-3 col-12 w-100 datatable-rds">
+                            <table class=" w-100" id="tbl-participantesEXT">
+                                <thead>
                                     <tr>
                                         <th>Nombre</th>
                                         <th>Correo</th>
@@ -303,11 +302,11 @@
         </div>
         {{-- </div> --}}
 
-        <div class="card ">
+        <div class="card card-body">
             <div class="card-header">
                 <h5>Temas Tratados<span class="text-danger">*</span></h5>
             </div>
-            <div class="card-body">
+            <div>
                 <div class="form-group col-sm-12 col-md-12 col-lg-12 mt-4">
                     <textarea required class="form-control date" type="text" name="tema_tratado" id="temas">
                                         {{ old('tema_tratado') }}

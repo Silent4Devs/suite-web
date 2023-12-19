@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+    @include('admin.listadistribucion.estilos')
     <style>
         .select2-search.select2-search--inline {
             margin-top: -20px !important;
@@ -28,12 +29,14 @@
     <form method="POST" id="formularioEditMinutas" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
-        <div class="card">
-            <div class="card-body">
+        <div class="card card-body">
+            <div class="card-header">
+                <h5>Minuta Revisión por Dirección</h5>
+            </div>
+            <div>
                 <div class="form-row">
-                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <label class="required" for="responsable_id">Elaboró</label>
-                        <select required class="form-control select2" name="responsable_id" id="responsable_id">
+                    <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
+                        <select required class="form-control" name="responsable_id" id="responsable_id">
                             @foreach ($responsablereunions as $responsablereunion)
                                 <option value="{{ $responsablereunion->id }}"
                                     {{ old('responsable_id', $minutasaltadireccion->responsable_id) == $responsablereunion->id ? 'selected' : '' }}>
@@ -46,15 +49,16 @@
                                 {{ $errors->first('responsable_id') }}
                             </span>
                         @endif
+                        <label class="required" for="responsable_id">Elaboró</label>
                         <span
                             class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
+                        <input required class="form-control date" type="date" min="1945-01-01" name="fechareunion"
+                            id="fechareunion" placeholder=""
+                            value="{{ old('fechareunion', \Carbon\Carbon::parse($minutasaltadireccion->fechareunion)->format('Y-m-d')) }}">
                         <label class="required"
                             for="fechareunion">{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}</label>
-                        <input required class="form-control date" type="date" min="1945-01-01" name="fechareunion"
-                            id="fechareunion"
-                            value="{{ old('fechareunion', \Carbon\Carbon::parse($minutasaltadireccion->fechareunion)->format('Y-m-d')) }}">
                         @if ($errors->has('fechareunion'))
                             <span class="text-danger">
                                 {{ $errors->first('fechareunion') }}
@@ -65,11 +69,11 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-sm-12 col-md-3 col-lg-3">
+                    <div class="form-group anima-focus col-sm-12 col-md-3 col-lg-3">
+                        <input placeholder=""required class="form-control date" type="time" name="hora_inicio"
+                            id="hora_inicio" value="{{ old('hora_inicio', $minutasaltadireccion->hora_inicio) }}">
                         <label class="required" for="hora_inicio">Horario de
                             inicio</label>
-                        <input required class="form-control date" type="time" name="hora_inicio" id="hora_inicio"
-                            value="{{ old('hora_inicio', $minutasaltadireccion->hora_inicio) }}">
                         @if ($errors->has('hora_inicio'))
                             <span class="text-danger">
                                 {{ $errors->first('hora_inicio') }}
@@ -78,19 +82,18 @@
                         <span
                             class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                     </div>
-                    <div class="form-group col-sm-12 col-md-3 col-lg-3">
+                    <div class="form-group anima-focus col-sm-12 col-md-3 col-lg-3">
+                        <input placeholder=""required class="form-control date" type="time" name="hora_termino"
+                            id="hora_termino" value="{{ old('hora_termino', $minutasaltadireccion->hora_termino) }}">
                         <label class="required" for="hora_termino">Horario de
                             término</label>
-                        <input required class="form-control date" type="time" name="hora_termino" id="hora_termino"
-                            value="{{ old('hora_termino', $minutasaltadireccion->hora_termino) }}">
                         @if ($errors->has('hora_termino'))
                             <span class="text-danger">
                                 {{ $errors->first('hora_termino') }}
                             </span>
                         @endif
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <label class="required" for="tipo_reunion">Tipo de reunión<span class="text-danger">*</span></label>
+                    <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
                         <select required class="form-control" name="tipo_reunion" id="tipo_reunion"
                             value="{{ old('tipo_reunion') }}">
                             <option value="presencial"
@@ -103,6 +106,7 @@
                                 {{ old('tipo_reunion', $minutasaltadireccion->tipo_reunion) == 'hibrida' ? 'selected' : '' }}>
                                 Hibrida</option>
                         </select>
+                        <label class="required" for="tipo_reunion">Tipo de reunión<span class="text-danger">*</span></label>
                         @if ($errors->has('tipo_reunion'))
                             <span class="text-danger">
                                 {{ $errors->first('tipo_reunion') }}
@@ -111,12 +115,12 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <label class="required" for="tema_reunion">Tema de la
-                            reunión</label>
-                        <input required data-vincular-nombre='true' class="form-control date" type="text"
+                    <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+                        <input placeholder=""required data-vincular-nombre='true' class="form-control date" type="text"
                             name="tema_reunion" id="tema_reunion"
                             value="{{ old('tema_reunion', $minutasaltadireccion->tema_reunion) }}">
+                        <label class="required" for="tema_reunion">Tema de la
+                            reunión</label>
                         @if ($errors->has('tema_reunion'))
                             <span class="text-danger">
                                 {{ $errors->first('tema_reunion') }}
@@ -125,10 +129,10 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+                        <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion', $minutasaltadireccion->objetivoreunion) }}</textarea>
                         <label class="required"
                             for="objetivoreunion">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}</label>
-                        <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion', $minutasaltadireccion->objetivoreunion) }}</textarea>
                         @if ($errors->has('objetivoreunion'))
                             <span class="text-danger">
                                 {{ $errors->first('objetivoreunion') }}
@@ -141,12 +145,13 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
-                    <span class="ml-1" style="font-size: 17px; font-weight: bold;">
-                        Participantes</span>
-                </div>
+        <div class="card card-body">
+            <div class="card-header">
+                <h5>Participantes</h5>
+            </div>
+            <div class="">
+                <small> <strong>NOTA: </strong>Para agregar participantes
+                    externos de click en el botón que tiene el siguiente icono</small>
                 <div class="pl-3 row w-100" x-data="{ externo: {{ $minutasaltadireccion->externos ? 'true' : 'false' }} }">
                     <div class="col-12" style="text-align: end">
 
@@ -155,14 +160,14 @@
                     </div>
                     <div class="col-12">
                         <div class="row">
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                                <input type="hidden" id="id_empleado">
+                                <input placeholder=""class="form-control" type="text" id="participantes_search"
+                                    placeholder="" style="position: relative" autocomplete="off" />
                                 <label class="required" for="participantes">Buscar
                                     participante</label>
-                                <input type="hidden" id="id_empleado">
-                                <input class="form-control" type="text" id="participantes_search"
-                                    placeholder="Busca un empleado" style="position: relative" autocomplete="off" />
                                 <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-                                    style="position: absolute; top: 43px; right: 25px;"></i>
+                                    style="position: absolute; top: 15px; right: 25px;"></i>
                                 <div id="participantes_sugeridos"></div>
                                 @if ($errors->has('participantes'))
                                     <span class="text-danger">
@@ -171,28 +176,28 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
                             </div>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                                <input class="form-control" type="text" id="email" placeholder="" readonly
+                                    style="cursor: not-allowed" />
                                 <label for="email">Email</label>
-                                <input class="form-control" type="text" id="email"
-                                    placeholder="Correo del participante" readonly style="cursor: not-allowed" />
                             </div>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                                <input class="form-control" type="text" id="puesto" placeholder="" readonly
+                                    style="cursor: not-allowed" />
                                 <label for="email">Puesto</label>
-                                <input class="form-control" type="text" id="puesto"
-                                    placeholder="Puesto del participante" readonly style="cursor: not-allowed" />
                             </div>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                                <input class="form-control" type="text" id="area" placeholder="" readonly
+                                    style="cursor: not-allowed" />
                                 <label for="email">Área</label>
-                                <input class="form-control" type="text" id="area"
-                                    placeholder="Área del participante" readonly style="cursor: not-allowed" />
                             </div>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="asistencia">Asistencia</label>
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
                                 <select class="form-control" id="asistencia" name="asistencia" placeholder="">
                                     <option value="Si" default>Sí</option>
                                     <option value="No">No</option>
                                     <option value="Ausencia Justificada">Ausencia Justificada</option>
                                 </select>
+                                <label for="asistencia">Asistencia</label>
                             </div>
                             <div class="col-12">
                                 <button id="btn-suscribir-participante" type="submit"
@@ -200,9 +205,9 @@
                                     Agregar Participante
                                 </button>
                             </div>
-                            <div class="mt-3 col-12 datatable-fix">
+                            <div class="mt-3 col-12 datatable-rds">
                                 <table class="table w-100" id="tbl-participantes">
-                                    <thead class="thead-dark">
+                                    <thead>
                                         <tr>
                                             <th>ID</th>
                                             <th>Nombre</th>
@@ -232,45 +237,40 @@
                         <div class="row" x-show="externo">
                             <p class="font-weight-bold col-12" style="font-size:11pt;">Participantes externos.</p>
                             <hr>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                                <input class="form-control" type="text" id="nombreEXT" placeholder="" />
                                 <label for="nombreEXT">Nombre</label>
-                                <input class="form-control" type="text" id="nombreEXT"
-                                    placeholder="Nombre del participante" />
                             </div>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                                <input class="form-control" type="text" id="emailEXT" placeholder="" />
                                 <label for="emailEXT">Email</label>
-                                <input class="form-control" type="text" id="emailEXT"
-                                    placeholder="Correo del participante" />
                             </div>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                                <input class="form-control" type="text" id="puestoEXT" placeholder="" />
                                 <label for="puestoEXT">Puesto</label>
-                                <input class="form-control" type="text" id="puestoEXT"
-                                    placeholder="Puesto del participante" />
                             </div>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                                <input class="form-control" type="text" id="empresaEXT" placeholder="" />
                                 <label for="empresaEXT">Empresa u
                                     Organización</label>
-                                <input class="form-control" type="text" id="empresaEXT"
-                                    placeholder="Empresa u Organización del participante" />
                             </div>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="asistenciaEXT">Asistencia</label>
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
                                 <select class="form-control" id="asistenciaEXT" name="asistenciaEXT" placeholder="">
                                     <option value="Si" default>Sí</option>
                                     <option value="No">No</option>
                                     <option value="Ausencia Justificada">Ausencia Justificada</option>
                                 </select>
+                                <label for="asistenciaEXT">Asistencia</label>
                             </div>
-                            <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
                                 <button id="btn-suscribir-participanteEXT" onclick="event.preventDefault();"
                                     class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: end;">
-
                                     Agregar Participante
                                 </button>
                             </div>
-                            <div class="mt-3 col-12 w-100 datatable-fix">
+                            <div class="mt-3 col-12 w-100 datatable-rds">
                                 <table class="table w-100" id="tbl-participantesEXT">
-                                    <thead class="thead-dark">
+                                    <thead>
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Correo</th>
@@ -299,17 +299,18 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="mt-3 col-sm-12 form-group">
+        {{-- <div class="mt-3 col-sm-12 form-group anima-focus">
                     <label for="evidencia">Documento</label>
                     <div class="custom-file">
                         <input type="file" name="files[]" multiple class="form-control" id="evidencia">
                     </div>
                 </div> --}}
-        <div class="card">
-            <div class="card-body">
+        <div class="card card-body">
+            <div class="card-header">
+                <h5>Temas Tratados<span class="text-danger">*</span></h5>
+            </div>
+            <div>
                 <div class="form-group col-sm-12 col-md-12 col-lg-12 mt-4">
-                    <label class="required" for="tema_tratado">Temas
-                        tratados</label>
                     <textarea required class="form-control date" type="text" name="tema_tratado" id="temas">{{ old('tema_tratado', $minutasaltadireccion->tema_tratado) }}</textarea>
                     @if ($errors->has('tema_tratado'))
                         <span class="text-danger">
@@ -333,7 +334,7 @@
 
         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
 
-        <div class="text-right form-group col-12">
+        <div class="text-right form-group anima-focus col-12">
             <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
             <button class="btn btn-danger" id="btnGuardar" type="submit">
                 Actualizar

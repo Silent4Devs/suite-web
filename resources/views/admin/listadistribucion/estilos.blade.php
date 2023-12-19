@@ -58,6 +58,11 @@
         border-radius: 14px;
     }
 
+    .card-header {
+        background-color: #fff;
+        margin-bottom: 8px;
+    }
+
     .card h5 {
         color: #306BA9;
     }
@@ -69,50 +74,8 @@
         padding: 20px;
     }
 
-    /* .form-group label {
-        position: absolute;
-        font-size: 20px;
-        pointer-events: none;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
-        margin: auto;
-        background-color: #000;
-        width: 140px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.2s;
-        transition-timing-function: ease-out;
-        border-radius: 100px;
-    }
-
-    .form-group label i {
-        margin-right: 10px;
-    }
-
-    .form-group input {
-        width: 300px;
-        background-color: rgba(0, 0, 0, 0);
-        border: 1px solid #ffffff88;
-        outline: none;
+    .instrucciones h5 {
         color: #fff;
-        font-size: 25px;
-        padding: 20px 30px;
-        box-sizing: border-box;
-        border-radius: 20px;
-        transition: 0.25s;
-    }
 
-    .form-group input:focus,
-    .form-group input:not(:placeholder-shown) {
-        border: 1px solid #fff;
     }
-
-    .form-group input:focus+label,
-    .form-group input:not(:placeholder-shown)+label {
-        transform: translateY(-35px);
-    } */
 </style>

@@ -69,7 +69,7 @@
             <h5>Minutas Revisión por Dirección</h5>
         </div>
         @include('partials.flashMessages')
-        <div class="card-body">
+        <div>
             <table class="datatable-rds" id="datatable-Minutasaltadireccion" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
@@ -291,7 +291,6 @@
                 dtButtons.push(btnImport);
             @endcan
             let dtOverrideGlobals = {
-                pageLength: 5,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -456,4 +455,4 @@
             }
         });
     </script>
-@endsection --}}
+@endsection
