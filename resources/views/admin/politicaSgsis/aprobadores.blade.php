@@ -95,7 +95,7 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Politica</a>
+            <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Aprobar Politica</a>
         </div>
     </div>
        @include('partials.flashMessages')
@@ -103,9 +103,7 @@
         <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
         <div class="text-right">
             <div class="d-flex justify-content-end">
-                <a href="#" id="btpdf" type="button" class="btpdf" title="pdf" data-toggle="modal" data-target="#miModal">
-                    <img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon">
-                  </a>
+                <a href="#" id="btpdf"  type="button" class="btpdf" title="pdf"><img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon"></a>
                 &nbsp;  &nbsp;
             </div>
             @include('csvImport.modalcomitedeseguridad', [
@@ -138,22 +136,6 @@
                 </thead>
             </table>
 
-      </div>
-
-      <div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Título del Modal</h5>
-            </div>
-            <div class="modal-body">
-                <h1>Hola</h1>
-            </div>
-          </div>
-        </div>
       </div>
 
 @endsection
