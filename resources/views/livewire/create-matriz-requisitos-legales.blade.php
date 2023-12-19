@@ -1,5 +1,6 @@
-@extends('layouts.admin')
-@section('content')
+{{-- @extends('layouts.admin')
+@section('content') --}}
+<div>
     <style>
         .select2-search.select2-search--inline {
             margin-top: -20px !important;
@@ -98,187 +99,28 @@
             </div>
         </div>
     </div>
-
-
-    <div>
-        <button wire:click='test'>
-            hola
-        </button>
-    </div>
-
-
-
-
-    <div class="mt-4 card" style="border-radius: 8px;">
-        <div class="card-body pb-0">
-            <form method="POST" action="{{ route('admin.matriz-requisito-legales.store') }}" enctype="multipart/form-data"
-                class="row">
-                @csrf
-                <div class="form-group col-12">
-                    <p class="titulo-card" style="">
-                        Requisito Legal
-                    </p>
-                    <hr>
-                </div>
-
-                <div class="form-group col-12">
-                    <div class="form-floating">
-                        <input required class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form "
-                            type="text" name="nombrerequisito" id="nombrerequisito"
-                            value="{{ old('nombrerequisito', '') }}" style="height:55px;"
-                            placeholder="Nombre del requisito legal, regulatorio, contractual o estatutario">
-                        @if ($errors->has('nombrerequisito'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('nombrerequisito') }}
-                            </div>
-                        @endif
-                        <label style="color:#606060;font-size:14px;" for="nombrerequisito">
-                            Nombre del requisito legal, regulatorio, contractual o estatutario</label>
-                    </div>
-                </div>
-                <div class="form-group col-sm-6">
-                    <div class="form-floating">
-                        <input type="text"
-                            class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form"
-                            name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}"
-                            aria-describedby="textExample1" placeholder="Cláusula, sección o apartado aplicable*"
-                            style="height:55px;" />
-                        <label class="" style="color:#606060;font-size:14px;" for="formacumple">Cláusula, sección o
-                            apartado
-                            aplicable*</label>
-                    </div>
-                </div>
-
-                @if ($errors->has('formacumple'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('formacumple') }}
-                    </div>
-                @endif
-
-                <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.formacumple_helper') }}</span>
-        </div>
-
-        <div class="row" style="padding-left:24px; padding-right:24px;">
-            <div class="col-sm-6">
-                <div class="form-floating">
-                    <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
-                        type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
-                        value="{{ old('fechaexpedicion') }}">
-                    @if ($errors->has('fechaexpedicion'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fechaexpedicion') }}
-                        </div>
-                    @endif
-                    <label for="fechaexpedicion"></i> Fecha de
-                        publicación</label>
-                </div>
-                <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-floating">
-                    <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
-                        type="date" name="fechavigor" id="fechavigor" min="1945-01-01" value="{{ old('fechavigor') }}">
-                    @if ($errors->has('fechavigor'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fechavigor') }}
-                        </div>
-                    @endif
-                    <label for="fechavigor">
-                        {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
-                </div>
-                <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
-            </div>
-        </div>
-
-
-        <div class="form-group col-sm-12 mt-4">
-            <div class="form-floating" style="padding-left:6px;padding-right:6px;">
-                <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
-                    style="height:200px;" name="requisitoacumplir" placeholder="Descripción del requisito a cumplir*"
-                    id="requisitoacumplir">{{ old('requisitoacumplir') }}</textarea>
-                @if ($errors->has('requisitoacumplir'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('requisitoacumplir') }}
-                    </div>
-                @endif
-                <label style="color:#606060;font-size:14px;" for="requisitoacumplir">
-                    Descripción del requisito a cumplir*</label>
-            </div>
-        </div>
-        </form>
-        <a type="button" class="btn btn-light mr-auto mb-3" wire:model="addAlcance1"
-            style="background-color: white; border-color:white; color:#057BE2;">
-            Añadir nuevo Requisito
-            <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
-        </a>
-    </div>
-
-
-    @foreach ($alcance_s1 as $key => $p)
-        <div class="my-2 col-12" style="text-align: end;">
-            <a class="btn trash-button" wire:click.prevent="removeAlcance1({{ $key }})">
-                <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;" title="Eliminar"></i>
-            </a>
-        </div>
+    <form wire:submit.prevent='save'>
         <div class="mt-4 card" style="border-radius: 8px;">
             <div class="card-body pb-0">
-                <form method="POST" action="{{ route('admin.matriz-requisito-legales.store') }}"
-                    enctype="multipart/form-data" class="row">
-                    @csrf
+                <div class="row">
                     <div class="form-group col-11" style="margin-bottom:0px;">
                         <p class="titulo-card" style="margin-bottom:0px;">
                             Requisito Legal
                         </p>
                     </div>
-                    <div class="form-group col-1"style="margin-bottom:0px;">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn" style="background-color: white; box-shadow:none;"
-                            data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <i class="fa-regular fa-trash-can fa-2xl" style="color: #606060;"></i>
-                        </button>
-                    </div>
-
                     <div class="mb-3">
                         <hr>
                     </div>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog" style="margin-top: 150px;">
-                            <div class="modal-content text-center">
-                                <div class="modal-body">
-                                    <div class="mt-5 mb-3" style="font:20px Segoe UI;color:#306BA9;">
-                                        ¿Estás seguro que deseas eliminar este elemento?
-                                    </div>
-                                    <i class="mt-5 mb-5 fa-regular fa-trash-can fa-2xl" style="color: #606060;"></i>
-                                    <div class="row mb-5 mt-2">
-                                        <div class="col-md-6" style="padding-left: 50px;">
-                                            <button type="button" class="btn btn-outline-primary"
-                                                style="width: 175px;
-                                                    height: 39px;font:14px Roboto;border: 1px solid;color:#057BE2;border-radius:6px;"
-                                                data-bs-dismiss="modal">Cancelar</button>
-                                        </div>
-                                        <div class="col-md-6"
-                                            style="
-                                            padding-right: 50px;">
-                                            <button type="button" data-bs-dismiss="modal" class="btn btn-primary"
-                                                style="width: 175px;
-                                                    height: 39px;box-shadow:none;border-radius:6px;">Eliminar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-group col-12">
                         <div class="form-floating">
                             <input required
                                 class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form "
                                 type="text" name="nombrerequisito" id="nombrerequisito"
                                 value="{{ old('nombrerequisito', '') }}" style="height:55px;"
-                                placeholder="Nombre del requisito legal, regulatorio, contractual o estatutario">
+                                placeholder="Nombre del requisito legal, regulatorio, contractual o estatutario"
+                                wire:model.defer='alcance.nombrerequisito'
+                                maxlength="255"
+                                >
                             @if ($errors->has('nombrerequisito'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('nombrerequisito') }}
@@ -294,93 +136,242 @@
                                 class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form"
                                 name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}"
                                 aria-describedby="textExample1" placeholder="Cláusula, sección o apartado aplicable*"
-                                style="height:55px;" />
+                                style="height:55px;"
+                                wire:model.defer='alcance.formacumple' required maxlength="255"/>
                             <label class="" style="color:#606060;font-size:14px;" for="formacumple">Cláusula,
                                 sección o
                                 apartado
                                 aplicable*</label>
                         </div>
                     </div>
-
                     @if ($errors->has('formacumple'))
                         <div class="invalid-feedback">
                             {{ $errors->first('formacumple') }}
                         </div>
                     @endif
-
-                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.formacumple_helper') }}</span>
-            </div>
-
-            <div class="row" style="padding-left:24px; padding-right:24px;">
-                <div class="col-sm-6">
-                    <div class="form-floating">
-                        <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
-                            type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
-                            value="{{ old('fechaexpedicion') }}">
-                        @if ($errors->has('fechaexpedicion'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fechaexpedicion') }}
+                    <div class="col-12">
+                        <div class="row" >
+                            <div class="col-sm-6">
+                                <div class="form-floating">
+                                    <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
+                                        type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
+                                        value="{{ old('fechaexpedicion') }}"
+                                        wire:model.defer='alcance.fechaexpedicion' required>
+                                    @if ($errors->has('fechaexpedicion'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('fechaexpedicion') }}
+                                        </div>
+                                    @endif
+                                    <label for="fechaexpedicion"></i> Fecha de
+                                        publicación</label>
+                                </div>
+                                <span
+                                    class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
                             </div>
-                        @endif
-                        <label for="fechaexpedicion"></i> Fecha de
-                            publicación</label>
-                    </div>
-                    <span
-                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-floating">
-                        <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
-                            type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
-                            value="{{ old('fechavigor') }}">
-                        @if ($errors->has('fechavigor'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fechavigor') }}
+                            <div class="col-sm-6">
+                                <div class="form-floating">
+                                    <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
+                                        type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
+                                        value="{{ old('fechavigor') }}"
+                                        wire:model.defer='alcance.fechavigor' required>
+                                    @if ($errors->has('fechavigor'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('fechavigor') }}
+                                        </div>
+                                    @endif
+                                    <label for="fechavigor">
+                                        {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
+                                </div>
+                                <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
                             </div>
-                        @endif
-                        <label for="fechavigor">
-                            {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
-                    </div>
-                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
-                </div>
-            </div>
-
-
-            <div class="form-group col-sm-12 mt-4">
-                <div class="form-floating" style="padding-left:6px;padding-right:6px;">
-                    <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
-                        style="height:200px;" name="requisitoacumplir" placeholder="Descripción del requisito a cumplir*"
-                        id="requisitoacumplir">{{ old('requisitoacumplir') }}</textarea>
-                    @if ($errors->has('requisitoacumplir'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('requisitoacumplir') }}
                         </div>
-                    @endif
-                    <label style="color:#606060;font-size:14px;" for="requisitoacumplir">
-                        Descripción del requisito a cumplir*</label>
+
+                    </div>
+                    <div class="form-group col-sm-12 mt-4">
+                        <div class="form-floating">
+                            <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
+                                style="height:200px;" name="requisitoacumplir" placeholder="Descripción del requisito a cumplir*"
+                                id="requisitoacumplir"
+                                wire:model.defer='alcance.requisitoacumplir'
+                                >{{ old('requisitoacumplir') }}</textarea>
+                            @if ($errors->has('requisitoacumplir'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('requisitoacumplir') }}
+                                </div>
+                            @endif
+                            <label style="color:#606060;font-size:14px;" for="requisitoacumplir">
+                                Descripción del requisito a cumplir*</label>
+                        </div>
+                    </div>
                 </div>
             </div>
-            </form>
-            <button type="button" class="btn btn-light mr-auto mb-3"
-                style="background-color: white; border-color:white; color:#057BE2;" wire:model="addAlcance1">
-                Añadir nuevo Requisito
-                <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
-            </button>
         </div>
-        <div class="my-2 col-12" style="text-align: end;">
-            <button class="btn trash-button" wire:click.prevent="removeAlcance1({{ $key }})">
-                <i class="fas fa-trash-alt" style="color: rgb(0, 0, 0); font-size: 15pt;" title="Eliminar"></i>
-            </button>
-        </div>
-    @endforeach
-    <div class="text-right form-group col-12">
-        <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
-        </span>
-        <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn boton-cancelar">
-            <div class="mt-2">Cancelar</div>
-        </a>
-        <button class="btn boton-enviar ml-2 mr-2" type="submit">
-            {{ trans('global.save') }}
+
+
+
+        @foreach ($alcance_s1 as $key => $p )
+            <div class="mt-4 card" style="border-radius: 8px;">
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <div class="form-group col-11" style="margin-bottom:0px;">
+                            <p class="titulo-card" style="margin-bottom:0px;">
+                                Requisito Legal
+                            </p>
+                        </div>
+                        <div class="form-group col-1"style="margin-bottom:0px;">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn" style="background-color: white; box-shadow:none;"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal_{{$key}}">
+                                <i class="fa-regular fa-trash-can fa-2xl" style="color: #606060;"></i>
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <hr>
+                        </div>
+                        <div class="form-group col-12">
+                            <div class="form-floating">
+                                <input required
+                                    class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form "
+                                    type="text" name="nombrerequisito.{{$key}}" id="nombrerequisito.{{$key}}"
+                                    value="{{ old('nombrerequisito', '') }}" style="height:55px;"
+                                    placeholder="Nombre del requisito legal, regulatorio, contractual o estatutario"
+                                    wire:model.defer='alcance_s1.{{$key}}.nombrerequisito'
+                                    maxlength="255"
+                                    >
+                                @if ($errors->has('nombrerequisito'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('nombrerequisito') }}
+                                    </div>
+                                @endif
+                                <label style="color:#606060;font-size:14px;" for="nombrerequisito">
+                                    Nombre del requisito legal, regulatorio, contractual o estatutario</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <div class="form-floating">
+                                <input type="text"
+                                    class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form"
+                                    name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}"
+                                    aria-describedby="textExample1" placeholder="Cláusula, sección o apartado aplicable*"
+                                    style="height:55px;"
+                                    wire:model.defer='alcance_s1.{{$key}}.formacumple' required maxlength="255"/>
+                                <label class="" style="color:#606060;font-size:14px;" for="formacumple">Cláusula,
+                                    sección o
+                                    apartado
+                                    aplicable*</label>
+                            </div>
+                        </div>
+                        @if ($errors->has('formacumple'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('formacumple') }}
+                            </div>
+                        @endif
+                        <div class="col-12">
+                            <div class="row" >
+                                <div class="col-sm-6">
+                                    <div class="form-floating">
+                                        <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
+                                            type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
+                                            value="{{ old('fechaexpedicion') }}"
+                                            wire:model.defer='alcance_s1.{{$key}}.fechaexpedicion' required>
+                                        @if ($errors->has('fechaexpedicion'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('fechaexpedicion') }}
+                                            </div>
+                                        @endif
+                                        <label for="fechaexpedicion"></i> Fecha de
+                                            publicación</label>
+                                    </div>
+                                    <span
+                                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-floating">
+                                        <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
+                                            type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
+                                            value="{{ old('fechavigor') }}"
+                                            wire:model.defer='alcance_s1.{{$key}}.fechavigor' required>
+                                        @if ($errors->has('fechavigor'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('fechavigor') }}
+                                            </div>
+                                        @endif
+                                        <label for="fechavigor">
+                                            {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
+                                    </div>
+                                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group col-sm-12 mt-4">
+                            <div class="form-floating">
+                                <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
+                                    style="height:200px;" name="requisitoacumplir.{{$key}}" placeholder="Descripción del requisito a cumplir*"
+                                    id="requisitoacumplir.{{$key}}"
+                                    wire:model.defer='alcance_s1.{{$key}}.requisitoacumplir'
+                                    >{{ old('requisitoacumplir') }}</textarea>
+                                @if ($errors->has('requisitoacumplir'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('requisitoacumplir') }}
+                                    </div>
+                                @endif
+                                <label style="color:#606060;font-size:14px;" for="requisitoacumplir">
+                                    Descripción del requisito a cumplir*</label>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal_{{$key}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog" style="margin-top: 150px;">
+                                <div class="modal-content text-center">
+                                    <div class="modal-body">
+                                        <div class="mt-5 mb-3" style="font:20px Segoe UI;color:#306BA9;">
+                                            ¿Estás seguro que deseas eliminar este elemento?
+                                        </div>
+                                        <i class="mt-5 mb-5 fa-regular fa-trash-can fa-2xl" style="color: #606060;"></i>
+                                        <div class="row mb-5 mt-2">
+                                            <div class="col-md-6" style="padding-left: 50px;">
+                                                <button type="button" class="btn btn-outline-primary"
+                                                    style="width: 175px;
+                                                        height: 39px;font:14px Roboto;border: 1px solid;color:#057BE2;border-radius:6px;"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                            </div>
+                                            <div class="col-md-6"
+                                                style="
+                                                padding-right: 50px;">
+                                                <button type="button" data-bs-dismiss="modal" class="btn btn-primary"
+                                                    style="width: 175px;
+                                                        height: 39px;box-shadow:none;border-radius:6px;" wire:click.prevent="removeAlcance1({{$key}})">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
+        <button type="button" class="btn btn-light mr-auto mb-3"
+            style="background-color: white; border-color:white; color:#057BE2;" wire:click.prevent="addAlcance1">
+            Añadir nuevo Requisito
+            <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
         </button>
-    </div>
-@endsection
+        <div class="text-right form-group col-12">
+            <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
+            </span>
+            <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn boton-cancelar">
+                <div class="mt-2">Cancelar</div>
+            </a>
+            <button class="btn boton-enviar ml-2 mr-2" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+    </form>
+</div>
+{{-- @endsection --}}
+
+
+
