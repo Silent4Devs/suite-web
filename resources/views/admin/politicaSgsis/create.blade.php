@@ -100,9 +100,9 @@
             </div>
 
             <div class="text-right form-group col-12">
-                <a href="{{ route('admin.politica-sgsis.index') }}" id="btn_cancelar" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
+                <a href="{{ route('admin.politica-sgsis.index') }}" id="btn_cancelar" class="btn">Cancelar</a>
+                <button class="btn btn-primary" type="submit">
+                    Guardar y Enviar Aprobación
                 </button>
             </div>
 
