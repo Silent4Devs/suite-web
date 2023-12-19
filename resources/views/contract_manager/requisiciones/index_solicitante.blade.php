@@ -47,7 +47,7 @@
                             <td>{{ $requisicion->referencia }}</td>
                             <td>{{ $requisicion->proveedor_catalogo }}</td>
                             <td>{{ $requisicion->estado }}</td>
-                            <td>{{ $requisicion->contrato->nombre_servicio }}</td>
+                            <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
