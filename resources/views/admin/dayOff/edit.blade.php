@@ -29,6 +29,13 @@
 
         @include('admin.dayOff.fields')
 
+        <div class="text-right form-group col-12">
+            <a href="{{ route('admin.dayOff.index') }}" class="btn btn-outline-primary">Regresar</a>
+            <button class="btn btn-danger" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+
     </div>
     {!! Form::close() !!}
 @endsection
