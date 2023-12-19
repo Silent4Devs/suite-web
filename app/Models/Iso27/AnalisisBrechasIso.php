@@ -3,6 +3,7 @@
 namespace App\Models\Iso27;
 
 use App\Models\Empleado;
+use App\Models\Norma;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,11 +22,17 @@ class AnalisisBrechasIso extends Model implements Auditable
         'porcentaje_implementacion',
         'id_elaboro',
         'estatus',
+        'norma_id',
     ];
 
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'id_elaboro')->alta();
+    }
+
+    public function norma()
+    {
+        return $this->belongsTo(Norma::class,'norma_id');
     }
 
     // public function gap_logro_tres()

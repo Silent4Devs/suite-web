@@ -691,7 +691,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             //Analisis brechas 2022
             //Template Analisis de Brechas
             Route::post('templates/store', 'TemplateController@store')->name('templates.store');
-            Route::get('/top', 'TopController@index')->name('top');
+            Route::get('/template-brechas-2022-top', 'TopController@index')->name('top');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
             Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
