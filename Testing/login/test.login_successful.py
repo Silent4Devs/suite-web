@@ -28,3 +28,11 @@ pw=driver.find_element(By.XPATH,"//input[contains(@name,'password')]").send_keys
 time.sleep(tiempo_modulos)
 btn=driver.find_element(By.XPATH,"//button[@type='submit'][contains(.,'Enviar')]")
 btn.click()
+# Esperar hasta 10 segundos para encontrar un elemento que indique un inicio de sesión exitoso
+try:
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//font[@class='letra_blanca'][contains(.,'Mi perfil')]"))
+    )
+    print("Inicio de sesión exitoso")
+except TimeoutException:
+    print("Inicio de sesión fallido")

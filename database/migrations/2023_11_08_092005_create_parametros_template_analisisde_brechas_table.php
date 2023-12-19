@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('colores_template_analisisde_brechas', function (Blueprint $table) {
+        Schema::create('parametros_template_analisisde_brechas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('template_id');
             $table->string('estatus');
@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('descripcion')->nullable();
             $table->foreign('template_id')->references('id')->on('template_analisisde_brechas')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('colores_template_analisisde_brechas');
+        Schema::dropIfExists('parametros_template_analisisde_brechas');
     }
 };

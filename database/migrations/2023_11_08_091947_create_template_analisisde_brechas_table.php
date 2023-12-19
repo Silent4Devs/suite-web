@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('no_secciones');
             $table->foreign('norma_id')->references('id')->on('normas')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

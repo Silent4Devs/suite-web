@@ -32,6 +32,11 @@ class EntendimientoOrganizacion extends Model implements Auditable
         return $this->belongsTo(Empleado::class, 'id_elabora', 'id')->alta();
     }
 
+    public function empleadoindiscriminado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_elabora', 'id');
+    }
+
     public function fodafortalezas()
     {
         return $this->hasMany(FortalezasEntendimientoOrganizacion::class, 'foda_id', 'id');
