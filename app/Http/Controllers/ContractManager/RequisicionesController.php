@@ -373,10 +373,11 @@ class RequisicionesController extends Controller
             'firma_compras' => null,
         ]);
 
-        $userEmail = User::getCurrentUser()->email;
+        $userEmail = User::where('id', $requisicion->id_user)->first();
         $organizacion = Organizacion::getFirst();
         $tipo_firma = 'rechazado_requisicion';
-        Mail::to($requisicion->email)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+
+        Mail::to(trim($userEmail->email))->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.requisiciones'));
     }
