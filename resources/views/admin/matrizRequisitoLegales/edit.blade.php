@@ -99,252 +99,86 @@
                     </p>
                     <hr>
                 </div>
-                <div class="form-group col-12">
-                    <div class="form-floating">
+                <div class="form-group col-12 anima-focus">
                         <input class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form"
-                            type="text" name="nombrerequisito" id="nombrerequisito" placeholder="Fundamento"
+                            type="text" name="nombrerequisito" id="nombrerequisito" placeholder=""
                             value="{{ old('nombrerequisito', $matrizRequisitoLegale->nombrerequisito) }}" required>
                         @if ($errors->has('nombrerequisito'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombrerequisito') }}
                             </div>
                         @endif
-                        <label class="" for="nombrerequisito">Nombre del requisito legal, regulatorio, contractual o
-                            estatutario*</label>
-                    </div>
+                        {!! Form::label('nombrerequisito', 'Nombre del requisito legal, regulatorio, contractual o estatutario*', ['class' => 'asterisco']) !!}
                 </div>
-
-                <div class="form-group col-md-6">
-                    <div class="form-floating">
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="form-group col-md-12 anima-focus">
                         <input class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form"
                             type="text" name="formacumple" id="formacumple"
                             value="{{ old('formacumple', $matrizRequisitoLegale->formacumple) }}"
-                            placeholder="Cláusula, sección o
-                        apartado
-                        aplicable*"
+                            placeholder=""
                         required>
                         @if ($errors->has('formacumple'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('formacumple') }}
                             </div>
                         @endif
-                        <label for="formacumple">Cláusula, sección o
-                            apartado
-                            aplicable*</label>
-
-                    </div>
-                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.formacumple_helper') }}</span>
+                        {!! Form::label('formacumple', 'Cláusula, sección o
+                        apartado
+                        aplicable*', ['class' => 'asterisco']) !!}
                 </div>
+                <br>
+                <br>
+                <br>
+                <br>
                 <div class="row" style="padding-right:0px;">
-                    <div class="form-group col-md-6">
-                        <div class="form-floating">
+                    <div class="form-group col-md-6 anima-focus">
                             <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
                                 type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
                                 value="{{ old('fechaexpedicion', $matrizRequisitoLegale->fechaexpedicion ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion)->format('Y-m-d') : null) }}"
-                                placeholder="Fecha de expedición" required>
+                                placeholder="" required>
                             @if ($errors->has('fechaexpedicion'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('fechaexpedicion') }}
                                 </div>
                             @endif
-                            <label
-                                for="fechaexpedicion">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion') }}*</label>
-                            <span
-                                class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
-                        </div>
+                            {!! Form::label('fechaexpedicion', 'Fecha de expedición*', ['class' => 'asterisco']) !!}
                     </div>
-
-                    <div class="form-group col-md-6" style="padding-right: 0px;">
-                        <div class="form-floating">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="form-group col-md-6 anima-focus">
                             <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
                                 type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
                                 value="{{ old('fechavigor', $matrizRequisitoLegale->fechavigor ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor)->format('Y-m-d') : null) }}"
-                                placeholder="Fecha de entrada en vigor" style="" required>
+                                placeholder="" style="" required>
                             @if ($errors->has('fechavigor'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('fechavigor') }}
                                 </div>
                             @endif
-                            <label for="fechavigor"
-                                style="">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}*</label>
-                            <span
-                                class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
-                        </div>
+                            {!! Form::label('fechavigor', 'Fecha de entrada en vigor*', ['class' => 'asterisco']) !!}
                     </div>
 
                 </div>
-
-                <div class="form-group col-sm-12">
-                    <div class="form-floating">
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="form-group col-sm-12 anima-focus">
                         <textarea class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form" type="text"
-                            name="requisitoacumplir" id="requisitoacumplir" required>{{ old('requisitoacumplir', $matrizRequisitoLegale->requisitoacumplir) }}</textarea>
+                            name="requisitoacumplir" id="requisitoacumplir" placeholder=" " required>{{ old('requisitoacumplir', $matrizRequisitoLegale->requisitoacumplir) }}</textarea>
                         @if ($errors->has('requisitoacumplir'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('requisitoacumplir') }}
                             </div>
                         @endif
-                        <label class="required" for="requisitoacumplir">Requisito(s) a
-                            cumplir*</label>
-                        <span
-                            class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}</span>
-                    </div>
-                </div>
-                {{--
-                <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#345183">
-                    <p class="text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
-                        Verificación del Requisito</p>
+                        {!! Form::label('requisitoacumplir', 'Requisitos a cumplir*', ['class' => 'asterisco']) !!}
                 </div>
 
-                <div class="form-group col-sm-6">
-                    <label> <i class="fas fa-question-circle iconos-crear"></i>¿En cumplimiento?</label>
-                    <select class="form-control {{ $errors->has('cumplerequisito') ? 'is-invalid' : '' }}"
-                        name="cumplerequisito" id="cumplerequisito">
-                        <option value disabled {{ old('cumplerequisito', null) === null ? 'selected' : '' }}>
-                            {{ trans('global.pleaseSelect') }}</option>
-                        @foreach (App\Models\MatrizRequisitoLegale::CUMPLEREQUISITO_SELECT as $key => $label)
-                            <option value="{{ $key }}"
-                                {{ old('cumplerequisito', $matrizRequisitoLegale->cumplerequisito) === (string) $key ? 'selected' : '' }}>
-                                {{ $label }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('cumplerequisito'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('cumplerequisito') }}
-                        </div>
-                    @endif
-                    <span
-                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.cumplerequisito_helper') }}</span>
-                </div>
-
-                <div class="form-group col-sm-6">
-                    <label for="fechaverificacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
-                        verificación</label>
-                    <input class="form-control date {{ $errors->has('fechaverificacion') ? 'is-invalid' : '' }}"
-                        type="date" name="fechaverificacion" id="fechaverificacion"
-                        value="{{ old('fechaverificacion', $matrizRequisitoLegale->fechaverificacion) }}">
-                    @if ($errors->has('fechaverificacion'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fechaverificacion') }}
-                        </div>
-                    @endif
-                </div>
-
-
-                <div class="form-group col-sm-12">
-                    <label for="metodo"><i class="fab fa-searchengin iconos-crear"></i> Método utilizado de
-                        verificación</label>
-                    <textarea class="form-control {{ $errors->has('metodo') ? 'is-invalid' : '' }}" type="text"
-                        name="metodo" id="metodo">{{ old('metodo', $matrizRequisitoLegale->metodo) }} </textarea>
-                    @if ($errors->has('metodo'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('metodo') }}
-                        </div>
-                    @endif
-                </div>
-
-
-                <div class="form-group col-sm-12">
-                    <label for="descripcion_cumplimiento"><i class="fas fa-clipboard-list iconos-crear"></i> Descripción del
-                        cumplimiento/incumplimiento</label><i class="fas fa-info-circle"
-                        style="font-size:12pt; float: right;"
-                        title="Describir de que forma la organización está cumpliendo/incumpliendo este requisito."></i>
-                    <textarea class="form-control {{ $errors->has('descripcion_cumplimiento') ? 'is-invalid' : '' }}"
-                        type="text" name="descripcion_cumplimiento"
-                        id="descripcion_cumplimiento">{{ old('descripcion_cumplimiento', $matrizRequisitoLegale->descripcion_cumplimiento) }} </textarea>
-                    @if ($errors->has('descripcion_cumplimiento'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('descripcion_cumplimiento') }}
-                        </div>
-                    @endif
-                </div>
-
-
-
-                <div class="row w-100 align-items-center" style="margin-left: 1px;">
-                    @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
-                    <div class="pl-0 ml-0 col-2">
-                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
-                            data-target="#planAccionModal">
-                            <i class="mr-1 fas fa-plus-circle"></i> Crear
-                        </button>
-                    </div>
-                    @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de Requisitos
-                    Legales'])
-                </div>
-
-
-
-                <div class="mb-3 col-sm-12">
-                    <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Evidencia</label>
-                    <div class="custom-file">
-                        <input type="file" class="form-control" {{ $errors->has('evidencia') ? 'is-invalid' : '' }}"
-                            multiple id="evidencia" name="files[]"
-                            {{ old('evidencia', $matrizRequisitoLegale->evidencia) }}>
-                        @if ($errors->has('evidencia'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('evidencia') }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="mb-3 col-10 d-flex justify-content-right">
-                    <span class="float-right" type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"
-                        data-target="#largeModal">
-                        <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Documentos
-                    </span>
-                </div>
-
-
-                <div class="form-group col-md-4">
-                    <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
-                    <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
-                        id="id_reviso">
-                        @foreach ($empleados as $id => $empleado)
-                            <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
-                                data-area="{{ $empleado->area->area }}"
-                                {{ old('id_reviso', $matrizRequisitoLegale->id_reviso) == $empleado->id ? 'selected' : '' }}>
-
-                                {{ $empleado->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('empleados'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('empleados') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
-                </div>
-
-
-
-
-                <div class="form-group col-md-4">
-                    <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                    <div class="form-control" id="puesto_reviso"></div>
-
-                </div>
-
-
-                <div class="form-group col-md-4">
-                    <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                    <div class="form-control" id="area_reviso"></div>
-
-                </div>
-
-                <div class="form-group col-sm-12">
-                    <label for="comentarios"><i class="fas fa-comment-dots iconos-crear"></i>Comentarios /
-                        observaciones</label>
-                    <textarea class="form-control {{ $errors->has('comentarios') ? 'is-invalid' : '' }}" type="text"
-                        name="comentarios"
-                        id="comentarios">{{ old('comentarios', $matrizRequisitoLegale->comentarios) }} </textarea>
-                    @if ($errors->has('comentarios'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('comentarios') }}
-                        </div>
-                    @endif
-                </div> --}}
 
 
                 <div class="text-right form-group col-12">
@@ -353,48 +187,6 @@
                         {{ trans('global.save') }}
                     </button>
                 </div>
-
-
-
-
-                {{-- <div class="modal" tabindex="-1" id="evidencia_activa">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Descargar Documentos</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body"> --}}
-
-                {{-- @dump(json_decode($activo->documentos_relacionados)) --}}
-                {{-- @if (json_decode($matrizRequisitoLegale->evidencia))
-                                    <div class="list-group">
-                                        @foreach (json_decode($matrizRequisitoLegale->evidencia) as $documento)
-
-                                            <a class="list-group-item list-group-item-action" target="_blank"
-                                                href="{{ asset('storage/matriz_evidencias' . '/' . $documento) }}">
-                                                <i class="mr-2 fas fa-file"></i><span>{{ $documento }}</span>
-                                            </a>
-                                        @endforeach
-                                    </div>
-                                @else
-                                    <p>Sin archivos cargados</p>
-                                @endif
-
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                            </div>
-
-
-
-                        </div>
-                    </div>
-                </div> --}}
-
 
 
 

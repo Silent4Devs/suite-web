@@ -38,89 +38,44 @@
             font-weight: bolder !important;
             color: rgb(255, 255, 255) !important;
         }
+        .card {
+        border-radius: 15px; /* Puedes ajustar el valor según tus preferencias */
+        overflow: hidden; /* Asegura que las esquinas redondas se apliquen correctamente */
+    }
+
+    .encabezado {
+            background:#FFF5DF;
+            color: #606060; /* Color del texto en el encabezado */
+            padding: 10px; /* Ajusta el espaciado interno del encabezado */
+            border-top-left-radius: 15px; /* Aplica esquinas redondeadas solo en la esquina superior izquierda */
+            border-top-right-radius: 15px; /* Aplica esquinas redondeadas solo en la esquina superior derecha */
+        }
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.politicaSgsis.visualizacion') }}
 <h5 class="col-12 titulo_general_funcion">Politícas de la Organización: <strong> {{ $organizacions->empresa }}</h5>
-<div class="card card-body" style="">
-
-    <div class="row" style="border-bottom: 2px solid #ccc;">
-        <div class="col-12 caja_titulo">
-            <h3>Políticas SGSI</h3>
-
-        </div>
-    </div>
     @if ($politicaSgsis)
         @foreach ($politicaSgsis as $data)
-            <div class="row ml-1 mt-3">
-                <h4><strong>{{ $data->nombre_politica ?: 'Nombre: No definido' }}</strong></h4>
-            </div>
-            <div class="row" style="margin-top: -2px;">
-                <div class="col-lg-9">
-                    <p>
-                        {!! $data->politicasgsi !!}
-                    </p>
-                    @livewire('aceptar-politica', ['id_politica' => $data->id])
+        <div class="encabezado">
+            <h6><strong>{{ $data->nombre_politica ?: 'Nombre: No definido' }}</strong></h6>
+            <h6>Fecha de publicación : {{ $data->fecha_publicacion ?: 'fecha_publicacion: No definido' }}</h6>
+            <div class="d-flex justify-content-end" style="position: relative; top: -2rem;">@livewire('aceptar-politica', ['id_politica' => $data->id])</div>
+        </div>
+        <div class="card card-body">
+            <div class="col-sm-12 d-flex align-items-center">
+                <div>
+                    <p>{!! $data->politicasgsi !!}</p>
                 </div>
-
-                <div class="col-sm-3" style="background-color:#345183; padding-top: 10px;">
-                    <div class="form-group">
-                        <label class="form-label"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
-                            publicación</label>
-                        <div class="dato_politica">{{ $data->fecha_publicacion ?: 'No definido' }}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de entrada en
-                            vigor</label>
-                        <div class="dato_politica">{{ $data->fecha_entrada ?: 'No definido' }}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
-                            revisión</label>
-                        <div class="dato_politica">{{ $data->fecha_revision ?: 'No definido' }}</div>
-                    </div>
-                    @if ($data->estemp == 'alta')
-                        <div class="form-group">
-                            <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Revisó: </label>
-                            <div class="dato_politica">{{ $data->reviso->name ?: 'No definido' }}</div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                            <div class="dato_politica">{{ $data->reviso->puesto ?: 'No definido' }}</div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                            <div class="dato_politica">{{ $data->reviso->area->area ?? 'No definido' }}</div>
-                        </div>
-                    @elseif ($data->estemp == 'baja')
-                        <div class="form-group">
-                            <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Revisó: </label>
-                            <div class="dato_politica">El empleado ya no se encuentra en la empresa:
-                                {{ $data->revisobaja->revisobaja->name ?: 'No definido' }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                            <div class="dato_politica">El empleado ya no se encuentra en la empresa:
-                                {{ $data->revisobaja->revisobaja->puesto ?: 'No definido' }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                            <div class="dato_politica">El empleado ya no se encuentra en la empresa:
-                                {{ $data->revisobaja->revisobaja->area->area ?: 'No definido' }}
-                            </div>
-                        </div>
-                    @endif
-
+                <div class="ml-auto">
+                    <img src="{{ asset('comite.png') }}" alt="Comite Image">
                 </div>
             </div>
-            <hr>
+        </div>
         @endforeach
     @else
         <div class="row">
             <h3>Sin registro</h3>
         </div>
     @endif
-</div>
+
 @endsection
