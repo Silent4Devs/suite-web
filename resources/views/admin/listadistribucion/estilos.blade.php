@@ -78,4 +78,11 @@
         color: #fff;
 
     }
+
+    .btn-verde {
+        background-color: #00B212 !important;
+        border-radius: 4px;
+        opacity: 1;
+        color: #fff;
+    }
 </style>

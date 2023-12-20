@@ -11,20 +11,25 @@
     <h5 class="col-12 titulo_general_funcion">Registrar: Minutas de Sesiones de Alta Dirección</h5>
     <div class="card card-body instrucciones">
         <div class="row">
-            <div class="col-2">
-                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="Onboarding" style="width: 180px; height:180px;">
+            <div class="col-md-4 col-sm-6"> <!-- Adjust column size based on screen size -->
+                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="Onboarding"
+                    style="max-width: 180px; max-height:180px;">
             </div>
-            <div class="col-10">
-                <h5>¿Qué es? Revisión por Dirección.</h5>
-                <p>Proceso fundamental en el contexto de los sistemas de gestión.</p>
-                <p>Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
-                    desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar que
-                    el
-                    sistema de gestión esté funcionando de manera eficaz y que se estén cumpliendo los objetivos y metas
-                    establecidos. Como evidencia de este punto se propone la generación de una minuta.</p>
+            <div class="col-md-8 col-sm-6"> <!-- Adjust column size based on screen size -->
+                <div>
+                    <h5>¿Qué es? Revisión por Dirección.</h5>
+                    <p>Proceso fundamental en el contexto de los sistemas de gestión.</p>
+                    <p>Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
+                        desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar
+                        que
+                        el
+                        sistema de gestión esté funcionando de manera eficaz y que se estén cumpliendo los objetivos y metas
+                        establecidos. Como evidencia de este punto se propone la generación de una minuta.</p>
+                </div>
             </div>
         </div>
     </div>
+
 
     <form method="POST" id="formularioEditMinutas" enctype="multipart/form-data">
         @csrf
@@ -200,8 +205,8 @@
                                 <label for="asistencia">Asistencia</label>
                             </div>
                             <div class="col-12">
-                                <button id="btn-suscribir-participante" type="submit"
-                                    class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: relative;">
+                                <button id="btn-suscribir-participante" type="submit" class="mr-3 btn btn-link"
+                                    style="float: left; position: relative;">
                                     Agregar Participante
                                 </button>
                             </div>
@@ -264,7 +269,7 @@
                             </div>
                             <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
                                 <button id="btn-suscribir-participanteEXT" onclick="event.preventDefault();"
-                                    class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: end;">
+                                    class="mr-3 btn btn-link" style="float: left; position: relative;">
                                     Agregar Participante
                                 </button>
                             </div>
@@ -334,14 +339,18 @@
 
         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
 
-        <div class="text-right form-group anima-focus col-12">
-            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
-            <button class="btn btn-danger" id="btnGuardar" type="submit">
-                Actualizar
-            </button>
-            <button class="btn btn-danger" id="btnUpdateAndReview" type="submit" style="width: 230px !important;">
-                Actualizar y enviar a revisión
-            </button>
+        <div class="row">
+            <div class="text-right col-12">
+                <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
+                    style="float: left; position: relative;">Cancelar</a>
+                <button class="btn btn-danger" id="btnGuardar" type="submit" style="float: left; position: relative;">
+                    Actualizar
+                </button>
+                <button class="btn btn-danger" id="btnUpdateAndReview" type="submit"
+                    style="float: left; position: relative;">
+                    Actualizar y enviar a revisión
+                </button>
+            </div>
         </div>
     </form>
 @endsection

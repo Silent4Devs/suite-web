@@ -11,10 +11,10 @@
 
     <div class="card card-body instrucciones">
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-3 col-3 justify-content-center">
                 <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="Onboarding" style="width: 180px; height:180px;">
             </div>
-            <div class="col-10">
+            <div class="col-md-9 col-9">
                 <h5>¿Qué es? Revisión por Dirección.</h5>
                 <p>Proceso fundamental en el contexto de los sistemas de gestión.</p>
                 <p>Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
@@ -25,6 +25,7 @@
             </div>
         </div>
     </div>
+
 
     <form method="POST" action="{{ route('admin.minutasaltadireccions.store') }}" enctype="multipart/form-data">
         @csrf
@@ -50,6 +51,7 @@
                                     {{ $errors->first('responsable_id') }}
                                 </span>
                             @endif
+                            <label for="responsable_id">Elaboro:</label>
                             <span
                                 class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
                         </div>
@@ -220,8 +222,8 @@
                             </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                            <button id="btn-suscribir-participante" type="submit"
-                                class="mr-3 btn btn-sm btn-outline-success" style="float: left; position: relative;">
+                            <button id="btn-suscribir-participante" type="submit" class="mr-3 btn btn-link"
+                                style="float: left; position: relative;">
                                 Agregar Participante
                             </button>
                         </div>
@@ -276,7 +278,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-12">
                             <button id="btn-suscribir-participanteEXT" onclick="event.preventDefault();"
-                                class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: end;">
+                                class="mr-3 btn btn-link" style="float: left; position: relative;">
                                 Agregar Participante
                             </button>
                         </div>

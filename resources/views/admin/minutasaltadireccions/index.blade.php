@@ -64,7 +64,7 @@
         </div>
     @endcan
 
-    <div class="card">
+    <div class="card card-body">
         <div class="card-header">
             <h5>Minutas Revisión por Dirección</h5>
         </div>
