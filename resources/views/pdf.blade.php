@@ -44,7 +44,7 @@
                     <td><strong>{{$politica->nombre_politica}} </strong> <br> <br>
                         Fecha publicacion:  {{$politica->fecha_publicacion}}  &nbsp;&nbsp;&nbsp;&nbsp;
                         Fecha revision: {{$politica->fecha_revision}}   <br> <br>
-                        <p>{{ \Illuminate\Support\Str::limit($politica->politicasgsi, 1000) }}</p>
+                        <p style="text-align: justify;">{{ \Illuminate\Support\Str::limit($politica->politicasgsi, 1000) }}</p>
 
                     </td>
                 </tr>

@@ -187,7 +187,7 @@
                         data: 'politicasgsi',
                         name: 'politicasgsi',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
+                            return `<div style="text-align: justify;">${data}</div>`;
                         }
                     },
                     {
