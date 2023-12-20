@@ -77,7 +77,7 @@ class Area extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('areas_all', 3600 * 12, function () {
+        return Cache::remember('Areas:areas_all', 3600 * 12, function () {
             return self::orderByDesc('id')->get();
         });
     }

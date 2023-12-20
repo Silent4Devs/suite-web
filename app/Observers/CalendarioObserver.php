@@ -59,6 +59,6 @@ class CalendarioObserver
 
     private function forgetCache()
     {
-        Cache::forget('calendario_all');
+        Cache::forget('Calendario:calendario_all');
     }
 }

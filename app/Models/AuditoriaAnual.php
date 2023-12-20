@@ -46,7 +46,7 @@ class AuditoriaAnual extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('auditoriaanual_all', 3600 * 12, function () {
+        return Cache::remember('AuditoriaAnual:auditoriaanual_all', 3600 * 8, function () {
             return self::get();
         });
     }
