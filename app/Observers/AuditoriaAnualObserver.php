@@ -63,6 +63,6 @@ class AuditoriaAnualObserver
 
     private function forgetCache()
     {
-        Cache::forget('auditoriaanual_all');
+        Cache::forget('AuditoriaAnual:auditoriaanual_all');
     }
 }
