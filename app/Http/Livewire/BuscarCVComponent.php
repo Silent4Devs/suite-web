@@ -123,8 +123,6 @@ class BuscarCVComponent extends Component
             $this->empleados = Empleado::getAltaEmpleados();
         }
 
-        $cacheKey = 'empleadosCV_data_'.Auth::user()->id;
-
         $empleadosCV = Empleado::alta()
             ->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
             ->when($this->empleado_id, function ($q3) {
@@ -151,7 +149,7 @@ class BuscarCVComponent extends Component
             ->when($this->general, function ($qGeneral) {
                 $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
             })
-            ->fastPaginate(21);
+            ->fastPaginate(18);
 
         $this->empleado_id = null;
 

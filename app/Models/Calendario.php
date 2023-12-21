@@ -63,7 +63,7 @@ class Calendario extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('calendario_all', 3600 * 12, function () {
+        return Cache::remember('Calendario:calendario_all', 3600 * 8, function () {
             return self::get();
         });
     }

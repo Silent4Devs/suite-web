@@ -72,7 +72,7 @@ class Puesto extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('Puestos_all', 3600 * 8, function () {
+        return Cache::remember('Puestos:Puestos_all', 3600 * 8, function () {
             return self::get();
         });
     }
