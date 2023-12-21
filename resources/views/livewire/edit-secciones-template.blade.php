@@ -284,7 +284,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="pregunta1" name="pregunta1" placeholder="" style="height: 76px;" required></textarea>
+                                <textarea class="form-control" id="pregunta1" name="pregunta1" wire:model.defer="pregunta1" placeholder=""
+                                    style="height: 76px;" required></textarea>
                                 <label for="pregunta1">Pregunta <sup>*</sup><label>
                             </div>
                         </div>
@@ -395,7 +396,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="pregunta2" name="pregunta2" placeholder="" style="height: 76px;" required></textarea>
+                                <textarea class="form-control" id="pregunta2" name="pregunta2" wire:model.defer="pregunta2" placeholder=""
+                                    style="height: 76px;" required></textarea>
                                 <label for="pregunta2">Pregunta<sup>*</sup></label>
                             </div>
                         </div>
@@ -504,7 +506,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="pregunta3" name="pregunta3" placeholder="" style="height: 76px;" required></textarea>
+                                <textarea class="form-control" id="pregunta3" name="pregunta3" wire:model.defer="pregunta3" placeholder=""
+                                    style="height: 76px;" required></textarea>
                                 <label for="pregunta3">Pregunta<sup>*</sup></label>
                             </div>
                         </div>
@@ -613,7 +616,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="pregunta4" name="pregunta4" placeholder="" style="height: 76px;" required></textarea>
+                                <textarea class="form-control" id="pregunta4" name="pregunta4" wire:model.defer="pregunta4" placeholder=""
+                                    style="height: 76px;" required></textarea>
                                 <label for="pregunta4">Pregunta<sup>*</sup></label>
                             </div>
                         </div>

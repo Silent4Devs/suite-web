@@ -41,6 +41,15 @@ class EditSeccionesTemplate extends Component
 
     public $normas;
 
+
+    public $pregunta1 = '';
+
+    public $pregunta2 = '';
+
+    public $pregunta3 = '';
+
+    public $pregunta4 = '';
+
     public $preguntas_s1 = [];
 
     public $preguntas_s2 = [];
@@ -147,12 +156,12 @@ class EditSeccionesTemplate extends Component
     public function mount($id_template)
     {
         $this->id_template = $id_template;
+        $template = TemplateAnalisisdeBrechas::with('parametros', 'secciones.preguntas')->find($this->id_template);
+        $this->asignarInputs($template);
     }
 
     public function render()
     {
-        $template = TemplateAnalisisdeBrechas::with('parametros', 'secciones.preguntas')->find($this->id_template);
-        $this->asignarInputs($template);
         // dd($template);
         $this->normas = Norma::get();
         return view('livewire.edit-secciones-template');
@@ -189,13 +198,20 @@ class EditSeccionesTemplate extends Component
         foreach ($secInput as $key => $sec) {
             $descripcion_seccion_name = 'descripcion_s' . $this->posicion_seccion;
             $porcentaje_seccion_name = 'porcentaje_seccion_' . $this->posicion_seccion;
+            $primera_pregunta_seccion_name = 'pregunta' . $this->posicion_seccion;
             $preguntas_seccion_name = 'preguntas_s' . $this->posicion_seccion;
 
             $this->$descripcion_seccion_name = $sec->descripcion;
             $this->$porcentaje_seccion_name = $sec->porcentaje_seccion;
-
+            $primpreg = 1;
+            $this->$preguntas_seccion_name = [];
             foreach ($sec->preguntas as $key => $preg) {
-                $this->$preguntas_seccion_name[] = $preg->pregunta;
+                if ($primpreg == 1) {
+                    $this->$primera_pregunta_seccion_name = $preg->pregunta;
+                } else {
+                    $this->$preguntas_seccion_name[] = $preg->pregunta;
+                }
+                $primpreg++;
             }
 
             // dd($this->preguntas_s2);
@@ -214,7 +230,8 @@ class EditSeccionesTemplate extends Component
 
             // dd($data["descripcion_s" . $this->datos_seccion]);
 
-            $template = TemplateAnalisisdeBrechas::create([
+            $template = TemplateAnalisisdeBrechas::find($this->id_template);
+            $template->update([
                 'nombre_template' => $data['nombre_template'],
                 'norma_id' => $data['norma'],
                 'descripcion' => $data['descripcion'],
@@ -222,6 +239,8 @@ class EditSeccionesTemplate extends Component
             ]);
 
             $groupedValues = $this->groupValues($data);
+
+            $borrarColores = ParametrosTemplateAnalisisdeBrechas::where('template_id', '=', $template->id)->delete();
 
             foreach ($groupedValues as $estatus) {
                 // dd($estatus);
@@ -235,6 +254,8 @@ class EditSeccionesTemplate extends Component
             }
 
             // dd($this->s1, $this->s2);
+
+            $borrarSecciones = SeccionesTemplateAnalisisdeBrechas::where('template_id', '=', $template->id)->delete();
 
             if ($this->secciones > 1 && $this->secciones <= 4) {
                 for ($i = 1; $i < $this->secciones; $i++) {
