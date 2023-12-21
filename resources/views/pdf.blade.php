@@ -7,6 +7,12 @@
     <title>Política del Sistema de Gestión</title>
 
     <link rel="stylesheet" href="css/requisiciones_pdf.css">
+    <style>
+        .quitar{
+            font-weight: normal;
+            text-align: justify;
+        }
+    </style>
 </head>
 <body>
 
@@ -31,7 +37,6 @@
                 <td class="td-blue-header">
                     <h5 style="font: normal normal medium 20px/20px Roboto;
                     letter-spacing: 0px;
-                    color: #306BA9;
                     opacity: 1;"></h5>
                     Políticas del Sistema de Gestión
                 </td>
@@ -46,7 +51,7 @@
                     <td><strong>{{$politica->nombre_politica}} </strong> <br> <br>
                         Fecha publicacion:  {{$politica->fecha_publicacion}}  &nbsp;&nbsp;&nbsp;&nbsp;
                         Fecha revision: {{$politica->fecha_revision}}   <br> <br>
-                        <p style="text-align: justify;">{{ \Illuminate\Support\Str::limit($politica->politicasgsi, 1000) }}</p>
+                        <p class="quitar">{!! \Illuminate\Support\Str::limit(strip_tags($politica->politicasgsi), 1050) !!}</p>
 
                     </td>
                 </tr>
