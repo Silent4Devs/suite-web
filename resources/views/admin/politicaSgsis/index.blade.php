@@ -74,6 +74,12 @@
                                 <th style="min-width: 80px; max-width:80px;">
                                     Mostrar
                                 </th>
+                                <th style="min-width: 80px; max-width:80px;">
+                                    Fecha publicación
+                                </th>
+                                <th style="min-width: 80px; max-width:80px;">
+                                    Fecha Revisión
+                                </th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
@@ -245,9 +251,30 @@
                         }
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'fecha_entrada',
+                        name: 'fecha_entrada',
+                        visible: false, // Inicialmente oculta
+                        render: function(data, type, row) {
+                            // Renderizar contenido para la nueva columna 1
+                            return data;
+                        }
+                    },
+                    {
+                        data: 'fecha_publicacion',
+                        name: 'fecha_publicacion',
+                        visible: false, // Inicialmente oculta
+                        render: function(data, type, row) {
+                            // Renderizar contenido para la nueva columna 2
+                            return data;
+                        }
+                    },
+                    {
+                    data: 'actions',
+                    name: '{{ trans('global.actions') }}',
+                    render: function(data, type, full, meta) {
+                        return data + '<button class="tu-clase-de-boton" style="border: none; position:relative; left:1.8rem; top:-1.2rem;"><i class="fas fa-arrow-down fa-sm" style="border: none;"></i></button>';
                     }
+                }
                 ],
                 orderCellsTop: true,
                 order: [
@@ -265,6 +292,17 @@
             });
 
             let table = $('#datatable-PoliticaSgsi').DataTable(dtOverrideGlobals);
-        });
+
+
+            $('#datatable-PoliticaSgsi').on('click', '.tu-clase-de-boton', function () {
+                // Muestra las nuevas columnas
+                table.column('fecha_entrada:name').visible(true);
+                table.column('fecha_publicacion:name').visible(true);
+
+                // Vuelve a dibujar la tabla para reflejar los cambios
+                table.draw();
+            });
+
+         });
     </script>
 @endsection
