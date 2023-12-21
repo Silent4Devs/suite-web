@@ -195,27 +195,41 @@
                         name: 'estatus',
                         render: function(data, type, row) {
                             let color = '';
+                            let boxShadow = '';
+                            let backgroundColor = '';
 
-                            // Asigna colores según el valor de 'estatus'
+                            // Asigna colores y sombras según el valor de 'estatus'
                             switch (data) {
                                 case 'aprobado':
                                     color = 'green';
-                                    shadow = '2px 2px 4px rgba(0, 128, 0, 0.5)';
+                                    boxShadow = '12px 12px 20px rgba(0, 128, 0, 0.5)';
+                                    backgroundColor = 'rgba(0, 128, 0, 0.1)';
                                     break;
                                 case 'rechazado':
                                     color = 'red';
-                                    shadow = '2px 2px 4px rgba(0, 128, 0, 0.5)';
+                                    boxShadow = '12px 12px 20px rgba(128, 0, 0, 0.5)';
+                                    backgroundColor = 'rgba(128, 0, 0, 0.1)';
                                     break;
                                 case 'pendiente':
                                     color = 'orange';
-                                    shadow = '2px 2px 4px rgba(0, 128, 0, 0.5)';
+                                    boxShadow = '12px 12px 20px rgba(255, 165, 0, 0.5)';
+                                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
                                     break;
                                 default:
                                     color = 'black';
-                                    shadow = '2px 2px 4px rgba(0, 128, 0, 0.5)';
+                                    boxShadow = '12px 12px 20px rgba(0, 0, 0, 0.5)';
+                                    backgroundColor = 'rgba(0, 0, 0, 0.1)';
                             }
 
-                            return `<span style="color: ${color}; text-shadow: ${shadow};">${data}</span>`;
+                            const style = `
+                                font: normal normal normal 10px/20px Roboto;
+                                color: ${color};
+                                box-shadow: ${boxShadow};
+                                border-radius: 12px;
+                                background-color: ${backgroundColor};
+                            `;
+
+                            return `<center><span style="${style}">${data}</span></center>`;
                         }
                     },
                     {

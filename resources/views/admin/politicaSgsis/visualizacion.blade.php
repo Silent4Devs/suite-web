@@ -49,6 +49,13 @@
             padding: 10px; /* Ajusta el espaciado interno del encabezado */
             border-top-left-radius: 15px; /* Aplica esquinas redondeadas solo en la esquina superior izquierda */
             border-top-right-radius: 15px; /* Aplica esquinas redondeadas solo en la esquina superior derecha */
+            position: relative;
+            left: 2rem;
+            top: 2rem;
+        }
+
+        .quitar{
+            font-weight: normal;
         }
     </style>
 @endsection
@@ -58,13 +65,13 @@
         @foreach ($politicaSgsis as $data)
         <div class="encabezado">
             <h6><strong>{{ $data->nombre_politica ?: 'Nombre: No definido' }}</strong></h6>
-            <h6>Fecha de publicación : {{ $data->fecha_publicacion ?: 'fecha_publicacion: No definido' }}</h6>
-            <div class="d-flex justify-content-end" style="position: relative; top: -2rem;">@livewire('aceptar-politica', ['id_politica' => $data->id])</div>
+            <p  class="quitar">Fecha de publicación : {{ $data->fecha_publicacion ?: 'fecha_publicacion: No definido' }}</p>
+            <div class="d-flex justify-content-end" style="position: relative; top: -2rem; right: 2rem;">@livewire('aceptar-politica', ['id_politica' => $data->id])</div>
         </div>
         <div class="card card-body">
             <div class="col-sm-12 d-flex align-items-center">
                 <div>
-                    <p>{!! $data->politicasgsi !!}</p>
+                    <p class="quitar">{{$data->politicasgsi}}</p>
                 </div>
                 <div class="ml-auto">
                     <img src="{{ asset('comite.png') }}" alt="Comite Image">

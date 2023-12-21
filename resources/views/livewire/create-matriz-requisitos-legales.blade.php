@@ -1,9 +1,6 @@
-{{-- @extends('layouts.admin')
-@section('content') --}}
 <div>
     <style>
-
-        .btn:focus{
+       .btn:focus{
             box-shadow: none !important;
             outline: none !important;
         }
@@ -82,7 +79,6 @@
     </style>
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
     <h5 class="col-12 titulo-matriz">Matriz de Requisitos Legales y Regulatorios</h5>
-    <br>
     <div class="card radius" style="background-color: #5397D5;">
         <div class="row">
             <div class="col-md-2">
@@ -179,14 +175,16 @@
                         >{{ old('requisitoacumplir') }}</textarea>
                         {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
                     </div>
-                    <div id="miDiv">
-                        <button type="button" class="btn mb-3" onclick="ocultarDiv()" id="miFormulario"
-                        style="color: #057BE2; width:15rem; position: relative; right: .5rem;"
-                        wire:click.prevent="addAlcance1">
-                        Añadir nuevo Requisito
-                        <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
-                     </button>
-                    </div>
+
+                    @if ($bandera)
+                    <button type="button" class="btn mb-3 miFormulario"  onclick="ocultarDiv()"
+                    style="color: #057BE2; width:15rem; position: relative; right: .5rem;"
+                    wire:click.prevent="addAlcance1">
+                    Añadir nuevo Requisito
+                    <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
+                    </button>
+                     @endif
+
                 </div>
             </div>
         </div>
@@ -205,8 +203,8 @@
                         <div class="form-group col-1"style="margin-bottom:0px;">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn" style="background-color: white; box-shadow:none;"
-                                data-bs-toggle="modal" data-bs-target="#exampleModal_{{$key}}">
-                                <i class="fa-regular fa-trash-can fa-2xl" style="color: #606060;"></i>
+                              data-bs-toggle="modal" data-bs-target="#exampleModal_{{$key}}">
+                            <i class="fa-regular fa-trash-can fa-2xl" style="color: #606060;"></i>
                             </button>
                         </div>
                         <div class="mb-3">
@@ -276,38 +274,38 @@
                             {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
                         </div>
 
-                        <button type="button" class="btn mb-3"
-                        style="color: #057BE2; width:15rem; position: relative; right: .5rem;"
-                        wire:click.prevent="addAlcance1">
+
+                        <button type="button" class="btn mb-3 nuevo-requisito-btn"  wire:click.prevent="addAlcance1"
+                        style="color: #057BE2; width:15rem; position: relative; right: .5rem;">
                         Añadir nuevo Requisito
                         <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
-                     </button>
+                        </button>
 
 
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal_{{$key}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog" style="margin-top: 150px;">
-                                <div class="modal-content text-center">
-                                    <div class="modal-body">
-                                        <div class="mt-5 mb-3" style="font:20px Segoe UI;color:#306BA9;">
-                                            ¿Estás seguro que deseas eliminar este elemento?
+                        aria-hidden="true">
+                        <div class="modal-dialog" style="margin-top: 150px;">
+                            <div class="modal-content text-center">
+                                <div class="modal-body">
+                                    <div class="mt-5 mb-3" style="font:20px Segoe UI;color:#306BA9;">
+                                        ¿Estás seguro que deseas eliminar este elemento?
+                                    </div>
+                                    <i class="mt-5 mb-5 fa-regular fa-trash-can fa-2xl" style="color: #606060;"></i>
+                                    <div class="row mb-5 mt-2">
+                                        <div class="col-md-6" style="padding-left: 50px;">
+                                            <button type="button" class="btn btn-outline-primary"
+                                                style="width: 175px;
+                                                    height: 39px;font:14px Roboto;border: 1px solid;color:#057BE2;border-radius:6px;"
+                                                data-bs-dismiss="modal">Cancelar</button>
                                         </div>
-                                        <i class="mt-5 mb-5 fa-regular fa-trash-can fa-2xl" style="color: #606060;"></i>
-                                        <div class="row mb-5 mt-2">
-                                            <div class="col-md-6" style="padding-left: 50px;">
-                                                <button type="button" class="btn btn-outline-primary"
-                                                    style="width: 175px;
-                                                        height: 39px;font:14px Roboto;border: 1px solid;color:#057BE2;border-radius:6px;"
-                                                    data-bs-dismiss="modal">Cancelar</button>
-                                            </div>
-                                            <div class="col-md-6"
-                                                style="
-                                                padding-right: 50px;">
-                                                <button type="button" data-bs-dismiss="modal" class="btn btn-primary"
-                                                    style="width: 175px;
-                                                        height: 39px;box-shadow:none;border-radius:6px;" wire:click.prevent="removeAlcance1({{$key}})">Eliminar</button>
-                                            </div>
+                                        <div class="col-md-6"
+                                            style="
+                                            padding-right: 50px;">
+                                            <button type="button" data-bs-dismiss="modal" class="btn btn-primary"
+                                                style="width: 175px;
+                                                    height: 39px;box-shadow:none;border-radius:6px;" wire:click.prevent="removeAlcance1({{$key}})">Eliminar</button>
+                                           </div>
                                         </div>
                                     </div>
                                 </div>
@@ -318,53 +316,60 @@
             </div>
         @endforeach
 
-        {{-- <button type="button" class="btn btn-light mr-auto mb-3 "
-        style="color: #057BE2; width:15rem; position: relative; right: 1rem;" wire:click.prevent="addAlcance1">
-            Añadir nuevo Requisito
-            <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
-        </button> --}}
-
         <div class="text-right form-group col-12">
             <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
             </span>
-            <a href="#" class="btn boton-cancelar" onclick="confirmCancellation('{{ route('admin.matriz-requisito-legales.index') }}')">
+            <a href="#" class="btn boton-cancelar" onclick="confirmarCancelar()">
                 <div class="mt-2">Cancelar</div>
             </a>
-            <button class="btn boton-enviar" type="submit">
-               Guardar  y Notificar
+            <button class="btn boton-enviar ml-2 mr-2" type="submit">
+                {{ trans('global.save') }}
             </button>
         </div>
     </form>
 </div>
+{{-- @endsection --}}
+
 
 <script>
-    function confirmCancellation(redirectUrl) {
+    document.addEventListener('livewire:load', function () {
+        Livewire.hook('element.updated', (el, component) => {
+            // Después de actualizar el componente, verifica si hay nuevos requisitos
+            const btns = el.querySelectorAll('.nuevo-requisito-btn');
+
+            btns.forEach(btn => {
+                const tarjeta = btn.getAttribute('data-tarjeta');
+                const tarjetaEl = el.querySelector(`[data-tarjeta="${tarjeta}"]`);
+
+                if (tarjetaEl && tarjetaEl.querySelector('.btn')) {
+                    // Oculta el botón en la tarjeta actual y muestra en las nuevas
+                    tarjetaEl.querySelector('.btn').style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    function confirmarCancelar() {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: 'Esta acción cancelará la operación. ¿Quieres continuar?',
+            text: '¿Realmente deseas cancelar?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, cancelar'
+            cancelButtonColor: '#ffffff',
+            cancelButtonText: '<span style="color: #057BE2; border: 1px solid var(--unnamed-color-057be2); border-radius: 4px; opacity: 1;">Cancelar</span>',
+            confirmButtonText: 'Sí, estoy seguro'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Redirige solo si el usuario confirma
-                window.location.href = redirectUrl;
+                // Redirige si el usuario hace clic en "Sí, estoy seguro"
+                window.location.href = "{{ route('admin.matriz-requisito-legales.index') }}";
             }
         });
     }
 </script>
 
-<script>
-     function ocultarDiv() {
-        var miDiv = document.getElementById("miDiv");
-        miDiv.style.display = "none";
-        return false;
-    }
-</script>
-
-{{-- @endsection --}}
 
 
 
