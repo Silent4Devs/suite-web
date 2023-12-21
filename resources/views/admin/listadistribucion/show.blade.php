@@ -12,81 +12,80 @@
                 </div>
                 <div class="col-10">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
-                        <p>En esta sección puedes generar las listas de distribucion de correos, agruparlas ydarles el nivel
+                        <p>En esta sección puedes generar las listas de distribucion de correos, agruparlas y darles el
+                            nivel
                             de prioridad para ser administradas conforme a su nivel asignado</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <form method="POST" action="{{ route('admin.lista-distribucion.update', [$lista->id]) }}">
-        @csrf
-        <div class="card">
-            <div class="card-header">
-                <h4>Módulo Asignado</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="anima-focus">
-                            <input class="form-control" id="modulo" name="modulo" type="text"
-                                value="{{ $lista->modulo }}" placeholder="" disabled>
-                            <label for="modulo">Modulo</label>
-                        </div>
+    <div class="card">
+        <div class="card-header">
+            <h4>Módulo Asignado</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="anima-focus">
+                        <input class="form-control" id="modulo" name="modulo" type="text"
+                            value="{{ $lista->modulo }}" placeholder="" disabled>
+                        <label for="modulo">Modulo</label>
                     </div>
-                    <div class="col-6">
-                        <div class="anima-focus">
-                            <input class="form-control" id="submodulo" name="submodulo" type="text"
-                                value="{{ $lista->submodulo }}" placeholder="" disabled>
-                            <label for="modulo">Submodulo</label>
-                        </div>
+                </div>
+                <div class="col-6">
+                    <div class="anima-focus">
+                        <input class="form-control" id="submodulo" name="submodulo" type="text"
+                            value="{{ $lista->submodulo }}" placeholder="" disabled>
+                        <label for="modulo">Submodulo</label>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header">
-                <h4>Configuración Listas de Aprobación</h4>
-            </div>
-            <div class="card-body">
-                <div class="row g-0">
-                    <div class="col-5">
-                        <p>Esta sección permite que las personas seleccionadas puedan autorizar el flujo en cualquier
-                            momento,
-                            sin requerir la aprobación de los niveles seleccionados
-                        </p>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h4>Configuración Listas de Aprobación</h4>
+        </div>
+        <div class="card-body">
+            <div class="row g-0">
+                <div class="col-5">
+                    <p>Esta sección permite que las personas seleccionadas puedan autorizar el flujo en cualquier
+                        momento,
+                        sin requerir la aprobación de los niveles seleccionados
+                    </p>
 
-                        <div class="col-12">
-                            <div class="anima-focus">
-                                <select id="superaprobadores" name="superaprobadores[]" class="form-control"
-                                    multiple="multiple" placeholder="">
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
-                                            {{ $empleado->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label for="superaprobadores">Super Aprobadores</label>
-                            </div>
+                    <div class="col-12">
+                        <div class="anima-focus">
+                            <select id="superaprobadores" name="superaprobadores[]" class="form-control" multiple="multiple"
+                                placeholder="" disabled>
+                                @foreach ($empleados as $empleado)
+                                    <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
+                                        {{ $empleado->name }}</option>
+                                @endforeach
+                            </select>
+                            <label for="superaprobadores">Super Aprobadores</label>
                         </div>
                     </div>
-                    <div class="col-7">
-                        <p>Seleccione cuantos niveles de aprobación tendra tu lista, para poder asignar por cada nivel el
-                            numero
-                            de colaboradores que se requiera.</p>
+                </div>
+                <div class="col-7">
+                    <p>Seleccione cuantos niveles de aprobación tendra tu lista, para poder asignar por cada nivel el
+                        numero
+                        de colaboradores que se requiera.</p>
 
-                        <div class="row mb-4">
-                            <div class="anima-focus">
-                                <select id="niveles" name="niveles" class="form-control" placholder="">
-                                    <option value={{ $lista->niveles }} selected>{{ $lista->niveles }}</option>
-                                    @for ($i = 1; $i < 6; $i++)
-                                        <option value={{ $i }}>{{ $i }}</option>
-                                    @endfor
-                                </select>
-                                <label for="niveles">Seleccione los niveles</label>
-                            </div>
+                    <div class="row mb-4">
+                        <div class="anima-focus">
+                            <select id="niveles" name="niveles" class="form-control" placholder="" disabled>
+                                <option value={{ $lista->niveles }} selected>{{ $lista->niveles }}</option>
+                                @for ($i = 1; $i < 6; $i++)
+                                    <option value={{ $i }}>{{ $i }}</option>
+                                @endfor
+                            </select>
+                            <label for="niveles">Seleccione los niveles</label>
                         </div>
+                    </div>
 
-                        {{-- @for ($i = 1; $i < 6; $i++)
+                    {{-- @for ($i = 1; $i < 6; $i++)
                             <div class="form-row nivel{{ $i }}Div" style="display: none;">
                                 <label for="nivel{{ $i }}">Nivel {{ $i }}</label>
                                 <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
@@ -99,30 +98,30 @@
                                 </select>
                             </div>
                         @endfor --}}
-                        <div>
-                            @for ($i = 1; $i < 6; $i++)
-                                <div class="form-row nivel{{ $i }}Div" style="display: none;">
-                                    <div class="mt-4 mb-1">
-                                        Nivel {{ $i }} <br>
-                                        Asigna a los colaboradores que deben aprobar para pasar al siguiente nivel
-                                    </div>
-                                    <div class="anima-focus">
-                                        <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
-                                            class="form-control" multiple="multiple">
-                                            @foreach ($empleados as $empleado)
-                                                <option value="{{ $empleado->id }}"
-                                                    data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
-                                                    {{ in_array($empleado->id, $nivelData[$i - 1] ?? []) ? 'selected' : '' }}>
-                                                    {{ $empleado->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="nivel{{ $i }}">Colaboradores</label>
-                                    </div>
+                    <div>
+                        @for ($i = 1; $i < 6; $i++)
+                            <div class="form-row nivel{{ $i }}Div" style="display: none;">
+                                <div class="mt-4 mb-1">
+                                    Nivel {{ $i }} <br>
+                                    Asigna a los colaboradores que deben aprobar para pasar al siguiente nivel
                                 </div>
-                            @endfor
-                        </div>
-                        {{-- <div class="form-row niveles-container" id="nivel2-container">
+                                <div class="anima-focus">
+                                    <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
+                                        class="form-control" multiple="multiple" disabled>
+                                        @foreach ($empleados as $empleado)
+                                            <option value="{{ $empleado->id }}"
+                                                data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                                {{ in_array($empleado->id, $nivelData[$i - 1] ?? []) ? 'selected' : '' }}>
+                                                {{ $empleado->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="nivel{{ $i }}">Colaboradores</label>
+                                </div>
+                            </div>
+                        @endfor
+                    </div>
+                    {{-- <div class="form-row niveles-container" id="nivel2-container">
                             <label for="nivel2">Nivel 2</label>
                             <select id="nivel2" name="nivel2[]" class="form-control" multiple="multiple">
                                 <optgroup label="Nivel 2">
@@ -173,13 +172,11 @@
                                 </optgroup>
                             </select>
                         </div> --}}
-                    </div>
                 </div>
             </div>
         </div>
-        <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-secondary">Regresar</a>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-    </form>
+    </div>
+    <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-secondary">Regresar</a>
 @endsection
 
 @section('scripts')

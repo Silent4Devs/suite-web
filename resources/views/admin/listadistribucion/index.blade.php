@@ -125,7 +125,7 @@
                     },
                     {
                         data: 'participantes',
-                        render: function(data) {
+                        render: function(data, type, row, meta) {
                             let parsedData;
                             try {
                                 parsedData = JSON.parse(data);
@@ -138,7 +138,9 @@
                                 let html = '<div class="row">'; // Opening div for the data
                                 let displayedEmpleados =
                                     0; // Counter for displayed empleados
+                                let numeroParticipantes = 0;
                                 parsedData.forEach(function(participante) {
+                                    numeroParticipantes++;
                                     if (participante.empleado && displayedEmpleados < 3) {
                                         html +=
                                             `<div class="col-4">
@@ -148,8 +150,12 @@
                                     }
                                     // Add more empleado fields as needed
                                 });
-                                // html +=
-                                //     `<button type = "button" class = "btn btn-primary" data - bs - toggle = "modal" data - bs - target = "#exampleModal" > Launch demo modal </button > </div >`;
+                                if (numeroParticipantes > 3) {
+                                    numeroParticipantes = numeroParticipantes - 3;
+                                    html +=
+                                        '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal' +
+                                        meta.row + '">+' + numeroParticipantes + '</button>';
+                                }
 
                                 // html += ``
                                 return html;
@@ -163,10 +169,22 @@
                     //     name: '{{ trans('global.actions') }}'
                     // }
                     {
-                        data: 'actions',
+                        data: 'id',
                         render: function(data, type, row, meta) {
-                            return '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal' +
-                                meta.row + '">Open Modal</button>';
+                            return `
+                            <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a href="/admin/lista-distribucion/${data}/edit"
+                                                    class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i>&nbsp;
+                                                    Editar</a></li>
+                                            <li><a href="/admin/lista-distribucion/${data}/show" class="btn btn-sm"
+                                                    title="Visualizar"><i class="fa fa-eye"></i>&nbsp;Ver</a></li>
+                                    </ul>
+                                </div>`;
                         }
                     },
                 ],

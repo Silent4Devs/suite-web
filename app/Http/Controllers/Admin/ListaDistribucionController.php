@@ -54,6 +54,10 @@ class ListaDistribucionController extends Controller
                 return $row->participantes ? $row->participantes : '';
             });
 
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
@@ -83,19 +87,12 @@ class ListaDistribucionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ListaDistribucion $listaDistribucion)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function show($id)
     {
         //
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
 
+        $superaprobadores_seleccionados = [];
         // dd($i);
         foreach ($lista->participantes as $participante) {
             if ($participante->nivel == 0) {
@@ -132,6 +129,45 @@ class ListaDistribucionController extends Controller
         // dd($lista->participantes);
         // dd('Llega', $id, $lista_distribucion);
         // dd($empleados);
+        return view('admin.listadistribucion.show', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+
+        $superaprobadores_seleccionados = [];
+
+        foreach ($lista->participantes as $participante) {
+            if ($participante->nivel == 0) {
+                // dd('entra');
+                $superaprobadores_seleccionados[] =
+                    [
+                        'empleado_id' => $participante->empleado_id,
+                        'numero_orden' => $participante->numero_orden,
+                    ];
+            }
+        }
+
+        for ($i = 1; $i <= $lista->niveles; $i++) {
+
+            foreach ($lista->participantes as $participante) {
+                if ($participante->nivel == $i) {
+
+                    $participantes_seleccionados['nivel' . $i][] =
+                        [
+                            'empleado_id' => $participante->empleado_id,
+                            'numero_orden' => $participante->numero_orden,
+                        ];
+                }
+            }
+        }
+
+        $empleados = Empleado::getAltaDataColumns();
+
         return view('admin.listadistribucion.edit', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados'));
     }
 
@@ -145,8 +181,11 @@ class ListaDistribucionController extends Controller
         // dd($request->niveles, $request->all());
         $lista = ListaDistribucion::select('id')->find($id);
         // dd($lista_id);
-        // $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->get();
+        //Se borran los participantes anteiores
+        $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->delete();
+
         // dd($request->all());
+
         $lista->update([
             'niveles' => $request->niveles,
         ]);
@@ -164,7 +203,7 @@ class ListaDistribucionController extends Controller
             $superi = 1;
             foreach ($request->superaprobadores as $superaprobador) {
                 // dd("superaprobador", $superaprobador);
-                $super = ParticipantesListaDistribucion::updateOrCreate(
+                $super = ParticipantesListaDistribucion::create(
                     [
                         'modulo_id' => $lista->id,
                         'nivel' => 0,
@@ -180,7 +219,7 @@ class ListaDistribucionController extends Controller
             $i = 1;
             foreach ($nivel as $participante) {
 
-                $participantes = ParticipantesListaDistribucion::updateOrCreate(
+                $participantes = ParticipantesListaDistribucion::create(
                     [
                         'modulo_id' => $lista->id,
                         'nivel' => $key,
