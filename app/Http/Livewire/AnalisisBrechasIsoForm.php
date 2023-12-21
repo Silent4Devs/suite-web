@@ -2,23 +2,25 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Models\Empleado;
-use Carbon\Carbon;
-use App\Models\Iso27\AnalisisBrechasIso;
 use App\Functions\GenerateAnalisisBIso;
+use App\Models\Empleado;
+use App\Models\Iso27\AnalisisBrechasIso;
 use App\Models\Iso27\GapDosConcentradoIso;
 use App\Models\Iso27\GapTresConcentradoIso;
 use App\Models\Iso27\GapUnoConcentratoIso;
 use App\Models\TemplateAnalisisdeBrechas;
+use Carbon\Carbon;
+use Livewire\Component;
 
 class AnalisisBrechasIsoForm extends Component
 {
     public $name;
-    public $fecha;
-    public $id_elaboro="";
-    public $estatus="";
 
+    public $fecha;
+
+    public $id_elaboro = '';
+
+    public $estatus = '';
 
     public function render()
     {
@@ -26,15 +28,16 @@ class AnalisisBrechasIsoForm extends Component
         $empleados = Empleado::getaltaAll();
         $analisis_brechas = AnalisisBrechasIso::get();
         $templates = TemplateAnalisisdeBrechas::get();
+
         // dd($analisis_brechas);
-        return view('livewire.analisis-brechas-iso-form', compact('empleados','analisis_brechas','templates'));
+        return view('livewire.analisis-brechas-iso-form', compact('empleados', 'analisis_brechas', 'templates'));
     }
 
     private function resetInput()
     {
         $this->name = null;
-        $this->id_elaboro = "";
-        $this->estatus = "";
+        $this->id_elaboro = '';
+        $this->estatus = '';
     }
 
     public function save()
