@@ -2,18 +2,20 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
+use App\Models\MatrizRequisitoLegale;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use App\Models\MatrizRequisitoLegale;
+use Livewire\Component;
 
 class CreateMatrizRequisitosLegales extends Component
 {
     public collection $alcance_s1;
-    public $alcance;
-    public $bandera = true;
-    public $bandera2 = false;
 
+    public $alcance;
+
+    public $bandera = true;
+
+    public $bandera2 = false;
 
     protected $listeners = [
         'renderMatriz' => 'render',
@@ -29,11 +31,10 @@ class CreateMatrizRequisitosLegales extends Component
         return view('livewire.create-matriz-requisitos-legales');
     }
 
-
     public function addAlcance1()
     {
         $this->alcance_s1->push([
-            'nombrerequisito' => "",
+            'nombrerequisito' => '',
         ]);
         $this->emit('renderMatriz');
 
@@ -69,6 +70,7 @@ class CreateMatrizRequisitosLegales extends Component
                 ]);
             }
             DB::commit();
+
             return redirect()->route('admin.matriz-requisito-legales.index');
         } catch (\Throwable $th) {
             DB::rollback();
