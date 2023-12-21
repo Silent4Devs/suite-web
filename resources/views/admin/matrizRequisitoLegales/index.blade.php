@@ -1,79 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        .table-striped tbody tr:nth-of-type(odd),
-        table.table tbody tr:nth-child(even) {
-            background-color: #ffffff;
-        }
-
-        .btn-outline-success {
-            background: #788bac !important;
-            color: white;
-            border: none;
-        }
-
-        .btn-outline-success:focus {
-            border-color: #345183 !important;
-            box-shadow: none;
-        }
-
-        .btn-outline-success:active {
-            box-shadow: none !important;
-        }
-
-        .btn-outline-success:hover {
-            background: #788bac;
-            color: white;
-
-        }
-
-        .btn_cargar {
-            border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
-            padding: 0;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 !important;
-            margin-left: 5px !important;
-        }
-
-        .radius {
-            border-radius: 16px;
-        }
-
-        .titulo-card {
-            text-align: left;
-            font: 20px Roboto;
-            color: #606060;
-        }
-
-        .dt-buttons.btn-group {
-            display: none !important;
-        }
-    </style>
-
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
     <div class="row d-flex align-items-center">
-        <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
-        <a class="col-md-3 btn btn-primary ml-auto" style="margin-right: 14px; font-size: 14px;"
+        <h5 class="titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
+        <a class="btn btn-primary ml-auto" style="font-size: 16px; position: relative; right: 1rem;"
             href="{{ route('admin.matriz-requisito-legales.create') }}">
-            <div class="ml-1 mt-2">
-                Nueva Matriz de Requisitos
-                <i class="fa-regular fa-plus fa-lg" style="color: #ffffff;"></i>
-            </div>
+            Nueva Matriz de Requisitos
 
         </a>
     </div>
-    <div class="mt-5 card radius">
         @can('matriz_requisitos_legales_agregar')
-            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Matriz de Requisitos Legales</strong></h3>
-            </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
@@ -84,21 +20,19 @@
             </div>
         @endcan
         @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table datatable-MatrizRequisitoLegale">
-                <thead class="thead-dark">
+        <div class="datatable-fix datatable-rds">
+            <h5>Requisitos legales</h5>
+            <table class="datatable datatable-MatrizRequisitoLegale">
+                <thead>
                     <tr>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">
-                            {{ trans('cruds.matrizRequisitoLegale.fields.id') }}</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Nombre del requisito legal</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Clausula</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Fecha&nbsp;de&nbsp;publicación</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Opciones</th>
+                        <th>Nombre del requisito legal</th>
+                        <th>Clausula</th>
+                        <th>Fecha&nbsp;de&nbsp;publicación</th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
             </table>
         </div>
-    </div>
 @endsection
 @section('scripts')
     @parent
@@ -107,71 +41,7 @@
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
             let dtButtons = [
-                // {
-                //     extend: 'csvHtml5',
-                //     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Exportar CSV',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     }
-                // },
-                // {
-                //     extend: 'excelHtml5',
-                //     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Exportar Excel',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     }
-                // },
-                // {
-                //     extend: 'pdfHtml5',
-                //     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Exportar PDF',
-                //     orientation: 'landscape',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     },
-                //     customize: function(doc) {
-                //         doc.pageMargins = [20, 60, 20, 30];
-                //         doc.styles.tableHeader.fontSize = 8.5;
-                //         doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
-                //     }
-                // },
-                // {
-                //     extend: 'print',
-                //     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Imprimir',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     }
-                // },
-                // {
-                //     extend: 'colvis',
-                //     text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Seleccionar Columnas',
-                // },
-                // {
-                //     extend: 'colvisGroup',
-                //     text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     show: ':hidden',
-                //     titleAttr: 'Ver todo',
-                // },
-                // {
-                //     extend: 'colvisRestore',
-                //     text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Restaurar a estado anterior',
-                // }
+
 
             ];
             @can('matriz_requisitos_legales_agregar')
@@ -187,29 +57,7 @@
                         window.location.href = url;
                     }
                 };
-                // let btnExport = {
-                // text: '<i class="fas fa-download"></i>',
-                // titleAttr: 'Descargar plantilla',
-                // className: "btn btn_cargar" ,
-                // url:"{{ route('descarga-matriz_requisitos_legales') }}",
-                // action: function(e, dt, node, config) {
-                // let {
-                // url
-                // } = config;
-                // window.location.href = url;
-                // }
-                // };
-                // let btnImport = {
-                // text: '<i class="fas fa-file-upload"></i>',
-                // titleAttr: 'Importar datos',
-                // className: "btn btn_cargar",
-                // action: function(e, dt, node, config) {
-                // $('#csvImportModal').modal('show');
-                // }
-                // };
                 dtButtons.push(btnAgregar);
-                // dtButtons.push(btnExport);
-                // dtButtons.push(btnImport);
             @endcan
 
             let dtOverrideGlobals = {
@@ -219,10 +67,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.matriz-requisito-legales.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
+                columns: [
                     {
                         data: 'nombrerequisito',
                         name: 'nombrerequisito'
@@ -231,170 +76,10 @@
                         data: 'formacumple',
                         name: 'formacumple'
                     },
-                    // {
-                    //     data: 'alcance',
-                    //     name: 'alcance'
-                    // },
-                    // {
-                    //     data: 'medio',
-                    //     name: 'medio'
-                    // },
                     {
                         data: 'fechaexpedicion',
                         name: 'fechaexpedicion'
                     },
-                    // {
-                    //     data: 'fechavigor',
-                    //     name: 'fechavigor'
-                    // },
-                    // {
-                    //     data: 'cumplimiento_organizacion',
-                    //     name: 'cumplimiento_organizacion'
-                    // },
-                    // {
-                    //     data: 'periodicidad_cumplimiento',
-                    //     name: 'periodicidad_cumplimiento'
-                    // },
-                    // {
-                    //     data: 'cumplerequisito',
-                    //     render: function(data, type, row, meta) {
-                    //         if (row.evaluaciones[0]) {
-                    //             return row.evaluaciones[0].cumplerequisito;
-                    //         }
-                    //         return 'No evaluado';
-                    //     }
-                    // },
-                    // {
-                    //     data: 'metodo',
-                    //     render: function(data, type, row, meta) {
-                    //         if (row.evaluaciones[0]) {
-                    //             return row.evaluaciones[0].metodo;
-                    //         }
-                    //         return 'No evaluado';
-                    //     }
-                    // },
-                    // {
-                    //     data: 'descripcion_cumplimiento',
-                    //     name: 'descripcion_cumplimiento'
-                    // },
-                    // {
-                    //     data: 'evidencia',
-                    //     name: 'evidencia',
-                    //     render: function(data, type, row, meta) {
-                    //         let archivo = "";
-                    //         let archivos = row.evidencias_matriz;
-                    //         console.log(archivos)
-                    //         archivo = ` <div class="container">
-
-                //                 <div class="mb-4 row">
-                //                 <div class="text-center col">
-                //                     <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
-                //                 </div>
-                //                 </div>
-
-                //                 <!-- modal -->
-                //                 <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                //                 <div class="modal-dialog modal-lg">
-                //                     <div class="modal-content">
-                //                     <div class="modal-body">`;
-                    //         if (archivos.length > 0) {
-                    //             archivo += `
-                //                             <!-- carousel -->
-                //                         <div
-                //                             id='carouselExampleIndicators${row.id}'
-                //                             class='carousel slide'
-                //                             data-ride='carousel'
-                //                             >
-                //                         <ol class='carousel-indicators'>
-                //                                 ${archivos?.map((archivo,idx)=>{
-                //                                     return `
-                    //                                         <li
-                    //                                         data-target='#carouselExampleIndicators${row.id}'
-                    //                                         data-slide-to='${idx}'
-                    //                                         ></li>`
-                //                                 })}
-                //                         </ol>
-                //                         <div class='carousel-inner'>
-                //                                 ${archivos?.map((archivo,idx)=>{
-                //                                     return `
-                    //                                         <div class='carousel-item ${idx==0?"active":""}'>
-                    //                                             <iframe seamless class='img-size' src='{{ asset('storage/matriz_evidencias') }}/${archivo.evidencia}'></iframe>
-                    //                                         </div>`
-                //                                 })}
-
-                //                         </div>
-
-                //                         </div>`;
-                    //         } else {
-                    //             archivo += `
-                //                             <div class="text-center">
-                //                                 <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
-                //                                 <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
-                //                                 </div>
-                //                             `
-                    //         }
-                    //         archivo += `</div>
-                //                     <div class="modal-footer">
-                //                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                //                        ${archivos.length==0?`
-                    //                                 <a
-                    //                                     class='carousel-control-prev'
-                    //                                     href='#carouselExampleIndicators${row.id}'
-                    //                                     role='button'
-                    //                                     data-slide='prev'
-                    //                                     >
-                    //                                     <span class='carousel-control-prev-icon'
-                    //                                         aria-hidden='true'
-                    //                                         ></span>
-                    //                                     <span class='sr-only'>Previous</span>
-                    //                                 </a>
-                    //                                 <a
-                    //                                     class='carousel-control-next'
-                    //                                     href='#carouselExampleIndicators${row.id}'
-                    //                                     role='button'
-                    //                                     data-slide='next'
-                    //                                     >
-                    //                                     <span
-                    //                                         class='carousel-control-next-icon'
-                    //                                         aria-hidden='true'
-                    //                                         ></span>
-                    //                                     <span class='sr-only'>Next</span>
-                    //                                 </a>`:""}
-                //                     </div>
-                //                     </div>
-                //                 </div>
-                //                 </div>`
-                    //         return archivo;
-                    //     }
-                    // },
-                    // {
-                    //     data: 'id',
-                    //     render: function(data, type, row, meta) {
-                    //         console.log(row)
-                    //         let html =
-                    //             `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.empleado?.avatar}" title="${row.empleado?.name}"></img>`;
-
-                    //         return `${row.empleado ? html: ''}`;
-                    //     }
-                    // },
-                    // {
-                    //     data: 'puesto',
-                    //     name: 'puesto',
-                    //     render: function(data, type, row, meta) {
-                    //         return row.empleado?.puesto;
-                    //     }
-                    // },
-                    // {
-                    //     data: 'area',
-                    //     name: 'area',
-                    //     render: function(data, type, row, meta) {
-                    //         return row.empleado?.area?.area;
-                    //     }
-                    // },
-                    // {
-                    //     data: 'comentarios',
-                    //     name: 'comentarios'
-                    // },
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
@@ -431,9 +116,6 @@
                                         @endcan
                                         @can('matriz_requisitos_legales_editar')
                                         <a class="dropdown-item" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i> editar</a>
-                                        @endcan
-                                        @can('matriz_requisitos_legales_evaluar')
-                                        <a class="dropdown-item" style="color:#77C64F;" href="${urlEvaluarMatriz}" title="Evaluar Requisito Legal"><i class="fas fa-calendar-check"></i> evaluar</a>
                                         @endcan
                                         @can('matriz_requisitos_legales_eliminar')
                                         <button class="dropdown-item" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i> eliminar</button>

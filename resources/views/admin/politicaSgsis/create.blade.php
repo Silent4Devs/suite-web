@@ -100,9 +100,9 @@
             </div>
 
             <div class="text-right form-group col-12">
-                <a href="{{ route('admin.politica-sgsis.index') }}" id="btn_cancelar" class="btn">Cancelar</a>
+                <a href="{{ route('admin.politica-sgsis.index') }}" id="btn_cancelar" class="btn" style="color: #5397D5">Cancelar</a>
                 <button class="btn btn-primary" type="submit">
-                    Guardar y Enviar Aprobación
+                    Guardar y enviar aprobación
                 </button>
             </div>
 
