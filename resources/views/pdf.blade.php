@@ -16,15 +16,17 @@
                 <td class="td-img-doc">
                     @if ($organizacions->logotipo)
                     {{-- <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{asset($organizacions->logotipo)}}"> --}}
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{asset('silent.png')}}">
+                    <img style="width:100%; max-width:100px; position: relative; left:1rem;" src="{{asset('silent.png')}}">
                     @else
                         <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </td>
                 <td class="info-header">
-                    {{$organizacions->empresa}} <br>
-                    {{$organizacions->rfc}} <br>
-                    {{$organizacions->direccion}} <br>
+                    <div style="position: relative; right: 5rem; text-align: justify;">
+                        {{$organizacions->empresa}} <br>
+                        {{$organizacions->rfc}} <br>
+                        {{$organizacions->direccion}} <br>
+                    </div>
                 </td>
                 <td class="td-blue-header">
                     <h5 style="font: normal normal medium 20px/20px Roboto;
@@ -50,6 +52,7 @@
                 </tr>
             </table>
         </div>
+        <hr>
         @endforeach
     </div>
 </div>
