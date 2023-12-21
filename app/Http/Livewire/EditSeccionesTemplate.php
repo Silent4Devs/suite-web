@@ -9,8 +9,36 @@ use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
 use Livewire\Component;
 
-class SeccionesTemplate extends Component
+class EditSeccionesTemplate extends Component
 {
+    public $id_template;
+
+    public $nombre_template = '';
+
+    public $norma = 0;
+
+    public $descripcion = '';
+
+    public $estatus_1 = '';
+    public $estatus_2 = '';
+    public $estatus_3 = '';
+    public $estatus_4 = '';
+
+    public $valor_estatus_1 = '';
+    public $valor_estatus_2 = '';
+    public $valor_estatus_3 = '';
+    public $valor_estatus_4 = '';
+
+    public $descripcion_parametros_1 = '';
+    public $descripcion_parametros_2 = '';
+    public $descripcion_parametros_3 = '';
+    public $descripcion_parametros_4 = '';
+
+    public $color_estatus_1 = '';
+    public $color_estatus_2 = '';
+    public $color_estatus_3 = '';
+    public $color_estatus_4 = '';
+
     public $normas;
 
     public $preguntas_s1 = [];
@@ -116,14 +144,65 @@ class SeccionesTemplate extends Component
         // dd($this->secciones);
     }
 
-    public function mount()
+    public function mount($id_template)
     {
+        $this->id_template = $id_template;
     }
 
     public function render()
     {
+        $template = TemplateAnalisisdeBrechas::with('parametros', 'secciones.preguntas')->find($this->id_template);
+        $this->asignarInputs($template);
+        // dd($template);
         $this->normas = Norma::get();
         return view('livewire.edit-secciones-template');
+    }
+
+    public function asignarInputs($template)
+    {
+        $this->nombre_template = $template->nombre_template;
+
+        $this->norma = $template->norma_id;
+
+        $this->descripcion = $template->descripcion;
+
+        $this->secciones = $template->no_secciones;
+
+        foreach ($template->parametros as $key => $parametro) {
+            $posicion = $key + 1;
+
+            // Construct the variable name by concatenating $posicion to $estatus_
+            $estatus_variable_name = 'estatus_' . $posicion;
+            $valor_estatus_name = 'valor_estatus_' . $posicion;
+            $descripcion_parametros_name = 'descripcion_parametros_' . $posicion;
+            $color_estatus_name = 'color_estatus_' . $posicion;
+
+
+            $this->$estatus_variable_name = $parametro->estatus;
+            $this->$valor_estatus_name = $parametro->valor;
+            $this->$descripcion_parametros_name = $parametro->descripcion;
+            $this->$color_estatus_name = $parametro->color;
+        }
+
+        $secInput = $template->secciones->where('numero_seccion', '=', $this->posicion_seccion);
+        // dd($secInput);
+        foreach ($secInput as $key => $sec) {
+            $descripcion_seccion_name = 'descripcion_s' . $this->posicion_seccion;
+            $porcentaje_seccion_name = 'porcentaje_seccion_' . $this->posicion_seccion;
+            $preguntas_seccion_name = 'preguntas_s' . $this->posicion_seccion;
+
+            $this->$descripcion_seccion_name = $sec->descripcion;
+            $this->$porcentaje_seccion_name = $sec->porcentaje_seccion;
+
+            foreach ($sec->preguntas as $key => $preg) {
+                $this->$preguntas_seccion_name[] = $preg->pregunta;
+            }
+
+            // dd($this->preguntas_s2);
+
+
+            // dd($seccion);
+        }
     }
 
     public function submitForm($data)
