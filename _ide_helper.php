@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.37.2.
+ * Generated for Laravel 10.38.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -4372,11 +4372,10 @@
                     /**
          * Remove all expired tag set entries.
          *
-         * @param string $key
-         * @return string
+         * @return void
          * @static
          */
-        public static function path($key)
+        public static function flushStaleTags()
         {
                         /** @var \Illuminate\Cache\RedisStore $instance */
                         $instance->flushStaleTags();
@@ -20656,9 +20655,7 @@
                         return $instance->buildConfig();
         }
 
-
     }
-
 
 }
 
