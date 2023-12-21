@@ -253,7 +253,7 @@ body {
 }
 
 header {
-    box-shadow: 6px 0px 6px 1px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 6px 0px 6px 1px rgba(0, 0, 0, 0.5); */
     z-index: 6;
 }
 
@@ -278,8 +278,9 @@ header {
 }
 
 .card {
-    border: none !important;
-    box-shadow: 0px 3px 6px 1px #00000029;
+    border-radius: 14px;
+    border: solid 1px #E5E5E5;
+    background-color: #fff;
 }
 
 .card-body.align-self-center {
@@ -986,7 +987,9 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 }
 
 /* simple tables  */
-.datatable-rds {
+.datatable-rds,
+.datatable-fix
+{
     border-radius: 14px;
     border: solid 1px #E5E5E5;
     background-color: #fff;
@@ -1007,41 +1010,56 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 }
 
 .datatable-rds table.dataTable thead,
-.datatable-rds table.table thead {
+.datatable-fix table.dataTable thead,
+.datatable-rds table.table thead,
+.datatable-fix table.table thead
+{
     background-color: #00000000 !important;
     border: none !important;
     color: #414141 !important;
     border-bottom: 1px solid #E5E5E5 !important;
 }
 
-.datatable-rds th {
+.datatable-rds th,
+.datatable-fix th
+{
     font-weight: bolder !important;
     font-size: 14px !important;
     color: #414141 !important;
 }
 
-.datatable-rds td {
+.datatable-rds td,
+.datatable-fix td
+{
     font-size: 14px !important;
     border-bottom: 1px solid #E5E5E5 !important;
     padding: 20px 10px !important;
 }
 
-.datatable-rds tr:last-child td {
+.datatable-rds tr:last-child td,
+.datatable-fix tr:last-child td
+{
     border-bottom: none !important;
 }
 
-.datatable-rds .btns-actions-global-datatable {
+.datatable-rds .btns-actions-global-datatable,
+.datatable-fix .btns-actions-global-datatable
+{
     display: none;
     background-color: #fff;
     box-shadow: 0px 3px 6px #00000029;
 }
 
-.datatable-rds .btn-action-show-datatables-global {
+.datatable-rds .btn-action-show-datatables-global,
+.datatable-fix .btn-action-show-datatables-global
+{
     display: block !important;
 }
 
-.datatable-rds .dataTables_wrapper>.row:first-child {
-    display: none;
+.datatable-rds .dataTables_wrapper>.row:first-child,
+.datatable-fix .dataTables_wrapper>.row:first-child
+{
+    /* display: none; */
 }
 
 /* ----------------------- */
@@ -1151,4 +1169,28 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     #tabla_blanca_imprimir_global tbody tr td:last-child {
         display: none !important;
     }
+}
+
+.table-acordeon {}
+
+.datatable-fix {
+    max-width: 100% !important;
+    overflow: auto !important;
+}
+
+.table-striped.table-acordeon tbody tr:nth-of-type(odd),
+table.table.table-acordeon tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.btn-arrow-menu-table-rotate {
+    transform: rotate(180deg);
+}
+
+.tr-sec-menu td {
+    border-top: none !important;
+}
+
+.c-body{
+    margin-top: 80px;
 }

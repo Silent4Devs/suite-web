@@ -18,7 +18,7 @@
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- boostrap icons --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 
@@ -53,1079 +53,10 @@
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.css" rel="stylesheet">
-
-
-    <style type="text/css">
-        .custom-file-input~.custom-file-label::after {
-            content: "Elegir";
-        }
-
-        .printModal {
-            font-family: sans-serif;
-            display: flex;
-            text-align: center;
-            font-weight: 300;
-            font-size: 30px;
-            left: 0;
-            top: 0;
-            position: absolute;
-            color: #0460b5;
-            width: 100%;
-            height: 100%;
-            background-color: hsla(0, 0%, 100%, .91)
-        }
-
-        .printClose {
-            position: absolute;
-            right: 10px;
-            top: 10px
-        }
-
-        .printClose:before {
-            content: "\00D7";
-            font-family: Helvetica Neue, sans-serif;
-            font-weight: 100;
-            line-height: 1px;
-            padding-top: .5em;
-            display: block;
-            font-size: 2em;
-            text-indent: 1px;
-            overflow: hidden;
-            height: 1.25em;
-            width: 1.25em;
-            text-align: center;
-            cursor: pointer
-        }
-
-        .DTFC_LeftBodyWrapper {
-            top: -13px !important;
-        }
-
-        /* .DTFC_RightBodyWrapper {
-            top: -13px !important;
-        } */
-
-        .DTFC_LeftHeadWrapper table thead tr th {
-            background: #788bac !important;
-        }
-
-        .DTFC_RightHeadWrapper table thead tr th {
-            background: #788bac !important;
-        }
-
-        .material-modulos {
-            font-size: 50px;
-            margin-bottom: 3px;
-            display: block;
-        }
-
-        .select2-selection--multiple {
-            overflow: hidden !important;
-            height: auto !important;
-            padding: 0 5px 5px 5px !important;
-        }
-
-        /*TOASTR*/
-        #toast-container>div {
-            opacity: 1 !important;
-        }
-
-        .toast-success {
-            /* background-color: #06b966; */
-            background-color: #06a755;
-        }
-
-        /* DATATABLE */
-        .datatable-fix table.dataTable thead .sorting:after {
-            opacity: 0.5;
-            content: "\f0dc";
-            font-family: "FontAwesome";
-        }
-
-        .datatable-fix table.dataTable thead .sorting_asc:after {
-            opacity: 0.5;
-            content: "\f0de";
-            font-family: "FontAwesome";
-        }
-
-        .datatable-fix table.dataTable thead .sorting_desc:after {
-            opacity: 0.5;
-            content: "\f0dd";
-            font-family: "FontAwesome";
-        }
-
-        table.dataTable {
-            border-collapse: collapse !important;
-        }
-
-        .btn-read {
-            display: inline-block;
-            cursor: pointer;
-            transition: .2s ease-out;
-            padding: 1px 4px;
-            border-radius: 5px;
-        }
-
-        .btn-read:hover {
-            color: rgb(47, 231, 1);
-            transform: scale(1.2);
-            transition: .2s ease-in;
-        }
-
-        .iconos-crear {
-            font-size: 15pt;
-            color: #3086AF;
-            margin-right: 10px;
-        }
-
-        .verde_silent {
-            background-color: #345183;
-        }
-
-        .azul_silent {
-            background-color: #2589AA;
-        }
-
-        .iconos_cabecera {
-            color: #ffffff;
-            font-size: 1.2rem;
-        }
-
-
-        body,
-        .iconos_cabecera {
-            transition: 0s;
-        }
-
-        body {
-            background-color: #F5F7FA !important;
-        }
-
-        #btnDark {
-            cursor: pointer;
-        }
-
-        .iconos_cabecera:active {
-            transform: scale(0.8);
-            transition: 0.06s;
-            opacity: 0.7;
-        }
-
-        .flex-column {
-            background: rgba(0, 0, 0, 0);
-        }
-
-        header {
-            box-shadow: 6px 0px 6px 1px rgba(0, 0, 0, 0.5);
-            z-index: 6;
-        }
-
-        .glyphicon-ok::before {
-            content: "\f00c";
-        }
-
-        .glyphicon-remove::before {
-            content: "\f00d";
-        }
-
-        .glyphicon {
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            font-style: normal;
-        }
-
-
-        .card.vrd-agua {
-            border-radius: 100px !important;
-            overflow: hidden;
-        }
-
-        .card {
-            border: none !important;
-            box-shadow: 0px 3px 6px 1px #00000029;
-        }
-
-        .card-body.align-self-center {
-            margin-top: -65px !important;
-
-            background-color: rgba(0, 0, 0, 0) !important;
-            box-shadow: none !important;
-            border-radius: 0 !important;
-
-        }
-
-        .card-body.align-self-center h3,
-        .card-body.align-self-center h3 i {
-            color: #345183 !important;
-        }
-
-        .btn.btn-success,
-        .btn.btn-danger {
-            min-width: 150px !important;
-            height: 35px;
-            background-color: #345183 !important;
-            color: #fff !important;
-            border-radius: 2px;
-            border: none !important;
-        }
-
-        .btn.btn-success:hover,
-        .btn.btn-danger:hover {
-            color: #345183 !important;
-            background-color: rgba(0, 0, 0, 0) !important;
-            box-shadow: 0 0 0 1px #345183;
-        }
-
-        .btn.btn-success:hover font {
-            color: #345183 !important;
-            background-color: rgba(0, 0, 0, 0) !important;
-        }
-
-        .btn_cancelar {
-            min-width: 150px !important;
-            height: 35px;
-            background-color: #aaa !important;
-            color: #fff !important;
-            border-radius: 2px;
-            border: none !important;
-            transition: 0.2s;
-            display: inline-block;
-            text-align: center;
-            padding-top: 5px;
-        }
-
-        .btn_cancelar:hover {
-            color: #888 !important;
-            background-color: rgba(0, 0, 0, 0) !important;
-            box-shadow: 0 0 0 1px #888;
-            text-decoration: none;
-        }
-
-        ol.breadcrumb {
-            background-color: rgba(0, 0, 0, 0);
-            top: 50px;
-            margin-left: -20px;
-            margin-top: -40px;
-            margin-bottom: 60px;
-            border: none;
-            opacity: 0.6;
-        }
-
-        ol.breadcrumb:hover {
-            opacity: 1;
-        }
-
-        .c-header.c-header-fixed {
-            z-index: 10 !important;
-        }
-
-
-
-        .c-sidebar-backdrop {
-            z-index: 9 !important;
-        }
-
-        .buscador-global {
-            border: none;
-            background-color: rgba(0, 0, 0, 0);
-            border-bottom: 1px solid #fff;
-            color: #fff !important;
-        }
-
-        .buscador-global::placeholder {
-            color: #fff;
-        }
-
-        .buscador-global:focus-visible {
-            outline: none;
-        }
-
-
-        img.rounded-circle {
-            border-radius: 0 !important;
-            clip-path: circle(12px at 50% 50%);
-            /* height: 37px; */
-        }
-
-        .img_empleado {
-            clip-path: circle(20px at 50% 50%);
-            height: 40px;
-        }
-
-        .fm-breadcrumb .breadcrumb.active-manager {
-            background-color: ##34518329;
-            margin: -5px 0 0 0;
-        }
-
-        .breadcrumb-item.active {
-            color: #000000;
-        }
-
-        .form-control:focus {
-            border-color: #0d6efd;
-            box-shadow: none;
-        }
-
-        label input.form-control {
-            border: none;
-            border-bottom: 1px solid #b4b4b4;
-            border-radius: unset;
-        }
-
-        label input.form-control:focus,
-        label input.form-control:active,
-        label input.form-control:focus-within {
-            outline: none;
-            border-bottom: 1px solid #7fabfd;
-        }
-
-        table.dataTable thead,
-        table.table thead {
-            background: #788BAC !important;
-            color: #fff !important;
-        }
-
-        table.dataTable tr th {
-            font-weight: normal;
-            border: none !important;
-        }
-    </style>
-    {{-- menu tabs --}}
-    <style type="text/css">
-        .caja_botones_menu {
-            display: flex;
-            justify-content: center;
-        }
-
-        .caja_botones_menu a {
-            text-decoration: none;
-            display: inline-block;
-            color: #345183;
-            padding: 5px 13px;
-            font-weight: bold;
-            margin: 0;
-            text-align: center;
-            align-items: center;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-        }
-
-        .caja_botones_menu a:first-child {}
-
-        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {}
-
-        .caja_botones_menu a i {
-            margin-right: 7px;
-            font-size: 15pt;
-        }
-
-        .caja_botones_menu a.btn_activo,
-        .caja_botones_menu a.btn_activo:hover {
-            background-color: #345183;
-            box-shadow: 0px -2px 0px 0px;
-            color: #fff;
-        }
-
-        .caja_botones_menu a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .caja_caja_secciones {
-            width: 100%;
-        }
-
-        .caja_secciones {
-            width: 100%;
-            display: flex;
-        }
-
-        .caja_secciones section {
-            width: 0px;
-            height: 0px;
-            overflow: hidden;
-            transition: 0.4s;
-            opacity: 0;
-        }
-
-        .caja_tab_reveldada {
-            height: auto !important;
-            width: 100% !important;
-            overflow: none;
-            opacity: 1 !important;
-        }
-
-        .seccion_div {
-            overflow: hidden;
-            width: 990px;
-        }
-
-        .caja_tab_reveldada .seccion_div {
-            overflow: hidden;
-            transition-delay: 0.5s;
-            width: 100%;
-        }
-
-        /*scroll style*/
-
-        .scroll_estilo::-webkit-scrollbar {
-            width: 7px;
-            height: 7px;
-        }
-
-        /* Track */
-        .scroll_estilo::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0);
-        }
-
-        /* Handle */
-        .scroll_estilo::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 50px;
-        }
-
-        /* Handle on hover */
-        .scroll_estilo::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 0.5);
-        }
-    </style>
-    {{-- Estilos Select 2 --}}
-    <style>
-        /* line 1, ../scss/core.scss */
-        .select2-selection--multiple {
-            overflow: hidden !important;
-            height: auto !important;
-        }
-
-        .select2-container {
-            box-sizing: border-box;
-            display: inline-block;
-            margin: 0;
-            position: relative;
-            vertical-align: middle;
-        }
-
-        /* line 1, ../scss/_single.scss */
-        .select2-container .select2-selection--single {
-            box-sizing: border-box;
-            cursor: pointer;
-            display: block;
-            height: 38px;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        /* line 12, ../scss/_single.scss */
-        .select2-container .select2-selection--single .select2-selection__rendered {
-            display: block;
-            padding-left: 8px;
-            padding-right: 20px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        /* line 25, ../scss/_single.scss */
-        .select2-container[dir="rtl"] .select2-selection--single .select2-selection__rendered {
-            padding-right: 8px;
-            padding-left: 20px;
-        }
-
-        /* line 1, ../scss/_multiple.scss */
-
-        .select2-container .select2-selection--multiple {
-            box-sizing: border-box;
-            cursor: pointer;
-            display: block;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        /* line 12, ../scss/_multiple.scss */
-        .select2-container .select2-selection--multiple .select2-selection__rendered {
-            display: inline-block;
-            overflow: hidden;
-            padding-left: 8px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        /* line 21, ../scss/_multiple.scss */
-        .select2-container .select2-search--inline {
-            float: left;
-        }
-
-        /* line 24, ../scss/_multiple.scss */
-        .select2-container .select2-search--inline .select2-search__field {
-            box-sizing: border-box;
-            border: none;
-            font-size: 100%;
-            margin-top: 3px;
-            margin-left: 3px;
-        }
-
-        /* line 31, ../scss/_multiple.scss */
-        .select2-container .select2-search--inline .select2-search__field::-webkit-search-cancel-button {
-            -webkit-appearance: none;
-        }
-
-        /* line 1, ../scss/_dropdown.scss */
-        .select2-dropdown {
-            background-color: white;
-            border: 1px solid #DDD;
-            border-radius: 4px;
-            box-sizing: border-box;
-            display: block;
-            position: absolute;
-            left: -100000px;
-            width: 100%;
-            z-index: 1051;
-        }
-
-        /* line 18, ../scss/_dropdown.scss */
-        .select2-results {
-            display: block;
-        }
-
-        /* line 22, ../scss/_dropdown.scss */
-        .select2-results__options {
-            list-style: none;
-            list-style-type: none !important;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* line 28, ../scss/_dropdown.scss */
-        .select2-results__option {
-            padding: 6px;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        /* line 34, ../scss/_dropdown.scss */
-        .select2-results__option[aria-selected] {
-            cursor: pointer;
-        }
-
-        /* line 39, ../scss/_dropdown.scss */
-        .select2-container--open .select2-dropdown {
-            left: 0;
-        }
-
-        /* line 43, ../scss/_dropdown.scss */
-        .select2-container--open .select2-dropdown--above {
-            border-bottom: none;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        /* line 49, ../scss/_dropdown.scss */
-        .select2-container--open .select2-dropdown--below {
-            border-top: none;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-
-        /* line 55, ../scss/_dropdown.scss */
-        .select2-search--dropdown {
-            display: block;
-            padding: 7px;
-        }
-
-        /* line 59, ../scss/_dropdown.scss */
-        .select2-search--dropdown .select2-search__field {
-            padding: 4px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* line 64, ../scss/_dropdown.scss */
-        .select2-search--dropdown .select2-search__field::-webkit-search-cancel-button {
-            -webkit-appearance: none;
-        }
-
-        /* line 69, ../scss/_dropdown.scss */
-        .select2-search--dropdown.select2-search--hide {
-            display: none;
-        }
-
-        /* line 15, ../scss/core.scss */
-        .select2-close-mask {
-            border: 0;
-            margin: 0;
-            padding: 0;
-            display: block;
-            position: fixed;
-            left: 0;
-            top: 0;
-            min-height: 100%;
-            min-width: 100%;
-            height: auto;
-            width: auto;
-            opacity: 0;
-            z-index: 99;
-            background-color: #fff;
-            filter: alpha(opacity=0);
-        }
-
-        /* line 1, ../scss/theme/default/_single.scss */
-        .select2-container--default .select2-selection--single {
-            background-color: #f0f0f0;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 2px;
-        }
-
-        /* line 6, ../scss/theme/default/_single.scss */
-        .select2-container--default .select2-selection--single:focus {
-            outline: 0;
-        }
-
-        /* line 10, ../scss/theme/default/_single.scss */
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #444;
-            line-height: 34px;
-        }
-
-        /* line 15, ../scss/theme/default/_single.scss */
-        .select2-container--default .select2-selection--single .select2-selection__clear {
-            cursor: pointer;
-            float: right;
-            font-weight: bold;
-        }
-
-        /* line 21, ../scss/theme/default/_single.scss */
-        .select2-container--default .select2-selection--single .select2-selection__placeholder {
-            color: #999;
-        }
-
-        /* line 25, ../scss/theme/default/_single.scss */
-        .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 36px;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            width: 20px;
-        }
-
-        /* line 35, ../scss/theme/default/_single.scss */
-        .select2-container--default .select2-selection--single .select2-selection__arrow b {
-            border-color: #888 transparent transparent transparent;
-            border-style: solid;
-            border-width: 5px 4px 0 4px;
-            height: 0;
-            left: 50%;
-            margin-left: -4px;
-            margin-top: -2px;
-            position: absolute;
-            top: 50%;
-            width: 0;
-        }
-
-        /* line 56, ../scss/theme/default/_single.scss */
-        .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__clear {
-            float: left;
-        }
-
-        /* line 60, ../scss/theme/default/_single.scss */
-        .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__arrow {
-            left: 1px;
-            right: auto;
-        }
-
-        /* line 68, ../scss/theme/default/_single.scss */
-        .select2-container--default.select2-container--disabled .select2-selection--single {
-            background-color: #eee;
-            cursor: default;
-        }
-
-        /* line 72, ../scss/theme/default/_single.scss */
-        .select2-container--default.select2-container--disabled .select2-selection--single .select2-selection__clear {
-            display: none;
-        }
-
-        /* line 81, ../scss/theme/default/_single.scss */
-        .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-            border-color: transparent transparent #888 transparent;
-            border-width: 0 4px 5px 4px;
-        }
-
-        /* line 1, ../scss/theme/default/_multiple.scss */
-        .select2-container--default .select2-selection--multiple {
-            background-color: #ffffff;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            -webkit-border-radius: 2px;
-            border-radius: 2px;
-            cursor: text;
-            height: 22px;
-        }
-
-        /* line 7, ../scss/theme/default/_multiple.scss */
-        .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-            box-sizing: border-box;
-            list-style: none;
-            list-style-type: none !important;
-            padding: 0 0 0 4px !important;
-            margin: 0;
-            padding: 0 5px;
-            width: 100%;
-        }
-
-        /* line 15, ../scss/theme/default/_multiple.scss */
-        .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
-            color: #999;
-            margin-top: 5px;
-            float: left;
-        }
-
-        /* line 23, ../scss/theme/default/_multiple.scss */
-        .select2-container--default .select2-selection--multiple .select2-selection__clear {
-            cursor: pointer;
-            float: right;
-            font-weight: bold;
-            margin-top: px;
-            margin-right: 2px;
-        }
-
-        /* line 31, ../scss/theme/default/_multiple.scss */
-        .select2-container--default .select2-selection--multiple .select2-selection__choice {
-            color: #ffffff;
-            background-color: #4a89dc;
-            // border: 1px solid #ddd;
-            border-radius: 2px;
-            cursor: default;
-            float: left;
-            margin-right: 5px;
-            margin-top: 1px;
-            padding: 1px 2px 2px !important;
-        }
-
-        /* line 46, ../scss/theme/default/_multiple.scss */
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-            color: #fff;
-            cursor: pointer;
-            display: inline-block;
-            font-weight: bold;
-            margin-right: 2px;
-        }
-
-        /* line 55, ../scss/theme/default/_multiple.scss */
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-            color: #333;
-        }
-
-        /* line 63, ../scss/theme/default/_multiple.scss */
-        .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice,
-        .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__placeholder {
-            float: right;
-        }
-
-        /* line 67, ../scss/theme/default/_multiple.scss */
-        .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice {
-            margin-left: 5px;
-            margin-right: auto;
-        }
-
-        /* line 72, ../scss/theme/default/_multiple.scss */
-        .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove {
-            margin-left: 2px;
-            margin-right: auto;
-        }
-
-        /* line 80, ../scss/theme/default/_multiple.scss */
-        .select2-container--default.select2-container--focus .select2-selection--multiple {
-            border: 1px solid #CCC;
-            outline: 0;
-        }
-
-        /* line 87, ../scss/theme/default/_multiple.scss */
-        .select2-container--default.select2-container--disabled .select2-selection--multiple {
-            background-color: #eee;
-            cursor: default;
-        }
-
-        /* line 92, ../scss/theme/default/_multiple.scss */
-        .select2-container--default.select2-container--disabled .select2-selection__choice__remove {
-            display: none;
-        }
-
-        /* line 6, ../scss/theme/default/layout.scss */
-        .select2-container--default.select2-container--open.select2-container--above .select2-selection--single,
-        .select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-
-        /* line 13, ../scss/theme/default/layout.scss */
-        .select2-container--default.select2-container--open.select2-container--below .select2-selection--single,
-        .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        /* line 20, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-search--dropdown .select2-search__field {
-            border: 1px solid #DDD;
-        }
-
-        /* line 22, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-search--dropdown .select2-search__field:focus {
-            outline: 0;
-        }
-
-        /* line 29, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-search--inline .select2-search__field {
-            background: transparent;
-            border: none;
-            outline: 0;
-        }
-
-        /* line 36, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results>.select2-results__options {
-            max-height: 200px;
-            overflow-y: auto;
-            padding: 2px !important;
-        }
-
-        /* line 42, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option[role=group] {
-            padding: 0;
-        }
-
-        /* line 46, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option[aria-disabled=true] {
-            color: #999;
-        }
-
-        /* line 50, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option[aria-selected=true] {
-            background-color: #EEE;
-        }
-
-        /* line 54, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option .select2-results__option {
-            padding-left: 1em;
-        }
-
-        /* line 57, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option .select2-results__option .select2-results__group {
-            padding-left: 0;
-        }
-
-        /* line 61, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option .select2-results__option .select2-results__option {
-            margin-left: -1em;
-            padding-left: 2em;
-        }
-
-        /* line 65, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
-            margin-left: -2em;
-            padding-left: 3em;
-        }
-
-        /* line 69, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
-            margin-left: -3em;
-            padding-left: 4em;
-        }
-
-        /* line 73, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
-            margin-left: -4em;
-            padding-left: 5em;
-        }
-
-        /* line 77, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
-            margin-left: -5em;
-            padding-left: 6em;
-        }
-
-        /* line 88, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__option--highlighted[aria-selected] {
-            background-color: #4a89dc;
-            color: white;
-        }
-
-        /* line 93, ../scss/theme/default/layout.scss */
-        .select2-container--default .select2-results__group {
-            cursor: default;
-            display: block;
-            padding: 6px;
-        }
-
-
-
-        .table td {
-            {{--  text-align: justify !important;  --}}
-        }
-
-        .titulo_general_funcion {
-            color: #788BAC;
-            margin-bottom: 65px;
-            font-size: 20px !important;
-        }
-
-        .form-group label {
-            color: #3086AF;
-        }
-
-        .titulo-formulario {
-            /*background-color: #fff; */
-            font-size: 20px;
-        }
-
-        .card_formulario {
-            background-color: #FCFCFC;
-        }
-
-        /*iconos de alertas azules*/
-        .w-100 .bi.bi-info.mr-3 {
-            margin-right: 0px !important;
-            margin-left: 20px !important;
-            font-size: 20px;
-        }
-
-        .nav.nav-tabs {
-            margin-bottom: 30px !important;
-        }
-
-        .nav.nav-tabs .nav-link.active {
-            background-color: #345183 !important;
-            color: #fff !important;
-        }
-
-        .ventana_menu ul {
-            margin-top: 100px !important;
-        }
-
-        .dt-button-collection.dropdown-menu {
-            max-height: 250px;
-            overflow: auto;
-        }
-
-        .dt-button-collection.dropdown-menu::-webkit-scrollbar {
-            width: 7px;
-            height: 7px;
-        }
-
-        /* Track */
-        .dt-button-collection.dropdown-menu::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0);
-        }
-
-        /* Handle */
-        .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 50px;
-        }
-
-        /* Handle on hover */
-        .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        .table.table-striped tr {
-            background-color: white !important;
-        }
-    </style>
-
-    <style>
-        #loading {
-            position: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            opacity: 0.8;
-            background-color: #fff;
-            z-index: 990000;
-        }
-
-        #loading-image {
-            position: absolute;
-            z-index: 100;
-        }
-    </style>
-
-    <style>
-        #contenido_imprimir {
-            padding: 20px;
-        }
-
-        .solo-print {
-            display: none;
-        }
-
-        .encabezado-print {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 35px;
-        }
-
-        .encabezado-print td {
-            padding: 10px 5px;
-            text-align: center;
-            border: 1px #ccc solid;
-        }
-
-        @media print {
-
-            .vista_print,
-            .print-none {
-                display: none !important;
-            }
-
-            .solo-print {
-                display: block !important;
-            }
-
-            body {
-                background-color: #fff !important;
-            }
-
-            .table th {
-                background-color: #788BAC !important;
-            }
-
-            #tabla_blanca_imprimir_global thead tr,
-            #tabla_blanca_imprimir_global thead tr th,
-            #tabla_blanca_imprimir_global thead tr th div {
-                height: unset !important;
-                color: #fff !important;
-                padding-top: 10px;
-            }
-
-            #tabla_blanca_imprimir_global thead tr:first-child th:last-child,
-            #tabla_blanca_imprimir_global tbody tr td:last-child {
-                display: none !important;
-            }
-        }
-    </style>
-
-    <style>
-        .table-acordeon {}
-
-        .datatable-fix {
-            max-width: 100% !important;
-            overflow: auto !important;
-        }
-
-        .table-striped.table-acordeon tbody tr:nth-of-type(odd),
-        table.table.table-acordeon tbody tr:nth-child(even) {
-            background-color: rgba(0, 0, 0, 0);
-        }
-
-        .btn-arrow-menu-table-rotate {
-            transform: rotate(180deg);
-        }
-
-        .tr-sec-menu td {
-            border-top: none !important;
-        }
-    </style>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/rds.css') }}">
     @yield('styles')
     @livewireStyles
 </head>
@@ -1148,9 +79,178 @@
         $hoy_format_global = \Carbon\Carbon::now()->format('d/m/Y');
     @endphp
 
-    @include('partials.menu')
+    <header>
+        <div class="content-header-blue">
+            <div class="caja-inicio-options-header">
+                <button onclick="document.querySelector('header').classList.toggle('mostrar-menu')">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <img src="{{ asset('img/logo-ltr.png') }}" alt="Logo Tabantaj" style="height: 40px;">
+                <div class="caja-buscador-header">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search">
+                </div>
+            </div>
+            <div class="caja-user-header">
+                Carlos Ferras
+                <div class="caja-img-user-header">
+                    <img src="https://img.freepik.com/vector-premium/hombre-indiferente-macho-rostro-desinteresado-rostro-humano-despreocupado-ilustracion-vector-emociones-gente_100470-72.jpg?w=360"
+                        alt="">
+                </div>
+            </div>
+        </div>
+        <div class="menu-hedare-window">
+            <div class="item-content-menu-header" style="background-color: #EEF6FF;">
+                <span class="title-item-menu-header">MI PANEL</span>
+
+                <ul class="menu-list-panel-header">
+                    <li>
+                        <a href="">
+                            <i class="bi bi-file-person-fill"></i>
+                            Mi perfil
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-newspaper"></i>
+                            Comunicación
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-calendar3"></i>
+                            Calendario
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-folder"></i>
+                            Documentos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-file-earmark-check"></i>
+                            Planes de acción
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-person-workspace"></i>
+                            Centro de atención
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="item-content-menu-header" style="background-color: #fff;">
+                <span class="title-item-menu-header">MÓDULOS TABANTAJ</span>
+                <div class="menu-blocks-mod-header">
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #F1F1F1;">
+                            <i class="material-symbols-outlined">home</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #FFD9ED;">
+                            <i class="material-symbols-outlined">warning</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #9CEBFF;">
+                            <i class="material-symbols-outlined">emoji_people</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #BFFFE9;">
+                            <i class="material-symbols-outlined">privacy_tip</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #E0C5FF;">
+                            <i class="material-symbols-outlined">group</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #FCB4BC;">
+                            <i class="material-symbols-outlined">language</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #B1C6FF;">
+                            <i class="material-symbols-outlined">emoji_people</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #FFFDC4;">
+                            <i class="material-symbols-outlined">privacy_tip</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #FFD3BF;">
+                            <i class="material-symbols-outlined">group</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="">
+                        <div class="caja-icon-mod-header" style="background: #E5E5E5;">
+                            <i class="material-symbols-outlined">privacy_tip</i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                </div>
+            </div>
+            <div class="item-content-menu-header line-left caja-menu-admin-header" style="background-color: #fff;">
+                <span class="title-item-menu-header">ADMINISTRACIÓN</span>
+                <ul class="menu-list-admin-header">
+                    <li>
+                        <a href="">
+                            <i class="bi bi-file-earmark-arrow-up"></i>
+                            Carga masiva de datos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-buildings"></i>
+                            Configurar Organización
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-person-gear"></i>
+                            Configurar C. humano
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-laptop"></i>
+                            Configurar Vistas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-gear"></i>
+                            Ajuste de ususario
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="item-content-menu-header caja-img-escritorio-header" style="background-color: #e7ecef;">
+                <img src="{{ asset('img/escritorio-header.png') }}" alt="" class="img-escritorio-header">
+            </div>
+        </div>
+    </header>
+
+    {{-- @include('partials.menu') --}}
     <div class="c-wrapper" id="contenido_body_general_wrapper">
-        <header class="px-3 c-header c-header-fixed" style="border: none;">
+        {{-- <header class="px-3 c-header c-header-fixed" style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
                 <i class="fas fa-fw fa-bars iconos_cabecera" style="color:#fff;"></i>
@@ -1270,7 +370,7 @@
                     </li>
                 </ul>
             </ul>
-        </header>
+        </header> --}}
 
         <div class="c-body">
             <main class="c-main">
@@ -1299,7 +399,7 @@
         </div>
 
         {{-- @include('partials.footer') --}}
-        <footer class="app-footer">
+        {{-- <footer class="app-footer">
             <div>
                 TABANTAJ
                 <font style="margin: 0px 20px;"> | </font>
@@ -1310,7 +410,7 @@
                 <font style="margin: 0px 20px;"> | </font>
                 Version: 4.34.10
             </div>
-        </footer>
+        </footer> --}}
     </div>
     <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
