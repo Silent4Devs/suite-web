@@ -2,6 +2,11 @@
 @section('content') --}}
 <div>
     <style>
+
+        .btn:focus{
+            box-shadow: none !important;
+            outline: none !important;
+        }
         .select2-search.select2-search--inline {
             margin-top: -20px !important;
         }
@@ -174,12 +179,14 @@
                         >{{ old('requisitoacumplir') }}</textarea>
                         {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
                     </div>
-                    <button type="button" class="btn btn-light mr-auto mb-3"
-                    style="color: #057BE2; width:15rem; position: relative; right: 1rem;"
-                    wire:click.prevent="addAlcance1">
-                    Añadir nuevo Requisito
-                    <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
-                 </button>
+                    <div id="miDiv">
+                        <button type="button" class="btn mb-3" onclick="ocultarDiv()" id="miFormulario"
+                        style="color: #057BE2; width:15rem; position: relative; right: .5rem;"
+                        wire:click.prevent="addAlcance1">
+                        Añadir nuevo Requisito
+                        <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
+                     </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -269,8 +276,8 @@
                             {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
                         </div>
 
-                        <button type="button" class="btn btn-light mr-auto mb-3"
-                        style="color: #057BE2; width:15rem; position: relative; right: 1rem;"
+                        <button type="button" class="btn mb-3"
+                        style="color: #057BE2; width:15rem; position: relative; right: .5rem;"
                         wire:click.prevent="addAlcance1">
                         Añadir nuevo Requisito
                         <i class="fa-solid fa-plus" style="color: #057BE2;"></i>
@@ -348,6 +355,15 @@
         });
     }
 </script>
+
+<script>
+     function ocultarDiv() {
+        var miDiv = document.getElementById("miDiv");
+        miDiv.style.display = "none";
+        return false;
+    }
+</script>
+
 {{-- @endsection --}}
 
 
