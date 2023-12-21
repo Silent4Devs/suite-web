@@ -21,6 +21,7 @@
         @endcan
         @include('partials.flashMessages')
         <div class="datatable-fix datatable-rds">
+            <h5>Requisitos legales</h5>
             <table class="datatable datatable-MatrizRequisitoLegale">
                 <thead>
                     <tr>
