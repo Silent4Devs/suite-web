@@ -3,11 +3,8 @@
 namespace App\Models\Iso27;
 
 use App\Models\Empleado;
-<<<<<<< HEAD
 use App\Models\Norma;
-=======
 use App\Models\EvaluacionTemplatesAnalisisBrechas;
->>>>>>> feature/edit_templates
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
