@@ -55,9 +55,9 @@
                 <i class="material-icons-outlined">arrow_back_ios</i>
             </div>
             <div class="carrusel-infinito" style="margin: 0px 10px 0px 10px;">
-                @foreach ($analisis_brechas as $index => $analisis_brecha )
-                <div class="item-carrusel"  style="{{ $index == 0 ? 'margin-left:25px;' : '' }}" wire:click="SelectCard({{ $index }})">
-                    <div class="card card-carrusel" style="{{$selectedCard === $index ? 'background-color: #3AAE65;' : '' }}">
+                @foreach ($templates as $index => $analisis_brecha )
+                <div class="item-carrusel"  style="{{ $index == 0 ? 'margin-left:25px;' : '' }}" wire:click="SelectCard({{ $analisis_brecha->id }})">
+                    <div class="card card-carrusel" style="{{$selectedCard === $analisis_brecha->id ? 'background-color: #3AAE65;' : '' }}">
                         <div class="card-body" style="padding: 18px 32px 10px 29px;">
                                 <div class="row">
                                     <div class="d-flex justify-content-start align-items-center">
@@ -67,7 +67,7 @@
                                             </i>
                                         </div>
                                         <div class="col-10" style="padding-right:0;">
-                                           <h6 style="margin-bottom: 0px;">{{$analisis_brecha->nombre}}</h6>
+                                           <h6 style="margin-bottom: 0px;">{{$analisis_brecha->nombre_template}}</h6>
                                            <p>Selecciona tu template</p>
                                         </div>
                                     </div>
@@ -82,18 +82,18 @@
             </div>
         </div>
         <div class="d-flex justify-content-start" style="padding-left: 160px;">
-            <a >Ver todos</a>
+            <a href="{{route('admin.template-top')}}">Ver todos</a>
         </div>
         <div class="d-flex justify-content-end" style="padding-right: 110px;">
-            <a class="btn btn-light text-primary border border-primary">
+            <a class="btn btn-light text-primary border border-primary" href="{{route('admin.templates')}}">
                 Crear template +
             </a>
         </div>
     </div>
 
     <div class="mt-4 card card-body">
-        <form wire:submit.prevent="save" wire:ignore>
-            @csrf
+        <form wire:submit.prevent={{ $view == 'create' ? 'save' : 'update' }}>
+            {{-- @csrf --}}
             <h5 class="form-group col-12">Datos generales</h5>
             <hr>
             {{-- <div class="form-group">
@@ -143,7 +143,7 @@
                     <label for="estatus">Estatus</label>
                 </div> --}}
                 <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
-                    <select class="form-control {{ $errors->has('norma') ? 'is-invalid' : '' }}" name="norma"
+                    {{-- <select class="form-control {{ $errors->has('norma') ? 'is-invalid' : '' }}" name="norma"
                         id="estatus" required wire:model.defer="norma" >
                         <option value disabled {{ old('norma', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
@@ -158,7 +158,10 @@
                         <div class="invalid-feedback">
                             {{ $errors->first('estatus') }}
                         </div>
-                    @endif
+                    @endif --}}
+                    <input  class="form-control" type="text"
+                    id="norma" disabled wire:model.defer="norma"  >
+
                     <label for="norma">norma</label>
                 </div>
 
@@ -208,8 +211,8 @@
 
             </div>
             <div class="text-right form-group col-12">
-                        <button class="btn btn-light text-primary border border-primary" type="submit">
-                            Crear Análisis de Brechas
+                        <button class="btn btn-light text-primary border border-primary"  >
+                            {{ $view == 'create' ? 'Crear Análisis de Brechas' : 'Actualizar Análisis de Brechas' }}
                         </button>
             </div>
         </form>
@@ -250,7 +253,26 @@
                                 @endif
                             </td>
                             <td>
-                                opciones
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" wire:click="edit({{ $analisis_brecha->id }})">
+                                            <div class="d-flex align-items-start">
+                                                <i class="material-icons-outlined" style="width: 24px;font-size:18px;">edit_outline</i>
+                                                Editar
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item" wire:click="$emit('delete',{{$analisis_brecha->id}})">
+                                            <div class="d-flex align-items-start">
+                                                <i class="material-icons-outlined" style="width: 24px;font-size:18px;">delete_outlined</i>
+                                                Eliminar
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -290,5 +312,33 @@
 
             });
         </script>
+
+@yield('js')
+
+<script>
+ document.addEventListener("DOMContentLoaded", function() {
+     Livewire.on("delete", id=>{
+         Swal.fire({
+             title: "Eliminar Análisis de brechas",
+             text: "¿Esta seguro que desea eliminar?",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonColor: "#3085d6",
+             cancelButtonColor: "#d33",
+             confirmButtonText: "Eliminar",
+             cancelButtonText: "Cancelar",
+         }).then((result) => {
+         if (result.isConfirmed) {
+             Livewire.emitTo('analisis-brechas-iso-form','destroy',id);
+             Swal.fire({
+             title: "Eliminado",
+             text: "El análisis de brechas se elimino con éxito",
+             icon: "success"
+             });
+         }
+         });
+     })
+ });
+</script>
 
     </div>

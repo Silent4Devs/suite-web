@@ -17,6 +17,7 @@ class TemplateAnalisisdeBrechas extends Model
         'norma_id',
         'descripcion',
         'no_secciones',
+        'top',
     ];
 
     public function secciones()

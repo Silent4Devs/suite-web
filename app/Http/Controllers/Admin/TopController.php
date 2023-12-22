@@ -9,8 +9,8 @@ class TopController extends Controller
 {
     public function index()
     {
-        $top_analisis = TemplateAnalisisdeBrechas::get();
+        // $top_analisis = TemplateAnalisisdeBrechas::get();
         // dd($top_analisis);
-        return view('admin.analisisdebrecha2022nv.top.index',compact('top_analisis'));
+        return view('admin.analisisdebrecha2022nv.top.index');
     }
 }

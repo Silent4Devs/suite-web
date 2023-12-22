@@ -23,7 +23,7 @@
                     </div>
                     <div class="mb-3 col-12 mt-4 " style="text-align: end">
                         <button type="button" wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}"
-                        class="btn btn-light text-dark border border-dark">{{ $view == 'create' ? 'Agregar' : 'Actualizar' }}</button>
+                        class="btn btn-light text-dark border border-dark">ddd</button>
                     </div>
                     <div class="datatable-fix datatable-rds">
                         <table class="table w-100" id="contactos_table" style="width:100%">
