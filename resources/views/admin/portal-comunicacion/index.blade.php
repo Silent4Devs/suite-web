@@ -43,7 +43,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="card card-body">
+                            <div class="card card-body" style="padding: 20px;">
                                 <div class="d-flex justify-content-center align-items-center" style="gap: 13px;">
                                     <i class="material-symbols-outlined" style="font-size: 70px;">schedule</i>
                                     <span style="font-size: 26px;" id="hora-portal"> </span>
@@ -55,15 +55,19 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="div4 card card-body">
-                                <h4 style="font-size: 30px;">Lunes, Enero 17</h4>
+                                <h4 style="font-size: 30px;" id="fecha-completa">
+                                    {{-- Fecha --}}
+                                </h4>
 
                                 <div class="calendar calendar-first" id="calendar_first" style="">
                                     <div class="calendar_header">
-                                        <button class="switch-month switch-left"> <i
-                                                class="fa fa-chevron-left"></i></button>
                                         <h2></h2>
-                                        <button class="switch-month switch-right"> <i
-                                                class="fa fa-chevron-right"></i></button>
+                                        <button class="switch-month switch-left btn">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </button>
+                                        <button class="switch-month switch-right btn">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </button>
                                     </div>
                                     <div class="calendar_weekdays"></div>
                                     <div class="calendar_content"></div>
@@ -396,20 +400,20 @@
         console.log(hora);
         console.log(med);
 
+        const fechaActual = new Date();
 
-        const settings = {
-            async: true,
-            crossDomain: true,
-            url: 'https://forecast9.p.rapidapi.com/',
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
-                'X-RapidAPI-Host': 'forecast9.p.rapidapi.com'
-            }
+        // Opciones para el formato de fecha
+        const opcionesFecha = {
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
         };
 
-        $.ajax(settings).done(function(response) {
-            console.log(response);
-        });
+        // Convertir la fecha actual a formato humano en español
+        const fechaHumana = fechaActual.toLocaleDateString('es-ES', opcionesFecha).replace(' de ', ' ');
+
+        // Mostrar la fecha en la consola
+        console.log(fechaHumana); // Ejemplo: "martes, 21 de diciembre de 2023"
+        document.getElementById('fecha-completa').innerHTML = fechaHumana;
     </script>
 @endsection

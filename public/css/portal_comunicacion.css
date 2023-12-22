@@ -247,81 +247,100 @@
 
 
 .calendar,
-        .calendar_weekdays,
-        .calendar_content {
-            max-width: 300px;
-        }
+.calendar_weekdays,
+.calendar_content {
+    width: 100%;
+}
 
-        .calendar {
-            margin: auto;
-            font-family: 'Muli', sans-serif;
-            font-weight: 400;
-        }
+.calendar {
+    margin: auto;
+    font-family: 'Muli', sans-serif;
+    font-weight: 400;
+}
 
-        .calendar_content,
-        .calendar_weekdays,
-        .calendar_header {
-            position: relative;
-            overflow: hidden;
-        }
+.calendar_content,
+.calendar_weekdays,
+.calendar_header {
+    position: relative;
+    overflow: hidden;
+}
 
-        .calendar_weekdays div {
-            display: inline-block;
-            vertical-align: top;
-        }
+.calendar_weekdays div {
+    display: inline-block;
+    vertical-align: top;
+}
 
-        .calendar_weekdays div,
-        .calendar_content div {
-            width: 14.28571%;
-            overflow: hidden;
-            text-align: center;
-            background-color: transparent;
-            color: #6f6f6f;
-            font-size: 12px;
-        }
+.calendar_weekdays div,
+.calendar_content div {
+    width: 14.28571%;
+    padding: 10px 4px;
+    overflow: hidden;
+    text-align: center;
+    background-color: transparent;
+    color: #6f6f6f;
+    font-size: 12px;
+}
 
-        .calendar_content div {
-            border: 1px solid transparent;
-            float: left;
-        }
+.calendar_content div {
+    border: 1px solid transparent;
+    float: left;
+    min-width: 35px;
+}
 
-        .calendar_content div:hover {
-            border: 1px solid #dcdcdc;
-            cursor: default;
-        }
+.calendar_content div:hover {
+    border: 1px solid #dcdcdc;
+    cursor: default;
+}
 
-        .calendar_content div.blank:hover {
-            cursor: default;
-            border: 1px solid transparent;
-        }
+.calendar_content div.blank:hover {
+    cursor: default;
+    border: 1px solid transparent;
+}
 
-        .calendar_content div.past-date {
-            color: #d5d5d5;
-        }
+.calendar_content div.past-date {
+    color: #d5d5d5;
+}
 
-        .calendar_content div.today {
-            font-weight: bold;
-            font-size: 12px;
-            color: #1040dd;
-            border: 1px solid #dcdcdc;
-        }
+.calendar_content div.today {
+    font-weight: bold;
+    color: #fff !important;
+    border: none;
+    position: relative;
+    z-index: 2;
+}
+.calendar_content div.today::before {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: #77AFEB;
+    border-radius: 100px;
+    z-index: -1;
+    transform: translateY(-1px);
+}
+.calendar_content div.selected {
+    background-color: #f0f0f0;
+}
 
-        .calendar_content div.selected {
-            background-color: #f0f0f0;
-        }
+.calendar_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+}
 
-        .calendar_header {
-            width: 100%;
-            text-align: center;
-        }
-
-        .calendar_header h2 {
-            padding: 5px 10px;
-            font-family: 'Muli', sans-serif;
-            font-weight: 300;
-            font-size: 12px;
-            color: #1040dd;
-            float: left;
-            width: 70%;
-            margin: 0 0 10px;
-        }
+.calendar_header h2 {
+    font-weight: bold;
+    font-size: 16px;
+    width: 70%;
+    margin: 0 0 10px;
+}
+#fecha-completa{
+    text-transform: capitalize;
+}

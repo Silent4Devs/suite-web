@@ -301,7 +301,7 @@ header {
 .btn.btn-danger {
     min-width: 150px !important;
     height: 35px;
-    background-color: #345183 !important;
+    background-color: #057BE2 !important;
     color: #fff !important;
     border-radius: 2px;
     border: none !important;
@@ -996,7 +996,10 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     padding: 25px;
     margin-top: 20px;
 }
-
+.datatable-fix{
+    border: none;
+    box-shadow: none;
+}
 .title-table-rds {
     font-weight: bolder;
     color: #606060;
