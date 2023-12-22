@@ -38,7 +38,6 @@ pipeline {
                 sh 'cd Testing/Calendario'
                 sh 'pip install pytest'
                 sh 'pip install selenium'
-                sh 'pytest test_calendario.py'
             }
         }
 

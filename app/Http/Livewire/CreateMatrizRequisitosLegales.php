@@ -11,13 +11,15 @@ class CreateMatrizRequisitosLegales extends Component
 {
     public collection $alcance_s1;
     public $alcance;
+    public $bandera = true;
+    public $bandera2 = false;
 
 
     protected $listeners = [
         'renderMatriz' => 'render',
     ];
 
-    public function mount ()
+    public function mount()
     {
         $this->alcance_s1 = new Collection();
     }
@@ -34,11 +36,15 @@ class CreateMatrizRequisitosLegales extends Component
             'nombrerequisito' => "",
         ]);
         $this->emit('renderMatriz');
+
+        $this->bandera = false;
+        $this->bandera2 = false;
     }
 
     public function removeAlcance1($index)
     {
         unset($this->alcance_s1[$index]);
+        $this->bandera = true;
     }
 
     public function save()
@@ -53,21 +59,19 @@ class CreateMatrizRequisitosLegales extends Component
                 'fechavigor' => $this->alcance['fechavigor'],
                 'requisitoacumplir' => $this->alcance['requisitoacumplir'],
             ]);
-            foreach($this->alcance_s1 as $alcance1)
-            {
+            foreach ($this->alcance_s1 as $alcance1) {
                 MatrizRequisitoLegale::create([
-                            'nombrerequisito' => $alcance1['nombrerequisito'],
-                            'formacumple' => $alcance1['formacumple'],
-                            'fechaexpedicion' => $alcance1['fechaexpedicion'],
-                            'fechavigor' => $alcance1['fechavigor'],
-                            'requisitoacumplir' => $alcance1['requisitoacumplir'],
-                        ]);
+                    'nombrerequisito' => $alcance1['nombrerequisito'],
+                    'formacumple' => $alcance1['formacumple'],
+                    'fechaexpedicion' => $alcance1['fechaexpedicion'],
+                    'fechavigor' => $alcance1['fechavigor'],
+                    'requisitoacumplir' => $alcance1['requisitoacumplir'],
+                ]);
             }
             DB::commit();
             return redirect()->route('admin.matriz-requisito-legales.index');
         } catch (\Throwable $th) {
             DB::rollback();
         }
-
     }
 }
