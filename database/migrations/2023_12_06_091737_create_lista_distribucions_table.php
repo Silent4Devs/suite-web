@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('modulo');
             $table->string('submodulo');
+            $table->string('modelo');
             $table->integer('niveles');
-            $table->boolean('superaprobador')->default(false);
+            // $table->boolean('superaprobador')->default(false);
             $table->timestamps();
         });
     }

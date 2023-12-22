@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyEntendimientoOrganizacionRequest;
 use App\Models\AmenazasEntendimientoOrganizacion;
+use App\Models\ControlListaDistribucion;
 use App\Models\DebilidadesEntendimientoOrganizacion;
 use App\Models\Empleado;
 use App\Models\EntendimientoOrganizacion;
 use App\Models\FortalezasEntendimientoOrganizacion;
+use App\Models\ListaDistribucion;
 use App\Models\OportunidadesEntendimientoOrganizacion;
+use App\Models\ProcesosListaDistribucion;
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
@@ -23,6 +26,8 @@ class EntendimientoOrganizacionController extends Controller
 {
     use CsvImportTrait;
     use ObtenerOrganizacion;
+
+    public $modelo = 'EntendimientoOrganizacion';
 
     public function index(Request $request)
     {
@@ -327,5 +332,105 @@ class EntendimientoOrganizacionController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+    }
+
+    public function solicitudAprobacion($id_foda)
+    {
+        // $modelo = 'EntendimientoOrganizacion';
+
+        $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
+
+        $proceso = ProcesosListaDistribucion::create([
+            'modulo_id' => $lista->id,
+            'estatus' => 'En Proceso',
+        ]);
+        // dd($lista, $id_foda, $this->modelo, $proceso);
+
+        foreach ($lista->participantes as $participante) {
+            $participantes = ControlListaDistribucion::create([
+                'proceso_id' => $proceso->id,
+                'participante_id' => $participante->id,
+                'estatus' => 'pendiente',
+            ]);
+        }
+
+        $control_participantes = ControlListaDistribucion::where('proceso_id', '=', $proceso->id)->get();
+        // dd($proceso, $control_participantes);
+    }
+
+
+
+    public function aprobado($id, Request $request)
+    {
+        // dd($id);
+        $revision_actual = intval(RevisionMinuta::where('minuta_id', $id)->max('no_revision'));
+        $aprobacion = RevisionMinuta::where('minuta_id', '=', $id)->where('empleado_id', '=', User::getCurrentUser()->empleado->id)
+            ->where('no_revision', '=', $revision_actual)->first();
+        // dd($aprobacion);
+        $aprobacion->update([
+            'estatus' => RevisionMinuta::APROBADO,
+            'comentarios' => $request->comentario,
+        ]);
+
+        $this->confirmacionAprobacion($id, $revision_actual);
+
+        return redirect(route('admin.minutasaltadireccions.index'));
+    }
+
+    public function rechazado($id, Request $request)
+    {
+        // dd($id, $request->all());
+        $revision_actual = intval(RevisionMinuta::where('minuta_id', $id)->max('no_revision'));
+        $aprobacion = RevisionMinuta::where('minuta_id', '=', $id)->where('empleado_id', '=', User::getCurrentUser()->empleado->id)
+            ->where('no_revision', '=', $revision_actual)->first();
+        // dd($aprobacion);
+        $aprobacion->update([
+            'estatus' => RevisionMinuta::RECHAZADO,
+            'comentarios' => $request->comentario,
+        ]);
+
+        $minuta = Minutasaltadireccion::find($id);
+
+        $minuta->update([
+            'estatus' => Minutasaltadireccion::DOCUMENTO_RECHAZADO,
+        ]);
+        // $responsable = $minuta->responsable->name;
+        $emailresponsable = $minuta->responsable->email;
+        $tema_minuta = $minuta->tema_reunion;
+
+        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaRechazadaResponsable($minuta->id, $tema_minuta, User::getCurrentUser()->empleado->name));
+
+        foreach ($minuta->participantes as $participante) {
+
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionMinutaRechazada($tema_minuta));
+        }
+
+        return redirect(route('admin.minutasaltadireccions.index'));
+    }
+
+    public function confirmacionAprobacion($id, $revision_actual)
+    {
+        $confirmacion = RevisionMinuta::where('minuta_id', '=', $id)
+            ->where('no_revision', '=', $revision_actual)
+            ->get();
+
+        $isSameEstatus = $confirmacion->every(function ($record) {
+            return $record->estatus == 2; // Assuming 'estatus' is the column name
+        });
+        // dd($confirmacion, $isSameEstatus);
+        if ($isSameEstatus) {
+            $minuta = Minutasaltadireccion::find($id);
+            $responsable = $minuta->responsable->name;
+            $emailresponsable = $minuta->responsable->email;
+            $tema_minuta = $minuta->tema_reunion;
+            // All records in $confirmacion have 'estatus' equal to 2
+            // Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaAprobada($responsable, $tema_minuta));
+            // $minuta->update([
+            //     'estatus' => Minutasaltadireccion::PUBLICADO,
+            // ]);
+        }
+        // else {
+        //     // There are records with different 'estatus' values
+        // }
     }
 }

@@ -14,6 +14,7 @@ class ListaDistribucion extends Model
     protected $fillable = [
         'modulo',
         'submodulo',
+        'modelo',
         'niveles',
         'superaprobador',
     ];
