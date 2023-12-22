@@ -24,4 +24,14 @@ class RespuestasEvaluacionAnalisisBrechas extends Model
     {
         return $this->belongsTo(ParametrosTemplateAnalisisdeBrechas::class, 'parametro_id', 'id');
     }
+
+    public function preguntas()
+    {
+        return $this->belongsTo(PreguntasTemplateAnalisisdeBrechas::class, 'pregunta_id', 'id');
+    }
+
+    public function evaluacion()
+    {
+        return $this->belongsTo(EvaluacionTemplatesAnalisisBrechas::class, 'ev_analisis_template_id', 'id');
+    }
 }

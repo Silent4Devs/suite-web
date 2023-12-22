@@ -3,6 +3,7 @@
 namespace App\Models\Iso27;
 
 use App\Models\Empleado;
+use App\Models\EvaluacionTemplatesAnalisisBrechas;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,10 @@ class AnalisisBrechasIso extends Model implements Auditable
     {
         return $this->belongsTo(Empleado::class, 'id_elaboro')->alta();
     }
+
+    // public function evaluacion(){
+    //     return $this->hasOne(EvaluacionTemplatesAnalisisBrechas::class, );
+    // }
 
     // public function gap_logro_tres()
     // {
