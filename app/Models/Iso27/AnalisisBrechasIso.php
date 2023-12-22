@@ -3,7 +3,11 @@
 namespace App\Models\Iso27;
 
 use App\Models\Empleado;
+<<<<<<< HEAD
 use App\Models\Norma;
+=======
+use App\Models\EvaluacionTemplatesAnalisisBrechas;
+>>>>>>> feature/edit_templates
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +38,9 @@ class AnalisisBrechasIso extends Model implements Auditable
     {
         return $this->belongsTo(Norma::class,'norma_id');
     }
+    // public function evaluacion(){
+    //     return $this->hasOne(EvaluacionTemplatesAnalisisBrechas::class, );
+    // }
 
     // public function gap_logro_tres()
     // {

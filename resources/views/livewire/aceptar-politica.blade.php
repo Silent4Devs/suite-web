@@ -19,7 +19,7 @@
         }
     </style>
     @if(!$acepto_politica)
-        <label class="aceptar" wire:click="aceptar({{$id_politica}})"><i class="far fa-check-square"></i> Acepto la política de la organización</label>
+        <label class="aceptar" wire:click="aceptar({{$id_politica}})"><i class="far fa-check-square"></i> Acepto política</label>
      @else
         <label class="aceptado"><i class="fas fa-check-square"></i> Política aceptada</label>
     @endif

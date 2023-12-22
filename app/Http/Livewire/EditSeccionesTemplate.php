@@ -9,9 +9,46 @@ use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
 use Livewire\Component;
 
-class SeccionesTemplate extends Component
+class EditSeccionesTemplate extends Component
 {
+    public $id_template;
+
+    public $nombre_template = '';
+
+    public $norma = 0;
+
+    public $descripcion = '';
+
+    public $estatus_1 = '';
+    public $estatus_2 = '';
+    public $estatus_3 = '';
+    public $estatus_4 = '';
+
+    public $valor_estatus_1 = '';
+    public $valor_estatus_2 = '';
+    public $valor_estatus_3 = '';
+    public $valor_estatus_4 = '';
+
+    public $descripcion_parametros_1 = '';
+    public $descripcion_parametros_2 = '';
+    public $descripcion_parametros_3 = '';
+    public $descripcion_parametros_4 = '';
+
+    public $color_estatus_1 = '';
+    public $color_estatus_2 = '';
+    public $color_estatus_3 = '';
+    public $color_estatus_4 = '';
+
     public $normas;
+
+
+    public $pregunta1 = '';
+
+    public $pregunta2 = '';
+
+    public $pregunta3 = '';
+
+    public $pregunta4 = '';
 
     public $preguntas_s1 = [];
 
@@ -116,14 +153,72 @@ class SeccionesTemplate extends Component
         // dd($this->secciones);
     }
 
-    public function mount()
+    public function mount($id_template)
     {
+        $this->id_template = $id_template;
+        $template = TemplateAnalisisdeBrechas::with('parametros', 'secciones.preguntas')->find($this->id_template);
+        $this->asignarInputs($template);
     }
 
     public function render()
     {
+        // dd($template);
         $this->normas = Norma::get();
         return view('livewire.edit-secciones-template');
+    }
+
+    public function asignarInputs($template)
+    {
+        $this->nombre_template = $template->nombre_template;
+
+        $this->norma = $template->norma_id;
+
+        $this->descripcion = $template->descripcion;
+
+        $this->secciones = $template->no_secciones;
+
+        foreach ($template->parametros as $key => $parametro) {
+            $posicion = $key + 1;
+
+            // Construct the variable name by concatenating $posicion to $estatus_
+            $estatus_variable_name = 'estatus_' . $posicion;
+            $valor_estatus_name = 'valor_estatus_' . $posicion;
+            $descripcion_parametros_name = 'descripcion_parametros_' . $posicion;
+            $color_estatus_name = 'color_estatus_' . $posicion;
+
+
+            $this->$estatus_variable_name = $parametro->estatus;
+            $this->$valor_estatus_name = $parametro->valor;
+            $this->$descripcion_parametros_name = $parametro->descripcion;
+            $this->$color_estatus_name = $parametro->color;
+        }
+
+        $secInput = $template->secciones->where('numero_seccion', '=', $this->posicion_seccion);
+        // dd($secInput);
+        foreach ($secInput as $key => $sec) {
+            $descripcion_seccion_name = 'descripcion_s' . $this->posicion_seccion;
+            $porcentaje_seccion_name = 'porcentaje_seccion_' . $this->posicion_seccion;
+            $primera_pregunta_seccion_name = 'pregunta' . $this->posicion_seccion;
+            $preguntas_seccion_name = 'preguntas_s' . $this->posicion_seccion;
+
+            $this->$descripcion_seccion_name = $sec->descripcion;
+            $this->$porcentaje_seccion_name = $sec->porcentaje_seccion;
+            $primpreg = 1;
+            $this->$preguntas_seccion_name = [];
+            foreach ($sec->preguntas as $key => $preg) {
+                if ($primpreg == 1) {
+                    $this->$primera_pregunta_seccion_name = $preg->pregunta;
+                } else {
+                    $this->$preguntas_seccion_name[] = $preg->pregunta;
+                }
+                $primpreg++;
+            }
+
+            // dd($this->preguntas_s2);
+
+
+            // dd($seccion);
+        }
     }
 
     public function submitForm($data)
@@ -135,7 +230,8 @@ class SeccionesTemplate extends Component
 
             // dd($data["descripcion_s" . $this->datos_seccion]);
 
-            $template = TemplateAnalisisdeBrechas::create([
+            $template = TemplateAnalisisdeBrechas::find($this->id_template);
+            $template->update([
                 'nombre_template' => $data['nombre_template'],
                 'norma_id' => $data['norma'],
                 'descripcion' => $data['descripcion'],
@@ -143,6 +239,8 @@ class SeccionesTemplate extends Component
             ]);
 
             $groupedValues = $this->groupValues($data);
+
+            $borrarColores = ParametrosTemplateAnalisisdeBrechas::where('template_id', '=', $template->id)->delete();
 
             foreach ($groupedValues as $estatus) {
                 // dd($estatus);
@@ -156,6 +254,8 @@ class SeccionesTemplate extends Component
             }
 
             // dd($this->s1, $this->s2);
+
+            $borrarSecciones = SeccionesTemplateAnalisisdeBrechas::where('template_id', '=', $template->id)->delete();
 
             if ($this->secciones > 1 && $this->secciones <= 4) {
                 for ($i = 1; $i < $this->secciones; $i++) {

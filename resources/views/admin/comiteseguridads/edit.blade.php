@@ -56,6 +56,11 @@
         border-radius: 4px;
         opacity: 1;
     }
+
+    .card {
+        border-radius: 15px; /* Puedes ajustar el valor según tus preferencias */
+        overflow: hidden; /* Asegura que las esquinas redondas se apliquen correctamente */
+    }
 </style>
 @section('content')
 
@@ -98,7 +103,7 @@
             </div>
 
             <div class="text-right form-group col-12" id="miDiv" style="display: none;">
-                <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color: 1px solid #057BE2;">Cancelar</a>
+                <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                 <button class="btn btn-primary" id="botonFormulario" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -114,7 +119,7 @@
 </div>
 
 <div class="text-right form-group col-12" >
-    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color: 1px solid #057BE2;">Cancelar</a>
+    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
     <button class="btn btn-primary" id="botonPrincipal" type="button">
         Guardar y Notificar
     </button>

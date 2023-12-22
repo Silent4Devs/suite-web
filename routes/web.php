@@ -607,8 +607,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('permissions', 'PermissionsController');
 
         //Template Analisis de Brechas
-        Route::get('templates', 'TemplateController@index')->name('templates');
-        Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+        Route::get('templates/create', 'TemplateController@create')->name('templates.create');
+        Route::get('templates/{id}/edit', 'TemplateController@edit')->name('templates.edit');
+        // Route::post('templates/store', 'TemplateController@store')->name('templates.store');
 
         //Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
@@ -678,7 +679,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
             //Analisis brechas 2022
             // Route::get('/top', 'TopController@index')->name('top');
+<<<<<<< HEAD
             Route::get('{id}/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
+=======
+            Route::get('template/{id}/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
+>>>>>>> feature/edit_templates
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::get('analisis-brechas-2022-inicio', 'AnalisisBrechaIsoController@inicioBrechas')->name('analisis-brechas-inicio');
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
@@ -834,9 +839,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
         Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
         Route::get('entendimiento-organizacions-foda-organizacions', 'EntendimientoOrganizacionController@cardFoda')->name('foda-organizacions');
-        route::get('entendimiento-organizacions-foda-edit/{id}','EntendimientoOrganizacionController@foda')->name('foda-organizacions.edit');
+        route::get('entendimiento-organizacions-foda-edit/{id}', 'EntendimientoOrganizacionController@foda')->name('foda-organizacions.edit');
         Route::get('entendimiento-organizacions-foda-general', 'EntendimientoOrganizacionController@cardFodaGeneral')->name('foda-general');
-        Route::get('entendimiento-organizacions-foda-admin/{id}','EntendimientoOrganizacionController@adminShow');
+        Route::get('entendimiento-organizacions-foda-admin/{id}', 'EntendimientoOrganizacionController@adminShow');
 
         // Partes Interesadas
         Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
@@ -898,6 +903,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::get('politica-sgsis/visualizacion', 'PoliticaSgsiController@visualizacion')->name('politica-sgsis/visualizacion');
 
+        Route::post('politica-sgsis/pdf', 'PoliticaSgsiController@pdf')->name('politica-sgsis.pdf');
         Route::resource('politica-sgsis', 'PoliticaSgsiController');
 
         // Roles Responsabilidades
