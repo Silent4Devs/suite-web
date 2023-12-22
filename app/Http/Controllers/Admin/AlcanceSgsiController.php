@@ -7,10 +7,12 @@ use App\Http\Requests\MassDestroyAlcanceSgsiRequest;
 use App\Models\AlcanceSgsi;
 use App\Models\Empleado;
 use App\Models\Norma;
+use App\Models\Organizacion;
 use App\Models\Team;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -21,11 +23,10 @@ class AlcanceSgsiController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('determinacion_alcance_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $alcanceSgsi = AlcanceSgsi::get(); // Puedes ajustar esto según tu lógica
 
         if ($request->ajax()) {
-            $query = AlcanceSgsi::with(['norma', 'empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
+            $query = AlcanceSgsi::select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -88,11 +89,13 @@ class AlcanceSgsiController extends Controller
         $empleados = Empleado::getAltaEmpleadosWithArea();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
-        $alcanceSgsi->load('team');
+        $direccion = $organizacion_actual->direccion;
+        $rfc = $organizacion_actual->rfc;
         $normas = Norma::get();
 
-        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
     }
 
     public function create()
@@ -108,21 +111,15 @@ class AlcanceSgsiController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
             'nombre' => 'required|string',
             'alcancesgsi' => 'required|string',
             'fecha_publicacion' => 'required|date',
-            'fecha_entrada' => 'required|date',
             'fecha_revision' => 'required|date',
-            'id_reviso_alcance' => 'required',
-            'normas' => 'required|array',
         ]);
 
-        $normas = array_map(function ($value) {
-            return intval($value);
-        }, $request->normas);
         $alcanceSgsi = AlcanceSgsi::create($request->all());
-        $alcanceSgsi->normas()->sync($normas);
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
     }
@@ -160,17 +157,10 @@ class AlcanceSgsiController extends Controller
             'nombre' => 'required|string',
             'alcancesgsi' => 'required|string',
             'fecha_publicacion' => 'required|date',
-            'fecha_entrada' => 'required|date',
-            'fecha_revision' => 'required|date',
-            'id_reviso_alcance' => 'required',
-            'normas' => 'required|array',
+            'fecha_revision' => 'required|date'
         ]);
 
         $alcanceSgsi->update($request->all());
-        $normas = array_map(function ($value) {
-            return intval($value);
-        }, $request->normas);
-        $alcanceSgsi->normas()->sync($normas);
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
     }
@@ -199,5 +189,17 @@ class AlcanceSgsiController extends Controller
         AlcanceSgsi::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function pdf()
+    {
+
+        $alcances = AlcanceSgsi::get();
+        $organizacions = Organizacion::getFirst();
+
+        $pdf = PDF::loadView('alcances', compact('alcances', 'organizacions'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('alcances.pdf');
     }
 }
