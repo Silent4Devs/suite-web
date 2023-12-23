@@ -16,6 +16,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
+          extensions: imagick, redis, bcmath, calendar, exif, gd, intl, ldap, mysqli, pcntl, pdo_mysql, pdo_pgsql, pgsql, soap, sockets, xsl, zip, opcache, apcu, memcached, mongodb, yaml, xdebug
 
       - name: Check out repository code
         uses: actions/checkout@v3
