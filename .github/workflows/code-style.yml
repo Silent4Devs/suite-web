@@ -16,13 +16,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
-          tools: laravel/pint
+          # tools: laravel/pint
 
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Code style fixer using laravel/pint
-        run: pint
+      # - name: Code style fixer using laravel/pint
+      #   run: pint
 
       # - uses: stefanzweifel/git-auto-commit-action@v5.0.0
       #   with:
