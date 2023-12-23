@@ -1,0 +1,32 @@
+name: Security checks
+run-name: ${{ github.actor }} run security checks
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+jobs:
+  Security-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Install composer dependencies
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Find security vulnerabilities in your PHP
+        uses: psalm/psalm-github-security-scan@1.2.1
+
+      - name: Checks composer.json for known vulnerabilities
+        uses: symfonycorp/security-checker-action@v4
+        with:
+          lock: ./composer.lock

@@ -1,0 +1,32 @@
+name: Check code quality
+run-name: ${{ github.actor }} run check code quality
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+jobs:
+  Code-style:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: laravel/pint
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Code style fixer using laravel/pint
+        run: pint
+
+      # - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      #   with:
+      #     commit_message: Apply automatic changes
+      #     branch: ${{ github.head_ref }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
