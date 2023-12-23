@@ -1,30 +1,37 @@
-.aprobado{
+.aprobado {
     padding: 3px;
     background-color: #61CB5C;
     color: #fff;
     border-radius: 4px;
 }
-.rechazado{
+
+.rechazado {
     padding: 3px;
     background-color: #EA7777;
     color: #fff;
     border-radius: 4px;
 }
-.pendiente{
+
+.pendiente {
     padding: 3px;
     background-color: #F48C16;
     color: #fff;
     border-radius: 4px;
 }
-.papelera{
+
+.papelera {
     padding: 3px;
     background-color: #aaa;
     color: #fff;
     border-radius: 4px;
 }
 
-.caja-calendar-semana{
-    background-color: #306BA9;
+table {
+    display: table !important;
+}
+
+.caja-calendar-semana {
+    background-color: #487fba;
     padding: 0px 20px;
     padding-top: 5px;
     border-top-left-radius: 16px;
@@ -32,49 +39,81 @@
     width: 95%;
     margin: auto;
 }
-.semanas-tras-time-text{
+
+.semanas-tras-time-text {
     color: #fff;
 }
+
 .caja-calendar-semana label,
-.caja-calendar-semana label i{
+.caja-calendar-semana label i {
     color: #fff;
 }
-.caja-calendar-semana .anima-focus label{
-    background-color: #306BA9;
+
+.caja-calendar-semana .anima-focus label {
+    background-color: #487fba;
     color: #fff;
 }
-.caja-calendar-semana .anima-focus input{
+
+.caja-calendar-semana .anima-focus input {
     color: #fff !important;
     height: 30px !important;
 }
-.caja-calendar-semana *{
+
+.caja-calendar-semana * {
     font-size: 12px;
 }
 
 /*llenar horas -------------------------------*/
-.tabla-llenar-horas th, .tabla-llenar-horas td{
+.tabla-llenar-horas th,
+.tabla-llenar-horas td {
     padding: 6px 3px !important;
     font-size: 13px !important;
 }
-.ingresar_horas{
+
+.ingresar_horas {
     width: 60px;
     -webkit-appearance: textfield !important;
     margin: 0;
-    -moz-appearance:textfield !important;
+    -moz-appearance: textfield !important;
 }
-.tabla-llenar-horas input, .tabla-llenar-horas div.form-control{
+
+.tabla-llenar-horas input,
+.tabla-llenar-horas div.form-control {
     margin-top: 7px;
 }
-.tabla-llenar-horas input[type="checkbox"]{
+
+.tabla-llenar-horas input[type="checkbox"] {
     margin-top: 20px !important;
 }
-.tabla-llenar-horas .form-control, .tabla-llenar-horas .select2{
-    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.08);
+
+.tabla-llenar-horas .form-control {
+    /* box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.08); */
+    border-radius: 10px;
+    /* border: 1px solid #B5B5B5 !important; */
 }
-.tabla-llenar-horas th{
+
+.tabla-llenar-horas .select2,
+.select2-container .select2-selection--single {
+    border-radius: 10px !important;
+}
+
+.tabla-llenar-horas th {
     text-align: center !important;
+    padding-bottom: 20px !important;
 }
-.table select{
+
+.tabla-llenar-horas th span {
+    border: #D2D2D2 1px solid;
+    border-radius: 100px;
+    padding: 3px 10px;
+    color: #306BA9;
+}
+
+.tabla-llenar-horas tbody tr:first-child td {
+    padding-top: 25px !important;
+}
+
+.table select {
     width: 100%;
     height: calc(1.6em + 0.75rem + 2px);
     padding: 0.375rem 0.75rem;
@@ -88,14 +127,16 @@
     border-radius: 0.25rem;
     justify-content: ;
 }
-.flatpickr-disabled{
+
+.flatpickr-disabled {
     color: #FFC5C5 !important;
 }
 
-.select-desactivo{
+.select-desactivo {
     position: relative;
 }
-.select-desactivo::before{
+
+.select-desactivo::before {
     content: "";
     position: absolute;
     background-color: red;
@@ -160,36 +201,42 @@ body.c-dark-theme .btn-outline-secondary {
     font-weight: lighter;
 }
 
-.flatpickr-monthDropdown-months{
+.flatpickr-monthDropdown-months {
     width: 150px !important;
 }
-.modal-content{
+
+.modal-content {
     position: relative;
 }
-.btn-tache-cerrar{
+
+.btn-tache-cerrar {
     position: absolute;
     top: 5px;
     right: 5px;
 }
+
 /*reportes empleado -------------------------------------------*/
-.lista_general{
+.lista_general {
     padding: 0;
     margin: 0;
     width: 100%;
 }
-.empleado_estatus_alta{
+
+.empleado_estatus_alta {
     background-color: #69D552;
     color: #fff;
     padding: 4px 6px;
     border-radius: 4px;
 }
-.empleado_estatus_baja{
+
+.empleado_estatus_baja {
     background-color: #FF9D9D;
     color: #fff;
     padding: 4px 6px;
     border-radius: 4px;
 }
-.general_li{
+
+.general_li {
     display: inline-block;
     vertical-align: top;
     list-style: none;
@@ -205,9 +252,10 @@ body.c-dark-theme .btn-outline-secondary {
     position: relative;
     overflow: hidden;
 }
-.general_li h4{
+
+.general_li h4 {
     font-size: 15px;
-    background-color: rgba(8,170,157,1);
+    background-color: rgba(8, 170, 157, 1);
     position: absolute;
     top: 0;
     left: 0;
@@ -219,7 +267,8 @@ body.c-dark-theme .btn-outline-secondary {
     align-items: center;
     padding: 4px 14px;
 }
-.general_li_ul{
+
+.general_li_ul {
     position: absolute;
     margin: 0;
     padding: 20px;
@@ -228,28 +277,38 @@ body.c-dark-theme .btn-outline-secondary {
     max-height: 75%;
     overflow: auto;
 }
-.general_li_ul h5{
+
+.general_li_ul h5 {
     margin: 0;
     font-size: 14px;
 }
-.general_li_ul li{
+
+.general_li_ul li {
     display: flex;
     justify-content: space-between;
 }
-.general_li small{
+
+.general_li small {
     font-weight: lighter;
 }
 
-.span_atrasos{
+.span_atrasos {
     padding: 5px 7px;
     color: #fff;
     border-radius: 4px;
     margin: auto;
 }
-table td .btn i{
-    font-size: 20px !important;
+
+table td .btn i {
+    font-size: 24px !important;
+    margin-right: 10px;
 }
-.list_times_faltantes{
+
+table th i {
+    transform: scale(1.3);
+}
+
+.list_times_faltantes {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -257,48 +316,62 @@ table td .btn i{
     height: 400px;
     overflow: auto;
 }
-.list_times_faltantes li{
+
+.list_times_faltantes li {
     display: inline-block;
     padding: 4px 7px;
     margin: 7px;
     border-radius: 4px;
     background-color: #f1f1f1;
 }
-.th-calendario{
+
+.th-calendario {
     text-align: center !important;
     background-color: rgba(0, 0, 0, 0.1) !important;
 }
-.th-año{
+
+.th-año {
     background-color: rgba(0, 0, 0, 0.15) !important;
 }
-.th-año:nth-child(even){
+
+.th-año:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.1) !important;
 }
-.th-mes{
+
+.th-mes {
     background-color: rgba(0, 0, 0, 0.2) !important;
 }
-.th-mes:nth-child(even){
+
+.th-mes:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.25) !important;
 }
-.th-semana{
+
+.th-semana {
     background-color: rgba(0, 0, 0, 0.3) !important;
 }
-.th-semana:nth-child(even){
+
+.th-semana:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.35) !important;
 }
-.tabla-fixed th{
-    background-color: #788BAC;
+
+.tabla-fixed th {
+    background-color: #788BAC !important;
+    color: #fff !important;
 }
-.tabla-fixed tr td{
+
+.tabla-fixed tr td {
     background-color: #fff !important;
 }
-.tabla-fixed tr:nth-child(even) td{
+
+.tabla-fixed tr:nth-child(even) td {
     background-color: #eee !important;
 }
-.cde-totalh{
+
+.cde-totalh {
     position: relative;
 }
-.cde-totalh::before{
+
+.cde-totalh::before {
     content: "";
     position: absolute;
     width: 1px;
@@ -307,13 +380,17 @@ table td .btn i{
     left: 0;
     background-color: grey;
 }
-.datatable_timesheet_empleados_reportes td, .datatable_timesheet_empleados_reportes th{
+
+.datatable_timesheet_empleados_reportes td,
+.datatable_timesheet_empleados_reportes th {
     font-size: 11px !important;
 }
-.datatable_timesheet_empleados_reportes td{
+
+.datatable_timesheet_empleados_reportes td {
     text-align: left !important;
 }
-.separador-titulo{
+
+.separador-titulo {
     background-color: #788BAC;
     padding: 4px 0;
     border-radius: 100px;
@@ -323,19 +400,22 @@ table td .btn i{
 }
 
 /*reportes proyecto -------------------------------------------*/
-.caja_anima_reporte{
+.caja_anima_reporte {
     position: relative;
     min-height: auto;
 }
-.caja_anima_reporte{
+
+.caja_anima_reporte {
     display: flex;
 }
-.caja_anima_reporte > div{
+
+.caja_anima_reporte>div {
     min-width: 100%;
 }
+
 #reporte_proyecto,
 #reporte_empleado,
-#reporte_general{
+#reporte_general {
     background-color: #f9f9f9;
     padding: 24px;
     border-radius: 6px;
@@ -345,71 +425,95 @@ table td .btn i{
     position: relative;
     z-index: 7;
 }
-.caja_anima_reporte .btn-cerrar{
+
+.caja_anima_reporte .btn-cerrar {
     position: absolute;
     right: 0px;
     top: 0px;
 }
-@keyframes reporteProyecto{
-    0%{
+
+@keyframes reporteProyecto {
+    0% {
         margin-left: 0%;
     }
-    100%{
+
+    100% {
         margin-left: -100%;
     }
 }
 
 /*dashboard ---------------------------------------------------*/
 
-.titulo-grafica{
+.titulo-grafica {
     margin: 0;
     font-size: 16px;
 }
-.titulo-grafica a{
+
+.titulo-grafica a {
     font-size: 11px;
 }
 
-.caja-cards-areas .card{
+.caja-cards-areas .card {
     display: inline-block;
     margin-right: 14px !important;
     background-color: #f8f8f8;
     min-width: 250px;
     padding: 20px !important;
 }
-.caja-cards-areas .progress{
+
+.caja-cards-areas .progress {
     background-color: #ddd;
 }
-.partisipacion-baja{
+
+.partisipacion-baja {
     background-color: #FF7373;
 }
-.partisipacion-media{
+
+.partisipacion-media {
     background-color: #FFAD3E;
 }
-.partisipacion-alta{
+
+.partisipacion-alta {
     background-color: #8BE578;
 }
-.caja-cards-areas .card h5{
+
+.caja-cards-areas .card h5 {
     color: rgba(0, 0, 0, 0.7);
     font-size: 14px;
 }
-.caja-cards-areas .card h4{
+
+.caja-cards-areas .card h4 {
     color: rgba(0, 0, 0, 0.5) !important;
     font-size: 18px;
 }
 
-@media(max-width: 1650px){
-    .total_graf_times_inner{
+@media(max-width: 1650px) {
+    .total_graf_times_inner {
         transform: scale(0.7);
     }
 }
-@media(max-width: 1380px){
-    .total_graf_times_inner{
+
+@media(max-width: 1380px) {
+    .total_graf_times_inner {
         transform: scale(0.4);
     }
 }
 
 
-table.dataTable tbody tr.selected td{
+table.dataTable tbody tr.selected td {
     color: unset !important;
     box-shadow: none !important;
+}
+
+.tr-sumas-facturables-horas {
+    background-color: #F3FFF6 !important;
+}
+
+.tr-sumas-facturables-horas:nth-child(2n) {
+    background-color: #B7E2EC !important;
+}
+
+.btn-secundario-mas {
+    border: none;
+    color: #057BE2;
 }

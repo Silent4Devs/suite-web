@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="menu-hedare-window">
-            <div class="item-content-menu-header" style="background-color: #EEF6FF;">
+            <div class="item-content-menu-header" style="background-color: #EEF6FF; min-width: 280px;">
                 <span class="title-item-menu-header">MI PANEL</span>
 
                 <ul class="menu-list-panel-header">
@@ -207,7 +207,8 @@
                     </a>
                 </div>
             </div>
-            <div class="item-content-menu-header line-left caja-menu-admin-header" style="background-color: #fff;">
+            <div class="item-content-menu-header line-left caja-menu-admin-header"
+                style="background-color: #fff; min-width: 280px;">
                 <span class="title-item-menu-header">ADMINISTRACIÓN</span>
                 <ul class="menu-list-admin-header">
                     <li>
@@ -242,7 +243,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="item-content-menu-header caja-img-escritorio-header" style="background-color: #e7ecef;">
+            <div class="item-content-menu-header caja-img-escritorio-header"
+                style="background-color: #e7ecef; padding: 0px;">
                 <img src="{{ asset('img/escritorio-header.png') }}" alt="" class="img-escritorio-header">
             </div>
         </div>

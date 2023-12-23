@@ -1,23 +1,23 @@
 <div>
     <form id="form_timesheet" action="{{ route('admin.timesheet.store') }}" method="POST">
-        <div>
-
-        </div>
         <div class="d-flex align-items-center justify-content-between card-mobile caja-calendar-semana" wire:ignore
             style="position: relative">
             <div class="form-group anima-focus">
 
-                <input type="date" id="fecha_dia" name="fecha_dia" class="form-control">
+                <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" placeholder="">
                 <label>
-                    <i class="fas fa-calendar-alt iconos-crear"></i>
+                    <i class="fa-regular fa-calendar"></i>
                     Semana laboral
                 </label>
                 <small class="fecha_dia errores text-danger" style="margin-left: 15px;"></small>
             </div>
 
             <div class="semanas-tras-time-text">
-                <small>Tiene permitido registrar
-                    <strong>{{ auth()->user()->empleado->semanas_min_timesheet }} </strong> semanas atras
+                <small>
+                    <i class="fa-solid fa-circle mr-2" style="color: #D2FDB8;"></i>
+                    Tiene permitido registrar
+                    <strong>{{ auth()->user()->empleado->semanas_min_timesheet }} </strong>
+                    semanas atras
                 </small>
             </div>
         </div>
@@ -25,24 +25,24 @@
             <x-loading-indicator />
             @csrf
 
-            <div class="datatable-fix">
+            <div class="datatable-fix scroll_estilos" style="margin-top: 0px;">
                 <table id="datatable_timesheet_create"
                     class="table table-responsive dataTables_scrollBody tabla-llenar-horas">
-                    <thead class="w-100 d-mobile-none">
+                    <thead class="d-mobile-none">
                         <tr>
-                            <th style="min-width:150px;">Proyecto </th>
-                            <th style="min-width:150px;">Tarea</th>
-                            <th>Facturable</th>
-                            <th style="min-width:40px;">Lunes</th>
-                            <th style="min-width:40px;">Martes</th>
-                            <th style="min-width:40px;">Miércoles</th>
-                            <th style="min-width:40px;">Jueves</th>
-                            <th style="min-width:40px;">Viernes</th>
-                            <th style="min-width:40px;">Sábado</th>
-                            <th style="min-width:40px;">Domingo</th>
-                            <th style="min-width:150px;">Descripción</th>
-                            <th style="">Opciones</th>
-                            <th style="min-width:70px;">Horas totales</th>
+                            <th style="min-width:150px;"><span>Proyecto</span> </th>
+                            <th style="min-width:150px;"><span>Tarea</span></th>
+                            <th><span><i class="fa-solid fa-dollar-sign"></i></span></th>
+                            <th style="min-width:40px;"><span>L</span></th>
+                            <th style="min-width:40px;"><span>M</span></th>
+                            <th style="min-width:40px;"><span>M</span></th>
+                            <th style="min-width:40px;"><span>J</span></th>
+                            <th style="min-width:40px;"><span>V</span></th>
+                            <th style="min-width:40px;"><span>S</span></th>
+                            <th style="min-width:40px;"><span>D</span></th>
+                            <th style="min-width:150px;"><span>Descripción</span></th>
+                            <th style=""><span><i class="fa-regular fa-trash-can"></i></span></th>
+                            <th style="min-width:70px;"><span>Total</span></th>
                         </tr>
                     </thead>
 
@@ -146,11 +146,12 @@
                                     @endif
                                     @if ($i > 1)
                                         <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}"
-                                            style="color:red; font-size:20px;" title="Eliminar fila"><i
-                                                class="fa-solid fa-trash-can"></i> <small
+                                            style="color:#006DDB; font-size:20px;" title="Eliminar fila">
+                                            <i class="fa-regular fa-trash-can"></i> <small
                                                 class="text-eliminar-actividad-mobile"
                                                 style="margin-left: 10px;">Eliminar
-                                                actividad</small></div>
+                                                actividad</small>
+                                        </div>
                                     @endif
                                 </td>
                                 <td>
@@ -195,9 +196,14 @@
 
 
             <div class="mt-4 caja-botones-time-acciones" style="display:flex; justify-content:space-between;">
-                <button class="btn btn-secundario btn-time-mas-fila"
+                <button class="btn btn-secundario-mas btn-time-mas-fila"
                     wire:click.prevent="$set('contador', {{ $contador + 1 }})">
-                    <font class="d-mobile-none">Agregar fila</font>
+                    <font class="d-mobile-none">
+                        <div class="d-flex align-items-center">
+                            Agregar fila
+                            <i class="material-symbols-outlined ml-1">add_circle</i>
+                        </div>
+                    </font>
                     <font class="d-mobile"><i class="fa-solid fa-plus mr-2"></i> Agregar actividad</font>
                 </button>
                 <div class="caja-botones-time-forms">
@@ -209,6 +215,8 @@
                             style="width:100%; height: 100%; position:absolute; display:flex; justify-content: center; align-items: center; top:0; left:0;">
                             Guardar borrador
                         </label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </button>
 
                     <div class="btn btn-success btn-regisrtar-time" style="position: relative;" data-toggle="modal"
@@ -219,6 +227,8 @@
                             style="width:100%; height: 100%; position:absolute; display:flex; justify-content: center; align-items: center; top:0; left:0;">
                             Registrar
                         </label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
             </div>
