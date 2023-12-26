@@ -629,7 +629,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('templates', 'TemplateController@index')->name('templates');
         Route::get('evaluacion-analisis-brechas-2022/{id}', 'FormularioAnalisisBrechasController@index')->name('formulario');
 
-            // Route::group(['middleware' => ['version_iso_2022']], function () {
+        Route::group(['middleware' => ['version_iso_2022']], function () {
             //Analisis brechas 2022
             //Template Analisis de Brechas
             Route::post('templates/store', 'TemplateController@store')->name('templates.store');

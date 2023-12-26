@@ -135,7 +135,7 @@
             </div>
         </div>
     </div> --}}
-        <div class="card card-body">
+        <div class="card card-body shadow-sm">
 
             <div class="row">
                 <div class="col-md-12">
