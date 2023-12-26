@@ -46,7 +46,7 @@ return [
             'from' => [
                 'address' => 'tucorreo@example.com',
                 'name' => 'Tu Nombre',
-            ]
+            ],
             // 'stream' => [
             //     'ssl' => [
             //         'allow_self_signed' => true,
