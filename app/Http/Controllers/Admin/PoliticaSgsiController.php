@@ -150,9 +150,17 @@ class PoliticaSgsiController extends Controller
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
             'id_reviso_politica' => 'required',
+            'fecha_publicacion' => 'required',
+            'fecha_revision' =>  'required',
         ]);
 
-        $politicaSgsi->update($request->all());
+        $politicaSgsi->update([
+            'nombre_politica' => $request->input('nombre_politica'),
+            'politicasgsi' => $request->input('politicasgsi'),
+            'fecha_publicacion' => $request->input('fecha_publicacion'),
+            'fecha_revision' => $request->input('fecha_revision'),
+            'estatus' => 'pendiente'
+        ]);
 
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Editado con éxito');
     }
