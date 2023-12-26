@@ -2,5 +2,3 @@
 
 // Este Jenkinsfilev1 no contiene un bloque pipeline adicional
 git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
-
-// Puedes agregar más pasos según sea necesario
