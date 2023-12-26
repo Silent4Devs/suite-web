@@ -11,6 +11,7 @@
     "chelout/laravel-relationship-events": "^2.0",
     "davejamesmiller/laravel-breadcrumbs": "5.x",
     "doctrine/dbal": "^3.1",
+    "essa/api-tool-kit": "^2.1",
     "guzzlehttp/guzzle": "^7.2",
     "hammerstone/fast-paginate": "^1.0",
     "intervention/image": "^2.5",

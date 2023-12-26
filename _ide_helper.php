@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.38.1.
+ * Generated for Laravel 10.38.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -24353,6 +24353,17 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->mergeConstraintsFrom($from);
+            }
+             
+                /**
+             * 
+             *
+             * @see \Essa\APIToolKit\MacroServiceProvider::boot()
+             * @static 
+             */ 
+            public static function dynamicPaginate()
+            {
+                                return \Illuminate\Database\Eloquent\Builder::dynamicPaginate();
             }
              
                 /**
