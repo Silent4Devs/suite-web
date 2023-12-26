@@ -23,7 +23,7 @@ class ControlListaDistribucion extends Model
         return $this->belongsTo(ProcesosListaDistribucion::class, 'proceso_id', 'id');
     }
 
-    public function participantes()
+    public function participante()
     {
         return $this->belongsTo(ParticipantesListaDistribucion::class, 'participante_id', 'id');
     }

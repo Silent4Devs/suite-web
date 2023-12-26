@@ -20,4 +20,9 @@ class ProcesosListaDistribucion extends Model
     {
         return $this->belongsTo(ListaDistribucion::class, 'modulo_id', 'id');
     }
+
+    public function participantes()
+    {
+        return $this->hasMany(ControlListaDistribucion::class, 'proceso_id', 'id');
+    }
 }

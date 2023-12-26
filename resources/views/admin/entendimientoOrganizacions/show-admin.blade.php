@@ -11,6 +11,10 @@
         .aprobar:hover {
             color: #F6FCFF;
         }
+
+        .card {
+            border-radius: 16px;
+        }
     </style>
 @endsection
 @section('content')
@@ -18,7 +22,7 @@
         <h5 class="titulo_general_funcion">Matriz FODA</h5>
     </div>
 
-    {{-- <div class="card card-body shadow-sm"> --}}
+    {{-- <div class="card card-body shadow-sm shadow-sm"> --}}
     {{-- <div class="d-flex justify-content-between">
             <div>
                 <h5>SILENT 4 BUSINESS</h5>
@@ -32,7 +36,7 @@
             <img src="{{ $logo_actual }}" alt="Logo de la empresa" height="150px">
         </div> --}}
 
-    <div class="card card-body">
+    <div class="card card-body shadow-sm">
         <div class="d-flex justify-content-between">
             <div>
                 <h5>SILENT 4 BUSINESS</h5>
@@ -102,7 +106,7 @@
 
     <form method="POST" id="formularioRevision" enctype="multipart/form-data">
         @csrf
-        {{-- <div class="card card-body">
+        {{-- <div class="card card-body shadow-sm">
         <div class="row">
             <div class="col-md-12">
                 <div class="row" style="justify-content: center; display: flex;">
@@ -146,7 +150,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                 <div class="row" style="justify-content: center; display: flex;">
                     <h3>Firma de Aprobación</h3>
                 </div>
@@ -157,11 +161,11 @@
                     <canvas id="signature-pad" class="signature-pad" width="450" height="250"
                         style="border: 1px solid black;"></canvas>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="row">
                 <div class="text-center form-group col-12">
-                    <button class="btn btn-verde" id="aprobado" type="submit">
+                    <button class="btn aprobar" id="aprobado" type="submit">
                         Aprobar Solicitud
                     </button>
                 </div>
@@ -181,22 +185,22 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var canvas = document.getElementById('signature-pad');
-            var signaturePad = new SignaturePad(canvas);
+            // var canvas = document.getElementById('signature-pad');
+            // var signaturePad = new SignaturePad(canvas);
 
-            document.getElementById('clear').addEventListener('click', function() {
-                signaturePad.clear();
-            });
+            // document.getElementById('clear').addEventListener('click', function() {
+            //     signaturePad.clear();
+            // });
             document.getElementById('aprobado').addEventListener('click', function(e) {
-                if (signaturePad.isEmpty()) {
-                    e.preventDefault();
-                    Swal.fire('Por favor firme el area designada.', '', 'info');
-                } else {
-                    let aprobar =
-                        "{{ route('admin.foda-organizacions.aprobado', $foda_actual) }}";
-                    document.getElementById('formularioRevision').setAttribute('action',
-                        aprobar);
-                }
+                // if (signaturePad.isEmpty()) {
+                //     e.preventDefault();
+                //     Swal.fire('Por favor firme el area designada.', '', 'info');
+                // } else {
+                let aprobar =
+                    "{{ route('admin.foda-organizacions.aprobado', $foda_actual) }}";
+                document.getElementById('formularioRevision').setAttribute('action',
+                    aprobar);
+                // }
             });
 
             document.getElementById('rechazado').addEventListener('click', function(e) {
@@ -205,7 +209,7 @@
                 if (comentario_if == '' || comentario_if == null) {
                     e.preventDefault();
                     Swal.fire(
-                        'Debe escribir comentarios de retroalimentacion al rechazar una Minuta',
+                        'Debe escribir comentarios de retroalimentacion al rechazar el Analisis',
                         '',
                         'info');
                 } else {

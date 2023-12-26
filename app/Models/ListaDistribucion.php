@@ -19,6 +19,11 @@ class ListaDistribucion extends Model
         'superaprobador',
     ];
 
+    public function proceso()
+    {
+        return $this->hasOne(ProcesosListaDistribucion::class, 'modulo_id', 'id');
+    }
+
     public function participantes()
     {
         return $this->hasMany(ParticipantesListaDistribucion::class, 'modulo_id', 'id');
