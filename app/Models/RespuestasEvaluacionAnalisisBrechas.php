@@ -9,7 +9,7 @@ class RespuestasEvaluacionAnalisisBrechas extends Model
 {
     use HasFactory;
 
-    protected $table = "respuestas_evaluacion_analisis_brechas";
+    protected $table = 'respuestas_evaluacion_analisis_brechas';
 
     protected $fillable = [
         'pregunta_id',
