@@ -121,16 +121,15 @@
                                             <p
                                                 style="text-align: center; font-size:11pt;
                                                 color:#153643; margin-left:25px; margin-right:25px">
-                                                La minuta: {{ $tema_minuta }} ha sido rechazada por el usuario:
-                                                {{ $rechazador }}<br>
-                                                Puedes ver los comentarios y editar la minuta en la siguiente liga.
+                                                El análisis FODA: {{ $analisis }} <br>
+                                                Puedes ver los comentarios y editar el analisis en la siguiente liga.
                                             </p>
                                             <br>
                                             <div style="text-align:center;">
                                                 Da click en la siguiente liga para revisarla y aprobarla
-                                                <a href="{{ route('admin.minutasaltadireccions.edit', $id_minuta) }}"
+                                                <a href="{{ route('admin.foda-organizacions.edit', $id_minuta) }}"
                                                     style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                    Revisar Minuta
+                                                    Revisar Análisis FODA
                                                 </a>
                                             </div>
                                         </div>

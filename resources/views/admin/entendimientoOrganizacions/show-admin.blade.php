@@ -144,7 +144,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group anima-focus">
-                        <textarea name="comentario" id="comentario" class="form-control"></textarea>
+                        <textarea name="comentario" id="comentario" class="form-control" placeholder=""></textarea>
                         <label for="comentario">Comentario</label>
                     </div>
                 </div>

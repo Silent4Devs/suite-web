@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('modulo_id');
             $table->string('estatus');
+            $table->unsignedBigInteger('proceso_id');
             $table->timestamps();
 
             $table->foreign('modulo_id')->references('id')->on('lista_distribucions')->onChange('cascade')->onDelete('cascade');
