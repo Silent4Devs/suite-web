@@ -1,17 +1,81 @@
 <div>
-    <div class="container-fluid mb-4">
-        <div class="row">
+    <style>
+
+        .card-dash-analisis{
+            width: 290px;
+            height: 68px;
+            box-shadow: 0px 1px 4px #0000000F;
+            border-radius: 8px;
+        }
+
+        .seccion-text {
+            font: medium 16px Roboto;
+            color: #464646;
+            opacity: 1;
+        }
+
+        .subtitle-valor {
+            font: normal normal normal 12px/20px Roboto;
+            letter-spacing: 0px;
+            color: #464646;
+            opacity: 1;
+            margin-bottom: 0px;
+        }
+
+        .seccion-valor{
+            font: medium 22px Roboto;
+            color: #34ABB9;
+            opacity: 1;
+        }
+
+        .col-icon{
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            background: #34ABB9;
+        }
+
+        .custom-progress {
+            background-color: #FFCB80;
+            border-radius: 29px;
+        }
+
+        .p-analisis{
+            text-align: left;
+            font: italic normal normal 14px/17px Roboto;
+            letter-spacing: 0px;
+            color: #606060;
+            opacity: 1;
+        }
+        .porcentaje-progress{
+            color: #34ABB9;
+            font-size: 22px;
+            margin: 0px;
+
+        }
+
+        .title-grafics{
+            font: normal normal normal 20px/20px Roboto;
+            letter-spacing: 0px;
+            color: #747474;
+            opacity: 1;
+        }
+
+    </style>
+
+        <div class="row mb-3 ">
             @if ($template_general->secciones->count() > 1)
                 <div class="col-3 mt-4">
-                    <div class="card card-body secciones justify-content-center">
-                        <div class="row align-items-center">
-                            <div class="col-3">
-                                <button wire:click="changeSeccion({{ 0 }})">Ojo</button>
-                            </div>
-                            <div class="col-9">
-                                <h5>
-                                    Total
-                                </h5>
+                    <div class="card card-analisis card-dash-analisis">
+                        <div class="card-body" style="margin: 0px; padding:0px;">
+                            <div class="row m-0 p-0" style="height: 68px;" >
+                                <div class="col-3 d-flex justify-content-center align-items-center col-icon">
+                                    <i class="material-icons-outlined" style="color: #FFFFFF; cursor: pointer;" wire:click="changeSeccion({{ 0 }})">
+                                        visibility
+                                    </i>
+                                </div>
+                                <div class="col-9 d-flex align-items-center justify-content-center">
+                                    <h5 class="seccion-text">Total</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -19,70 +83,83 @@
             @endif
             @foreach ($template_general->secciones as $key => $seccion)
                 <div class="col-3 mt-4">
-                    <div class="card card-body secciones justify-content-center">
-                        <div class="row align-items-center">
-                            <div class="col-3">
-                                <button wire:click="changeSeccion({{ $seccion->numero_seccion }})">Ojo</button>
+                    <div class="card card-body card-analisis card-dash-analisis" style="margin: 0px; padding:0px;">
+                        <div class="row m-0 p-0" style="height: 68px;">
+                            <div class="col-3 d-flex justify-content-center align-items-center col-icon">
+                                <i class="material-icons-outlined" style="color: #FFFFFF; cursor: pointer;" wire:click="changeSeccion({{ $seccion->numero_seccion }})">
+                                    visibility
+                                </i>
                             </div>
-                            <div class="col-6">
-                                <h5>
+                            <div class="col-6 d-flex align-items-center justify-content-center">
+                                <h5 class="seccion-text">
                                     Sección {{ $seccion->numero_seccion }}
                                 </h5>
                             </div>
-                            <div class="col-3">
-                                <p>
-                                    Valor {{ $seccion->porcentaje_seccion }}
-                                </p>
+                            <div class="col-3 d-flex align-items-center justify-content-center">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="subtitle-valor">
+                                            valor
+                                        </p>
+                                    </div>
+                                    <div class="col-12">
+                                        <h5 class="seccion-valor">
+                                            {{ round($seccion->porcentaje_seccion) }}%
+                                        </h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
-    </div>
-
 
     @if ($seccion_vista != 0)
         @foreach ($template->secciones as $key => $seccion)
-            <div class="card card-body">
-                <div class="row align-items-center">
-                    <div class="col-2">
-                        <p>Avance del análisis</p>
+            <div class="card card-body ">
+                <div class="row m-0 p-0" >
+                    <div class="col-2 d-flex justify-content-start align-items-center" style="padding-left: 0px;">
+                        <p style="margin: 0px;">Avance del análisis</p>
                     </div>
-                    <div class="col-9">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar"
-                                style="width: {{ (string) ($totalPorcentaje / $seccion->porcentaje_seccion) * 100 }}%;"
-                                aria-valuenow="{{ $sectionPercentages[$seccion->numero_seccion]['percentage'] }}"
-                                aria-valuemin="0"
-                                aria-valuemax="{{ $sectionPercentages[$seccion->numero_seccion]['percentage'] }}">
-                                {{ number_format($totalPorcentaje, 2) }}% de avance
-                            </div>
+                    <div class="col-9 d-flex align-items-center">
+                            <div class="progress" style="border-radius: 29px; width:900px;">
+                                <div class="progress-bar custom-progress" role="progressbar"
+                                    style="width: {{ (string) ($totalPorcentaje / $seccion->porcentaje_seccion) * 100 }}%;"
+                                    aria-valuenow="{{ $sectionPercentages[$seccion->numero_seccion]['percentage'] }}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="{{ $sectionPercentages[$seccion->numero_seccion]['percentage'] }}">
+                                    {{ number_format($totalPorcentaje, 2) }}% de avance
+                                </div>
                         </div>
                     </div>
-                    <div class="col-1">
-                        <p> {{ $seccion->porcentaje_seccion }}%</p>
+                    <div class="col-1 d-flex justify-content-center align-items-center">
+                        <p class="porcentaje-progress"> {{ round($seccion->porcentaje_seccion) }}%</p>
                     </div>
                 </div>
 
                 <div class="row">
-                    <sub>La evaluación tiene un peso total del 100%</sub><br>
-                    <sub>En el caso del registro de dos o mas secciones en la plantilla. "La evaluación dividira su
-                        valoración del porcentaje {{ $seccion->porcentaje_seccion }}% del 100% total"</sub>
+                    <p class="p-analisis">
+                        La evaluación tiene un peso total del 100%.<br>
+                        En el caso del registro de dos o más secciones en la plantilla: “La evaluación dividirá su valoración del porcentaje (Número registrado) % del 100% total”.
+                    </p>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-header">
-                    Sección: {{ $seccion->numero_seccion }}: {{ $seccion->descripcion }}
-                </div>
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-12">
+                            <h5 class="title-grafics">
+                                Sección {{ $seccion->numero_seccion }}: {{ $seccion->descripcion }}
+                            </h5>
+                            <hr>
+                        </div>
                         <div class="col-6">
-                            <div class="table-responsive">
-                                <table class="table">
+                            <div class="datatable-fix datatable-rds">
+                                {{-- <table class="table w-100">
                                     <thead>
-                                        <tr class="table-secondary">
+                                        <tr>
                                             <th>
                                                 Estatus
                                             </th>
@@ -96,7 +173,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($template->parametros as $parametro)
-                                            <tr class="table-light">
+                                            <tr >
                                                 <td>
                                                     {{ $parametro->estatus }}
                                                 </td>
@@ -113,6 +190,44 @@
                                     </tbody>
                                     <tfoot>
                                         <tr class="table-primary">
+                                            <td>Total</td>
+                                            <td>{{ $totalCount ?? 0 }}</td>
+                                            <td>{{ number_format((float) $totalPorcentaje, 2, '.') ?? 0 }}%</td>
+                                        </tr>
+                                    </tfoot>
+                                </table> --}}
+                                <table class="table w-100 table-borderless" id="contactos_table" style="width:100%">
+                                    <thead >
+                                        <tr style="background:#EBEBEB;">
+                                            <th>
+                                                Estatus
+                                            </th>
+                                            <th>
+                                                Requisitos
+                                            </th>
+                                            <th>
+                                                Peso
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($template->parametros as $parametro)
+                                            <tr style="background: #FFFFFF;">
+                                                <td>
+                                                    {{ $parametro->estatus }}
+                                                </td>
+                                                <td style="background-color: {{ $parametro->color }}">
+                                                    {{ $cuentas[$parametro->id] ?? 0 }}
+                                                </td>
+                                                <td>
+                                                    {{ number_format((float) $peso_parametros[$parametro->id], 2, '.') ?? 0 }}%
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="background: #EEFDFF;">
                                             <td>Total</td>
                                             <td>{{ $totalCount ?? 0 }}</td>
                                             <td>{{ number_format((float) $totalPorcentaje, 2, '.') ?? 0 }}%</td>
@@ -210,13 +325,13 @@
         @endforeach
     @else
         <div class="card card-body">
-            <div class="row align-items-center">
-                <div class="col-2">
-                    <p>Avance del análisis</p>
+            <div class="row m-0 p-0">
+                <div class="col-2 d-flex justify-content-start align-items-center" style="padding-left: 0px;">
+                    <p class="m-0">Avance Total del análisis</p>
                 </div>
-                <div class="col-9">
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar"
+                <div class="col-9 d-flex align-items-center">
+                    <div class="progress" style="border-radius:29px; width:900px;">
+                        <div class="progress-bar custom-progress" role="progressbar"
                             style="width: {{ (string) ($sectionPercentages[0]['percentage'] / 100) * 100 }}%;"
                             aria-valuenow="{{ $sectionPercentages[0]['percentage'] }}" aria-valuemin="0"
                             aria-valuemax="{{ $sectionPercentages[0]['percentage'] }}">
@@ -224,16 +339,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-1">
-                    <p> 100%</p>
+                <div class="col-1 d-flex justify-content-start align-items-center">
+                    <p class="porcentaje-progress m-0"> 100%</p>
                 </div>
             </div>
-
         </div>
 
         <div class="card">
             <div class="card-header">
-                Porcentaje Total del Análisis
+                <h5 class="title-grafics">
+                    Porcentaje Total del Análisis
+                </h5>
             </div>
             <div class="card-body">
                 <div class="row">
