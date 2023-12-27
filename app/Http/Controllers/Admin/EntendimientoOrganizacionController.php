@@ -342,12 +342,12 @@ class EntendimientoOrganizacionController extends Controller
         for ($i = 1; $i <= $no_niveles; $i++) {
             foreach ($proceso->participantes as $part) {
                 if (
-                    $part->participante->nivel == $i && $part->participante->control->estatus == "En Proceso"
+                    $part->participante->nivel == $i && $part->participante->control->estatus == "Pendiente"
                     && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                 ) {
                     for ($j = 1; $j <= 5; $j++) {
                         if (
-                            $part->participante->numero_orden == $j && $part->participante->control->estatus == "En Proceso"
+                            $part->participante->numero_orden == $j && $part->participante->control->estatus == "Pendiente"
                             && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                         ) {
 
@@ -376,7 +376,7 @@ class EntendimientoOrganizacionController extends Controller
         // dd($foda);
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        $no_niveles = $lista->niveles;
+        // $no_niveles = $lista->niveles;
         // dd($lista, $no_niveles);
 
         $proceso = ProcesosListaDistribucion::updateOrCreate(
@@ -385,7 +385,7 @@ class EntendimientoOrganizacionController extends Controller
                 'proceso_id' => $id_foda, //Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
             ],
             [
-                'estatus' => 'En Proceso',
+                'estatus' => 'Pendiente',
             ]
         );
         // dd($lista, $id_foda, $this->modelo, $proceso);
@@ -397,7 +397,7 @@ class EntendimientoOrganizacionController extends Controller
                     'participante_id' => $participante->id,
                 ],
                 [
-                    'estatus' => 'pendiente',
+                    'estatus' => 'Pendiente',
                 ]
             );
         }
@@ -406,9 +406,8 @@ class EntendimientoOrganizacionController extends Controller
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
-                //Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
                 // dd('primer usuario', $part->participante);
-                break;
             }
         }
 
@@ -419,7 +418,7 @@ class EntendimientoOrganizacionController extends Controller
                 // for ($j = 1; $j <= 5; $j++) {
                 if ($part->participante->numero_orden == 1) {
                     $emailAprobador = $part->participante->empleado->email;
-                    //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                    Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
                     break;
                 }
                 // }
@@ -503,7 +502,7 @@ class EntendimientoOrganizacionController extends Controller
         $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso);
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
-            //Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->analisis));
+            Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->analisis));
             // dd('primer usuario', $part->participante);
         }
     }
@@ -535,10 +534,10 @@ class EntendimientoOrganizacionController extends Controller
         $emailresponsable = $foda->empleado->email;
         $analisis_foda = $foda->analisis;
 
-        //Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoAnalisisFODALider($foda->id, $analisis_foda));
+        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoAnalisisFODALider($foda->id, $analisis_foda));
 
         foreach ($aprobacion->participantes as $participante) {
-            //Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoAnalisisFODA($analisis_foda));
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoAnalisisFODA($analisis_foda));
         }
 
         return redirect(route('admin.entendimiento-organizacions.index'));
@@ -573,12 +572,12 @@ class EntendimientoOrganizacionController extends Controller
 
         for ($i = 1; $i <= $no_niveles; $i++) {
             foreach ($proceso->participantes as $part) {
-                if ($part->participante->nivel == $i && $part->participante->control->estatus == "En Proceso") {
+                if ($part->participante->nivel == $i && $part->participante->control->estatus == "Pendiente") {
                     for ($j = 1; $j <= 5; $j++) {
-                        if ($part->participante->numero_orden == $j && $part->participante->control->estatus == "En Proceso") {
+                        if ($part->participante->numero_orden == $j && $part->participante->control->estatus == "Pendiente") {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
-                            //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
                             break;
                         }
                     }

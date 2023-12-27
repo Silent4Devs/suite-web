@@ -11,9 +11,11 @@ class MatrizEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $empleado_name;
+    // public $empleado_name;
 
-    public $comite_name;
+    // public $comite_name;
+
+    public $id_matriz;
 
     /**
      * Create a new message instance.
@@ -22,8 +24,9 @@ class MatrizEmail extends Mailable
      */
 
     //prueba
-    public function __construct()
+    public function __construct($id_matriz)
     {
+        $this->id_matriz = $id_matriz;
     }
 
     public function getBase64($url)
@@ -31,18 +34,18 @@ class MatrizEmail extends Mailable
         try {
             $img_route = $url;
             $logo_base = file_get_contents($img_route);
-            $img = 'data:image/png;base64,'.base64_encode($logo_base);
+            $img = 'data:image/png;base64,' . base64_encode($logo_base);
 
             return $img;
         } catch (\Exception $e) {
             try {
                 $img_route = $url;
                 $logo_base = Storage::get($img_route);
-                $img = 'data:image/png;base64,'.base64_encode($logo_base);
+                $img = 'data:image/png;base64,' . base64_encode($logo_base);
 
                 return $img;
             } catch (\Throwable $th) {
-                $img = 'data:image/png;base64,'.'';
+                $img = 'data:image/png;base64,' . '';
 
                 return $img;
             }

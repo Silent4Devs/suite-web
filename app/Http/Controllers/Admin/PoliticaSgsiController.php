@@ -6,13 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPoliticaSgsiRequest;
 use App\Http\Requests\StorePoliticaSgsiRequest;
 use App\Http\Requests\UpdatePoliticaSgsiRequest;
+use App\Mail\PoliticasEstatusEmail;
+use App\Models\ControlListaDistribucion;
 use App\Models\Empleado;
+use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\PoliticaSgsi;
+use App\Models\ProcesosListaDistribucion;
 use App\Models\Team;
+use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -20,6 +26,8 @@ use Yajra\DataTables\Facades\DataTables;
 class PoliticaSgsiController extends Controller
 {
     use ObtenerOrganizacion;
+
+    public $modelo =  'PoliticaSgsi';
 
     public function index(Request $request)
     {
@@ -125,10 +133,70 @@ class PoliticaSgsiController extends Controller
         ]);
 
         //envio de corrreo
+        $this->listaDistribucion($politicaSgsi);
 
         $politicaSgsi->estatus =  'pendiente';
 
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
+    }
+
+    public function listaDistribucion($politicaSgsi)
+    {
+        // dd($requisito, $array_requisito);
+        $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
+        $creador = User::getCurrentUser()->empleado->id; // Replace 123 with your specific empleado_id value
+        // $no_niveles = $lista->niveles;
+        // dd($lista, $no_niveles);
+
+        $proceso = ProcesosListaDistribucion::updateOrCreate(
+            [
+                'modulo_id' => $lista->id,
+                'proceso_id' => $politicaSgsi->id, //Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
+            ],
+            [
+                'estatus' => 'Pendiente',
+            ]
+        );
+        // dd($lista, $id_foda, $this->modelo, $proceso);
+
+        foreach ($lista->participantes as $participante) {
+            $participantes = ControlListaDistribucion::updateOrCreate(
+                [
+                    'proceso_id' => $proceso->id,
+                    'participante_id' => $participante->id,
+                ],
+                [
+                    'estatus' => 'Pendiente',
+                ]
+            );
+        }
+        $this->envioCorreos($proceso, $politicaSgsi);
+    }
+
+    public function envioCorreos($proceso, $politicaSgsi)
+    {
+        foreach ($proceso->participantes as $part) {
+            if ($part->participante->nivel == 0) {
+                $emailSuperAprobador = $part->participante->empleado->email;
+                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new PoliticasEstatusEmail($politicaSgsi->id));
+                // dd('primer usuario', $part->participante);
+            }
+        }
+
+        //Aprobadores normales
+        // for ($i = 1; $i <= $no_niveles; $i++) {
+        foreach ($proceso->participantes as $part) {
+            if ($part->participante->nivel == 1) {
+                // for ($j = 1; $j <= 5; $j++) {
+                if ($part->participante->numero_orden == 1) {
+                    $emailAprobador = $part->participante->empleado->email;
+                    Mail::to(removeUnicodeCharacters($emailAprobador))->send(new PoliticasEstatusEmail($politicaSgsi->id));
+                    break;
+                }
+                // }
+            }
+            // }
+        }
     }
 
     public function edit(PoliticaSgsi $politicaSgsi)
@@ -194,7 +262,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
         foreach ($politicaSgsis as $polsgsis) {
-            if (! isset($polsgsis->reviso)) {
+            if (!isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                 $polsgsis->estemp = 'baja';
             } else {
