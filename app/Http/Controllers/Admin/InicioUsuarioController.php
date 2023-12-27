@@ -51,9 +51,12 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use Essa\APIToolKit\Api\ApiResponse;
 
 class InicioUsuarioController extends Controller
 {
+    use ApiResponse;
+
     public function index()
     {
         abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');

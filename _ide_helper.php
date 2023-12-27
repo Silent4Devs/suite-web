@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.38.1.
+ * Generated for Laravel 10.38.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -21231,230 +21231,6 @@
      
 }
 
-    namespace Opcodes\LogViewer\Facades { 
-            /**
-     * 
-     *
-     * @see \Opcodes\LogViewer\LogViewerService
-     */ 
-        class LogViewer {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function basePathForLogs()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->basePathForLogs();
-        }
-                    /**
-         * 
-         *
-         * @return \Opcodes\LogViewer\LogFileCollection|\Opcodes\LogViewer\LogFile[] 
-         * @static 
-         */ 
-        public static function getFiles()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFiles();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getFilesGroupedByFolder()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFilesGroupedByFolder();
-        }
-                    /**
-         * Find the file with the given identifier or file name.
-         *
-         * @static 
-         */ 
-        public static function getFile($fileIdentifier)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFile($fileIdentifier);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getFolder($folderIdentifier)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFolder($folderIdentifier);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function supportsHostsFeature()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->supportsHostsFeature();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function resolveHostsUsing($callback)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->resolveHostsUsing($callback);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getHosts()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getHosts();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getHost($hostIdentifier)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getHost($hostIdentifier);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function clearFileCache()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->clearFileCache();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getRouteDomain()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getRouteDomain();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getRoutePrefix()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getRoutePrefix();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getRouteMiddleware()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getRouteMiddleware();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function auth($callback = null)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->auth($callback);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function lazyScanChunkSize()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->lazyScanChunkSize();
-        }
-                    /**
-         * Get the maximum number of bytes of the log that we should display.
-         *
-         * @static 
-         */ 
-        public static function maxLogSize()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->maxLogSize();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setMaxLogSize($bytes)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->setMaxLogSize($bytes);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function laravelRegexPattern()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->laravelRegexPattern();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function logMatchPattern()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->logMatchPattern();
-        }
-                    /**
-         * Determine if Log Viewer's published assets are up-to-date.
-         *
-         * @throws \RuntimeException
-         * @static 
-         */ 
-        public static function assetsAreCurrent()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->assetsAreCurrent();
-        }
-                    /**
-         * Get the current version of the Log Viewer
-         *
-         * @static 
-         */ 
-        public static function version()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->version();
-        }
-         
-    }
-     
-}
-
     namespace Sentry\Laravel { 
             /**
      * 
@@ -24582,6 +24358,17 @@ namespace  {
                 /**
              * 
              *
+             * @see \Essa\APIToolKit\MacroServiceProvider::boot()
+             * @static 
+             */ 
+            public static function dynamicPaginate()
+            {
+                                return \Illuminate\Database\Eloquent\Builder::dynamicPaginate();
+            }
+             
+                /**
+             * 
+             *
              * @see \Hammerstone\FastPaginate\FastPaginate::paginate()
              * @param mixed $perPage
              * @param mixed $columns
@@ -26920,7 +26707,6 @@ namespace  {
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
             class Livewire extends \Livewire\Livewire {}
-            class LogViewer extends \Opcodes\LogViewer\Facades\LogViewer {}
             class Sentry extends \Sentry\Laravel\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class ResponseCache extends \Spatie\ResponseCache\Facades\ResponseCache {}

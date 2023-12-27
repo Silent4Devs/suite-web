@@ -119,7 +119,13 @@ class AlcanceSgsiController extends Controller
             'fecha_revision' => 'required|date',
         ]);
 
-        $alcanceSgsi = AlcanceSgsi::create($request->all());
+        $alcanceSgsi = AlcanceSgsi::create([
+            'nombre' =>  $request->input('nombre'),
+            'alcancesgsi' =>  $request->input('alcancesgsi'),
+            'fecha_publicacion'  =>  $request->input('fecha_publicacion'),
+            'fecha_revision'  =>  $request->input('fecha_revision'),
+            'estatus'  =>  'pendiente'
+        ]);
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
     }
@@ -160,7 +166,13 @@ class AlcanceSgsiController extends Controller
             'fecha_revision' => 'required|date'
         ]);
 
-        $alcanceSgsi->update($request->all());
+        $alcanceSgsi->update([
+            'nombre' =>  $request->input('nombre'),
+            'alcancesgsi' =>  $request->input('alcancesgsi'),
+            'fecha_publicacion'  =>  $request->input('fecha_publicacion'),
+            'fecha_revision'  =>  $request->input('fecha_revision'),
+            'estatus'  =>  'pendiente'
+        ]);
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
     }

@@ -9,7 +9,7 @@ pipeline {
 
        stage('Install') {
             steps {
-                git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
+                git branch: 'develop', url: 'https://github.com/Silent4Devs/suite-web.git'
             }
         }
 

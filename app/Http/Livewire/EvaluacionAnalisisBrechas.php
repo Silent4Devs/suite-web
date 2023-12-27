@@ -9,13 +9,19 @@ use Livewire\Component;
 class EvaluacionAnalisisBrechas extends Component
 {
     public $itemId; // Renamed from $id
+
     public $seccion_vista = 0;
 
     public $selectedValues;
+
     public $oldSelectedValues;
+
     public $evidenciaValues;
+
     public $oldEvidenciaValues;
+
     public $recomendacionValues;
+
     public $oldRecomendacionValues = []; // Store old values
 
     public $cuentas;
@@ -45,10 +51,10 @@ class EvaluacionAnalisisBrechas extends Component
                     $this->selectedValues[$pregunta->id]['option1'] = old("selectedValues.{$pregunta->id}.option1", $pregunta->respuesta->parametro->id ?? null);
                     $this->oldSelectedValues[$pregunta->id]['option1'] = $this->selectedValues[$pregunta->id]['option1'];
 
-                    $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->evidencia ?? '');
+                    $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.'.$pregunta->id, $pregunta->respuesta->evidencia ?? '');
                     $this->oldEvidenciaValues[$pregunta->id] = $this->evidenciaValues[$pregunta->id];
 
-                    $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->recomendacion ?? '');
+                    $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.'.$pregunta->id, $pregunta->respuesta->recomendacion ?? '');
                     $this->oldRecomendacionValues[$pregunta->id] = $this->recomendacionValues[$pregunta->id];
                 }
             }
@@ -95,6 +101,7 @@ class EvaluacionAnalisisBrechas extends Component
         //sirve para mostrar las respuesta ya existentes, no se pudo poner en hydrate()
 
         $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+
         // $this->emit('mounted');
         // dd($cuentas);
         // dd($sectionPercentages);
@@ -178,7 +185,7 @@ class EvaluacionAnalisisBrechas extends Component
                 }
             }
 
-            $percentage = $totalQuestionsInSection > 0 ? ($answeredQuestions / $totalQuestionsInSection) *  $seccion->porcentaje_seccion : 0;
+            $percentage = $totalQuestionsInSection > 0 ? ($answeredQuestions / $totalQuestionsInSection) * $seccion->porcentaje_seccion : 0;
 
             $sectionPercentages[$seccion->numero_seccion] = [
                 'answeredQuestions' => $answeredQuestions,
@@ -264,7 +271,7 @@ class EvaluacionAnalisisBrechas extends Component
 
             $sectionPercentages[$seccion->numero_seccion] = $this->sumaParametrosSeccion($seccion->numero_seccion);
             // dd($sectionPercentages);
-            $percentage += $sectionPercentages[$seccion->numero_seccion]["total_porcentaje"];
+            $percentage += $sectionPercentages[$seccion->numero_seccion]['total_porcentaje'];
         }
 
         // dd($sectionPercentages, $percentage);
@@ -314,7 +321,6 @@ class EvaluacionAnalisisBrechas extends Component
     public function saveRecomendacion($preguntaID)
     {
         $recomendacionValue = $this->recomendacionValues[$preguntaID] ?? null;
-
 
         if ($recomendacionValue !== null) {
             // Update or create based on pregunta_id
