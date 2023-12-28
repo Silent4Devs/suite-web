@@ -152,6 +152,8 @@ class ListaDistribucionController extends Controller
             }
         }
 
+        $participantes_seleccionados = [];
+
         for ($i = 1; $i <= $lista->niveles; $i++) {
 
             foreach ($lista->participantes as $participante) {

@@ -339,7 +339,7 @@ class EntendimientoOrganizacionController extends Controller
 
         // dd($proceso, $foda);
         if ($proceso->estatus == "Pendiente") {
-            for ($i = 1; $i <= $no_niveles; $i++) {
+            for ($i = 0; $i <= $no_niveles; $i++) {
                 foreach ($proceso->participantes as $part) {
                     if (
                         $part->participante->nivel == $i && $part->estatus == "Pendiente"
@@ -409,7 +409,7 @@ class EntendimientoOrganizacionController extends Controller
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
-                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                //Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
                 // dd('primer usuario', $part->participante);
             }
         }
@@ -421,7 +421,7 @@ class EntendimientoOrganizacionController extends Controller
                 // for ($j = 1; $j <= 5; $j++) {
                 if ($part->participante->numero_orden == 1) {
                     $emailAprobador = $part->participante->empleado->email;
-                    Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                    //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
                     break;
                 }
                 // }
@@ -502,10 +502,11 @@ class EntendimientoOrganizacionController extends Controller
 
     public function correosAprobacion($proceso, $foda)
     {
-        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso);
+        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
+        // dd($procesoAprobado);
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
-            Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->analisis));
+            //Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->analisis));
             // dd('primer usuario', $part->participante);
         }
     }
@@ -537,10 +538,10 @@ class EntendimientoOrganizacionController extends Controller
         $emailresponsable = $foda->empleado->email;
         $analisis_foda = $foda->analisis;
 
-        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoAnalisisFODALider($foda->id, $analisis_foda));
+        //Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoAnalisisFODALider($foda->id, $analisis_foda));
 
         foreach ($aprobacion->participantes as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoAnalisisFODA($analisis_foda));
+            //Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoAnalisisFODA($analisis_foda));
         }
 
         return redirect(route('admin.entendimiento-organizacions.index'));
@@ -580,7 +581,7 @@ class EntendimientoOrganizacionController extends Controller
                         if ($part->participante->numero_orden == $j && $part->estatus == "Pendiente") {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
-                            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                            //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
                             break;
                         }
                     }
