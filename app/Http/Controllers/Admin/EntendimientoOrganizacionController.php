@@ -338,34 +338,37 @@ class EntendimientoOrganizacionController extends Controller
         $no_niveles = $modulo->niveles;
 
         // dd($proceso, $foda);
+        if ($proceso->estatus == "Pendiente") {
+            for ($i = 1; $i <= $no_niveles; $i++) {
+                foreach ($proceso->participantes as $part) {
+                    if (
+                        $part->participante->nivel == $i && $part->estatus == "Pendiente"
+                        && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
+                    ) {
+                        for ($j = 1; $j <= 5; $j++) {
+                            if (
+                                $part->participante->numero_orden == $j && $part->estatus == "Pendiente"
+                                && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
+                            ) {
 
-        for ($i = 1; $i <= $no_niveles; $i++) {
-            foreach ($proceso->participantes as $part) {
-                if (
-                    $part->participante->nivel == $i && $part->participante->control->estatus == "Pendiente"
-                    && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
-                ) {
-                    for ($j = 1; $j <= 5; $j++) {
-                        if (
-                            $part->participante->numero_orden == $j && $part->participante->control->estatus == "Pendiente"
-                            && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
-                        ) {
+                                $empleados = Empleado::getaltaAll();
+                                $foda_actual = $entendimientoOrganizacion;
+                                $obtener_FODA = EntendimientoOrganizacion::where('id', $entendimientoOrganizacion)->first();
+                                $organizacion_actual = $this->obtenerOrganizacion();
+                                $logo_actual = $organizacion_actual->logo;
+                                $empresa_actual = $organizacion_actual->empresa;
 
-                            $empleados = Empleado::getaltaAll();
-                            $foda_actual = $entendimientoOrganizacion;
-                            $obtener_FODA = EntendimientoOrganizacion::where('id', $entendimientoOrganizacion)->first();
-                            $organizacion_actual = $this->obtenerOrganizacion();
-                            $logo_actual = $organizacion_actual->logo;
-                            $empresa_actual = $organizacion_actual->empresa;
-
-                            return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
-                            break;
-                        } else {
-                            return redirect(route('admin.entendimiento-organizacions.index'));
+                                return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+                                break;
+                            } else {
+                                return redirect(route('admin.entendimiento-organizacions.index'));
+                            }
                         }
                     }
                 }
             }
+        } else {
+            return redirect(route('admin.entendimiento-organizacions.index'));
         }
     }
 
@@ -572,9 +575,9 @@ class EntendimientoOrganizacionController extends Controller
 
         for ($i = 1; $i <= $no_niveles; $i++) {
             foreach ($proceso->participantes as $part) {
-                if ($part->participante->nivel == $i && $part->participante->control->estatus == "Pendiente") {
+                if ($part->participante->nivel == $i && $part->estatus == "Pendiente") {
                     for ($j = 1; $j <= 5; $j++) {
-                        if ($part->participante->numero_orden == $j && $part->participante->control->estatus == "Pendiente") {
+                        if ($part->participante->numero_orden == $j && $part->estatus == "Pendiente") {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
                             Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));

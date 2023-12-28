@@ -23,8 +23,10 @@ class ParticipantesListaDistribucion extends Model
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->select('id', 'name', 'foto', 'email');
     }
 
-    public function control()
+    public function control($id_proceso)
     {
-        return $this->hasOne(ControlListaDistribucion::class, 'participante_id', 'id');
+        return ControlListaDistribucion::where('proceso_id', $id_proceso)
+            ->where('participante_id', $this->id)
+            ->first();
     }
 }

@@ -26,4 +26,9 @@ class ProcesosListaDistribucion extends Model
     {
         return $this->hasMany(ControlListaDistribucion::class, 'proceso_id', 'id');
     }
+
+    public function comentarios()
+    {
+        return $this->hasMany(ComentariosProcesosListaDistribucion::class, 'proceso_id', 'id');
+    }
 }
