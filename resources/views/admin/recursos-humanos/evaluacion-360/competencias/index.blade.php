@@ -32,25 +32,34 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered w-100 tblCompetencias">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="min-width:50px;">
-                            Competencias
-                        </th>
-                        <th style="vertical-align: top; min-width:250px;">
-                            Nombre
-                        </th>
-                        <th style="vertical-align: top; min-width:150px;">
-                            Tipo
-                        </th>
-                        <th style="vertical-align: top;min-width:150px;">
-                            Opciones
-                        </th>
-                    </tr>
+            <div class="text-right">
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('admin.ev360-competencias.create') }}" type="button" class="btn btn-primary">Registrar Competencia</a>
+                    </div>
+            </div>
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <h3 class="title-table-rds"> Competencias</h3>
+                <table class="datatable tblCompetencias" id="tblCompetencias">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="min-width:50px;">
+                                Competencias
+                            </th>
+                            <th style="vertical-align: top; min-width:250px;">
+                                Nombre
+                            </th>
+                            <th style="vertical-align: top; min-width:150px;">
+                                Tipo
+                            </th>
+                            <th style="vertical-align: top;min-width:150px;">
+                                Opciones
+                            </th>
+                        </tr>
 
-                </thead>
-            </table>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

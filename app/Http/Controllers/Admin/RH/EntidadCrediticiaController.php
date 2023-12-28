@@ -7,6 +7,9 @@ use App\Models\RH\EntidadCrediticia;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
+
+
 
 class EntidadCrediticiaController extends Controller
 {
@@ -18,10 +21,46 @@ class EntidadCrediticiaController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('entidades_crediticeas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad', 'descripcion')->get();
+
         if ($request->ajax()) {
-            return datatables()->of($entidadesCrediticias)->toJson();
+            $query = EntidadCrediticia::get();
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->addIndexColumn();
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'capacitaciones_ver';
+                $editGate = 'capacitaciones_editar';
+                $deleteGate = 'capacitaciones_eliminar';
+                $crudRoutePart = 'recursos';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->addColumn('entidad', function ($row) {
+                return $row->entidad ? $row->entidad : '';
+            });
+            $table->addColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
         }
+
+
+        $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad', 'descripcion')->get();
 
         return view('admin.recursos-humanos.entidades-crediticias.index', compact('entidadesCrediticias'));
     }
