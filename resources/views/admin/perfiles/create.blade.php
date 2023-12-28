@@ -6,10 +6,10 @@
         <div class="card-body">
             <form method="POST" action="{{ route('admin.perfiles.store') }}" enctype="multipart/form-data">
                 @csrf
-                <div class="form-group">
-                    <label class="required" for="nombre"><i class="fas fa-briefcase iconos-crear"></i>Nombre del Nivel</label>
-                    <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
+                <div class="form-group anima-focus">
+                    <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" placeholder="" type="text" name="nombre"
                         id="nombre" value="{{ old('nombre', '') }}" required>
+                        {!! Form::label('nombre', 'Nombre del Nivel*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('nombre'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre') }}
@@ -17,10 +17,10 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.puesto.fields.puesto_helper') }}</span>
                 </div>
-                <div class="form-group">
-                    <label for="descripcion"><i class="fas fa-file-signature iconos-crear"></i>Descripción</label>
-                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                        name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+                <div class="form-group anima-focus">
+                    <textarea class="form-control  {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
+                        name="descripcion" placeholder="" id="descripcion">{{ old('descripcion') }}</textarea>
+                        {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}

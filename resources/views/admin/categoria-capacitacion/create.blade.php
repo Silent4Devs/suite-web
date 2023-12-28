@@ -8,11 +8,10 @@
             <form method="POST" action="{{ route('admin.categoria-capacitacion.store') }}" class="row">
                 @csrf
 
-                <div class="form-group col-sm-12 col-lg-12 col-md-12">
-                    <label class="required" for="nombre"><i class="fas fa-layer-group iconos-crear"></i>Nombre de la
-                        Categoría</label>
-                    <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
+                <div class="form-group col-sm-12 col-lg-12 col-md-12 anima-focus">
+                    <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" placeholder="" type="text" name="nombre"
                         id="nombre" value="{{ old('nombre', '') }}" required>
+                        {!! Form::label('nombre', 'Nombre de la Categoría*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('nombre'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre') }}
