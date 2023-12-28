@@ -1,17 +1,17 @@
-<div class="form-group">
-    <label class="required" for="name"><i class="fas fa-briefcase iconos-crear"></i>Nombre</label>
-    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name"
+<div class="form-group anima-focus">
+    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="" type="text" name="name" id="name"
         value="{{ old('name', $tipoContratoEmpleado->name) }}" required>
+        {!! Form::label('name', 'Nombre*', ['class' => 'asterisco']) !!}
     @if ($errors->has('name'))
         <div class="invalid-feedback">
             {{ $errors->first('name') }}
         </div>
     @endif
 </div>
-<div class="form-group">
-    <label for="description"><i class="fas fa-file-signature iconos-crear"></i>Descripción</label>
-    <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description"
+<div class="form-group anima-focus">
+    <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="" name="description"
         id="description">{{ old('description', $tipoContratoEmpleado->description) }}</textarea>
+        {!! Form::label('description', 'Descripción*', ['class' => 'asterisco']) !!}
     @if ($errors->has('description'))
         <div class="invalid-feedback">
             {{ $errors->first('description') }}
