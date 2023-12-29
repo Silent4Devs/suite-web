@@ -7,13 +7,9 @@
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
     </h5>
 
-    <div class="card card-body not-card-mobile time-responsivo">
-        <div class="row">
-            <x-loading-indicator />
-            @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
 
-        </div>
-    </div>
+    <x-loading-indicator />
+    @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
 @endsection
 
 
@@ -305,16 +301,17 @@
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
 
-            $('.tabla-llenar-horas tbody').click(function(e){
-                if (e.target.className == 'area-click-acordeon-time-mobile' && document.body.classList.contains('body-responsive-mobile')) {
-                    $('.tr-time-actividad-mobile:not(.tr-time-actividad-mobile:hover)').removeClass('ver-tr-time-mobile');
+            $('.tabla-llenar-horas tbody').click(function(e) {
+                if (e.target.className == 'area-click-acordeon-time-mobile' && document.body.classList
+                    .contains('body-responsive-mobile')) {
+                    $('.tr-time-actividad-mobile:not(.tr-time-actividad-mobile:hover)').removeClass(
+                        'ver-tr-time-mobile');
                     $('.tr-time-actividad-mobile:hover').toggleClass('ver-tr-time-mobile');
                 }
             });
         });
-
     </script>
 
     <script>
@@ -330,14 +327,13 @@
         }
 
         function resetInactivityTimeout() {
-        clearTimeout(inactivityTimeout);
+            clearTimeout(inactivityTimeout);
 
-        inactivityTimeout = setTimeout(showInactiveMessage, time); // 60000 ms = 1 minuto
+            inactivityTimeout = setTimeout(showInactiveMessage, time); // 60000 ms = 1 minuto
         }
 
         document.addEventListener("mousemove", resetInactivityTimeout);
 
         resetInactivityTimeout();
-
     </script>
 @endsection
