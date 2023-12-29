@@ -343,6 +343,14 @@ class PoliticaSgsiController extends Controller
                                 return redirect(route('admin.politica-sgsis.index'));
                             }
                         }
+                    } elseif (
+                        $part->participante->nivel == 0 && $part->estatus == "Pendiente"
+                        && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
+                    ) {
+                        $politicaSgsi->load('team');
+                        // dd($politicaSgsi);
+                        return view('admin.politicaSgsis.revision', compact('politicaSgsi'));
+                        break;
                     }
                 }
             }

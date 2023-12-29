@@ -34,69 +34,69 @@ class EntendimientoOrganizacionController extends Controller
 
     public $modelo = 'EntendimientoOrganizacion';
 
-    public function index(Request $request)
-    {
-        abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //$obtener_FODA = EntendimientoOrganizacion::first();
-        // $query = EntendimientoOrganizacion::with('empleado')->get();
-        // dd($query);
-        if ($request->ajax()) {
-            $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
-            $table = Datatables::of($query);
+    // public function index(Request $request)
+    // {
+    //     abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    //     //$obtener_FODA = EntendimientoOrganizacion::first();
+    //     // $query = EntendimientoOrganizacion::with('empleado')->get();
+    //     // dd($query);
+    //     if ($request->ajax()) {
+    //         $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+    //         $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+    //         $table->addColumn('placeholder', '&nbsp;');
+    //         $table->addColumn('actions', '&nbsp;');
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis_foda_ver';
-                $editGate = 'analisis_foda_editar';
-                $deleteGate = 'analisis_foda_eliminar';
-                $crudRoutePart = 'entendimiento-organizacions';
+    //         $table->editColumn('actions', function ($row) {
+    //             $viewGate = 'analisis_foda_ver';
+    //             $editGate = 'analisis_foda_editar';
+    //             $deleteGate = 'analisis_foda_eliminar';
+    //             $crudRoutePart = 'entendimiento-organizacions';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('fortaleza', function ($row) {
-                return $row->fortaleza ? strip_tags($row->fortaleza) : '';
-            });
-            $table->editColumn('oportunidades', function ($row) {
-                return $row->oportunidades ? $row->oportunidades : '';
-            });
-            $table->editColumn('debilidades', function ($row) {
-                return $row->debilidades ? $row->debilidades : '';
-            });
-            $table->editColumn('amenazas', function ($row) {
-                return $row->amenazas ? $row->amenazas : '';
-            });
-            $table->editColumn('analisis', function ($row) {
-                return $row->analisis ? $row->analisis : '';
-            });
-            $table->editColumn('fecha', function ($row) {
-                return $row->fecha ? \Carbon\Carbon::parse($row->fecha)->format('d-m-Y') : '';
-            });
-            $table->editColumn('elabora', function ($row) {
-                return $row->empleado ? $row->empleado->name : '';
-            });
+    //             return view('partials.datatablesActions', compact(
+    //                 'viewGate',
+    //                 'editGate',
+    //                 'deleteGate',
+    //                 'crudRoutePart',
+    //                 'row'
+    //             ));
+    //         });
+    //         $table->editColumn('id', function ($row) {
+    //             return $row->id ? $row->id : '';
+    //         });
+    //         $table->editColumn('fortaleza', function ($row) {
+    //             return $row->fortaleza ? strip_tags($row->fortaleza) : '';
+    //         });
+    //         $table->editColumn('oportunidades', function ($row) {
+    //             return $row->oportunidades ? $row->oportunidades : '';
+    //         });
+    //         $table->editColumn('debilidades', function ($row) {
+    //             return $row->debilidades ? $row->debilidades : '';
+    //         });
+    //         $table->editColumn('amenazas', function ($row) {
+    //             return $row->amenazas ? $row->amenazas : '';
+    //         });
+    //         $table->editColumn('analisis', function ($row) {
+    //             return $row->analisis ? $row->analisis : '';
+    //         });
+    //         $table->editColumn('fecha', function ($row) {
+    //             return $row->fecha ? \Carbon\Carbon::parse($row->fecha)->format('d-m-Y') : '';
+    //         });
+    //         $table->editColumn('elabora', function ($row) {
+    //             return $row->empleado ? $row->empleado->name : '';
+    //         });
 
-            $table->rawColumns(['actions', 'placeholder']);
+    //         $table->rawColumns(['actions', 'placeholder']);
 
-            return $table->make(true);
-        }
+    //         return $table->make(true);
+    //     }
 
-        $obtener_FODA = EntendimientoOrganizacion::first();
-        $empleado = Empleado::getaltaAll();
-        $teams = Team::get();
+    //     $obtener_FODA = EntendimientoOrganizacion::first();
+    //     $empleado = Empleado::getaltaAll();
+    //     $teams = Team::get();
 
-        return view('admin.entendimientoOrganizacions.index', compact('obtener_FODA', 'teams', 'empleado'));
-    }
+    //     return view('admin.entendimientoOrganizacions.index', compact('obtener_FODA', 'teams', 'empleado'));
+    // }
 
     public function create()
     {
@@ -315,7 +315,8 @@ class EntendimientoOrganizacionController extends Controller
 
         return view('admin.entendimientoOrganizacions.cardFodaEdit', compact('oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'foda_actual'));
     }
-    public function cardFodaGeneral()
+    // public function cardFodaGeneral()
+    public function index()
     {
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
@@ -339,7 +340,7 @@ class EntendimientoOrganizacionController extends Controller
 
         // dd($proceso, $foda);
         if ($proceso->estatus == "Pendiente") {
-            for ($i = 0; $i <= $no_niveles; $i++) {
+            for ($i = 1; $i <= $no_niveles; $i++) {
                 foreach ($proceso->participantes as $part) {
                     if (
                         $part->participante->nivel == $i && $part->estatus == "Pendiente"
@@ -364,6 +365,19 @@ class EntendimientoOrganizacionController extends Controller
                                 return redirect(route('admin.entendimiento-organizacions.index'));
                             }
                         }
+                    } elseif (
+                        $part->participante->nivel == 0 && $part->estatus == "Pendiente"
+                        && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
+                    ) {
+                        $empleados = Empleado::getaltaAll();
+                        $foda_actual = $entendimientoOrganizacion;
+                        $obtener_FODA = EntendimientoOrganizacion::where('id', $entendimientoOrganizacion)->first();
+                        $organizacion_actual = $this->obtenerOrganizacion();
+                        $logo_actual = $organizacion_actual->logo;
+                        $empresa_actual = $organizacion_actual->empresa;
+
+                        return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+                        break;
                     }
                 }
             }

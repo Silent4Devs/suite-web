@@ -332,6 +332,15 @@ class AlcanceSgsiController extends Controller
                                 return redirect(route('admin.alcance-sgsis.index'));
                             }
                         }
+                    } elseif (
+                        $part->participante->nivel == 0 && $part->estatus == "Pendiente"
+                        && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
+                    ) {
+                        $alcanceSgsi->load('team');
+                        $normas = Norma::get();
+
+                        return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas'));
+                        break;
                     }
                 }
             }
