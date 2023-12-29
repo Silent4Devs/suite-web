@@ -295,6 +295,7 @@
             </div>
         </div>
 
+        @if (isset($nuevos))
         <div class="card-body">
             <h3 class="title-card-portal-c">Nuevos ingresos</h3>
 
@@ -318,13 +319,13 @@
                             <hr>
                             @php
                                 $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
+                                $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $nuv->cumpleaños);
                                 $mes = $meses[$fecha->format('n') - 1];
                                 $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
                             @endphp
                             <div>
                                 <strong> Fecha de ingreso </strong> <br>
-                                {{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}
+                                {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d-m-Y') }}
                             </div>
                         </div>
                     @endforeach
@@ -334,7 +335,9 @@
                 </button>
             </div>
         </div>
+        @endif
 
+        @if (isset($cumpleaños))
         <div class="card-body">
             <h3 class="title-card-portal-c mt-5">Cumpleaños</h3>
 
@@ -378,7 +381,7 @@
                 </button>
             </div>
         </div>
-
+        @endif
     </div>
     <div style="height: 100px;"></div>
 @endsection
