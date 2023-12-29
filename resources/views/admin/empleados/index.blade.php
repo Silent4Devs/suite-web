@@ -1,18 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-    <style type="text/css">
-        table {
-            table-layout: fixed;
-            width: 500px;
-        }
-
-        th,
-        td {
-            border: 1px solid blue;
-            width: 130px;
-            word-wrap: break-word
-        }
-    </style>
     <h5 class="col-12 titulo_general_funcion">Empleados</h5>
 
      <div class="text-right">
@@ -20,11 +7,11 @@
             <a href="{{ route('admin.empleados.create') }}" type="button" class="btn btn-primary">Registrar Empleados</a>
 
             <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
-            class="btn btn-success btn-sm active" role="button" aria-pressed="true"><i
+            class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><i
                 class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
 
                 <a href="{{ route('admin.empleado.importar') }}" style="text-align: right;padding-right: 20px;"
-                        class="btn btn-success btn-sm active" role="button" aria-pressed="true"><i
+                        class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><i
                             class="fas fa-file-upload"></i> Importar datos</a>
         </div>
     </div>

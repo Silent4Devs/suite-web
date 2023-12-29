@@ -129,9 +129,9 @@ class LevelController extends Controller
      * @param  int  $level
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Level $level)
+    public function destroy($id)
     {
-        $level->delete();
+        $level = Level::find($id)->delete();
 
         //Alert::toast('El nivel se eliminó con éxito', 'success');
         return redirect()->route('admin.levels.index');

@@ -101,8 +101,21 @@
                         name: 'name',
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlBtnEditar =
+                                `/admin/categories/${data}/edit`;
+                            let urlBtnEliminar =
+                                `/admin/categories/destroy/${data}`;
+
+                            let botones = `
+                                <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
+                                <form style="display:inline-block" action="${urlBtnEliminar}" method="GET">
+                                @csrf
+                                <button class="btn" type="submit"><i class="fas fa-trash-alt"></i></button></form>
+                            `;
+                            return botones;
+                        }
                     }
                 ],
                 orderCellsTop: true,

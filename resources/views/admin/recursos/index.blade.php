@@ -48,7 +48,7 @@
 
             <div class="text-right">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.categoria-capacitacion.create') }}" type="button" class="btn btn-primary">Registrar Recurso</a>
+                    <a href="{{ route('admin.recursos.create') }}" type="button" class="btn btn-primary">Registrar Capacitaciones</a>
                 </div>
             </div>
             @include('partials.flashMessages')
@@ -65,7 +65,7 @@
                         'route' => 'admin.vulnerabilidads.parseCsvImport',
                     ])
                 </div>
-                <h3 class="title-table-rds"> Recursos</h3>
+                <h3 class="title-table-rds"> Capacitaciones</h3>
                 <table class="datatable datatable-Recurso" id="datatable-Recurso">
                     <thead class="thead-dark">
                         <tr>
