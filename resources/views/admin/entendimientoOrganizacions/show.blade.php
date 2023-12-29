@@ -6,10 +6,10 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center">
         <h5 class="titulo_general_funcion">Matriz FODA</h5>
-        <button class="btn btn-print">
+        {{-- <button class="btn btn-print">
             IMPRIMIR
             <i class="fa-solid fa-print"></i>
-        </button>
+        </button> --}}
     </div>
 
     <div class="card card-body">
