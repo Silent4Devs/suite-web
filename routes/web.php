@@ -427,6 +427,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('Metrica', 'RH\ObjetivoUnidadMedidaController', ['except' => ['edit']]);
 
         Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
+        Route::view('iso27001/guia', 'admin.iso27001.guia')->name('iso27001.guia');
         Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
         Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
         Route::view('contratos', 'admin.contratos.index')->name('contratos.index');

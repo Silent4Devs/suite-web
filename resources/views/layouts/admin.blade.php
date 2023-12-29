@@ -105,37 +105,37 @@
 
                 <ul class="menu-list-panel-header">
                     <li>
-                        <a href="">
+                        <a href="{{ route('admin.inicio-Usuario.index') }}">
                             <i class="bi bi-file-person-fill"></i>
                             Mi perfil
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="{{ route('admin.portal-comunicacion.index') }}">
                             <i class="bi bi-newspaper"></i>
                             Comunicación
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="{{ route('admin.systemCalendar') }}">
                             <i class="bi bi-calendar3"></i>
                             Calendario
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="{{ route('admin.documentos.publicados') }}">
                             <i class="bi bi-folder"></i>
                             Documentos
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="{{ route('admin.planes-de-accion.index') }}">
                             <i class="bi bi-file-earmark-check"></i>
                             Planes de acción
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="{{ route('admin.desk.index') }}">
                             <i class="bi bi-person-workspace"></i>
                             Centro de atención
                         </a>
@@ -145,69 +145,69 @@
             <div class="item-content-menu-header" style="background-color: #fff;">
                 <span class="title-item-menu-header">MÓDULOS TABANTAJ</span>
                 <div class="menu-blocks-mod-header">
-                    <a href="">
+                    <a href="{{ route('admin.portal-comunicacion.index') }}">
                         <div class="caja-icon-mod-header" style="background: #F1F1F1;">
                             <i class="material-symbols-outlined">home</i>
                         </div>
                         <span>Inicio</span>
                     </a>
-                    <a href="">
+                    <a href="{{ route('admin.analisis-riesgos.menu') }}">
                         <div class="caja-icon-mod-header" style="background: #FFD9ED;">
                             <i class="material-symbols-outlined">warning</i>
                         </div>
-                        <span>Inicio</span>
+                        <span>Análisis de riesgos</span>
                     </a>
-                    <a href="">
+                    <a href="{{ route('admin.visitantes.menu') }}">
                         <div class="caja-icon-mod-header" style="background: #9CEBFF;">
                             <i class="material-symbols-outlined">emoji_people</i>
                         </div>
-                        <span>Inicio</span>
+                        <span>Visitante</span>
                     </a>
-                    <a href="">
+                    <a href="{{ route('admin.analisis-impacto.menu') }}">
                         <div class="caja-icon-mod-header" style="background: #BFFFE9;">
                             <i class="material-symbols-outlined">privacy_tip</i>
                         </div>
-                        <span>Inicio</span>
+                        <span>Análisis de impacto</span>
                     </a>
-                    <a href="">
+                    <a href="{{ asset('admin/capital-humano') }}">
                         <div class="caja-icon-mod-header" style="background: #E0C5FF;">
                             <i class="material-symbols-outlined">group</i>
                         </div>
-                        <span>Inicio</span>
+                        <span>Capital humano</span>
                     </a>
-                    <a href="">
+                    <a href="{{ route('admin.iso27001.index') }}">
                         <div class="caja-icon-mod-header" style="background: #FCB4BC;">
                             <i class="material-symbols-outlined">language</i>
                         </div>
-                        <span>Inicio</span>
+                        <span>Sistema de Gestión</span>
                     </a>
-                    <a href="">
+                    <a href="{{ route('admin.timesheet-inicio') }}">
                         <div class="caja-icon-mod-header" style="background: #B1C6FF;">
-                            <i class="material-symbols-outlined">emoji_people</i>
+                            <i class="material-symbols-outlined">event_available</i>
                         </div>
-                        <span>Inicio</span>
+                        <span>Timesheet</span>
                     </a>
-                    <a href="">
+                    <a href="{{ route('admin.systemCalendar') }}">
                         <div class="caja-icon-mod-header" style="background: #FFFDC4;">
-                            <i class="material-symbols-outlined">privacy_tip</i>
+                            <i class="material-symbols-outlined">calendar_month</i>
                         </div>
-                        <span>Inicio</span>
+                        <span>Calendario</span>
                     </a>
-                    <a href="">
+                    <a href="{{ route('admin.desk.index') }}">
                         <div class="caja-icon-mod-header" style="background: #FFD3BF;">
                             <i class="material-symbols-outlined">group</i>
                         </div>
-                        <span>Inicio</span>
+                        <span>Centro de atención</span>
                     </a>
-                    <a href="">
+                    <a href="{{ asset('admin/organizacions') }}">
                         <div class="caja-icon-mod-header" style="background: #E5E5E5;">
-                            <i class="material-symbols-outlined">privacy_tip</i>
+                            <i class="material-symbols-outlined">language</i>
                         </div>
-                        <span>Inicio</span>
+                        <span>Mi Organización</span>
                     </a>
                 </div>
             </div>
-            <div class="item-content-menu-header line-left caja-menu-admin-header"
+            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-auto scroll_estilos"
                 style="background-color: #fff; min-width: 280px;">
                 <span class="title-item-menu-header">ADMINISTRACIÓN</span>
                 <ul class="menu-list-admin-header">
@@ -217,29 +217,57 @@
                             Carga masiva de datos
                         </a>
                     </li>
-                    <li>
-                        <a href="">
+                    <li class="li-click-list-header">
+                        <a href="#">
                             <i class="bi bi-buildings"></i>
                             Configurar Organización
+                            <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                         </a>
+                        <ul>
+                            <li><a href="">Organización</a></li>
+                            <li><a href="">Sedes</a></li>
+                            <li><a href="">Crear Grupo de Áreas</a></li>
+                            <li><a href="">Crear Áreas</a></li>
+                            <li><a href="">Macroprocesos</a></li>
+                            <li><a href="">Procesos</a></li>
+                            <li><a href="">Categorias de Activos</a></li>
+                            <li><a href="">Subcategorias de Activos </a></li>
+                            <li><a href="">Inventario de Activos</a></li>
+                            <li><a href="">Glosario</a></li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="">
+                    <li class="li-click-list-header">
+                        <a href="#">
                             <i class="bi bi-person-gear"></i>
                             Configurar C. humano
+                            <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                         </a>
+                        <ul>
+                            <li>ssa</li>
+                            <li>ssaddd</li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="">
+                    <li class="li-click-list-header">
+                        <a href="#">
                             <i class="bi bi-laptop"></i>
                             Configurar Vistas
+                            <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                         </a>
+                        <ul>
+                            <li>ssa</li>
+                            <li>ssaddd</li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="">
+                    <li class="li-click-list-header">
+                        <a href="#">
                             <i class="bi bi-gear"></i>
                             Ajuste de ususario
+                            <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                         </a>
+                        <ul>
+                            <li>ssa</li>
+                            <li>ssaddd</li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -1005,6 +1033,12 @@
                 modalBackDrop.style.height = "100%"
             }
         })
+    </script>
+
+    <script>
+        $('.li-click-list-header').click(function() {
+            $('.li-click-list-header:hover').toggleClass('active-ul-header');
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>

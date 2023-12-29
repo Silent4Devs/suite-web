@@ -136,6 +136,7 @@ header.mostrar-menu {
     padding: 0 50px;
     padding-top: 140px;
     padding-bottom: 50px;
+    max-height: ;
 }
 
 .title-item-menu-header {
@@ -235,6 +236,10 @@ header.mostrar-menu {
     list-style: none;
 }
 
+.menu-list-admin-header li {
+    width: 100%;
+}
+
 .menu-list-admin-header a {
     width: 100%;
     height: 40px;
@@ -250,12 +255,37 @@ header.mostrar-menu {
     font-size: 18px;
 }
 
+.li-click-list-header {
+    position: relative;
+}
+
+.li-click-list-header ul {
+    display: none;
+}
+
+.i-direct {
+    position: absolute;
+    right: 0;
+    top: 15px;
+    margin-right: -10px !important;
+    opacity: 0.6 !important;
+}
+
+.active-ul-header .i-direct {
+    transform: rotate(180deg) !important;
+}
+
+.active-ul-header ul {
+    display: block !important;
+}
+
 .img-person {
     width: 40px;
     height: 40px;
-    border-radius: 100px;
+    border-radius: 1000px;
     overflow: hidden;
     display: inline-block;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .img-person img {
