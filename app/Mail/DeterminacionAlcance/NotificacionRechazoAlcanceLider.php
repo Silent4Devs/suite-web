@@ -3,10 +3,7 @@
 namespace App\Mail\DeterminacionAlcance;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class NotificacionRechazoAlcanceLider extends Mailable
@@ -17,6 +14,7 @@ class NotificacionRechazoAlcanceLider extends Mailable
      * Create a new message instance.
      */
     public $id_alcance;
+
     public $nombre;
 
     public function __construct($id_alcance, $nombre)
@@ -32,6 +30,6 @@ class NotificacionRechazoAlcanceLider extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.alcance-sgsi.notificacion-alcance-lider')->subject('Determinación de Alcance Rechazado: ' . $this->nombre)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.alcance-sgsi.notificacion-alcance-lider')->subject('Determinación de Alcance Rechazado: '.$this->nombre)->cc('gestiondetalento@silent4business.com');
     }
 }

@@ -1,0 +1,81 @@
+.header-card-iu {
+    width: 85%;
+    margin: auto;
+    background-color: #D8E1EC;
+    padding: 20px 45px;
+    height: 100px;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+}
+
+.title-name-user {
+    margin: 0px;
+    font-size: 20px;
+    color: #3086AF;
+}
+
+.estatus-user {
+    padding: 3px 20px;
+    font-size: 10px;
+    border-radius: 20px;
+}
+
+.info-blue-user {
+    background-color: #306BA9;
+    text-align: center;
+    color: #fff !important;
+    padding: 60px 35px;
+    box-sizing: border-box;
+}
+
+.info-blue-user a {
+    color: #fff;
+}
+
+.caja-btn-user .btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    color: #306BA9;
+}
+
+.title-user-card {
+    margin: 0;
+    font-size: 24px;
+    color: #3086AF;
+}
+
+.caja-info-user-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.caja-info-user-main div {}
+
+.caja-info-user-main span {
+    color: #306BA9;
+}
+
+.caja-equipo {
+    color: #306BA9;
+}
+
+.caja-btns-op-equipo-user {
+    display: flex;
+    justify-content: space-between;
+}
+
+.caja-btns-op-equipo-user i {
+    display: flex;
+    width: 45px;
+    height: 45px;
+    background-color: #fff;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 8px;
+    color: #306BA9;
+    justify-content: center;
+    align-items: center;
+}

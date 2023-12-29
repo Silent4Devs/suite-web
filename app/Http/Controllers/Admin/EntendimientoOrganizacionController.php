@@ -21,12 +21,12 @@ use App\Models\ProcesosListaDistribucion;
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use App\Traits\ObtenerOrganizacion;
-use Illuminate\Support\Facades\Mail;
 
 class EntendimientoOrganizacionController extends Controller
 {
@@ -128,13 +128,10 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (!is_null($request->participantes)) {
+        if (! is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/release/experiencia_usuario_s3
         // dd($foda);
         return redirect()->route('admin.foda-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
     }
@@ -189,7 +186,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (!is_null($request->participantes)) {
+        if (! is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -320,37 +317,20 @@ class EntendimientoOrganizacionController extends Controller
 
         return view('admin.entendimientoOrganizacions.cardFodaEdit', compact('oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'foda_actual'));
     }
-<<<<<<< HEAD
 
-    public function cardFodaGeneral()
-=======
     // public function cardFodaGeneral()
     public function index()
->>>>>>> origin/release/experiencia_usuario_s3
     {
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
         return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query'));
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/release/experiencia_usuario_s3
     public function adminShow($entendimientoOrganizacion)
     {
         abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-<<<<<<< HEAD
-        $empleados = Empleado::getaltaAll();
-        $foda_actual = $entendimientoOrganizacion;
-        $obtener_FODA = EntendimientoOrganizacion::where('id', $entendimientoOrganizacion)->first();
-        $organizacion_actual = $this->obtenerOrganizacion();
-        $logo_actual = $organizacion_actual->logo;
-        $empresa_actual = $organizacion_actual->empresa;
-
-        return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
-=======
         $foda = EntendimientoOrganizacion::find($entendimientoOrganizacion);
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
@@ -363,16 +343,16 @@ class EntendimientoOrganizacionController extends Controller
         $no_niveles = $modulo->niveles;
 
         // dd($proceso, $foda);
-        if ($proceso->estatus == "Pendiente") {
+        if ($proceso->estatus == 'Pendiente') {
             for ($i = 1; $i <= $no_niveles; $i++) {
                 foreach ($proceso->participantes as $part) {
                     if (
-                        $part->participante->nivel == $i && $part->estatus == "Pendiente"
+                        $part->participante->nivel == $i && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
                         for ($j = 1; $j <= 5; $j++) {
                             if (
-                                $part->participante->numero_orden == $j && $part->estatus == "Pendiente"
+                                $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
 
@@ -390,7 +370,7 @@ class EntendimientoOrganizacionController extends Controller
                             }
                         }
                     } elseif (
-                        $part->participante->nivel == 0 && $part->estatus == "Pendiente"
+                        $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
                         $empleados = Empleado::getaltaAll();
@@ -472,8 +452,6 @@ class EntendimientoOrganizacionController extends Controller
         return redirect(route('admin.entendimiento-organizacions.index'));
     }
 
-
-
     public function aprobado($id, Request $request)
     {
         $aprobador = User::getCurrentUser()->empleado->id;
@@ -500,7 +478,7 @@ class EntendimientoOrganizacionController extends Controller
                 $query->whereHas('participante', function ($subQuery) use ($aprobador) {
                     $subQuery->where('empleado_id', '=', $aprobador);
                 });
-            }
+            },
         ])->where('modulo_id', '=', $modulo->id)
             ->where('proceso_id', '=', $id)
             ->first();
@@ -518,12 +496,12 @@ class EntendimientoOrganizacionController extends Controller
         if ($participante->nivel == 0) {
             // dd("superaprobador");
             $proceso->update([
-                'estatus' => "Aprobado"
+                'estatus' => 'Aprobado',
             ]);
 
             foreach ($proceso_general->participantes as $p) {
                 $p->update([
-                    'estatus' => 'Aprobado'
+                    'estatus' => 'Aprobado',
                 ]);
             }
 
@@ -535,6 +513,7 @@ class EntendimientoOrganizacionController extends Controller
             ]);
             $this->confirmacionAprobacion($proceso_general, $foda);
         }
+
         return redirect(route('admin.entendimiento-organizacions.index'));
     }
 
@@ -548,7 +527,6 @@ class EntendimientoOrganizacionController extends Controller
             // dd('primer usuario', $part->participante);
         }
     }
-
 
     public function rechazado($id, Request $request)
     {
@@ -569,7 +547,7 @@ class EntendimientoOrganizacionController extends Controller
 
         foreach ($aprobacion->participantes as $p) {
             $p->update([
-                'estatus' => 'Rechazado'
+                'estatus' => 'Rechazado',
             ]);
         }
         // $responsable = $minuta->responsable->name;
@@ -614,9 +592,9 @@ class EntendimientoOrganizacionController extends Controller
 
         for ($i = 1; $i <= $no_niveles; $i++) {
             foreach ($proceso->participantes as $part) {
-                if ($part->participante->nivel == $i && $part->estatus == "Pendiente") {
+                if ($part->participante->nivel == $i && $part->estatus == 'Pendiente') {
                     for ($j = 1; $j <= 5; $j++) {
-                        if ($part->participante->numero_orden == $j && $part->estatus == "Pendiente") {
+                        if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
                             //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
@@ -626,6 +604,5 @@ class EntendimientoOrganizacionController extends Controller
                 }
             }
         }
->>>>>>> origin/release/experiencia_usuario_s3
     }
 }
