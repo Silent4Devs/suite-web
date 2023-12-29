@@ -114,7 +114,7 @@ class LevelController extends Controller
     public function update(Request $request, Level $level)
     {
         $request->validate([
-            'name' => 'required|unique:levels,name,' . $level->id,
+            'name' => 'required|unique:levels,name,'.$level->id,
         ]);
 
         $level->update($request->all());

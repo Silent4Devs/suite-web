@@ -114,7 +114,7 @@ return [
             ],
             GeneratorFilesType::MIGRATION => [
                 'folder_path' => database_path('migrations'),
-                'file_name' => date('Y_m_d_His') . '_create_{TableName}_table.php',
+                'file_name' => date('Y_m_d_His').'_create_{TableName}_table.php',
                 'namespace' => null,
             ],
             GeneratorFilesType::ROUTES => [

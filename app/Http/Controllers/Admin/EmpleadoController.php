@@ -1087,10 +1087,7 @@ class EmpleadoController extends Controller
         ]);
 
         $this->validateDynamicForms($request);
-<<<<<<< HEAD
-=======
         //modifique query
->>>>>>> origin/release/experiencia_usuario_s3
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
         if ($request->snap_foto && $request->file('foto')) {
