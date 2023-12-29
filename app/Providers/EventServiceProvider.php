@@ -237,10 +237,6 @@ class EventServiceProvider extends ServiceProvider
         Course::observe(CourseObserver::class);
         Contrato::observe(ContratoObserver::class);
         PerfilEmpleado::observe(PerfilEmpleadoObserver::class);
-<<<<<<< HEAD
-=======
-        Minutasaltadireccion::observe(MinutasAltaDireccionObserver::class);
->>>>>>> origin/release/experiencia_usuario_s3
         IncidentesVacaciones::observe(IncidentesVacacionesObserver::class);
         IncidentesDayoff::observe(IncidentesDayoffObserver::class);
         SolicitudDayOff::observe(SolicitudDayOffObserver::class);

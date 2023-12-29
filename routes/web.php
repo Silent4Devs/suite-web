@@ -697,7 +697,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             // Route::get('/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::get('analisis-brechas-2022-inicio', 'AnalisisBrechaIsoController@inicioBrechas')->name('analisis-brechas-inicio');
-<<<<<<< HEAD
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
             Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
             Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
@@ -710,8 +709,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::post('templates/store', 'TemplateController@store')->name('templates.store');
             Route::get('/top', 'TopController@index')->name('top');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
-=======
->>>>>>> origin/release/experiencia_usuario_s3
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
             Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
             Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
@@ -856,15 +853,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         route::get('entendimiento-organizacions-foda-edit/{id}', 'EntendimientoOrganizacionController@foda')->name('foda-organizacions.edit');
         Route::get('entendimiento-organizacions-foda-general', 'EntendimientoOrganizacionController@cardFodaGeneral')->name('foda-general');
         Route::get('entendimiento-organizacions-foda-admin/{id}', 'EntendimientoOrganizacionController@adminShow');
-<<<<<<< HEAD
-=======
-        Route::post('entendimiento-organizacions/{minuta}/solicitud-aprobacion', 'EntendimientoOrganizacionController@solicitudAprobacion')->name('foda-organizacions.solicitudAprobacion');
-        Route::post('entendimiento-organizacions/{minuta}/aprobado', 'EntendimientoOrganizacionController@aprobado')->name('foda-organizacions.aprobado');
-        Route::post('entendimiento-organizacions/{minuta}/rechazado', 'EntendimientoOrganizacionController@rechazado')->name('foda-organizacions.rechazado');
->>>>>>> origin/release/experiencia_usuario_s3
 
-        // Partes Interesadas
-        Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
+        Route::post('entendimiento-organizacions/{minuta}/solicitud-aprobacion', 'EntendimientoOrganizacionController@solicitudAprobacion')->name('foda-organizacions.solicitudAprobacion');
         Route::get('partes-interesadas/{id}/edit', 'PartesInteresadasController@edit')->name('partes-interesadas.edit');
         Route::post('partes-interesadas/{id}/update', 'PartesInteresadasController@update')->name('partes-interesadas.update');
         Route::resource('partes-interesadas', 'PartesInteresadasController')->except(['edit', 'update']);
@@ -892,12 +882,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('alcance-sgsis', 'AlcanceSgsiController');
         Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
         Route::post('alcance-sgsis/pdf', 'AlcanceSgsiController@pdf')->name('alcance-sgsis.pdf');
-<<<<<<< HEAD
-=======
-        Route::get('alcance-sgsis-revision/{id}', 'AlcanceSgsiController@revision')->name('alcance-sgsis.revision');
-        Route::post('alcance-sgsis/{id}/aprobado', 'AlcanceSgsiController@aprobado')->name('alcance-sgsis.aprobado');
-        Route::post('alcance-sgsis/{id}/rechazado', 'AlcanceSgsiController@rechazado')->name('alcance-sgsis.rechazado');
->>>>>>> origin/release/experiencia_usuario_s3
 
         // Comiteseguridads
         Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
@@ -932,19 +916,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('politica-sgsis/destroy', 'PoliticaSgsiController@massDestroy')->name('politica-sgsis.massDestroy');
 
         Route::get('politica-sgsis/visualizacion', 'PoliticaSgsiController@visualizacion')->name('politica-sgsis/visualizacion');
-<<<<<<< HEAD
-
-=======
-        Route::get('politica-sgsis-revision/{id}', 'PoliticaSgsiController@revision')->name('politica-sgsis.revision');
-        Route::post('politica-sgsis/{id}/aprobado', 'PoliticaSgsiController@aprobado')->name('politica-sgsis.aprobado');
-        Route::post('politica-sgsis/{id}/rechazado', 'PoliticaSgsiController@rechazado')->name('politica-sgsis.rechazado');
->>>>>>> origin/release/experiencia_usuario_s3
-        Route::post('politica-sgsis/pdf', 'PoliticaSgsiController@pdf')->name('politica-sgsis.pdf');
-        Route::resource('politica-sgsis', 'PoliticaSgsiController');
-
-        // Roles Responsabilidades
-        Route::delete('roles-responsabilidades/destroy', 'RolesResponsabilidadesController@massDestroy')->name('roles-responsabilidades.massDestroy');
-        Route::resource('roles-responsabilidades', 'm');
 
         // Riesgosoportunidades
         Route::delete('riesgosoportunidades/destroy', 'RiesgosoportunidadesController@massDestroy')->name('riesgosoportunidades.massDestroy');
