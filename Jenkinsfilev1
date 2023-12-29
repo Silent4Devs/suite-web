@@ -1,4 +1,2 @@
-// Jenkinsfilev1
-
 // Este Jenkinsfilev1 no contiene un bloque pipeline adicional
 git branch: 'stagging', url: 'https://github.com/Silent4Devs/suite-web.git'
