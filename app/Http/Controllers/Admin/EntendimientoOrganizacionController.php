@@ -131,10 +131,6 @@ class EntendimientoOrganizacionController extends Controller
         if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/release/experiencia_usuario_s3
         // dd($foda);
         return redirect()->route('admin.foda-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
     }
@@ -320,37 +316,18 @@ class EntendimientoOrganizacionController extends Controller
 
         return view('admin.entendimientoOrganizacions.cardFodaEdit', compact('oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'foda_actual'));
     }
-<<<<<<< HEAD
-
-    public function cardFodaGeneral()
-=======
     // public function cardFodaGeneral()
     public function index()
->>>>>>> origin/release/experiencia_usuario_s3
     {
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
         return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query'));
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/release/experiencia_usuario_s3
     public function adminShow($entendimientoOrganizacion)
     {
         abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-<<<<<<< HEAD
-        $empleados = Empleado::getaltaAll();
-        $foda_actual = $entendimientoOrganizacion;
-        $obtener_FODA = EntendimientoOrganizacion::where('id', $entendimientoOrganizacion)->first();
-        $organizacion_actual = $this->obtenerOrganizacion();
-        $logo_actual = $organizacion_actual->logo;
-        $empresa_actual = $organizacion_actual->empresa;
-
-        return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
-=======
         $foda = EntendimientoOrganizacion::find($entendimientoOrganizacion);
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
@@ -626,6 +603,5 @@ class EntendimientoOrganizacionController extends Controller
                 }
             }
         }
->>>>>>> origin/release/experiencia_usuario_s3
     }
 }
