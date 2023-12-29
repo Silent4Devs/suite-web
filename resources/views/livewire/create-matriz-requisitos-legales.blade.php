@@ -76,6 +76,17 @@
             color: #606060;
             text-align: left;
         }
+        .btn{
+            box-shadow: none !important;
+        }
+        #btn_cancelar{
+    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+    border: 1px solid var(--unnamed-color-057be2);
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #057BE2;
+    border-radius: 4px;
+    opacity: 1;
+    }
     </style>
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
     <h5 class="col-12 titulo-matriz">Matriz de Requisitos Legales y Regulatorios</h5>
@@ -319,7 +330,7 @@
         <div class="text-right form-group col-12">
             <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
             </span>
-            <a href="#" class="btn boton-cancelar" onclick="confirmarCancelar()">
+            <a href="#" class="btn" id="btn_cancelar" style="color:#057BE2;" onclick="confirmarCancelar()">
                 <div class="mt-2">Cancelar</div>
             </a>
             <button class="btn boton-enviar ml-2 mr-2" type="submit">

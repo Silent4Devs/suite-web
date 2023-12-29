@@ -491,7 +491,6 @@
                                     break;
                                 case 'rechazado':
                                     color = '#dd0483'; // Rojo
-                                    boxShadow = '12px 12px 20px rgba(128, 0, 0, 0.5)';
                                     backgroundColor = 'rgba(128, 0, 0, 0.1)';
                                     break;
                                 case 'pendiente':

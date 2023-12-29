@@ -71,7 +71,7 @@
         <div class="card card-body">
             <div class="col-sm-12 d-flex align-items-center">
                 <div>
-                    <p class="quitar">{!! \Illuminate\Support\Str::limit(strip_tags($politica->politicasgsi), 1050) !!}</p>
+                    <p class="quitar">{!! \Illuminate\Support\Str::limit(strip_tags($data->politicasgsi), 1050) !!}</p>
                 </div>
                 <div class="ml-auto">
                     <img src="{{ asset('comite.png') }}" alt="Comite Image">
