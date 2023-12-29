@@ -14,7 +14,6 @@ pipeline {
         }
 
 
-
         stage('Build') {
             steps {
                 script {
@@ -40,7 +39,6 @@ pipeline {
                 sh 'pip install selenium'
             }
         }
-
 
         stage('Deploy via SSH') {
             steps {
