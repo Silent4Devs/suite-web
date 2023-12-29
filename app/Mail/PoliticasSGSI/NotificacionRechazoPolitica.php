@@ -3,10 +3,7 @@
 namespace App\Mail\PoliticasSGSI;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class NotificacionRechazoPolitica extends Mailable
@@ -30,6 +27,6 @@ class NotificacionRechazoPolitica extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.politicas.notificacion-politica-rechazada')->subject('Política del SGSI Rechazada: ' . $this->analisis)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.politicas.notificacion-politica-rechazada')->subject('Política del SGSI Rechazada: '.$this->analisis)->cc('gestiondetalento@silent4business.com');
     }
 }

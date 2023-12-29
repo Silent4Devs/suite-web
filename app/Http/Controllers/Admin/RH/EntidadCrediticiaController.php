@@ -9,8 +9,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
-
-
 class EntidadCrediticiaController extends Controller
 {
     /**
@@ -58,7 +56,6 @@ class EntidadCrediticiaController extends Controller
 
             return $table->make(true);
         }
-
 
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad', 'descripcion')->get();
 

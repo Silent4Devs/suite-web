@@ -2,36 +2,35 @@
 
 namespace App\Http\Controllers\Api\InicioUsuario;
 
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Models\Activo;
-use App\Models\Puesto;
-use App\Models\Quejas;
-use App\Models\Mejoras;
-use App\Models\Recurso;
-use App\Models\Empleado;
+use App\Models\Area;
+use App\Models\AuditoriaAnual;
+use App\Models\AuditoriaInterna;
+use App\Models\Calendario;
+use App\Models\CalendarioOficial;
 use App\Models\Denuncias;
 use App\Models\Documento;
-use App\Models\Calendario;
-use App\Models\Sugerencias;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use App\Models\RH\Evaluacion;
-use App\Models\AuditoriaAnual;
-use App\Models\PanelInicioRule;
-use App\Models\SolicitudDayOff;
-use App\Models\AuditoriaInterna;
-use App\Models\CalendarioOficial;
-use App\Models\RevisionDocumento;
-use App\Models\PlanImplementacion;
+use App\Models\Empleado;
 use App\Models\FelicitarCumpleaños;
-use App\Models\SolicitudVacaciones;
-use App\Http\Controllers\Controller;
+use App\Models\Mejoras;
+use App\Models\Organizacion;
+use App\Models\PanelInicioRule;
+use App\Models\PlanImplementacion;
+use App\Models\Puesto;
+use App\Models\Quejas;
+use App\Models\Recurso;
+use App\Models\RevisionDocumento;
+use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluadoEvaluador;
+use App\Models\SolicitudDayOff;
+use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\SolicitudVacaciones;
+use App\Models\Sugerencias;
+use App\Models\User;
+use Carbon\Carbon;
 use Essa\APIToolKit\Api\ApiResponse;
 use Illuminate\Support\Facades\Cache;
-use App\Models\SolicitudPermisoGoceSueldo;
 
 class InicioUsuarioController extends Controller
 {

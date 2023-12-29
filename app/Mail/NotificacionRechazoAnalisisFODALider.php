@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class NotificacionRechazoAnalisisFODALider extends Mailable
@@ -17,6 +14,7 @@ class NotificacionRechazoAnalisisFODALider extends Mailable
      * Create a new message instance.
      */
     public $id;
+
     public $analisis;
 
     public function __construct($id, $analisis)
@@ -32,6 +30,6 @@ class NotificacionRechazoAnalisisFODALider extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.entendimiento-organizacion.notificacion-analisis-lider')->subject('Analisis FODA Rechazado: ' . $this->analisis)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.entendimiento-organizacion.notificacion-analisis-lider')->subject('Analisis FODA Rechazado: '.$this->analisis)->cc('gestiondetalento@silent4business.com');
     }
 }

@@ -1,198 +1,201 @@
 @extends('layouts.admin')
 @section('content')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+    <style>
+        @media print {
+            .print-none {
+                display: none !important;
+            }
+        }
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
-<style>
-  @media print {
-        .print-none {
+        .boton-cancelar {
+            background-color: white;
+            border-color: #057BE2;
+            font: 14px Roboto;
+            color: #057BE2;
+            border-radius: 4px;
+            width: 148px;
+            height: 48px;
+            align-content: center;
+        }
+
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+
+        .table tr td:nth-child(2) {
+            text-align: justify !important;
+        }
+
+        .table tr th:nth-child(3) {
+            text-align: center !important;
+            min-width: 200px !important;
+        }
+
+        .table tr td:nth-child(4) {
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(4) {
+            width: 120px !important;
+            max-width: 120px !important;
+            min-width: 120px !important;
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(2) {
+            width: 400px !important;
+            max-width: 500px !important;
+            min-width: 100px !important;
+            text-align: center !important;
+        }
+
+
+        .table tr td:nth-child(5) {
+            max-width: 200px !important;
+            min-width: 200px !important;
+            width: 200px !important;
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(5) {
+            width: 200px !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+            text-align: center !important;
+        }
+
+        .table tr td:nth-child(6) {
+            max-width: 200px !important;
+            min-width: 200px !important;
+            width: 200px !important;
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(6) {
+            width: 200px !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+            text-align: center !important;
+        }
+
+        .table tr td:nth-child(7) {
+            max-width: 200px !important;
+            min-width: 200px !important;
+            width: 200px !important;
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(7) {
+            width: 200px !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+            text-align: center !important;
+        }
+
+        .table tr td:nth-child(8) {
+            max-width: 80px !important;
+            min-width: 80px !important;
+            width: 80px !important;
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(8) {
+            width: 80px !important;
+            max-width: 80px !important;
+            min-width: 80px !important;
+            text-align: center !important;
+        }
+
+        .agregar {
+            margin-right: 15px;
+        }
+
+        .radius {
+            border-radius: 16px;
+        }
+
+        .titulo-card {
+
+            text-align: left;
+            font: 20px Roboto;
+            color: #606060;
+        }
+
+        .dt-buttons.btn-group {
             display: none !important;
         }
-    }
 
-    .boton-cancelar {
-        background-color: white;
-        border-color: #057BE2;
-        font: 14px Roboto;
-        color: #057BE2;
-        border-radius: 4px;
-        width: 148px;
-        height: 48px;
-        align-content: center;
-    }
+        .modal-dialog {
+            max-width: var(--bs-modal-width);
+            margin-right: 0px;
+            margin-left: 180px;
+            margin-top: 180px;
+        }
 
-    .btn-outline-success {
-        background: #788bac !important;
-        color: white;
-        border: none;
-    }
+        .modal-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            color: var(--bs-modal-color);
+            pointer-events: auto;
+            background-color: var(--bs-modal-bg);
+            background-clip: padding-box;
+            border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+            border-radius: 16px;
+            outline: 0;
+            margin-top: 0px;
+            margin-bottom: 100px;
+        }
 
-    .btn-outline-success:focus {
-        border-color: #345183 !important;
-        box-shadow: none;
-    }
+        .boton-sin-borde {
+            border: none;
+            outline: none;
+            /* Esto elimina el contorno al hacer clic */
+        }
 
-    .btn-outline-success:active {
-        box-shadow: none !important;
-    }
+        .boton-transparente {
+            background-color: transparent;
+            border: none;
+            /* Elimina el borde del botón si lo deseas */
+        }
 
-    .btn-outline-success:hover {
-        background: #788bac;
-        color: white;
-
-    }
-
-    .btn_cargar {
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 35px;
-        height: 35px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-
-    .table tr td:nth-child(2) {
-        text-align: justify !important;
-    }
-
-    .table tr th:nth-child(3) {
-        text-align: center !important;
-        min-width: 200px !important;
-    }
-
-    .table tr td:nth-child(4) {
-        text-align: center !important;
-    }
-
-    .table tr th:nth-child(4) {
-        width: 120px !important;
-        max-width: 120px !important;
-        min-width: 120px !important;
-        text-align: center !important;
-    }
-
-    .table tr th:nth-child(2) {
-        width: 400px !important;
-        max-width: 500px !important;
-        min-width: 100px !important;
-        text-align: center !important;
-    }
-
-
-    .table tr td:nth-child(5) {
-        max-width: 200px !important;
-        min-width: 200px !important;
-        width: 200px !important;
-        text-align: center !important;
-    }
-
-    .table tr th:nth-child(5) {
-        width: 200px !important;
-        max-width: 200px !important;
-        min-width: 200px !important;
-        text-align: center !important;
-    }
-
-    .table tr td:nth-child(6) {
-        max-width: 200px !important;
-        min-width: 200px !important;
-        width: 200px !important;
-        text-align: center !important;
-    }
-
-    .table tr th:nth-child(6) {
-        width: 200px !important;
-        max-width: 200px !important;
-        min-width: 200px !important;
-        text-align: center !important;
-    }
-
-    .table tr td:nth-child(7) {
-        max-width: 200px !important;
-        min-width: 200px !important;
-        width: 200px !important;
-        text-align: center !important;
-    }
-
-    .table tr th:nth-child(7) {
-        width: 200px !important;
-        max-width: 200px !important;
-        min-width: 200px !important;
-        text-align: center !important;
-    }
-
-    .table tr td:nth-child(8) {
-        max-width: 80px !important;
-        min-width: 80px !important;
-        width: 80px !important;
-        text-align: center !important;
-    }
-
-    .table tr th:nth-child(8) {
-        width: 80px !important;
-        max-width: 80px !important;
-        min-width: 80px !important;
-        text-align: center !important;
-    }
-
-    .agregar {
-        margin-right: 15px;
-    }
-
-    .radius {
-        border-radius: 16px;
-    }
-
-    .titulo-card {
-
-        text-align: left;
-        font: 20px Roboto;
-        color: #606060;
-    }
-
-    .dt-buttons.btn-group {
-        display: none !important;
-    }
-
-    .modal-dialog {
-        max-width: var(--bs-modal-width);
-        margin-right: 0px;
-        margin-left: 180px;
-        margin-top: 180px;
-    }
-
-    .modal-content {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        color: var(--bs-modal-color);
-        pointer-events: auto;
-        background-color: var(--bs-modal-bg);
-        background-clip: padding-box;
-        border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
-        border-radius: 16px;
-        outline: 0;
-        margin-top: 0px;
-        margin-bottom: 100px;
-    }
-    .boton-sin-borde {
-        border: none;
-        outline: none; /* Esto elimina el contorno al hacer clic */
-    }
-    .boton-transparente {
-    background-color: transparent;
-    border: none; /* Elimina el borde del botón si lo deseas */
-    }
-
-    .boton-transparentev2 {
+        .boton-transparentev2 {
             top: 214px;
             width: 135px;
             height: 40px;
@@ -203,11 +206,13 @@
             border: 1px solid #057BE2;
             opacity: 1;
         }
-        .icon {
-            opacity: 0.7; /* Ajusta la opacidad de la imagen según tus necesidades */
-            }
 
-        .textopdf{
+        .icon {
+            opacity: 0.7;
+            /* Ajusta la opacidad de la imagen según tus necesidades */
+        }
+
+        .textopdf {
             font: var(--unnamed-font-style-normal) normal medium var(--unnamed-font-size-20)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
             letter-spacing: var(--unnamed-character-spacing-0);
             color: var(--unnamed-color-306ba9);
@@ -219,7 +224,8 @@
             position: relative;
             left: 1rem;
         }
-        .modal{
+
+        .modal {
             font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-14)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
             letter-spacing: var(--unnamed-character-spacing-0);
             color: var(--unnamed-color-606060);
@@ -229,80 +235,86 @@
             color: #606060;
             opacity: 1;
         }
-</style>
+    </style>
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
-        @can('politica_sistema_gestion_agregar')
+    @can('politica_sistema_gestion_agregar')
         <div class="text-right">
-                <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Politica</a>
-                </div>
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Politica</a>
+            </div>
         </div>
-        @endcan
+    @endcan
 
-        <div class="row d-flex align-items-center">
-            <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
-                    style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
-                        style="color: #ffffff;"></i>
-                </button>
-                <div class="modal-dialog" style="margin-top: 0px;">
-                    <div class="modal-content" style="width:1000px;">
-                        <div class="modal-body" style="border-radius: 0px;">
-                            <div class="print-none">
-                            </div>
-                            <div class="card col-sm-12 col-md-10"
-                                style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
-                                <div class="card-body" style="">
-                                    <div class="print-none" style="text-align:right;">
-                                           <form method="POST" style="position: relative; left: 10rem; " action="{{ route('admin.politica-sgsis.pdf') }}">
-                                                @csrf
-                                                <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-                                                    IMPRIMIR <img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon">
-                                                </button>
-                                            </form>
-                                    </div>
-                                    <div class="card mt-5" style="width:900px;box-shadow:4px;">
-                                        <div class="row col-12 ml-0"
-                                            style="border-radius;
+    <div class="row d-flex align-items-center">
+        <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
+                style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
+                    style="color: #ffffff;"></i>
+            </button>
+            <div class="modal-dialog" style="margin-top: 0px;">
+                <div class="modal-content" style="width:1000px;">
+                    <div class="modal-body" style="border-radius: 0px;">
+                        <div class="print-none">
+                        </div>
+                        <div class="card col-sm-12 col-md-10"
+                            style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
+                            <div class="card-body" style="">
+                                <div class="print-none" style="text-align:right;">
+                                    <form method="POST" style="position: relative; left: 10rem; "
+                                        action="{{ route('admin.politica-sgsis.pdf') }}">
+                                        @csrf
+                                        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                                            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="card mt-5" style="width:900px;box-shadow:4px;">
+                                    <div class="row col-12 ml-0"
+                                        style="border-radius;
                                         padding-left: 0px;padding-right: 0px;">
-                                            <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                <img src="{{ asset('silent.png') }}"  class="mt-2 img-fluid" style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
-                                            </div>
-                                            <div class="col-5 p-2 mt-3">
-                                                <br>
-                                                <span class="" style="color:black; position: relative; top: -1.5rem; right: 3rem;">
-                                                   {{$empresa_actual}} <br>
-                                                  RFC: {{$rfc}} <br>
-                                                   {{$direccion}} <br>
-                                                </span>
-
-                                            </div>
-                                            <div class="col-4 pt-6 pl-6" style="background:#EEFCFF;">
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <span class="textopdf"> <strong> Reporte Política del Sistema de Gestión</strong></span>
-                                            </div>
+                                        <div class="col-3" style="border-left: 25px solid #2395AA">
+                                            <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
+                                                style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                        </div>
+                                        <div class="col-5 p-2 mt-3">
                                             <br>
-                                            <div class="col-12 " style="background:#EEFCFF; border-right: 25px solid #2395AA;">
-                                                <div style="position: relative; right: 1rem;  margin: 5%"><br><h6 style="color:#306BA9;">Nombre de la política</h6>
-                                                    <p >Política del Sistema de Gestión</p></div>
+                                            <span class=""
+                                                style="color:black; position: relative; top: -1.5rem; right: 3rem;">
+                                                {{ $empresa_actual }} <br>
+                                                RFC: {{ $rfc }} <br>
+                                                {{ $direccion }} <br>
+                                            </span>
+
+                                        </div>
+                                        <div class="col-4 pt-6 pl-6" style="background:#EEFCFF;">
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <span class="textopdf"> <strong> Reporte Política del Sistema de
+                                                    Gestión</strong></span>
+                                        </div>
+                                        <br>
+                                        <div class="col-12 " style="background:#EEFCFF; border-right: 25px solid #2395AA;">
+                                            <div style="position: relative; right: 1rem;  margin: 5%"><br>
+                                                <h6 style="color:#306BA9;">Nombre de la política</h6>
+                                                <p>Política del Sistema de Gestión</p>
                                             </div>
                                         </div>
-                                        @foreach ($politicaSgsis as $politica)
+                                    </div>
+                                    @foreach ($politicaSgsis as $politica)
                                         <div style="margin: 4%">
-                                            <h5 style="color:#306BA9;">{{$politica->nombre_politica}}</h5>
-                                            <p>Fecha de publicación: {{$politica->fecha_publicacion}}  &nbsp;&nbsp;&nbsp; Fecha de revision: {{$politica->fecha_revision}}</p>
+                                            <h5 style="color:#306BA9;">{{ $politica->nombre_politica }}</h5>
+                                            <p>Fecha de publicación: {{ $politica->fecha_publicacion }} &nbsp;&nbsp;&nbsp;
+                                                Fecha de revision: {{ $politica->fecha_revision }}</p>
                                             <br>
-                                            <small style="text-align: justify;">{!!$politica->politicasgsi!!}</small>
+                                            <small style="text-align: justify;">{!! $politica->politicasgsi !!}</small>
                                         </div>
                                         <hr>
-                                        @endforeach
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -310,51 +322,48 @@
                 </div>
             </div>
         </div>
-                @include('partials.flashMessages')
-                <div class="datatable-fix datatable-rds">
-                    <div class="d-flex justify-content-end">
+    </div>
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <div class="d-flex justify-content-end">
 
-                        <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-                        </button>
-<<<<<<< HEAD
-
-=======
-                        {{-- <form method="POST" action="{{ route('admin.politica-sgsis.pdf') }}">
+            <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+            </button>
+            {{-- <form method="POST" action="{{ route('admin.politica-sgsis.pdf') }}">
                             @csrf
                             <button class="boton-transparente">
                                 <img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon">
                             </button>
                         </form> --}}
->>>>>>> origin/release/experiencia_usuario_s3
-                    </div>
-                    <h3 class="title-table-rds"> Politicas</h3>
-                    <table class="datatable datatable-Comiteseguridad" id="datatable-PoliticaSgsi">
-                        <thead class="head-light">
-                            <tr>
-                                <th style="min-width: 180px; max-width:180px;">
-                                    Nombre
-                                </th>
-                                <th style="min-width: 400px; max-width:400px;">
-                                    Políticas
-                                </th>
-                                <th style="min-width: 80px; max-width:80px;">
-                                    Estatus
-                                </th>
-                                <th style="min-width: 80px; max-width:80px;">
-                                    Mostrar
-                                </th>
-                                <th style="min-width: 80px; max-width:80px;">
-                                    Fecha publicación
-                                </th>
-                                <th style="min-width: 80px; max-width:80px;">
-                                    Fecha Revisión
-                                </th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+        </div>
+        <h3 class="title-table-rds"> Politicas</h3>
+        <table class="datatable datatable-Comiteseguridad" id="datatable-PoliticaSgsi">
+            <thead class="head-light">
+                <tr>
+                    <th style="min-width: 180px; max-width:180px;">
+                        Nombre
+                    </th>
+                    <th style="min-width: 400px; max-width:400px;">
+                        Políticas
+                    </th>
+                    <th style="min-width: 80px; max-width:80px;">
+                        Estatus
+                    </th>
+                    <th style="min-width: 80px; max-width:80px;">
+                        Mostrar
+                    </th>
+                    <th style="min-width: 80px; max-width:80px;">
+                        Fecha publicación
+                    </th>
+                    <th style="min-width: 80px; max-width:80px;">
+                        Fecha Revisión
+                    </th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 @endsection
 @section('scripts')
     @parent
@@ -452,8 +461,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.politica-sgsis.index') }}",
-                columns: [
-                    {
+                columns: [{
                         data: 'nombre_politica',
                         name: 'nombre_politica',
                         render: function(data, type, row) {
@@ -538,12 +546,12 @@
                         }
                     },
                     {
-                    data: 'actions',
-                    name: '{{ trans('global.actions') }}',
-                    // render: function(data, type, full, meta) {
-                    //     return data + '<button class="tu-clase-de-boton" style="border: none; position:relative; left:1.8rem; top:-1.2rem;"><i class="fas fa-arrow-down fa-sm" style="border: none;"></i></button>';
-                    // }
-                }
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}',
+                        // render: function(data, type, full, meta) {
+                        //     return data + '<button class="tu-clase-de-boton" style="border: none; position:relative; left:1.8rem; top:-1.2rem;"><i class="fas fa-arrow-down fa-sm" style="border: none;"></i></button>';
+                        // }
+                    }
                 ],
                 orderCellsTop: true,
                 order: [
@@ -572,6 +580,6 @@
             //     table.draw();
             // });
 
-         });
+        });
     </script>
 @endsection

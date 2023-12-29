@@ -14,7 +14,7 @@ class ProcesosListaDistribucion extends Model
     protected $fillable = [
         'modulo_id',
         'estatus',
-        'proceso_id'
+        'proceso_id',
     ];
 
     public function modulo()

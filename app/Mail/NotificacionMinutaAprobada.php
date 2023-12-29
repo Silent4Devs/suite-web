@@ -11,6 +11,7 @@ class NotificacionMinutaAprobada extends Mailable
     use Queueable, SerializesModels;
 
     public $responsable;
+
     public $tema_minuta;
 
     public function __construct($responsable, $tema_minuta)
@@ -26,6 +27,6 @@ class NotificacionMinutaAprobada extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.minutas.notificacion-minuta-aprobada')->subject('Minuta Aprobada: ' . $this->tema_minuta)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.minutas.notificacion-minuta-aprobada')->subject('Minuta Aprobada: '.$this->tema_minuta)->cc('gestiondetalento@silent4business.com');
     }
 }
