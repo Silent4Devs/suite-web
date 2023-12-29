@@ -13,6 +13,7 @@ use App\Models\Team;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -89,8 +90,10 @@ class PoliticaSgsiController extends Controller
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+        $direccion = $organizacion_actual->direccion;
+        $rfc = $organizacion_actual->rfc;
 
-        return view('admin.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
     }
 
     public function create()
@@ -110,9 +113,7 @@ class PoliticaSgsiController extends Controller
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
             'fecha_publicacion' => 'required|date',
-            'fecha_entrada' => 'required|date',
             'fecha_revision' => 'required|date',
-            'id_reviso_politica' => 'required',
         ]);
 
         $politicaSgsi = PoliticaSgsi::create($request->all());
@@ -138,9 +139,6 @@ class PoliticaSgsiController extends Controller
         $request->validate([
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
-            /*            'fecha_publicacion' => 'required|date',
-           'fecha_entrada' => 'required|date',
-           'fecha_revision' => 'required|date',*/
             'id_reviso_politica' => 'required',
         ]);
 
@@ -176,9 +174,9 @@ class PoliticaSgsiController extends Controller
 
     public function visualizacion()
     {
-        $politicaSgsis = PoliticaSgsi::getAll();
+        $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
         foreach ($politicaSgsis as $polsgsis) {
-            if (! isset($polsgsis->reviso)) {
+            if (!isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                 $polsgsis->estemp = 'baja';
             } else {
@@ -188,5 +186,17 @@ class PoliticaSgsiController extends Controller
         $organizacions = Organizacion::getFirst();
 
         return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis', 'organizacions'));
+    }
+
+    public function pdf()
+    {
+
+        $politicas = PoliticaSgsi::get();
+        $organizacions = Organizacion::getFirst();
+
+        $pdf = PDF::loadView('pdf', compact('politicas', 'organizacions'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('politicas.pdf');
     }
 }

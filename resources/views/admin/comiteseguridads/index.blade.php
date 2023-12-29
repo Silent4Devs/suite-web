@@ -1,147 +1,28 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        .btn-outline-success {
-            background: #788bac !important;
-            color: white;
-            border: none;
-        }
-
-        .btn-outline-success:focus {
-            border-color: #345183 !important;
-            box-shadow: none;
-        }
-
-        .btn-outline-success:active {
-            box-shadow: none !important;
-        }
-
-        .btn-outline-success:hover {
-            background: #788bac;
-            color: white;
-
-        }
-
-        .btn_cargar {
-            border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
-            padding: 0;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 !important;
-            margin-right: 10px !important;
-        }
-
-        .table tr th:nth-child(2) {
-
-
-            min-width: 80px !important;
-            text-align: center !important;
-        }
-
-        .table tr th:nth-child(3) {
-
-
-            min-width: 80px !important;
-            text-align: center !important;
-        }
-
-        .table tr td:nth-child(3) {
-
-            text-align: center !important;
-        }
-
-        .table tr th:nth-child(4) {
-
-            min-width: 130px !important;
-            text-align: center !important;
-        }
-
-        .table tr td:nth-child(4) {
-
-            text-align: center !important;
-        }
-
-        .table tr th:nth-child(5) {
-
-
-            min-width: 900px !important;
-            text-align: center !important;
-        }
-
-        .table tr td:nth-child(5) {
-
-            text-align: justify !important;
-        }
-
-
-        .agregar {
-            margin-right: 15px;
-        }
-
-        .module {
-            width: 250px;
-            margin: 0 0 1em 0;
-            overflow: hidden;
-        }
-
-        .module p {
-            margin: 0;
-        }
-
-        .line-clamp {
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-        }
-    </style>
-
     {{ Breadcrumbs::render('admin.comiteseguridads.index') }}
-
     @can('comformacion_comite_seguridad_agregar')
         <h5 class="col-12 titulo_general_funcion">Conformación del Comité</h5>
-        <div class="mt-5 card">
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modalcomitedeseguridad', [
-                        'model' => 'Vulnerabilidad',
-                        'route' => 'admin.vulnerabilidads.parseCsvImport',
-                    ])
+        <div class="text-right">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('admin.comiteseguridads.create') }}" type="button" class="btn btn-primary">Registrar Comité</a>
                 </div>
-            </div>
-        @endcan
-
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered datatable-Comiteseguridad" style="width: 100%">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="min-width: 150px;">
-                            Nombre del comité
-                        </th>
-                        <th style="min-width: 200px;">
-                            Miembros
-                        </th>
-                        <th style="min-width: 200px;">
-                            Descripción
-                        </th>
-                        <th style="min-width: 25px;">
-                            Opciones
-                        </th>
-                    </tr>
-                    
-                </thead>
-            </table>
         </div>
-    </div>
+                @include('partials.flashMessages')
+                <div class="datatable-fix datatable-rds">
+                    <h3 class="title-table-rds"> Comites</h3>
+                    @include('admin.comiteseguridads.table')
+                </div>
+    @endcan
 @endsection
 @section('scripts')
     @parent
+    <script>
+        $('#btnImport').on('click', function(e) {
+        e.preventDefault();
+        $('#xlsxImportModal').modal('show');
+     });
+    </script>
     <script>
         $(function() {
             let dtButtons = [{
@@ -324,31 +205,76 @@
                         }
                     },
                     {
-                        data: 'miembros',
-                        name: 'miembros',
-                        render: function(data, type, row, meta) {
-                            let miembros = data;
-                            if (type === "miembroText") {
-                                let miembrosTexto = "";
-                                miembros.forEach(miembro => {
-                                    miembrosTexto += `
-                            ${miembro.name},
-                            `;
-                                });
-                                return miembrosTexto.trim();
-                            }
-                            let html = '';
-                            miembros.forEach(miembro => {
-                                html += `
-                            <img src="{{ asset('storage/empleados/imagenes/') }}/${miembro.avatar}"
-                                        class="rounded-circle" alt="${miembro.name}"
-                                        title="${miembro.name}" style="clip-path: circle(15px at 50% 50%);height: 30px;">
-                            `
-                            });
-                            return html;
-                        }
+                            data: 'miembros',
+                            name: 'miembros',
+                            render: function (data, type, row, meta) {
+                                let miembros = data;
 
-                    },
+                                if (type === "miembroText") {
+                                    let miembrosTexto = "";
+                                    miembros.slice(0, 3).forEach(miembro => {
+                                        miembrosTexto += `${miembro.name}, `;
+                                    });
+                                    return miembrosTexto.trim();
+                                } else {
+                                    let html = '<div style="display: flex; align-items: center;">'; // Contenedor flexbox con alineación vertical centrada
+                                    const maxVisibleImages = 3;
+
+                                    miembros.slice(0, maxVisibleImages).forEach(miembro => {
+                                        html += `
+                                            <div style="width: 30px; height: 30px; overflow: hidden; border-radius: 50%; margin-right: 5px;">
+                                                <img src="{{ asset('storage/empleados/imagenes/') }}/${miembro.avatar}"
+                                                    class="rounded-circle" alt="${miembro.name}"
+                                                    title="${miembro.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                                            </div>
+                                        `;
+                                    });
+
+                                    if (miembros.length > maxVisibleImages) {
+                                        // Si hay más de tres imágenes, mostrar el botón de más
+                                        html += `
+                                                <button type="button" class="btn btn-xs rounded-circle" data-toggle="modal" data-target="#miembrosModal" style="background-color: #f7f3d2; width: 20px; height: 20px; font-size: 10px; line-height: 14px; border: none;">
+                                                    +
+                                                </button>
+                                        `;
+
+                                        // Modal con las imágenes adicionales
+                                        html += `
+                                                <div class="modal fade" id="miembrosModal" tabindex="-1" role="dialog" aria-labelledby="miembrosModalLabel" aria-hidden="true">
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 30px; color: #ffffff; position: relative; right: 24rem; top: -10px;">
+                                                        <span aria-hidden="true" class="fas fa-times"></span>
+                                                    </button>
+                                                    <br>
+                                                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5  class="modal-title" id="miembrosModalLabel"  style="position:relative; left:170px;">Participantes</h5>
+                                                        </div>
+                                                            <div class="modal-body" style="text-align: center; display: flex; flex-wrap: nowrap; justify-content: center; overflow-x: auto;">
+                                            `;
+
+                                        // Mostrar las imágenes adicionales en el modal
+                                        miembros.forEach(miembro => {
+                                            html += `
+                                                <img src="{{ asset('storage/empleados/imagenes/') }}/${miembro.avatar}"
+                                                    class="rounded-circle" alt="${miembro.name}" title="${miembro.name}"
+                                                    style="object-fit: cover; clip-path: circle(50%); height: 30px; width: 30px; margin-right: 10px;">
+                                            `;
+                                        });
+                                    }
+
+                                    html += '</div>'; // Cierre del contenedor flexbox
+                                    return html;
+                                }
+                            }
+                        },
+
                     {
                         data: 'descripcion',
                         name: 'descripcion',
@@ -366,19 +292,8 @@
                     [0, 'desc']
                 ],
             };
+
             let table = $('.datatable-Comiteseguridad').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
     </script>
 @endsection

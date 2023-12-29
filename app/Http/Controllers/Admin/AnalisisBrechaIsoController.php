@@ -260,4 +260,9 @@ class AnalisisBrechaIsoController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function inicioBrechas()
+    {
+        return view('admin.analisisdebrechas2022.inicio-brechas');
+    }
 }
