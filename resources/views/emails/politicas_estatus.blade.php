@@ -46,8 +46,16 @@
                             <table class="caja-info">
                                 <tr>
                                     <td style="padding: 10px 30px 10px 30px;">
+<<<<<<< HEAD
                                         <img class="img-firts" vspace="15" hspace="7" width="100" height="70" src="{{asset('Imagen_member.png')}}" style="margin: auto; margin-top: 30px;"><br><br>
                                         <img class="img-firts" width="150" height="150" src="{{asset('logo-s4b.png')}}" style="margin: auto; margin-top: 30px;">
+=======
+                                        <img class="img-firts" vspace="15" hspace="7" width="100"
+                                            height="70" src="{{ asset('Imagen_member.png') }}"
+                                            style="margin: auto; margin-top: 30px;"><br><br>
+                                        <img class="img-firts" width="150" height="150"
+                                            src="{{ asset('logo-s4b.png') }}" style="margin: auto; margin-top: 30px;">
+>>>>>>> origin/release/experiencia_usuario_s3
 
 
                                         <h4 style=" font-size: 26px;">Notificación de Cambios</h4>
@@ -56,8 +64,13 @@
                                             La Matriz de requisitos ha sido actualizada, favor de validar los cambios.
                                         </p>
 
+<<<<<<< HEAD
 
                                         <a class="link" href="{{ route('admin.politica-sgsis.index') }}" style=" display: block; font-size: 13px;">Lista de Politicas</a>
+=======
+                                        <a class="link" href="{{ route('admin.politica-sgsis.show', $id_politica) }}"
+                                            style=" display: block; font-size: 13px;">Lista de Politicas</a>
+>>>>>>> origin/release/experiencia_usuario_s3
 
 
                                     </td>
@@ -65,9 +78,18 @@
                             </table>
                             <br><br>
                             <div class="caja-blue" style="background-color: #2567AE; padding: 25px 0px;">
+<<<<<<< HEAD
                                 <a href="https://www.facebook.com/silent4business" style="margin: 10px;"><img src="{{ $img_facebook }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
                                 <a href="https://twitter.com/silent4business" style="margin: 10px;"><img src="{{ $img_twitter }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
                                 <a href="https://www.linkedin.com/company/silent4business/mycompany/" style="margin: 0px 10px;"><img src="{{ $img_linkedin }}" width="25px"></a>
+=======
+                                <a href="https://www.facebook.com/silent4business" style="margin: 10px;"><img
+                                        src="{{ $img_facebook }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
+                                <a href="https://twitter.com/silent4business" style="margin: 10px;"><img
+                                        src="{{ $img_twitter }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
+                                <a href="https://www.linkedin.com/company/silent4business/mycompany/"
+                                    style="margin: 0px 10px;"><img src="{{ $img_linkedin }}" width="25px"></a>
+>>>>>>> origin/release/experiencia_usuario_s3
                             </div>
                             <p>
 
@@ -82,4 +104,8 @@
 
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> origin/release/experiencia_usuario_s3

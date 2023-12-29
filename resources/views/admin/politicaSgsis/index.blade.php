@@ -317,7 +317,16 @@
                         <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                         </button>
+<<<<<<< HEAD
 
+=======
+                        {{-- <form method="POST" action="{{ route('admin.politica-sgsis.pdf') }}">
+                            @csrf
+                            <button class="boton-transparente">
+                                <img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon">
+                            </button>
+                        </form> --}}
+>>>>>>> origin/release/experiencia_usuario_s3
                     </div>
                     <h3 class="title-table-rds"> Politicas</h3>
                     <table class="datatable datatable-Comiteseguridad" id="datatable-PoliticaSgsi">

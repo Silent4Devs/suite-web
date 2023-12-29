@@ -8,61 +8,54 @@
 
 
 
-<div class="container w-100 form-group col-12 mt-5">
-    <div class="mb-2 row">
+<div class="card card-body">
+    {{-- <div class="mb-2 row">
         <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
             <span class="ml-1" style="font-size: 17px; font-weight: bold;">
-                <i class="fas fa-stream"></i> Vincular Plan de Acción</span>
+                 Vincular Plan de Acción</span>
         </div>
+    </div> --}}
+    <div class="card-header">
+        <h5>Acuerdos y Compromisos</h5>
     </div>
-    <div class="row">
-        <div class="col-sm-12 col-lg-12 col-md-12">
-            <div class="form-group">
-                <label for="actividad"><i class="iconos-crear fas fa-stream"></i> Actividad <span
-                        class="text-danger">*</span></label><i class="fas fa-info-circle"
-                    style="font-size:12pt; float: right;" title="Nombre de la actividad"></i>
-                <div class="row align-items-center">
-                    <div class="col-12">
-                        <input type="text" class="form-control" id="actividad" name="actividad">
-                    </div>
+    <div class="">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12 col-md-12">
+                <div class="form-group anima-focus">
+                    <input type="text" class="form-control" id="actividad" name="actividad" placeholder="">
+                    <label for="actividad"> Actividad <span class="text-danger">*</span></label>
                     {{-- <div class="pr-0 col-1">
                         <button id="btnVincularNombre" class="btn btn-outline-primary btn-sm"
-                            title="Vincular con nombre"><i class="fas fa-share"></i></button>
+                            title="Vincular con nombre"></button>
                     </div> --}}
                 </div>
                 {{-- <small id="actividadHelp" class="form-text text-muted">Nombre de la actividad</small> --}}
                 <small class="p-0 m-0 text-xs error_actividad errores text-danger"></small>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12 col-lg-6 col-6">
-            <div class="form-group">
-                <label for="inicio"><i class="iconos-crear fas fa-calendar-day"></i> Inicio <span
-                        class="text-danger">*</span></label><i class="fas fa-info-circle"
-                    style="font-size:12pt; float: right;" title="Fecha de inicio de la actividad"></i>
-                <input type="date" min="1945-01-01" class="form-control" id="inicio" name="inicio">
-                {{-- <small id="inicioHelp" class="form-text text-muted">Fecha de inicio de la actividad</small> --}}
-                <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 col-6">
+                <div class="form-group anima-focus">
+                    <input type="date" min="1945-01-01" class="form-control" id="inicio" name="inicio">
+                    <label for="inicio"> Inicio <span class="text-danger">*</span></label>
+                    {{-- <small id="inicioHelp" class="form-text text-muted">Fecha de inicio de la actividad</small> --}}
+                    <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
+
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-6">
+                <div class="form-group anima-focus">
+                    <input type="date" min="1945-01-01" class="form-control" id="finalizacion" name="finalizacion">
+                    <label for="finalizacion"> Finalización <span class="text-danger">*</span></label>
+                    {{-- <small id="finalizacionHelp" class="form-text text-muted">Fecha de finalización de la
+                            actividad</small> --}}
+                    <small class="p-0 m-0 text-xs error_finalizacion errores text-danger"></small>
+                </div>
             </div>
         </div>
-        <div class="col-sm-12 col-lg-6 col-6">
-            <div class="form-group">
-                <label for="finalizacion"><i class="iconos-crear fas fa-calendar-day"></i> Finalización <span
-                        class="text-danger">*</span></label><i class="fas fa-info-circle"
-                    style="font-size:12pt; float: right;"
-                    title="Fecha de finalización de la
-                        actividad"></i>
-                <input type="date" min="1945-01-01" class="form-control" id="finalizacion" name="finalizacion">
-                {{-- <small id="finalizacionHelp" class="form-text text-muted">Fecha de finalización de la
-                    actividad</small> --}}
-                <small class="p-0 m-0 text-xs error_finalizacion errores text-danger"></small>
-            </div>
-        </div>
-    </div>
-    {{-- <div class="col-sm-12 col-lg-4 col-4">
-            <div class="form-group">
-                <label for="progreso"><i class="iconos-crear fas fa-percent"></i> Progreso <span
+        {{-- <div class="col-sm-12 col-lg-4 col-4">
+            <div class="form-group anima-focus">
+                <label for="progreso"> Progreso <span
                         class="text-danger">*</span></label>
                 <input type="number" class="form-control" id="progreso" name="progreso" min="0" max="100">
                 <small id="progresoHelp" class="form-text text-muted">Progreso de la actividad, rango de 0 -
@@ -70,141 +63,141 @@
                 <small class="p-0 m-0 text-xs error_progreso errores text-danger"></small>
             </div>
         </div> --}}
-    <div class="mb-3 row">
-        <div class="col-sm-12 col-lg-12 col-md-12">
-            <label for="responsables_actividad"><i class="iconos-crear fas fa-users"></i> Responsables <span
-                    class="text-danger">*</span></label><i class="fas fa-info-circle"
-                style="font-size:12pt; float: right;" title="Responsables de la actividad"></i>
-            <select class="responsables_actividad" id="responsables_actividad" multiple>
-                @foreach ($empleados as $empleado)
-                    <option value="{{ $empleado->id }}" avatar="{{ $empleado->avatar }}">
-                        {{ $empleado->name }}</option>
-                @endforeach
-            </select>
-            {{-- <small id="responsables_actividadHelp" class="form-text text-muted">Responsables de la actividad</small> --}}
-            <small class="p-0 m-0 text-xs error_participantes errores text-danger"></small>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12 col-lg-12 col-md-12">
-            <div class="form-group">
-                <label for="comentarios"><i class="iconos-crear fas fa-comments"></i> Comentarios <span
-                        class="text-danger">*</span></label><i class="fas fa-info-circle"
-                    style="font-size:12pt; float: right;" title="Comentarios de la actividad"></i>
-                <textarea class="form-control w-100" id="comentarios" name="comentarios"></textarea>
-                {{-- <small id="comentariosHelp" class="form-text text-muted">Comentarios de la actividad</small> --}}
-                <small class="p-0 m-0 text-xs error_comentarios errores text-danger"></small>
+        <div class="mb-3 row">
+            <div class="form-group anima-focus col-sm-12 col-lg-12 col-md-12">
+                <select class="responsables_actividad form-control" id="responsables_actividad" multiple placeholder="">
+                    @foreach ($empleados as $empleado)
+                        <option value="{{ $empleado->id }}" avatar="{{ $empleado->avatar }}">
+                            {{ $empleado->name }}</option>
+                    @endforeach
+                </select>
+                <label for="responsables_actividad"> Responsables <span class="text-danger">*</span></label>
+                {{-- <i
+                    class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                    title="Responsables de la actividad"></i> --}}
+                {{-- <small id="responsables_actividadHelp" class="form-text text-muted">Responsables de la actividad</small> --}}
+                <small class="p-0 m-0 text-xs error_participantes errores text-danger"></small>
             </div>
         </div>
-    </div>
-    <input type="hidden" id="actividades" name="actividades">
-    <div class="col-12">
-        <button id="btnAgregar" class="mt-3 mb-2 btn btn-sm btn-outline-success" style="float:right;"><i
-                class="fas fa-plus-circle"></i> Agregar Actividad
-        </button>
-    </div>
-    @if ($errors->has('actividades'))
-        <span class="text-danger">
-            <i class="mr-2 fas fa-info-circle"></i>{{ $errors->first('actividades') }}
-        </span>
-    @endif
-    <div class="mt-5 datatable-fix w-100">
-        <table id="tblActividades" class="table w-100">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Estatus</th>
-                    <th scope="col">Actividad</th>
-                    <th scope="col">Inicio</th>
-                    <th scope="col">Finalización</th>
-                    <th scope="col">Duración</th>
-                    <th scope="col">Responsable(s)</th>
-                    <th scope="col">Responsable(s)_id</th>
-                    <th scope="col">Comentarios</th>
-                    <th scope="col">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (isset($actividades))
-                    @foreach ($actividades as $actividad)
-                        @php
-                            $estatus = 'Completado';
-                            $color = 'rgb(0,200,117)';
-                            $textColor = 'white';
-                            switch ($actividad->status) {
-                                case 'STATUS_ACTIVE':
-                                    $estatus = 'En Progreso';
-                                    $color = 'rgb(253, 171, 61)';
-                                    break;
-                                case 'STATUS_DONE':
-                                    $color = 'rgb(0, 200, 117)';
-                                    $estatus = 'Completado';
-                                    break;
-                                case 'STATUS_FAILED':
-                                    $estatus = 'Con Retraso';
-                                    $color = 'rgb(226, 68, 92)';
-                                    break;
-                                case 'STATUS_SUSPENDED':
-                                    $estatus = 'Suspendido';
-                                    $color = '#aaaaaa';
-                                    break;
-                                case 'STATUS_WAITING':
-                                    $estatus = 'En Espera';
-                                    $color = '#F79136';
 
-                                    break;
-                                case 'STATUS_UNDEFINED':
-                                    $estatus = 'Indefinido';
-                                    $color = '#00b1e1';
-                                    break;
-                                default:
-                                    $estatus = 'Indefinido';
-                                    break;
-                            }
-                        @endphp
-                        <tr>
-                            <td>{{ $actividad->id }}</td>
-                            <td style="background: {{ $color }}; color:{{ $textColor }}">
-                                {{ $estatus }}
-                            </td>
-                            <td>{{ $actividad->name }}</td>
-                            <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->start) / 1000)->toDateTimeString())->format('Y-m-d') }}
-                            </td>
-                            <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->end) / 1000)->toDateTimeString())->format('Y-m-d') }}
-                            </td>
-                            <td>{{ $actividad->duration }}</td>
-                            <td>
-                                @foreach ($actividad->assigs as $assig)
+        <div class="row">
+            <div class="col-sm-12 col-lg-12 col-md-12">
+                <div class="form-group anima-focus">
+                    <textarea class="form-control w-100" id="comentarios" name="comentarios" placeholder=""></textarea>
+                    <label for="comentarios"> Comentarios <span class="text-danger">*</span></label>
+                    {{-- <small id="comentariosHelp" class="form-text text-muted">Comentarios de la actividad</small> --}}
+                    <small class="p-0 m-0 text-xs error_comentarios errores text-danger"></small>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="actividades" name="actividades">
+        <div class="col-12">
+            <button id="btnAgregar" class="mt-3 mb-2 btn btn-sm btn-link" style="float:left;">Agregar
+                Actividad +
+            </button>
+        </div>
+        @if ($errors->has('actividades'))
+            <span class="text-danger">
+                {{ $errors->first('actividades') }}
+            </span>
+        @endif
+        <div class="mt-5 datatable-rds w-100">
+            <table id="tblActividades" class=" w-100">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Estatus</th>
+                        <th scope="col">Actividad</th>
+                        <th scope="col">Inicio</th>
+                        <th scope="col">Finalización</th>
+                        <th scope="col">Duración</th>
+                        <th scope="col">Responsable(s)</th>
+                        <th scope="col">Responsable(s)_id</th>
+                        <th scope="col">Comentarios</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (isset($actividades))
+                        @foreach ($actividades as $actividad)
+                            @php
+                                $estatus = 'Completado';
+                                $color = 'rgb(0,200,117)';
+                                $textColor = 'white';
+                                switch ($actividad->status) {
+                                    case 'STATUS_ACTIVE':
+                                        $estatus = 'En Progreso';
+                                        $color = 'rgb(253, 171, 61)';
+                                        break;
+                                    case 'STATUS_DONE':
+                                        $color = 'rgb(0, 200, 117)';
+                                        $estatus = 'Completado';
+                                        break;
+                                    case 'STATUS_FAILED':
+                                        $estatus = 'Con Retraso';
+                                        $color = 'rgb(226, 68, 92)';
+                                        break;
+                                    case 'STATUS_SUSPENDED':
+                                        $estatus = 'Suspendido';
+                                        $color = '#aaaaaa';
+                                        break;
+                                    case 'STATUS_WAITING':
+                                        $estatus = 'En Espera';
+                                        $color = '#F79136';
+
+                                        break;
+                                    case 'STATUS_UNDEFINED':
+                                        $estatus = 'Indefinido';
+                                        $color = '#00b1e1';
+                                        break;
+                                    default:
+                                        $estatus = 'Indefinido';
+                                        break;
+                                }
+                            @endphp
+                            <tr>
+                                <td>{{ $actividad->id }}</td>
+                                <td style="background: {{ $color }}; color:{{ $textColor }}">
+                                    {{ $estatus }}
+                                </td>
+                                <td>{{ $actividad->name }}</td>
+                                <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->start) / 1000)->toDateTimeString())->format('Y-m-d') }}
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->end) / 1000)->toDateTimeString())->format('Y-m-d') }}
+                                </td>
+                                <td>{{ $actividad->duration }}</td>
+                                <td>
+                                    @foreach ($actividad->assigs as $assig)
+                                        @php
+                                            $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
+                                        @endphp
+                                        <img src="{{ $empleado->avatar_ruta }}" id="res_{{ $empleado->id }}"
+                                            alt="{{ $empleado->name }}" title="{{ $empleado->name }}"
+                                            style="clip-path: circle(15px at 50% 50%);width: 45px;" />
+                                    @endforeach
+                                </td>
+                                <td>
                                     @php
-                                        $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
+                                        $asignados = [];
+                                        foreach ($actividad->assigs as $assig) {
+                                            $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
+                                            array_push($asignados, $empleado->id);
+                                        }
                                     @endphp
-                                    <img src="{{ $empleado->avatar_ruta }}" id="res_{{ $empleado->id }}"
-                                        alt="{{ $empleado->name }}" title="{{ $empleado->name }}"
-                                        style="clip-path: circle(15px at 50% 50%);width: 45px;" />
-                                @endforeach
-                            </td>
-                            <td>
-                                @php
-                                    $asignados = [];
-                                    foreach ($actividad->assigs as $assig) {
-                                        $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
-                                        array_push($asignados, $empleado->id);
-                                    }
-                                @endphp
-                                {{ str_replace('"', '', str_replace('[', '', str_replace(']', '', json_encode($asignados)))) }}
-                            </td>
-                            <td>{{ $actividad->description }}</td>
-                            <td>
-                                <button class="btn btn-sm text-danger" title="Eliminar actividad"
-                                    onclick="event.preventDefault(); EliminarFila(this)"><i
-                                        class="fa fa-trash-alt"></i></button>
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
+                                    {{ str_replace('"', '', str_replace('[', '', str_replace(']', '', json_encode($asignados)))) }}
+                                </td>
+                                <td>{{ $actividad->description }}</td>
+                                <td>
+                                    <button class="btn btn-sm text-danger" title="Eliminar actividad"
+                                        onclick="event.preventDefault(); EliminarFila(this)"><i
+                                            class="fa fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <script>
@@ -355,7 +348,7 @@
                     images,
                     participantes_id,
                     comentarios,
-                    `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"><i class="fa fa-trash-alt"></i></button>`,
+                    `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
                 ]).draw();
 
             } else {
