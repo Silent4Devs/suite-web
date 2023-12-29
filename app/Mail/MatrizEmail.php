@@ -11,9 +11,17 @@ class MatrizEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+<<<<<<< HEAD
     public $empleado_name;
 
     public $comite_name;
+=======
+    // public $empleado_name;
+
+    // public $comite_name;
+
+    public $id_matriz;
+>>>>>>> origin/release/experiencia_usuario_s3
 
     /**
      * Create a new message instance.
@@ -22,8 +30,14 @@ class MatrizEmail extends Mailable
      */
 
     //prueba
+<<<<<<< HEAD
     public function __construct()
     {
+=======
+    public function __construct($id_matriz)
+    {
+        $this->id_matriz = $id_matriz;
+>>>>>>> origin/release/experiencia_usuario_s3
     }
 
     public function getBase64($url)
@@ -31,18 +45,30 @@ class MatrizEmail extends Mailable
         try {
             $img_route = $url;
             $logo_base = file_get_contents($img_route);
+<<<<<<< HEAD
+            $img = 'data:image/png;base64,'.base64_encode($logo_base);
+=======
             $img = 'data:image/png;base64,' . base64_encode($logo_base);
+>>>>>>> origin/release/experiencia_usuario_s3
 
             return $img;
         } catch (\Exception $e) {
             try {
                 $img_route = $url;
                 $logo_base = Storage::get($img_route);
+<<<<<<< HEAD
+                $img = 'data:image/png;base64,'.base64_encode($logo_base);
+
+                return $img;
+            } catch (\Throwable $th) {
+                $img = 'data:image/png;base64,'.'';
+=======
                 $img = 'data:image/png;base64,' . base64_encode($logo_base);
 
                 return $img;
             } catch (\Throwable $th) {
                 $img = 'data:image/png;base64,' . '';
+>>>>>>> origin/release/experiencia_usuario_s3
 
                 return $img;
             }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\ParametrosTemplateAnalisisdeBrechas;
 use App\Models\Norma;
+use App\Models\ParametrosTemplateAnalisisdeBrechas;
 use App\Models\PreguntasTemplateAnalisisdeBrechas;
 use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;

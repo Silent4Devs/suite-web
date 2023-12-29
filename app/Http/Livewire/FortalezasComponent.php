@@ -90,5 +90,4 @@ class FortalezasComponent extends Component
         $this->dispatchBrowserEvent('contentChanged');
         $this->view = 'create';
     }
-
 }

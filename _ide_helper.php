@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.38.1.
+ * Generated for Laravel 10.38.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -6721,11 +6721,18 @@
          *
          * @param string $path
          * @param string $data
+<<<<<<< HEAD
          * @param bool $lock
          * @return int
          * @static
          */
         public static function append($path, $data, $lock = false)
+=======
+         * @return int
+         * @static
+         */
+        public static function append($path, $data)
+>>>>>>> origin/release/experiencia_usuario_s3
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
                         return $instance->append($path, $data, $lock);
@@ -14180,6 +14187,7 @@
                     /**
          * Get all of the type names for the database.
          *
+<<<<<<< HEAD
          * @deprecated Will be removed in a future Laravel version.
          * @return array
          * @static
@@ -26799,7 +26807,6 @@ namespace  {
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
             class Livewire extends \Livewire\Livewire {}
-            class LogViewer extends \Opcodes\LogViewer\Facades\LogViewer {}
             class Sentry extends \Sentry\Laravel\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class ResponseCache extends \Spatie\ResponseCache\Facades\ResponseCache {}
