@@ -3,10 +3,7 @@
 namespace App\Mail\PoliticasSGSI;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class NotificacionAprobacionPolitica extends Mailable
@@ -30,6 +27,6 @@ class NotificacionAprobacionPolitica extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.politicas.notificacion-politica-aprobada')->subject('Politica Aprobada: ' . $this->nombre_politica);
+        return $this->view('mails.politicas.notificacion-politica-aprobada')->subject('Politica Aprobada: '.$this->nombre_politica);
     }
 }

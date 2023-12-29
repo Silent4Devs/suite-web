@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class NotificacionAprobacionSuperAprobadorAnalisisFODA extends Mailable
@@ -17,6 +14,7 @@ class NotificacionAprobacionSuperAprobadorAnalisisFODA extends Mailable
      * Create a new message instance.
      */
     public $id_foda;
+
     public $nombre_analisis;
 
     public function __construct($id_foda, $nombre_analisis)
@@ -32,6 +30,6 @@ class NotificacionAprobacionSuperAprobadorAnalisisFODA extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.entendimiento-organizacion.notificacion-analisis-participantes')->subject('Solicitud Aprobación de Analisis FODA: ' . $this->nombre_analisis);
+        return $this->view('mails.entendimiento-organizacion.notificacion-analisis-participantes')->subject('Solicitud Aprobación de Analisis FODA: '.$this->nombre_analisis);
     }
 }

@@ -2,11 +2,6 @@
 
 namespace App\Http\Livewire;
 
-<<<<<<< HEAD
-use App\Models\MatrizRequisitoLegale;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-=======
 use App\Mail\MatrizEmail;
 use App\Models\ControlListaDistribucion;
 use App\Models\ListaDistribucion;
@@ -16,16 +11,12 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
->>>>>>> origin/release/experiencia_usuario_s3
 use Livewire\Component;
 
 class CreateMatrizRequisitosLegales extends Component
 {
-<<<<<<< HEAD
-=======
     public $modelo = 'MatrizRequisitoLegale';
 
->>>>>>> origin/release/experiencia_usuario_s3
     public collection $alcance_s1;
 
     public $alcance;
@@ -69,16 +60,11 @@ class CreateMatrizRequisitosLegales extends Component
     {
         // dd($this->alcance, $this->alcance_s1);
         DB::beginTransaction();
-<<<<<<< HEAD
-        try {
-            MatrizRequisitoLegale::create([
-=======
 
         $array_requisito = [];
 
         try {
             $requisito = MatrizRequisitoLegale::create([
->>>>>>> origin/release/experiencia_usuario_s3
                 'nombrerequisito' => $this->alcance['nombrerequisito'],
                 'formacumple' => $this->alcance['formacumple'],
                 'fechaexpedicion' => $this->alcance['fechaexpedicion'],
@@ -86,11 +72,7 @@ class CreateMatrizRequisitosLegales extends Component
                 'requisitoacumplir' => $this->alcance['requisitoacumplir'],
             ]);
             foreach ($this->alcance_s1 as $alcance1) {
-<<<<<<< HEAD
-                MatrizRequisitoLegale::create([
-=======
                 $array_requisito[] = MatrizRequisitoLegale::create([
->>>>>>> origin/release/experiencia_usuario_s3
                     'nombrerequisito' => $alcance1['nombrerequisito'],
                     'formacumple' => $alcance1['formacumple'],
                     'fechaexpedicion' => $alcance1['fechaexpedicion'],
@@ -100,17 +82,12 @@ class CreateMatrizRequisitosLegales extends Component
             }
             DB::commit();
 
-<<<<<<< HEAD
-=======
             $this->listaDistribucion($requisito, $array_requisito);
 
->>>>>>> origin/release/experiencia_usuario_s3
             return redirect()->route('admin.matriz-requisito-legales.index');
         } catch (\Throwable $th) {
             DB::rollback();
         }
-<<<<<<< HEAD
-=======
     }
 
     public function listaDistribucion($requisito, $array_requisito)
@@ -145,7 +122,7 @@ class CreateMatrizRequisitosLegales extends Component
         }
         $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-        if (!$containsValue) {
+        if (! $containsValue) {
             // dd("Estoy en la lista");
             $this->envioCorreos($proceso, $requisito);
             // The collection contains the specific empleado_id value
@@ -177,7 +154,7 @@ class CreateMatrizRequisitosLegales extends Component
             }
             $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-            if (!$containsValue) {
+            if (! $containsValue) {
                 // dd("Estoy en la lista");
                 $this->envioCorreos($proceso, $requisito);
                 // The collection contains the specific empleado_id value
@@ -193,6 +170,5 @@ class CreateMatrizRequisitosLegales extends Component
             Mail::to(removeUnicodeCharacters($emailAprobador))->send(new MatrizEmail($requisito->id));
         }
         // dd("Se enviaron todos");
->>>>>>> origin/release/experiencia_usuario_s3
     }
 }

@@ -657,8 +657,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             // });
         });
 
-
-
         Route::group(['middleware' => ['version_iso_2013']], function () {
             // Declaracion de Aplicabilidad
             Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');

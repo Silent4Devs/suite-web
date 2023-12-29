@@ -9,7 +9,7 @@ class ParticipantesListaDistribucion extends Model
 {
     use HasFactory;
 
-    protected $table = "participantes_lista_distribucions";
+    protected $table = 'participantes_lista_distribucions';
 
     protected $fillable = [
         'modulo_id',

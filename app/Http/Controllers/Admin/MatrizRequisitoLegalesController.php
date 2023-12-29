@@ -7,7 +7,6 @@ use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
 use App\Http\Requests\StoreMatrizRequisitoLegaleRequest;
 use App\Http\Requests\UpdateMatrizRequisitoLegaleRequest;
 use App\Mail\MatrizEmail;
-use App\Models\ControlListaDistribucion;
 use App\Models\Empleado;
 use App\Models\EvaluacionRequisitoLegal;
 use App\Models\EvidenciaMatrizRequisitoLegale;
@@ -26,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MatrizRequisitoLegalesController extends Controller
 {
-    public $modelo = "MatrizRequisitoLegale";
+    public $modelo = 'MatrizRequisitoLegale';
 
     public function index(Request $request)
     {
@@ -157,7 +156,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-        if (!$containsValue) {
+        if (! $containsValue) {
             // dd("Estoy en la lista");
             $this->envioCorreos($proceso, $matrizRequisitoLegale->id);
             // The collection contains the specific empleado_id value
@@ -278,7 +277,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
     }
 
     public function evaluar(MatrizRequisitoLegale $id)
