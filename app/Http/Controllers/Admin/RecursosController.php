@@ -37,7 +37,13 @@ class RecursosController extends Controller
         abort_if(Gate::denies('capacitaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Recurso::with(['empleados', 'team', 'categoria_capacitacion'])->select(sprintf('%s.*', (new Recurso)->table))->orderByDesc('id');
+            $query = Recurso::with([
+                'empleados:id,name,foto,puesto',
+                'team',
+                'categoria_capacitacion'
+            ])->select(sprintf('%s.*', (new Recurso)->table))
+                ->orderByDesc('id');
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -102,7 +108,6 @@ class RecursosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('capacitaciones_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $participantes = User::all()->pluck('name', 'id');
         $categorias = CategoriaCapacitacion::get();
         $recurso = new Recurso;
         $areas = Area::with('empleados')->get();

@@ -1426,7 +1426,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('courses/{course}/evaluacion/{evaluation}/quizdetail', 'CursoEstudiante@tableQuizDetails')->name('courses.quizdetails');
     //categorias para el administrador de escuela
     Route::resource('categories', 'Escuela\Admin\CategoryController');
+    Route::get('categories/destroy/{id}', 'Escuela\Admin\CategoryController@destroy');
     Route::resource('levels', 'Escuela\Admin\LevelController');
+    Route::get('levels/destroy/{id}', 'Escuela\Admin\LevelController@destroy');
     Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
 });
 
