@@ -19,6 +19,7 @@ class ExternosMinutaDireccion extends Model implements Auditable
         'emailEXT',
         'puestoEXT',
         'empresaEXT',
+        'asistenciaEXT',
         'minuta_id',
     ];
 

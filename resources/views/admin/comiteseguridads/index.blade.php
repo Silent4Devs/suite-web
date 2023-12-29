@@ -18,6 +18,12 @@
 @section('scripts')
     @parent
     <script>
+        $('#btnImport').on('click', function(e) {
+        e.preventDefault();
+        $('#xlsxImportModal').modal('show');
+     });
+    </script>
+    <script>
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',

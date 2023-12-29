@@ -33,7 +33,7 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <div class="btn btn-success" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
+            <div class="btn btn-primary" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
         </div>
     </div>
         @include('partials.flashMessages')

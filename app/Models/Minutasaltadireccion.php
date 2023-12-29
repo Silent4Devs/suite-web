@@ -13,6 +13,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Support\Facades\Cache;
 
 class Minutasaltadireccion extends Model implements Auditable, HasMedia
 {
@@ -29,6 +30,8 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
     const DOCUMENTO_RECHAZADO = 4;
 
     const DOCUMENTO_OBSOLETO = 5;
+
+    const APROBADO = 6;
 
     protected $appends = [
         'archivo', 'estatus_formateado', 'color_estatus',
@@ -53,6 +56,7 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
         'responsable_id',
         'arearesponsable',
         'fechareunion',
+        'tipo_reunion',
         'hora_inicio',
         'hora_termino',
         'tema_reunion',
@@ -64,6 +68,13 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
         'deleted_at',
         'team_id',
     ];
+
+    public static function getAllMinutasAltaDireccion()
+    {
+        return Cache::remember('MinutasAltaDireccion:minutas_alta_direccion_all', 3600 * 8, function () {
+            return self::with(['responsable', 'participantes', 'planes'])->orderByDesc('id')->get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -156,6 +167,12 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
     public function participantes()
     {
         return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->alta()->with('area');
+    }
+
+    public function participantesCorreo()
+    {
+        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->alta()->with('area')
+            ->select('name', 'email');
     }
 
     public function documentos()
