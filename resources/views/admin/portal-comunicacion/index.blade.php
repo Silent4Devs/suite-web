@@ -11,19 +11,23 @@
             </a>
         </div>
 
-        <div class="d-flex justify-content-center align-items-center" style="gap: 25px;">
-            <div class="img-person" style="width:130px; height:130px;">
-                <img src="https://img.freepik.com/vector-premium/hombre-indiferente-macho-rostro-desinteresado-rostro-humano-despreocupado-ilustracion-vector-emociones-gente_100470-72.jpg?w=360"
-                    alt="">
+        @if ($user->empleado)
+            <div class="d-flex justify-content-center align-items-center" style="gap: 25px;">
+                <div class="caja-img-user-header">
+                    <img src="{{ asset('storage/empleados/imagenes/' . '/' . $user->empleado->avatar) }}"
+                        alt="{{ $user->empleado->name }}">
+                </div>
+                <div class="caja-input-search">
+                    <span style="font-size: 20px;"> <strong>
+                            Bienvenido&nbsp;{{ $user->empleado ? explode(' ', $user->empleado->name)[0] : '' }},
+                        </strong> </span>
+                    <span> ¿Qué&nbsp;quieres&nbsp;hacer&nbsp;hoy? </span>
+                    <span> | </span>
+                    <input type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off">
+                    <i class="material-symbols-outlined icon-mic">mic</i>
+                </div>
             </div>
-            <div class="caja-input-search">
-                <span style="font-size: 20px;"> <strong> Bienvenido&nbsp;Juanito, </strong> </span>
-                <span> ¿Qué&nbsp;quieres&nbsp;hacer&nbsp;hoy? </span>
-                <span> | </span>
-                <input type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off">
-                <i class="material-symbols-outlined icon-mic">mic</i>
-            </div>
-        </div>
+        @endif
 
         <div class="mt-5">
             <div class="row">

@@ -136,7 +136,6 @@ header.mostrar-menu {
     padding: 0 50px;
     padding-top: 140px;
     padding-bottom: 50px;
-    max-height: ;
 }
 
 .title-item-menu-header {
@@ -199,7 +198,7 @@ header.mostrar-menu {
     justify-content: center;
     align-items: center;
     color: #2E2E2E;
-
+    transform: scale(1.05) !important;
 }
 
 .caja-img-escritorio-header {
@@ -229,6 +228,7 @@ header.mostrar-menu {
 .caja-menu-admin-header {}
 
 .menu-list-admin-header {
+    width: calc(100% - 30px);
     display: block;
     margin: 0px;
     margin-top: 40px;

@@ -297,7 +297,26 @@ header {
     color: #345183 !important;
 }
 
-.btn {}
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info,
+.btn-light,
+.btn-dark,
+.btn-link,
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-warning,
+.btn-outline-info,
+.btn-outline-light,
+.btn-outline-dark {
+    padding: 12px 25px !important;
+    border-radius: 4px !important;
+}
 
 .btn.btn-info {
     padding: 12px 25px !important;
@@ -1002,6 +1021,14 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     margin-top: 20px;
 }
 
+.card .datatable-rds {
+    border-radius: 0px;
+    border: none;
+    background-color: #fff;
+    padding: 0px;
+    margin-top: 0px;
+}
+
 .title-table-rds {
     font-weight: bolder;
     color: #606060;
@@ -1015,8 +1042,10 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 }
 
 .datatable-rds table.dataTable thead,
+.dataTables_scroll table.dataTable thead,
 .datatable-fix table.dataTable thead,
 .datatable-rds table.table thead,
+.dataTables_scroll table.table thead,
 .datatable-fix table.table thead {
     background-color: #00000000 !important;
     border: none !important;
@@ -1025,6 +1054,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 }
 
 .datatable-rds th,
+.dataTables_scroll th,
 .datatable-fix th {
     font-weight: bolder !important;
     font-size: 14px !important;
@@ -1032,6 +1062,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 }
 
 .datatable-rds td,
+.dataTables_scroll td,
 .datatable-fix td {
     font-size: 14px !important;
     border-bottom: 1px solid #E5E5E5 !important;
@@ -1039,11 +1070,13 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 }
 
 .datatable-rds tr:last-child td,
+.dataTables_scroll tr:last-child td,
 .datatable-fix tr:last-child td {
     border-bottom: none !important;
 }
 
 .datatable-rds .btns-actions-global-datatable,
+.dataTables_scroll .btns-actions-global-datatable,
 .datatable-fix .btns-actions-global-datatable {
     display: none;
     background-color: #fff;
@@ -1051,11 +1084,13 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 }
 
 .datatable-rds .btn-action-show-datatables-global,
+.dataTables_scroll .btn-action-show-datatables-global,
 .datatable-fix .btn-action-show-datatables-global {
     display: block !important;
 }
 
 .datatable-rds .dataTables_wrapper>.row:first-child,
+.dataTables_scroll .dataTables_wrapper>.row:first-child,
 .datatable-fix .dataTables_wrapper>.row:first-child {
     /* display: none; */
 }
@@ -1208,4 +1243,8 @@ table.table.table-acordeon tbody tr:nth-child(even) {
 
 .material-symbols-outlined {
     line-height: 0.5;
+}
+
+.table-bordered {
+    border: none !important;
 }
