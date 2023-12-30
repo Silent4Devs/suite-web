@@ -93,13 +93,15 @@
                     <input type="search">
                 </div>
             </div>
-            <div class="caja-user-header">
-                Carlos Ferras
-                <div class="caja-img-user-header">
-                    <img src="https://img.freepik.com/vector-premium/hombre-indiferente-macho-rostro-desinteresado-rostro-humano-despreocupado-ilustracion-vector-emociones-gente_100470-72.jpg?w=360"
-                        alt="">
+            @if ($usuario->empleado)
+                <div class="caja-user-header">
+                    {{ $usuario->empleado ? explode(' ', $usuario->empleado->name)[0] : '' }}
+                    <div class="caja-img-user-header">
+                        <img src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
+                            alt="{{ $usuario->empleado->name }}">
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
         <div class="menu-hedare-window">
             <div class="item-content-menu-header" style="background-color: #EEF6FF; min-width: 280px;">
@@ -147,131 +149,149 @@
             <div class="item-content-menu-header" style="background-color: #fff;">
                 <span class="title-item-menu-header">MÓDULOS TABANTAJ</span>
                 <div class="menu-blocks-mod-header">
-                    <a href="{{ route('admin.portal-comunicacion.index') }}">
-                        <div class="caja-icon-mod-header" style="background: #F1F1F1;">
-                            <i class="material-symbols-outlined">home</i>
-                        </div>
-                        <span>Inicio</span>
-                    </a>
-                    <a href="{{ route('admin.analisis-riesgos.menu') }}">
-                        <div class="caja-icon-mod-header" style="background: #FFD9ED;">
-                            <i class="material-symbols-outlined">warning</i>
-                        </div>
-                        <span>Análisis de riesgos</span>
-                    </a>
-                    <a href="{{ route('admin.visitantes.menu') }}">
+                    <a href="{{ asset('admin/recursos') }}">
                         <div class="caja-icon-mod-header" style="background: #9CEBFF;">
+                            <i class="material-symbols-outlined">school</i>
+                        </div>
+                        <span>Capacitaciones</span>
+                    </a>
+                    <a href="#">
+                        <div class="caja-icon-mod-header" style="background: #BFFFE9;">
+                            <i class="material-symbols-outlined">request_quote</i>
+                        </div>
+                        <span>Finanzas</span>
+                    </a>
+                    <a href="#">
+                        <div class="caja-icon-mod-header" style="background: #F1F1F1;">
                             <i class="material-symbols-outlined">emoji_people</i>
                         </div>
-                        <span>Visitante</span>
+                        <span>Gestión Normativa</span>
                     </a>
-                    <a href="{{ route('admin.analisis-impacto.menu') }}">
-                        <div class="caja-icon-mod-header" style="background: #BFFFE9;">
-                            <i class="material-symbols-outlined">privacy_tip</i>
-                        </div>
-                        <span>Análisis de impacto</span>
-                    </a>
-                    <a href="{{ asset('admin/capital-humano') }}">
-                        <div class="caja-icon-mod-header" style="background: #E0C5FF;">
-                            <i class="material-symbols-outlined">group</i>
-                        </div>
-                        <span>Capital humano</span>
-                    </a>
-                    <a href="{{ route('admin.iso27001.index') }}">
+                    <a href="{{ route('admin.analisis-riesgos.menu') }}">
                         <div class="caja-icon-mod-header" style="background: #FCB4BC;">
-                            <i class="material-symbols-outlined">language</i>
+                            <i class="material-symbols-outlined">report</i>
                         </div>
-                        <span>Sistema de Gestión</span>
+                        <span>Gestión de Riesgos</span>
                     </a>
-                    <a href="{{ route('admin.timesheet-inicio') }}">
+                    <a href="{{ url('contract_manager/katbol') }}">
+                        <div class="caja-icon-mod-header" style="background: #E0C5FF;">
+                            <i class="material-symbols-outlined">assignment</i>
+                        </div>
+                        <span>Gestión Contractual</span>
+                    </a>
+                    <a href="#">
                         <div class="caja-icon-mod-header" style="background: #B1C6FF;">
-                            <i class="material-symbols-outlined">event_available</i>
+                            <i class="material-symbols-outlined">shield_person</i>
                         </div>
-                        <span>Timesheet</span>
+                        <span>Admon. de Proyectos</span>
                     </a>
-                    <a href="{{ route('admin.systemCalendar') }}">
+                    <a href="{{ route('admin.carpeta.index') }}">
                         <div class="caja-icon-mod-header" style="background: #FFFDC4;">
-                            <i class="material-symbols-outlined">calendar_month</i>
+                            <i class="material-symbols-outlined">folder_copy</i>
                         </div>
-                        <span>Calendario</span>
+                        <span>Gestor Documental</span>
                     </a>
-                    <a href="{{ route('admin.desk.index') }}">
-                        <div class="caja-icon-mod-header" style="background: #FFD3BF;">
+                    <a href="{{ route('admin.visitantes.menu') }}">
+                        <div class="caja-icon-mod-header" style="background: #FFD9ED;">
                             <i class="material-symbols-outlined">group</i>
                         </div>
-                        <span>Centro de atención</span>
+                        <span>Visitantes</span>
                     </a>
-                    <a href="{{ asset('admin/organizacions') }}">
-                        <div class="caja-icon-mod-header" style="background: #E5E5E5;">
-                            <i class="material-symbols-outlined">language</i>
+                    <a href="#">
+                        <div class="caja-icon-mod-header" style="background: #FFD3BF;">
+                            <i class="material-symbols-outlined">diversity_3</i>
                         </div>
-                        <span>Mi Organización</span>
+                        <span>Gestión de Talento</span>
                     </a>
                 </div>
             </div>
-            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-auto scroll_estilos"
+            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden"
                 style="background-color: #fff; min-width: 280px;">
                 <span class="title-item-menu-header">ADMINISTRACIÓN</span>
-                <ul class="menu-list-admin-header">
-                    <li>
-                        <a href="">
-                            <i class="bi bi-file-earmark-arrow-up"></i>
-                            Carga masiva de datos
-                        </a>
-                    </li>
-                    <li class="li-click-list-header">
-                        <a href="#">
-                            <i class="bi bi-buildings"></i>
-                            Configurar Organización
-                            <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
-                        </a>
-                        <ul>
-                            <li><a href="">Organización</a></li>
-                            <li><a href="">Sedes</a></li>
-                            <li><a href="">Crear Grupo de Áreas</a></li>
-                            <li><a href="">Crear Áreas</a></li>
-                            <li><a href="">Macroprocesos</a></li>
-                            <li><a href="">Procesos</a></li>
-                            <li><a href="">Categorias de Activos</a></li>
-                            <li><a href="">Subcategorias de Activos </a></li>
-                            <li><a href="">Inventario de Activos</a></li>
-                            <li><a href="">Glosario</a></li>
-                        </ul>
-                    </li>
-                    <li class="li-click-list-header">
-                        <a href="#">
-                            <i class="bi bi-person-gear"></i>
-                            Configurar C. humano
-                            <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
-                        </a>
-                        <ul>
-                            <li>ssa</li>
-                            <li>ssaddd</li>
-                        </ul>
-                    </li>
-                    <li class="li-click-list-header">
-                        <a href="#">
-                            <i class="bi bi-laptop"></i>
-                            Configurar Vistas
-                            <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
-                        </a>
-                        <ul>
-                            <li>ssa</li>
-                            <li>ssaddd</li>
-                        </ul>
-                    </li>
-                    <li class="li-click-list-header">
-                        <a href="#">
-                            <i class="bi bi-gear"></i>
-                            Ajuste de ususario
-                            <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
-                        </a>
-                        <ul>
-                            <li>ssa</li>
-                            <li>ssaddd</li>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="overflow-auto scroll_estilo" style="max-height:400px;  width: 120%;">
+                    <ul class="menu-list-admin-header ">
+                        <li class="li-click-list-header">
+                            <a href="#">
+                                <i class="bi bi-file-earmark-arrow-up"></i>
+                                Catalogos SG
+                                <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
+                            </a>
+                            <ul>
+                                <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a></li>
+                                <li><a href="{{ route('admin.auditoria-clausula') }}">Cláusula</a></li>
+                            </ul>
+                        </li>
+                        <li class="li-click-list-header">
+                            <a href="#">
+                                <i class="bi bi-buildings"></i>
+                                Configurar Organización
+                                <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
+                            </a>
+                            <ul>
+                                <li><a href="{{ route('admin.organizacions.index') }}">Organización</a></li>
+                                <li><a href="{{ route('admin.sedes.index') }}">Sedes</a></li>
+                                <li><a href="{{ route('admin.grupoarea.index') }}">Crear Grupo de Áreas</a></li>
+                                <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
+                                <li><a href="{{ route('admin.macroprocesos.index') }}">Macroprocesos</a></li>
+                                <li><a href="{{ route('admin.procesos.index') }}">Procesos</a></li>
+                                <li><a href="{{ route('admin.tipoactivos.index') }}">Categorias de Activos</a></li>
+                                <li><a href="{{ route('admin.subtipoactivos.index') }}">Subcategorias de Activos </a>
+                                </li>
+                                <li><a href="{{ route('admin.activos.index') }}">Inventario de Activos</a></li>
+                                <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
+                            </ul>
+                        </li>
+                        <li class="li-click-list-header">
+                            <a href="#">
+                                <i class="bi bi-person-gear"></i>
+                                Configurar C. humano
+                                <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
+                            </a>
+                            <ul>
+                                <li><a href="{{ route('admin.puestos.index') }}">Puestos</a></li>
+                                <li><a href="{{ route('admin.perfiles.index') }}">Niveles Jerárquicos</a></li>
+                                <li><a href="{{ route('admin.empleados.index') }}">Empleados</a></li>
+                                <li><a href="{{ asset('admin/categoria-capacitacion') }}">Categorías de Capacitaciones
+                                    </a></li>
+                                <li><a href="{{ asset('admin/recursos') }}">Capacitaciones</a></li>
+                            </ul>
+                        </li>
+                        <li class="li-click-list-header">
+                            <a href="#">
+                                <i class="bi bi-laptop"></i>
+                                Configurar Vistas
+                                <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
+                            </a>
+                            <ul>
+                                <li><a href="{{ route('admin.panel-inicio.index') }}">Mis Datos</a></li>
+                                <li><a href="{{ route('admin.panel-organizacion.index') }}">Mi Organización</a></li>
+                            </ul>
+                        </li>
+                        <li class="li-click-list-header">
+                            <a href="#">
+                                <i class="bi bi-gear"></i>
+                                Ajuste de usuario
+                                <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
+                            </a>
+                            <ul>
+                                <li><a href="{{ route('admin.roles.index') }}">Roles</a></li>
+                                <li><a href="{{ route('admin.users.index') }}">Usuarios</a></li>
+                            </ul>
+                        </li>
+                        <li class="li-click-list-header">
+                            <a href="#">
+                                <i class="bi bi-gear"></i>
+                                Ajuste de sistema
+                                <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
+                            </a>
+                            <ul>
+                                <li><a href="{{ route('admin.configurar-soporte.index') }}">Configurar Soporte</a>
+                                </li>
+                                <li><a href="{{ route('admin.visualizar-logs.index') }}">Visualizar Logs</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="item-content-menu-header caja-img-escritorio-header"
                 style="background-color: #e7ecef; padding: 0px;">
