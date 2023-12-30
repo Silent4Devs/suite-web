@@ -115,7 +115,6 @@
                         }
 
                     },
-
                     {
                         data: 'submodulo',
                         name: 'submodulo',
@@ -136,34 +135,35 @@
 
                             if (Array.isArray(parsedData)) {
                                 let html = '<div class="row">'; // Opening div for the data
-                                let displayedEmpleados =
-                                    0; // Counter for displayed empleados
+                                let displayedEmpleados = 0; // Counter for displayed empleados
                                 let numeroParticipantes = 0;
+
                                 parsedData.forEach(function(participante) {
                                     numeroParticipantes++;
                                     if (participante.empleado && displayedEmpleados < 3) {
                                         html +=
                                             `<div class="col-4">
-                                            <img src="{{ asset('storage/empleados/imagenes') }}/${participante.empleado.avatar}" class="img_empleado" title="${participante.empleado.name}">
+                                                <img src="{{ asset('storage/empleados/imagenes') }}/${participante.empleado.avatar}" class="img_empleado" title="${participante.empleado.name}">
                                             </div>`;
                                         displayedEmpleados++;
                                     }
                                     // Add more empleado fields as needed
                                 });
+
+                                html += '</div>'; // Closing div for the data
+
                                 if (numeroParticipantes > 3) {
                                     numeroParticipantes = numeroParticipantes - 3;
                                     html +=
-                                        '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal' +
+                                        '<button type="button" class="btn btn-round ml-2" style="border-radius: 50%;  background-color: #fff8dc;   width: 30px; height: 30px; position:relative; left:10rem; top:-1rem;" data-bs-toggle="modal" data-bs-target="#exampleModal' +
                                         meta.row + '">+' + numeroParticipantes + '</button>';
                                 }
 
-                                // html += ``
                                 return html;
                             }
                             return ''; // Return empty string if 'participantes' data is not an array
                         }
                     },
-
                     // {
                     //     data: 'actions',
                     //     name: '{{ trans('global.actions') }}'

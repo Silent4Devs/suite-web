@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}">
+    <style>
+        body{
+            color:#057BE2;
+        }
+    </style>
 @endsection
 @section('content')
     @include('admin.listadistribucion.estilos')
