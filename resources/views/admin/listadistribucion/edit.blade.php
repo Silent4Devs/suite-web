@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}"
 @endsection
 @section('content')
     @include('admin.listadistribucion.estilos')
@@ -23,7 +23,7 @@
         @csrf
         <div class="card">
             <div class="card-header">
-                <h4>Módulo Asignado</h4>
+                <h4 style="color:#057BE2;">Módulo Asignado</h4>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -31,14 +31,14 @@
                         <div class="anima-focus">
                             <input class="form-control" id="modulo" name="modulo" type="text"
                                 value="{{ $lista->modulo }}" placeholder="" disabled>
-                            <label for="modulo">Modulo</label>
+                            <label style="color:#057BE2;" for="modulo">Modulo</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="anima-focus">
                             <input class="form-control" id="submodulo" name="submodulo" type="text"
                                 value="{{ $lista->submodulo }}" placeholder="" disabled>
-                            <label for="modulo">Submodulo</label>
+                            <label style="color:#057BE2;" for="modulo">Submodulo</label>
                         </div>
                     </div>
                 </div>
@@ -46,11 +46,16 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h4>Configuración Listas de Aprobación</h4>
+                <h4 style="color:#057BE2;">Configuración Listas de Aprobación</h4>
             </div>
             <div class="card-body">
                 <div class="row g-0">
                     <div class="col-5">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
                         <p>Esta sección permite que las personas seleccionadas puedan autorizar el flujo en cualquier
                             momento,
                             sin requerir la aprobación de los niveles seleccionados
@@ -65,7 +70,7 @@
                                             {{ $empleado->name }}</option>
                                     @endforeach
                                 </select>
-                                <label for="superaprobadores">Super Aprobadores</label>
+                                <label for="superaprobadores" style="color:#057BE2;">Super Aprobadores</label>
                             </div>
                         </div>
                     </div>
@@ -73,6 +78,8 @@
                         <p>Seleccione cuantos niveles de aprobación tendra tu lista, para poder asignar por cada nivel el
                             numero
                             de colaboradores que se requiera.</p>
+                            <br>
+                            <br>
 
                         <div class="row mb-4">
                             <div class="anima-focus">
@@ -82,7 +89,7 @@
                                         <option value={{ $i }}>{{ $i }}</option>
                                     @endfor
                                 </select>
-                                <label for="niveles">Seleccione los niveles</label>
+                                <label for="niveles" style="color:#057BE2;">Seleccione los niveles</label>
                             </div>
                         </div>
 
@@ -117,7 +124,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel{{ $i }}">Colaboradores</label>
+                                        <label for="nivel{{ $i }}" style="color:#057BE2;">Colaboradores</label>
                                     </div>
                                 </div>
                             @endfor
