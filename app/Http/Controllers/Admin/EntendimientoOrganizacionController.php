@@ -25,7 +25,6 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Mail;
 
 class EntendimientoOrganizacionController extends Controller
@@ -322,7 +321,21 @@ class EntendimientoOrganizacionController extends Controller
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
-        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query'));
+        $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+
+        if ($modulo->participantes->isEmpty()) {
+            $listavacia = 'vacia';
+        } else {
+            foreach ($modulo->participantes as $participante) {
+                if ($participante->empleado->estatus != 'alta') {
+                    $listavacia = 'baja';
+                    return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia'));
+                }
+            }
+            $listavacia = 'cumple';
+        }
+
+        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia'));
     }
     public function adminShow($entendimientoOrganizacion)
     {

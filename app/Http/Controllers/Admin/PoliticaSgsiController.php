@@ -23,10 +23,7 @@ use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
-=======
 use Illuminate\Support\Facades\Mail;
->>>>>>> origin/release/experiencia_usuario_s3
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -109,7 +106,41 @@ class PoliticaSgsiController extends Controller
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
 
-        return view('admin.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
+        $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+
+        if ($modulo->participantes->isEmpty()) {
+            $listavacia = 'vacia';
+        } else {
+            foreach ($modulo->participantes as $participante) {
+                if ($participante->empleado->estatus != 'alta') {
+                    $listavacia = 'baja';
+                    return view('admin.politicaSgsis.index', compact(
+                        'politicaSgsis',
+                        'teams',
+                        'empleados',
+                        'organizacion_actual',
+                        'logo_actual',
+                        'empresa_actual',
+                        'direccion',
+                        'rfc',
+                        'listavacia',
+                    ));
+                }
+            }
+            $listavacia = 'cumple';
+        }
+
+        return view('admin.politicaSgsis.index', compact(
+            'politicaSgsis',
+            'teams',
+            'empleados',
+            'organizacion_actual',
+            'logo_actual',
+            'empresa_actual',
+            'direccion',
+            'rfc',
+            'listavacia',
+        ));
     }
 
     public function create()
@@ -137,19 +168,12 @@ class PoliticaSgsiController extends Controller
             'politicasgsi' => $request->input('politicasgsi'),
             'fecha_publicacion' => $request->input('fecha_publicacion'),
             'fecha_revision' => $request->input('fecha_revision'),
-<<<<<<< HEAD
-            'estatus' => 'pendiente'
-        ]);
-
-        //envio de corrreo
-=======
             'estatus' => 'pendiente',
             'id_reviso_politica' => User::getCurrentUser()->empleado->id,
         ]);
 
         //envio de corrreo
         $this->solicitudAprobacion($politicaSgsi->id);
->>>>>>> origin/release/experiencia_usuario_s3
 
         $politicaSgsi->estatus =  'pendiente';
 
@@ -182,11 +206,7 @@ class PoliticaSgsiController extends Controller
         $request->validate([
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
-<<<<<<< HEAD
-            'id_reviso_politica' => 'required',
-=======
             // 'id_reviso_politica' => 'required',
->>>>>>> origin/release/experiencia_usuario_s3
             'fecha_publicacion' => 'required',
             'fecha_revision' =>  'required',
         ]);
@@ -196,16 +216,11 @@ class PoliticaSgsiController extends Controller
             'politicasgsi' => $request->input('politicasgsi'),
             'fecha_publicacion' => $request->input('fecha_publicacion'),
             'fecha_revision' => $request->input('fecha_revision'),
-<<<<<<< HEAD
-            'estatus' => 'pendiente'
-        ]);
-=======
             'estatus' => 'pendiente',
             'id_reviso_politica' => User::getCurrentUser()->empleado->id,
         ]);
 
         $this->solicitudAprobacion($politicaSgsi->id);
->>>>>>> origin/release/experiencia_usuario_s3
 
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Editado con éxito');
     }
@@ -262,9 +277,6 @@ class PoliticaSgsiController extends Controller
 
         return $pdf->download('politicas.pdf');
     }
-<<<<<<< HEAD
-}
-=======
 
     public function solicitudAprobacion($id_politica)
     {
@@ -535,4 +547,3 @@ class PoliticaSgsiController extends Controller
         }
     }
 }
->>>>>>> origin/release/experiencia_usuario_s3

@@ -15,19 +15,13 @@ use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\Norma;
 use App\Models\Organizacion;
-<<<<<<< HEAD
-=======
 use App\Models\ProcesosListaDistribucion;
->>>>>>> origin/release/experiencia_usuario_s3
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
-=======
 use Illuminate\Support\Facades\Mail;
->>>>>>> origin/release/experiencia_usuario_s3
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -113,7 +107,21 @@ class AlcanceSgsiController extends Controller
         $rfc = $organizacion_actual->rfc;
         $normas = Norma::get();
 
-        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
+        $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+
+        if ($modulo->participantes->isEmpty()) {
+            $listavacia = 'vacia';
+        } else {
+            foreach ($modulo->participantes as $participante) {
+                if ($participante->empleado->estatus != 'alta') {
+                    $listavacia = 'baja';
+                    return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
+                }
+            }
+            $listavacia = 'cumple';
+        }
+
+        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
     }
 
     public function create()
@@ -144,11 +152,8 @@ class AlcanceSgsiController extends Controller
             'fecha_revision'  =>  $request->input('fecha_revision'),
             'estatus'  =>  'pendiente'
         ]);
-<<<<<<< HEAD
-=======
 
         $this->solicitudAprobacion($alcanceSgsi->id);
->>>>>>> origin/release/experiencia_usuario_s3
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
     }
@@ -196,11 +201,8 @@ class AlcanceSgsiController extends Controller
             'fecha_revision'  =>  $request->input('fecha_revision'),
             'estatus'  =>  'pendiente'
         ]);
-<<<<<<< HEAD
-=======
 
         $this->solicitudAprobacion($alcanceSgsi->id);
->>>>>>> origin/release/experiencia_usuario_s3
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
     }
@@ -242,9 +244,6 @@ class AlcanceSgsiController extends Controller
 
         return $pdf->download('alcances.pdf');
     }
-<<<<<<< HEAD
-}
-=======
     public function solicitudAprobacion($id_alcance)
     {
         // $modelo = 'AlcanceSgsi';
@@ -516,4 +515,3 @@ class AlcanceSgsiController extends Controller
         }
     }
 }
->>>>>>> origin/release/experiencia_usuario_s3
