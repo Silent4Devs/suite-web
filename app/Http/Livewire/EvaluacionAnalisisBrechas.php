@@ -5,9 +5,15 @@ namespace App\Http\Livewire;
 use App\Models\RespuestasEvaluacionAnalisisBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
 use Livewire\Component;
+use Illuminate\Support\Facades\Storage;
+
+use App\Traits\ObtenerOrganizacion;
+use PDF;
 
 class EvaluacionAnalisisBrechas extends Component
 {
+    use ObtenerOrganizacion;
+
     public $itemId; // Renamed from $id
     public $seccion_vista = 0;
 
@@ -19,7 +25,9 @@ class EvaluacionAnalisisBrechas extends Component
     public $oldRecomendacionValues = []; // Store old values
 
     public $cuentas;
+    public $totalAnalisis;
     // public $preguntasCount;
+    public $hola="hola live";
 
     public function mount($id)
     {
@@ -58,7 +66,6 @@ class EvaluacionAnalisisBrechas extends Component
             $peso_parametros = $result['porcentaje_parametros'];
             $totalCount = $result['totalCount'];
             $totalPorcentaje = $result['total_porcentaje'];
-
             $sectionPercentages = $this->porcentajeSeccion($this->seccion_vista);
 
             $grafica_cuentas = [];
@@ -69,6 +76,7 @@ class EvaluacionAnalisisBrechas extends Component
                     $grafica_colores[] = $parametro->color;
                 }
             }
+            $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
         } else {
             $template = $template_general;
 
@@ -82,6 +90,8 @@ class EvaluacionAnalisisBrechas extends Component
 
             $sectionPercentages = $this->porcentajeTotal();
 
+            // dd($sectionPercentages);
+
             $grafica_cuentas = [];
             $grafica_colores = [];
             foreach ($template->parametros as $parametro) {
@@ -90,14 +100,22 @@ class EvaluacionAnalisisBrechas extends Component
                     $grafica_colores[] = $parametro->color;
                 }
             }
+            $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
         }
 
+        $this->totalAnalisis = $this->porcentajeTotal()[0]['percentage'];
         //sirve para mostrar las respuesta ya existentes, no se pudo poner en hydrate()
 
-        $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+        // $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
         // $this->emit('mounted');
         // dd($cuentas);
         // dd($sectionPercentages);
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+        $direccion = $organizacion_actual->direccion;
+        $rfc = $organizacion_actual->rfc;
+
         return view('livewire.evaluacion-analisis-brechas', compact(
             'template',
             'template_general',
@@ -105,7 +123,8 @@ class EvaluacionAnalisisBrechas extends Component
             'totalCount',
             'sectionPercentages',
             'peso_parametros',
-            'totalPorcentaje'
+            'totalPorcentaje',
+            'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'
         ));
     }
 
@@ -323,5 +342,32 @@ class EvaluacionAnalisisBrechas extends Component
                 ['recomendacion' => $recomendacionValue] // Value to update or create
             );
         }
+    }
+
+    public function pdf()
+    {
+        // dd("aqui");
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+        $direccion = $organizacion_actual->direccion;
+        $rfc = $organizacion_actual->rfc;
+
+            $pdf = PDF::loadView('evaluacion-analisis-brechas-pdf', compact('organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
+            $pdf->setPaper('A4', 'portrait');
+
+            $pdfFileName = 'mi-archivo.pdf';
+            $pdfFilePath = 'documentos_analisis/' . $pdfFileName; // Ruta dentro del directorio storage
+
+            // Almacenar el PDF en el sistema de archivos de Laravel
+            Storage::put($pdfFilePath, $pdf->output());
+
+            $pdfFileUrl = Storage::url($pdfFilePath);
+            // dd($pdfFileUrl);
+
+// Descargar el archivo PDF
+// return response()->download(storage_path('app/public/storage/documentos_analisis'), $pdfFileName);
+return response()->download(storage_path('app/documentos_analisis/'.$pdfFileName));
+
     }
 }

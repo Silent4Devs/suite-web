@@ -9,24 +9,26 @@
 
     <h5 class="titulo">Formulario</h5>
 
-    <div class="card instrucciones">
+    <div class="card shadow-sm instrucciones" style="background: #18919F; border-radius: 16px; color:#FFFFFF;">
         <div class="card-body">
             <div class="row" style="padding-bottom: 10px;">
-                <div class="col-2">
-                    <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="imagen_instrucciones">
+                <div class="col-2" style="padding-left: 25px;">
+                    <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="imagen_instrucciones" style="width: 150px;
+                    height: 150px; margin-left: 5px; mar">
                 </div>
-                <div class="col-10">
-                    <h5>¿Que es? Dashboard Análisis de brechas</h5>
-                    <p>Es una herramienta qye ayuda a las organizaciones s visualizar las brechas entre el estado actual y
-                        el
-                        estado deseado. Este dashboard suele incluir indicadores clave de rendimiento KPI que miden el
-                        desempeño
-                        de la organizacion en las areas que se estan analizando. El dashboard puede ser una herramienta
-                        valiosa
-                        para la gestion de las brechas. Al proporcionar una visión general de las brechas, ell dashboard
-                        puede
-                        ayudar a las organizaciones a priorizar las areas de mejora y a tomar medidas para cerrar las
-                        brechas
+                <div class="col-10" style="padding-left:0px; padding-right:25px;">
+                    <h5 style="font: normal normal 600 19px/26px Segoe UI;
+                    letter-spacing: 0px;
+                    color: #FFFFFF;
+                    opacity: 1;">¿Que es? Dashboard Análisis de brechas</h5>
+                    <p style="font: normal normal normal Roboto;
+                    letter-spacing: 0px;
+                    color: #FFFFFF;
+                    opacity: 1;">
+                        Es una herramienta qye ayuda a las organizaciones a visualizar las brechas entre el estado actual y el
+                        estado deseado. Este dashboard suele incluir indicadores clave de rendimiento KPI que miden el desempeño de la organizacion en las areas que se estan analizando.<br>
+                        Al proporcionar una visión general de las brechas, ell dashboard
+                        puede ayudar a las organizaciones a priorizar las areas de mejora y a tomar medidas para cerrar las brechas
                     </p>
                 </div>
             </div>
