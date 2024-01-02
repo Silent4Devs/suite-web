@@ -517,4 +517,15 @@ class AlcanceSgsiController extends Controller
             }
         }
     }
+
+
+
+    public function visualizacion()
+    {
+        $alcances = AlcanceSgsi::get();
+
+        $organizacions = Organizacion::getFirst();
+
+        return view('admin.alcanceSgsis.visualizacion', compact('alcances', 'organizacions'));
+    }
 }

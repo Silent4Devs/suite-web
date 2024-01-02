@@ -39,49 +39,59 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered w-100 tblEvaluaciones">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="vertical-align: top">
-                            ID
-                        </th>
-                        <th style="vertical-align: top">
-                            Nombre
-                        </th>
-                        <th style="vertical-align: top">
-                            Estatus
-                        </th>
-                        {{-- <th style="vertical-align: top">
-                            Autoevaluación
-                        </th>
-                        <th style="vertical-align: top">
-                            Jefe&nbsp;Inmediato
-                        </th>
-                        <th style="vertical-align: top">
-                            Equipo&nbsp;a&nbsp;Cargo
-                        </th>
-                        <th style="vertical-align: top">
-                            Misma&nbsp;Área
-                        </th> --}}
-                        <th style="vertical-align: top">
-                            Fecha&nbsp;Inicio
-                        </th>
-                        <th style="vertical-align: top">
-                            Fecha&nbsp;Fin
-                        </th>
-                        <th style="vertical-align: top">
-                            ¿Incluye Competencias?
-                        </th>
-                        <th style="vertical-align: top">
-                            ¿Incluye Objetivos?
-                        </th>
-                        <th style="vertical-align: top;">
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+
+            <div class="text-right">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('admin.ev360-evaluaciones.create') }}" type="button" class="btn btn-primary">Registrar Evaluación 360°</a>
+                </div>
+            </div>
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <h3 class="title-table-rds">Evaluaciones 360°</h3>
+                <table class="datatable  tblEvaluaciones">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="vertical-align: top">
+                                ID
+                            </th>
+                            <th style="vertical-align: top">
+                                Nombre
+                            </th>
+                            <th style="vertical-align: top">
+                                Estatus
+                            </th>
+                            {{-- <th style="vertical-align: top">
+                                Autoevaluación
+                            </th>
+                            <th style="vertical-align: top">
+                                Jefe&nbsp;Inmediato
+                            </th>
+                            <th style="vertical-align: top">
+                                Equipo&nbsp;a&nbsp;Cargo
+                            </th>
+                            <th style="vertical-align: top">
+                                Misma&nbsp;Área
+                            </th> --}}
+                            <th style="vertical-align: top">
+                                Fecha&nbsp;Inicio
+                            </th>
+                            <th style="vertical-align: top">
+                                Fecha&nbsp;Fin
+                            </th>
+                            <th style="vertical-align: top">
+                                ¿Incluye Competencias?
+                            </th>
+                            <th style="vertical-align: top">
+                                ¿Incluye Objetivos?
+                            </th>
+                            <th style="vertical-align: top;">
+                                Opciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -183,20 +193,7 @@
 
             ];
 
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Construir evaluacion',
-                url: "{{ route('admin.ev360-evaluaciones.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    // $('#evaluacionModal').modal('show');
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            dtButtons.push(btnAgregar);
+
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

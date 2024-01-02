@@ -21,9 +21,6 @@
                             Nivel
                         </th>
                         <th>
-                            Descripción
-                        </th>
-                        <th>
                             Opciones
                         </th>
                     </tr>
@@ -106,59 +103,6 @@
                 }
 
             ];
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-            let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.perfiles.massDestroy') }}",
-                className: 'btn-danger',
-                action: function(e, dt, node, config) {
-                    var ids = $.map(dt.rows({
-                        selected: true
-                    }).data(), function(entry) {
-                        return entry.id
-                    });
-
-                    if (ids.length === 0) {
-                        alert('{{ trans('global.datatables.zero_selected') }}')
-
-                        return
-                    }
-
-                    if (confirm('{{ trans('global.areYouSure') }}')) {
-                        $.ajax({
-                                headers: {
-                                    'x-csrf-token': _token
-                                },
-                                method: 'POST',
-                                url: config.url,
-                                data: {
-                                    ids: ids,
-                                    _method: 'DELETE'
-                                }
-                            })
-                            .done(function() {
-                                location.reload()
-                            })
-                    }
-                }
-            }
-            //dtButtons.push(deleteButton)
-
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nuevo',
-                url: "{{ route('admin.perfiles.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            @can('niveles_jerarquicos_agregar')
-                dtButtons.push(btnAgregar);
-            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -172,10 +116,6 @@
                 columns: [{
                         data: 'perfil',
                         name: 'perfil'
-                    },
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion'
                     },
                     {
                         data: 'actions',
