@@ -1,10 +1,2 @@
-// Jenkinsfilev1
-
 // Este Jenkinsfilev1 no contiene un bloque pipeline adicional
-<<<<<<< HEAD
 git branch: 'stagging', url: 'https://github.com/Silent4Devs/suite-web.git'
-=======
-git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
-
-// Puedes agregar más pasos según sea necesario
->>>>>>> origin/release/experiencia_usuario_s3

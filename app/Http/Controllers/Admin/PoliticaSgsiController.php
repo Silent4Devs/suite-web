@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPoliticaSgsiRequest;
 use App\Http\Requests\StorePoliticaSgsiRequest;
 use App\Http\Requests\UpdatePoliticaSgsiRequest;
-use App\Mail\PoliticasEstatusEmail;
 use App\Mail\PoliticasSGSI\NotificacionAprobacionPolitica;
 use App\Mail\PoliticasSGSI\NotificacionRechazoPolitica;
 use App\Mail\PoliticasSGSI\NotificacionRechazoPoliticaLider;
@@ -32,7 +31,7 @@ class PoliticaSgsiController extends Controller
 {
     use ObtenerOrganizacion;
 
-    public $modelo =  'PoliticaSgsi';
+    public $modelo = 'PoliticaSgsi';
 
     public function index(Request $request)
     {
@@ -175,7 +174,7 @@ class PoliticaSgsiController extends Controller
         //envio de corrreo
         $this->solicitudAprobacion($politicaSgsi->id);
 
-        $politicaSgsi->estatus =  'pendiente';
+        $politicaSgsi->estatus = 'pendiente';
 
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
     }
@@ -208,7 +207,7 @@ class PoliticaSgsiController extends Controller
             'politicasgsi' => 'required',
             // 'id_reviso_politica' => 'required',
             'fecha_publicacion' => 'required',
-            'fecha_revision' =>  'required',
+            'fecha_revision' => 'required',
         ]);
 
         $politicaSgsi->update([
@@ -254,7 +253,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
         foreach ($politicaSgsis as $polsgsis) {
-            if (!isset($polsgsis->reviso)) {
+            if (! isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                 $polsgsis->estemp = 'baja';
             } else {
@@ -353,23 +352,24 @@ class PoliticaSgsiController extends Controller
 
         $no_niveles = $modulo->niveles;
         // dd($proceso);
-        if ($proceso->estatus == "Pendiente") {
+        if ($proceso->estatus == 'Pendiente') {
             for ($i = 1; $i <= $no_niveles; $i++) {
                 foreach ($proceso->participantes as $part) {
                     // dd($part, $part->participante, $part->participante->control($proceso->id), $part->estatus);
                     if (
-                        $part->participante->nivel == $i && $part->estatus == "Pendiente"
+                        $part->participante->nivel == $i && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
 
                         for ($j = 1; $j <= 5; $j++) {
                             if (
-                                $part->participante->numero_orden == $j && $part->estatus == "Pendiente"
+                                $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
                                 // dd($proceso);
                                 // dd($politicaSgsi, $part);
                                 $politicaSgsi->load('team');
+
                                 // dd($politicaSgsi);
                                 return view('admin.politicaSgsis.revision', compact('politicaSgsi'));
                                 break;
@@ -378,10 +378,11 @@ class PoliticaSgsiController extends Controller
                             }
                         }
                     } elseif (
-                        $part->participante->nivel == 0 && $part->estatus == "Pendiente"
+                        $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
                         $politicaSgsi->load('team');
+
                         // dd($politicaSgsi);
                         return view('admin.politicaSgsis.revision', compact('politicaSgsi'));
                         break;
@@ -420,7 +421,7 @@ class PoliticaSgsiController extends Controller
                 $query->whereHas('participante', function ($subQuery) use ($aprobador) {
                     $subQuery->where('empleado_id', '=', $aprobador);
                 });
-            }
+            },
         ])->where('modulo_id', '=', $modulo->id)
             ->where('proceso_id', '=', $id)
             ->first();
@@ -438,12 +439,12 @@ class PoliticaSgsiController extends Controller
         if ($participante->nivel == 0) {
             // dd("superaprobador");
             $proceso->update([
-                'estatus' => "Aprobado"
+                'estatus' => 'Aprobado',
             ]);
 
             foreach ($proceso_general->participantes as $p) {
                 $p->update([
-                    'estatus' => 'Aprobado'
+                    'estatus' => 'Aprobado',
                 ]);
             }
 
@@ -455,6 +456,7 @@ class PoliticaSgsiController extends Controller
             ]);
             $this->confirmacionAprobacion($proceso_general, $politica);
         }
+
         return redirect(route('admin.politica-sgsis.index'));
     }
 
@@ -468,7 +470,6 @@ class PoliticaSgsiController extends Controller
             // dd('primer usuario', $part->participante);
         }
     }
-
 
     public function rechazado($id, Request $request)
     {
@@ -489,7 +490,7 @@ class PoliticaSgsiController extends Controller
 
         foreach ($aprobacion->participantes as $p) {
             $p->update([
-                'estatus' => 'Rechazado'
+                'estatus' => 'Rechazado',
             ]);
         }
         // $responsable = $minuta->responsable->name;
@@ -516,7 +517,7 @@ class PoliticaSgsiController extends Controller
         // dd($confirmacion, $isSameEstatus);
         if ($isSameEstatus) {
             $proceso->update([
-                'estatus' => "Aprobado"
+                'estatus' => 'Aprobado',
             ]);
             // dd($proceso, $politica);
             $this->correosAprobacion($proceso->id, $politica);
@@ -533,9 +534,9 @@ class PoliticaSgsiController extends Controller
 
         for ($i = 1; $i <= $no_niveles; $i++) {
             foreach ($proceso->participantes as $part) {
-                if ($part->participante->nivel == $i && $part->estatus == "Pendiente") {
+                if ($part->participante->nivel == $i && $part->estatus == 'Pendiente') {
                     for ($j = 1; $j <= 5; $j++) {
-                        if ($part->participante->numero_orden == $j && $part->estatus == "Pendiente") {
+                        if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
                             Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));

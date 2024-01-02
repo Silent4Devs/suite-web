@@ -30,7 +30,7 @@ class AlcanceSgsiController extends Controller
 {
     use ObtenerOrganizacion;
 
-    public $modelo = "AlcanceSgsi";
+    public $modelo = 'AlcanceSgsi';
 
     public function index(Request $request)
     {
@@ -146,11 +146,11 @@ class AlcanceSgsiController extends Controller
         ]);
 
         $alcanceSgsi = AlcanceSgsi::create([
-            'nombre' =>  $request->input('nombre'),
-            'alcancesgsi' =>  $request->input('alcancesgsi'),
-            'fecha_publicacion'  =>  $request->input('fecha_publicacion'),
-            'fecha_revision'  =>  $request->input('fecha_revision'),
-            'estatus'  =>  'pendiente'
+            'nombre' => $request->input('nombre'),
+            'alcancesgsi' => $request->input('alcancesgsi'),
+            'fecha_publicacion' => $request->input('fecha_publicacion'),
+            'fecha_revision' => $request->input('fecha_revision'),
+            'estatus' => 'pendiente',
         ]);
 
         $this->solicitudAprobacion($alcanceSgsi->id);
@@ -191,15 +191,15 @@ class AlcanceSgsiController extends Controller
             'nombre' => 'required|string',
             'alcancesgsi' => 'required|string',
             'fecha_publicacion' => 'required|date',
-            'fecha_revision' => 'required|date'
+            'fecha_revision' => 'required|date',
         ]);
 
         $alcanceSgsi->update([
-            'nombre' =>  $request->input('nombre'),
-            'alcancesgsi' =>  $request->input('alcancesgsi'),
-            'fecha_publicacion'  =>  $request->input('fecha_publicacion'),
-            'fecha_revision'  =>  $request->input('fecha_revision'),
-            'estatus'  =>  'pendiente'
+            'nombre' => $request->input('nombre'),
+            'alcancesgsi' => $request->input('alcancesgsi'),
+            'fecha_publicacion' => $request->input('fecha_publicacion'),
+            'fecha_revision' => $request->input('fecha_revision'),
+            'estatus' => 'pendiente',
         ]);
 
         $this->solicitudAprobacion($alcanceSgsi->id);
@@ -244,6 +244,7 @@ class AlcanceSgsiController extends Controller
 
         return $pdf->download('alcances.pdf');
     }
+
     public function solicitudAprobacion($id_alcance)
     {
         // $modelo = 'AlcanceSgsi';
@@ -321,18 +322,18 @@ class AlcanceSgsiController extends Controller
             ->first();
 
         $no_niveles = $modulo->niveles;
-        if ($proceso->estatus == "Pendiente") {
+        if ($proceso->estatus == 'Pendiente') {
             for ($i = 1; $i <= $no_niveles; $i++) {
                 foreach ($proceso->participantes as $part) {
                     // dd($part, $part->participante, $part->participante->control($proceso->id), $part->estatus);
                     if (
-                        $part->participante->nivel == $i && $part->estatus == "Pendiente"
+                        $part->participante->nivel == $i && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
 
                         for ($j = 1; $j <= 5; $j++) {
                             if (
-                                $part->participante->numero_orden == $j && $part->estatus == "Pendiente"
+                                $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
                                 // dd($proceso);
@@ -347,7 +348,7 @@ class AlcanceSgsiController extends Controller
                             }
                         }
                     } elseif (
-                        $part->participante->nivel == 0 && $part->estatus == "Pendiente"
+                        $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
                         $alcanceSgsi->load('team');
@@ -390,7 +391,7 @@ class AlcanceSgsiController extends Controller
                 $query->whereHas('participante', function ($subQuery) use ($aprobador) {
                     $subQuery->where('empleado_id', '=', $aprobador);
                 });
-            }
+            },
         ])->where('modulo_id', '=', $modulo->id)
             ->where('proceso_id', '=', $id)
             ->first();
@@ -408,12 +409,12 @@ class AlcanceSgsiController extends Controller
         if ($participante->nivel == 0) {
             // dd("superaprobador");
             $proceso->update([
-                'estatus' => "Aprobado"
+                'estatus' => 'Aprobado',
             ]);
 
             foreach ($proceso_general->participantes as $p) {
                 $p->update([
-                    'estatus' => 'Aprobado'
+                    'estatus' => 'Aprobado',
                 ]);
             }
 
@@ -425,6 +426,7 @@ class AlcanceSgsiController extends Controller
             ]);
             $this->confirmacionAprobacion($proceso_general, $alcance);
         }
+
         return redirect(route('admin.alcance-sgsis.index'));
     }
 
@@ -457,7 +459,7 @@ class AlcanceSgsiController extends Controller
 
         foreach ($aprobacion->participantes as $p) {
             $p->update([
-                'estatus' => 'Rechazado'
+                'estatus' => 'Rechazado',
             ]);
         }
         // $responsable = $minuta->responsable->name;
@@ -484,7 +486,7 @@ class AlcanceSgsiController extends Controller
         // dd($confirmacion, $isSameEstatus);
         if ($isSameEstatus) {
             $proceso->update([
-                'estatus' => "Aprobado"
+                'estatus' => 'Aprobado',
             ]);
             // dd($proceso, $alcance);
             $this->correosAprobacion($proceso->id, $alcance);
@@ -501,9 +503,9 @@ class AlcanceSgsiController extends Controller
 
         for ($i = 1; $i <= $no_niveles; $i++) {
             foreach ($proceso->participantes as $part) {
-                if ($part->participante->nivel == $i && $part->estatus == "Pendiente") {
+                if ($part->participante->nivel == $i && $part->estatus == 'Pendiente') {
                     for ($j = 1; $j <= 5; $j++) {
-                        if ($part->participante->numero_orden == $j && $part->estatus == "Pendiente") {
+                        if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
                             //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));

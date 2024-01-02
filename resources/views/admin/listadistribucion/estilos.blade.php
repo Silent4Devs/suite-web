@@ -68,7 +68,7 @@
     }
 
     .instrucciones {
-        background-color: #5397D5;
+        background-color:#306BA9;
         border-radius: 8px;
         color: #fff;
         padding: 20px;

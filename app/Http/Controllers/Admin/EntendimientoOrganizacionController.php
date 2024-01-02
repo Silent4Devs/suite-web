@@ -23,6 +23,7 @@ use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
@@ -130,6 +131,7 @@ class EntendimientoOrganizacionController extends Controller
         if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
+
         // dd($foda);
         return redirect()->route('admin.foda-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
     }
@@ -315,6 +317,7 @@ class EntendimientoOrganizacionController extends Controller
 
         return view('admin.entendimientoOrganizacions.cardFodaEdit', compact('oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'foda_actual'));
     }
+
     // public function cardFodaGeneral()
     public function index()
     {
@@ -353,16 +356,16 @@ class EntendimientoOrganizacionController extends Controller
         $no_niveles = $modulo->niveles;
 
         // dd($proceso, $foda);
-        if ($proceso->estatus == "Pendiente") {
+        if ($proceso->estatus == 'Pendiente') {
             for ($i = 1; $i <= $no_niveles; $i++) {
                 foreach ($proceso->participantes as $part) {
                     if (
-                        $part->participante->nivel == $i && $part->estatus == "Pendiente"
+                        $part->participante->nivel == $i && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
                         for ($j = 1; $j <= 5; $j++) {
                             if (
-                                $part->participante->numero_orden == $j && $part->estatus == "Pendiente"
+                                $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
 
@@ -380,7 +383,7 @@ class EntendimientoOrganizacionController extends Controller
                             }
                         }
                     } elseif (
-                        $part->participante->nivel == 0 && $part->estatus == "Pendiente"
+                        $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
                         $empleados = Empleado::getaltaAll();
@@ -462,8 +465,6 @@ class EntendimientoOrganizacionController extends Controller
         return redirect(route('admin.entendimiento-organizacions.index'));
     }
 
-
-
     public function aprobado($id, Request $request)
     {
         $aprobador = User::getCurrentUser()->empleado->id;
@@ -490,7 +491,7 @@ class EntendimientoOrganizacionController extends Controller
                 $query->whereHas('participante', function ($subQuery) use ($aprobador) {
                     $subQuery->where('empleado_id', '=', $aprobador);
                 });
-            }
+            },
         ])->where('modulo_id', '=', $modulo->id)
             ->where('proceso_id', '=', $id)
             ->first();
@@ -508,12 +509,12 @@ class EntendimientoOrganizacionController extends Controller
         if ($participante->nivel == 0) {
             // dd("superaprobador");
             $proceso->update([
-                'estatus' => "Aprobado"
+                'estatus' => 'Aprobado',
             ]);
 
             foreach ($proceso_general->participantes as $p) {
                 $p->update([
-                    'estatus' => 'Aprobado'
+                    'estatus' => 'Aprobado',
                 ]);
             }
 
@@ -525,6 +526,7 @@ class EntendimientoOrganizacionController extends Controller
             ]);
             $this->confirmacionAprobacion($proceso_general, $foda);
         }
+
         return redirect(route('admin.entendimiento-organizacions.index'));
     }
 
@@ -538,7 +540,6 @@ class EntendimientoOrganizacionController extends Controller
             // dd('primer usuario', $part->participante);
         }
     }
-
 
     public function rechazado($id, Request $request)
     {
@@ -559,7 +560,7 @@ class EntendimientoOrganizacionController extends Controller
 
         foreach ($aprobacion->participantes as $p) {
             $p->update([
-                'estatus' => 'Rechazado'
+                'estatus' => 'Rechazado',
             ]);
         }
         // $responsable = $minuta->responsable->name;
@@ -604,9 +605,9 @@ class EntendimientoOrganizacionController extends Controller
 
         for ($i = 1; $i <= $no_niveles; $i++) {
             foreach ($proceso->participantes as $part) {
-                if ($part->participante->nivel == $i && $part->estatus == "Pendiente") {
+                if ($part->participante->nivel == $i && $part->estatus == 'Pendiente') {
                     for ($j = 1; $j <= 5; $j++) {
-                        if ($part->participante->numero_orden == $j && $part->estatus == "Pendiente") {
+                        if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
                             //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));

@@ -135,19 +135,6 @@
                 }
 
             ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar competencia',
-                url: "{{ route('admin.ev360-competencias.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            dtButtons.push(btnAgregar);
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

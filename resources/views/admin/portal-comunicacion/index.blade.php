@@ -11,19 +11,23 @@
             </a>
         </div>
 
-        <div class="d-flex justify-content-center align-items-center" style="gap: 25px;">
-            <div class="img-person" style="width:130px; height:130px;">
-                <img src="https://img.freepik.com/vector-premium/hombre-indiferente-macho-rostro-desinteresado-rostro-humano-despreocupado-ilustracion-vector-emociones-gente_100470-72.jpg?w=360"
-                    alt="">
+        @if ($user->empleado)
+            <div class="d-flex justify-content-center align-items-center" style="gap: 25px;">
+                <div class="caja-img-user-header">
+                    <img src="{{ asset('storage/empleados/imagenes/' . '/' . $user->empleado->avatar) }}"
+                        alt="{{ $user->empleado->name }}">
+                </div>
+                <div class="caja-input-search">
+                    <span style="font-size: 20px;"> <strong>
+                            Bienvenido&nbsp;{{ $user->empleado ? explode(' ', $user->empleado->name)[0] : '' }},
+                        </strong> </span>
+                    <span> ¿Qué&nbsp;quieres&nbsp;hacer&nbsp;hoy? </span>
+                    <span> | </span>
+                    <input type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off">
+                    <i class="material-symbols-outlined icon-mic">mic</i>
+                </div>
             </div>
-            <div class="caja-input-search">
-                <span style="font-size: 20px;"> <strong> Bienvenido&nbsp;Juanito, </strong> </span>
-                <span> ¿Qué&nbsp;quieres&nbsp;hacer&nbsp;hoy? </span>
-                <span> | </span>
-                <input type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off">
-                <i class="material-symbols-outlined icon-mic">mic</i>
-            </div>
-        </div>
+        @endif
 
         <div class="mt-5">
             <div class="row">
@@ -295,6 +299,7 @@
             </div>
         </div>
 
+        @if (isset($nuevos))
         <div class="card-body">
             <h3 class="title-card-portal-c">Nuevos ingresos</h3>
 
@@ -318,13 +323,13 @@
                             <hr>
                             @php
                                 $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
+                                $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $nuv->cumpleaños);
                                 $mes = $meses[$fecha->format('n') - 1];
                                 $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
                             @endphp
                             <div>
                                 <strong> Fecha de ingreso </strong> <br>
-                                {{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}
+                                {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d-m-Y') }}
                             </div>
                         </div>
                     @endforeach
@@ -334,7 +339,9 @@
                 </button>
             </div>
         </div>
+        @endif
 
+        @if (isset($cumpleaños))
         <div class="card-body">
             <h3 class="title-card-portal-c mt-5">Cumpleaños</h3>
 
@@ -378,7 +385,7 @@
                 </button>
             </div>
         </div>
-
+        @endif
     </div>
     <div style="height: 100px;"></div>
 @endsection

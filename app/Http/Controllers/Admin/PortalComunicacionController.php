@@ -77,7 +77,7 @@ class PortalComunicacionController extends Controller
         $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         $getAlta = Empleado::alta();
 
-        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy, $getAlta) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $getAlta) {
             return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
 
@@ -89,7 +89,7 @@ class PortalComunicacionController extends Controller
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
         });
 
-        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe', 'nuevos', 'cumpleaños'));
+        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe', 'nuevos', 'cumpleaños', 'user'));
     }
 
     /**

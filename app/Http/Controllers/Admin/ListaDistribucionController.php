@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\ListaDistribucion;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
+use App\Models\Escuela\Level;
+use App\Models\ListaDistribucion;
 use App\Models\ParticipantesListaDistribucion;
-use Carbon\Carbon;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Gate;
-
+use Illuminate\Http\Request;
 
 class ListaDistribucionController extends Controller
 {
@@ -20,6 +16,8 @@ class ListaDistribucionController extends Controller
      */
     public function index(Request $request)
     {
+        // $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
+        // dd($query);
         //
         if ($request->ajax()) {
 
@@ -64,6 +62,7 @@ class ListaDistribucionController extends Controller
         }
 
         $data['participantes'] = ListaDistribucion::with('participantes.empleado')->get();
+
         return view('admin.listadistribucion.index', $data);
     }
 
@@ -126,6 +125,7 @@ class ListaDistribucionController extends Controller
         // $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
         // dd($participantes_seleccionados);
         $empleados = Empleado::getAltaDataColumns();
+
         // dd($lista->participantes);
         // dd('Llega', $id, $lista_distribucion);
         // dd($empleados);

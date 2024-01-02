@@ -2,7 +2,7 @@
 @section('content')
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
     <div class="row d-flex align-items-center">
-        <h5 class="titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
+        <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
         <a class="btn btn-primary ml-auto" style="font-size: 16px; position: relative; right: 1rem;"
             href="{{ route('admin.matriz-requisito-legales.create') }}">
             Nueva Matriz de Requisitos
@@ -82,21 +82,6 @@
 
 
             ];
-            @can('matriz_requisitos_legales_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar nueva matríz de requisitos legales',
-                    url: "{{ route('admin.matriz-requisito-legales.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -147,15 +132,11 @@
                                     </button>
                                     <div class="dropdown-menu">
 
-
-                                        @can('matriz_requisitos_legales_ver')
-                                        <a class="dropdown-item" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i> ver</a>
-                                        @endcan
                                         @can('matriz_requisitos_legales_editar')
-                                        <a class="dropdown-item" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i> editar</a>
+                                        <a class="dropdown-item" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i> Editar</a>
                                         @endcan
                                         @can('matriz_requisitos_legales_eliminar')
-                                        <button class="dropdown-item" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i> eliminar</button>
+                                        <button class="dropdown-item" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i> Eliminar</button>
                                         @endcan
                                     </div>
                                 </div>`;

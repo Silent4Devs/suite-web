@@ -3,9 +3,22 @@
     <link rel="stylesheet" href="{{ asset('css/foda.css') }}">
 @endsection
 @section('content')
+    <style>
+        .btn-options-foda-card {
+            position: absolute;
+            right: 0;
+            top: 7px;
+        }
+    </style>
     <h5 class="col-12 titulo_general_funcion">Análisis FODA</h5>
 
-    <div class="card-filtros-fodas">
+    <div class="text-right">
+        <a href="{{ route('admin.entendimiento-organizacions.create') }}" class="btn btn-info"
+            style="background-color: #0489FE !important;">
+            Crear análisis FODA
+        </a>
+    </div>
+    <div class="card-filtros-fodas mt-3">
         <div class="row">
             <div class="col-md-4">
                 <label for="">Buscar</label>
@@ -35,35 +48,28 @@
             {{-- <a href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}"> --}}
             <div class="card card-foda">
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col-10">
-                            <strong> {{ Carbon\Carbon::parse($foda->fecha)->format('d/m/Y') }}</strong>
-                        </div>
-                        <div class="col-2">
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                    @can('analisis_foda_ver')
-                                        <a class="dropdown-item"
-                                            href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}">
-                                            <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>
-                                    @endcan
-                                    @can('analisis_foda_editar')
-                                        <a class="dropdown-item"
-                                            href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}/edit">
-                                            <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                    @endcan
-                                    @can('analisis_foda_eliminar')
-                                        <a class="dropdown-item delete-item" onclick="deleteItem({{ $foda->id }})">
-                                            <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
-                                    @endcan
-                                    {{-- <a class="dropdown-item disabled" href=#>
+                    <strong> {{ Carbon\Carbon::parse($foda->fecha)->format('d/m/Y') }}</strong>
+                    <div class="dropdown btn-options-foda-card">
+                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            @can('analisis_foda_ver')
+                                <a class="dropdown-item"
+                                    href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}">
+                                    <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>
+                            @endcan
+                            @can('analisis_foda_editar')
+                                <a class="dropdown-item"
+                                    href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}/edit">
+                                    <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                            @endcan
+                            @can('analisis_foda_eliminar')
+                                <a class="dropdown-item delete-item" onclick="deleteItem({{ $foda->id }})">
+                                    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                            @endcan
+                            {{-- <a class="dropdown-item disabled" href=#>
                                         <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (En uso)</a> --}}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

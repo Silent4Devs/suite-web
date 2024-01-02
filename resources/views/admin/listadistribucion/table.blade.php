@@ -43,6 +43,7 @@
                             usort($participantesByLevel, function ($a, $b) {
                                 return $a->numero_orden <=> $b->numero_orden;
                             });
+
                         @endphp
 
                         @if ($nivel == 0)
@@ -86,3 +87,4 @@
         </div>
     </div>
 @endforeach
+
