@@ -43,9 +43,10 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="datatable-fix">
-            <table class="table table-bordered w-100 tblNiveles">
+            <table class="datatable tblNiveles" id="tblNiveles">
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">

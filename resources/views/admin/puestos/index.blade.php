@@ -61,20 +61,25 @@
                 </div>
             </div>
 
-            @include('partials.flashMessages')
-            <div class="datatable-fix datatable-rds">
+            <div class="text-right">
                 <div class="d-flex justify-content-end">
-                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-puesto') }}">
-                        <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
-                    </a> &nbsp;&nbsp;&nbsp;
-                    <a class="boton-transparente boton-sin-borde" id="btnImport">
-                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
-                    </a>
-                    @include('csvImport.modalperfilpuesto', [
-                        'model' => 'Vulnerabilidad',
-                        'route' => 'admin.vulnerabilidads.parseCsvImport',
-                    ])
+                    <a href="{{ route('admin.puestos.create') }}" type="button" class="btn btn-primary">Registrar Perfil de Puesto</a>
                 </div>
+            </div>
+            @include('partials.flashMessages')
+                <div class="datatable-fix datatable-rds">
+                    <div class="d-flex justify-content-end">
+                        <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-puesto') }}">
+                            <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                        </a> &nbsp;&nbsp;&nbsp;
+                        <a class="boton-transparente boton-sin-borde" id="btnImport">
+                            <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                        </a>
+                        @include('csvImport.modalperfilpuesto', [
+                            'model' => 'Vulnerabilidad',
+                            'route' => 'admin.vulnerabilidads.parseCsvImport',
+                        ])
+                    </div>
                 <h3 class="title-table-rds"> Puestos</h3>
                 <table class="datatable datatable-Puesto" id="datatable-Puesto">
                     <thead class="thead-dark">
@@ -176,72 +181,6 @@
                 }
 
             ];
-
-            @can('puestos_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar area',
-                url: "{{ route('admin.puestos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-puesto') }}",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                    $('#xlsxImportModal').modal('show');
-                }
-            };
-
-            dtButtons.push(btnAgregar);
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
-            @endcan
-            @can('puestos_eliminar')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.puestos.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-
-                return
-                }
-
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

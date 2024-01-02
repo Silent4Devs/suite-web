@@ -130,48 +130,6 @@
                     }
                 },
                 {
-                    extend: 'print',
-                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    customize: function(doc) {
-                        let logo_actual = @json($logo_actual);
-                        let empresa_actual = @json($empresa_actual);
-
-                        var now = new Date();
-                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
-                        $(doc.document.body).prepend(`
-                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
-                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
-                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
-                                </div>
-                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
-                                    <p>${empresa_actual}</p>
-                                    <strong style="color:#345183">CATEGORÍAS DE CAPACITACIONES</strong>
-                                </div>
-                                <div class="col-3 p-2">
-                                    Fecha: ${jsDate}
-                                </div>
-                            </div>
-                        `);
-
-                        $(doc.document.body).find('table')
-                            .css('font-size', '12px')
-                            .css('margin-top', '15px')
-                        // .css('margin-bottom', '60px')
-                        $(doc.document.body).find('th').each(function(index) {
-                            $(this).css('font-size', '18px');
-                            $(this).css('color', '#fff');
-                            $(this).css('background-color', 'blue');
-                        });
-                    },
-                    title: '',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
                     extend: 'colvis',
                     text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
@@ -193,30 +151,6 @@
 
             ];
 
-            @can('capacitaciones_categorias_agregar')
-                let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-categoriacapacitacion') }}",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
-                };
-                let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xlsxImportModal').modal('show');
-                }
-                };
-                dtButtons.push(btnExport);
-                dtButtons.push(btnImport);
-            @endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
