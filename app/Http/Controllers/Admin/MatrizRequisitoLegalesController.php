@@ -49,6 +49,7 @@ class MatrizRequisitoLegalesController extends Controller
             foreach ($modulo->participantes as $participante) {
                 if ($participante->empleado->estatus != 'alta') {
                     $listavacia = 'baja';
+
                     return view('admin.matrizRequisitoLegales.index', compact('teams', 'listavacia'));
                 }
             }

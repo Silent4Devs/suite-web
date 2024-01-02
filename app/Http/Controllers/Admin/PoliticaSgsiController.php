@@ -113,6 +113,7 @@ class PoliticaSgsiController extends Controller
             foreach ($modulo->participantes as $participante) {
                 if ($participante->empleado->estatus != 'alta') {
                     $listavacia = 'baja';
+
                     return view('admin.politicaSgsis.index', compact(
                         'politicaSgsis',
                         'teams',

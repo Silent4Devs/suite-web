@@ -115,6 +115,7 @@ class AlcanceSgsiController extends Controller
             foreach ($modulo->participantes as $participante) {
                 if ($participante->empleado->estatus != 'alta') {
                     $listavacia = 'baja';
+
                     return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
                 }
             }

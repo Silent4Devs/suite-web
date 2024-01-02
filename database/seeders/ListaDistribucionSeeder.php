@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\ListaDistribucion;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ListaDistribucionSeeder extends Seeder

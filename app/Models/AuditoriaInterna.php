@@ -119,7 +119,6 @@ class AuditoriaInterna extends Model implements Auditable, HasMedia
         $this->attributes['fechaauditoria'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-
     public function creadorAuditoria()
     {
         return $this->belongsTo(Empleado::class, 'creador_auditoria_id', 'id');
