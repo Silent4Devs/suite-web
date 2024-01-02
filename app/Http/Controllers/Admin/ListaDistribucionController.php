@@ -4,7 +4,6 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
-use App\Models\Escuela\Level;
 use App\Models\ListaDistribucion;
 use App\Models\ParticipantesListaDistribucion;
 use Illuminate\Http\Request;
@@ -109,7 +108,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
                     // dd('entra');
-                    $participantes_seleccionados['nivel' . $i][] =
+                    $participantes_seleccionados['nivel'.$i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -159,7 +158,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel' . $i][] =
+                    $participantes_seleccionados['nivel'.$i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -194,7 +193,7 @@ class ListaDistribucionController extends Controller
 
         $data = [];
         for ($i = 1; $i <= $request->niveles; $i++) {
-            $nivelArrayName = 'nivel' . $i;
+            $nivelArrayName = 'nivel'.$i;
             if (isset($nivelArrayName)) {
                 $data[$i] = $request->$nivelArrayName;
                 // $data[$nivelArrayName] = $nivelArrayName;

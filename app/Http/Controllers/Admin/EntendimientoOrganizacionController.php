@@ -127,7 +127,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (!is_null($request->participantes)) {
+        if (! is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
@@ -185,7 +185,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (!is_null($request->participantes)) {
+        if (! is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -323,7 +323,22 @@ class EntendimientoOrganizacionController extends Controller
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
-        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query'));
+        $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+
+        if ($modulo->participantes->isEmpty()) {
+            $listavacia = 'vacia';
+        } else {
+            foreach ($modulo->participantes as $participante) {
+                if ($participante->empleado->estatus != 'alta') {
+                    $listavacia = 'baja';
+
+                    return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia'));
+                }
+            }
+            $listavacia = 'cumple';
+        }
+
+        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia'));
     }
 
     public function adminShow($entendimientoOrganizacion)
