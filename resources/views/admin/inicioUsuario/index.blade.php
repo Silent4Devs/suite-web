@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/inicio_usuario.css') }}">
 @endsection
 @section('content')
+    @include('partials.menu-slider')
     <div class="d-flex" style="gap: 30px;">
         <div class="w-100">
             <div class="header-card-iu">
@@ -27,7 +28,8 @@
                 <div class="d-flex">
                     <div class=" info-blue-user">
                         <div class="img-person" style="width: 205px; height: 205px;">
-                            <img src="{{ asset('') }}" alt="">
+                            <img src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
+                                alt="">
                         </div>
                         <div class="mt-4">
                             <a href="">Ver perfil profesional</a> <br>
@@ -36,11 +38,11 @@
                         </div>
                         <div class="mt-4">
                             <strong>Email</strong><br>
-                            nombre@dominio.com
+                            {{ $usuario->empleado->email }}
                         </div>
                         <div class="mt-4">
                             <strong>Teléfono</strong><br>
-                            55 5555 5555
+                            {{ $usuario->empleado->telefono }}
                         </div>
                     </div>
                     <div class="card-body">
@@ -50,7 +52,7 @@
                         <div class=" caja-info-user-main">
                             <div>
                                 <span>Genero</span><br>
-                                H
+                                {{ $usuario->empleado->genero }}
                             </div>
                             <div>
                                 <span>Perfil</span><br>

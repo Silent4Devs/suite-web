@@ -3,17 +3,12 @@
     <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}">
 @endsection
 @section('content')
+    @include('partials.menu-slider')
     <div style="max-width: 1900px;">
-
-        <div class="carrusel-menu-main-view">
-            <a href="">
-
-            </a>
-        </div>
 
         @if ($user->empleado)
             <div class="d-flex justify-content-center align-items-center" style="gap: 25px;">
-                <div class="caja-img-user-header">
+                <div class="img-person" style="width: 100px; height: 100px;">
                     <img src="{{ asset('storage/empleados/imagenes/' . '/' . $user->empleado->avatar) }}"
                         alt="{{ $user->empleado->name }}">
                 </div>
@@ -300,91 +295,91 @@
         </div>
 
         @if (isset($nuevos))
-        <div class="card-body">
-            <h3 class="title-card-portal-c">Nuevos ingresos</h3>
+            <div class="card-body">
+                <h3 class="title-card-portal-c">Nuevos ingresos</h3>
 
-            <div class="carrusel-portal carr-port-nuevo">
-                <button>
-                    <i class="material-symbols-outlined">arrow_back_ios</i>
-                </button>
-                <div class="caja-items-carrusel-portal">
-                    @foreach ($nuevos as $nuv)
-                        <div class="item-carrusel-portal">
-                            <div class="img-person" style="width: 80px; height: 80px;">
-                                <img src="{{ $nuv->avatar_ruta }}" alt="">
+                <div class="carrusel-portal carr-port-nuevo">
+                    <button>
+                        <i class="material-symbols-outlined">arrow_back_ios</i>
+                    </button>
+                    <div class="caja-items-carrusel-portal">
+                        @foreach ($nuevos as $nuv)
+                            <div class="item-carrusel-portal">
+                                <div class="img-person" style="width: 80px; height: 80px;">
+                                    <img src="{{ $nuv->avatar_ruta }}" alt="">
+                                </div>
+                                <div>
+                                    <span class="title-item-carr-port">{{ $nuv->name }} </span> <br>
+                                    <p>
+                                        {{ $nuv->puesto }} <br>
+                                        {{ $nuv->area->area }}
+                                    </p>
+                                </div>
+                                <hr>
+                                @php
+                                    $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                                    $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $nuv->cumpleaños);
+                                    $mes = $meses[$fecha->format('n') - 1];
+                                    $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
+                                @endphp
+                                <div>
+                                    <strong> Fecha de ingreso </strong> <br>
+                                    {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d-m-Y') }}
+                                </div>
                             </div>
-                            <div>
-                                <span class="title-item-carr-port">{{ $nuv->name }} </span> <br>
-                                <p>
-                                    {{ $nuv->puesto }} <br>
-                                    {{ $nuv->area->area }}
-                                </p>
-                            </div>
-                            <hr>
-                            @php
-                                $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $nuv->cumpleaños);
-                                $mes = $meses[$fecha->format('n') - 1];
-                                $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
-                            @endphp
-                            <div>
-                                <strong> Fecha de ingreso </strong> <br>
-                                {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d-m-Y') }}
-                            </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <button>
+                        <i class="material-symbols-outlined">arrow_forward_ios</i>
+                    </button>
                 </div>
-                <button>
-                    <i class="material-symbols-outlined">arrow_forward_ios</i>
-                </button>
             </div>
-        </div>
         @endif
 
         @if (isset($cumpleaños))
-        <div class="card-body">
-            <h3 class="title-card-portal-c mt-5">Cumpleaños</h3>
+            <div class="card-body">
+                <h3 class="title-card-portal-c mt-5">Cumpleaños</h3>
 
-            <div class="carrusel-portal carr-port-cumple">
-                <button>
-                    <i class="material-symbols-outlined">arrow_back_ios</i>
-                </button>
-                <div class="caja-items-carrusel-portal">
-                    @forelse($cumpleaños as $cumple)
-                        <div class="item-carrusel-portal">
-                            <div class="img-person" style="width: 80px; min-width: 80px; height: 80px;">
-                                <img src="{{ $cumple->avatar_ruta }}" alt="">
+                <div class="carrusel-portal carr-port-cumple">
+                    <button>
+                        <i class="material-symbols-outlined">arrow_back_ios</i>
+                    </button>
+                    <div class="caja-items-carrusel-portal">
+                        @forelse($cumpleaños as $cumple)
+                            <div class="item-carrusel-portal">
+                                <div class="img-person" style="width: 80px; min-width: 80px; height: 80px;">
+                                    <img src="{{ $cumple->avatar_ruta }}" alt="">
+                                </div>
+                                <div style="width: 100%">
+                                    <span class="title-item-carr-port">{{ $cumple->name }} </span> <br>
+                                    <p>
+                                        {{ $cumple->puesto }} <br>
+                                        {{ $cumple->area->area }}
+                                        <br>
+                                        <br>
+                                        @php
+                                            $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                                            $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
+                                            $mes = $meses[$fecha->format('n') - 1];
+                                            $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
+                                        @endphp
+                                        <strong> Fecha de cumpleaños </strong> <br>
+                                        {{ $inputs['Fecha'] }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <i class="material-symbols-outlined" style="font-size: 50px;">thumb_up</i>
+                                </div>
+                                <img src="{{ asset('img/example-remove/cumple_portal.png') }}" alt=""
+                                    class="cumple-img-portal">
                             </div>
-                            <div style="width: 100%">
-                                <span class="title-item-carr-port">{{ $cumple->name }} </span> <br>
-                                <p>
-                                    {{ $cumple->puesto }} <br>
-                                    {{ $cumple->area->area }}
-                                    <br>
-                                    <br>
-                                    @php
-                                        $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                        $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
-                                        $mes = $meses[$fecha->format('n') - 1];
-                                        $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
-                                    @endphp
-                                    <strong> Fecha de cumpleaños </strong> <br>
-                                    {{ $inputs['Fecha'] }}
-                                </p>
-                            </div>
-                            <div>
-                                <i class="material-symbols-outlined" style="font-size: 50px;">thumb_up</i>
-                            </div>
-                            <img src="{{ asset('img/example-remove/cumple_portal.png') }}" alt=""
-                                class="cumple-img-portal">
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <button>
+                        <i class="material-symbols-outlined">arrow_forward_ios</i>
+                    </button>
                 </div>
-                <button>
-                    <i class="material-symbols-outlined">arrow_forward_ios</i>
-                </button>
             </div>
-        </div>
         @endif
     </div>
     <div style="height: 100px;"></div>
