@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}"
-@endsection
-@section('content')
+<link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}" @endsection
+    @section('content')
     @include('admin.listadistribucion.estilos')
 
     <div class="card instrucciones">
@@ -188,9 +187,7 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 @endsection
-
-@section('scripts')
-    <script>
+    @section('scripts') <script>
         var superaprobadoresSeleccionados = {!! json_encode($superaprobadores_seleccionados) !!};
 
         $(document).ready(function() {
@@ -289,7 +286,15 @@
                 for (var i = 1; i <= selectedNivel; i++) {
                     $('.nivel' + i + 'Div')
                         .show(); // Show the selected nivel and preceding nivel's select boxes
-                    $('.nivel' + i + 'Div select').select2(); // Initialize select2 for the chosen select(s)
+                    $('.nivel' + i + 'Div select').select2({
+                        maximumSelectionLength: 5,
+                        language: {
+                            maximumSelected: function(maximumSelect) {
+                                return 'Solo pueden seleccionarse un maximo de 5 aprobadores por nivel.';
+                                // Customize the message according to your preference
+                            }
+                        },
+                    }); // Initialize select2 for the chosen select(s)
                 }
             });
 
@@ -297,7 +302,15 @@
             $('.form-row').hide(); // Hide all select boxes initially
             for (var i = 1; i <= initialNivel; i++) {
                 $('.nivel' + i + 'Div').show(); // Show the preselected nivel and preceding nivel's select boxes
-                $('.nivel' + i + 'Div select').select2(); // Initialize select2 for the preselected select(s)
+                $('.nivel' + i + 'Div select').select2({
+                    maximumSelectionLength: 5,
+                    language: {
+                        maximumSelected: function(maximumSelect) {
+                            return 'Solo pueden seleccionarse un maximo de 5 aprobadores por nivel.';
+                            // Customize the message according to your preference
+                        }
+                    },
+                }); // Initialize select2 for the preselected select(s)
             }
         });
     </script>
@@ -308,6 +321,17 @@
         $('#superaprobadores').select2({
             templateResult: formatAvatar, // Format avatar in options
             templateSelection: formatAvatar, // Format avatar in selected options
+            maximumSelectionLength: 5,
+            language: {
+                maximumSelected: function(maximumSelect) {
+                    return 'Solo pueden seleccionarse un maximo de 5 superaprobadores.';
+                    // Customize the message according to your preference
+                }
+            },
+            formatSelectionTooBig: function(maximum) {
+                return '';
+                // Customize the message according to your preference
+            },
             escapeMarkup: function(m) {
                 return m;
             }
@@ -358,6 +382,13 @@
                 $('#nivel' + i).select2({
                     templateResult: formatAvatar,
                     templateSelection: formatAvatar,
+                    maximumSelectionLength: 5,
+                    language: {
+                        maximumSelected: function(maximumSelect) {
+                            return 'Solo pueden seleccionarse un maximo de 5 aprobadores por nivel.';
+                            // Customize the message according to your preference
+                        }
+                    },
                     escapeMarkup: function(m) {
                         return m;
                     }
@@ -386,12 +417,12 @@
         $('#nivel1').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
-            if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-                $('#nivel1').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-                selectedOptions.shift();
-            }
+            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
+            //     $('#nivel1').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
+            //     selectedOptions.shift();
+            // }
 
             if (!selectedOptions.includes(selectedOptionId)) {
                 selectedOptions.push(selectedOptionId);
@@ -417,12 +448,12 @@
         $('#nivel2').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
-            if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-                $('#nivel2').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-                selectedOptions.shift();
-            }
+            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
+            //     $('#nivel2').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
+            //     selectedOptions.shift();
+            // }
 
             if (!selectedOptions.includes(selectedOptionId)) {
                 selectedOptions.push(selectedOptionId);
@@ -448,12 +479,12 @@
         $('#nivel3').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
-            if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-                $('#nivel3').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-                selectedOptions.shift();
-            }
+            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
+            //     $('#nivel3').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
+            //     selectedOptions.shift();
+            // }
 
             if (!selectedOptions.includes(selectedOptionId)) {
                 selectedOptions.push(selectedOptionId);
@@ -479,12 +510,12 @@
         $('#nivel4').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
-            if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-                $('#nivel4').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-                selectedOptions.shift();
-            }
+            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
+            //     $('#nivel4').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
+            //     selectedOptions.shift();
+            // }
 
             if (!selectedOptions.includes(selectedOptionId)) {
                 selectedOptions.push(selectedOptionId);
@@ -509,12 +540,12 @@
         $('#nivel5').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
-            if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-                Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-                    'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-                $('#nivel5').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-                selectedOptions.shift();
-            }
+            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
+            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
+            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
+            //     $('#nivel5').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
+            //     selectedOptions.shift();
+            // }
 
             if (!selectedOptions.includes(selectedOptionId)) {
                 selectedOptions.push(selectedOptionId);
