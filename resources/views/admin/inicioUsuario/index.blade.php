@@ -334,7 +334,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-person iconos-crear"></i>N° Empleado</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado ? $usuario->empleado->n_empleado : "Sin registro" }}
+                                        {{ $usuario->empleado->n_empleado ?? "Sin registro" }}
                                     </div>
                                 </div>
                             @endif
@@ -342,7 +342,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-envelope iconos-crear"></i> Email</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado ? $usuario->empleado->email : "Sin registro"}}
+                                        {{ $usuario->empleado->email ?? "Sin registro"}}
                                     </div>
                                 </div>
                             @endif
@@ -350,7 +350,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-calendar2-event iconos-crear"></i> Fecha de ingreso</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado ? \Carbon\Carbon::parse($usuario->empleado->antiguedad)->format('d/m/Y') : "Sin registro"}}
+                                        {{ \Carbon\Carbon::parse($usuario->empleado->antiguedad)->format('d/m/Y') ?? "Sin registro"}}
                                     </div>
                                 </div>
                             @endif
@@ -358,7 +358,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-person iconos-crear"></i> Jefe inmediato</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado ? $usuario->empleado->name : 'Sin Jefe Inmediato' }}
+                                        {{  $usuario->empleado->name ?? 'Sin Jefe Inmediato' }}
                                     </div>
                                 </div>
                             @endif
@@ -366,7 +366,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-diagram-3 iconos-crear"></i> Área</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado ? $usuario->empleado->area->area : 'Dato no registrado' }}
+                                        {{  $usuario->empleado->area->area ?? 'Dato no registrado' }}
                                     </div>
                                 </div>
                             @endif
@@ -374,7 +374,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-person-badge iconos-crear"></i> Puesto</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado ? $usuario->empleado->puesto : 'Dato no registrado' }}
+                                        {{ $usuario->empleado->puesto ?? 'Dato no registrado' }}
                                     </div>
                                 </div>
                             @endif
@@ -382,7 +382,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-building iconos-crear"></i> Sede</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado ? $usuario->empleado->sede : 'Dato no registrado' }}
+                                        {{ $usuario->empleado->sede ?? 'Dato no registrado' }}
                                     </div>
                                 </div>
                             @endif
@@ -390,7 +390,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-telephone iconos-crear"></i> Teléfono</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado ? $usuario->empleado->telefono : 'Dato no registrado' }}
+                                        {{  $usuario->empleado->telefono ?? 'Dato no registrado' }}
                                     </div>
                                 </div>
                             @endif
@@ -400,7 +400,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-calendar4-event iconos-crear"></i> Cumpleaños</label>
                                 <div class="text-muted">
-                                    {{ $usuario->empleado ?\Carbon\Carbon::parse($usuario->empleado->cumpleaños)->format('d-m-Y') : 'Dato no registrado' }}
+                                    {{ \Carbon\Carbon::parse($usuario->empleado->cumpleaños)->format('d-m-Y') ?? 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -408,7 +408,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-person-badge iconos-crear"></i> Perfil</label>
                                 <div class="text-muted">
-                                    {{ $usuario->empleado ? $usuario->empleado->perfil->nombre : 'Dato no registrado' }}
+                                    {{ $usuario->empleado->perfil->nombre ?? 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -416,7 +416,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-person iconos-crear"></i> Genero</label>
                                 <div class="text-muted">
-                                    {{ $usuario->empleado ? $usuario->empleado->genero : 'Dato no registrado' }}
+                                    {{ $usuario->empleado->genero ?? 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -424,7 +424,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-reception-3 iconos-crear"></i> Estatus</label>
                                 <div class="text-muted">
-                                    {{ $usuario->empleado ? $usuario->empleado->estatus : 'Dato no registrado' }}
+                                    {{ $usuario->empleado->estatus ?? 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -432,7 +432,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-geo-alt iconos-crear"></i> Dirección</label>
                                 <div class="text-muted">
-                                    {{ $usuario->empleado ? $usuario->empleado->direccion : 'Dato no registrado' }}
+                                    {{ $usuario->empleado->direccion ?? 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -486,7 +486,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr>    
+                                <hr>
                             @endforeach
                         @endforelse
 
