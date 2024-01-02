@@ -9,6 +9,7 @@ use App\Models\AuditoriaInternasHallazgos;
 use App\Models\Calendario;
 use App\Models\CalendarioOficial;
 use App\Models\ClasificacionesAuditorias;
+use App\Models\ClausulasAuditorias;
 use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
@@ -45,11 +46,57 @@ class AuditoriasSGI extends Component
         }
         //DASHBOARD AUDITORIAS
         //Tarjetas en general
-        $clashallazgos = AuditoriaInternasHallazgos::select('clasificacion_hallazgo')->get();
-        // dd($clashallazgos);
-        $clashallazgosaudit = AuditoriaInternasHallazgos::distinct()->pluck('incumplimiento_requisito')->map(function ($item) {
-            return $item;
-        })->unique()->values()->toArray();
+        $hallazgos = AuditoriaInternasHallazgos::where('clasificacion_id', '!=', null)->where('clausula_id', '!=', null)->with('clasificacion', 'clausula')->get();
+        $clasificaciones = ClasificacionesAuditorias::get();
+        $clausulas = ClausulasAuditorias::get();
+        // dd($hallazgos, $clasificaciones, $clausulas);
+
+        $clasificaciones_array = [];
+
+        foreach ($clasificaciones as $clasif) {
+            $clasificaciones_array[$clasif->nombre_clasificaciones] = 0;
+        }
+        $clausulas_array = [];
+        foreach ($clausulas as $claus) {
+            $clausulas_array[$claus->nombre_clausulas] = 0;
+        }
+
+        foreach ($hallazgos as $hallazgo) {
+            $clasificacionNombre = $hallazgo->clasificacion->nombre_clasificaciones;
+            $clausulaNombre = $hallazgo->clausula->nombre_clausulas;
+            // dd($clasificacionNombre, $clausulaNombre);
+            // Increment the respective counter for clasificacion and clausula
+            if (isset($clasificaciones_array[$clasificacionNombre])) {
+                $clasificaciones_array[$clasificacionNombre]++;
+            }
+
+            if (isset($clausulas_array[$clausulaNombre])) {
+                $clausulas_array[$clausulaNombre]++;
+            }
+        }
+
+        // Extract counts for clasificaciones and clausulas into their respective arrays
+        $clasificacionesData = [];
+        foreach ($clasificaciones_array as $clasifName => $count) {
+            $clasificacionesData['x'][] = $clasifName;
+            $clasificacionesData['y'][] = $count;
+        }
+
+        $clausulasData = [];
+        foreach ($clausulas_array as $clausulaName => $count) {
+            $clausulasData['x'][] = $clausulaName;
+            $clausulasData['y'][] = $count;
+        }
+
+        $clasificacionesDataJson = json_encode($clasificacionesData);
+        $clausulasDataJson = json_encode($clausulasData);
+
+        // $clashallazgosaudit = AuditoriaInternasHallazgos::distinct()->pluck('incumplimiento_requisito')->map(function ($item) {
+        //     return $item;
+        // })->unique()->values()->toArray();
+
+        // dd($clasificaciones_array, $clausulas_array);
+
         // dd($clashallazgosaudit);
         // $clashallazgosnames = AuditoriaInternasHallazgos::distinct()->pluck('clasificacion_hallazgo')->map(function ($item) {
         //     $lowerCaseItem = strtolower($item);
@@ -63,23 +110,12 @@ class AuditoriasSGI extends Component
         //     }
         // })->unique()->values()->toArray();
         // dd($clashallazgosnames);
-        $observacion = $clashallazgos->Where('clasificacion_hallazgo', 'Observación')->count();
-        $noconformayor = $clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Mayor')->count();
-        $oportunidadmejora = $clashallazgos->Where('clasificacion_hallazgo', 'Oportunidad de Mejora')->count();
         //tarjetas de no conformidad menor
-        $nc1 = $clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Menor')->count();
-        $nc2 = $clashallazgos->Where('clasificacion_hallazgo', 'NC Menor')->count();
-        $nc3 = $clashallazgos->Where('clasificacion_hallazgo', 'NO CONFORMIDAD MENOR')->count();
-        $noconformenor = $nc1 + $nc2 + $nc3;
+
+        // $noconformenor = $clashallazgos->Where('clasificacion_hallazgo', 'No Conformidad Menor')->count() +
+        //     $clashallazgos->Where('clasificacion_hallazgo', 'NC Menor')->count() +
+        //     $clashallazgos->Where('clasificacion_hallazgo', 'NO CONFORMIDAD MENOR')->count();
         //GRAFICA DE BARRAS DE AUDITORIA
-        $clausid = AuditoriaInternasHallazgos::select('clausula_id')->get();
-        $contexto = $clausid->Where('clausula_id', '1')->count();
-        $liderazgo = $clausid->Where('clausula_id', '2')->count();
-        $planificacion = $clausid->Where('clausula_id', '3')->count();
-        $soporte = $clausid->Where('clausula_id', '4')->count();
-        $operacion = $clausid->Where('clausula_id', '5')->count();
-        $evaluacion = $clausid->Where('clausula_id', '6')->count();
-        $mejora = $clausid->Where('clausula_id', '7')->count();
 
         $totalclasificaciones = ClasificacionesAuditorias::select()->get();
         // dd($totalclasificaciones);
@@ -98,10 +134,10 @@ class AuditoriasSGI extends Component
         $nombreaudits = AuditoriaInterna::distinct()->pluck('nombre_auditoria')->map(function ($item) {
             return $item;
         })->unique()->values()->toArray();
-        $tclasificaciones = ClasificacionesAuditorias::select('nombre_clasificaciones')->get();
-        $clasificaciones = ClasificacionesAuditorias::distinct()->pluck('nombre_clasificaciones')->map(function ($item) {
-            return $item;
-        })->unique()->values()->toArray();
+        // $tclasificaciones = ClasificacionesAuditorias::select('nombre_clasificaciones')->get();
+        // $clasificaciones = ClasificacionesAuditorias::distinct()->pluck('nombre_clasificaciones')->map(function ($item) {
+        //     return $item;
+        // })->unique()->values()->toArray();
 
         // dd($nombreauditorias);
         // dd($nombreClasificacion1,$nombreClasificacion2,$nombreClasificacion3,$nombreClasificacion4);
@@ -206,25 +242,29 @@ class AuditoriasSGI extends Component
             'encursoCountAC' => $encursoCountAC,
             'enesperaCountAC' => $enesperaCountAC,
             'sinatenderCountAC' => $sinatenderCountAC,
-            'observacion' => $observacion,
-            'noconformayor' => $noconformayor,
-            'oportunidadmejora' => $oportunidadmejora,
-            'noconformenor' => $noconformenor,
+            // 'observacion' => $observacion,
+            // 'noconformayor' => $noconformayor,
+            // 'oportunidadmejora' => $oportunidadmejora,
+            // 'noconformenor' => $noconformenor,
             'empleado' => $empleado,
-            'clausid' => $clausid,
-            'contexto' => $contexto,
-            'liderazgo' => $liderazgo,
-            'planificacion' => $planificacion,
-            'soporte' => $soporte,
-            'operacion' => $operacion,
-            'evaluacion' => $evaluacion,
-            'mejora' => $mejora,
-            'clashallazgosaudit' => $clashallazgosaudit,
+            // 'clausid' => $clausid,
+            // 'contexto' => $contexto,
+            // 'liderazgo' => $liderazgo,
+            // 'planificacion' => $planificacion,
+            // 'soporte' => $soporte,
+            // 'operacion' => $operacion,
+            // 'evaluacion' => $evaluacion,
+            // 'mejora' => $mejora,
+            // 'clashallazgosaudit' => $clashallazgosaudit,
             'audits' => $audits,
             'totalclasificaciones' => $totalclasificaciones,
             'nombreauditorias' => $nombreauditorias,
             'nombreaudits' => $nombreaudits,
             'clasificaciones' => $clasificaciones,
+            'clasificacion_array' => $clasificaciones_array,
+            'clausulas_array' => $clausulas_array,
+            'clasificacionesDataJson' => $clasificacionesDataJson,
+            'clausulasDataJson' => $clausulasDataJson,
         ]);
     }
 }
