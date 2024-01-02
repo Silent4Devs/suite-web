@@ -37,7 +37,7 @@ try:
 
     # Esperar hasta 10 segundos para encontrar un elemento que indique un inicio de sesión exitoso
     element = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//font[@class='letra_blanca'][contains(.,'Mi perfil')]"))
+        EC.presence_of_element_located((By.XPATH, "//img[contains(@alt,'Logo Tabantaj')]"))
     )
     print("Inicio de sesión exitoso")
 except TimeoutException:
