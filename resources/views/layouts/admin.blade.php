@@ -183,7 +183,7 @@
                         <div class="caja-icon-mod-header" style="background: #B1C6FF;">
                             <i class="material-symbols-outlined">shield_person</i>
                         </div>
-                        <span>Admon. de Proyectos</span>
+                        <span>Admin. de Proyectos</span>
                     </a>
                     <a href="{{ route('admin.carpeta.index') }}">
                         <div class="caja-icon-mod-header" style="background: #FFFDC4;">

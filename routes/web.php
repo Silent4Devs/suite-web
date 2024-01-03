@@ -888,6 +888,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('matriz-requisito-legales', 'MatrizRequisitoLegalesController');
 
         // Alcance Sgsis
+        Route::get('alcance-sgsis/visualizacion', 'AlcanceSgsiController@visualizacion')->name('alcance-sgsis/visualizacion');
         Route::delete('alcance-sgsis/destroy', 'AlcanceSgsiController@massDestroy')->name('alcance-sgsis.massDestroy');
         Route::resource('alcance-sgsis', 'AlcanceSgsiController');
         Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
