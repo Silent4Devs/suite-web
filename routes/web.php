@@ -615,8 +615,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('permissions', 'PermissionsController');
 
         //Template Analisis de Brechas
-        Route::get('templates', 'TemplateController@index')->name('templates');
-        Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+        Route::get('templates/create', 'TemplateController@create')->name('templates.create');
+        Route::get('templates/{id}/edit', 'TemplateController@edit')->name('templates.edit');
+        // Route::post('templates/store', 'TemplateController@store')->name('templates.store');
 
         //Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
@@ -704,7 +705,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
             //Analisis brechas 2022
             // Route::get('/top', 'TopController@index')->name('top');
-            // Route::get('/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
+            Route::get('template/{id}/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::get('analisis-brechas-2022-inicio', 'AnalisisBrechaIsoController@inicioBrechas')->name('analisis-brechas-inicio');
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
@@ -717,7 +718,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             //Analisis brechas 2022
             //Template Analisis de Brechas
             Route::post('templates/store', 'TemplateController@store')->name('templates.store');
-            Route::get('/top', 'TopController@index')->name('top');
+            Route::get('/template-brechas-2022-top', 'TopController@index')->name('template-top');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
             Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');

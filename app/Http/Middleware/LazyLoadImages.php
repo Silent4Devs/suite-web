@@ -12,15 +12,15 @@ class LazyLoadImages
         // $cacheKey = 'lazy_loading:lazy' . $request->fullUrl();
 
         // return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($next, $request) {
-            $response = $next($request);
+        $response = $next($request);
 
-            $content = $response->getContent();
+        $content = $response->getContent();
 
-            $modifiedContent = $this->addLazyLoadingAttribute($content);
+        $modifiedContent = $this->addLazyLoadingAttribute($content);
 
-            $response->setContent($modifiedContent);
+        $response->setContent($modifiedContent);
 
-            return $response;
+        return $response;
         // });
     }
 

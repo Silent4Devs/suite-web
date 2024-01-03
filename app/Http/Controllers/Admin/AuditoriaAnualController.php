@@ -178,7 +178,7 @@ class AuditoriaAnualController extends Controller
         $auditoria = AuditoriaAnual::with('documentos_material')->find($request->auditoriaId);
         $paths = [];
         foreach ($auditoria->documentos_material as $documento) {
-            $path = asset('storage/programaAnualAuditoria/documentos/' . $auditoria->id . '/' . $documento->documento);
+            $path = asset('storage/programaAnualAuditoria/documentos/'.$auditoria->id.'/'.$documento->documento);
             $extension = pathinfo($path, PATHINFO_EXTENSION);
             array_push($paths, [
                 'path' => $path,
