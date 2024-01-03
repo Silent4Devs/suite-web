@@ -38,9 +38,11 @@
                         <td>{{$requisicion->referencia}}</td>
                         <td>{{$requisicion->proveedor_catalogo}}</td>
                         <td>{{$requisicion->estado}}</td>
+
                         <td>
                             {{ !empty($requisicion->contrato->nombre_servicio) ? $requisicion->contrato->nombre_servicio : "Sin registro" }}
                         </td>
+
                         <td>{{$requisicion->area}}</td>
                         <td>{{$requisicion->user}}</td>
                         <td>
