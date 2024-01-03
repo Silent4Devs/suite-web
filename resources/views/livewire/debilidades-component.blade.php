@@ -4,13 +4,14 @@
             <i class="material-icons" style="cursor: pointer;">edit</i>
         </a>
         <div class="modal fade" id="modalDebilidades"  tabindex="-1" aria-labelledby="modalDebilidadesLabel" aria-hidden="true" wire:ignore.self>
+            <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 2rem;"  class="close" data-dismiss="modal" aria-label="Close" >
+                <i class="fa-solid fa-x fa-2xl"
+                style="color: #ffffff;"></i>
+            </button>
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Debilidades</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="mt-2 form-group anima-focus">
