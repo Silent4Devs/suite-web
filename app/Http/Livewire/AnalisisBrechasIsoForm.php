@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Functions\GenerateAnalisisBIso;
 use App\Models\Empleado;
 use App\Models\Iso27\AnalisisBrechasIso;
+use Livewire\Component;
+use Carbon\Carbon;
 use App\Models\Iso27\GapDosConcentradoIso;
 use App\Models\Iso27\GapTresConcentradoIso;
 use App\Models\Iso27\GapUnoConcentratoIso;
@@ -74,7 +76,9 @@ class AnalisisBrechasIsoForm extends Component
             $this->resetInput();
             $this->emit('limpiarNameInput');
         }
-        dd('afuera');
+        // dd('afuera');
+
+        g
 
     }
 
