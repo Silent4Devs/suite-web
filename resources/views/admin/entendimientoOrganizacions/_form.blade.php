@@ -27,7 +27,7 @@
             <hr>
         </div>
         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
-            <input required class="form-control" type="text" name="analisis" id="analisis"
+            <input required  maxlength="255" class="form-control" type="text" name="analisis" id="analisis"
                 value="{{ old('analisis', $entendimientoOrganizacion->analisis) }}" placeholder="">
             @if ($errors->has('analisis'))
                 <div class="invalid-feedback  d-block">
@@ -66,9 +66,8 @@
             <label class="required" for="id_elabora">Realizó</label>
         </div>
         <div class="form-group anima-focus col-md-6">
-            <div class="form-control" id="puesto_asignada" readonly></div>
+            <div class="form-control puesto-container" id="puesto_asignada" readonly></div>
             <label for="id_puesto_asignada">Puesto</label>
-
         </div>
 
     </div>
@@ -177,6 +176,22 @@
 </div>
 
 @section('scripts')
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#id_elabora').change(function () {
+                // Obtiene el valor seleccionado y el atributo de datos asociados
+                var selectedOption = $(this).find(':selected');
+                var puesto = selectedOption.data('puesto');
+
+                // Actualiza el contenido del segundo div con el puesto correspondiente
+                $('.puesto-container').text(puesto);
+            });
+
+            // Disparar el evento change inicialmente para que refleje el valor predeterminado si es necesario
+            $('#id_elabora').change();
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function(e) {
 
