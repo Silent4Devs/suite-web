@@ -1,5 +1,47 @@
 @extends('layouts.admin')
+@section('styles')
+    <style>
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            header, .c-header, .c-head, .c-header-fixed, #sidebar, .barra-herramientas-bottom-molbile, footer{
+                display: none !important;
+                opacity: 0 !important;
 
+            }
+
+            .c-main {
+                margin-top: 0px !important;
+                padding-top: 0px !important;
+            }
+
+            body.c-sidebar-lg-show .c-wrapper {
+                margin-left: 0px !important;
+            }
+
+            .modal {
+                position: relative !important;
+                background-color: #FFFFFF !important;
+            }
+            .modal-dialog, .modal-content, .modal-body, .card {
+                width: 100% !important;
+                background-color: #FFFFFF !important;
+                box-shadow: none !important;
+
+            }
+
+            .modal-dialog{
+                margin-left: 0px !important;
+            }
+            .modal-backdrop {
+                background-color: transparent !important;
+            }
+
+        }
+    </style>
+@endsection
 @section('content')
     @include('admin.analisisdebrecha2022nv.estilos')
     <!-- Include Chart.js library -->
@@ -7,9 +49,9 @@
 
     @include('partials.flashMessages')
 
-    <h5 class="titulo">Formulario</h5>
+    <h5 class="titulo print-none">Formulario</h5>
 
-    <div class="card shadow-sm instrucciones" style="background: #18919F; border-radius: 16px; color:#FFFFFF;">
+    <div class="card shadow-sm instrucciones print-none" style="background: #18919F; border-radius: 16px; color:#FFFFFF;">
         <div class="card-body">
             <div class="row" style="padding-bottom: 10px;">
                 <div class="col-2" style="padding-left: 25px;">

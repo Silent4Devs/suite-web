@@ -85,7 +85,7 @@
             <a href="{{route('admin.template-top')}}">Ver todos</a>
         </div>
         <div class="d-flex justify-content-end" style="padding-right: 110px;">
-            <a class="btn btn-light text-primary border border-primary" href="{{route('admin.templates')}}">
+            <a class="btn btn-light text-primary border border-primary" href="{{route('admin.templates.create')}}">
                 Crear template +
             </a>
         </div>

@@ -27,6 +27,9 @@ class EvaluacionAnalisisBrechas extends Component
     public $cuentas;
     public $totalAnalisis;
     public $results;
+    public $grafica_cuentas2 = [];
+    public $grafica_colores2= [];
+
 
 
     public function mount($id)
@@ -108,11 +111,16 @@ class EvaluacionAnalisisBrechas extends Component
             foreach ($template->parametros as $parametro) {
                 if (array_key_exists($parametro->id, $this->cuentas)) {
                     $grafica_cuentas[$parametro->estatus] = $this->cuentas[$parametro->id];
+
                     $grafica_colores[] = $parametro->color;
                 }
             }
-            // dd($template->parametros);
+            $this->grafica_cuentas2 = $grafica_cuentas;
+
+            $this->grafica_colores2 = $grafica_colores;
+
             $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+
 
             //apartado para imprimir
 
@@ -131,6 +139,7 @@ class EvaluacionAnalisisBrechas extends Component
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
 
+        $this->emit('renderAreas1');
 
 
         return view('livewire.evaluacion-analisis-brechas', compact(
@@ -388,10 +397,11 @@ class EvaluacionAnalisisBrechas extends Component
         $rfc = $organizacion_actual->rfc;
 
         $sectionPercentages = $this->porcentajeTotal();
-
+        $results = $this->results;
 
             $pdf = PDF::loadView('evaluacion-analisis-brechas-pdf', compact('organizacion_actual', 'logo_actual', 'empresa_actual',
-            'direccion', 'rfc', 'template','sectionPercentages', 'result', 'cuentas', 'peso_parametros', 'totalCount', 'totalPorcentaje'
+            'direccion', 'rfc', 'template','sectionPercentages', 'result', 'cuentas', 'peso_parametros', 'totalCount', 'totalPorcentaje',
+            'results'
         ));
             $pdf->setPaper('A4', 'portrait');
 

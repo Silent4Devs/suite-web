@@ -133,7 +133,7 @@
                 <img src="{{ asset('img/brechas-inicio-a.png') }}" alt="">
                 <div class="d-flex flex-column align-items-center">
                     <h4>Templates</h4>
-                    <a href="{{route('admin.templates')}}" class="btn btn-info">Generar</a>
+                    <a href="{{route('admin.templates.create')}}" class="btn btn-info">Generar</a>
                 </div>
             </div>
         </div>

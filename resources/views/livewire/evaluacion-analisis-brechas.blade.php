@@ -144,7 +144,7 @@
         }
     </style>
 
-        <div class="row mb-3 ">
+        <div class="row mb-3 print-none">
             @if ($template_general->secciones->count() > 1)
                 <div class="col-3 mt-4">
                     <div class="card shadow-sm card-analisis card-dash-analisis">
@@ -396,7 +396,7 @@
             </div>
         @endforeach
     @else
-        <div class="card shadow-sm card-body">
+        <div class="card shadow-sm card-body print-none">
             <div class="row m-0 p-0">
                 <div class="col-2 d-flex justify-content-start align-items-center" style="padding-left: 0px;">
                     <p class="m-0">Avance Total del análisis</p>
@@ -417,7 +417,7 @@
             </div>
         </div>
 
-        <div class="card shadow-sm">
+        <div class="card shadow-sm print-none">
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
@@ -481,7 +481,7 @@
                     <div class="col-6 align-items-center">
                         <!-- HTML structure to contain the bar chart -->
                         <div id="contenedor-principal">
-                            <canvas id="graf-parametros" width="400" height="400"></canvas>
+                            <canvas id="graf-parametros" style="width:400px; height:300px;"></canvas>
                         </div>
 
                     </div>
@@ -491,7 +491,7 @@
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
+                <button type="button" class="btn-close print-none" data-bs-dismiss="modal" aria-label="Close"
                     style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
                         style="color: #ffffff;"></i>
                 </button>
@@ -502,11 +502,11 @@
                                 style="border-radius: 16px; box-shadow: none; border-color:white; width: auto;">
                                 <div class="card-body" style="">
                                     <div class="print-none" style="text-align:right;">
-                                        <form wire:submit.prevent="pdf" id="generate-pdf-form">
-                                            <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+
+                                            <button class="boton-transparentev2"  style="color: #306BA9;" onclick="window.print()">
                                                 IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                                             </button>
-                                        </form>
+
                                     </div>
                                     <div class="card mt-5" style="width:900px;box-shadow:4px;">
                                         <div class="row col-12 ml-0"
@@ -550,7 +550,7 @@
                                                         <div class="datatable-fix datatable-rds">
                                                             <table class="table w-100 table-borderless">
                                                                 <thead>
-                                                                    <tr style="background:#EBEBEB;">
+                                                                    <tr style="background:#EBEBEB !important;">
                                                                         <th>
                                                                             Sección
                                                                         </th>
@@ -579,7 +579,7 @@
 
                                                                 </tbody>
                                                                 <tfoot>
-                                                                    <tr style="background: #EEFDFF;">
+                                                                    <tr style="background: #EEFDFF !important;">
                                                                         <td colspan="1">Total</td>
                                                                         <td>100%</td>
                                                                         <td>{{ number_format((float) $sectionPercentages[0]['percentage'], 2, '.') ?? 0 }}%
@@ -592,7 +592,7 @@
                                                     <div class="col-6 align-items-center">
                                                         <!-- HTML structure to contain the bar chart -->
                                                         <div id="contenedor-principal">
-                                                            <canvas id="graf-parametros" width="400" height="400"></canvas>
+                                                            <canvas id="graf-modal-1" style="width:400px; height:250px;"></canvas>
                                                         </div>
 
                                                     </div>
@@ -610,7 +610,7 @@
                                                             <div class="datatable-fix datatable-rds">
                                                                 <table class="table w-100 table-borderless" style="width:100%">
                                                                     <thead >
-                                                                        <tr style="background:#EBEBEB;">
+                                                                        <tr style="background:#EBEBEB !important;">
                                                                             <th>
                                                                                 Estatus
                                                                             </th>
@@ -628,7 +628,7 @@
                                                                                 <td>
                                                                                     {{ $parametro->estatus }}
                                                                                 </td>
-                                                                                <td style="background-color: {{ $parametro->color }}">
+                                                                                <td style="background-color: {{ $parametro->color }} !important;">
                                                                                     {{-- {{ $cuentas[$parametro->id] ?? 0 }} --}}
                                                                                     {{$results[$key]['counts'][$parametro->id] ?? 0}}
                                                                                 </td>
@@ -640,7 +640,7 @@
 
                                                                     </tbody>
                                                                     <tfoot>
-                                                                        <tr style="background: #EEFDFF;">
+                                                                        <tr style="background: #EEFDFF !important;">
                                                                             <td>Total</td>
                                                                             <td>{{ $results[$key]['totalCount'] ?? 0 }}</td>
                                                                             <td>{{ number_format((float) $results[$key]['total_porcentaje'], 2, '.') ?? 0 }}%</td>
@@ -680,6 +680,7 @@
     @endif
 
     @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             document.addEventListener('livewire:load', function() {
                 console.log('hola');
@@ -712,19 +713,12 @@
             });
         </script>
 
+        {{-- script para que carge la primera grafica --}}
 
         {{-- <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Tu script aquí
-                console.log('La página se ha cargado');
-                Livewire.on('renderAreas', (grafica_cuentas, grafica_colores) => {
-                    // console.log(cuentas);
-                    // console.log(colores);
-                    document.getElementById('graf-parametros').remove();
+            document.addEventListener('livewire:load', function () {
 
-                    let canvas = document.createElement("canvas");
-                    canvas.id = "graf-parametros";
-                    document.getElementById("contenedor-principal").appendChild(canvas);
+                document.getElementById("graf-parametros").appendChild(canvas);
 
                     let grafica_proyectos = new Chart(document.getElementById('graf-parametros'), {
                         type: 'bar',
@@ -742,9 +736,68 @@
                         },
                     });
 
-                });
             });
         </script> --}}
+
+
+        {{-- script para graficas del modal --}}
+        <script>
+            document.addEventListener('livewire:load', function () {
+
+            const data = @json($grafica_cuentas2);
+            const colores = @json($grafica_colores2);
+            const values = Object.values(data);
+            const valuesColors = Object.values(colores);
+            console.log(valuesColors);
+
+
+            var ctx = document.getElementById('graf-parametros').getContext('2d');
+            var barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.entries(data),
+                    datasets: [{
+                        label: 'Preguntas que cumplen esta valoración',
+                        data: values,
+                        backgroundColor: valuesColors,
+                        borderWidth: 1,
+                    }],
+                },
+            });
+
+            var ctx = document.getElementById('graf-modal-1').getContext('2d');
+            var barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.entries(data),
+                    datasets: [{
+                        label: 'Preguntas que cumplen esta valoración',
+                        data: values,
+                        backgroundColor: valuesColors,
+                        borderWidth: 1,
+                    }],
+                },
+            });
+
+                    // var ctx = document.getElementById('graf-modal-1').getContext('2d');
+                    // var donaChart = new Chart(ctx, {
+                    //     type: 'doughnut',
+                    //     data: {
+                    //         labels: ['Dato 1', 'Dato 2'],
+                    //         datasets: [{
+                    //             data:[10,20],
+                    //             backgroundColor: [
+                    //                 'rgba(255, 99, 132, 0.8)',
+                    //                 'rgba(54, 162, 235, 0.8)',
+                    //             ],
+                    //             borderWidth: 1,
+                    //         }],
+                    //     },
+                    // });
+                // });
+            });
+        </script>
+
 
     @endsection
 </div>
