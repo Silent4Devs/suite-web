@@ -30,9 +30,7 @@ try:
 
     # Ingresar credenciales
     usr = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys(usuario)
-    time.sleep(tiempo_modulos)
     pw = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys(contrasena)
-    time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
@@ -55,13 +53,12 @@ menu.click()
 #Comunicación
 print("Dando click a Comunicacion")
 comunicacion=driver.find_element(By.XPATH,comunicacion_xpath)
-time.sleep(tiempo_espera)
-WebDriverWait(driver, 6).until(EC.presence_of_element_located((By.XPATH, comunicacion_xpath)))
+WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, comunicacion_xpath)))
 comunicacion.click()
 
 #Scroll hasta el final
 element = driver.find_element(By.XPATH, last_element)
 driver.execute_script("arguments[0].scrollIntoView(true);", element)
-WebDriverWait(driver, 7).until(EC.presence_of_element_located((By.XPATH, last_element)))
+WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, last_element)))
 print("Se hizo el scroll hasta el final de la página")
 

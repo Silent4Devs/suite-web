@@ -10,7 +10,8 @@ tiempo_modulos = 4
 tiempo_carga = 10
 tiempo_espera = 2.5
 menu_xpath = "//i[contains(@class,'fa-solid fa-bars')]"
-documentos_xpath = "(//a[contains(.,'Documentos')])[1]"
+atencion_xpath = "//a[contains(.,'Centro de atención')]"
+
 
 # Pide al usuario que ingrese sus credenciales
 usuario = input("Ingresa tu nombre de usuario: ")
@@ -29,9 +30,7 @@ try:
 
     # Ingresar credenciales
     usr = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys(usuario)
-    time.sleep(tiempo_modulos)
     pw = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys(contrasena)
-    time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
@@ -51,8 +50,8 @@ menu=driver.find_element(By.XPATH,menu_xpath)
 WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, menu_xpath)))
 menu.click()
 
-#Documentos
-print("Dando click a Documentos")
-documentos=driver.find_element(By.XPATH,documentos_xpath)
-WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, documentos_xpath)))
-documentos.click()
+#Comunicación
+print("Dando click a Comunicacion")
+centro_atencion=driver.find_element(By.XPATH,atencion_xpath)
+WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, atencion_xpath)))
+centro_atencion.click()

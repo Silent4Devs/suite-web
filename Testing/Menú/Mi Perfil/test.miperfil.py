@@ -29,9 +29,7 @@ try:
 
     # Ingresar credenciales
     usr = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys(usuario)
-    time.sleep(tiempo_modulos)
     pw = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys(contrasena)
-    time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
@@ -54,7 +52,7 @@ menu.click()
 #Mi Perfil
 print("Dando click a Mi Perfil")
 miperfil=driver.find_element(By.XPATH,miperfil_xpath)
-time.sleep(tiempo_espera)
-WebDriverWait(driver, 7).until(EC.presence_of_element_located((By.XPATH, miperfil_xpath)))
+time.sleep(2)
+WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, miperfil_xpath)))
 miperfil.click()
 

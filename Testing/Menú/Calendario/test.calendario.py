@@ -29,9 +29,7 @@ try:
 
     # Ingresar credenciales
     usr = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys(usuario)
-    time.sleep(tiempo_modulos)
     pw = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys(contrasena)
-    time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
