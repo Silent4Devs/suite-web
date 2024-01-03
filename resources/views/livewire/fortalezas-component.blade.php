@@ -4,8 +4,11 @@
     <a class="d-inline" data-toggle="modal" data-target="#modalFortalezas">
         <i class="material-icons" style="cursor: pointer;">edit</i>
     </a>
-    <div class="modal fade" id="modalFortalezas" tabindex="-1" aria-labelledby="modalFortalezasLabel" aria-hidden="true"
-        wire:ignore.self>
+    <div class="modal fade" id="modalFortalezas" tabindex="-1" aria-labelledby="modalFortalezasLabel" aria-hidden="true"  wire:ignore.self>
+        <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 10rem;"  class="close" data-dismiss="modal" aria-label="Close" >
+            <i class="fa-solid fa-x fa-2xl"
+            style="color: #ffffff;"></i>
+        </button>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -178,7 +181,6 @@
             })
         })
     </script> --}}
-
     @yield('js')
 
     <script>
