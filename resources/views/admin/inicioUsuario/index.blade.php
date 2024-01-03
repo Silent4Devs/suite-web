@@ -9,7 +9,7 @@
             <div class="header-card-iu">
                 <div class="d-flex justify-content-between align-items-start">
                     <div class="d-flex align-items-end">
-                        <h4 class="title-name-user">Carlos Fernando Alberto Crúz Andrade</h4>
+                        <h4 class="title-name-user">{{ $usuario->empleado->name }}</h4>
                         <small class="ml-3">
                             <i class="fa-solid fa-location-dot"></i>
                             Torre Murano
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div>
-                    Nº de empelado <span>0000</span>
+                    Nº de empelado <span>{{ $usuario->empleado->n_registro }}</span>
                 </div>
             </div>
             <div class="card overflow-hidden">
@@ -56,19 +56,20 @@
                             </div>
                             <div>
                                 <span>Perfil</span><br>
-                                Gerente
+                                {{ $usuario->empleado->puesto }}
                             </div>
                             <div>
                                 <span>fecha de ingreso</span><br>
-                                21-12-22
+                                {{ $usuario->empleado->fecha_ingreso }}
                             </div>
                             <div>
                                 <span>Jefe inmediato</span><br>
-                                Juan Francisco Curiel Morales
+                                {{ $usuario->empleado->jefe_inmediato }}
                             </div>
                             <div>
                                 <span>Cumpleaños</span><br>
-                                21-12-22
+                                {{ $usuario->empleado->actual_birdthday }}
+
                             </div>
                         </div>
                     </div>

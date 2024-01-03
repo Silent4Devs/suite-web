@@ -109,3 +109,51 @@ ul {
 .paso-iso-guia.active-iso-paso {
     display: block !important;
 }
+
+/* inicio guia ----- */
+.info-inicio-guia {
+    background-color: #fff;
+    min-width: 600px;
+    max-width: 600px;
+    padding: 0px 50px;
+    box-sizing: border-box;
+    height: 98vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-inicio-guia h4 {
+    color: #467BD3;
+    font-size: 50px;
+}
+
+.info-inicio-guia p {
+    color: #818181;
+    font-size: 18px;
+}
+
+.info-inicio-guia ul {
+    font-size: 14px;
+    color: #818181;
+}
+
+.info-inicio-guia li {
+    margin-top: 10px;
+}
+
+.caja-img-iso-guia-inicio {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6f9ff;
+}
+
+.caja-img-iso-guia-inicio img {
+    width: 100%;
+}
+
+.btn-cont-guia-inicio {
+    border-radius: ;
+}
