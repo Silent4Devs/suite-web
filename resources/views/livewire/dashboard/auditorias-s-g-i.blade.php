@@ -275,8 +275,8 @@
             border-radius: 8px 0px 0px 8px;
             border-right: 0.5px solid #606060;
             /* border-right: 0.5px solid #606060;
-        border-right-style: solid;
-        border-right-width: medium; */
+            border-right-style: solid;
+            border-right-width: medium; */
             opacity: 1;
         }
 
@@ -488,8 +488,8 @@
 
             <div class="">
                 {{-- <select class="form-control filtro" style="margin-left: 570px;margin-bottom: 24px;">
-                <option>ISO 27001</option>
-            </select> --}}
+                    <option>ISO 27001</option>
+                </select> --}}
             </div>
         </div>
     </div>
@@ -565,13 +565,13 @@
                 </select>
             </div>
             <div class="row" style="margin: 0px 0px 0px 54px;">
-                @foreach ($totalclasificaciones as $totalclasificacion)
+                @foreach ($clasificaciones_array as $key => $clasificacion)
                     <div class="d-flex inline m-3">
                         <div class="datosconformidades">
-                            <h6 class="datos-letra-tarjeta-A">{{ $totalclasificacion->total }}</h6>
+                            <h6 class="datos-letra-tarjeta-A">{{ $clasificacion }}</h6>
                         </div>
                         <div class="botones2">
-                            <h3 class="letra-tarjeta2">{{ $totalclasificacion->nombre_clasificaciones }}</h3>
+                            <h3 class="letra-tarjeta2">{{ $key }}</h3>
                         </div>
                     </div>
                 @endforeach
@@ -580,7 +580,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="fondo-grafica">
@@ -589,7 +589,7 @@
                             <!-- Reemplaza el select existente con la lista desplegable personalizada de Select2 -->
                             <select id="filtroClasificacion" class="form-control filtro" style="margin-left: 780px;">
                                 @foreach ($clasificaciones as $clasificacion)
-                                    <option>{{ $clasificacion->nombre_clasificaciones }}</option>
+                                    <option>{{ $clasificacion }}</option>
                                 @endforeach
                             </select>
                             <div id="A"></div>
@@ -888,12 +888,11 @@
     <script>
         // Define los datos iniciales para la gráfica
 
-        // For clausulas
-        var clausulasData = {!! $clausulasDataJson !!};
-
         let datosGrafica = {
-            x: clausulasData.x,
-            y: clausulasData.y,
+            x: ['Contexto', 'Liderazgo', 'Planificación', 'Soporte', 'Operación', 'Evaluación', 'Mejora'],
+            y: [{{ $contexto }}, {{ $liderazgo }}, {{ $planificacion }}, {{ $soporte }},
+                {{ $operacion }}, {{ $evaluacion }}, {{ $mejora }}
+            ],
             type: 'bar',
             marker: {
                 color: ['#CEB475', '#65CDEE', '#EE6581', '#8965EE', '#C665EE', '#36C8D2', '#28C2A3'],
@@ -902,7 +901,9 @@
                 color: 'white',
                 size: 16
             },
-            text: clausulasData.x,
+            text: [{{ $contexto }}, {{ $liderazgo }}, {{ $planificacion }}, {{ $soporte }},
+                {{ $operacion }}, {{ $evaluacion }}, {{ $mejora }}
+            ],
             textposition: 'auto'
         };
 
@@ -932,30 +933,29 @@
                 .then(response => response.json())
                 .then(data => {
                     // Copia los datos actuales
-                    // let newData = {
-                    //     datosGrafica
-                    // };
-                    // console.log(newData);
+                    let newData = {
+                        ...datosGrafica
+                    };
+
                     // Actualiza newData.y según el clausula_id obtenido
                     // Esto es solo un ejemplo, debes definir los valores correspondientes según tu lógica
-                    // switch (data.clausula_id) {
-                    //     case 1:
-                    //         newData.y = [1, 0, 0, 0, 0, 0, 0];
-                    //         break;
-                    //     case 2:
-                    //         newData.y = [0, 3, 0, 0, 0, 0, 0];
-                    //         break;
-                    //     case 3:
-                    //         newData.y = [0, 0, 6, 0, 0, 0, 0];
-                    //         break;
-                    //         // Agrega más casos según tus clausulas...
-                    //     default:
-                    //         newData.y = [0, 0, 0, 0, 0, 0, 0]; // Valores predeterminados si no hay coincidencia
-                    // }
-
+                    switch (data.clausula_id) {
+                        case 1:
+                            newData.y = [{{ $contexto }}, 0, 0, 0, 0, 0, 0];
+                            break;
+                        case 2:
+                            newData.y = [0, {{ $liderazgo }}, 0, 0, 0, 0, 0];
+                            break;
+                        case 3:
+                            newData.y = [0, 0, {{ $planificacion }}, 0, 0, 0, 0];
+                            break;
+                            // Agrega más casos según tus clausulas...
+                        default:
+                            newData.y = [0, 0, 0, 0, 0, 0, 0]; // Valores predeterminados si no hay coincidencia
+                    }
 
                     // Actualiza el gráfico
-                    Plotly.newPlot("A", datosGrafica.y, layoutsssss);
+                    Plotly.newPlot("A", [newData], layoutsssss);
                 })
                 .catch(error => {
                     console.error('Error al obtener el clausula_id:', error);
@@ -963,7 +963,7 @@
         }
 
         // Inicializa el gráfico con los datos iniciales
-        Plotly.newPlot("A", datosGrafica, layoutsssss);
+        Plotly.newPlot("A", [datosGrafica], layoutsssss);
     </script>
 
     {{-- DASHBOARD DE MEJORAS Y ACCIONES --}}
@@ -972,11 +972,9 @@
     {{-- GRAFICA DE BARRAS TOTAL DE MEJORAS --}}
 
     <script>
-        var clasificacionesData = {!! $clasificacionesDataJson !!};
-
         let data = [{
-            x: clasificacionesData.x,
-            y: clasificacionesData.y,
+            x: ['En curso', 'En espera', 'Cerrados', 'Sin atender'],
+            y: [{{ $encursoCount }}, {{ $enesperaCount }}, {{ $cerradoCount }}, {{ $sinatenderCount }}],
             type: 'bar',
             marker: {
                 color: ['#28C2A3', '#FF9B65', '#6C6C6C', '#E66060']
@@ -985,6 +983,9 @@
                 color: 'white',
                 size: 12
             },
+            text: [{{ $encursoCount }}, {{ $enesperaCount }}, {{ $cerradoCount }},
+                {{ $sinatenderCount }}
+            ], // Aquí se especifica el texto
             textposition: 'auto' // Establece la posición del texto (en este caso, se coloca automáticamente)
         }];
         let layout = {
@@ -1005,13 +1006,10 @@
 
     {{-- GRAFICA DE PASTEL PORCENTAJE DE MEJORA --}}
 
-
     <script>
-        var clasificacionesData = {!! $clasificacionesDataJson !!};
-
         let datass = [{
-            values: clasificacionesData.y,
-            labels: clasificacionesData.x,
+            values: [{{ $encursoCount }}, {{ $enesperaCount }}, {{ $cerradoCount }}, {{ $sinatenderCount }}],
+            labels: ['En curso', 'En espera', 'Cerrados', 'Sin atender'],
             hole: .45,
             type: 'pie',
             marker: {
@@ -1034,11 +1032,9 @@
     {{-- GRAFICA DE BARRA TOTAL DE LAS ACCIONES CORRECTIVAS --}}
 
     <script>
-        var clausulasData = {!! $clausulasDataJson !!};
-
         let datasss = [{
-            x: clausulasData.x,
-            y: clausulasData.y,
+            x: ['En curso', 'En espera', 'Cerrados', 'Sin atender'],
+            y: [{{ $encursoCountAC }}, {{ $enesperaCountAC }}, {{ $cerradoCountAC }}, {{ $sinatenderCountAC }}],
             type: 'bar',
             marker: {
                 color: ['#28C2A3', '#FF9B65', '#6C6C6C', '#E66060']
@@ -1047,6 +1043,9 @@
                 color: 'white',
                 size: 12
             },
+            text: [{{ $encursoCountAC }}, {{ $enesperaCountAC }}, {{ $cerradoCountAC }},
+                {{ $sinatenderCountAC }}
+            ], // Aquí se especifica el texto
             textposition: 'auto' // Establece la posición del texto (en este caso, se coloca automáticamente)
         }];
 
@@ -1069,11 +1068,11 @@
     {{-- GRAFICA DE PASTEL PORCENTAJE DE ACCIONES CORRECTIVAS --}}
 
     <script>
-        var clausulasData = {!! $clausulasDataJson !!};
-
         let datas = [{
-            values: clausulasData.y,
-            labels: clausulasData.x,
+            values: [{{ $encursoCountAC }}, {{ $enesperaCountAC }}, {{ $cerradoCountAC }},
+                {{ $sinatenderCountAC }}
+            ],
+            labels: ['En curso', 'En espera', 'Cerrados', 'Sin atender'],
             hole: .45,
             type: 'pie',
             marker: {
@@ -1096,25 +1095,20 @@
     </script>
 
     <script type="text/javascript">
-        < script type = "text/javascript" >
-
-            <
-            script type = "text/javascript" >
-
-            ScheduleList = [
-                @foreach ($audits as $audit)
-                    {
-                        id: 'revisiones{{ $audit->id }}',
-                        calendarId: '12',
-                        title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revisión de entregables: {{ $audit->nombre }}',
-                        category: 'allday',
-                        dueDateClass: '',
-                        start: '{{ \Carbon\Carbon::parse($audit->fechainicio)->format('Y-m-d') }}',
-                        end: '{{ \Carbon\Carbon::parse($audit->fechafin)->format('Y-m-d') }}',
-                        isReadOnly: true,
-                    },
-                @endforeach
-            ];
+        ScheduleList = [
+            @foreach ($audits as $audit)
+                {
+                    id: 'revisiones{{ $audit->id }}',
+                    calendarId: '12',
+                    title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revisión de entregables: {{ $audit->nombre }}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ \Carbon\Carbon::parse($audit->fechainicio)->format('Y-m-d') }}',
+                    end: '{{ \Carbon\Carbon::parse($audit->fechafin)->format('Y-m-d') }}',
+                    isReadOnly: true,
+                },
+            @endforeach
+        ];
     </script>
 
     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
