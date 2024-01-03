@@ -152,18 +152,6 @@
                 //dtButtons.push(deleteButton)
             @endcan
             @can('comformacion_comite_seguridad_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar nuevo comite de seguridad',
-                    url: "{{ route('admin.comiteseguridads.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
                 let btnExport = {
                     text: '<i class="fas fa-download"></i>',
                     titleAttr: 'Descargar plantilla',
@@ -184,8 +172,6 @@
                         $('#xlsxImportModal').modal('show');
                     }
                 };
-
-                dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan

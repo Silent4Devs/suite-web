@@ -40,6 +40,7 @@ class PoliticaSgsi extends Model implements Auditable
         'fecha_entrada',
         'fecha_revision',
         'id_reviso_politica',
+        'estatus',
         'created_at',
         'updated_at',
         'deleted_at',

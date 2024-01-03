@@ -1,0 +1,159 @@
+.c-main {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+}
+
+.container-fluid {
+    padding: 0 !important;
+}
+
+.menu-pasos-guia {
+    box-shadow: 0px 3px 6px #00000029;
+    background-color: #F5F5F5;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 230px;
+    height: 100%;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.menu-pasos-guia ul li {
+    width: 100%;
+    color: #306BA9;
+    margin-top: 50px;
+    display: flex;
+    gap: 6px;
+}
+
+.menu-pasos-guia ul li span {
+    width: 22px;
+    height: 22px;
+    border-radius: 100px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #306BA9;
+}
+
+.content-guia-iso {
+    margin-left: 230px;
+}
+
+.title-guia-iso {
+    color: #818181;
+    font-size: 16px;
+}
+
+.card-main-iso {
+    padding: 50px 168px !important;
+    border-radius: 0px !important;
+}
+
+.title-info-iso {
+    color: #3086AF;
+    font-size: 20px;
+}
+
+.list-info-iso li {
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.caja-cards-iso-guia {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.card-iso-guia {
+    background-color: #fff;
+    color: #306BA9;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0px 1px 4px #00000024;
+    text-align: center;
+    width: 206px;
+}
+
+.card-iso-guia img {
+    width: 100%;
+}
+
+.title-card-img-iso {
+    font-size: 16px;
+    margin: 22px 0px;
+}
+
+.card-iso-guia span {
+    background-color: #BDE4BB;
+    color: #039C55;
+    font-size: 10px;
+    padding: 4px 20px;
+    border-radius: 100px;
+}
+
+.paso-iso-guia {
+    display: none;
+}
+
+.paso-iso-guia.active-iso-paso {
+    display: block !important;
+}
+
+/* inicio guia ----- */
+.info-inicio-guia {
+    background-color: #fff;
+    min-width: 600px;
+    max-width: 600px;
+    padding: 0px 50px;
+    box-sizing: border-box;
+    height: 98vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-inicio-guia h4 {
+    color: #467BD3;
+    font-size: 50px;
+}
+
+.info-inicio-guia p {
+    color: #818181;
+    font-size: 18px;
+}
+
+.info-inicio-guia ul {
+    font-size: 14px;
+    color: #818181;
+}
+
+.info-inicio-guia li {
+    margin-top: 10px;
+}
+
+.caja-img-iso-guia-inicio {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6f9ff;
+}
+
+.caja-img-iso-guia-inicio img {
+    width: 100%;
+}
+
+.btn-cont-guia-inicio {
+    border-radius: ;
+}

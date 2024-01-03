@@ -28,8 +28,11 @@
             <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 Competencias Asignadas
             </div>
-            <div class="datatable-fix">
-                <table class="table table-bordered w-100 tblCompetenciasPorPuesto">
+
+
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <table class="datatable tblCompetenciasPorPuesto" id="tblCompetenciasPorPuesto">
                     <thead class="thead-dark">
                         <tr>
                             <th style="vertical-align: top">
@@ -43,9 +46,9 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
                 </table>
             </div>
+
             <div class="d-flex justify-content-end w-100">
                 <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}" class="btn_cancelar">Regresar</a>
                 {{-- <button type="submit" class="btn btn-danger">Guardar</button> --}}

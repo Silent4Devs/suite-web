@@ -129,16 +129,25 @@ class AuditoriaInternaController extends Controller
         ]);
 
         $auditoriaInterna = AuditoriaInterna::create($request->all());
+        $auditoriaInterna->update([
+            'creador_auditoria_id' => User::getCurrentUser()->empleado->id,
+        ]);
         $auditoriaInterna->equipo()->sync($request->equipo);
         $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-        return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna]);
+        return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna->id]);
     }
 
-    public function edit(AuditoriaInterna $auditoriaInterna)
+    public function edit($IDauditoriaInterna)
     {
         abort_if(Gate::denies('auditoria_interna_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if (auth()->user()->empleado->id == $auditoriaInterna->lider_id) {
+
+        $auditoriaInterna = AuditoriaInterna::find($IDauditoriaInterna);
+        if (
+            User::getCurrentUser()->empleado->id == $auditoriaInterna->lider_id
+            || User::getCurrentUser()->empleado->id == $auditoriaInterna->creador_auditoria_id
+        ) {
+
             $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team');
 
             $clasificacionesauditorias = ClasificacionesAuditorias::all();
@@ -154,7 +163,10 @@ class AuditoriaInternaController extends Controller
                 ->with('clasificacionesauditorias', $clasificacionesauditorias)
                 ->with('clausulasauditorias', $clausulasauditorias);
         } else {
-            return redirect(route('admin.auditoria-internas.index'));
+
+            return redirect()->back()->with('edit', 'success');
+
+            // return redirect(route('admin.auditoria-internas.index'));
         }
     }
 
@@ -182,8 +194,8 @@ class AuditoriaInternaController extends Controller
     {
         abort_if(Gate::denies('auditoria_interna_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditoriaInterna->load('clausulas', 'auditorlider', 'equipo', 'team', 'auditoriaHallazgos');
-        // dd( $auditoriaInterna->hallazgos);
+        $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team', 'reportes.empleado', 'reportes.hallazgos');
+        // dd($auditoriaInterna->reportes);
 
         return view('admin.auditoriaInternas.show', compact('auditoriaInterna'));
     }
@@ -232,10 +244,12 @@ class AuditoriaInternaController extends Controller
                     ->with('clasificaciones', $clasificaciones)
                     ->with('clausulas', $clausulas)
                     ->with('id', $id);
+            } else {
+                return redirect()->back()->with('reporte', 'success');
             }
         }
 
-        return redirect()->route('admin.auditoria-internas.index');
+        return redirect()->back()->with('reporte', 'success');
     }
 
     public function createReporte($id)
@@ -253,13 +267,13 @@ class AuditoriaInternaController extends Controller
 
         $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
 
-        if (! Storage::exists('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte')) {
-            Storage::makeDirectory('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$reporte->id.'/'.$nombre_colaborador, 0755, true);
+        if (!Storage::exists('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte')) {
+            Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $reporte->id . '/' . $nombre_colaborador, 0755, true);
         }
 
-        $filename = '/audit'.$reporte->id_auditoria.'firmaempleado'.$nombre_colaborador.'.png';
+        $filename = '/audit' . $reporte->id_auditoria . 'firmaempleado' . $nombre_colaborador . '.png';
 
-        Storage::put('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$reporte->id.'/'.$nombre_colaborador.$filename, $image);
+        Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $reporte->id . '/' . $nombre_colaborador . $filename, $image);
 
         $reporte = AuditoriaInternasReportes::where('id_auditoria', '=', $reporte->id_auditoria)
             ->where('empleado_id', '=', auth()->user()->empleado->id)
@@ -317,13 +331,13 @@ class AuditoriaInternaController extends Controller
 
         $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
 
-        if (! Storage::exists('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte')) {
-            Storage::makeDirectory('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$nombre_lider, 0755, true);
+        if (!Storage::exists('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte')) {
+            Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $nombre_lider, 0755, true);
         }
 
-        $filename = '/audit'.$reporte->id_auditoria.'firmalider'.$nombre_lider.'.png';
+        $filename = '/audit' . $reporte->id_auditoria . 'firmalider' . $nombre_lider . '.png';
 
-        Storage::put('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$reporte->id.'/'.$nombre_lider.$filename, $image);
+        Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $reporte->id . '/' . $nombre_lider . $filename, $image);
 
         $reporte = AuditoriaInternasReportes::where('id_auditoria', '=', $reporte->id_auditoria)
             ->where('lider_id', '=', $reporte->lider->id)->first();

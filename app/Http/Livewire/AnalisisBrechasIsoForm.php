@@ -2,11 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Models\Empleado;
-use Carbon\Carbon;
-use App\Models\Iso27\AnalisisBrechasIso;
 use App\Functions\GenerateAnalisisBIso;
+use App\Models\Empleado;
+use App\Models\Iso27\AnalisisBrechasIso;
 use App\Models\Iso27\GapDosConcentradoIso;
 use App\Models\Iso27\GapTresConcentradoIso;
 use App\Models\Iso27\GapUnoConcentratoIso;
@@ -17,6 +15,7 @@ class AnalisisBrechasIsoForm extends Component
 {
     public $analisis_id;
     public $name;
+
     public $fecha;
     public $id_elaboro="";
     public $norma ="iso27001";
@@ -42,8 +41,8 @@ class AnalisisBrechasIsoForm extends Component
     private function resetInput()
     {
         $this->name = null;
-        $this->id_elaboro = "";
-        $this->estatus = "";
+        $this->id_elaboro = '';
+        $this->estatus = '';
     }
 
     public function save()

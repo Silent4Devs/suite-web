@@ -6,10 +6,10 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center">
         <h5 class="titulo_general_funcion">Matriz FODA</h5>
-        <button class="btn btn-print">
+        {{-- <button class="btn btn-print">
             IMPRIMIR
             <i class="fa-solid fa-print"></i>
-        </button>
+        </button> --}}
     </div>
 
     <div class="card card-body">
@@ -50,6 +50,10 @@
                     @endforeach
                 </p>
             </div>
+            <div class="foda-title-midel">
+                <small>Análisis</small>
+                <h3>FODA</h3>
+            </div>
             <div class="foda-item fi-opo">
                 <h6 class="title-foda-item">OPORTUNIDADES</h6>
                 <p class="mt-3">
@@ -82,4 +86,12 @@
 
 
 @section('scripts')
+    <script>
+        let caja = document.querySelector('.caja-foda').getBoundingClientRect().height;
+        let firstItem = document.querySelector('.fi-for').getBoundingClientRect().height;
+
+        let calc = (firstItem * 100) / caja;
+
+        document.querySelector('.foda-title-midel').style.top = calc + '%';
+    </script>
 @endsection

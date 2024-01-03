@@ -1087,6 +1087,7 @@ class EmpleadoController extends Controller
         ]);
 
         $this->validateDynamicForms($request);
+        //modifique query
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
         if ($request->snap_foto && $request->file('foto')) {

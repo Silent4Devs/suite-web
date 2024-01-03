@@ -182,15 +182,65 @@
             margin-top: 0px;
             margin-bottom: 100px;
         }
+
+        .boton-sin-borde {
+            border: none;
+            outline: none;
+            /* Esto elimina el contorno al hacer clic */
+        }
+
+        .boton-transparente {
+            background-color: transparent;
+            border: none;
+            /* Elimina el borde del botón si lo deseas */
+        }
+
+        .boton-transparentev2 {
+            top: 214px;
+            width: 135px;
+            height: 40px;
+            /* UI Properties */
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(--unnamed-color-057be2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #057BE2;
+            opacity: 1;
+        }
+
+        .icon {
+            opacity: 0.7;
+            /* Ajusta la opacidad de la imagen según tus necesidades */
+        }
+
+        .textopdf {
+            font: var(--unnamed-font-style-normal) normal medium var(--unnamed-font-size-20)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-306ba9);
+            text-align: left;
+            font: normal normal medium 20px/20px Roboto;
+            letter-spacing: 0px;
+            color: #306BA9;
+            opacity: 1;
+            position: relative;
+            left: 2.5rem;
+        }
+
+        .modal {
+            font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-14)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-606060);
+            text-align: left;
+            font: normal normal normal 14px/20px Roboto;
+            letter-spacing: 0px;
+            color: #606060;
+            opacity: 1;
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('determinacion_alcance_agregar')
         <div class="row d-flex align-items-center">
             <h5 class="col-12 titulo_general_funcion">Determinación de Alcance</h5>
-            <button type="button" class="btn boton-cancelar" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Cancelar
-            </button>
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -206,125 +256,151 @@
                             <div class="card col-sm-12 col-md-10"
                                 style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
                                 <div class="card-body" style="">
-                                    <div class="print-none" style="text-align:right;margin-left: 750px;">
-                                        <button class="btn btn-outline-primary mt-4" style="font-size:14px;width:150px;"
-                                            onclick="javascript:window.print()">
-                                            Imprimir
-                                            <i class="fas fa-print"style="color:#057BE2;"></i>
-                                        </button>
+                                    <div class="print-none" style="text-align:right;">
+                                        <form method="POST" style="position: relative; left: 10rem; "
+                                            action="{{ route('admin.alcance-sgsis.pdf') }}">
+                                            @csrf
+                                            <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                                                IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+                                            </button>
+                                        </form>
                                     </div>
-                                    @php
-                                        $organizacion = \App\Models\Organizacion::getFirst();
-                                        $logotipo = $organizacion->logotipo;
-                                        $empresa = $organizacion->empresa;
-                                    @endphp
                                     <div class="card mt-5" style="width:900px;box-shadow:4px;">
                                         <div class="row col-12 ml-0"
-                                            style="border-radius: 0px;height:147px;
+                                            style="border-radius;
                                         padding-left: 0px;padding-right: 0px;">
                                             <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                <img src="{{ asset($logotipo) }}" class="mt-2 img-fluid" style="">
+                                                <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
+                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
                                             </div>
-                                            <div class="col-5 p-2 mt-3" style="text-align: left;">
+                                            <div class="col-5 p-2 mt-3">
                                                 <br>
-                                                <span class="" style="color:#306BA9; font-size:20px;font-weight:bold;">
-                                                    Reporte Determinación de alcance
+                                                <span class=""
+                                                    style="color:black; position: relative; top: -1.5rem; right: 3rem;">
+                                                    {{ $empresa_actual }} <br>
+                                                    RFC: {{ $rfc }} <br>
+                                                    {{ $direccion }} <br>
                                                 </span>
 
                                             </div>
-                                            <div class="col-4 pt-5 pl-5" style="background:#EEFCFF;">
-                                                <span class="" style="font-size:14px;color:#345183;background:#EEFCFF;">
-                                                    Fecha de revisión: prueba
-                                                </span>
-                                                <div class="" style="font-size:14px;color:#345183;">
-                                                    Fecha de publicación:
-                                                    prueba
+                                            <div class="col-4 pt-6 pl-6" style="background:#EEFCFF;">
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <span class="textopdf"> <strong> Reporte Determinación de
+                                                        Alcance</strong></span>
+                                            </div>
+                                            <br>
+                                            <div class="col-12 " style="background:#EEFCFF; border-right: 25px solid #2395AA;">
+                                                <div style="position: relative; right:1rem;  margin: 5%"><br>
+                                                    <h6 style="color:#306BA9;">Nombre del alcance</h6>
+                                                    <p>Alcance Del Sistema De Gestión De Continuidad Del Negocio</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row" style="">
-                                            <div class="col-md-11" style="padding-right:0px;">
-                                                <div class="card mb-1"
-                                                    style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
-                                                    <div class="mt-4"
-                                                        style="font-weight: bold;margin-left:55px;font-size:14px; color:#306BA9;">
-                                                        Nombre del alcance
-                                                    </div>
-                                                    <div class="px-2 mt-2 ml-5 mr-5 mb-4"
-                                                        style="font-size:14px; color:#606060;">
-                                                        nombre
-                                                    </div>
-                                                </div>
+                                        @foreach ($alcanceSgsi as $alcanceSgs)
+                                            <div style="margin: 4%;">
+                                                <h5 style="color:#306BA9;">{{ $alcanceSgs->nombre }}</h5>
+                                                <p>Fecha de publicación: {{ $alcanceSgs->fecha_publicacion }} &nbsp;&nbsp;&nbsp;
+                                                    Fecha de revision: {{ $alcanceSgs->fecha_revision }}</p>
+                                                <p style="text-align: justify; position: relative; top: -23rem;">
+                                                    {!! $alcanceSgs->alcancesgsi !!}</p>
                                             </div>
-                                            <div class="col-md-1 mb-1"
-                                                style="width:65px;padding-left:0px;padding-right:0px;background-color:#295082;
-                                            ">
-                                            </div>
-                                        </div>
-                                        <div class="mt-4 mb-3  dato_mairg" style="">
-                                            <span
-                                                style="font-size:14px; color:#306BA9;margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
-                                                Alcance
-                                            </span>
-                                            <div class="px-2 mt-2 ml-5 mr-5" style="font-size:14px; color:#606060;">
-                                                alcancesgsi
-                                            </div>
-                                        </div>
-
-                                        <div class="border-bottom" style="margin-top:800px;">
-                                        </div>
+                                            <hr>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-            <a type="button" class="col-md-2 btn btn-primary btn-lg ml-auto" style="margin-right: 14px; font-size: 14px;"
-                href="{{ route('admin.alcance-sgsis.create') }}">
-                Registrar Alcance</a>
         </div>
-        <div class="mt-5 card radius">
-            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Determinación de Alcance</strong></h3>
-            </div> --}}
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modalvulnerabilidad', [
-                        'model' => 'Vulnerabilidad',
-                        'route' => 'admin.vulnerabilidads.parseCsvImport',
-                    ])
-                </div>
-            </div>
-            {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.alcance-sgsis.create') }}">
-                  Agregar <strong>+</strong>
-            </a>
-        </div>
-    </div> --}}
-        @endcan
+    @endcan
 
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix radius">
-            <div class="titulo-card">Alcance</div>
-            <hr>
-            <table class="table table-striped datatable-AlcanceSgsi">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="max-width:300px !important;background-color:rgb(255, 255, 255); color:#414141;">Nombre
-                            del Alcance</th>
-                        <th style="min-width:200px; background-color:rgb(255, 255, 255); color:#414141;">Alcance</th>
-                        <th class="d-flex justify-content-center"
-                            style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">
-                            Estatus</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Opciones</th>
-                    </tr>
-                </thead>
-            </table>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.alcance-sgsis.create') }}" type="button" class="btn btn-primary">Registrar
+                Alcance</a>
         </div>
     </div>
+
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <div class="d-flex justify-content-end">
+            <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+            </button>
+        </div>
+        <h3 class="title-table-rds"> Alcances</h3>
+        <table class="datatable datatable-AlcanceSgsi">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="max-width:800px">Nombre</th>
+                    <th style="min-width:400px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alcance</th>
+                    <th style="max-width:80px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estatus</th>
+                    <th style="max-width:80px;">
+                        Fecha publicación
+                    </th>
+                    <th style="max-width:80px;">
+                        Fecha Revisión
+                    </th>
+                    <th style="">Opciones</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    @if ($listavacia == 'vacia')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">No se ha agregado ningún colaborador a la lista</h4>
+                    <br><p>No se ha agregado un responsable al flujo de aprobación de esta vista.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra registrar información en este módulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to another view after user clicks OK
+                        window.location.href =
+                            '{{ route('admin.iso27001.index') }}';
+                    }
+                });
+            });
+        </script>
+    @elseif ($listavacia == 'baja')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">Colaborador dado de baja</h4>
+                    <br><p>El colaborador responsable de este formulario ta no se encuentra dado de alta en el sistema.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este módulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to another view after user clicks OK
+                        window.location.href =
+                            '{{ route('admin.iso27001.index') }}';
+                    }
+                });
+            });
+        </script>
+    @endif
 @endsection
 @section('scripts')
     @parent
@@ -352,22 +428,6 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-                // {
-                //     extend: 'pdfHtml5',
-                //     title: `Alcance SGSIS ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Exportar PDF',
-                //     orientation: 'portrait',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     },
-                //     customize: function(doc) {
-                //         // doc.pageMargins = [20, 60, 20, 30];
-                //         // doc.styles.tableHeader.fontSize = 7.5;
-                //         // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                //     }
-                // },
                 {
                     extend: 'print',
                     title: `Alcance SGSIS ${new Date().toLocaleDateString().trim()}`,
@@ -525,12 +585,69 @@
                         name: 'alcancesgsi'
                     },
                     {
-                        data: 'id_reviso_alcance',
-                        name: 'id_reviso_alcance'
+                        data: 'estatus',
+                        name: 'estatus',
+                        render: function(data, type, row) {
+                            let color = '';
+                            let boxShadow = '';
+                            let backgroundColor = '';
+
+                            // Asigna colores y sombras según el valor de 'estatus'
+                            switch (data) {
+                                case 'aprobado':
+                                    color = '#008F27'; // Verde
+                                    backgroundColor = 'rgba(0, 128, 0, 0.1)';
+                                    break;
+                                case 'rechazado':
+                                    color = '#dd0483'; // Rojo
+                                    boxShadow = '12px 12px 20px rgba(128, 0, 0, 0.5)';
+                                    backgroundColor = 'rgba(128, 0, 0, 0.1)';
+                                    break;
+                                case 'pendiente':
+                                    color = '#DD8E04'; // Naranja
+                                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
+                                    break;
+                                default:
+                                    color = '#464646'; // Negro
+                                    backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                            }
+
+                            const style = `
+                                background: #E9FFE8 0% 0% no-repeat padding-box;
+                                border-radius: 7px;
+                                opacity: 1;
+                                color: ${color};
+                                box-shadow: ${boxShadow};
+                                background-color: ${backgroundColor};
+                            `;
+
+                            return `<center><span style="${style}">${data}</span></center>`;
+                        }
+                    },
+                    {
+                        data: 'fecha_publicacion',
+                        name: 'fecha_publicacion',
+                        // visible: false, // Inicialmente oculta
+                        render: function(data, type, row) {
+                            // Renderizar contenido para la nueva columna 2
+                            return data;
+                        }
+                    },
+                    {
+                        data: 'fecha_revision',
+                        name: 'fecha_revision',
+                        // visible: false, // Inicialmente oculta
+                        render: function(data, type, row) {
+                            // Renderizar contenido para la nueva columna 1
+                            return data;
+                        }
                     },
                     {
                         data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        name: '{{ trans('global.actions') }}',
+                        // render: function(data, type, full, meta) {
+                        // return data + '<button class="tu-clase-de-boton" style="border: none;"><i class="fas fa-arrow-down fa-sm" style="border: none;"></i></button>';
+                        // }
                     },
                 ],
                 orderCellsTop: true,
@@ -539,17 +656,14 @@
                 ]
             };
             let table = $('.datatable-AlcanceSgsi').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
+
+            // $('.datatable-AlcanceSgsi').on('click', '.tu-clase-de-boton', function () {
+            //     // Muestra las nuevas columnas
+            //     table.column('fecha_entrada:name').visible(true);
+            //     table.column('fecha_publicacion:name').visible(true);
+
+            //     // Vuelve a dibujar la tabla para reflejar los cambios
+            //     table.draw();
             // });
         });
     </script>

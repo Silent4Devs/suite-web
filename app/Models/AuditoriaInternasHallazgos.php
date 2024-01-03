@@ -56,4 +56,9 @@ class AuditoriaInternasHallazgos extends Model implements Auditable
     {
         return $this->belongsTo(ClausulasAuditorias::class, 'clausula_id');
     }
+
+    public function reporte()
+    {
+        return $this->belongsTo(AuditoriaInternasReportes::class, 'reporte_id', 'id');
+    }
 }

@@ -3,33 +3,37 @@
         {{ Breadcrumbs::render('EV360-Tipo-Contrato-Empleados') }}
         <h5 class="col-12 titulo_general_funcion">Tipos de contrato para empleados</h5>
 
-    <div class="mt-5 card">
-        <div class="card-body datatable-fix">
 
-            @include('partials.flashMessages')
-            <table id="tblTiposContratoEmpleados" class="table table-bordered w-100 datatable-ControlDocumento">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="vertical-align: top">
-                            ID
-                        </th>
-                        <th style="vertical-align: top">
-                            Nombre
-                        </th>
-                        <th style="vertical-align: top">
-                            Descripción
-                        </th>
-                        <th style="vertical-align: top">
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </div>
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.tipos-contratos-empleados.create') }}" type="button" class="btn btn-primary">Registrar Contrato</a>
+            </div>
     </div>
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <h3 class="title-table-rds"> Contratos</h3>
+                <table id="tblTiposContratoEmpleados" class="datatable datatable-ControlDocumento">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="vertical-align: top">
+                                ID
+                            </th>
+                            <th style="vertical-align: top">
+                                Nombre
+                            </th>
+                            <th style="vertical-align: top">
+                                Descripción
+                            </th>
+                            <th style="vertical-align: top">
+                                Opciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
 @endsection
 @section('scripts')
     @parent

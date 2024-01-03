@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Escuela\Category;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
@@ -14,9 +15,43 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        if ($request->ajax()) {
+            $query = Category::get();
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->addIndexColumn();
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'capacitaciones_ver';
+                $editGate = 'capacitaciones_editar';
+                $deleteGate = 'capacitaciones_eliminar';
+                $crudRoutePart = 'recursos';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+
+        $categories = Category::get();
 
         return view('admin.escuela.admin.categories.index', compact('categories'));
     }
@@ -94,9 +129,9 @@ class CategoryController extends Controller
      * @param  int  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        $category->delete();
+        $category = Category::find($id)->delete();
 
         //Alert::toast('La categoría fue eliminada exitosamente', 'success');
         return redirect()->route('admin.categories.index');

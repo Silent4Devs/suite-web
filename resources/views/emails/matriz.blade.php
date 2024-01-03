@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
 <head>
     <meta charset="utf-8">
 
@@ -10,7 +11,7 @@
 
     <title>Matriz</title>
     <style>
-        .content{
+        .content {
             border-top: 30px solid #2567AE;
             border-bottom: 30px solid #2567AE;
             background-color: #f4f4f4;
@@ -20,16 +21,19 @@
             font-family: arial;
             color: #707070;
         }
-        .caja-info{
+
+        .caja-info {
             text-align: center;
             font-family: arial;
             color: #707070;
         }
+
         img {
             height: auto !important;
         }
     </style>
 </head>
+
 <body>
     <table width="100%">
         <tr>
@@ -42,28 +46,35 @@
                             <table class="caja-info">
                                 <tr>
                                     <td style="padding: 10px 30px 10px 30px;">
-                                        <img class="img-firts" vspace="15" hspace="7" width="100" height="70" src="{{asset('Imagen_member.png')}}" style="margin: auto; margin-top: 30px;"><br><br>
-                                        <img class="img-firts" width="150" height="150" src="{{asset('logo-s4b.png')}}" style="margin: auto; margin-top: 30px;">
+                                        <img class="img-firts" vspace="15" hspace="7" width="100"
+                                            height="70" src="{{ asset('Imagen_member.png') }}"
+                                            style="margin: auto; margin-top: 30px;"><br><br>
+                                        <img class="img-firts" width="150" height="150"
+                                            src="{{ asset('logo-s4b.png') }}" style="margin: auto; margin-top: 30px;">
 
 
-                                            <h4 style=" font-size: 26px;">Notificación de Cambios</h4>
+                                        <h4 style=" font-size: 26px;">Notificación de Cambios</h4>
 
-                                            <p style="font-size: 16px;">
-                                                La Matriz de requisitos ha sido actualizada, favor de validar los cambios.
-                                            </p>
+                                        <p style="font-size: 16px;">
+                                            La Matriz de requisitos ha sido actualizada, favor de validar los cambios.
+                                        </p>
 
 
-                                        <a class="link" href="{{ route('admin.politica-sgsis.index') }}" style=" display: block; font-size: 13px;">Lista de Politicas</a>
-
+                                        <a class="link"
+                                            href="{{ route('admin.matriz-requisito-legales.show', $id_matriz) }}"
+                                            style=" display: block; font-size: 13px;">Visualizar Matriz</a>
 
                                     </td>
                                 </tr>
-                                </table>
+                            </table>
                             <br><br>
                             <div class="caja-blue" style="background-color: #2567AE; padding: 25px 0px;">
-                                <a href="https://www.facebook.com/silent4business" style="margin: 10px;"><img src="{{ $img_facebook }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
-                                <a href="https://twitter.com/silent4business" style="margin: 10px;"><img src="{{ $img_twitter }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
-                                <a href="https://www.linkedin.com/company/silent4business/mycompany/" style="margin: 0px 10px;"><img src="{{ $img_linkedin }}" width="25px"></a>
+                                <a href="https://www.facebook.com/silent4business" style="margin: 10px;"><img
+                                        src="{{ $img_facebook }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
+                                <a href="https://twitter.com/silent4business" style="margin: 10px;"><img
+                                        src="{{ $img_twitter }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
+                                <a href="https://www.linkedin.com/company/silent4business/mycompany/"
+                                    style="margin: 0px 10px;"><img src="{{ $img_linkedin }}" width="25px"></a>
                             </div>
                             <p>
 
@@ -77,4 +88,5 @@
     </table>
 
 </body>
+
 </html>

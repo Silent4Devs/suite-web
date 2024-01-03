@@ -7,15 +7,17 @@
 
     <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Vacaciones</h5>
 
-    @can('reglas_vacaciones_acceder')
-        <div class="text-right">
-            <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
-                href="{{ url('admin/ExportVacaciones') }}">
-                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                Exportar Excel
-            </a>
-        </div>
-    @endcan
+    <div class="row">
+        @can('reglas_vacaciones_vista_global')
+            <div class="col-12 text-right">
+                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
+                    href="{{ url('admin/ExportVacaciones') }}">
+                    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                    Exportar Excel
+                </a>
+            </div>
+        @endcan
+    </div>
 
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">

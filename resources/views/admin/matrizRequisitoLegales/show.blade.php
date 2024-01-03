@@ -61,7 +61,7 @@
                             {{ trans('cruds.matrizRequisitoLegale.fields.cumplerequisito') }}
                         </th>
                         <td>
-                            {{ $matrizRequisitoLegale->evaluaciones[0]->cumplerequisito }}
+                            {{ $matrizRequisitoLegale->evaluaciones[0]->cumplerequisito ?? '' }}
                         </td>
                     </tr>
                     <tr>
