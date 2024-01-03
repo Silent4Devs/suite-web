@@ -41,7 +41,22 @@ class MatrizRequisitoLegalesController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.matrizRequisitoLegales.index', compact('teams'));
+        $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+
+        if ($modulo->participantes->isEmpty()) {
+            $listavacia = 'vacia';
+        } else {
+            foreach ($modulo->participantes as $participante) {
+                if ($participante->empleado->estatus != 'alta') {
+                    $listavacia = 'baja';
+
+                    return view('admin.matrizRequisitoLegales.index', compact('teams', 'listavacia'));
+                }
+            }
+            $listavacia = 'cumple';
+        }
+
+        return view('admin.matrizRequisitoLegales.index', compact('teams', 'listavacia'));
     }
 
     public function create()

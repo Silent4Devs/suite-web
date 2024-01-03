@@ -20,7 +20,7 @@ class ParticipantesListaDistribucion extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->select('id', 'name', 'foto', 'email');
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->select('id', 'name', 'foto', 'email', 'estatus');
     }
 
     public function control($id_proceso)

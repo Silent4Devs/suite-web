@@ -9,30 +9,68 @@
 
         </a>
     </div>
-        @can('matriz_requisitos_legales_agregar')
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modal', [
-                        'model' => 'Amenaza',
-                        'route' => 'admin.amenazas.parseCsvImport',
-                    ])
-                </div>
+    @can('matriz_requisitos_legales_agregar')
+        <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+            <div class="col-lg-12">
+                @include('csvImport.modal', [
+                    'model' => 'Amenaza',
+                    'route' => 'admin.amenazas.parseCsvImport',
+                ])
             </div>
-        @endcan
-        @include('partials.flashMessages')
-        <div class="datatable-fix datatable-rds">
-            <h3 class="title-table-rds">Requisitos legales</h3>
-            <table class="datatable datatable-MatrizRequisitoLegale">
-                <thead>
-                    <tr>
-                        <th>Nombre del requisito legal</th>
-                        <th>Cláusula</th>
-                        <th>Fecha&nbsp;de&nbsp;publicación</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-            </table>
         </div>
+    @endcan
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <h5>Requisitos legales</h5>
+        <table class="datatable datatable-MatrizRequisitoLegale">
+            <thead>
+                <tr>
+                    <th>Nombre del requisito legal</th>
+                    <th>Clausula</th>
+                    <th>Fecha&nbsp;de&nbsp;publicación</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    @if ($listavacia == 'vacia')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">No se ha agregado ningún colaborador a la lista</h4>
+                    <br><p>No se ha agregado un responsable al flujo de aprobación de esta vista.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra registrar información en este modulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+            });
+        </script>
+    @elseif ($listavacia == 'baja')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">Colaborador dado de baja</h4>
+                    <br><p>El colaborador responsable de este formulario ta no se encuentra dado de alta en el sistema.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este modulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+            });
+        </script>
+    @endif
 @endsection
 @section('scripts')
     @parent
@@ -52,8 +90,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.matriz-requisito-legales.index') }}",
-                columns: [
-                    {
+                columns: [{
                         data: 'nombrerequisito',
                         name: 'nombrerequisito'
                     },
