@@ -489,7 +489,6 @@
             </div>
         </div>
 
-        {{-- <div class="row d-flex align-items-center"> --}}
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
@@ -630,10 +629,11 @@
                                                                                     {{ $parametro->estatus }}
                                                                                 </td>
                                                                                 <td style="background-color: {{ $parametro->color }}">
-                                                                                    {{ $cuentas[$parametro->id] ?? 0 }}
+                                                                                    {{-- {{ $cuentas[$parametro->id] ?? 0 }} --}}
+                                                                                    {{$results[$key]['counts'][$parametro->id] ?? 0}}
                                                                                 </td>
                                                                                 <td>
-                                                                                    {{ number_format((float) $peso_parametros[$parametro->id], 2, '.') ?? 0 }}%
+                                                                                    {{ number_format((float) $results[$key]['porcentaje_parametros'][$parametro->id], 2, '.') ?? 0 }}%
                                                                                 </td>
                                                                             </tr>
                                                                         @endforeach
@@ -642,8 +642,8 @@
                                                                     <tfoot>
                                                                         <tr style="background: #EEFDFF;">
                                                                             <td>Total</td>
-                                                                            <td>{{ $totalCount ?? 0 }}</td>
-                                                                            <td>{{ number_format((float) $totalPorcentaje, 2, '.') ?? 0 }}%</td>
+                                                                            <td>{{ $results[$key]['totalCount'] ?? 0 }}</td>
+                                                                            <td>{{ number_format((float) $results[$key]['total_porcentaje'], 2, '.') ?? 0 }}%</td>
                                                                         </tr>
                                                                     </tfoot>
                                                                 </table>
@@ -674,13 +674,13 @@
                     </div>
                 </div>
             </div>
-        {{-- </div> --}}
+
 
 
     @endif
 
     @section('scripts')
-        {{-- <script>
+        <script>
             document.addEventListener('livewire:load', function() {
                 console.log('hola');
                 Livewire.on('renderAreas', (grafica_cuentas, grafica_colores) => {
@@ -710,9 +710,10 @@
 
                 });
             });
-        </script> --}}
+        </script>
 
-        <script>
+
+        {{-- <script>
             document.addEventListener('DOMContentLoaded', function () {
                 // Tu script aquí
                 console.log('La página se ha cargado');
@@ -743,7 +744,7 @@
 
                 });
             });
-        </script>
+        </script> --}}
 
     @endsection
 </div>

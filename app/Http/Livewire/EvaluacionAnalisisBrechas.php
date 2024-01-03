@@ -26,8 +26,8 @@ class EvaluacionAnalisisBrechas extends Component
 
     public $cuentas;
     public $totalAnalisis;
-    // public $preguntasCount;
-    public $hola="hola live";
+    public $results;
+
 
     public function mount($id)
     {
@@ -62,8 +62,10 @@ class EvaluacionAnalisisBrechas extends Component
             }
 
             $result = $this->sumaParametrosSeccion($this->seccion_vista);
+            // dd($result);
             $this->cuentas = $result['counts'];
             $peso_parametros = $result['porcentaje_parametros'];
+            // dd($peso_parametros);
             $totalCount = $result['totalCount'];
             $totalPorcentaje = $result['total_porcentaje'];
             $sectionPercentages = $this->porcentajeSeccion($this->seccion_vista);
@@ -79,18 +81,27 @@ class EvaluacionAnalisisBrechas extends Component
             $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
         } else {
             $template = $template_general;
-
             $result = $this->sumaParametrosTotal();
+            // $result2 = $this->sumaParametrosSeccion(1);
+            $result2=[];
+            for($i=1;$i<=3; $i++){
+                $result3 = $this->sumaParametrosSeccion($i);
+                array_push($result2,$result3);
+            }
+            $this->results = $result2;
+            // dd($result2[1]['counts']);
+
             $this->cuentas = $result['counts'];
+            // dd($this->cuentas, $this->results[0]);
             $peso_parametros = $result['porcentaje_parametros'];
+            // $this->pesos_parametros = $result2['porcentaje_parametros'];
             $totalCount = $result['totalCount'];
             $totalPorcentaje = $result['total_porcentaje'];
-
             // dd($result);
 
             $sectionPercentages = $this->porcentajeTotal();
 
-            // dd($sectionPercentages);
+            // dd($this->porcentajeTotal());
 
             $grafica_cuentas = [];
             $grafica_colores = [];
@@ -100,7 +111,11 @@ class EvaluacionAnalisisBrechas extends Component
                     $grafica_colores[] = $parametro->color;
                 }
             }
+            // dd($template->parametros);
             $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+
+            //apartado para imprimir
+
         }
 
         $this->totalAnalisis = $this->porcentajeTotal()[0]['percentage'];
@@ -115,6 +130,8 @@ class EvaluacionAnalisisBrechas extends Component
         $empresa_actual = $organizacion_actual->empresa;
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
+
+
 
         return view('livewire.evaluacion-analisis-brechas', compact(
             'template',
@@ -346,14 +363,36 @@ class EvaluacionAnalisisBrechas extends Component
 
     public function pdf()
     {
-        // dd("aqui");
+        $template = TemplateAnalisisdeBrechas::with('parametros')
+        ->with('secciones')
+        ->find($this->itemId);
+        $resultados =[];
+
+        for($i=1;$i<=3; $i++){
+            $result = $this->sumaParametrosSeccion($i);
+            array_push($resultados,$result);
+        }
+
+        // dd($resultados);
+        $cuentas = $result['counts'];
+        $peso_parametros = $result['porcentaje_parametros'];
+        $totalCount = $result['totalCount'];
+        $totalPorcentaje = $result['total_porcentaje'];
+
+        // dd($template, $template->parametros);
+        // dd($result);
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
 
-            $pdf = PDF::loadView('evaluacion-analisis-brechas-pdf', compact('organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
+        $sectionPercentages = $this->porcentajeTotal();
+
+
+            $pdf = PDF::loadView('evaluacion-analisis-brechas-pdf', compact('organizacion_actual', 'logo_actual', 'empresa_actual',
+            'direccion', 'rfc', 'template','sectionPercentages', 'result', 'cuentas', 'peso_parametros', 'totalCount', 'totalPorcentaje'
+        ));
             $pdf->setPaper('A4', 'portrait');
 
             $pdfFileName = 'mi-archivo.pdf';
