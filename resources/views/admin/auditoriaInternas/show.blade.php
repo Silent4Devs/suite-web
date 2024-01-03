@@ -1,5 +1,186 @@
 @extends('layouts.admin')
 @section('content')
+
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body {
+                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                text-align: justify;
+                font-size: 12px;
+                color: #6c6c6c;
+            }
+
+            table td {
+                border: 1px solid black;
+            }
+
+            table {
+                border: 1px solid #a8a8a8;
+                width: 100%;
+                max-width: 100%;
+                border-spacing: 0px;
+                margin: 0px;
+                overflow-wrap: break-word !important;
+                table-layout: fixed !important;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+            }
+
+            table td {
+                border: 1px solid #a8a8a8;
+                padding: 10px 25px;
+                vertical-align: super;
+                overflow-wrap: break-word !important;
+                table-layout: fixed !important;
+                color: black;
+            }
+
+            th.parametro {
+                /* border: 1px solid #a8a8a8; */
+                background-color: #EEF5FF !important;
+                color: black !important;
+            }
+
+            td.parametro {
+                border: 1px solid #a8a8a8;
+                background-color: #EEF5FF;
+            }
+
+            table thead {
+                background: #306BA9 0% 0% no-repeat padding-box;
+                /* border: 1px solid #707070; */
+                /* border-radius: 8px 8px 0px 0px; */
+                opacity: 1;
+                text-align: center;
+                color: white;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                margin: 0px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                margin: 0px;
+                margin-bottom: 5px;
+            }
+
+            hr {
+                border: none;
+                border-bottom: 1px solid #eaeaea;
+            }
+
+            .caja-general-doc {
+                width: 100%;
+            }
+
+            .encabezado {
+                border-left: 10px solid #2395AA !important;
+                border-right: 0px solid black;
+                border-top: 0px solid black;
+                border-bottom: 0px solid black;
+            }
+
+            .encabezado td {
+                padding-left: 20px;
+                padding: 15px auto;
+                vertical-align: middle;
+                border: 0px solid black;
+            }
+
+            .td-img-doc {
+                width: 80px !important;
+                max-width: 80px !important;
+                min-width: 80px !important;
+            }
+
+            .td-img-doc img {
+                width: 100%;
+            }
+
+            .info-header {
+                font-size: 13px;
+            }
+
+            .td-blue-header {
+                background-color: #EEFCFF;
+                color: #2395AA;
+                font-size: 13px;
+            }
+
+            .table-tada-requi {
+                background-color: #EEF5FF;
+                border-right: 20px solid #295082;
+            }
+
+            .title-product {
+                font-size: 13px;
+                padding: 15px 20px;
+                background-color: #EEFCFF;
+            }
+
+            .table-product p,
+            .table-proveedor p {
+                color: #3086AF;
+            }
+
+            .caja-proveedor {
+                background-color: #eee;
+            }
+
+            .caja-proveedor:nth-child(even) {
+                background-color: #fff;
+            }
+
+            .title-proveedor {
+                font-size: 13px;
+                padding: 15px 20px;
+                border-left: 10px solid #2395AA;
+                background-color: #D9D9D9;
+                font-weight: lighter;
+                margin: 0px;
+            }
+
+            .caja-firmas {
+                margin-top: 70px;
+            }
+
+            .img-firma {
+                height: 170px;
+            }
+
+            .caja-firmas {
+                color: #747474;
+            }
+
+            .table-totales {
+                max-width: 300px !important;
+                width: 300px !important;
+                background-color: #EEFCFF;
+                margin-left: 405px;
+            }
+
+            .table-totales td {
+                text-align: right;
+            }
+
+            .table-politicas {
+                /* page-break-before: always; */
+                font-size: 14px;
+                text-align: justify;
+            }
+
+            .table-politicas p {
+                margin-top: 20px;
+            }
+        </style>
+    </head>
     <style>
         span.errors {
             font-size: 11px;
@@ -123,104 +304,73 @@
                         $empresa = $organizacion->empresa;
                     @endphp
 
-                    <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
-                        <div class="col-2 p-2" style="border-right: 2px solid #ccc">
-                            <img src="{{ asset($logotipo) }}" class="mt-2" style="width:90px;">
-                        </div>
-                        <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
-                            <span
-                                style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
-                            <br>
-                            <span style="color:#345183; font-size:15px;"><strong>Informe de Auditoría</strong></span>
+                    <table class="encabezado">
+                        <tr>
+                            <td class="td-img-doc">
+                                @if ($logotipo)
+                                    <img style="width:100%; max-width:150px;"
+                                        src="{{ public_path('razon_social/' . $logotipo) }}">
+                                @else
+                                    <img src="{{ public_path('sinLogo.png') }}" style="width:100%; max-width:150px;">
+                                @endif
+                            </td>
+                            <td class="info-header">
+                                {{ $organizacion->empresa }} <br>
+                                {{ $organizacion->rfc }} <br>
+                                {{ $organizacion->direccion }} <br>
+                            </td>
+                            <td class="td-blue-header">
+                                <p>INFORME DE AUDITORIA</p>
+                                <p>ID AUDITORÍA: {{ $auditoriaInterna->id_auditoria }}</p>
+                                <p>Fecha
+                                    inicio:{{ \Carbon\Carbon::parse($auditoriaInterna->fecha_inicio)->format('d-m-Y') }}</p>
+                            </td>
+                        </tr>
+                    </table>
 
-                        </div>
-                        <div class="col-3 p-2">
-                            <span style="color:#345183;">Fecha:
-                                {{ \Carbon\Carbon::parse($auditoriaInterna->created_at)->format('d-m-Y') }}
-                            </span>
-                        </div>
-                    </div>
+                    <table>
+                        <tr>
+                            <td class="parametro">
+                                <p>Nombre de la auditoria</p><br>
+                                <p>{{ $auditoriaInterna->nombre_auditoria }}</p><br>
+                                <p>Área:</p><br>
+                                <p>{{ $auditoriaInterna->lider->area->area }}</p>
+                            </td>
+                            <td class="parametro">
+                                <p>Equipo Auditoria:</p>
+                                @foreach ($auditoriaInterna->equipo as $equipo)
+                                    <p>{{ $equipo->name }}</p>
+                                @endforeach
+                                {{-- <p>{{ $minutasaltadireccion->hora_termino }}</p> --}}
+                            </td>
 
-                    <div style="color:#18183c">
-                        <span class="p-1" style="text-align:center">ID Auditoría:</span>
-                        <strong>{{ $auditoriaInterna->id_auditoria ? $auditoriaInterna->id_auditoria : 'Sin registro' }}</strong>
-                    </div>
-
-                    <div style="color:#18183c">
-                        <span class="p-1" style="text-align:center">Nombre de la Auditoría:</span>
-                        <strong>{{ $auditoriaInterna->nombre_auditoria ? $auditoriaInterna->nombre_auditoria : 'Sin registro' }}</strong>
-                    </div>
-
-
-                    <div style="color:#18183c">
-                        <span class="p-1" style="text-align:center">Fecha Inicio:</span>
-                        <strong>{{ \Carbon\Carbon::parse($auditoriaInterna->fecha_inicio)->format('d-m-Y') }}</strong>
-                        </span>
-                    </div>
-
-
-                    @if ($auditoriaInterna->lider == null)
-                        <span class="p-1" style="text-align:center">Auditor:</span>
-
-                        <strong>{{ $auditoriaInterna->auditor_externo ? $auditoriaInterna->auditor_externo : 'Sin registro' }}</strong>
-                    @else
-                        <div style="color:#18183c">
-
-                            <span class="p-1" style="text-align:center">Auditor:</span>
-
-                            <strong>{{ $auditoriaInterna->lider ? $auditoriaInterna->lider->name : 'Sin registro' }}</strong>
-                        </div>
-
-                        <div style="color:#18183c">
-
-                            <span class="p-1" style="text-align:center">Puesto:</span>
-
-                            <strong>{{ $auditoriaInterna->lider ? $auditoriaInterna->lider->puesto : 'Sin registro' }}</strong>
-                        </div>
-
-                        <div style="color:#18183c">
-
-                            <span class="p-1" style="text-align:center">Área:</span>
-
-                            <strong>{{ $auditoriaInterna->lider ? $auditoriaInterna->lider->area->area : 'Sin registro' }}</strong>
-                        </div>
-                    @endif
-
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
-                        <span style="font-size: 17px; font-weight: bold;">Objetivo de la Auditoría</span>
-                    </div>
-
-                    <span style="text-align: justify; color:#18183c;">{!! $auditoriaInterna->objetivo ? $auditoriaInterna->objetivo : 'Sin registro' !!}</span>
-
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
-                        <span style="font-size: 17px; font-weight: bold;">Alcance de la Auditoría</span>
-                    </div>
-
-                    <span style="text-align: justify; color:#18183c;">{!! $auditoriaInterna->alcance ? $auditoriaInterna->alcance : 'Sin registro' !!}</span>
+                            <td class="parametro">
+                                <p>Nombre Auditor externo</p>
+                                <p>{{ $auditoriaInterna->auditor_externo }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td class="parametro">
+                                <p>Objetivo de la auditoría</p><br>
+                                <p>{!! $auditoriaInterna->objetivo !!}</p><br>
+                                <p>Alcance de la auditoría</p><br>
+                                <p>{!! $auditoriaInterna->alcance !!}</p><br>
+                            </td>
+                        </tr>
+                    </table>
+                    @foreach ($auditoriaInterna->reportes as $reporte)
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>{{ $reporte->empleado->name }}</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    @endforeach
 
 
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
-                        <span style="font-size: 17px; font-weight: bold;">Equipo de auditoría</span>
-                    </div>
-
-                    <div style="color:#18183c;">
-                        @forelse ($auditoriaInterna->equipo as $equipoAuditoria)
-                            <span>Nombre:<strong>
-                                    {{ $equipoAuditoria->name ? $equipoAuditoria->name : 'Sin registro' }}</strong></span>
-                            <br>
-                            <span>Puesto:<strong>
-                                    {{ $equipoAuditoria->puesto ? $equipoAuditoria->puesto : 'Sin registro' }}</strong></span>
-                            <br>
-                            <span>Área:<strong>
-                                    {{ $equipoAuditoria->area ? $equipoAuditoria->area->area : 'Sin registro' }}</strong></span>
-                            <br>
-                        @empty
-                            <strong>Sin registro</strong>
-                        @endforelse
-                    </div>
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
-                        <span style="font-size: 17px; font-weight: bold;">Hallazgos</span>
-                    </div>
 
                     <table class="table">
                         <thead class="head-light">
@@ -251,7 +401,7 @@
 
                                 </tr>
                             @empty
-                                <strong>Sin registro</strong>
+                                <p>Sin registro</p>
                             @endforelse
 
 

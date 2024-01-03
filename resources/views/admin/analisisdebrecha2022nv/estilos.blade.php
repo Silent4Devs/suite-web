@@ -6,7 +6,7 @@
     </script>
 </head>
 
-<style>
+{{-- <style>
     .card {
         background-color: #FFFFFF;
         border-radius: 14px !important;
@@ -112,4 +112,4 @@
     h6 {
         color: #306BA9;
     }
-</style>
+</style> --}}

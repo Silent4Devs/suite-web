@@ -113,11 +113,6 @@
     </div> --}}
     @livewire('analisis-brechas-iso-form')
 
-    <div class="card">
-        <div class="card-body">
-            assss
-        </div>
-    </div>
 @endsection
 
 @section('scripts')

@@ -167,21 +167,21 @@ class OrdenCompraController extends Controller
         $data = $request->all();
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $producto_nuevo = KatbolProductoRequisicion::create([
-                'cantidad' => $data['cantidad' . $i],
-                'producto_id' => $data['producto' . $i],
-                'centro_costo_id' => $data['centro_costo' . $i],
-                'espesificaciones' => $data['especificaciones' . $i],
-                'contrato_id' => $data['contrato' . $i],
+                'cantidad' => $data['cantidad'.$i],
+                'producto_id' => $data['producto'.$i],
+                'centro_costo_id' => $data['centro_costo'.$i],
+                'espesificaciones' => $data['especificaciones'.$i],
+                'contrato_id' => $data['contrato'.$i],
                 'requisiciones_id' => $requisicion->id,
-                'no_personas' => $data['no_personas' . $i],
-                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
-                'sub_total' => $data['sub_total' . $i],
-                'iva' => $data['iva' . $i],
-                'iva_retenido' => $data['iva_retenido' . $i],
-                'descuento' => $data['descuento' . $i],
-                'otro_impuesto' => $data['otro_impuesto' . $i],
-                'isr_retenido' => $data['isr_retenido' . $i],
-                'total' => $data['total' . $i],
+                'no_personas' => $data['no_personas'.$i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento'.$i],
+                'sub_total' => $data['sub_total'.$i],
+                'iva' => $data['iva'.$i],
+                'iva_retenido' => $data['iva_retenido'.$i],
+                'descuento' => $data['descuento'.$i],
+                'otro_impuesto' => $data['otro_impuesto'.$i],
+                'isr_retenido' => $data['isr_retenido'.$i],
+                'total' => $data['total'.$i],
             ]);
         }
 

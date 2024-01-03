@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\AceptarAlcance as ModelsAceptarAlcance;
-use App\Models\AceptoPolitica;
 use App\Models\User;
 use Livewire\Component;
 

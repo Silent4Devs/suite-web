@@ -103,11 +103,17 @@
                     imageHeight: 100,
                     html: `<h4 style="color:red;">No se ha agregado ningún colaborador a la lista</h4>
                     <br><p>No se ha agregado un responsable al flujo de aprobación de esta vista.</p><br>
-                    <p>Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra registrar información en este modulo.</p>`,
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra registrar información en este módulo.</p>`,
                     // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
                     showCancelButton: false,
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'OK',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to another view after user clicks OK
+                        window.location.href =
+                            '{{ route('admin.iso27001.index') }}';
+                    }
                 });
             });
         </script>
@@ -121,11 +127,17 @@
                     imageHeight: 100,
                     html: `<h4 style="color:red;">Colaborador dado de baja</h4>
                     <br><p>El colaborador responsable de este formulario ta no se encuentra dado de alta en el sistema.</p><br>
-                    <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este modulo.</p>`,
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este módulo.</p>`,
                     // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
                     showCancelButton: false,
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'OK',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to another view after user clicks OK
+                        window.location.href =
+                            '{{ route('admin.iso27001.index') }}';
+                    }
                 });
             });
         </script>

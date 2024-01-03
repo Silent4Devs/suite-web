@@ -107,7 +107,9 @@ class PoliticaSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if ($modulo->participantes->isEmpty()) {
+        if (! isset($modulo)) {
+            $listavacia = 'vacia';
+        } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
         } else {
             foreach ($modulo->participantes as $participante) {

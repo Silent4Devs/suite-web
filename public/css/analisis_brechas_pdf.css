@@ -1,0 +1,82 @@
+body{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: justify;
+    font-size: 12px;
+    color: #6c6c6c;
+}
+table{
+    width: 100%;
+    max-width: 100%;
+    border-spacing: 0px;
+    margin: 0px;
+    overflow-wrap: break-word !important;
+    table-layout: fixed !important;
+}
+table td{
+    padding: 10px 25px;
+    vertical-align: super;
+    overflow-wrap: break-word !important;
+    table-layout: fixed !important;
+}
+h1,h2,h3,h4,h5,h6{
+    margin: 0px;
+    margin-bottom: 10px;
+}
+p{
+    margin: 0px;
+    margin-bottom: 5px;
+}
+hr{
+    border: none;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.caja-general-doc{
+    width: 100%;
+}
+.encabezado{
+    border-left: 10px solid #2395AA;
+}
+.encabezado td{
+    padding-left: 20px;
+    padding: 15px auto;
+    vertical-align: middle;
+}
+.td-img-doc{
+    width: 80px !important;
+    max-width: 80px !important;
+    min-width: 80px !important;
+}
+.td-img-doc img{
+    width: 100%;
+}
+.info-header{
+    font-size: 13px;
+}
+.td-data-header{
+    font: normal normal normal 20px/20px Roboto;
+            letter-spacing: 0px;
+            color: #747474;
+            opacity: 1;
+}
+
+.row {
+    margin-top: 40px;
+}
+
+/* Estilos para la clase col-12 */
+.col-12 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para la clase col-11 */
+.col-11 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para la clase title-grafics */
+.title-grafics {
+    /* Agrega estilos según sea necesario para tu diseño */
+}

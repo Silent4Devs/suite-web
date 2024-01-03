@@ -18,7 +18,6 @@ class ListaDistribucionController extends Controller
         $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
         // dd($query);
 
-
         // if ($request->ajax()) {
 
         //     $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();

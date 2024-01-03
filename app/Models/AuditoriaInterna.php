@@ -98,7 +98,7 @@ class AuditoriaInterna extends Model implements Auditable, HasMedia
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function registerMediaConversions(?Media $media = null): void
+    public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
@@ -166,5 +166,10 @@ class AuditoriaInterna extends Model implements Auditable, HasMedia
     public function auditoriaHallazgos()
     {
         return $this->hasMany(AuditoriaInternasHallazgos::class, 'auditoria_internas_id');
+    }
+
+    public function reportes()
+    {
+        return $this->hasMany(AuditoriaInternasReportes::class, 'id_auditoria', 'id');
     }
 }
