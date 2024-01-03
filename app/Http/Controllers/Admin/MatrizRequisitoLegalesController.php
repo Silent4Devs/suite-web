@@ -43,7 +43,9 @@ class MatrizRequisitoLegalesController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if ($modulo->participantes->isEmpty()) {
+        if (!isset($modulo)) {
+            $listavacia = 'vacia';
+        } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
         } else {
             foreach ($modulo->participantes as $participante) {
@@ -171,7 +173,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-        if (! $containsValue) {
+        if (!$containsValue) {
             // dd("Estoy en la lista");
             $this->envioCorreos($proceso, $matrizRequisitoLegale->id);
             // The collection contains the specific empleado_id value
@@ -292,7 +294,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
     }
 
     public function evaluar(MatrizRequisitoLegale $id)

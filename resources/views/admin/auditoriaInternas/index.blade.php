@@ -96,9 +96,11 @@
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </div>
 
-                                <form action="{{ asset('admin/auditoria-internas/' . $aud->id) }}" method="POST">
+                                <form id="deleteForm{{ $aud->id }}"
+                                    action="{{ asset('admin/auditoria-internas/' . $aud->id) }}" method="POST">
                                     <div class="dropdown-menu">
-                                        <a href="{{ asset('admin/auditoria-internas/' . $aud->id) }}" class="dropdown-item">
+                                        <a href="{{ asset('admin/auditoria-internas/' . $aud->id) }}"
+                                            class="dropdown-item">
                                             <i class="fa-solid fa-eye"></i>&nbsp;Ver
                                         </a>
                                         <a href="{{ route('admin.auditoria-internas.edit', $aud->id) }}"
@@ -107,7 +109,7 @@
                                         </a>
                                         <input type="hidden" name="_method" value="DELETE">
                                         @csrf
-                                        <button class="dropdown-item">
+                                        <button class="dropdown-item delete-btn" data-id="{{ $aud->id }}">
                                             <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
                                         </button>
                                     </div>
@@ -198,6 +200,34 @@
 @endsection
 @section('scripts')
     @parent
+    <script>
+        // Add event listener to the delete button
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const audId = this.getAttribute('data-id');
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: 'Esta acción eliminará el registro permanentemente.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const deleteForm = document.getElementById(`deleteForm${audId}`);
+                        deleteForm.submit();
+                    }
+                });
+            });
+        });
+    </script>
+
     <script>
         function viewAudit(id) {
             $('.tr-second' + id).toggleClass('d-none');

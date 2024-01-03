@@ -107,7 +107,9 @@ class PoliticaSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if ($modulo->participantes->isEmpty()) {
+        if (!isset($modulo)) {
+            $listavacia = 'vacia';
+        } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
         } else {
             foreach ($modulo->participantes as $participante) {
@@ -254,7 +256,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
         foreach ($politicaSgsis as $polsgsis) {
-            if (! isset($polsgsis->reviso)) {
+            if (!isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                 $polsgsis->estemp = 'baja';
             } else {

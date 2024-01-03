@@ -167,4 +167,9 @@ class AuditoriaInterna extends Model implements Auditable, HasMedia
     {
         return $this->hasMany(AuditoriaInternasHallazgos::class, 'auditoria_internas_id');
     }
+
+    public function reportes()
+    {
+        return $this->hasMany(AuditoriaInternasReportes::class, 'id_auditoria', 'id');
+    }
 }
