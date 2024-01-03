@@ -15,54 +15,55 @@ class ListaDistribucionController extends Controller
      */
     public function index(Request $request)
     {
-        // $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
+        $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
         // dd($query);
-        //
-        if ($request->ajax()) {
 
-            $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
-            $table = datatables()::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        // if ($request->ajax()) {
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'incidentes_vacaciones_crear';
-                $editGate = 'incidentes_vacaciones_editar';
-                $deleteGate = 'incidentes_vacaciones_eliminar';
-                $crudRoutePart = 'incidentes-vacaciones';
+        //     $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
+        //     $table = datatables()::of($query);
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        //     $table->addColumn('placeholder', '&nbsp;');
+        //     $table->addColumn('actions', '&nbsp;');
 
-            $table->editColumn('modulo', function ($row) {
-                return $row->modulo ? $row->modulo : '';
-            });
-            $table->editColumn('submodulo', function ($row) {
-                return $row->submodulo ? $row->submodulo : '';
-            });
-            $table->editColumn('participantes', function ($row) {
-                return $row->participantes ? $row->participantes : '';
-            });
+        //     $table->editColumn('actions', function ($row) {
+        //         $viewGate = 'incidentes_vacaciones_crear';
+        //         $editGate = 'incidentes_vacaciones_editar';
+        //         $deleteGate = 'incidentes_vacaciones_eliminar';
+        //         $crudRoutePart = 'incidentes-vacaciones';
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
+        //         return view('partials.datatablesActions', compact(
+        //             'viewGate',
+        //             'editGate',
+        //             'deleteGate',
+        //             'crudRoutePart',
+        //             'row'
+        //         ));
+        //     });
 
-            $table->rawColumns(['actions', 'placeholder']);
+        //     $table->editColumn('modulo', function ($row) {
+        //         return $row->modulo ? $row->modulo : '';
+        //     });
+        //     $table->editColumn('submodulo', function ($row) {
+        //         return $row->submodulo ? $row->submodulo : '';
+        //     });
+        //     $table->editColumn('participantes', function ($row) {
+        //         return $row->participantes ? $row->participantes : '';
+        //     });
 
-            return $table->make(true);
-        }
+        //     $table->editColumn('id', function ($row) {
+        //         return $row->id ? $row->id : '';
+        //     });
 
-        $data['participantes'] = ListaDistribucion::with('participantes.empleado')->get();
+        //     $table->rawColumns(['actions', 'placeholder']);
 
-        return view('admin.listadistribucion.index', $data);
+        //     return $table->make(true);
+        // }
+
+        $participantes = ListaDistribucion::with('participantes.empleado')->get();
+
+        return view('admin.listadistribucion.index', compact('query', 'participantes'));
     }
 
     /**
