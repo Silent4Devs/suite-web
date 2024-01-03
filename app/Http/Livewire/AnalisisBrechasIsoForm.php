@@ -8,34 +8,43 @@ use App\Models\Iso27\AnalisisBrechasIso;
 use App\Models\Iso27\GapDosConcentradoIso;
 use App\Models\Iso27\GapTresConcentradoIso;
 use App\Models\Iso27\GapUnoConcentratoIso;
-use App\Models\TemplateAnalisisdeBrechas;
 use App\Models\Norma;
+use App\Models\TemplateAnalisisdeBrechas;
 
 class AnalisisBrechasIsoForm extends Component
 {
     public $analisis_id;
+
     public $name;
 
     public $fecha;
-    public $id_elaboro="";
-    public $norma ="iso27001";
+
+    public $id_elaboro = '';
+
+    public $norma = 'iso27001';
+
     private $norma_id = 1;
+
     public $selectedCard = null;
+
     public $view = 'create';
+
     protected $listeners = ['destroy'];
 
     public function mount()
     {
         $this->fecha = Carbon::now()->format('d-m-y');
     }
+
     public function render()
     {
         $empleados = Empleado::getaltaAll();
         $analisis_brechas = AnalisisBrechasIso::get();
-        $templates = TemplateAnalisisdeBrechas::where('top',true)->get();
+        $templates = TemplateAnalisisdeBrechas::where('top', true)->get();
         // dd($templates);
         $normas = Norma::get();
-        return view('livewire.analisis-brechas-iso-form', compact('empleados','analisis_brechas','templates', "normas"));
+
+        return view('livewire.analisis-brechas-iso-form', compact('empleados', 'analisis_brechas', 'templates', 'normas'));
     }
 
     private function resetInput()
@@ -47,8 +56,7 @@ class AnalisisBrechasIsoForm extends Component
 
     public function save()
     {
-        if($this->selectedCard)
-        {
+        if ($this->selectedCard) {
             $analisisBrechaIso = AnalisisBrechasIso::create([
                 'nombre' => $this->name,
                 'fecha' => $this->fecha,
@@ -66,7 +74,7 @@ class AnalisisBrechasIsoForm extends Component
             $this->resetInput();
             $this->emit('limpiarNameInput');
         }
-        dd("afuera");
+        dd('afuera');
 
     }
 
@@ -85,7 +93,7 @@ class AnalisisBrechasIsoForm extends Component
         $analisis_brechas = AnalisisBrechasIso::find($id);
         $this->name = $analisis_brechas->nombre;
         $fecha = strtotime($analisis_brechas->fecha);
-        $this->fecha = date('d-m-y',$fecha);
+        $this->fecha = date('d-m-y', $fecha);
         $this->id_elaboro = $analisis_brechas->empleado->id;
         $this->view = 'edit';
         $this->analisis_id = $id;

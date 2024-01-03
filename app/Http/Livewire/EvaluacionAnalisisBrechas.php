@@ -4,10 +4,9 @@ namespace App\Http\Livewire;
 
 use App\Models\RespuestasEvaluacionAnalisisBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
-use Livewire\Component;
-use Illuminate\Support\Facades\Storage;
-
 use App\Traits\ObtenerOrganizacion;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
 use PDF;
 
 class EvaluacionAnalisisBrechas extends Component
@@ -31,12 +30,14 @@ class EvaluacionAnalisisBrechas extends Component
     public $oldRecomendacionValues = []; // Store old values
 
     public $cuentas;
+
     public $totalAnalisis;
+
     public $results;
+
     public $grafica_cuentas2 = [];
-    public $grafica_colores2= [];
 
-
+    public $grafica_colores2 = [];
 
     public function mount($id)
     {
@@ -92,10 +93,10 @@ class EvaluacionAnalisisBrechas extends Component
             $template = $template_general;
             $result = $this->sumaParametrosTotal();
             // $result2 = $this->sumaParametrosSeccion(1);
-            $result2=[];
-            for($i=1;$i<=3; $i++){
+            $result2 = [];
+            for ($i = 1; $i <= 3; $i++) {
                 $result3 = $this->sumaParametrosSeccion($i);
-                array_push($result2,$result3);
+                array_push($result2, $result3);
             }
             $this->results = $result2;
             // dd($result2[1]['counts']);
@@ -127,7 +128,6 @@ class EvaluacionAnalisisBrechas extends Component
 
             $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
 
-
             //apartado para imprimir
 
         }
@@ -146,7 +146,6 @@ class EvaluacionAnalisisBrechas extends Component
         $rfc = $organizacion_actual->rfc;
 
         $this->emit('renderAreas1');
-
 
         return view('livewire.evaluacion-analisis-brechas', compact(
             'template',
@@ -378,13 +377,13 @@ class EvaluacionAnalisisBrechas extends Component
     public function pdf()
     {
         $template = TemplateAnalisisdeBrechas::with('parametros')
-        ->with('secciones')
-        ->find($this->itemId);
-        $resultados =[];
+            ->with('secciones')
+            ->find($this->itemId);
+        $resultados = [];
 
-        for($i=1;$i<=3; $i++){
+        for ($i = 1; $i <= 3; $i++) {
             $result = $this->sumaParametrosSeccion($i);
-            array_push($resultados,$result);
+            array_push($resultados, $result);
         }
 
         // dd($resultados);
@@ -404,24 +403,24 @@ class EvaluacionAnalisisBrechas extends Component
         $sectionPercentages = $this->porcentajeTotal();
         $results = $this->results;
 
-            $pdf = PDF::loadView('evaluacion-analisis-brechas-pdf', compact('organizacion_actual', 'logo_actual', 'empresa_actual',
-            'direccion', 'rfc', 'template','sectionPercentages', 'result', 'cuentas', 'peso_parametros', 'totalCount', 'totalPorcentaje',
+        $pdf = PDF::loadView('evaluacion-analisis-brechas-pdf', compact('organizacion_actual', 'logo_actual', 'empresa_actual',
+            'direccion', 'rfc', 'template', 'sectionPercentages', 'result', 'cuentas', 'peso_parametros', 'totalCount', 'totalPorcentaje',
             'results'
         ));
-            $pdf->setPaper('A4', 'portrait');
+        $pdf->setPaper('A4', 'portrait');
 
-            $pdfFileName = 'mi-archivo.pdf';
-            $pdfFilePath = 'documentos_analisis/' . $pdfFileName; // Ruta dentro del directorio storage
+        $pdfFileName = 'mi-archivo.pdf';
+        $pdfFilePath = 'documentos_analisis/'.$pdfFileName; // Ruta dentro del directorio storage
 
-            // Almacenar el PDF en el sistema de archivos de Laravel
-            Storage::put($pdfFilePath, $pdf->output());
+        // Almacenar el PDF en el sistema de archivos de Laravel
+        Storage::put($pdfFilePath, $pdf->output());
 
-            $pdfFileUrl = Storage::url($pdfFilePath);
-            // dd($pdfFileUrl);
+        $pdfFileUrl = Storage::url($pdfFilePath);
+        // dd($pdfFileUrl);
 
-// Descargar el archivo PDF
-// return response()->download(storage_path('app/public/storage/documentos_analisis'), $pdfFileName);
-return response()->download(storage_path('app/documentos_analisis/'.$pdfFileName));
+        // Descargar el archivo PDF
+        // return response()->download(storage_path('app/public/storage/documentos_analisis'), $pdfFileName);
+        return response()->download(storage_path('app/documentos_analisis/'.$pdfFileName));
 
     }
 }
