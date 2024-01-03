@@ -1,4 +1,28 @@
 @extends('layouts.admin')
+<style>
+    .imgdoc {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        top: 5px;
+        left: 15px;
+        /* UI Properties */
+        background: transparent url('img/icono_onboarding.png') 0% 0% no-repeat padding-box;
+        opacity: 1;
+    }
+    #btn_cancelar{
+    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+    border: 1px solid var(--unnamed-color-057be2);
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #057BE2;
+    border-radius: 4px;
+    opacity: 1;
+    }
+    .anima-focus label {
+        margin-top: -7px !important;
+
+    }
+</style>
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}">
     <style>
@@ -14,11 +38,11 @@
         <div class="">
             <div class="row">
                 <div class="col-2">
+                    <img src="{{asset('politicas.png')}}" class="imgdoc"  alt="">
                 </div>
-                <div class="col-10">
+                <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
-                        <p>En esta sección puedes generar las listas de distribucion de correos, agruparlas y darles el
-                            nivel
+                        <p>En esta sección puedes generar las listas de distribucion de correos, agruparlas ydarles el nivel
                             de prioridad para ser administradas conforme a su nivel asignado</p>
                 </div>
             </div>
@@ -26,33 +50,31 @@
     </div>
 
     <div class="card">
-        <div class="card-header">
-            <h4>Módulo Asignado</h4>
-        </div>
         <div class="card-body">
+            <h4 style="color:#057BE2; title-table-rds">Módulo asignado</h4>
+            <hr>
             <div class="row">
                 <div class="col-6">
                     <div class="anima-focus">
                         <input class="form-control" id="modulo" name="modulo" type="text"
                             value="{{ $lista->modulo }}" placeholder="" disabled>
-                        <label for="modulo">Modulo</label>
+                        <label>Modulo</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="anima-focus">
                         <input class="form-control" id="submodulo" name="submodulo" type="text"
                             value="{{ $lista->submodulo }}" placeholder="" disabled>
-                        <label for="modulo">Submodulo</label>
+                        <label>Submodulo</label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="card">
-        <div class="card-header">
-            <h4>Configuración Listas de Aprobación</h4>
-        </div>
         <div class="card-body">
+            <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
+            <hr>
             <div class="row g-0">
                 <div class="col-5">
                     <p>Esta sección permite que las personas seleccionadas puedan autorizar el flujo en cualquier
@@ -69,7 +91,7 @@
                                         {{ $empleado->name }}</option>
                                 @endforeach
                             </select>
-                            <label for="superaprobadores">Super Aprobadores</label>
+                            <label for="superaprobadores" style="color:#057BE2;">Super Aprobadores</label>
                         </div>
                     </div>
                 </div>
@@ -86,7 +108,7 @@
                                     <option value={{ $i }}>{{ $i }}</option>
                                 @endfor
                             </select>
-                            <label for="niveles">Seleccione los niveles</label>
+                            <label for="niveles" style="color:#057BE2;">Seleccione los niveles</label>
                         </div>
                     </div>
 
@@ -107,7 +129,7 @@
                         @for ($i = 1; $i < 6; $i++)
                             <div class="form-row nivel{{ $i }}Div" style="display: none;">
                                 <div class="mt-4 mb-1">
-                                    Nivel {{ $i }} <br>
+                                    <i class="fas fa-circle" style="color: #007bff;"></i> Nivel {{ $i }} <br>
                                     Asigna a los colaboradores que deben aprobar para pasar al siguiente nivel
                                 </div>
                                 <div class="anima-focus">
@@ -121,7 +143,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <label for="nivel{{ $i }}">Colaboradores</label>
+                                    <label for="nivel{{ $i }}" style="color:#057BE2;">Colaboradores</label>
                                 </div>
                             </div>
                         @endfor
@@ -181,7 +203,7 @@
             </div>
         </div>
     </div>
-    <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-secondary">Regresar</a>
+    <a href="{{ route('admin.lista-distribucion.index') }}" type="button"  class="btn" id="btn_cancelar" style="color:#057BE2;">Regresar</a>
 @endsection
 
 @section('scripts')

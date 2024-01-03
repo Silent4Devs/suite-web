@@ -43,7 +43,7 @@
 
 
     @include('partials.flashMessages')
-    <div class="datatable-fix datatable-rds">
+    <div class="datatable-rds w-100">
         <h3 class="title-table-rds">Lista de Distribución</h3>
         @include('admin.listadistribucion.table')
     </div>
@@ -51,7 +51,7 @@
     {{-- </div> --}}
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
     @parent
     <script>
         $(function() {
@@ -207,4 +207,4 @@
 
         });
     </script>
-@endsection
+@endsection --}}
