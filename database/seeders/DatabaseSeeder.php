@@ -102,7 +102,9 @@ class DatabaseSeeder extends Seeder
                 // ProveedorRequisicionsTableSeeder::class,
                 // PermisosKatbol::class,
                 // DashboardGestionContratosSeeder::class,
-                ListaDistribucionSeeder::class,
+                // ListaDistribucionSeeder::class,
+                ClasificacionesAuditoriasSeeder::class,
+                ClausulasAuditoriasSeeder::class,
 
                 //kaans
                 // PermisosEscuelaInstructorSeeder::class,
