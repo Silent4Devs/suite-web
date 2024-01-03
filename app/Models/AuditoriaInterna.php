@@ -90,6 +90,7 @@ class AuditoriaInterna extends Model implements Auditable, HasMedia
         'deleted_at',
         'team_id',
         'lider_id',
+        'creador_auditoria_id', //Creador de la auditoria
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -118,9 +119,10 @@ class AuditoriaInterna extends Model implements Auditable, HasMedia
         $this->attributes['fechaauditoria'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function auditorlider()
+    public function creadorAuditoria()
     {
-        return $this->belongsTo(User::class, 'auditorlider_id');
+        return $this->belongsTo(Empleado::class, 'creador_auditoria_id', 'id');
+        // return $this->belongsTo(Empleado::class, 'creador_auditoria_id', 'id')->alta();
     }
 
     public function equipoauditoria()

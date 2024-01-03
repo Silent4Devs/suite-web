@@ -129,16 +129,25 @@ class AuditoriaInternaController extends Controller
         ]);
 
         $auditoriaInterna = AuditoriaInterna::create($request->all());
+        $auditoriaInterna->update([
+            'creador_auditoria_id' => User::getCurrentUser()->empleado->id,
+        ]);
         $auditoriaInterna->equipo()->sync($request->equipo);
         $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-        return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna]);
+        return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna->id]);
     }
 
-    public function edit(AuditoriaInterna $auditoriaInterna)
+    public function edit($IDauditoriaInterna)
     {
         abort_if(Gate::denies('auditoria_interna_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if (auth()->user()->empleado->id == $auditoriaInterna->lider_id) {
+
+        $auditoriaInterna = AuditoriaInterna::find($IDauditoriaInterna);
+        if (
+            User::getCurrentUser()->empleado->id == $auditoriaInterna->lider_id
+            || User::getCurrentUser()->empleado->id == $auditoriaInterna->creador_auditoria_id
+        ) {
+
             $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team');
 
             $clasificacionesauditorias = ClasificacionesAuditorias::all();
@@ -154,7 +163,10 @@ class AuditoriaInternaController extends Controller
                 ->with('clasificacionesauditorias', $clasificacionesauditorias)
                 ->with('clausulasauditorias', $clausulasauditorias);
         } else {
-            return redirect(route('admin.auditoria-internas.index'));
+
+            return redirect()->back()->with('edit', 'success');
+
+            // return redirect(route('admin.auditoria-internas.index'));
         }
     }
 
@@ -232,6 +244,8 @@ class AuditoriaInternaController extends Controller
                     ->with('clasificaciones', $clasificaciones)
                     ->with('clausulas', $clausulas)
                     ->with('id', $id);
+            } else {
+                return redirect()->back()->with('reporte', 'success');
             }
         }
 

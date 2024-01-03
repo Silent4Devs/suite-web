@@ -182,14 +182,18 @@
             margin-top: 0px;
             margin-bottom: 100px;
         }
+
         .boton-sin-borde {
             border: none;
-            outline: none; /* Esto elimina el contorno al hacer clic */
+            outline: none;
+            /* Esto elimina el contorno al hacer clic */
         }
+
         .boton-transparente {
-    background-color: transparent;
-    border: none; /* Elimina el borde del botón si lo deseas */
-    }
+            background-color: transparent;
+            border: none;
+            /* Elimina el borde del botón si lo deseas */
+        }
 
         .boton-transparentev2 {
             top: 214px;
@@ -202,11 +206,13 @@
             border: 1px solid #057BE2;
             opacity: 1;
         }
-        .icon {
-            opacity: 0.7; /* Ajusta la opacidad de la imagen según tus necesidades */
-            }
 
-        .textopdf{
+        .icon {
+            opacity: 0.7;
+            /* Ajusta la opacidad de la imagen según tus necesidades */
+        }
+
+        .textopdf {
             font: var(--unnamed-font-style-normal) normal medium var(--unnamed-font-size-20)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
             letter-spacing: var(--unnamed-character-spacing-0);
             color: var(--unnamed-color-306ba9);
@@ -218,7 +224,8 @@
             position: relative;
             left: 2.5rem;
         }
-        .modal{
+
+        .modal {
             font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-14)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
             letter-spacing: var(--unnamed-character-spacing-0);
             color: var(--unnamed-color-606060);
@@ -250,26 +257,29 @@
                                 style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
                                 <div class="card-body" style="">
                                     <div class="print-none" style="text-align:right;">
-                                           <form method="POST" style="position: relative; left: 10rem; " action="{{ route('admin.alcance-sgsis.pdf') }}">
-                                                @csrf
-                                                <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-                                                    IMPRIMIR <img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon">
-                                                </button>
-                                            </form>
+                                        <form method="POST" style="position: relative; left: 10rem; "
+                                            action="{{ route('admin.alcance-sgsis.pdf') }}">
+                                            @csrf
+                                            <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                                                IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+                                            </button>
+                                        </form>
                                     </div>
                                     <div class="card mt-5" style="width:900px;box-shadow:4px;">
                                         <div class="row col-12 ml-0"
                                             style="border-radius;
                                         padding-left: 0px;padding-right: 0px;">
                                             <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                <img src="{{ asset('silent.png') }}"  class="mt-2 img-fluid" style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                                <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
+                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
                                             </div>
                                             <div class="col-5 p-2 mt-3">
                                                 <br>
-                                                <span class="" style="color:black; position: relative; top: -1.5rem; right: 3rem;">
-                                                   {{$empresa_actual}} <br>
-                                                  RFC: {{$rfc}} <br>
-                                                   {{$direccion}} <br>
+                                                <span class=""
+                                                    style="color:black; position: relative; top: -1.5rem; right: 3rem;">
+                                                    {{ $empresa_actual }} <br>
+                                                    RFC: {{ $rfc }} <br>
+                                                    {{ $direccion }} <br>
                                                 </span>
 
                                             </div>
@@ -277,21 +287,26 @@
                                                 <br>
                                                 <br>
                                                 <br>
-                                                <span class="textopdf"> <strong> Reporte Determinación de  Alcance</strong></span>
+                                                <span class="textopdf"> <strong> Reporte Determinación de
+                                                        Alcance</strong></span>
                                             </div>
                                             <br>
                                             <div class="col-12 " style="background:#EEFCFF; border-right: 25px solid #2395AA;">
-                                                <div style="position: relative; right:1rem;  margin: 5%"><br><h6 style="color:#306BA9;">Nombre del alcance</h6>
-                                                    <p >Alcance Del Sistema De Gestión De Continuidad Del Negocio</p></div>
+                                                <div style="position: relative; right:1rem;  margin: 5%"><br>
+                                                    <h6 style="color:#306BA9;">Nombre del alcance</h6>
+                                                    <p>Alcance Del Sistema De Gestión De Continuidad Del Negocio</p>
+                                                </div>
                                             </div>
                                         </div>
                                         @foreach ($alcanceSgsi as $alcanceSgs)
-                                        <div style="margin: 4%;">
-                                            <h5 style="color:#306BA9;">{{$alcanceSgs->nombre}}</h5>
-                                            <p>Fecha de publicación: {{$alcanceSgs->fecha_publicacion}}  &nbsp;&nbsp;&nbsp; Fecha de revision: {{$alcanceSgs->fecha_revision}}</p>
-                                            <p style="text-align: justify; position: relative; top: -23rem;">{!!$alcanceSgs->alcancesgsi!!}</p>
-                                        </div>
-                                        <hr>
+                                            <div style="margin: 4%;">
+                                                <h5 style="color:#306BA9;">{{ $alcanceSgs->nombre }}</h5>
+                                                <p>Fecha de publicación: {{ $alcanceSgs->fecha_publicacion }} &nbsp;&nbsp;&nbsp;
+                                                    Fecha de revision: {{ $alcanceSgs->fecha_revision }}</p>
+                                                <p style="text-align: justify; position: relative; top: -23rem;">
+                                                    {!! $alcanceSgs->alcancesgsi !!}</p>
+                                            </div>
+                                            <hr>
                                         @endforeach
                                     </div>
                                 </div>
@@ -303,39 +318,77 @@
         </div>
     @endcan
 
-        <div class="text-right">
-                <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.alcance-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Alcance</a>
-                </div>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.alcance-sgsis.create') }}" type="button" class="btn btn-primary">Registrar
+                Alcance</a>
         </div>
+    </div>
 
-        @include('partials.flashMessages')
-        <div class="datatable-fix datatable-rds">
-            <div class="d-flex justify-content-end">
-                <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-                </button>
-            </div>
-            <h3 class="title-table-rds"> Alcances</h3>
-            <table class="datatable datatable-AlcanceSgsi">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="max-width:800px">Nombre</th>
-                        <th style="min-width:400px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alcance</th>
-                        <th
-                            style="max-width:80px;">
-                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estatus</th>
-                           <th style="max-width:80px;">
-                            Fecha publicación
-                        </th>
-                        <th style="max-width:80px;">
-                            Fecha Revisión
-                        </th>
-                        <th style="">Opciones</th>
-                    </tr>
-                </thead>
-            </table>
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <div class="d-flex justify-content-end">
+            <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+            </button>
         </div>
+        <h3 class="title-table-rds"> Alcances</h3>
+        <table class="datatable datatable-AlcanceSgsi">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="max-width:800px">Nombre</th>
+                    <th style="min-width:400px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alcance</th>
+                    <th style="max-width:80px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estatus</th>
+                    <th style="max-width:80px;">
+                        Fecha publicación
+                    </th>
+                    <th style="max-width:80px;">
+                        Fecha Revisión
+                    </th>
+                    <th style="">Opciones</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    @if ($listavacia == 'vacia')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">No se ha agregado ningún colaborador a la lista</h4>
+                    <br><p>No se ha agregado un responsable al flujo de aprobación de esta vista.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra registrar información en este modulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+            });
+        </script>
+    @elseif ($listavacia == 'baja')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">Colaborador dado de baja</h4>
+                    <br><p>El colaborador responsable de este formulario ta no se encuentra dado de alta en el sistema.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este modulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+            });
+        </script>
+    @endif
 @endsection
 @section('scripts')
     @parent

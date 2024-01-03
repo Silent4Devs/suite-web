@@ -84,7 +84,7 @@
                                 {!! $aud->objetivo !!}
                             </td>
                             <td style="text-align: center;">
-                                <a href="{{ route('admin.auditoria-internas.reporteIndividual', $aud->id_auditoria) }}">
+                                <a href="{{ route('admin.auditoria-internas.reporteIndividual', $aud->id) }}">
                                     <i class="fa-solid fa-user-check" style="color:#5A5A5A;"></i>
                                 </a>
                             </td>
@@ -99,7 +99,7 @@
                                 <form action="{{ asset('admin/auditoria-internas/' . $aud->id) }}" method="POST">
                                     <div class="dropdown-menu">
                                         <a href="{{ asset('admin/auditoria-internas/' . $aud->id) }}" class="dropdown-item">
-                                            <i class="fa-solid fa-trash"></i>&nbsp;Ver
+                                            <i class="fa-solid fa-eye"></i>&nbsp;Ver
                                         </a>
                                         <a href="{{ route('admin.auditoria-internas.edit', $aud->id) }}"
                                             class="dropdown-item">
@@ -160,6 +160,41 @@
             </table>
         </div>
     </div>
+    @if (session('edit'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'No es posible acceder a vista.',
+                    imageUrl: `{{ asset('assets/rechazo-edit-auditoria.png') }}`, // Replace with the path to your image
+                    imageWidth: 260, // Set the width of the image as needed
+                    imageHeight: 160,
+                    html: `<p>Esta sección solo puede ser visible si se tienen los permisos requeridos.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+
+            });
+        </script>
+    @endif
+    @if (session('reporte'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('assets/rechazo-reporte-auditoria.png') }}`, // Replace with the path to your image
+                    imageWidth: 260, // Set the width of the image as needed
+                    imageHeight: 160,
+                    html: `<p>Esta sección solo puede ser visible si se tienen los permisos requeridos.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+            });
+        </script>
+    @endif
 @endsection
 @section('scripts')
     @parent
