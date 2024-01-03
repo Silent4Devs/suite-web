@@ -7,57 +7,57 @@
         <meta charset="utf-8">
         <style>
             body {
-                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
-                text-align: justify !important;
-                font-size: 12px !important;
-                color: #6c6c6c !important;
+                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                text-align: justify;
+                font-size: 12px;
+                color: #6c6c6c;
             }
 
             table td {
-                border: none !important;
+                border: none;
             }
 
             table {
-                border: none !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                border-spacing: 0px !important;
-                margin: 0px !important;
-                overflow-wrap: break-word !important !important;
-                table-layout: fixed !important !important;
+                border: none;
+                width: 100%;
+                max-width: 100%;
+                border-spacing: 0px;
+                margin: 0px;
+                overflow-wrap: break-word !important;
+                table-layout: fixed !important;
 
 
             }
 
             table td {
-                border: none !important;
-                padding: 10px 25px !important;
-                vertical-align: super !important;
-                overflow-wrap: break-word !important !important;
-                table-layout: fixed !important !important;
-                color: black !important;
+                border: none;
+                padding: 10px 25px;
+                vertical-align: super;
+                overflow-wrap: break-word !important;
+                table-layout: fixed !important;
+                color: black;
             }
 
             th.parametro {
-                /* border: 1px solid #a8a8a8!important ; */
-                background-color: #EEF5FF !important !important;
-                color: black !important !important;
+                /* border: 1px solid #a8a8a8; */
+                background-color: #EEF5FF !important;
+                color: black !important;
             }
 
             td.parametro {
-                border: 1px solid #a8a8a8 !important;
-                background-color: #EEF5FF !important;
+                border: 1px solid #a8a8a8;
+                background-color: #EEF5FF;
             }
 
             table thead {
-                background: #CDCDCD 0% 0% no-repeat padding-box !important;
-                /* border: 1px solid #707070!important ; */
-                */ opacity: 1 !important;
-                text-align: left !important;
-                font: normal normal medium 16px/19px Roboto !important;
-                letter-spacing: 0px !important;
-                color: #414141 !important;
-                opacity: 1 !important;
+                background: #CDCDCD 0% 0% no-repeat padding-box;
+                /* border: 1px solid #707070; */
+                */ opacity: 1;
+                text-align: left;
+                font: normal normal medium 16px/19px Roboto;
+                letter-spacing: 0px;
+                color: #414141;
+                opacity: 1;
             }
 
             h1,
@@ -66,147 +66,147 @@
             h4,
             h5,
             h6 {
-                margin: 0px !important;
-                margin-bottom: 10px !important;
+                margin: 0px;
+                margin-bottom: 10px;
             }
 
             table.objalc {
-                background: #F2F2F2 0% 0% no-repeat padding-box !important;
-                opacity: 1 !important;
+                background: #F2F2F2 0% 0% no-repeat padding-box;
+                opacity: 1;
             }
 
             table.general {
-                background: #DDDDDD 0% 0% no-repeat padding-box !important;
-                opacity: 1 !important;
+                background: #DDDDDD 0% 0% no-repeat padding-box;
+                opacity: 1;
             }
 
             p {
-                text-align: left !important;
-                font: normal normal normal 12px/14px Roboto !important;
-                letter-spacing: 0px !important;
-                color: #464646 !important;
-                opacity: 1 !important;
+                text-align: left;
+                font: normal normal normal 12px/14px Roboto;
+                letter-spacing: 0px;
+                color: #464646;
+                opacity: 1;
             }
 
             p.parametro {
-                text-align: left !important;
-                font: normal normal medium 12px/14px Roboto !important;
-                letter-spacing: 0px !important;
-                color: #414141 !important;
-                opacity: 1 !important;
+                text-align: left;
+                font: normal normal medium 12px/14px Roboto;
+                letter-spacing: 0px;
+                color: #414141;
+                opacity: 1;
             }
 
             hr {
-                border: none !important;
-                border-bottom: 1px solid #eaeaea !important;
+                border: none;
+                border-bottom: 1px solid #eaeaea;
             }
 
             .caja-general-doc {
-                width: 100% !important;
+                width: 100%;
             }
 
             .encabezado {
-                border-left: 10px solid #2395AA !important !important;
-                border-right: 0px solid black !important;
-                border-top: 0px solid black !important;
-                border-bottom: 0px solid black !important;
+                border-left: 10px solid #2395AA !important;
+                border-right: 0px solid black;
+                border-top: 0px solid black;
+                border-bottom: 0px solid black;
             }
 
             .encabezado td {
-                padding-left: 20px !important;
-                padding: 15px auto !important;
-                vertical-align: middle !important;
-                border: 0px solid black !important;
+                padding-left: 20px;
+                padding: 15px auto;
+                vertical-align: middle;
+                border: 0px solid black;
             }
 
             .td-img-doc {
-                width: 80px !important !important;
-                max-width: 80px !important !important;
-                min-width: 80px !important !important;
+                width: 80px !important;
+                max-width: 80px !important;
+                min-width: 80px !important;
             }
 
             .td-img-doc img {
-                width: 100% !important;
+                width: 100%;
             }
 
             .info-header {
-                text-align: left !important;
-                font: normal normal normal 15px/20px Roboto !important;
-                letter-spacing: 0px !important;
-                color: #3D3D3D !important;
-                opacity: 1 !important;
+                text-align: left;
+                font: normal normal normal 15px/20px Roboto;
+                letter-spacing: 0px;
+                color: #3D3D3D;
+                opacity: 1;
             }
 
             .td-blue-header {
-                background-color: #EEFCFF !important;
-                color: #2395AA !important;
-                font-size: 13px !important;
+                background-color: #EEFCFF;
+                color: #2395AA;
+                font-size: 13px;
             }
 
             .table-tada-requi {
-                background-color: #EEF5FF !important;
-                border-right: 20px solid #295082 !important;
+                background-color: #EEF5FF;
+                border-right: 20px solid #295082;
             }
 
             .title-product {
-                font-size: 13px !important;
-                padding: 15px 20px !important;
-                background-color: #EEFCFF !important;
+                font-size: 13px;
+                padding: 15px 20px;
+                background-color: #EEFCFF;
             }
 
             .table-product p,
             .table-proveedor p {
-                color: #3086AF !important;
+                color: #3086AF;
             }
 
             .caja-proveedor {
-                background-color: #eee !important;
+                background-color: #eee;
             }
 
             .caja-proveedor:nth-child(even) {
-                background-color: #fff !important;
+                background-color: #fff;
             }
 
             .title-proveedor {
-                font-size: 13px !important;
-                padding: 15px 20px !important;
-                border-left: 10px solid #2395AA !important;
-                background-color: #D9D9D9 !important;
-                font-weight: lighter !important;
-                margin: 0px !important;
+                font-size: 13px;
+                padding: 15px 20px;
+                border-left: 10px solid #2395AA;
+                background-color: #D9D9D9;
+                font-weight: lighter;
+                margin: 0px;
             }
 
             .caja-firmas {
-                margin-top: 70px !important;
+                margin-top: 70px;
             }
 
             .img-firma {
-                height: 170px !important;
+                height: 170px;
             }
 
             .caja-firmas {
-                color: #747474 !important;
+                color: #747474;
             }
 
             .table-totales {
-                max-width: 300px !important !important;
-                width: 300px !important !important;
-                background-color: #EEFCFF !important;
-                margin-left: 405px !important;
+                max-width: 300px !important;
+                width: 300px !important;
+                background-color: #EEFCFF;
+                margin-left: 405px;
             }
 
             .table-totales td {
-                text-align: right !important;
+                text-align: right;
             }
 
             .table-politicas {
-                /* page-break-before: always!important ; */
-                font-size: 14px !important;
-                text-align: justify !important;
+                /* page-break-before: always; */
+                font-size: 14px;
+                text-align: justify;
             }
 
             .table-politicas p {
-                margin-top: 20px !important;
+                margin-top: 20px;
             }
         </style>
     </head>
@@ -219,15 +219,12 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-                    <div class="print-none">
-                        <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Regresar</a>
-                        <button class="btn btn-danger print-none"
-                            style="position: absolute!important ; right:20px!important ;"
-                            onclick="javascript:window.print()">
-                            <i class="fas fa-print"></i>
-                            Imprimir
-                        </button>
-                    </div>
+                    <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Regresar</a>
+                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                        onclick="javascript:window.print()">
+                        <i class="fas fa-print"></i>
+                        Imprimir
+                    </button>
 
                     @php
                         use App\Models\Organizacion;
@@ -243,11 +240,11 @@
                                     <div class="col-2">
                                         <div class="td-img-doc">
                                             @if ($logotipo)
-                                                <img style="width:100%!important ; max-width:150px!important ;"
+                                                <img style="width:100%; max-width:150px;"
                                                     src="{{ public_path('razon_social/' . $logotipo) }}">
                                             @else
                                                 <img src="{{ public_path('sinLogo.png') }}"
-                                                    style="width:100%!important ; max-width:150px!important ;">
+                                                    style="width:100%; max-width:150px;">
                                             @endif
                                         </div>
                                     </div>
@@ -259,29 +256,29 @@
                                             {{ $organizacion->direccion }} <br>
                                         </div>
                                     </div>
-                                    <div class="col-4" style="text-align: right!important ;">
+                                    <div class="col-4" style="text-align: right;">
                                         <p
-                                            style="text-align: left!important ;
-font: normal normal medium 18px/13px Roboto!important ;
-letter-spacing: 0px!important ;
-color: #606060!important ;
-opacity: 1!important ;">
+                                            style="text-align: left;
+font: normal normal medium 18px/13px Roboto;
+letter-spacing: 0px;
+color: #606060;
+opacity: 1;">
                                             INFORME DE AUDITORIA</p>
                                         <p
-                                            style="text-align: left!important ;
-font: normal normal medium 16px/20px Roboto!important ;
-letter-spacing: 0px!important ;
-color: #606060!important ;
-text-transform: uppercase!important ;
-opacity: 1!important ;">
+                                            style="text-align: left;
+font: normal normal medium 16px/20px Roboto;
+letter-spacing: 0px;
+color: #606060;
+text-transform: uppercase;
+opacity: 1;">
                                             ID AUDITORÍA: {{ $auditoriaInterna->id_auditoria }}</p>
                                         <p
-                                            style="text-align: left!important ;
-font: normal normal medium 14px/20px Roboto!important ;
-letter-spacing: 0px!important ;
-color: #606060!important ;
-text-transform: uppercase!important ;
-opacity: 1!important ;">
+                                            style="text-align: left;
+font: normal normal medium 14px/20px Roboto;
+letter-spacing: 0px;
+color: #606060;
+text-transform: uppercase;
+opacity: 1;">
                                             Fecha
                                             inicio:{{ \Carbon\Carbon::parse($auditoriaInterna->fecha_inicio)->format('d-m-Y') }}
                                         </p>
@@ -348,13 +345,13 @@ opacity: 1!important ;">
                         <table class="table-striped">
                             <thead>
                                 <tr>
-                                    <td style="text-align: left!important ;" colspan="2">
-                                        <p style="font: normal medium 16px/19px!important ;"><strong>
+                                    <td style="text-align: left;" colspan="2">
+                                        <p style="font: normal medium 16px/19px;"><strong>
                                                 Hallazgos del
                                                 equipo: {{ $reporte->empleado->name }}</strong></p>
                                     </td>
-                                    <td style="text-align: right!important ;">
-                                        <p style="font: normal medium 16px/19px!important ;"> <strong>Área Relacionada:
+                                    <td style="text-align: right;">
+                                        <p style="font: normal medium 16px/19px;"> <strong>Área Relacionada:
                                                 {{ $reporte->empleado->area->area }}</strong></p>
                                     </td>
                                 </tr>
@@ -363,32 +360,31 @@ opacity: 1!important ;">
                                 @foreach ($reporte->hallazgos as $hallazgos)
                                     <tr>
                                         <td colspan="3">
-                                            <div style="padding: 10px!important ;">
+                                            <div style="padding: 10px;">
                                                 <div class="row">
-                                                    <div class="col-3" style="margin-bottom: 10px!important ;">
+                                                    <div class="col-3" style="margin-bottom: 10px;">
                                                         <p><strong>Clausula</strong></p>
                                                         <p>{{ $hallazgos->clausula->nombre_clausulas }}</p>
                                                     </div>
-                                                    <div class="col-5" style="margin-bottom: 10px!important ;">
+                                                    <div class="col-5" style="margin-bottom: 10px;">
                                                         <p><strong>Subtema y Titulo</strong></p>
-                                                        <p>{{ $hallazgos->no_tipo }} &nbsp!important ;
-                                                            {{ $hallazgos->titulo }}</p>
+                                                        <p>{{ $hallazgos->no_tipo }} &nbsp; {{ $hallazgos->titulo }}</p>
                                                     </div>
-                                                    <div class="col-4" style="margin-bottom: 10px!important ;">
+                                                    <div class="col-4" style="margin-bottom: 10px;">
                                                         <p><strong>Requisito</strong></p>
                                                         <p>{{ $hallazgos->incumplimiento_requisito }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-5" style="margin-bottom: 10px!important ;">
+                                                    <div class="col-5" style="margin-bottom: 10px;">
                                                         <p><strong>Descripción:</strong></p>
                                                         <p>{{ $hallazgos->descripcion }}</p>
                                                     </div>
-                                                    <div class="col-4" style="margin-bottom: 10px!important ;">
+                                                    <div class="col-4" style="margin-bottom: 10px;">
                                                         <p><strong>Proceso Relacionado:</strong></p>
                                                         <p>{{ $hallazgos->procesos->nombre }}</p>
                                                     </div>
-                                                    <div class="col-3" style="margin-bottom: 10px!important ;">
+                                                    <div class="col-3" style="margin-bottom: 10px;">
                                                         <p><strong>Clasificación:</strong></p>
                                                         <p>{{ $hallazgos->clasificacion->nombre_clasificaciones }}</p>
                                                     </div>
