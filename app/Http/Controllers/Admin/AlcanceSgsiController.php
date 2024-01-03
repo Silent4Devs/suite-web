@@ -481,6 +481,15 @@ class AlcanceSgsiController extends Controller
         }
     }
 
+    public function visualizacion()
+    {
+        $alcances = AlcanceSgsi::where('estatus', 'aprobado')->get();
+
+        $organizacions = Organizacion::getFirst();
+
+        return view('admin.alcanceSgsis.visualizacion', compact('alcances', 'organizacions'));
+    }
+
     public function siguienteCorreo($proceso, $alcance)
     {
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();

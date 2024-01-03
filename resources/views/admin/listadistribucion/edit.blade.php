@@ -1,4 +1,29 @@
 @extends('layouts.admin')
+<style>
+    .imgdoc {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        top: 5px;
+        left: 15px;
+        /* UI Properties */
+        background: transparent url('img/icono_onboarding.png') 0% 0% no-repeat padding-box;
+        opacity: 1;
+    }
+
+    #btn_cancelar{
+    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+    border: 1px solid var(--unnamed-color-057be2);
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #057BE2;
+    opacity: 1;
+    }
+
+    .anima-focus label {
+        margin-top: -7px !important;
+
+    }
+</style>
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}" @endsection
     @section('content')
@@ -8,8 +33,9 @@
         <div class="">
             <div class="row">
                 <div class="col-2">
+                    <img src="{{asset('politicas.png')}}" class="imgdoc"  alt="">
                 </div>
-                <div class="col-10">
+                <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
                         <p>En esta sección puedes generar las listas de distribucion de correos, agruparlas ydarles el nivel
                             de prioridad para ser administradas conforme a su nivel asignado</p>
@@ -21,33 +47,32 @@
     <form method="POST" action="{{ route('admin.lista-distribucion.update', [$lista->id]) }}">
         @csrf
         <div class="card">
-            <div class="card-header">
-                <h4 style="color:#057BE2;">Módulo Asignado</h4>
-            </div>
             <div class="card-body">
+                <h4 style="color:#057BE2; title-table-rds">Módulo asignado</h4>
+                <hr>
+                <br>
                 <div class="row">
                     <div class="col-6">
                         <div class="anima-focus">
                             <input class="form-control" id="modulo" name="modulo" type="text"
                                 value="{{ $lista->modulo }}" placeholder="" disabled>
-                            <label style="color:#057BE2;" for="modulo">Modulo</label>
+                            <label  for="modulo">Módulo</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="anima-focus">
                             <input class="form-control" id="submodulo" name="submodulo" type="text"
                                 value="{{ $lista->submodulo }}" placeholder="" disabled>
-                            <label style="color:#057BE2;" for="modulo">Submodulo</label>
+                            <label  for="modulo">Submódulo</label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div class="card-header">
-                <h4 style="color:#057BE2;">Configuración Listas de Aprobación</h4>
-            </div>
             <div class="card-body">
+                <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
+                <hr>
                 <div class="row g-0">
                     <div class="col-5">
                         <br>
@@ -55,14 +80,13 @@
                         <br>
                         <br>
                         <br>
-                        <p>Esta sección permite que las personas seleccionadas puedan autorizar el flujo en cualquier
-                            momento,
-                            sin requerir la aprobación de los niveles seleccionados
+                        <p style="text-align:justify">Esta sección permite que las personas <br> seleccionadas puedan autorizar el flujo en <br> cualquier
+                            momento, sin requerir la aprobación <br> de los niveles seleccionados.
                         </p>
 
-                        <div class="col-12">
+                        <div class="col-8">
                             <div class="anima-focus">
-                                <select id="superaprobadores" name="superaprobadores[]" class="form-control"
+                                <select id="superaprobadores"  name="superaprobadores[]" class="form-control"
                                     multiple="multiple" placeholder="">
                                     @foreach ($empleados as $empleado)
                                         <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
@@ -73,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-7">
+                    <div class="col-6">
                         <p>Seleccione cuantos niveles de aprobación tendra tu lista, para poder asignar por cada nivel el
                             numero
                             de colaboradores que se requiera.</p>
@@ -91,28 +115,14 @@
                                 <label for="niveles" style="color:#057BE2;">Seleccione los niveles</label>
                             </div>
                         </div>
-
-                        {{-- @for ($i = 1; $i < 6; $i++)
-                            <div class="form-row nivel{{ $i }}Div" style="display: none;">
-                                <label for="nivel{{ $i }}">Nivel {{ $i }}</label>
-                                <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
-                                    class="form-control" multiple="multiple">
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
-                                            {{ $empleado->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endfor --}}
                         <div>
                             @for ($i = 1; $i < 6; $i++)
                                 <div class="form-row nivel{{ $i }}Div" style="display: none;">
                                     <div class="mt-4 mb-1">
-                                        Nivel {{ $i }} <br>
-                                        Asigna a los colaboradores que deben aprobar para pasar al siguiente nivel
+                                        <i class="fas fa-circle" style="color: #007bff;"></i>  Nivel {{ $i }} <br>
+                                       &nbsp; &nbsp; Asigna a los colaboradores que deben aprobar para pasar al siguiente nivel.
                                     </div>
-                                    <div class="anima-focus">
+                                    <div class="anima-focus" style="width: 100rem;">
                                         <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
                                             class="form-control" multiple="multiple">
                                             @foreach ($empleados as $empleado)
@@ -128,63 +138,14 @@
                                 </div>
                             @endfor
                         </div>
-                        {{-- <div class="form-row niveles-container" id="nivel2-container">
-                            <label for="nivel2">Nivel 2</label>
-                            <select id="nivel2" name="nivel2[]" class="form-control" multiple="multiple">
-                                <optgroup label="Nivel 2">
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
-                                            {{ $empleado->name }}
-                                        </option>
-                                    @endforeach
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        <div class="form-row niveles-container" id="nivel3-container">
-                            <label for="nivel3">Nivel 3</label>
-                            <select id="nivel3" name="nivel3[]" class="form-control" multiple="multiple">
-                                <optgroup label="Nivel 3">
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
-                                            {{ $empleado->name }}
-                                        </option>
-                                    @endforeach
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        <div class="form-row niveles-container" id="nivel4-container">
-                            <label for="nivel4">Nivel 4</label>
-                            <select id="nivel4" name="nivel4[]" class="form-control" multiple="multiple">
-                                <optgroup label="Nivel 4">
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
-                                            {{ $empleado->name }}
-                                        </option>
-                                    @endforeach
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        <div class="form-row niveles-container" id="nivel5-container">
-                            <label for="nivel5">Nivel 5</label>
-                            <select id="nivel5" name="nivel5[]" class="form-control" multiple="multiple">
-                                <optgroup label="Nivel 5">
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
-                                            {{ $empleado->name }}
-                                        </option>
-                                    @endforeach
-                                </optgroup>
-                            </select>
-                        </div> --}}
                     </div>
                 </div>
             </div>
         </div>
-        <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-secondary">Regresar</a>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <div  style="position: relative; left: 65rem;">
+            <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+            <button type="submit" class="btn btn-primary" style="width: 8rem;">Crear</button>
+        </div>
     </form>
 @endsection
     @section('scripts') <script>
