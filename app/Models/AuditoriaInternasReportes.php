@@ -32,4 +32,9 @@ class AuditoriaInternasReportes extends Model
     {
         return $this->belongsTo(Empleado::class, 'lider_id')->alta();
     }
+
+    public function hallazgos()
+    {
+        return $this->hasMany(AuditoriaInternasHallazgos::class, 'reporte_id', 'id');
+    }
 }

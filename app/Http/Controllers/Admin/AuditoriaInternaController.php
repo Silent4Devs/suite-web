@@ -194,8 +194,8 @@ class AuditoriaInternaController extends Controller
     {
         abort_if(Gate::denies('auditoria_interna_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team', 'auditoriaHallazgos');
-        // dd( $auditoriaInterna->hallazgos);
+        $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team', 'reportes.empleado', 'reportes.hallazgos');
+        // dd($auditoriaInterna->reportes);
 
         return view('admin.auditoriaInternas.show', compact('auditoriaInterna'));
     }
@@ -249,7 +249,7 @@ class AuditoriaInternaController extends Controller
             }
         }
 
-        return redirect()->route('admin.auditoria-internas.index');
+        return redirect()->back()->with('reporte', 'success');
     }
 
     public function createReporte($id)
