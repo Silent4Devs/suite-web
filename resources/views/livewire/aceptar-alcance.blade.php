@@ -22,7 +22,7 @@
         transform: scale(1.1);
     }
     </style>
-    @if(!$aceptar-alcance)
+    @if(!$acepto_alcance)
     <label class="aceptar" wire:click="aceptar({{$id_alcance}})"><i class="far fa-check-square"></i> Acepto
         alcance</label>
     @else

@@ -159,8 +159,7 @@
                                         type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
                                         value="{{ old('fechaexpedicion') }}"
                                         wire:model.defer='alcance.fechaexpedicion' required>
-                                        {!! Form::label('fechaexpedicion', 'Fecha de
-                                        publicación*', ['class' => 'asterisco']) !!}
+                                        {!! Form::label('fechaexpedicion', 'Fecha de expedición*', ['class' => 'asterisco']) !!}
                             </div>
                             <br>
                             <br>
@@ -170,8 +169,7 @@
                                         type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
                                         value="{{ old('fechavigor') }}"
                                         wire:model.defer='alcance.fechavigor' required>
-                                        {!! Form::label('fechavigor', 'Fecha de
-                                        publicación*', ['class' => 'asterisco']) !!}
+                                        {!! Form::label('fechavigor', 'Fecha de entrada en vigor*', ['class' => 'asterisco']) !!}
                             </div>
                         </div>
 

@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+    @include('layouts.datatables_css')
+    <link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}">
 
     <head>
         <meta charset="utf-8">
@@ -12,23 +14,23 @@
             }
 
             table td {
-                border: 1px solid black;
+                border: none;
             }
 
             table {
-                border: 1px solid #a8a8a8;
+                border: none;
                 width: 100%;
                 max-width: 100%;
                 border-spacing: 0px;
                 margin: 0px;
                 overflow-wrap: break-word !important;
                 table-layout: fixed !important;
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
+
+
             }
 
             table td {
-                border: 1px solid #a8a8a8;
+                border: none;
                 padding: 10px 25px;
                 vertical-align: super;
                 overflow-wrap: break-word !important;
@@ -48,12 +50,14 @@
             }
 
             table thead {
-                background: #306BA9 0% 0% no-repeat padding-box;
+                background: #CDCDCD 0% 0% no-repeat padding-box;
                 /* border: 1px solid #707070; */
-                /* border-radius: 8px 8px 0px 0px; */
+                */ opacity: 1;
+                text-align: left;
+                font: normal normal medium 16px/19px Roboto;
+                letter-spacing: 0px;
+                color: #414141;
                 opacity: 1;
-                text-align: center;
-                color: white;
             }
 
             h1,
@@ -66,9 +70,30 @@
                 margin-bottom: 10px;
             }
 
+            table.objalc {
+                background: #F2F2F2 0% 0% no-repeat padding-box;
+                opacity: 1;
+            }
+
+            table.general {
+                background: #DDDDDD 0% 0% no-repeat padding-box;
+                opacity: 1;
+            }
+
             p {
-                margin: 0px;
-                margin-bottom: 5px;
+                text-align: left;
+                font: normal normal normal 12px/14px Roboto;
+                letter-spacing: 0px;
+                color: #464646;
+                opacity: 1;
+            }
+
+            p.parametro {
+                text-align: left;
+                font: normal normal medium 12px/14px Roboto;
+                letter-spacing: 0px;
+                color: #414141;
+                opacity: 1;
             }
 
             hr {
@@ -105,7 +130,11 @@
             }
 
             .info-header {
-                font-size: 13px;
+                text-align: left;
+                font: normal normal normal 15px/20px Roboto;
+                letter-spacing: 0px;
+                color: #3D3D3D;
+                opacity: 1;
             }
 
             .td-blue-header {
@@ -181,106 +210,6 @@
             }
         </style>
     </head>
-    <style>
-        span.errors {
-            font-size: 11px;
-        }
-
-        canvas {
-            border: 2px dotted #CCCCCC;
-            border-radius: 15px;
-            cursor: crosshair;
-        }
-
-        canvas {
-            border: 2px dotted #CCCCCC;
-            border-radius: 15px;
-            cursor: crosshair;
-        }
-
-
-        img.rounded-circle {
-            border-radius: 0 !important;
-            clip-path: circle(35px at 50% 50%);
-            height: 70px;
-        }
-
-        .card-custom {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            margin: auto;
-            text-align: center;
-            height: 100%;
-            font-family: arial;
-        }
-
-        .title-custom {
-            color: grey;
-            font-size: 14px;
-        }
-
-        .circulo-rojo {
-            width: 100px;
-            height: 100px;
-            -moz-border-radius: 20%;
-            -webkit-border-radius: 20%;
-            border-radius: 50%;
-            background: #FF417B;
-        }
-
-        .circulo-naranja {
-            width: 10px;
-            height: 10px;
-            -moz-border-radius: 10%;
-            -webkit-border-radius: 10%;
-            border-radius: 50%;
-            background: #FFCB63;
-        }
-
-        @media print {
-            header {
-                display: none !important;
-            }
-
-            .ps__rail-y {
-                display: none !important;
-            }
-
-            .ps__thumb-y {
-                display: none !important;
-            }
-
-            .titulo_general_funcion {
-                display: none !important;
-            }
-
-            #sidebar {
-                display: none !important;
-            }
-
-            body {
-                background-color: #fff !important;
-            }
-
-            #but {
-                display: none !important;
-            }
-
-            .datos_der_cv {
-                margin-right: -50px !important;
-
-
-            }
-
-            .table th td:nth-child(1) {
-                min-width: 100px;
-            }
-
-            .print-none {
-                display: none !important;
-            }
-        }
-    </style>
 
     <div class="print-none">
         {{ Breadcrumbs::render('admin.auditoria-internas.create') }}
@@ -290,12 +219,23 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-                    <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Regresar</a>
-                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                    <div class="row">
+                        <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Regresar</a>
+                        <form method="POST"
+                            action="{{ route('admin.auditoria-internas.pdf', ['id' => $auditoriaInterna->id]) }}">
+                            @csrf
+                            <div class="justify-content-right">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    {{-- <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
-                    </button>
+                    </button> --}}
 
                     @php
                         use App\Models\Organizacion;
@@ -306,112 +246,173 @@
 
                     <table class="encabezado">
                         <tr>
-                            <td class="td-img-doc">
-                                @if ($logotipo)
-                                    <img style="width:100%; max-width:150px;"
-                                        src="{{ public_path('razon_social/' . $logotipo) }}">
-                                @else
-                                    <img src="{{ public_path('sinLogo.png') }}" style="width:100%; max-width:150px;">
-                                @endif
-                            </td>
-                            <td class="info-header">
-                                {{ $organizacion->empresa }} <br>
-                                {{ $organizacion->rfc }} <br>
-                                {{ $organizacion->direccion }} <br>
-                            </td>
-                            <td class="td-blue-header">
-                                <p>INFORME DE AUDITORIA</p>
-                                <p>ID AUDITORÍA: {{ $auditoriaInterna->id_auditoria }}</p>
-                                <p>Fecha
-                                    inicio:{{ \Carbon\Carbon::parse($auditoriaInterna->fecha_inicio)->format('d-m-Y') }}</p>
+                            <td>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <div class="td-img-doc">
+                                            @if ($logotipo)
+                                                <img style="width:100%; max-width:150px;"
+                                                    src="{{ public_path('razon_social/' . $logotipo) }}">
+                                            @else
+                                                <img src="{{ public_path('sinLogo.png') }}"
+                                                    style="width:100%; max-width:150px;">
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="info-header">
+                                            {{ $organizacion->empresa }} <br>
+                                            {{ $organizacion->rfc }} <br>
+                                            {{ $organizacion->direccion }} <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" style="text-align: right;">
+                                        <p
+                                            style="text-align: left;
+font: normal normal medium 18px/13px Roboto;
+letter-spacing: 0px;
+color: #606060;
+opacity: 1;">
+                                            INFORME DE AUDITORIA</p>
+                                        <p
+                                            style="text-align: left;
+font: normal normal medium 16px/20px Roboto;
+letter-spacing: 0px;
+color: #606060;
+text-transform: uppercase;
+opacity: 1;">
+                                            ID AUDITORÍA: {{ $auditoriaInterna->id_auditoria }}</p>
+                                        <p
+                                            style="text-align: left;
+font: normal normal medium 14px/20px Roboto;
+letter-spacing: 0px;
+color: #606060;
+text-transform: uppercase;
+opacity: 1;">
+                                            Fecha
+                                            inicio:{{ \Carbon\Carbon::parse($auditoriaInterna->fecha_inicio)->format('d-m-Y') }}
+                                        </p>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </table>
 
-                    <table>
+                    <table class="general">
                         <tr>
-                            <td class="parametro">
-                                <p>Nombre de la auditoria</p><br>
-                                <p>{{ $auditoriaInterna->nombre_auditoria }}</p><br>
-                                <p>Área:</p><br>
-                                <p>{{ $auditoriaInterna->lider->area->area }}</p>
-                            </td>
-                            <td class="parametro">
-                                <p>Equipo Auditoria:</p>
-                                @foreach ($auditoriaInterna->equipo as $equipo)
-                                    <p>{{ $equipo->name }}</p>
-                                @endforeach
-                                {{-- <p>{{ $minutasaltadireccion->hora_termino }}</p> --}}
-                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <p><strong>Nombre de la auditoria:</strong></p>
+                                        <p>{{ $auditoriaInterna->nombre_auditoria }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p><strong>Equipo Auditoria:</strong></p><br>
+                                        <div class="row">
+                                            @foreach ($auditoriaInterna->equipo as $equipo)
+                                                <div class="col-4">
+                                                    <p>{{ $equipo->name }}</p>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <p><strong>Nombre Auditor externo</strong></p>
+                                        <p>{{ $auditoriaInterna->auditor_externo }}</p>
+                                    </div>
+                                </div>
 
-                            <td class="parametro">
-                                <p>Nombre Auditor externo</p>
-                                <p>{{ $auditoriaInterna->auditor_externo }}</p>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <p><strong>Área:</strong></p>
+                                        <p>{{ $auditoriaInterna->lider->area->area }}</p>
+                                    </div>
+                                </div>
+
                             </td>
                         </tr>
                     </table>
-                    <table>
+                    <table class="objalc">
                         <tr>
-                            <td class="parametro">
-                                <p>Objetivo de la auditoría</p><br>
-                                <p>{!! $auditoriaInterna->objetivo !!}</p><br>
-                                <p>Alcance de la auditoría</p><br>
-                                <p>{!! $auditoriaInterna->alcance !!}</p><br>
+                            <td>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <br>
+                                        <p><strong>Objetivo de la auditoría:</strong></p>
+                                        <p>{!! $auditoriaInterna->objetivo !!}</p><br>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p><strong>Alcance de la auditoría:</strong></p>
+                                        <p>{!! $auditoriaInterna->alcance !!}</p>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </table>
                     @foreach ($auditoriaInterna->reportes as $reporte)
-                        <table>
+                        <table class="table-striped">
                             <thead>
                                 <tr>
-                                    <td>{{ $reporte->empleado->name }}</td>
+                                    <td style="text-align: left;" colspan="2">
+                                        <p style="font: normal medium 16px/19px;"><strong>
+                                                Hallazgos del
+                                                equipo: {{ $reporte->empleado->name }}</strong></p>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <p style="font: normal medium 16px/19px;"> <strong>Área Relacionada:
+                                                {{ $reporte->empleado->area->area }}</strong></p>
+                                    </td>
                                 </tr>
                             </thead>
+                            <tbody>
+                                @foreach ($reporte->hallazgos as $hallazgos)
+                                    <tr>
+                                        <td colspan="3">
+                                            <div style="padding: 10px;">
+                                                <div class="row">
+                                                    <div class="col-3" style="margin-bottom: 10px;">
+                                                        <p><strong>Clausula</strong></p>
+                                                        <p>{{ $hallazgos->clausula->nombre_clausulas }}</p>
+                                                    </div>
+                                                    <div class="col-5" style="margin-bottom: 10px;">
+                                                        <p><strong>Subtema y Titulo</strong></p>
+                                                        <p>{{ $hallazgos->no_tipo }} &nbsp; {{ $hallazgos->titulo }}</p>
+                                                    </div>
+                                                    <div class="col-4" style="margin-bottom: 10px;">
+                                                        <p><strong>Requisito</strong></p>
+                                                        <p>{{ $hallazgos->incumplimiento_requisito }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-5" style="margin-bottom: 10px;">
+                                                        <p><strong>Descripción:</strong></p>
+                                                        <p>{{ $hallazgos->descripcion }}</p>
+                                                    </div>
+                                                    <div class="col-4" style="margin-bottom: 10px;">
+                                                        <p><strong>Proceso Relacionado:</strong></p>
+                                                        <p>{{ $hallazgos->procesos->nombre }}</p>
+                                                    </div>
+                                                    <div class="col-3" style="margin-bottom: 10px;">
+                                                        <p><strong>Clasificación:</strong></p>
+                                                        <p>{{ $hallazgos->clasificacion->nombre_clasificaciones }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p><strong>Criterio de auditoría:</strong></p>
+                                                        <p>{!! $auditoriaInterna->criterios_auditoria !!}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     @endforeach
-
-
-
-                    <table class="table">
-                        <thead class="head-light">
-                            <tr>
-                                <th scope="col-6">Incumplimiento</th>
-                                <th scope="col-6">Descripción</th>
-                                <th scope="col-6">Clasificación</th>
-                                <th scope="col-6">Proceso relacionado</th>
-                                <th scope="col-6">Área relacionada</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($auditoriaInterna->auditoriaHallazgos as $hallazgo)
-                                <tr>
-                                    <td style="min-width:130px;">
-                                        {{ $hallazgo->incumplimiento_requisito ? $hallazgo->incumplimiento_requisito : 'Sin registro' }}
-                                    </td>
-                                    <td style="min-width:100px;">
-                                        {{ $hallazgo->descripcion ? $hallazgo->descripcion : 'Sin registro' }}</td>
-                                    <td style="min-width:100px;">
-                                        {{ $hallazgo->clasificacion_hallazgo ? $hallazgo->clasificacion_hallazgo : 'Sin registro' }}
-                                    </td>
-                                    <td style="min-width:100px;">
-                                        {{ $hallazgo->procesos ? $hallazgo->procesos->nombre : 'n/a' }}</td>
-                                    <td style="min-width:100px;">{{ $hallazgo->areas ? $hallazgo->areas->area : 'n/a' }}
-                                    </td>
-
-                                </tr>
-                            @empty
-                                <p>Sin registro</p>
-                            @endforelse
-
-
-                        </tbody>
-                    </table>
-
-
-
-
-
 
                 </div>
 
