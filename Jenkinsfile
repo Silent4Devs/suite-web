@@ -35,11 +35,7 @@ pipeline {
         stage('Permisos') {
             steps {
                 script {
-                    dir('/var/contenedor/suite-web') {
-                        // Ejecutar comandos en el directorio
-                        sh 'ls -la'  // Puedes agregar comandos adicionales aquí
-                        sh 'chmod -R 777 /var/contenedor/suite-web'
-                    }
+                     sh "ssh usuario@192.168.9.78 'sudo chmod -R 777 /var/contenedor/suite-web'"
               }
             }
         }
