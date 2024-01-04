@@ -433,6 +433,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
         Route::view('iso27001/guia', 'admin.iso27001.guia')->name('iso27001.guia');
+        Route::view('iso27001/normas-guia', 'admin.iso27001.normas-guia')->name('iso27001.normas-guia');
         Route::view('iso27001/inicio-guia', 'admin.iso27001.inicio-guia')->name('iso27001.inicio-guia');
         Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
         Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');

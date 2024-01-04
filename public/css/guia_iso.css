@@ -8,14 +8,13 @@
 }
 
 .menu-pasos-guia {
-    box-shadow: 0px 3px 6px #00000029;
-    background-color: #F5F5F5;
-    padding: 20px;
+    background-color: #EEF6FF;
     position: fixed;
     left: 0;
     top: 80px;
     width: 230px;
     height: 100%;
+    padding-top: 120px;
 }
 
 ul {
@@ -26,12 +25,25 @@ ul {
 
 .menu-pasos-guia ul li {
     width: 100%;
-    color: #306BA9;
-    margin-top: 50px;
+    font-size: 16px;
+    color: #3086AF;
     display: flex;
-    gap: 6px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-weight: normal;
+    cursor: pointer;
 }
 
+li.active-paso{
+    color: #001e3d !important;
+}
+
+.menu-pasos-guia ul li i{
+    font-size: 25px;
+    margin-right: 20px;
+}
 .menu-pasos-guia ul li span {
     width: 22px;
     height: 22px;
@@ -42,6 +54,22 @@ ul {
     align-items: center;
     background-color: #306BA9;
 }
+.list-info-iso{
+    margin-top: 30px;
+}
+.list-info-iso li{
+    position: relative;
+    padding-left: 20px;
+    font-size: 14px;
+}
+.list-info-iso li::before {
+    content: "•";
+    margin-left: -14px;
+    margin-top: -10px;
+    font-size: 27px;
+    color: #3086AF; /* or whatever color you prefer */
+    position: absolute;
+  }
 
 .content-guia-iso {
     margin-left: 230px;
@@ -53,13 +81,16 @@ ul {
 }
 
 .card-main-iso {
-    padding: 50px 168px !important;
-    border-radius: 0px !important;
+    background-image: url('../img/iso/fondo-card.png');
+    background-attachment: fixed;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: 100% 50%;
 }
 
 .title-info-iso {
     color: #3086AF;
-    font-size: 20px;
+    font-size: 28px;
 }
 
 .list-info-iso li {
@@ -69,24 +100,62 @@ ul {
 
 .caja-cards-iso-guia {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
     gap: 40px;
 }
 
 .card-iso-guia {
     background-color: #fff;
-    color: #306BA9;
+    color: #3086AF;
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0px 1px 4px #00000024;
-    text-align: center;
-    width: 206px;
+    width: 300px;
+    display: flex;
+    gap: 20px;
+    position: relative;
+    z-index: 3;
+    padding: 3px;
+}
+.card-iso-guia::before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(132deg, rgba(255,160,204,1) 19%, rgba(146,159,255,1) 52%, rgba(15,200,208,1) 83%);
+    z-index: -2;
+}
+.card-iso-guia::after{
+    content: "";
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    border-radius: 14px;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    background-color: #fff;
+    z-index: -1;
 }
 
-.card-iso-guia img {
+.img-card-iso{
+    min-width: 60px;
+    height: 130px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.img-card-iso img {
     width: 100%;
+    object-fit: cover;
+    height: 100%;
+    transition: 0.15s;
+    transform: scale(1.1);
+}
+
+.card-iso-guia:hover .img-card-iso img{
+    transform: scale(1);
 }
 
 .title-card-img-iso {
@@ -154,6 +223,42 @@ ul {
     width: 100%;
 }
 
-.btn-cont-guia-inicio {
-    border-radius: ;
+.btn-continuar-iso {
+    border-radius: 1000px;
+    padding: 23px 57px;
+    background-color: #4DD1A6;
+    color: #fff;
+}
+
+.card-norma{
+    overflow: hidden;
+    width: 350px;
+    color: #575757;
+    box-shadow: 0px 3px 6px #00000029;
+}
+.card-norma h4{
+    font-size: 18px;
+}
+.card-norma p{
+    font-size: 14px;
+}
+
+.card-img{
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+.card-img img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.title-normas-iso{
+    color: #3086AF;
+    font-size: 30px;
+}
+
+.btn-entrar{
+    position: absolute;
 }

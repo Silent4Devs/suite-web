@@ -21,8 +21,8 @@
                 <li>- Ahorra tiempo y recursos.</li>
             </ul>
 
-            <div class="mt-3">
-                <a href="" class="btn">
+            <div class="mt-5">
+                <a href="" class="btn btn-continuar-iso">
                     CONTINUAR
                 </a>
             </div>

@@ -1248,3 +1248,7 @@ table.table.table-acordeon tbody tr:nth-child(even) {
 .table-bordered {
     border: none !important;
 }
+
+a:hover {
+    text-decoration: none  !important;
+}
