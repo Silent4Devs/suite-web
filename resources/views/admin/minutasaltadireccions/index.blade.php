@@ -57,8 +57,8 @@
             Revisión por dirección</h5>
         <div style="margin-bottom: 10px; text-align:end;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-crear" href="{{ route('admin.minutasaltadireccions.create') }}">
-                    Agregar <strong>+</strong>
+                <a class="btn btn-primary" href="{{ route('admin.minutasaltadireccions.create') }}">
+                    Agregar Revisión
                 </a>
             </div>
         </div>
@@ -66,7 +66,7 @@
 
     <div class="card card-body">
         <div class="card-header">
-            <h5>Minutas Revisión por Dirección</h5>
+            <h5 class="title-table-rds">Minutas Revisión por Dirección</h5>
         </div>
         @include('partials.flashMessages')
         <div>
@@ -82,7 +82,7 @@
                         <th>
                             Fecha
                         </th>
-                        <th>
+                        <th style="width: 8rem; text-align: start;">
                             Elaboró
                         </th>
                         <th>
@@ -104,30 +104,46 @@
                             <td>{{ $q->fechareunion }}</td>
                             <td>
                                 <img src="{{ asset('storage/empleados/imagenes') }}/{{ $q->responsable->avatar ?? '' }}"
-                                    title="{{ $q->responsable->name ?? '' }}" class="rounded-circle"
-                                    style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                                    title="{{ $q->responsable->name ?? '' }}" class="btn btn-round ml-2 rounded-circle"
+                                    style="width: 50px; height:50px; background-color: #fff8dc;" />
                             </td>
                             <td>
                                 @foreach ($q->participantes as $index => $participante)
                                     @if ($index < 3)
                                         <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
-                                            class="rounded-circle" alt="{{ $participante->name }}"
+                                            class="btn btn-round ml-2 rounded-circle" alt="{{ $participante->name }}"
                                             title="{{ $participante->name }}"
-                                            style="clip-path: circle(15px at 50% 50%); height: 30px;">
+                                            style="width: 50px; height:50px; background-color: #fff8dc;">
                                     @endif
                                 @endforeach
                                 @if ($q->participantes->count() > 3)
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-round ml-2 rounded-circle"  style="width: 50px; height:50px; background-color: #fff8dc;" data-bs-toggle="modal"
                                         data-bs-target="#participantsModal{{ $q->id }}">
-                                        +{{ $q->participantes->count() - 3 }} more
+                                        +{{ $q->participantes->count() - 3 }}
                                     </button>
                                 @endif
 
                             </td>
 
                             <td>
-                                <span class="badge"
-                                    style="color:{{ $q->color_estatus }}">{{ $q->estatus_formateado }}</span>
+                            @php
+                                $badgeColor = '';
+                                switch ($q->estatus_formateado) {
+                                    case 'En Elaboración':
+                                        $badgeColor = 'red';
+                                        break;
+                                    case 'En Revisión':
+                                        $badgeColor = 'blue';
+                                        break;
+                                    case 'Publicado':
+                                        $badgeColor = 'green';
+                                        break;
+                                    default:
+                                        $badgeColor = 'red';
+                                }
+                             @endphp
+
+                            <span class="badge" style="color:{{ $badgeColor }}">{{ $q->estatus_formateado }}</span>
                             </td>
                             <td>
                                 <div class="dropdown">
@@ -138,18 +154,18 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         @can('revision_por_direccion_editar')
                                             <li><a href="/admin/minutasaltadireccions/{{ $q->id }}/edit"
-                                                    class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i>&nbsp;
-                                                    Editar</a></li>
+                                                    class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i>
+                                                    </a>Editar</li>
                                         @endcan
                                         @can('revision_por_direccion_ver')
                                             <li><a href="/admin/minutasaltadireccions/{{ $q->id }}" class="btn btn-sm"
-                                                    title="Visualizar"><i class="fa fa-eye"></i>&nbsp;Ver</a></li>
+                                                    title="Visualizar"><i class="fa fa-eye"></i></a>Ver</li>
                                         @endcan
                                         @foreach ($q->planes as $plan)
                                             @can('revision_por_direccion_plan_accion')
                                                 <li><a href="/admin/planes-de-accion/{{ $plan->id }}" class="btn btn-sm"
-                                                        title="Plan de Acción"><i class="fa fa-stream"></i>&nbsp;Plan de
-                                                        Accion</a>
+                                                        title="Plan de Acción"><i class="fa fa-stream"></i></a>Plan de
+                                                        Accion
                                                 </li>
                                             @endcan
                                         @endforeach
@@ -165,12 +181,12 @@
                                                         <path
                                                             d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
                                                     </svg>
-                                                </a>&nbsp;Versiones</li>
+                                                </a>Versiones</li>
                                         @endcan
                                         @can('revision_por_direccion_eliminar')
                                             <li><button class="btn btn-sm text-danger" title="Eliminar"
                                                     onclick="Eliminar('/admin/minutasaltadireccions/{{ $q->id }}','{{ $q->tema_reunion }}')"><i
-                                                        class="fa fa-trash-alt"></i>Eliminar</button></li>
+                                                        class="fa fa-trash-alt"></i></button>Eliminar</li>
                                         @endcan
                                     </ul>
                                 </div>
@@ -411,8 +427,7 @@
 
             window.Eliminar = function(url, nombre) {
                 Swal.fire({
-                    title: `¿Estás seguro de eliminar la siguiente minuta?`,
-                    html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
+                    title: `¿Estás seguro de eliminar?`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -430,15 +445,11 @@
                             beforeSend: function() {
                                 Swal.fire(
                                     '¡Estamos Eliminando!',
-                                    `La minuta: ${nombre} está siendo eliminada`,
-                                    'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
                                     'Eliminado!',
-                                    `La minuta: ${nombre} ha sido eliminada`,
-                                    'success'
                                 )
                                 table.ajax.reload();
                             },
