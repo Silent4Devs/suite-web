@@ -328,7 +328,7 @@
         <div class="text-right form-group col-12">
             <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
             </span>
-            <a href="#" class="btn" id="btn_cancelar" style="color:#057BE2;" onclick="confirmarCancelar()">
+            <a href="#" class="btn" id="btn_cancelar" style="color:#057BE2; height:3rem;" onclick="confirmarCancelar()">
                 <div class="mt-2">Cancelar</div>
             </a>
             <button class="btn boton-enviar ml-2 mr-2" type="submit">
