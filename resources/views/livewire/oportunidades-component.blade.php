@@ -6,11 +6,11 @@
         </a>
 
         <div class="modal fade" id="modalOportunidades"  tabindex="-1" aria-labelledby="modalOportunidadesLabel" aria-hidden="true" wire:ignore.self>
-            <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 18rem;"  class="close" data-dismiss="modal" aria-label="Close" >
+            <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 10rem;"  class="close" data-dismiss="modal" aria-label="Close" >
                 <i class="fa-solid fa-x fa-2xl"
                 style="color: #ffffff;"></i>
             </button>
-            <div class="modal-dialog">
+            <div class="modal-dialog  modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-black">
                     <h5 class="modal-title" id="modalOportunidadesLabel">Oportunidades</h5>
