@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('analisis_brechas_isos', function (Blueprint $table) {
             $table->unsignedInteger('template_id')->nullable();
-            $table->foreign('norma_id')->references('id')->on('normas');
         });
     }
 
