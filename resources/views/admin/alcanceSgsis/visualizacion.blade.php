@@ -8,7 +8,7 @@
             width: 100%;
         }
 
-        .logo_organizacion_politica {
+        .logo_organizacion_alcance {
             height: 150px;
             position: absolute;
             right: 50px;
@@ -28,7 +28,7 @@
             color: rgb(255, 255, 255);
         }
 
-        .dato_politica {
+        .dato_alcance {
             font-size: 9pt !important;
             margin-left: 25px;
         }
