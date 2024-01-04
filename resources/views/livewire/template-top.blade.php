@@ -3,7 +3,7 @@
         Análisis de Brechas
     </div>
     <div class="row">
-        <div class="card card-body mt-3" style="width:1030px;">
+        <div class="card card-body mt-3 shadow-sm" style="width:1030px;">
             <div class="titulo-card">Templates generados
                 <hr>
             </div>
@@ -18,7 +18,7 @@
                                 Fecha de creación</th>
                             <th style="background-color:rgb(255, 255, 255); color:#414141;">No de preguntas</th>
                             <th style="background-color:rgb(255, 255, 255); color:#414141;">Top 8</th>
-                            {{-- <th style="background-color:rgb(255, 255, 255); color:#414141;"></th> --}}
+                            <th style="background-color:rgb(255, 255, 255); color:#414141;"></th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -46,6 +46,28 @@
                                         </label>
                                       </div>
                                 </td>
+                                <td>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        {{--<a class="dropdown-item" wire:click="edit({{ $analisis_brecha->id }})">
+                                            <div class="d-flex align-items-start">
+                                                <i class="material-icons-outlined" style="width: 24px;font-size:18px;">edit_outline</i>
+                                                Editar
+                                            </div>
+                                        </a>--}}
+                                        <a class="dropdown-item" wire:click="$emit('delete',{{$analisis->id}})">
+                                            <div class="d-flex align-items-start">
+                                                <i class="material-icons-outlined" style="width: 24px;font-size:18px;">delete_outlined</i>
+                                                Eliminar
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -59,4 +81,38 @@
 
         </div> --}}
     </div>
+    <div class="row d-flex justify-content-end">
+        <div >
+                <a class="btn btn-light text-primary border border-primary" href="{{route('admin.analisisdebrechas-2022.create')}}" style="width: 136px;">
+                    Regresar
+                </a>
+        </div>
+    </div>
+
+    @yield('js')
+    <script>
+ document.addEventListener("DOMContentLoaded", function() {
+     Livewire.on("delete", id=>{
+         Swal.fire({
+             title: "Eliminar Template de brechas",
+             text: "¿Esta seguro que desea eliminar?",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonColor: "#3085d6",
+             cancelButtonColor: "#d33",
+             confirmButtonText: "Eliminar",
+             cancelButtonText: "Cancelar",
+         }).then((result) => {
+         if (result.isConfirmed) {
+             Livewire.emitTo('template-top','destroy',id);
+             Swal.fire({
+             title: "Eliminado",
+             text: "El análisis de brechas se elimino con éxito",
+             icon: "success"
+             });
+         }
+         });
+     })
+ });
+</script>
 </div>

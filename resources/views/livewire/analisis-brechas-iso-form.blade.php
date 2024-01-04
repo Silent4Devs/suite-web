@@ -46,10 +46,14 @@
            box-shadow: 0px 1px 4px #0000000F;
         }
 
+        .datatable-rds td {
+            border-bottom:none !important;
+        }
+
 
     </style>
 
-    <div class="mt-4 card card-body">
+    <div class="mt-4 card card-body shadow-sm" style="border-radius:16px;">
         <div class="content-limit caja-carrusel">
             <div class="arrow-carrusel-izq" style="margin-right: 10px;">
                 <i class="material-icons-outlined">arrow_back_ios</i>
@@ -91,7 +95,7 @@
         </div>
     </div>
 
-    <div class="mt-4 card card-body">
+    <div class="mt-4 card card-body shadow-sm" style="border-radius:16px;">
         <form wire:submit.prevent={{ $view == 'create' ? 'save' : 'update' }}>
             {{-- @csrf --}}
             <h5 class="form-group col-12">Datos generales</h5>
@@ -226,6 +230,7 @@
                             <th>Nombre</th>
 	                        <th>Fecha</th>
                             <th>Elaboro</th>
+                            <th style="display: flex; justify-content:center;">Análisis</th>
                             <th>norma</th>
                             <th></th>
 	                    </tr>
@@ -244,6 +249,11 @@
                             </td>
                             <td>
                                 {{$analisis_brecha->empleado->name}}
+                            </td>
+                            <td style="display: flex; justify-content:center;" >
+                                <i class="material-icons-outlined" style="cursor: pointer;">
+                                        visibility
+                                    </i>
                             </td>
                             <td>
                                 @if (isset($analisis_brecha->norma_id))
@@ -337,6 +347,14 @@
              });
          }
          });
+     })
+ });
+</script>
+
+<script>
+ document.addEventListener("DOMContentLoaded", function() {
+     Livewire.on("selectedCardAlert", function(){
+         Swal.fire("Debe seleccionar un template");
      })
  });
 </script>

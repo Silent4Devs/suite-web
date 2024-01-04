@@ -66,8 +66,12 @@ class AnalisisBrechasIsoForm extends Component
             GapTresConcentradoIso::insert($datosgaptresIso);
             $this->resetInput();
             $this->emit('limpiarNameInput');
+                
+            return;
         }
-        dd("afuera");
+
+         $this->emit('selectedCardAlert');
+        
 
     }
 

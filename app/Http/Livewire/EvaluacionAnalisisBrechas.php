@@ -29,6 +29,7 @@ class EvaluacionAnalisisBrechas extends Component
     public $results;
     public $grafica_cuentas2 = [];
     public $grafica_colores2= [];
+    public $resultskeys = [];
 
 
 
@@ -92,7 +93,7 @@ class EvaluacionAnalisisBrechas extends Component
                 array_push($result2,$result3);
             }
             $this->results = $result2;
-            // dd($result2[1]['counts']);
+            // dd($this->results);
 
             $this->cuentas = $result['counts'];
             // dd($this->cuentas, $this->results[0]);
@@ -116,10 +117,22 @@ class EvaluacionAnalisisBrechas extends Component
                 }
             }
             $this->grafica_cuentas2 = $grafica_cuentas;
+            // dd($template->secciones);
+            $resultskeys = [];
+            $keys = $template->secciones->keys();
+        foreach($keys as $key){
+            $key=$key+1;
+            $resultkey = $this->sumaParametrosSeccion($key);
+            // dump($resultkey['counts']);
+            array_push($resultskeys,$resultkey['counts']);
+        }
+        // dd($resultskeys);
 
             $this->grafica_colores2 = $grafica_colores;
+            $this->resultskeys = $resultskeys;
 
             $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+            $this->emit('renderGraficsModal', $this->grafica_cuentas2,$resultskeys);
 
 
             //apartado para imprimir

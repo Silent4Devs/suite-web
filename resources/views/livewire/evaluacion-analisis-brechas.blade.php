@@ -74,12 +74,12 @@
             opacity: 1;
         }
 
-        input,select {
+        input,select,textarea {
             border:none;
             color: #057BE2
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             border: 1px solid #057BE2;
             outline: none !important;
         }
@@ -374,18 +374,16 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" wire:model.lazy="evidenciaValues.{{ $pregunta->id }}"
-
+                                            <textarea  wire:model.lazy="evidenciaValues.{{ $pregunta->id }}"
                                                 wire:change="saveEvidencia('{{ $pregunta->id }}')"
-                                                value="{{ isset($oldEvidenciaValues[$pregunta->id]) ? $oldEvidenciaValues[$pregunta->id] : $pregunta->respuesta->evidencia ?? '' }}">
+                                                value="{{ isset($oldEvidenciaValues[$pregunta->id]) ? $oldEvidenciaValues[$pregunta->id] : $pregunta->respuesta->evidencia ?? '' }}" style="height:100%; width: 100%;"></textarea>
                                         </td>
                                         <td>
-                                            <input type="text"
+                                            <textarea
                                                 wire:model.lazy="recomendacionValues.{{ $pregunta->id }}"
                                                 wire:change="saveRecomendacion('{{ $pregunta->id }}')"
-                                                value="{{ isset($oldRecomendacionValues[$pregunta->id]) ? $oldRecomendacionValues[$pregunta->id] : $pregunta->respuesta->recomendacion ?? '' }}">
+                                                value="{{ isset($oldRecomendacionValues[$pregunta->id]) ? $oldRecomendacionValues[$pregunta->id] : $pregunta->respuesta->recomendacion ?? '' }}" style="height:100%; width: 100%;"></textarea>
                                         </td>
-
 
                                     </tr>
                                 @endforeach
@@ -550,7 +548,7 @@
                                                         <div class="datatable-fix datatable-rds">
                                                             <table class="table w-100 table-borderless">
                                                                 <thead>
-                                                                    <tr style="background:#EBEBEB !important;">
+                                                                    <tr class="impre-header" style="background-color:#EBEBEB !important;">
                                                                         <th>
                                                                             Sección
                                                                         </th>
@@ -579,7 +577,7 @@
 
                                                                 </tbody>
                                                                 <tfoot>
-                                                                    <tr style="background: #EEFDFF !important;">
+                                                                    <tr class="impre-footer" style="background: #EEFDFF !important;">
                                                                         <td colspan="1">Total</td>
                                                                         <td>100%</td>
                                                                         <td>{{ number_format((float) $sectionPercentages[0]['percentage'], 2, '.') ?? 0 }}%
@@ -589,10 +587,10 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 align-items-center">
+                                                    <div class="col-6 align-items-center" style="display: flex; align-items:center;">
                                                         <!-- HTML structure to contain the bar chart -->
                                                         <div id="contenedor-principal">
-                                                            <canvas id="graf-modal-1" style="width:400px; height:250px;"></canvas>
+                                                            <canvas id="graf-modal-5" ></canvas>
                                                         </div>
 
                                                     </div>
@@ -610,7 +608,7 @@
                                                             <div class="datatable-fix datatable-rds">
                                                                 <table class="table w-100 table-borderless" style="width:100%">
                                                                     <thead >
-                                                                        <tr style="background:#EBEBEB !important;">
+                                                                        <tr class="impre-header" style="background:#EBEBEB !important;">
                                                                             <th>
                                                                                 Estatus
                                                                             </th>
@@ -640,7 +638,7 @@
 
                                                                     </tbody>
                                                                     <tfoot>
-                                                                        <tr style="background: #EEFDFF !important;">
+                                                                        <tr class="impre-footer" style="background: #EEFDFF !important;">
                                                                             <td>Total</td>
                                                                             <td>{{ $results[$key]['totalCount'] ?? 0 }}</td>
                                                                             <td>{{ number_format((float) $results[$key]['total_porcentaje'], 2, '.') ?? 0 }}%</td>
@@ -656,7 +654,7 @@
                                                         </style>
                                                         <div class="col-6" style="display: flex; align-items:center;">
                                                             <div id="contenedor-principal">
-                                                                <canvas id="graf-parametros"></canvas>
+                                                                <canvas id="graf-modal-{{$key}}"></canvas>
                                                             </div>
 
                                                             <!-- HTML structure to contain the bar chart -->
@@ -708,39 +706,54 @@
                             }, ]
                         },
                     });
+    
+                });
+            });
+        </script>
+        {{-- script para graficas del modal --}}
+        <script>
+             document.addEventListener('livewire:load', function() {
+                Livewire.on('renderGraficsModal', (data,resultskeys) => {
+                    console.log(resultskeys);
+                    const colores = @json($grafica_colores2);
+                    const values = Object.values(data);
+                    const valuesColors = Object.values(colores);
 
+                    var ctxGlobal = document.getElementById('graf-modal-5').getContext('2d');
+                    var barChartGlobal = new Chart(ctxGlobal, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(data),
+                            datasets: [{
+                                label: 'Preguntas que cumplen esta valoración',
+                                data: values,
+                                backgroundColor: valuesColors,
+                                borderWidth: 1,
+                            }],
+                        },
+                    });
+                    
+                    resultskeys.forEach(function(objeto, index) {
+                    console.log(Object.values(objeto),index);
+                    var ctx = document.getElementById(`graf-modal-${index}`).getContext('2d');
+                    var barChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(data),
+                            datasets: [{
+                                label: 'Preguntas que cumplen esta valoración',
+                                data: Object.values(objeto),
+                                backgroundColor: valuesColors,
+                                borderWidth: 1,
+                            }],
+                        },
+                    });
+                    });
                 });
             });
         </script>
 
-        {{-- script para que carge la primera grafica --}}
 
-        {{-- <script>
-            document.addEventListener('livewire:load', function () {
-
-                document.getElementById("graf-parametros").appendChild(canvas);
-
-                    let grafica_proyectos = new Chart(document.getElementById('graf-parametros'), {
-                        type: 'bar',
-                        data: {
-                            datasets: [{
-                                label: "Preguntas que cumplen esta valoración:",
-                                data: grafica_cuentas,
-                                backgroundColor: grafica_colores,
-                                lineTension: 0,
-                                fill: true,
-                                options: {
-                                    indexAxis: 'y',
-                                }
-                            }, ]
-                        },
-                    });
-
-            });
-        </script> --}}
-
-
-        {{-- script para graficas del modal --}}
         <script>
             document.addEventListener('livewire:load', function () {
 
@@ -748,8 +761,7 @@
             const colores = @json($grafica_colores2);
             const values = Object.values(data);
             const valuesColors = Object.values(colores);
-            console.log(valuesColors);
-
+            const resultskeys = @json($resultskeys);
 
             var ctx = document.getElementById('graf-parametros').getContext('2d');
             var barChart = new Chart(ctx, {
@@ -765,11 +777,11 @@
                 },
             });
 
-            var ctx = document.getElementById('graf-modal-1').getContext('2d');
-            var barChart = new Chart(ctx, {
+            var ctxGlobal = document.getElementById('graf-modal-5').getContext('2d');
+            var barChartGlobal = new Chart(ctxGlobal, {
                 type: 'bar',
                 data: {
-                    labels: Object.entries(data),
+                    labels: Object.keys(data),
                     datasets: [{
                         label: 'Preguntas que cumplen esta valoración',
                         data: values,
@@ -779,22 +791,23 @@
                 },
             });
 
-                    // var ctx = document.getElementById('graf-modal-1').getContext('2d');
-                    // var donaChart = new Chart(ctx, {
-                    //     type: 'doughnut',
-                    //     data: {
-                    //         labels: ['Dato 1', 'Dato 2'],
-                    //         datasets: [{
-                    //             data:[10,20],
-                    //             backgroundColor: [
-                    //                 'rgba(255, 99, 132, 0.8)',
-                    //                 'rgba(54, 162, 235, 0.8)',
-                    //             ],
-                    //             borderWidth: 1,
-                    //         }],
-                    //     },
-                    // });
-                // });
+            resultskeys.forEach(function(objeto, index) {
+                    console.log(Object.values(objeto),index);
+                    var ctx = document.getElementById(`graf-modal-${index}`).getContext('2d');
+                    var barChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(data),
+                            datasets: [{
+                                label: 'Preguntas que cumplen esta valoración',
+                                data: Object.values(objeto),
+                                backgroundColor: valuesColors,
+                                borderWidth: 1,
+                            }],
+                        },
+                    });
+                    });
+
             });
         </script>
 

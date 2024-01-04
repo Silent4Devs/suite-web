@@ -39,6 +39,23 @@
                 background-color: transparent !important;
             }
 
+            .impre-header {
+                background: #EBEBEB !important;
+            }
+
+            .impre-header th {
+                background: #EBEBEB !important;
+                
+            }
+
+            .impre-footer {
+                background: #EEFDFF !important;
+            }
+
+            .impre-footer td {
+                background: #EEFDFF !important;
+            }
+
         }
     </style>
 @endsection
