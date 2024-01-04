@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('analisis_brechas_iso', function (Blueprint $table) {
+        Schema::table('analisis_brechas_isos', function (Blueprint $table) {
             $table->unsignedInteger('template_id')->nullable();
-            $table->foreign('norma_id')->references('id')->on('normas');
         });
     }
 
