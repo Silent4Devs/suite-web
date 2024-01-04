@@ -95,9 +95,8 @@
                                 <div class="btn" onclick="viewAudit({{ $aud->id }})">
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </div>
-
                                 <form id="deleteForm{{ $aud->id }}"
-                                    action="{{ asset('admin/auditoria-internas/' . $aud->id) }}" method="POST">
+                                    action="{{ route('admin.auditoria-internas.destroy', $aud->id) }}" method="POST">
                                     <div class="dropdown-menu">
                                         <a href="{{ asset('admin/auditoria-internas/' . $aud->id) }}"
                                             class="dropdown-item">
@@ -107,9 +106,10 @@
                                             class="dropdown-item">
                                             <i class="fa-solid fa-pencil"></i>&nbsp;Editar
                                         </a>
-                                        <input type="hidden" name="_method" value="DELETE">
                                         @csrf
-                                        <button class="dropdown-item delete-btn" data-id="{{ $aud->id }}">
+                                        @method('DELETE') <!-- Use the DELETE method -->
+                                        <button type="button" class="dropdown-item delete-btn"
+                                            data-id="{{ $aud->id }}">
                                             <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
                                         </button>
                                     </div>
@@ -201,7 +201,6 @@
 @section('scripts')
     @parent
     <script>
-        // Add event listener to the delete button
         const deleteButtons = document.querySelectorAll('.delete-btn');
         deleteButtons.forEach(button => {
             button.addEventListener('click', function(event) {
@@ -220,13 +219,46 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        const deleteForm = document.getElementById(`deleteForm${audId}`);
-                        deleteForm.submit();
+                        fetch(`/admin/auditoria-internas/${audId}`, {
+                                method: 'DELETE', // Send a DELETE request
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    Swal.fire({
+                                        title: 'Éxito',
+                                        text: 'Registro eliminado con éxito',
+                                        icon: 'success'
+                                    }).then(() => {
+                                        window.location
+                                    .reload(); // Reload the page after successful deletion
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'No se pudo eliminar el registro',
+                                        icon: 'error'
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un problema al eliminar el registro',
+                                    icon: 'error'
+                                });
+                            });
                     }
                 });
             });
         });
     </script>
+
 
     <script>
         function viewAudit(id) {

@@ -207,8 +207,9 @@ class AuditoriaInternaController extends Controller
 
         $auditoriaInterna->delete();
 
-        return back();
+        return response()->json(['status' => 'success']);
     }
+
 
     public function massDestroy(MassDestroyAuditoriaInternaRequest $request)
     {

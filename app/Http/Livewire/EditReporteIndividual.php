@@ -8,6 +8,7 @@ use App\Models\AuditoriaInternasHallazgos;
 use App\Models\AuditoriaInternasReportes;
 use App\Models\ClasificacionesAuditorias;
 use App\Models\Proceso;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -46,7 +47,7 @@ class EditReporteIndividual extends Component
 
     public $comentarios;
 
-    public $reporte;
+    public $reporte = null;
 
     public $hallazgoAuditoriaID;
 
@@ -69,7 +70,15 @@ class EditReporteIndividual extends Component
         if ($this->reporte->exists()) {
             $this->reporte = $this->reporte->first();
         } else {
-            $this->createReporte($audit);
+            foreach ($audit->equipo as $key => $equipo) {
+                # code...
+                if (User::getCurrentUser()->empleado->id == $equipo->id) {
+                    $this->createReporte($audit);
+                    break;
+                } else {
+                    $this->reporte = null;
+                }
+            }
         }
     }
 
@@ -78,29 +87,37 @@ class EditReporteIndividual extends Component
         $procesos = Proceso::getAll();
         $this->reportes_audit = AuditoriaInternasReportes::select('id')->where('id_auditoria', '=', $this->id_auditoria)->get();
         // dd($reportes_audit->count());
-        $datas = AuditoriaInternasHallazgos::where('auditoria_internas_id', '=', $this->id_auditoria)
-            ->where('reporte_id', '=', $this->reporte->id)
-            ->paginate($this->pagination);
+        // dd($this->reporte);
+        if ($this->reporte != null) {
+            $datas = AuditoriaInternasHallazgos::with('clausula', 'clasificacion')->where('auditoria_internas_id', '=', $this->id_auditoria)
+                ->where('reporte_id', '=', $this->reporte->id)
+                ->paginate($this->pagination);
 
-        $clasificacionIds = $this->clasificaciones->pluck('id');
+            $clasificacionIds = $this->clasificaciones->pluck('id');
 
-        $cuentas = ClasificacionesAuditorias::leftJoin('auditoria_internas_hallazgos', function ($join) use ($clasificacionIds) {
-            $join->on('clasificaciones_auditorias.id', '=', 'auditoria_internas_hallazgos.clasificacion_id')
-                ->whereIn('auditoria_internas_hallazgos.clasificacion_id', $clasificacionIds)
-                ->where('auditoria_internas_hallazgos.auditoria_internas_id', $this->id_auditoria)
-                ->where('auditoria_internas_hallazgos.reporte_id', $this->reporte->id)
-                ->where('auditoria_internas_hallazgos.deleted_at', null);
-        })
-            ->select(
-                'clasificaciones_auditorias.id as clasificacion_id',
-                DB::raw('COUNT(auditoria_internas_hallazgos.id) as count'),
-                'clasificaciones_auditorias.nombre_clasificaciones as nombre'
-            )
-            ->groupBy('clasificaciones_auditorias.id')
-            ->get();
+            $cuentas = ClasificacionesAuditorias::leftJoin('auditoria_internas_hallazgos', function ($join) use ($clasificacionIds) {
+                $join->on('clasificaciones_auditorias.id', '=', 'auditoria_internas_hallazgos.clasificacion_id')
+                    ->whereIn('auditoria_internas_hallazgos.clasificacion_id', $clasificacionIds)
+                    ->where('auditoria_internas_hallazgos.auditoria_internas_id', $this->id_auditoria)
+                    ->where('auditoria_internas_hallazgos.reporte_id', $this->reporte->id)
+                    ->where('auditoria_internas_hallazgos.deleted_at', null);
+            })
+                ->select(
+                    'clasificaciones_auditorias.id as clasificacion_id',
+                    DB::raw('COUNT(auditoria_internas_hallazgos.id) as count'),
+                    'clasificaciones_auditorias.nombre_clasificaciones as nombre'
+                )
+                ->groupBy('clasificaciones_auditorias.id')
+                ->get();
 
-        $this->comentarios = $this->reporte->comentarios;
-
+            $this->comentarios = $this->reporte->comentarios;
+        } else {
+            $datas = null;
+            $clasificacionIds = null;
+            $cuentas = null;
+            $this->comentarios = null;
+        }
+        // dd($cuentas);
         return view('livewire.edit-reporte-individual', compact('procesos', 'datas', 'cuentas'))
             ->with('clasificaciones', $this->clasificaciones)
             ->with('clausulas', $this->clausulas)
