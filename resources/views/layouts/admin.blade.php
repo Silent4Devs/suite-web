@@ -161,7 +161,7 @@
                         </div>
                         <span>Finanzas</span>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('admin.iso27001.inicio-guia') }}">
                         <div class="caja-icon-mod-header" style="background: #F1F1F1;">
                             <i class="material-symbols-outlined">emoji_people</i>
                         </div>

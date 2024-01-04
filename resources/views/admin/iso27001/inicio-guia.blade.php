@@ -3,6 +3,16 @@
     <link rel="stylesheet" href="{{ asset('css/guia_iso.css') }}">
 @endsection
 @section('content')
+    <style>
+        .c-main {
+            margin-top: 0px !important;
+            padding-top: 0px !important;
+        }
+
+        .container-fluid {
+            padding: 0 !important;
+        }
+    </style>
     <div class="d-flex">
         <div class="info-inicio-guia">
             <h4>
@@ -22,7 +32,7 @@
             </ul>
 
             <div class="mt-5">
-                <a href="" class="btn btn-continuar-iso">
+                <a href="{{ route('admin.iso27001.normas-guia') }}" class="btn btn-continuar-iso">
                     CONTINUAR
                 </a>
             </div>
