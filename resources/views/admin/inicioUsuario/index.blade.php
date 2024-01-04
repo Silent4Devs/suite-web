@@ -95,7 +95,7 @@
             <div class="card card-body">
                 <div id="user-equipo" class="mis-cards active">
                     <h3 class="title-user-card">Mi equipo</h3>
-                    <hr class="my-4">
+                    <hr class="mt-4">
                     <div class="caja-equipo content-mi-card scroll_estilo">
                         @forelse ($equipo_a_cargo as $empleado)
                             <div class="d-flex align-items-center mt-4" style="gap: 30px;">
@@ -161,11 +161,52 @@
                 </div>
                 <div id="user-activos" class="mis-cards">
                     <h3 class="title-user-card">Mis activos</h3>
-                    <hr class="my-4">
+                    <hr class="mt-4">
+
+
+                    <div class="caja-activos">
+
+                        @if ($activos)
+                            @foreach ($activos as $activo)
+                                <div class="mt-5 d-flex align-items-center" style="gap: 15px;">
+                                    <div class="icon-activo">
+                                        <i class="material-symbols-outlined"> laptop_mac</i>
+                                    </div>
+                                    <div class="info-activo">
+                                        <strong>ACT-{{ $activo->id }}</strong> <br>
+                                        <strong>{{ $activo->nombreactivo }}</strong> <br><br>
+                                        <strong>Serie: </strong> {{ $activo->descripcion }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            &nbsp;
+                        @endif
+                    </div>
+
                 </div>
                 <div id="user-competencias" class="mis-cards">
                     <h3 class="title-user-card">Mis competencias</h3>
                     <hr class="my-4">
+
+                    <div class="caja-activos content-mi-card scroll_estilo">
+
+                        <div class="">
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
         </div>
