@@ -155,7 +155,7 @@
                         </div>
                         <span>Capacitaciones</span>
                     </a>
-                    <a href="#">
+                    <a href="{{ asset('contract_manager/requisiciones') }}  ">
                         <div class="caja-icon-mod-header" style="background: #BFFFE9;">
                             <i class="material-symbols-outlined">request_quote</i>
                         </div>
@@ -197,7 +197,7 @@
                         </div>
                         <span>Visitantes</span>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('admin.capital-humano.index') }}">
                         <div class="caja-icon-mod-header" style="background: #FFD3BF;">
                             <i class="material-symbols-outlined">diversity_3</i>
                         </div>

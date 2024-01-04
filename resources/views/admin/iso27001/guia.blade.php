@@ -188,7 +188,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
-                    <button class="btn btn-previous">Atras</button>
+                    <button class="btn btn-previous">Atrás</button>
                     <button class="btn btn-netx">Siguiente paso</button>
                 </div>
             </div>
@@ -283,7 +283,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
-                    <button class="btn btn-previous">Atras</button>
+                    <button class="btn btn-previous">Atrás</button>
                     <button class="btn btn-netx">Siguiente paso</button>
                 </div>
             </div>
@@ -381,7 +381,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
-                    <button class="btn btn-previous">Atras</button>
+                    <button class="btn btn-previous">Atrás</button>
                     <button class="btn btn-netx">Siguiente paso</button>
                 </div>
             </div>
@@ -464,7 +464,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
-                    <button class="btn btn-previous">Atras</button>
+                    <button class="btn btn-previous">Atrás</button>
                     <button class="btn btn-netx">Siguiente paso</button>
                 </div>
             </div>
@@ -534,7 +534,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
-                    <button class="btn btn-previous">Atras</button>
+                    <button class="btn btn-previous">Atrás</button>
                     <button class="btn btn-netx">Siguiente paso</button>
                 </div>
             </div>
@@ -577,7 +577,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <button class="btn btn-previous">Atras</button>
+                    <button class="btn btn-previous">Atrás</button>
                 </div>
             </div>
 
