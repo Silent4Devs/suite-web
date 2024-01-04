@@ -21,6 +21,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 use Yajra\DataTables\Facades\DataTables;
@@ -356,5 +357,16 @@ class AuditoriaInternaController extends Controller
         } catch (Throwable $e) {
             return response()->json(['success' => false]);
         }
+    }
+
+    public function pdf($id)
+    {
+        $auditoriaInterna = AuditoriaInterna::find($id);
+        $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team', 'reportes.empleado', 'reportes.hallazgos');
+        // dd($auditoriaInterna);
+        $pdf = PDF::loadView('admin\auditoriaInternas\auditoria_interna_pdf', compact('auditoriaInterna'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('auditoria_Interna.pdf');
     }
 }

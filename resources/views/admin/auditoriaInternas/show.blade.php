@@ -219,12 +219,23 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-                    <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Regresar</a>
-                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                    <div class="row">
+                        <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Regresar</a>
+                        <form method="POST"
+                            action="{{ route('admin.auditoria-internas.pdf', ['id' => $auditoriaInterna->id]) }}">
+                            @csrf
+                            <div class="justify-content-right">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    {{-- <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
-                    </button>
+                    </button> --}}
 
                     @php
                         use App\Models\Organizacion;
