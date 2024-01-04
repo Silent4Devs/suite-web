@@ -79,3 +79,11 @@
     justify-content: center;
     align-items: center;
 }
+
+.mis-cards {
+    display: none;
+}
+
+.mis-cards.active {
+    display: block;
+}
