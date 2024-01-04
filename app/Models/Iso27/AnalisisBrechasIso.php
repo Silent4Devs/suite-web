@@ -35,6 +35,11 @@ class AnalisisBrechasIso extends Model implements Auditable
     {
         return $this->belongsTo(Norma::class,'norma_id');
     }
+
+    public function evaluacionTemplateAnalisisBrechas()
+    {
+        return $this->hasOne(EvaluacionTemplatesAnalisisBrechas::class, 'analisis_brechas_id', 'id');
+    }
     // public function evaluacion(){
     //     return $this->hasOne(EvaluacionTemplatesAnalisisBrechas::class, );
     // }

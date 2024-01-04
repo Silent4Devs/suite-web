@@ -29,4 +29,9 @@ class TemplateAnalisisdeBrechas extends Model
     {
         return $this->hasMany(ParametrosTemplateAnalisisdeBrechas::class, 'template_id', 'id');
     }
+
+    public function evaluacionTemplatesAnalisisBrechas($id)
+    {
+        return self::select('id','nombre_template','norma_id','descripcion','no_secciones','top')->findOrFail($id);
+    }
 }

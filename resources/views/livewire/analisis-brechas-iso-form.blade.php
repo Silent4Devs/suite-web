@@ -50,6 +50,10 @@
             border-bottom:none !important;
         }
 
+        .rounded-card{
+            border-radius: 16px;
+        }
+
 
     </style>
 
@@ -251,7 +255,7 @@
                                 {{$analisis_brecha->empleado->name}}
                             </td>
                             <td style="display: flex; justify-content:center;" >
-                                <i class="material-icons-outlined" style="cursor: pointer;">
+                                <i class="material-icons-outlined" style="cursor: pointer;" wire:click="analisis({{$analisis_brecha->id}})">
                                         visibility
                                     </i>
                             </td>
@@ -354,7 +358,17 @@
 <script>
  document.addEventListener("DOMContentLoaded", function() {
      Livewire.on("selectedCardAlert", function(){
-         Swal.fire("Debe seleccionar un template");
+         Swal.fire({
+        title: "Importante",
+        text: "Seleciona un template del carrusel",
+        imageUrl: @json($imagenID),
+        imageWidth: 100,
+        imageHeight: 100,
+        imageAlt: "Custom image",
+        customClass: {
+            popup: 'rounded-card'
+        }
+});
      })
  });
 </script>

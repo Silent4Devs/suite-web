@@ -18,7 +18,7 @@
                                 Fecha de creación</th>
                             <th style="background-color:rgb(255, 255, 255); color:#414141;">No de preguntas</th>
                             <th style="background-color:rgb(255, 255, 255); color:#414141;">Top 8</th>
-                            <th style="background-color:rgb(255, 255, 255); color:#414141;"></th> 
+                            <th style="background-color:rgb(255, 255, 255); color:#414141;"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,12 +53,12 @@
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        {{--<a class="dropdown-item" wire:click="edit({{ $analisis_brecha->id }})">
+                                        <a class="dropdown-item" href="{{route('admin.templates.edit',$analisis->id)}}">
                                             <div class="d-flex align-items-start">
                                                 <i class="material-icons-outlined" style="width: 24px;font-size:18px;">edit_outline</i>
                                                 Editar
                                             </div>
-                                        </a>--}}
+                                        </a>
                                         <a class="dropdown-item" wire:click="$emit('delete',{{$analisis->id}})">
                                             <div class="d-flex align-items-start">
                                                 <i class="material-icons-outlined" style="width: 24px;font-size:18px;">delete_outlined</i>

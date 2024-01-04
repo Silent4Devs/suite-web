@@ -40,6 +40,10 @@ class EvaluacionAnalisisBrechas extends Component
 
     public function render()
     {
+        // $test = TemplateAnalisisdeBrechas::find($this->itemId);
+        // dd($test);
+
+
         $template_general = TemplateAnalisisdeBrechas::with('parametros')
             ->with('secciones')
             ->find($this->itemId);
