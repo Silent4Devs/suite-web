@@ -34,8 +34,13 @@ pipeline {
 
         stage('Permisos') {
             steps {
-                sh 'cd /var/contenedor/suite-web'
-                sh 'chmod -R 777 /var/contenedor/suite-web'
+                script {
+                    dir('/var/contenedor/suite-web') {
+                        // Ejecutar comandos en el directorio
+                        sh 'ls -la'  // Puedes agregar comandos adicionales aquí
+                        sh 'chmod -R 777 /var/contenedor/suite-web'
+                    }
+              }
             }
         }
 
