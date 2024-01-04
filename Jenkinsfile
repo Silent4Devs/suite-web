@@ -31,15 +31,6 @@ pipeline {
             }
         }
 
-
-        stage('Permisos') {
-            steps {
-                script {
-                     sh "ssh usuario@192.168.9.78 'sudo chmod -R 777 /var/contenedor/suite-web'"
-              }
-            }
-        }
-
         stage('Deploy via SSH') {
             steps {
                 script {
