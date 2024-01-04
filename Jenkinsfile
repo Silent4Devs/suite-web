@@ -32,18 +32,16 @@ pipeline {
         }
 
 
-        stage('Testing') {
+        stage('Permisos') {
             steps {
-                sh 'cd Testing/Calendario'
-                sh 'pip install pytest'
-                sh 'pip install selenium'
+                sh 'cd /var/contenedor/suite-web'
+                sh 'chmod -R 777 /var/contenedor/suite-web'
             }
         }
 
         stage('Deploy via SSH') {
             steps {
                 script {
-                    sh 'sudo chmod -R 777 /var/contenedor/suite-web'
                     sshagent(['/root/.ssh/id_rsa.pub']) {
                         sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
                     }
