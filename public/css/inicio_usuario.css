@@ -65,7 +65,7 @@
 
 .caja-btns-op-equipo-user {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
 }
 
 .caja-btns-op-equipo-user i {
@@ -86,4 +86,9 @@
 
 .mis-cards.active {
     display: block;
+}
+
+.content-mi-card {
+    max-height: 410px;
+    overflow: auto;
 }

@@ -96,25 +96,67 @@
                 <div id="user-equipo" class="mis-cards active">
                     <h3 class="title-user-card">Mi equipo</h3>
                     <hr class="my-4">
-                    <div class="caja-equipo">
-                        <div class="d-flex align-items-center" style="gap: 30px;">
-                            <div class="img-person" style="width: 90px; height:90px;">
-                                <img src="" alt="">
-                            </div>
-                            <div>
-                                <p class="mb-1">
-                                    <strong>Mauricio David Blancas García</strong>
-                                </p>
-                                <p>
-                                    Mauricio.blancas@silent4business.com
-                                </p>
-                                <div class="caja-btns-op-equipo-user">
-                                    <a href=""><i class="bi bi-phone"></i></a>
-                                    <a href=""><i class="bi bi-whatsapp"></i></a>
-                                    <a href=""><i class="bi bi-envelope"></i></a>
+                    <div class="caja-equipo content-mi-card scroll_estilo">
+                        @forelse ($equipo_a_cargo as $empleado)
+                            <div class="d-flex align-items-center mt-4" style="gap: 30px;">
+                                <div class="img-person" style="width: 90px; height:90px;">
+                                    <img src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}"
+                                        alt="">
+                                </div>
+                                <div>
+                                    <p class="mb-1">
+                                        <strong>{{ $empleado->name }}</strong>
+                                    </p>
+                                    <p>
+                                        {{ $empleado->email }}
+                                    </p>
+                                    <div class="caja-btns-op-equipo-user">
+                                        <a
+                                            href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}">
+                                            <i class="bi bi-phone"></i>
+                                        </a>
+                                        <a
+                                            href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}">
+                                            <i class="bi bi-whatsapp"></i>
+                                        </a>
+                                        <a href="mailto:{{ $empleado->email }}">
+                                            <i class="bi bi-envelope"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @empty
+                            @foreach ($equipo_trabajo as $empleado)
+                                <div class="d-flex align-items-center mt-4" style="gap: 30px;">
+                                    <div class="img-person" style="width: 90px; height:90px;">
+                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}"
+                                            alt="">
+                                    </div>
+                                    <div>
+                                        <p class="mb-1">
+                                            <strong>{{ $empleado->name }}</strong>
+                                        </p>
+                                        <p>
+                                            {{ $empleado->email }}
+                                        </p>
+                                        <div class="caja-btns-op-equipo-user">
+                                            <a
+                                                href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}">
+                                                <i class="bi bi-phone"></i>
+                                            </a>
+                                            <a
+                                                href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}">
+                                                <i class="bi bi-whatsapp"></i>
+                                            </a>
+                                            <a href="mailto:{{ $empleado->email }}">
+                                                <i class="bi bi-envelope"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endforelse
+
                     </div>
                 </div>
                 <div id="user-activos" class="mis-cards">
