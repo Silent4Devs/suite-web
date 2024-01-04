@@ -26,7 +26,7 @@ class AceptarAlcance extends Component
             $this->acepto_alcance = false;
         }
 
-        return view('livewire.aceptar-politica');
+        return view('livewire.aceptar-alcance');
     }
 
     public function aceptar($id_alcance)
