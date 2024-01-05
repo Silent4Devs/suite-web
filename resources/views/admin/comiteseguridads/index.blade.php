@@ -152,18 +152,6 @@
                 //dtButtons.push(deleteButton)
             @endcan
             @can('comformacion_comite_seguridad_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar nuevo comite de seguridad',
-                    url: "{{ route('admin.comiteseguridads.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
                 let btnExport = {
                     text: '<i class="fas fa-download"></i>',
                     titleAttr: 'Descargar plantilla',
@@ -184,8 +172,6 @@
                         $('#xlsxImportModal').modal('show');
                     }
                 };
-
-                dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
@@ -233,9 +219,9 @@
                                     if (miembros.length > maxVisibleImages) {
                                         // Si hay más de tres imágenes, mostrar el botón de más
                                         html += `
-                                                <button type="button" class="btn btn-xs rounded-circle" data-toggle="modal" data-target="#miembrosModal" style="background-color: #f7f3d2; width: 20px; height: 20px; font-size: 10px; line-height: 14px; border: none;">
-                                                    +
-                                                </button>
+                                        <button type="button" class="btn btn-xs rounded-circle" data-toggle="modal" data-target="#miembrosModal" style="background-color: #f7f3d2; width: 20px; height: 20px; font-size: 10px; line-height: 14px; border: none; border-radius: 50%;">
+                                            +3
+                                        </button>
                                         `;
 
                                         // Modal con las imágenes adicionales

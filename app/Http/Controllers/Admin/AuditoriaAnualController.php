@@ -102,8 +102,8 @@ class AuditoriaAnualController extends Controller
 
         $request->validate([
             'nombre' => 'required|string',
-            'fechainicio' => 'nullable|date',
-            'fechafin' => 'nullable|date',
+            'fechainicio' => 'nullable|date|before_or_equal:fechafin',
+            'fechafin' => 'nullable|date|after_or_equal:fechainicio',
             'objetivo' => 'required|string',
             'alcance' => 'required|string',
         ]);
@@ -132,8 +132,8 @@ class AuditoriaAnualController extends Controller
 
         $request->validate([
             'nombre' => 'required|string',
-            'fechainicio' => 'nullable|date',
-            'fechafin' => 'nullable|date',
+            'fechainicio' => 'nullable|date|before_or_equal:fechafin',
+            'fechafin' => 'nullable|date|after_or_equal:fechainicio',
             'objetivo' => 'required|string',
             'alcance' => 'required|string',
         ]);

@@ -50,7 +50,7 @@
             border-top-left-radius: 15px; /* Aplica esquinas redondeadas solo en la esquina superior izquierda */
             border-top-right-radius: 15px; /* Aplica esquinas redondeadas solo en la esquina superior derecha */
             position: relative;
-            left: 2rem;
+            left: .5rem;
             top: 2rem;
         }
 
@@ -71,7 +71,7 @@
         <div class="card card-body">
             <div class="col-sm-12 d-flex align-items-center">
                 <div>
-                    <p class="quitar">{{$data->politicasgsi}}</p>
+                    <p class="quitar">{!! \Illuminate\Support\Str::limit(strip_tags($data->politicasgsi), 1050) !!}</p>
                 </div>
                 <div class="ml-auto">
                     <img src="{{ asset('comite.png') }}" alt="Comite Image">

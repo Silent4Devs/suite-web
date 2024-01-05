@@ -4,76 +4,81 @@
     <a class="d-inline" data-toggle="modal" data-target="#modalFortalezas">
         <i class="material-icons" style="cursor: pointer;">edit</i>
     </a>
-    <div class="modal fade" id="modalFortalezas"  tabindex="-1" aria-labelledby="modalFortalezasLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="modalFortalezas" tabindex="-1" aria-labelledby="modalFortalezasLabel" aria-hidden="true"  wire:ignore.self>
+        <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 10rem;"  class="close" data-dismiss="modal" aria-label="Close" >
+            <i class="fa-solid fa-x fa-2xl"
+            style="color: #ffffff;"></i>
+        </button>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Fortalezas</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
+                <div class="line"></div>
                 <div class="modal-body">
                     <div class="mt-2 form-group anima-focus">
-                        <textarea class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza" placeholder=""></textarea>
+                        <textarea class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza"></textarea>
                         @error('fortaleza')
-                        <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+                            <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
                         @enderror
                         <label for="fortaleza">Agrega una fortaleza</label>
                     </div>
                     <div class="mb-3 col-12 mt-4 " style="text-align: end">
                         <button type="button" wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}"
-                        class="btn btn-light text-dark border border-dark">ddd</button>
+                            class="btn btn-light text-dark border border-dark">{{ $view == 'create' ? 'Agregar Fortaleza' : 'Actualizar' }}</button>
                     </div>
-                    <div class="datatable-fix datatable-rds">
+                    <div class="datatable-fix ">
                         <table class="table w-100" id="contactos_table" style="width:100%">
-                                <thead>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Fortaleza</th>
+                                    <th style="min-width:100px;">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($fortalezas as $index => $fortaleza)
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Fortaleza</th>
-                                        <th style="min-width:100px;">Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($fortalezas as $index => $fortaleza)
-                                        <tr>
-                                            <td>
-                                                {{ $index + 1 }}
-                                            </td>
-                                            <td>
-                                                {{ $fortaleza->fortaleza }}
-                                            </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn dropdown-toggle" type="button"
+                                        <td>
+                                            {{ $index + 1 }}
+                                        </td>
+                                        <td>
+                                            {{ $fortaleza->fortaleza }}
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn dropdown-toggle" type="button"
                                                     data-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" wire:click="edit({{ $fortaleza->id }})">
-                                                            <div class="d-flex align-items-start">
-                                                                <i class="material-icons-outlined" style="width: 24px;font-size:18px;">edit_outline</i>
-                                                                Editar
-                                                            </div>
-                                                        </a>
-                                                        <a class="dropdown-item" wire:click="$emit('delete',{{$fortaleza->id}})">
-                                                            <div class="d-flex align-items-start">
-                                                                <i class="material-icons-outlined" style="width: 24px;font-size:18px;">delete_outlined</i>
-                                                                Eliminar
-                                                            </div>
-                                                        </a>
-                                                    </div>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" wire:click="edit({{ $fortaleza->id }})">
+                                                        <div class="d-flex align-items-start">
+                                                            <i class="material-icons-outlined"
+                                                                style="width: 24px;font-size:18px;">edit_outline</i>
+                                                            Editar
+                                                        </div>
+                                                    </a>
+                                                    <a class="dropdown-item"
+                                                        wire:click="$emit('delete',{{ $fortaleza->id }})">
+                                                        <div class="d-flex align-items-start">
+                                                            <i class="material-icons-outlined"
+                                                                style="width: 24px;font-size:18px;">delete_outlined</i>
+                                                            Eliminar
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                            </td>
-                                        </tr>
-
-                                    @endforeach
-                                </tbody>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light text-primary border border-primary" data-dismiss="modal">Guardar</button>
+                    <button type="button" class="btn btn-light text-primary border border-primary"
+                        data-dismiss="modal">Ver FODA</button>
                 </div>
             </div>
         </div>
@@ -176,12 +181,11 @@
             })
         })
     </script> --}}
-
     @yield('js')
 
-       <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
-            Livewire.on("delete", id=>{
+            Livewire.on("delete", id => {
                 Swal.fire({
                     title: "Remover Fortaleza del foda",
                     text: "¿Esta seguro que desea eliminar la fortaleza del FODA?",
@@ -192,17 +196,17 @@
                     confirmButtonText: "Eliminar",
                     cancelButtonText: "Cancelar",
                 }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.emitTo('fortalezas-component','destroy',id);
-                    Swal.fire({
-                    title: "Eliminado",
-                    text: "La Fortaleza se elimino con éxito",
-                    icon: "success"
-                    });
-                }
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('fortalezas-component', 'destroy', id);
+                        Swal.fire({
+                            title: "Eliminado",
+                            text: "La Fortaleza se elimino con éxito",
+                            icon: "success"
+                        });
+                    }
                 });
             })
         });
-       </script>
+    </script>
 
 </div>

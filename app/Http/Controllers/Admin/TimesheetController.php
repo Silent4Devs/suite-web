@@ -291,9 +291,9 @@ class TimesheetController extends Controller
             }
 
             if ($timesheet_nuevo->estatus == 'pendiente') {
-                $aprobador = Empleado::getDataColumns()->find($usuario->empleado->supervisor_id);
+                $aprobador = Empleado::find($usuario->empleado->supervisor_id);
 
-                $solicitante = Empleado::getDataColumns()->find($usuario->empleado->id);
+                $solicitante = Empleado::find($usuario->empleado->id);
 
                 try {
                     // Enviar correo

@@ -76,6 +76,17 @@
             color: #606060;
             text-align: left;
         }
+        .btn{
+            box-shadow: none !important;
+        }
+        #btn_cancelar{
+    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+    border: 1px solid var(--unnamed-color-057be2);
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #057BE2;
+    border-radius: 4px;
+    opacity: 1;
+    }
     </style>
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
     <h5 class="col-12 titulo-matriz">Matriz de Requisitos Legales y Regulatorios</h5>
@@ -148,8 +159,7 @@
                                         type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
                                         value="{{ old('fechaexpedicion') }}"
                                         wire:model.defer='alcance.fechaexpedicion' required>
-                                        {!! Form::label('fechaexpedicion', 'Fecha de
-                                        publicación*', ['class' => 'asterisco']) !!}
+                                        {!! Form::label('fechaexpedicion', 'Fecha de expedición*', ['class' => 'asterisco']) !!}
                             </div>
                             <br>
                             <br>
@@ -159,8 +169,7 @@
                                         type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
                                         value="{{ old('fechavigor') }}"
                                         wire:model.defer='alcance.fechavigor' required>
-                                        {!! Form::label('fechavigor', 'Fecha de
-                                        publicación*', ['class' => 'asterisco']) !!}
+                                        {!! Form::label('fechavigor', 'Fecha de entrada en vigor*', ['class' => 'asterisco']) !!}
                             </div>
                         </div>
 
@@ -319,7 +328,7 @@
         <div class="text-right form-group col-12">
             <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
             </span>
-            <a href="#" class="btn boton-cancelar" onclick="confirmarCancelar()">
+            <a href="#" class="btn" id="btn_cancelar" style="color:#057BE2; height:3rem;" onclick="confirmarCancelar()">
                 <div class="mt-2">Cancelar</div>
             </a>
             <button class="btn boton-enviar ml-2 mr-2" type="submit">

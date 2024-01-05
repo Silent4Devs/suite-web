@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
-use App\Models\Iso27\AnalisisBrechasIso;
 
 /**
  * Class Norma.
@@ -51,5 +50,4 @@ class Norma extends Model implements Auditable
     {
         return $this->hasMany(Objetivosseguridad::class);
     }
-
 }

@@ -227,6 +227,10 @@ class RequisicionesController extends Controller
             $requisicion->fecha_firma_jefe_requi = $fecha;
             $requisicion->save();
             $userEmail = 'lourdes.abadia@silent4business.com';
+
+            $organizacion = Organizacion::getFirst();
+
+            Mail::to('ldelgadillo@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_finanzas') {
             $fecha = date('d-m-Y');
@@ -297,7 +301,7 @@ class RequisicionesController extends Controller
             }
         } elseif ($requisicion->firma_finanzas === null) {
             $user = User::getCurrentUser();
-            if ($user->name === 'Lourdes Del Pilar Abadia Velasco') {
+            if ($user->name === 'Lourdes Del Pilar Abadia Velasco' || $user->name === 'Layla Esperanza Delgadillo Aguilar') {
                 $tipo_firma = 'firma_finanzas';
             } else {
                 return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar');

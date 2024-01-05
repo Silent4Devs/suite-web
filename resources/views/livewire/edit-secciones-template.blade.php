@@ -48,7 +48,7 @@
                 <div class="form-row">
                     <div class="col-1 color-picker">
                         <input type="color" id="color_estatus_1" name="color_estatus_1"
-                            wire:model.defer="color_estatus_1" class="color-input form-control" value="#34B990"
+                            wire:model.defer="color_estatus_1" class="color-input form-control"
                             title="Seleccione un color">
                     </div>
                     <div class="col-3">
@@ -78,7 +78,7 @@
                 <div class="form-row">
                     <div class="col-1 color-picker">
                         <input type="color" id="color_estatus_2" name="color_estatus_2"
-                            wire:model.defer="color_estatus_2" class="color-input form-control" value="#73A7D5"
+                            wire:model.defer="color_estatus_2" class="color-input form-control"
                             title="Seleccione un color">
                     </div>
                     <div class="col-3">
@@ -108,7 +108,7 @@
                 <div class="form-row">
                     <div class="col-1 color-picker">
                         <input type="color" id="color_estatus_3" name="color_estatus_3"
-                            wire:model.defer="color_estatus_3" class="color-input form-control" value="#F59595"
+                            wire:model.defer="color_estatus_3" class="color-input form-control"
                             title="Seleccione un color">
                     </div>
                     <div class="col-3">
@@ -138,7 +138,7 @@
                 <div class="form-row">
                     <div class="col-1 color-picker">
                         <input type="color" id="color_estatus_4" name="color_estatus_4"
-                            wire:model.defer="color_estatus_4" class="color-input form-control" value="#EEEEEE"
+                            wire:model.defer="color_estatus_4" class="color-input form-control"
                             title="Seleccione un color">
                     </div>
                     <div class="col-3">

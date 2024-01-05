@@ -104,70 +104,58 @@
         <div class="card-body">
             <h5 class="titulo-card">Alcance</h5>
             <hr>
-            <form method="POST" action="{{ route('admin.alcance-sgsis.store') }}" enctype="multipart/form-data">
+            <form method="POST" id="formularioAprobacion" action="{{ route('admin.alcance-sgsis.store') }}" enctype="multipart/form-data">
                 @csrf
-                <div class="form-group">
-                    <div class="form-floating" style="">
-                        <input class="form-control form" placeholder="Agrega un nombre al alcance" id="nombre"
-                            name="nombre" value="{{ old('nombre') }}" required>
+                <div class="form-group anima-focus">
+                    <input
+                    class="form-control form"
+                    placeholder=""
+                    id="nombre"
+                    name="nombre"
+                    value="{{ old('nombre') }}"
+                    required
+                    maxlength="255"
+                    pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"
+                    title="Por favor, introduce un nombre válido con un máximo de 255 caracteres y caracteres de varios idiomas." >
+
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
                             </div>
                         @endif
-                        <label for="nombre" style="color: #606060;">
-                            Nombre del alcance
-                        </label>
-                    </div>
+                        {!! Form::label('nombre', 'Nombre del alcance*', ['class' => 'asterisco']) !!}
                 </div>
-                <div class="form-floating">
-                    <input required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form"
-                        name="alcancesgsi" id="alcancesgsi" value="{{ old('alcancesgsi') }}"placeholder="Alcance">
-                    <label for="alcancesgi" style="color: #606060;">Alcance</label>
+                <div class="form-group anima-focus">
+                    <input required  maxlength="255"  pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"  class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form"
+                        name="alcancesgsi" id="alcancesgsi" value="{{ old('alcancesgsi') }}"placeholder="">
+                        {!! Form::label('alcancesgsi', 'Alcance*', ['class' => 'asterisco']) !!}
                 </div>
         </div>
 
         <div class="row mb-3" style="padding-left:18px; padding-right:18px;">
-            <div class="form-floating col-sm-6">
+            <div class="form-group anima-focus col-sm-6">
                 <input required class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }} form"
                     type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
-                    value="{{ old('fecha_publicacion') }}" placeholder="Fecha de publicación">
+                    value="{{ old('fecha_publicacion') }}" placeholder="">
                 @if ($errors->has('fecha_publicacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_publicacion') }}
                     </div>
                 @endif
-                <label class="required ml-2" for="fecha_publicacion" style="color: #606060;">Fecha de
-                    Publicacion</label>
+                {!! Form::label('fecha_publicacion', 'Fecha de publicación*', ['class' => 'asterisco']) !!}
+
             </div>
-            <div class="form-floating col-sm-6" style="">
+            <div class="form-group anima-focus col-sm-6" style="">
                 <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }} form"
                     placeholder="Fecha de publicación" type="date" name="fecha_revision" id="fecha_revision"
-                    min="1945-01-01" value="{{ old('fecha_revision') }}" placeholder="Fecha de revisión">
-                @if ($errors->has('fecha_publicacion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fecha_publicacion') }}
-                    </div>
-                @endif
-                <label class="required ml-2" for="fecha_revision">Fecha
-                    de
-                    revisión</label>
-            </div>
-
-
-            {{-- <div class="form-group col-sm-6">
-                <label class="required" for="fecha_revision">Fecha
-                    de
-                    revisión</label>
-                <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
-                    type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
-                    value="{{ old('fecha_revision') }}">
+                    min="1945-01-01" value="{{ old('fecha_revision') }}" placeholder="">
                 @if ($errors->has('fecha_revision'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_revision') }}
                     </div>
                 @endif
-            </div> --}}
+                {!! Form::label('fecha_revision', 'Fecha de revision*', ['class' => 'asterisco']) !!}
+            </div>
         </div>
     </div>
     </form>
@@ -202,7 +190,7 @@
             </div>
         </div>
         {{-- <a href="{{ route('admin.alcance-sgsis.index') }}"> --}}
-        <button onclick="redirigirARuta()" type="button" class="btn boton-enviar mr-2" data-bs-toggle="modal"
+        <button onclick="redirigirARuta()" type="button" class="btn btn-primary boton-enviar mr-2" data-bs-toggle="modal"
             data-bs-target="#aprobacion" style="font-size:14px;width:250px;">
             {{ trans('global.save') }} y enviar a aprobación
         </button>
@@ -228,7 +216,9 @@
 @section('scripts')
     <script>
         function redirigirARuta() {
-            // Esperar 10 segundos antes de redirigir a la ruta de Laravel
+
+            document.getElementById('formularioAprobacion').submit();
+
             setTimeout(function() {
                 window.location.href = "{{ route('admin.alcance-sgsis.index') }}";
             }, 3000); // 10000 milisegundos (10 segundos)

@@ -84,7 +84,7 @@
                                 {!! $aud->objetivo !!}
                             </td>
                             <td style="text-align: center;">
-                                <a href="{{ route('admin.auditoria-internas.reporteIndividual', $aud->id_auditoria) }}">
+                                <a href="{{ route('admin.auditoria-internas.reporteIndividual', $aud->id) }}">
                                     <i class="fa-solid fa-user-check" style="color:#5A5A5A;"></i>
                                 </a>
                             </td>
@@ -95,19 +95,21 @@
                                 <div class="btn" onclick="viewAudit({{ $aud->id }})">
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </div>
-
-                                <form action="{{ asset('admin/auditoria-internas/' . $aud->id) }}" method="POST">
+                                <form id="deleteForm{{ $aud->id }}"
+                                    action="{{ route('admin.auditoria-internas.destroy', $aud->id) }}" method="POST">
                                     <div class="dropdown-menu">
-                                        <a href="{{ asset('admin/auditoria-internas/' . $aud->id) }}" class="dropdown-item">
-                                            <i class="fa-solid fa-trash"></i>&nbsp;Ver
+                                        <a href="{{ asset('admin/auditoria-internas/' . $aud->id) }}"
+                                            class="dropdown-item">
+                                            <i class="fa-solid fa-eye"></i>&nbsp;Ver
                                         </a>
                                         <a href="{{ route('admin.auditoria-internas.edit', $aud->id) }}"
                                             class="dropdown-item">
                                             <i class="fa-solid fa-pencil"></i>&nbsp;Editar
                                         </a>
-                                        <input type="hidden" name="_method" value="DELETE">
                                         @csrf
-                                        <button class="dropdown-item">
+                                        @method('DELETE') <!-- Use the DELETE method -->
+                                        <button type="button" class="dropdown-item delete-btn"
+                                            data-id="{{ $aud->id }}">
                                             <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
                                         </button>
                                     </div>
@@ -160,9 +162,104 @@
             </table>
         </div>
     </div>
+    @if (session('edit'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'No es posible acceder a vista.',
+                    imageUrl: `{{ asset('assets/rechazo-edit-auditoria.png') }}`, // Replace with the path to your image
+                    imageWidth: 260, // Set the width of the image as needed
+                    imageHeight: 160,
+                    html: `<p>Esta sección solo puede ser visible si se tienen los permisos requeridos.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+
+            });
+        </script>
+    @endif
+    @if (session('reporte'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('assets/rechazo-reporte-auditoria.png') }}`, // Replace with the path to your image
+                    imageWidth: 260, // Set the width of the image as needed
+                    imageHeight: 160,
+                    html: `<p>Esta sección solo puede ser visible si se tienen los permisos requeridos.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+            });
+        </script>
+    @endif
 @endsection
 @section('scripts')
     @parent
+    <script>
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const audId = this.getAttribute('data-id');
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: 'Esta acción eliminará el registro permanentemente.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(`/admin/auditoria-internas/${audId}`, {
+                                method: 'DELETE', // Send a DELETE request
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    Swal.fire({
+                                        title: 'Éxito',
+                                        text: 'Registro eliminado con éxito',
+                                        icon: 'success'
+                                    }).then(() => {
+                                        window.location
+                                    .reload(); // Reload the page after successful deletion
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'No se pudo eliminar el registro',
+                                        icon: 'error'
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un problema al eliminar el registro',
+                                    icon: 'error'
+                                });
+                            });
+                    }
+                });
+            });
+        });
+    </script>
+
+
     <script>
         function viewAudit(id) {
             $('.tr-second' + id).toggleClass('d-none');

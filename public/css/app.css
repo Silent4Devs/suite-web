@@ -21766,11 +21766,6 @@ html:not([dir="rtl"]) .c-switch-label .c-switch-slider::after {
     background-color: rgba(0, 0, 21, 0.075);
 }
 
-.table .thead-dark th {
-    color: #fff;
-    background-color: #636f83;
-}
-
 .table .thead-light th {
     color: #768192;
     background-color: #d8dbe0;
@@ -32636,10 +32631,6 @@ table.table tbody tr:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.075);
 }
 
-.table .thead-dark th {
-    color: #fff;
-    background-color: #788BAC;
-}
 
 .table .thead-light th {
     color: #495057;

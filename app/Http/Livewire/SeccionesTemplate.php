@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\ParametrosTemplateAnalisisdeBrechas;
 use App\Models\Norma;
+use App\Models\ParametrosTemplateAnalisisdeBrechas;
 use App\Models\PreguntasTemplateAnalisisdeBrechas;
 use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
@@ -11,15 +11,49 @@ use Livewire\Component;
 
 class SeccionesTemplate extends Component
 {
+    public $nombre_template = null;
     public $normas;
+    public $descripcion = null;
+
+    public $color_estatus_1 = "#34B990";
+    public $color_estatus_2 = "#73A7D5";
+    public $color_estatus_3 = "#F59595";
+    public $color_estatus_4 = "#EEEEEE";
+
+    public $estatus_1;
+    public $estatus_2;
+    public $estatus_3;
+    public $estatus_4;
+
+    public $valor_estatus_1;
+    public $valor_estatus_2;
+    public $valor_estatus_3;
+    public $valor_estatus_4;
+
+    public $descripcion_parametros_1;
+    public $descripcion_parametros_2;
+    public $descripcion_parametros_3;
+    public $descripcion_parametros_4;
+
+    public $descripcion_s1;
+    public $descripcion_s2;
+    public $descripcion_s3;
+    public $descripcion_s4;
+
+    public $pregunta1;
+    public $pregunta2;
+    public $pregunta3;
+    public $pregunta4;
 
     public $preguntas_s1 = [];
-
     public $preguntas_s2 = [];
-
     public $preguntas_s3 = [];
-
     public $preguntas_s4 = [];
+
+    public $porcentaje_seccion_1;
+    public $porcentaje_seccion_2;
+    public $porcentaje_seccion_3;
+    public $porcentaje_seccion_4;
 
     public $secciones = 1;
 
@@ -123,6 +157,7 @@ class SeccionesTemplate extends Component
     public function render()
     {
         $this->normas = Norma::get();
+
         return view('livewire.edit-secciones-template');
     }
 
@@ -335,6 +370,8 @@ class SeccionesTemplate extends Component
     public function groupValues($values)
     {
         $groupedValues = [];
+
+        // dd($values);
 
         for ($i = 1; $i <= 4; $i++) {
             $estatusKey = "estatus_{$i}";

@@ -77,57 +77,48 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <div class="form-group">
-                    <div class="form-floating form" style="">
-                        <input class="form-control form" placeholder="Agrega un nombre al alcance"id="nombre"
+                <div class="form-group anima-focus">
+                        <input class="form-control form" maxlength="255"  pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"  placeholder="" id="nombre"
                             name="nombre"value="{{ old('nombre', $alcanceSgsi->nombre) }}" required>
-                        <label for="nombre" style="color: #606060;">
-                            Nombre de Alcance
-                        </label>
-                    </div>
+                            {!! Form::label('nombre', 'Nombre del alcance*', ['class' => 'asterisco']) !!}
                 </div>
-                <div class="form-group">
-                    <div class="form-floating mb-3">
-                        <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form" name="alcancesgsi"
-                            id="alcancesgsi" style="height:200px;">{!! old('alcancesgsi', strip_tags($alcanceSgsi->alcancesgsi)) !!}</textarea>
+                <div class="form-group anima-focus">
+                        <textarea required placeholder="" maxlength="255"  pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"  class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form" name="alcancesgsi"
+                            id="alcancesgsi" >{!! old('alcancesgsi', strip_tags($alcanceSgsi->alcancesgsi)) !!}</textarea>
                         @if ($errors->has('alcancesgsi'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('alcancesgsi') }}
                             </div>
                         @endif
-                        <label for="alcancesgsi" style="color: #606060;">
-                            Alcance
-                        </label>
-                    </div>
+                        {!! Form::label('alcancesgsi', 'Alcance*', ['class' => 'asterisco']) !!}
+                </div>
+                <br>
                     <div class="row">
-                        <div class="form-floating col-sm-6">
+                        <div class="form-group anima-focus col-sm-6">
                             <input required
                                 class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }} form"
-                                type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
+                                type="date" name="fecha_publicacion" placeholder="" id="fecha_publicacion" min="1945-01-01"
                                 value="{{ old('fecha_publicacion', \Carbon\Carbon::parse($alcanceSgsi->fecha_publicacion)->format('Y-m-d')) }}">
                             @if ($errors->has('fecha_publicacion'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('fecha_publicacion') }}
                                 </div>
                             @endif
-                            <label class="required" for="fecha_publicacion" style="color: #606060;">Fecha de
-                                publicación</label>
+                            {!! Form::label('fecha_publicacion', 'Fecha de publicación*', ['class' => 'asterisco']) !!}
                         </div>
 
 
-                        <div class="form-floating col-sm-6 mb-3">
+                        <div class="form-group anima-focus col-sm-6 mb-3">
                             <input required
                                 class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }} form"
-                                type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
+                                type="date" name="fecha_revision" placeholder="" id="fecha_revision" min="1945-01-01"
                                 value="{{ old('fecha_revision', \Carbon\Carbon::parse($alcanceSgsi->fecha_revision)->format('Y-m-d')) }}">
                             @if ($errors->has('fecha_revision'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('fecha_revision') }}
                                 </div>
                             @endif
-                            <label class="required" for="fecha_revision" style="padding-right:26px;">Fecha
-                                de revisión
-                            </label>
+                            {!! Form::label('fecha_publicacion', 'Fecha de revisión*', ['class' => 'asterisco']) !!}
                         </div>
                     </div>
 

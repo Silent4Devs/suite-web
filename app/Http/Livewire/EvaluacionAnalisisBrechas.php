@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\RespuestasEvaluacionAnalisisBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
+use App\Traits\ObtenerOrganizacion;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Iso27\AnalisisBrechasIso;
@@ -20,20 +22,28 @@ class EvaluacionAnalisisBrechas extends Component
     public $seccion_vista = 0;
 
     public $selectedValues;
+
     public $oldSelectedValues;
+
     public $evidenciaValues;
+
     public $oldEvidenciaValues;
+
     public $recomendacionValues;
+
     public $oldRecomendacionValues = []; // Store old values
 
     public $cuentas;
+
     public $totalAnalisis;
+
     public $results;
+
     public $grafica_cuentas2 = [];
     public $grafica_colores2= [];
     public $resultskeys = [];
 
-
+    public $grafica_colores2 = [];
 
     public function mount($id)
     {
@@ -64,10 +74,10 @@ class EvaluacionAnalisisBrechas extends Component
                     $this->selectedValues[$pregunta->id]['option1'] = old("selectedValues.{$pregunta->id}.option1", $pregunta->respuesta->parametro->id ?? null);
                     $this->oldSelectedValues[$pregunta->id]['option1'] = $this->selectedValues[$pregunta->id]['option1'];
 
-                    $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->evidencia ?? '');
+                    $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.'.$pregunta->id, $pregunta->respuesta->evidencia ?? '');
                     $this->oldEvidenciaValues[$pregunta->id] = $this->evidenciaValues[$pregunta->id];
 
-                    $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->recomendacion ?? '');
+                    $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.'.$pregunta->id, $pregunta->respuesta->recomendacion ?? '');
                     $this->oldRecomendacionValues[$pregunta->id] = $this->recomendacionValues[$pregunta->id];
                 }
             }
@@ -94,10 +104,10 @@ class EvaluacionAnalisisBrechas extends Component
             $template = $template_general;
             $result = $this->sumaParametrosTotal();
             // $result2 = $this->sumaParametrosSeccion(1);
-            $result2=[];
-            for($i=1;$i<=3; $i++){
+            $result2 = [];
+            for ($i = 1; $i <= 3; $i++) {
                 $result3 = $this->sumaParametrosSeccion($i);
-                array_push($result2,$result3);
+                array_push($result2, $result3);
             }
             $this->results = $result2;
             // dd($this->results);
@@ -158,7 +168,6 @@ class EvaluacionAnalisisBrechas extends Component
         $rfc = $organizacion_actual->rfc;
 
         $this->emit('renderAreas1');
-
 
         return view('livewire.evaluacion-analisis-brechas', compact(
             'template',
@@ -241,7 +250,7 @@ class EvaluacionAnalisisBrechas extends Component
                 }
             }
 
-            $percentage = $totalQuestionsInSection > 0 ? ($answeredQuestions / $totalQuestionsInSection) *  $seccion->porcentaje_seccion : 0;
+            $percentage = $totalQuestionsInSection > 0 ? ($answeredQuestions / $totalQuestionsInSection) * $seccion->porcentaje_seccion : 0;
 
             $sectionPercentages[$seccion->numero_seccion] = [
                 'answeredQuestions' => $answeredQuestions,
@@ -327,7 +336,7 @@ class EvaluacionAnalisisBrechas extends Component
 
             $sectionPercentages[$seccion->numero_seccion] = $this->sumaParametrosSeccion($seccion->numero_seccion);
             // dd($sectionPercentages);
-            $percentage += $sectionPercentages[$seccion->numero_seccion]["total_porcentaje"];
+            $percentage += $sectionPercentages[$seccion->numero_seccion]['total_porcentaje'];
         }
 
         // dd($sectionPercentages, $percentage);
@@ -378,7 +387,6 @@ class EvaluacionAnalisisBrechas extends Component
     {
         $recomendacionValue = $this->recomendacionValues[$preguntaID] ?? null;
 
-
         if ($recomendacionValue !== null) {
             // Update or create based on pregunta_id
             RespuestasEvaluacionAnalisisBrechas::updateOrCreate(
@@ -391,13 +399,13 @@ class EvaluacionAnalisisBrechas extends Component
     public function pdf()
     {
         $template = TemplateAnalisisdeBrechas::with('parametros')
-        ->with('secciones')
-        ->find($this->itemId);
-        $resultados =[];
+            ->with('secciones')
+            ->find($this->itemId);
+        $resultados = [];
 
-        for($i=1;$i<=3; $i++){
+        for ($i = 1; $i <= 3; $i++) {
             $result = $this->sumaParametrosSeccion($i);
-            array_push($resultados,$result);
+            array_push($resultados, $result);
         }
 
         // dd($resultados);
@@ -417,24 +425,24 @@ class EvaluacionAnalisisBrechas extends Component
         $sectionPercentages = $this->porcentajeTotal();
         $results = $this->results;
 
-            $pdf = PDF::loadView('evaluacion-analisis-brechas-pdf', compact('organizacion_actual', 'logo_actual', 'empresa_actual',
-            'direccion', 'rfc', 'template','sectionPercentages', 'result', 'cuentas', 'peso_parametros', 'totalCount', 'totalPorcentaje',
+        $pdf = PDF::loadView('evaluacion-analisis-brechas-pdf', compact('organizacion_actual', 'logo_actual', 'empresa_actual',
+            'direccion', 'rfc', 'template', 'sectionPercentages', 'result', 'cuentas', 'peso_parametros', 'totalCount', 'totalPorcentaje',
             'results'
         ));
-            $pdf->setPaper('A4', 'portrait');
+        $pdf->setPaper('A4', 'portrait');
 
-            $pdfFileName = 'mi-archivo.pdf';
-            $pdfFilePath = 'documentos_analisis/' . $pdfFileName; // Ruta dentro del directorio storage
+        $pdfFileName = 'mi-archivo.pdf';
+        $pdfFilePath = 'documentos_analisis/'.$pdfFileName; // Ruta dentro del directorio storage
 
-            // Almacenar el PDF en el sistema de archivos de Laravel
-            Storage::put($pdfFilePath, $pdf->output());
+        // Almacenar el PDF en el sistema de archivos de Laravel
+        Storage::put($pdfFilePath, $pdf->output());
 
-            $pdfFileUrl = Storage::url($pdfFilePath);
-            // dd($pdfFileUrl);
+        $pdfFileUrl = Storage::url($pdfFilePath);
+        // dd($pdfFileUrl);
 
-// Descargar el archivo PDF
-// return response()->download(storage_path('app/public/storage/documentos_analisis'), $pdfFileName);
-return response()->download(storage_path('app/documentos_analisis/'.$pdfFileName));
+        // Descargar el archivo PDF
+        // return response()->download(storage_path('app/public/storage/documentos_analisis'), $pdfFileName);
+        return response()->download(storage_path('app/documentos_analisis/'.$pdfFileName));
 
     }
 }

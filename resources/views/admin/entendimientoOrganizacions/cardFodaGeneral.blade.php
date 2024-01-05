@@ -3,9 +3,22 @@
     <link rel="stylesheet" href="{{ asset('css/foda.css') }}">
 @endsection
 @section('content')
+    <style>
+        .btn-options-foda-card {
+            position: absolute;
+            right: 0;
+            top: 7px;
+        }
+    </style>
     <h5 class="col-12 titulo_general_funcion">Análisis FODA</h5>
 
-    <div class="card-filtros-fodas">
+    <div class="text-right">
+        <a href="{{ route('admin.entendimiento-organizacions.create') }}" class="btn btn-info"
+            style="background-color: #0489FE !important;">
+            Crear análisis FODA
+        </a>
+    </div>
+    <div class="card-filtros-fodas mt-3">
         <div class="row">
             <div class="col-md-4">
                 <label for="">Buscar</label>
@@ -35,35 +48,28 @@
             {{-- <a href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}"> --}}
             <div class="card card-foda">
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col-10">
-                            <strong> {{ Carbon\Carbon::parse($foda->fecha)->format('d/m/Y') }}</strong>
-                        </div>
-                        <div class="col-2">
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                    @can('analisis_foda_ver')
-                                        <a class="dropdown-item"
-                                            href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}">
-                                            <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>
-                                    @endcan
-                                    @can('analisis_foda_editar')
-                                        <a class="dropdown-item"
-                                            href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}/edit">
-                                            <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                    @endcan
-                                    @can('analisis_foda_eliminar')
-                                        <a class="dropdown-item delete-item" onclick="deleteItem({{ $foda->id }})">
-                                            <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
-                                    @endcan
-                                    {{-- <a class="dropdown-item disabled" href=#>
+                    <strong> {{ Carbon\Carbon::parse($foda->fecha)->format('d/m/Y') }}</strong>
+                    <div class="dropdown btn-options-foda-card">
+                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            @can('analisis_foda_ver')
+                                <a class="dropdown-item"
+                                    href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}">
+                                    <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>
+                            @endcan
+                            @can('analisis_foda_editar')
+                                <a class="dropdown-item"
+                                    href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}/edit">
+                                    <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                            @endcan
+                            @can('analisis_foda_eliminar')
+                                <a class="dropdown-item delete-item" onclick="deleteItem({{ $foda->id }})">
+                                    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                            @endcan
+                            {{-- <a class="dropdown-item disabled" href=#>
                                         <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (En uso)</a> --}}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -86,6 +92,56 @@
             {{-- </a> --}}
         @endforeach
     </div>
+
+    @if ($listavacia == 'vacia')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">No se ha agregado ningún colaborador a la lista</h4>
+                    <br><p>No se ha agregado un responsable al flujo de aprobación de esta vista.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra registrar información en este módulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to another view after user clicks OK
+                        window.location.href =
+                            '{{ route('admin.iso27001.index') }}';
+                    }
+                });
+            });
+        </script>
+    @elseif ($listavacia == 'baja')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">Colaborador dado de baja</h4>
+                    <br><p>El colaborador responsable de este formulario ta no se encuentra dado de alta en el sistema.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este módulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to another view after user clicks OK
+                        window.location.href =
+                            '{{ route('admin.iso27001.index') }}';
+                    }
+                });
+            });
+        </script>
+    @endif
 @endsection
 <script>
     function buscadorGlobal() {
