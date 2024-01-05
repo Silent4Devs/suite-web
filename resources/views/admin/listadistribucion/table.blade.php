@@ -34,12 +34,12 @@
                         @endforeach
 
                         @if ($participantCount > 3)
-                        <div class="col-3">
-                            <button type="button" class="btn btn-round ml-2 rounded-circle"
-                                style="width: 30px; height:30px; background-color: #fff8dc;" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal{{ $modulo->id }}">+</button>
-                        </div>
-                       @endif
+                            <div class="col-3">
+                                <button type="button" class="btn btn-round ml-2 rounded-circle"
+                                    style="width: 30px; height:30px; background-color: #fff8dc;" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal{{ $modulo->id }}">+</button>
+                            </div>
+                        @endif
 
                     </div>
 
@@ -86,7 +86,9 @@
                                 @endphp
                             @endforeach
 
-                            <h6 style="color:#057BE2; position: relative; left: 15rem;">  Nivel &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aprobadores</h6>
+                            <h6 style="color:#057BE2; position: relative; left: 15rem;"> Nivel
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aprobadores
+                            </h6>
                             <br>
                             <br>
                             @foreach ($levels as $nivel => $participantesByLevel)
@@ -99,12 +101,13 @@
                                 @endphp
 
                                 @if ($nivel == 0)
-                                    {{-- <div class="row mb-3">
+                                    <div class="row mb-3" style="position: relative; left: 8rem;">
                                         <div class="col-6">
+                                            <br>
                                             <h6>Super Aprobadores</h6>
                                         </div>
                                         <div class="col-6">
-                                            <div class="row">
+                                            <div class="row" style="position: relative; right: 11rem;">
                                                 @foreach ($participantesByLevel as $participante)
                                                     <div class="col-2">
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
@@ -114,18 +117,18 @@
                                                 @endforeach
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 @else
                                     <div class="row mb-3" style="position: relative; left: 15rem;">
                                         <div class="col-6">
                                             <br>
-                                            <h6>  Nivel {{ $nivel }}</h6> &nbsp;&nbsp;&nbsp;
+                                            <h6> Nivel {{ $nivel }}</h6> &nbsp;&nbsp;&nbsp;
                                         </div>
                                         <div class="col-4">
                                             <div class="row" style="position: relative; right: 20rem;">
                                                 @foreach ($participantesByLevel as $participante)
                                                     <div class="col-4">
-                                                        <img  src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
+                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $participante->empleado->name }}">
                                                     </div>
