@@ -109,3 +109,29 @@
     color: #747474;
     font-size: 12px;
 }
+
+.title-ob-ev{
+    color: #3086AF;
+    font-size: 32px;
+}
+
+.item-ob-ev{
+    border-radius: 16px;
+    width: 400px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    color: #fff;
+}
+.img-ob-ev{
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.img-ob-ev img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
