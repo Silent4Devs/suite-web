@@ -344,7 +344,7 @@
 
 
         <div class="text-right form-group col-12">
-            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
+            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
             <button class="btn btn-danger" id="btnGuardar" type="submit">
                 {{ trans('global.save') }}
             </button>

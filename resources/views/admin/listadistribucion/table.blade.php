@@ -35,9 +35,9 @@
 
                         @if ($participantCount > 3)
                             <div class="col-3">
-                                <button type="button" class="btn btn-round ml-2 rounded-circle"
-                                    style="width: 30px; height:30px; background-color: #fff8dc;" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal{{ $modulo->id }}">+</button>
+                                    <button type="button" class="btn btn-round ml-2 rounded-circle" style="width: 25px; height: 25px; background-color: #fff8dc; padding: 0; position: relative; right: 2rem; border: 1px solid black; border-radius: 50%;" data-bs-toggle="modal"  data-bs-target="#exampleModal{{ $modulo->id }}">
+                                        <span style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $modulo->participantes->count() - 3 }}</span>
+                                    </button>
                             </div>
                         @endif
 
@@ -63,7 +63,7 @@
             <div class="modal fade" id="exampleModal{{ $modulo->id }}" tabindex="-1"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"
-                style="margin:10px 0px 10px 1230px;"><i class="fa-solid fa-x fa-2xl"
+                style="margin:50px 0px 50px 1230px; position: relative; top: 3rem; right: 2rem;"><i class="fa-solid fa-x fa-2xl"
                     style="color: #ffffff;"></i>
             </button>
                 <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -101,7 +101,7 @@
                                 @endphp
 
                                 @if ($nivel == 0)
-                                    <div class="row mb-3" style="position: relative; left: 8rem;">
+                                    {{-- <div class="row mb-3" style="position: relative; left: 6rem;">
                                         <div class="col-6">
                                             <br>
                                             <h6>Super Aprobadores</h6>
@@ -117,7 +117,7 @@
                                                 @endforeach
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 @else
                                     <div class="row mb-3" style="position: relative; left: 15rem;">
                                         <div class="col-6">

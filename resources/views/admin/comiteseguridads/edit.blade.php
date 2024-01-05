@@ -3,7 +3,7 @@
     #card{
         /* UI Properties */
         height: 11rem;
-        background: #5397D5 0% 0% no-repeat padding-box;
+        background: #306BA9 0% 0% no-repeat padding-box;
         border-radius: 8px;
         opacity: 1;
         margin: 0 auto;
@@ -79,7 +79,7 @@
             @method('PUT')
             @csrf
             <div class="form-group col-sm-12 col-md-12 col-lg-12  anima-focus">
-                <input class="form-control {{ $errors->has('nombre_comite') ? 'is-invalid' : '' }}" type="text"
+                <input class="form-control  {{ $errors->has('nombre_comite') ? 'is-invalid' : '' }}"  maxlength="255" type="text"
                     name="nombre_comite" id="nombre_comite"
                     value="{{ old('nombre_comite', $comiteseguridad->nombre_comite) }}" placeholder=" " required>
                     {!! Form::label('nombre_comite', 'Nombre del Comité*', ['class' => 'asterisco']) !!}
@@ -103,7 +103,7 @@
             </div>
 
             <div class="text-right form-group col-12" id="miDiv" style="display: none;">
-                <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+                <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2; width:6rem; height: 10rem;">Cancelar</a>
                 <button class="btn btn-primary" id="botonFormulario" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -119,7 +119,7 @@
 </div>
 
 <div class="text-right form-group col-12" >
-    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2; width:6rem; height: 3rem;">Cancelar</a>
     <button class="btn btn-primary" id="botonPrincipal" type="button">
         Guardar y Notificar
     </button>

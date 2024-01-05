@@ -625,21 +625,21 @@
                             return `<center><span style="${style}">${data}</span></center>`;
                         }
                     }
-                    },
-                    {
-                        data: 'fecha_publicacion',
-                        name: 'fecha_publicacion',
-                        // visible: false, // Inicialmente oculta
-                        render: function(data, type, row) {
-                            // Renderizar contenido para la nueva columna 2
-                            return data;
+0.1)';
+                            }
+
+                            const style = `
+                                background: #E9FFE8 0% 0% no-repeat padding-box;
+                                border-radius: 7px;
+                                opacity: 1;
+                                color: ${color};
+                                box-shadow: ${boxShadow};
+                                background-color: ${backgroundColor};
+                            `;
+
+                            return `<center><span style="${style}">${data}</span></center>`;
                         }
-                    },
-                    {
-                        data: 'fecha_revision',
-                        name: 'fecha_revision',
-                        // visible: false, // Inicialmente oculta
-                        render: function(data, type, row) {
+                    render: function(data, type, row) {
                             // Renderizar contenido para la nueva columna 1
                             return data;
                         }
