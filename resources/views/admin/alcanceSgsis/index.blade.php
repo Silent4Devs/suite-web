@@ -592,6 +592,9 @@
                             let boxShadow = '';
                             let backgroundColor = '';
 
+                            if (data === null) {
+                                return '<center><span style="color: red;  opacity: 1;  border-radius: 7px;  background: #E9FFE8 0% 0% no-repeat padding-box;  color = #dd0483; backgroundColor = rgba(128, 0, 0, 0.1);">Generar</span></center>';
+                            } else {
                             // Asigna colores y sombras según el valor de 'estatus'
                             switch (data) {
                                 case 'aprobado':
@@ -600,7 +603,6 @@
                                     break;
                                 case 'rechazado':
                                     color = '#dd0483'; // Rojo
-                                    boxShadow = '12px 12px 20px rgba(128, 0, 0, 0.5)';
                                     backgroundColor = 'rgba(128, 0, 0, 0.1)';
                                     break;
                                 case 'pendiente':
@@ -617,12 +619,12 @@
                                 border-radius: 7px;
                                 opacity: 1;
                                 color: ${color};
-                                box-shadow: ${boxShadow};
                                 background-color: ${backgroundColor};
                             `;
 
                             return `<center><span style="${style}">${data}</span></center>`;
                         }
+                    }
                     },
                     {
                         data: 'fecha_publicacion',

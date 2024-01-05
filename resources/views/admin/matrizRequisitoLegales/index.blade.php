@@ -27,7 +27,7 @@
                 <tr>
                     <th>Nombre del requisito legal</th>
                     <th>Clausula</th>
-                    <th>Fecha&nbsp;de&nbsp;publicación</th>
+                    <th>Fecha</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
@@ -166,9 +166,7 @@
 
             window.eliminar = function(url, nombre) {
                 Swal.fire({
-                    title: `¿
-                                                Estás seguro de eliminar la siguiente matríz de requisito legal ? `,
-                    html: ` < strong > < i class = "mr-2 fas fa-exclamation-triangle" > < /i>${nombre}</strong > `,
+                    title: `¿Estás seguro de eliminar ? `,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -186,23 +184,11 @@
                             beforeSend: function() {
                                 Swal.fire(
                                     '¡Estamos Eliminando!',
-                                    `
-                                                La Matríz de requisito legal: $ {
-                                                    nombre
-                                                }
-                                                está siendo eliminada`,
-                                    'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
                                     'Eliminado!',
-                                    `
-                                                La Matríz de requisito legal: $ {
-                                                    nombre
-                                                }
-                                                ha sido eliminada`,
-                                    'success'
                                 )
                                 table.ajax.reload();
                             },

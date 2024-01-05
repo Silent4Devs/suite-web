@@ -87,11 +87,9 @@
                 <button onclick="document.querySelector('header').classList.toggle('mostrar-menu')">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <img src="{{ asset('img/logo-ltr.png') }}" alt="Logo Tabantaj" style="height: 40px;">
-                <div class="caja-buscador-header">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="search">
-                </div>
+                <a href="{{ url('/') }}"><img src="{{ asset('img/logo-ltr.png') }}" alt="Logo Tabantaj"
+                        style="height: 40px;"></a>
+                @livewire('global-search-component', ['lugar' => 'header'])
             </div>
             @if ($usuario->empleado)
                 <div class="caja-user-header">
