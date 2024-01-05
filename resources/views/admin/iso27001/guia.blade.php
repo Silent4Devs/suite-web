@@ -13,7 +13,7 @@
             padding: 0 !important;
         }
     </style>
-    <div class="menu-pasos-guia">
+    <div class="menu-pasos-guia scroll_estilo">
         <ul>
             <li data-id="content-guia-iso-1" class="paso-menu-1 active-paso">
                 <i class="material-symbols-outlined">article</i>
