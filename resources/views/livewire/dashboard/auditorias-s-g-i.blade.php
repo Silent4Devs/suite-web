@@ -545,15 +545,15 @@
     <div class="tab-content">
         {{-- MI PLAN ISO (TAB CONTENT) --}}
         <div class="tab-pane fade text-center" id="mi-plan-iso">
-            <img src="{{ asset('img/escuela/home/technical-issues-1.jpg') }}" alt="jpg"
+            {{-- <img src="{{ asset('img/escuela/home/technical-issues-1.jpg') }}" alt="jpg"
                 style="width:50%; max-width:400px;">
-            <p></p>
+            <p></p> --}}
         </div>
         {{-- RIESGOS (TAB CONTENT) --}}
         <div class="tab-pane fade text-center" id="riesgos">
-            <img src="{{ asset('img/escuela/home/technical-issues-2.jpg') }}" alt="jpg"
+            {{-- <img src="{{ asset('img/escuela/home/technical-issues-2.jpg') }}" alt="jpg"
                 style="width:50%; max-width:1000px;">
-            <p></p>
+            <p></p> --}}
         </div>
         {{-- AUDITORIAS (TAB CONTENT) --}}
         <div class="tab-pane fade" id="auditorias">
@@ -601,7 +601,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="fondo-calendario">
-                            <h1 class="titulo-graficas">Calendario de auditorias</h1>
+                            <h1 class="titulo-graficas">Calendario</h1>
                             <hr style="margin: 0px 32px 0px 32px;">
                             <div class="" style="margin-top:50px;">
                                 @can('mi_perfil_mi_calendario_acceder')
@@ -873,7 +873,7 @@
                 $('.tab-pane').removeClass('active');
 
                 // Activa el tab correspondiente
-                $($(this).attr('href')).addClass('active');
+                $($(this).attr('href')).addClass('show active');
             });
         });
     </script>
