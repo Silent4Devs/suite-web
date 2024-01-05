@@ -77,6 +77,7 @@
                                                 <select name="c_id" id="c_id"
                                                     class="form-control select {{ $errors->has('c_id') ? 'is-invalid' : '' }}"
                                                     wire:model.defer="c_id" required>
+                                                    <option value="">Seleccione una Claúsula</option>
                                                     @foreach ($clausulas as $claus)
                                                         <option value="{{ $claus->id }}">
                                                             {{ $claus->nombre_clausulas }}
@@ -343,8 +344,8 @@
             </div>
         </div>
 
-        @if ($this->reporte->estado == 'enviado')
-            <div class="card card-body" wire:ignore>
+        @if ($this->reporte->estado == 'enviado' || $this->reporte->estado == null)
+            <div class="card card-body">
                 <div class="row">
                     <div class="form-group col-sm-12">
                         <div class="anima-focus">
@@ -362,7 +363,7 @@
                 </div>
             </div>
         @elseif ($this->reporte->estado == 'aprobado' || $this->reporte->estado == 'rechazado')
-            <div class="card card-body" wire:ignore>
+            <div class="card card-body">
                 <div class="row col-md-12"></div>
                 <div>
                     <h5>Comentarios:</h5>
@@ -373,59 +374,67 @@
             </div>
         @endif
 
-        <div class="card card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    @if ($this->reporte->estado != 'aprobado')
+        <div>
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        @if ($this->reporte->estado != 'aprobado')
+                            <div class="row" style="justify-content: center; display: flex;">
+                                <h3>Firma de Auditor Lider</h3>
+                            </div>
+                            <div class="row" style="justify-content: center; display: flex;">
+                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                            </div>
+                            <div class="row" style="justify-content: center; display: flex;">
+                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                                    style="border: 1px solid black;"></canvas>
+                            </div>
+                        @else
+                            <div class="row" style="justify-content: center; display: flex;">
+                                <h3>Firma de Auditor Lider</h3>
+                            </div>
+                            <div class="row">
+                                <span style="height: 36px;"></span>
+                            </div>
+                            <div class="row" style="justify-content: center; display: flex;">
+                                <img width="450" height="250" style="border: 1px solid black;"
+                                    src="{{ asset('storage/auditorias-internas/auditoria/' . $this->reporte->id_auditoria . '/reporte/' . $this->reporte->id . '/' . $this->reporte->lider->name . $this->reporte->firma_lider) }}">
+                            </div>
+                        @endif
+                    </div>
+                    <div class="col-md-6">
                         <div class="row" style="justify-content: center; display: flex;">
-                            <h3>Firma de Auditor Lider</h3>
-                        </div>
-                        <div class="row" style="justify-content: center; display: flex;">
-                            <button id="clear" class="btn btn-link">Limpiar Firma</button>
-                        </div>
-                        <div class="row" style="justify-content: center; display: flex;">
-                            <canvas id="signature-pad" class="signature-pad" width="450" height="250"
-                                style="border: 1px solid black;"></canvas>
-                        </div>
-                    @else
-                        <div class="row" style="justify-content: center; display: flex;">
-                            <h3>Firma de Auditor Lider</h3>
+                            <h3>Firma de Auditor Interno</h3>
                         </div>
                         <div class="row">
                             <span style="height: 36px;"></span>
                         </div>
+                        @if (isset($this->reporte->firma_empleado))
+                            <div class="row" style="justify-content: center; display: flex;">
+                                <img width="450" height="250" style="border: 1px solid black;"
+                                    alt="No se ha Firmado el reporte"
+                                    src="{{ asset('storage/auditorias-internas/auditoria/' . $this->reporte->id_auditoria . '/reporte/' . $this->reporte->id . '/' . $this->reporte->empleado->name . $this->reporte->firma_empleado) }}">
+                            </div>
+                        @else
+                            <div class="row" style="justify-content: center; display: flex;">
+                                <h4>No se ha firmado el reporte</h4>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                @if ($this->reporte->estado != 'aprobado')
+                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="submit" class="btn btn-outline-primary"
+                            data-reporte="{{ $this->reporte->id }}">Confirmar Acuerdo</button>
+                    </div>
+                    <div class="row" style="justify-content: center; display: flex;">
                         <div class="row" style="justify-content: center; display: flex;">
-                            <img width="450" height="250" style="border: 1px solid black;"
-                                src="{{ asset('storage/auditorias-internas/auditoria/' . $this->reporte->id_auditoria . '/reporte/' . $this->reporte->id . '/' . $this->reporte->lider->name . $this->reporte->firma_lider) }}">
+                            <button type="submit" id="rechazo-link" class="btn btn-link"
+                                data-reporte="{{ $this->reporte->id }}">Rechazar</button>
                         </div>
-                    @endif
-                </div>
-                <div class="col-md-6">
-                    <div class="row" style="justify-content: center; display: flex;">
-                        <h3>Firma de Auditor Interno</h3>
                     </div>
-                    <div class="row">
-                        <span style="height: 36px;"></span>
-                    </div>
-                    <div class="row" style="justify-content: center; display: flex;">
-                        <img width="450" height="250" style="border: 1px solid black;"
-                            alt="No se ha Firmado el reporte"
-                            src="{{ asset('storage/auditorias-internas/auditoria/' . $this->reporte->id_auditoria . '/reporte/' . $this->reporte->id . '/' . $this->reporte->empleado->name . $this->reporte->firma_empleado) }}">
-                    </div>
-                </div>
+                @endif
             </div>
-            @if ($this->reporte->estado != 'aprobado')
-                <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                    <button id="save" type="submit" class="btn btn-outline-primary"
-                        data-reporte="{{ $this->reporte->id }}">Confirmar Acuerdo</button>
-                </div>
-                <div class="row" style="justify-content: center; display: flex;">
-                    <div class="row" style="justify-content: center; display: flex;">
-                        <button type="submit" id="rechazo-link" class="btn btn-link"
-                            data-reporte="{{ $this->reporte->id }}">Rechazar</button>
-                    </div>
-                </div>
-            @endif
         </div>
 
     @endif

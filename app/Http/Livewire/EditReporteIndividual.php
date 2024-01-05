@@ -37,6 +37,8 @@ class EditReporteIndividual extends Component
 
     public $area;
 
+    public $clausula_id;
+
     public $clasificacion_id;
 
     public $incumplimiento_requisito;
