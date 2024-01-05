@@ -62,7 +62,7 @@
             </tr>
             <div class="modal fade" id="exampleModal{{ $modulo->id }}" tabindex="-1"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"
                 style="margin:10px 0px 10px 1230px;"><i class="fa-solid fa-x fa-2xl"
                     style="color: #ffffff;"></i>
             </button>

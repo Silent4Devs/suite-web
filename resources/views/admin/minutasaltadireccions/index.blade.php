@@ -133,17 +133,17 @@
                                         $badgeColor = 'red';
                                         break;
                                     case 'En Revisión':
-                                        $badgeColor = 'blue';
+                                        $badgeColor = 'green';
                                         break;
                                     case 'Publicado':
-                                        $badgeColor = 'green';
+                                        $badgeColor = '#DD8E04';
                                         break;
                                     default:
                                         $badgeColor = 'red';
                                 }
                              @endphp
 
-                            <span class="badge" style="color:{{ $badgeColor }}">{{ $q->estatus_formateado }}</span>
+                            <span class="badge" style="color:{{ $badgeColor }}; background: #E9FFE8 0% 0% no-repeat padding-box; border-radius: 7px; opacity: 1;">{{ $q->estatus_formateado }}</span>
                             </td>
                             <td>
                                 <div class="dropdown">
@@ -202,21 +202,21 @@
     @foreach ($query as $q)
         <div class="modal fade" id="participantsModal{{ $q->id }}" tabindex="-1"
             aria-labelledby="participantsModalLabel" aria-hidden="true">
+            <button type="button"  style="position: relative; top: 7rem; right: 15rem;"  class="close" data-dismiss="modal" aria-label="Close" >
+                <i class="fa-solid fa-x fa-2xl"
+                style="color: #ffffff;"></i>
+            </button>
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content" style="text-align: center;">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="participantsModalLabel">Participantes</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="participantsModalLabel"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Participantes</h5>
                     </div>
                     <div class="modal-body">
                         @foreach ($q->participantes as $index => $participante)
                             <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
                                 class="rounded-circle" alt="{{ $participante->name }}" title="{{ $participante->name }}"
-                                style="clip-path: circle(15px at 50% 50%); height: 30px;">
+                                style="object-fit: cover; clip-path: circle(50%); height: 30px; width: 30px; margin-right: 10px;">
                         @endforeach
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
