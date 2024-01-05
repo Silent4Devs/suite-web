@@ -32,14 +32,6 @@ pipeline {
         }
 
 
-        stage('Testing') {
-            steps {
-                sh 'cd Testing/Calendario'
-                sh 'pip install pytest'
-                sh 'pip install selenium'
-            }
-        }
-
         stage('Deploy via SSH') {
             steps {
                 script {

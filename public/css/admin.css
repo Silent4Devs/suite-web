@@ -924,7 +924,7 @@ table.dataTable tr th {
 }
 
 .titulo_general_funcion {
-    color: #487fba;
+    color: #818181;
     margin-bottom: 40px;
 }
 
@@ -1247,4 +1247,8 @@ table.table.table-acordeon tbody tr:nth-child(even) {
 
 .table-bordered {
     border: none !important;
+}
+
+a:hover {
+    text-decoration: none !important;
 }

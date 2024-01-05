@@ -51,12 +51,12 @@
         }
 
         /* .item-ms:first-child {
-                margin-left: 160px;
-            }
+                                                    margin-left: 160px;
+                                                }
 
-            .item-ms:last-child {
-                margin-right: 160px;
-            } */
+                                                .item-ms:last-child {
+                                                    margin-right: 160px;
+                                                } */
 
         .item-ms span {
             font-size: 10px;
@@ -130,39 +130,9 @@
         </div>
 
         <div class="item-ms">
-            <a href="">
-                <i class="material-symbols-outlined">house</i>
-                <span>from1 </span>
-            </a>
-        </div>
-        <div class="item-ms">
-            <a href="">
-                <i class="material-symbols-outlined">house</i>
-                <span>from2</span>
-            </a>
-        </div>
-        <div class="item-ms">
-            <a href="">
-                <i class="material-symbols-outlined">house</i>
-                <span>from1 </span>
-            </a>
-        </div>
-        <div class="item-ms">
-            <a href="">
-                <i class="material-symbols-outlined">house</i>
-                <span>from2</span>
-            </a>
-        </div>
-        <div class="item-ms">
-            <a href="">
-                <i class="material-symbols-outlined">house</i>
-                <span>from1 </span>
-            </a>
-        </div>
-        <div class="item-ms">
-            <a href="">
-                <i class="material-symbols-outlined">house</i>
-                <span>from2</span>
+            <a href="{{ asset('contract_manager/requisiciones') }}">
+                <i class="material-symbols-outlined">contract</i>
+                <span>Requisiciones </span>
             </a>
         </div>
     </div>
