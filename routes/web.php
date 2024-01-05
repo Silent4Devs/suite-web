@@ -876,6 +876,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('configurar-soporte', 'ConfigurarSoporteController');
         Route::get('getgetEmployeeData', 'ConfigurarSoporteController@getgetEmployeeData')->name('getgetEmployeeData');
         Route::get('soporte', 'ConfigurarSoporteController@visualizarSoporte')->name('soporte');
+        Route::view('actualizaciones', 'actualizaciones')->name('actualizaciones');
 
         //Configuración Consultores
         // Route::delete('configurar-consultor/destroy', 'ConfigurarConsultorController@massDestroy')->name('configurar-consultor.massDestroy');

@@ -288,6 +288,7 @@
                                 <li><a href="{{ route('admin.configurar-soporte.index') }}">Configurar Soporte</a>
                                 </li>
                                 <li><a href="{{ route('admin.visualizar-logs.index') }}">Visualizar Logs</a></li>
+                                <li><a href="{{ url('admin/actualizaciones') }}">Actualizaciones</a></li>
                             </ul>
                         </li>
                     </ul>
