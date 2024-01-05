@@ -87,11 +87,10 @@ class ListaDistribucionController extends Controller
      */
     public function show($id)
     {
-        //
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
 
         $superaprobadores_seleccionados = [];
-        // dd($i);
+
         foreach ($lista->participantes as $participante) {
             if ($participante->nivel == 0) {
                 // dd('entra');
@@ -102,13 +101,15 @@ class ListaDistribucionController extends Controller
                     ];
             }
         }
-        // dd($superaprobadores_seleccionados);
+
+        $participantes_seleccionados = [];
+
         for ($i = 1; $i <= $lista->niveles; $i++) {
-            // dd($i);
+
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
-                    // dd('entra');
-                    $participantes_seleccionados['nivel'.$i][] =
+
+                    $participantes_seleccionados['nivel' . $i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -116,18 +117,9 @@ class ListaDistribucionController extends Controller
                 }
             }
         }
-        // dd($participantes_seleccionados);
-        // $participantes = $lista->participantes;
 
-        // $participantes_seleccionados[] = $lista->participantes->pluck('empleado_id', 'nivel', 'numero_orden')->toArray();
-
-        // $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
-        // dd($participantes_seleccionados);
         $empleados = Empleado::getAltaDataColumns();
 
-        // dd($lista->participantes);
-        // dd('Llega', $id, $lista_distribucion);
-        // dd($empleados);
         return view('admin.listadistribucion.show', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados'));
     }
 
@@ -158,7 +150,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel'.$i][] =
+                    $participantes_seleccionados['nivel' . $i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -193,7 +185,7 @@ class ListaDistribucionController extends Controller
 
         $data = [];
         for ($i = 1; $i <= $request->niveles; $i++) {
-            $nivelArrayName = 'nivel'.$i;
+            $nivelArrayName = 'nivel' . $i;
             if (isset($nivelArrayName)) {
                 $data[$i] = $request->$nivelArrayName;
                 // $data[$nivelArrayName] = $nivelArrayName;
