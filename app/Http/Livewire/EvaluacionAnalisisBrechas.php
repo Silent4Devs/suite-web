@@ -6,6 +6,7 @@ use App\Models\RespuestasEvaluacionAnalisisBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
 use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Iso27\AnalisisBrechasIso;
 
 use App\Traits\ObtenerOrganizacion;
 use PDF;
@@ -14,7 +15,8 @@ class EvaluacionAnalisisBrechas extends Component
 {
     use ObtenerOrganizacion;
 
-    public $itemId; // Renamed from $id
+    public $itemId;
+    public $analisisId; // Renamed from $id
     public $seccion_vista = 0;
 
     public $selectedValues;
@@ -35,14 +37,14 @@ class EvaluacionAnalisisBrechas extends Component
 
     public function mount($id)
     {
-        $this->itemId = $id;
+
+        $this->analisisId = $id;
     }
 
     public function render()
     {
-        // $test = TemplateAnalisisdeBrechas::find($this->itemId);
-        // dd($test);
-
+        $analisisBrecha = AnalisisBrechasIso::with('evaluacionTemplateAnalisisBrechas')->find($this->analisisId);
+        $this->itemId = $analisisBrecha->evaluacionTemplateAnalisisBrechas->template_id;
 
         $template_general = TemplateAnalisisdeBrechas::with('parametros')
             ->with('secciones')
@@ -55,6 +57,7 @@ class EvaluacionAnalisisBrechas extends Component
                     return $query->with('preguntas.respuesta')->where('numero_seccion', '=', $this->seccion_vista);
                 })
                 ->find($this->itemId);
+
 
             foreach ($template->secciones as $key => $seccion) {
                 foreach ($seccion->preguntas as $key => $pregunta) {
@@ -130,13 +133,11 @@ class EvaluacionAnalisisBrechas extends Component
             // dump($resultkey['counts']);
             array_push($resultskeys,$resultkey['counts']);
         }
-        // dd($resultskeys);
+        $this->grafica_colores2 = $grafica_colores;
+        $this->resultskeys = $resultskeys;
 
-            $this->grafica_colores2 = $grafica_colores;
-            $this->resultskeys = $resultskeys;
-
-            $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
-            $this->emit('renderGraficsModal', $this->grafica_cuentas2,$resultskeys);
+        $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+        $this->emit('renderGraficsModal', $this->grafica_cuentas2,$resultskeys);
 
 
             //apartado para imprimir
@@ -355,8 +356,8 @@ class EvaluacionAnalisisBrechas extends Component
         // dd($this->selectedValues);
 
         RespuestasEvaluacionAnalisisBrechas::updateOrCreate(
-            ['pregunta_id' => $preguntaID], // Search criteria
-            ['parametro_id' => $parametroID, 'some_field' => $parametroID] // Values to update or create
+            ['pregunta_id' => $preguntaID, 'ev_analisis_template_id' => $this->itemId ], // Search criteria
+            ['parametro_id' => $parametroID], // Values to update or create
         );
     }
 

@@ -125,9 +125,11 @@ class AnalisisBrechasIsoForm extends Component
 
     public function analisis($id)
     {
-        $test2 = AnalisisBrechasIso::with('evaluacionTemplateAnalisisBrechas')->find($id);
+        // $test2 = AnalisisBrechasIso::with('evaluacionTemplateAnalisisBrechas')->find($id);
+        // dd($test2);
 
-        return redirect()->route('admin.formulario',$test2->evaluacionTemplateAnalisisBrechas->id);
+        // return redirect()->route('admin.formulario',$test2->evaluacionTemplateAnalisisBrechas->id);
+        return redirect()->route('admin.formulario',$id);
 
         // dd($test2->evaluacionTemplateAnalisisBrechas->id);
 

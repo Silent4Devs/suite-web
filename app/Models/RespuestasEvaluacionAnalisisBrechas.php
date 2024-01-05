@@ -16,6 +16,7 @@ class RespuestasEvaluacionAnalisisBrechas extends Model
         'parametro_id',
         'evidencia',
         'recomendacion',
+        'ev_analisis_template_id',
     ];
 
     public $timestamps = false;
