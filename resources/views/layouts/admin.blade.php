@@ -177,13 +177,13 @@
                         </div>
                         <span>Gestión Contractual</span>
                     </a>
-                    <a href="#">
+                    <a href="{{ asset('admin/planes-de-accion') }}">
                         <div class="caja-icon-mod-header" style="background: #B1C6FF;">
                             <i class="material-symbols-outlined">shield_person</i>
                         </div>
                         <span>Admin. de Proyectos</span>
                     </a>
-                    <a href="{{ route('admin.carpeta.index') }}">
+                    <a href="{{ asset('admin/documentos') }}">
                         <div class="caja-icon-mod-header" style="background: #FFFDC4;">
                             <i class="material-symbols-outlined">folder_copy</i>
                         </div>
@@ -211,10 +211,12 @@
                         <li class="li-click-list-header">
                             <a href="#">
                                 <i class="bi bi-file-earmark-arrow-up"></i>
-                                Catalogos SG
+                                Ajustes SG
                                 <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                             </a>
                             <ul>
+                                <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de distribución</a>
+                                </li>
                                 <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a></li>
                                 <li><a href="{{ route('admin.auditoria-clausula') }}">Cláusula</a></li>
                             </ul>
