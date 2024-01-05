@@ -164,7 +164,7 @@
                     <hr class="mt-4">
 
 
-                    <div class="caja-activos">
+                    <div class="caja-activos content-mi-card scroll_estilo"">
 
                         @if ($activos)
                             @foreach ($activos as $activo)
@@ -187,29 +187,31 @@
                 </div>
                 <div id="user-competencias" class="mis-cards">
                     <h3 class="title-user-card">Mis competencias</h3>
-                    <hr class="my-4">
+                    <hr class="mt-4">
 
-                    <div class="caja-activos content-mi-card scroll_estilo">
+                    <div class="caja-competencias content-mi-card scroll_estilo"">
 
-                        <div class="">
-
-                        </div>
-
+                        @foreach ($competencias as $competencia)
+                            @if ($competencia->competencia)
+                                <div class="mt-5 d-flex align-items-center" style="gap: 15px;">
+                                    <div class="">
+                                        <img src="{{ $competencia->competencia->imagen_ruta }}" alt=""
+                                            style="width: 50px;">
+                                    </div>
+                                    <div class="info-activo">
+                                        <strong>{{ $competencia->competencia->nombre }}</strong> <br>
+                                        <strong>Nivel: </strong> {{ $competencia->nivel_esperado }}
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
 
-
-
-
-
-
-
-
-
-
-
                 </div>
+
             </div>
         </div>
+    </div>
     </div>
 
     <div class="card card-body" style="background-color: #D8E1EC !important">
