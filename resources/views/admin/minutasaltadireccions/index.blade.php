@@ -117,7 +117,7 @@
                                     @endif
                                 @endforeach
                                 @if ($q->participantes->count() > 3)
-                                    <button type="button" class="btn btn-round ml-2 rounded-circle"  style="width: 50px; height:50px; background-color: #fff8dc;" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-round ml-2 rounded-circle"  style="width: 25px; height:25px; background-color: #fff8dc;" data-bs-toggle="modal"
                                         data-bs-target="#participantsModal{{ $q->id }}">
                                         +{{ $q->participantes->count() - 3 }}
                                     </button>
