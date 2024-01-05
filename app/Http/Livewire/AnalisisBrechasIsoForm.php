@@ -53,7 +53,6 @@ class AnalisisBrechasIsoForm extends Component
     {
         $this->name = null;
         $this->id_elaboro = '';
-        $this->estatus = '';
     }
 
     public function save()
@@ -78,7 +77,7 @@ class AnalisisBrechasIsoForm extends Component
         }
         // dd('afuera');
 
-        g
+
 
     }
 
@@ -88,7 +87,6 @@ class AnalisisBrechasIsoForm extends Component
             $this->selectedCard = null;
         } else {
             $this->selectedCard = $index;
-
         }
     }
 
@@ -101,7 +99,6 @@ class AnalisisBrechasIsoForm extends Component
         $this->id_elaboro = $analisis_brechas->empleado->id;
         $this->view = 'edit';
         $this->analisis_id = $id;
-
     }
 
     public function update()

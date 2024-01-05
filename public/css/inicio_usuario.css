@@ -65,7 +65,7 @@
 
 .caja-btns-op-equipo-user {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
 }
 
 .caja-btns-op-equipo-user i {
@@ -78,4 +78,34 @@
     color: #306BA9;
     justify-content: center;
     align-items: center;
+}
+
+.mis-cards {
+    display: none;
+}
+
+.mis-cards.active {
+    display: block;
+}
+
+.content-mi-card {
+    max-height: 410px;
+    overflow: auto;
+}
+
+
+.icon-activo {
+    width: 75px;
+    height: 75px;
+    border-radius: 100px;
+    box-shadow: 0px 3px 6px #00000029;
+    color: #3086AF;
+    display: grid;
+    place-items: center;
+    font-size: 40px;
+}
+
+.info-activo {
+    color: #747474;
+    font-size: 12px;
 }
