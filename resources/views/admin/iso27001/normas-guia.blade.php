@@ -8,7 +8,7 @@
     <div class="card card-body px-5">
         <h2 class="title-normas-iso">Normas</h2>
         <div class="d-flex mt-5 caja-cards-normas justify-content-center" style="gap: 20px;">
-            <a href="" class="disabled">
+            <a href="#" class="disabled">
                 <div class="card card-norma" style="background-color: #FFF0C5;">
                     <div class="card-img">
                         <img src="{{ asset('img/iso/iso23.png') }}" alt="">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </a>
-            <a href="" class="disabled">
+            <a href="#" class="disabled">
 
                 <div class="card card-norma" style="background-color: #FFD4DB;">
                     <div class="card-img">
@@ -63,12 +63,12 @@
                             La ISO 27001 se basa en el enfoque de gestión de riesgos para la seguridad
                             de la información. Este enfoque implica la identificación, evaluación y mitigación de los
                             riesgos de
-                            seguridad de la información que enfrenta una organización..
+                            seguridad de la información que enfrenta una organización.
                         </p>
                     </div>
                 </div>
             </a>
-            <a href="" class="disabled">
+            <a href="#" class="disabled">
                 <div class="card card-norma" style="background-color: #BED6F9;">
                     <div class="card-img">
                         <img src="{{ asset('img/iso/iso22.png') }}" alt="">
