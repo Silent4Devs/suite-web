@@ -316,15 +316,15 @@
                                     </p>
                                 </div>
                                 <hr>
-                                @php
+                                {{-- @php
                                     $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
                                     $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $nuv->cumpleaños);
                                     $mes = $meses[$fecha->format('n') - 1];
                                     $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
-                                @endphp
+                                @endphp --}}
                                 <div>
                                     <strong> Fecha de ingreso </strong> <br>
-                                    {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d-m-Y') }}
+                                    {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d/m/Y') }}
                                 </div>
                             </div>
                         @endforeach
