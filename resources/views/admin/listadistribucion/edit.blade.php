@@ -11,12 +11,12 @@
         opacity: 1;
     }
 
-    #btn_cancelar{
-    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    border: 1px solid var(--unnamed-color-057be2);
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border: 1px solid #057BE2;
-    opacity: 1;
+    #btn_cancelar {
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        border: 1px solid var(--unnamed-color-057be2);
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #057BE2;
+        opacity: 1;
     }
 
     .anima-focus label {
@@ -33,7 +33,7 @@
         <div class="">
             <div class="row">
                 <div class="col-2">
-                    <img src="{{asset('politicas.png')}}" class="imgdoc"  alt="">
+                    <img src="{{ asset('politicas.png') }}" class="imgdoc"  alt="">
                 </div>
                 <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
