@@ -46,7 +46,7 @@
 
 .doc-item-portal {
     width: 100%;
-    height: 115px;
+    /* height: 115px; */
     border-radius: 16px;
     color: #fff;
     display: flex !important;

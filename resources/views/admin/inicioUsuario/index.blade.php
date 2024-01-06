@@ -229,7 +229,7 @@
                 </div>
             </a>
 
-            <a href="">
+            <a href="" class="d-none">
                 <div class="item-ob-ev" style="background-color: #249AB8;">
                     <div class="img-ob-ev">
                         <img src="{{ asset('img/inicio_usuario/ev_tri.png') }}" alt="">
