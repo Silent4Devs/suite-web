@@ -51,12 +51,12 @@
         }
 
         /* .item-ms:first-child {
-                                                    margin-left: 160px;
-                                                }
+                                                        margin-left: 160px;
+                                                    }
 
-                                                .item-ms:last-child {
-                                                    margin-right: 160px;
-                                                } */
+                                                    .item-ms:last-child {
+                                                        margin-right: 160px;
+                                                    } */
 
         .item-ms span {
             font-size: 10px;

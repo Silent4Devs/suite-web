@@ -1,54 +1,44 @@
 @extends('layouts.admin')
-{{-- <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}"> --}}
 @section('content')
     @include('admin.listadistribucion.estilos')
-    {{-- <style>
-        .btn-outline-success {
-            background: #788bac !important;
-            color: white;
+    <style>
+            .boton-transparente {
+            background-color: transparent;
             border: none;
+            /* Elimina el borde del botón si lo deseas */
         }
 
-        .btn-outline-success:focus {
-            border-color: #345183 !important;
-            box-shadow: none;
+        .boton-transparentev2 {
+            top: 214px;
+            width: 135px;
+            height: 40px;
+            /* UI Properties */
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(--unnamed-color-057be2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #057BE2;
+            opacity: 1;
         }
 
-        .btn-outline-success:active {
-            box-shadow: none !important;
+        .icon {
+            opacity: 0.7;
+            /* Ajusta la opacidad de la imagen según tus necesidades */
         }
 
-        .btn-outline-success:hover {
-            background: #788bac;
-            color: white;
-
+        .textopdf {
+            font: var(--unnamed-font-style-normal) normal medium var(--unnamed-font-size-20)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-306ba9);
+            text-align: left;
+            font: normal normal medium 20px/20px Roboto;
+            letter-spacing: 0px;
+            color: #306BA9;
+            opacity: 1;
+            position: relative;
+            top: -2rem;
+            font-size: 15px;
         }
-
-        .btn_cargar {
-            border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
-            padding: 0;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 !important;
-            margin-right: 10px !important;
-        }
-
-        .table tr td:nth-child(4) {
-
-            text-align: center !important;
-        }
-
-
-        .agregar {
-            margin-right: 15px;
-        }
-    </style> --}}
+    </style>
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
 
@@ -117,33 +107,45 @@
                                     @endif
                                 @endforeach
                                 @if ($q->participantes->count() > 3)
-                                    <button type="button" class="btn btn-round ml-2 rounded-circle"  style="width: 50px; height:50px; background-color: #fff8dc;" data-bs-toggle="modal"
-                                        data-bs-target="#participantsModal{{ $q->id }}">
-                                        +{{ $q->participantes->count() - 3 }}
-                                    </button>
+                                <button type="button" class="btn btn-round ml-2 rounded-circle" style="width: 25px; height: 25px; background-color: #fff8dc; padding: 0; position: relative; border: 1px solid black; border-radius: 50%;" data-bs-toggle="modal" data-bs-target="#participantsModal{{ $q->id }}">
+                                    <span style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $q->participantes->count() - 3 }}</span>
+                                </button>
                                 @endif
 
                             </td>
 
                             <td>
-                            @php
+                                @php
                                 $badgeColor = '';
+                                $backgroundColor = '';
+                                $fontWeight = '300'; // Puedes ajustar este valor según tus preferencias
+
                                 switch ($q->estatus_formateado) {
-                                    case 'En Elaboración':
-                                        $badgeColor = 'red';
+                                    case 'Rechazado':
+                                        $badgeColor = '#FF0000';
+                                        $backgroundColor = 'rgba(221, 4, 131, 0.1)';
                                         break;
                                     case 'En Revisión':
-                                        $badgeColor = 'green';
+                                        $badgeColor = '#FF9900';
+                                        $backgroundColor = 'rgba(255, 200, 0, 0.2)';
                                         break;
                                     case 'Publicado':
-                                        $badgeColor = '#DD8E04';
+                                        $badgeColor = '#039C55';
+                                        $backgroundColor = 'rgba(3, 156, 85, 0.1)';
+                                        break;
+                                    case 'En Borrador':
+                                        $badgeColor = '#0080FF';
+                                        $backgroundColor = 'rgba(0, 128, 255, 0.1)';
                                         break;
                                     default:
-                                        $badgeColor = 'red';
+                                        $badgeColor = 'blue';
+                                        $backgroundColor = 'rgba(0, 0, 255, 0.1)';
                                 }
-                             @endphp
+                                @endphp
 
-                            <span class="badge" style="color:{{ $badgeColor }}; background: #E9FFE8 0% 0% no-repeat padding-box; border-radius: 7px; opacity: 1;">{{ $q->estatus_formateado }}</span>
+                                <span class="badge" style="color: {{ $badgeColor }}; background-color: {{ $backgroundColor }}; border-radius: 7px; padding: 5px; font-weight: {{ $fontWeight }};">{{ $q->estatus_formateado }}</span>
+
+
                             </td>
                             <td>
                                 <div class="dropdown">
@@ -158,8 +160,9 @@
                                                     </a>Editar</li>
                                         @endcan
                                         @can('revision_por_direccion_ver')
-                                            <li><a href="/admin/minutasaltadireccions/{{ $q->id }}" class="btn btn-sm"
-                                                    title="Visualizar"><i class="fa fa-eye"></i></a>Ver</li>
+                                            <li><a href="#" class="btn btn-sm" title="Visualizar" data-toggle="modal" data-target="#exampleModal">
+                                                <i class="fa fa-eye"></i> Ver
+                                            </a></li>
                                         @endcan
                                         @foreach ($q->planes as $plan)
                                             @can('revision_por_direccion_plan_accion')
@@ -197,6 +200,192 @@
             </table>
         </div>
     </div>
+
+
+        <div class="row d-flex align-items-center justify-content-center">
+                <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
+                <!-- Modal -->
+                <div class="modal modal2 fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
+                        style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
+                            style="color: #ffffff;"></i>
+                    </button>
+                    <div class="modal-dialog" style="margin-top: 0px; max-width: 1000px;">
+                        <div class="modal-content" style="width:1000px;">
+                            <div class="modal-body" style="border-radius: 0px;">
+                                <div class="print-none">
+                                </div>
+                                <div class="card col-sm-12 col-md-10"
+                                    style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
+                                    <div class="card-body" style=" position: relative; left:4.5rem; width:800px;">
+                                        <div class="print-none" style="text-align:right;">
+                                            <form method="POST"
+                                                action="{{ route('admin.politica-sgsis.pdf') }}">
+                                                @csrf
+                                                <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                                                    IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="card mt-6" style="width:750px; position: relative; right: -.8rem;">
+                                            <div class="row col-12 ml-0"
+                                                style="border-radius;
+                                                padding-left: 0px;padding-right: 0px;">
+                                                <div class="col-3" style="border-left: 25px solid #2395AA">
+                                                    <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
+                                                        style=" width:70%; position: relative; left: -.1rem; top: 1.4rem;">
+                                                </div>
+                                                <div class="col-5 p-2 mt-3">
+                                                    <br>
+                                                    <span class=""
+                                                        style="color:black; position: relative; top: -1.5rem; right: 3rem;  font-size: 12px;">
+                                                        {{ $empresa_actual }} <br>
+                                                        RFC: {{ $rfc }} <br>
+                                                        {{ $direccion }} <br>
+                                                    </span>
+
+                                                </div>
+                                                <div class="col-4 pt-6 pl-6" style="background:#EEFCFF;">
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <span class="textopdf"> <strong> Minuta Revisión por Dirección</strong></span>
+                                                </div>
+                                                <br>
+                                            </div>
+                                                <div style="margin: 4%">
+                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="6"><center>Minuta reunión</center></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd;">Fecha:</td>
+                                                                <td style="border: 1px solid #dddddd;">dd/mm/aa</td>
+                                                                <td style="border: 1px solid #dddddd;">Hora Inicio</td>
+                                                                <td style="border: 1px solid #dddddd;">00:00</td>
+                                                                <td style="border: 1px solid #dddddd;">Hora fin</td>
+                                                                <td style="border: 1px solid #dddddd;">00:00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd;">Tema:</td>
+                                                                <td style="border: 1px solid #dddddd;"></td>
+                                                                <td style="border: 1px solid #dddddd;">Objetivo;</td>
+                                                                <td style="border: 1px solid #dddddd;"></td>
+                                                                <td style="border: 1px solid #dddddd;"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <br>
+                                                    <br>
+                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="4"><center>Participantes</center></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd;">Nombre/Apellidos</td>
+                                                                <td style="border: 1px solid #dddddd;">Puesto/Area</td>
+                                                                <td style="border: 1px solid #dddddd;">Asistencia</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd;">.</td>
+                                                                <td style="border: 1px solid #dddddd;">.</td>
+                                                                <td style="border: 1px solid #dddddd;">.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <br>
+                                                    <br>
+                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="2"><center style="color: white;">Temas tratados</center></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
+                                                                    <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;"></textarea>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <br>
+                                                    <br>
+                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="5"><center>Acuerdos y Compromisos</center></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd;">Actividades</td>
+                                                                <td style="border: 1px solid #dddddd;">Responsable</td>
+                                                                <td style="border: 1px solid #dddddd;">Fecha compromiso</td>
+                                                                <td style="border: 1px solid #dddddd;">Estatus</td>
+                                                                <td style="border: 1px solid #dddddd;">Comentarios</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd;">.</td>
+                                                                <td style="border: 1px solid #dddddd;">.</td>
+                                                                <td style="border: 1px solid #dddddd;">.</td>
+                                                                <td style="border: 1px solid #dddddd;">.</td>
+                                                                <td style="border: 1px solid #dddddd;">.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <br>
+                                                    <br>
+                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="6"><center>Próxima reunión</center></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd;">Fecha:</td>
+                                                                <td style="border: 1px solid #dddddd;"></td>
+                                                                <td style="border: 1px solid #dddddd;">Hora</td>
+                                                                <td style="border: 1px solid #dddddd;"></td>
+                                                                <td style="border: 1px solid #dddddd;">Lugar</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd;" colspan="5">Proposito:</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <br>
+                                                    <br>
+                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="background-color: #FFFFFF; padding: 8px; color: black; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="2"><center style="color: black;">Anexo</center></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
+                                                                    <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;">Se adjunta la respuesta que Habiza dio en la reunión que tuvo con los representantes y que motivó se convocara a la reunión de hoy 10/03/2021, ya que mencionaron que para el mes de abril de este año ya no serán ellos los que administren el clúster. 1.- BARDA COLINDANTE: La barda colindante que comprende el tren número 2 que corresponde de la casa 9 a la 24, no se va a hacer porque los cimientos que se hicieron para la misma no soportan más peso inclusive ni siquiera 20 centímetros de malla ya que los vientos la derribarían 2.- PLANOS DE CONSTRUCIÓN Los planos nos los entregarían la próxima semana, pero solo van a ser los planos de cada prototipo pues las casas están hechas en serie y todos tienen las mismas características en cuanto al tema eléctrico e hidráulico, se va a entregar por correo y físico solo uno. 3.- GASTOS DE ADMINISTRACIÓN El informe nos lo entregan a más tardar el día 29 de marzo de 2021, y ellos se comprometen a compartir proveedores de insumos, vigilancia y jardineros. Por este punto se sugiere ir planeando u organizando la administración, no hay prorroga. 4.- CISTERNA DE RIEGO Nos comentan que la cisterna ya está para su funcionamiento y que a nosotros nos corresponde hacer el contrato de toma de agua para áreas verdes y alberca, inclusive nos entregaron la solicitud y esta tendrá un costo de $7,041.11. 5.-CANAL PLUVIAL</textarea>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
 
     <!-- Modal -->
     @foreach ($query as $q)

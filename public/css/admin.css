@@ -1250,5 +1250,9 @@ table.table.table-acordeon tbody tr:nth-child(even) {
 }
 
 a:hover {
-    text-decoration: none !important;
+    text-decoration: none;
+    color: unset;
+}
+a{
+    color: unset;
 }

@@ -219,9 +219,9 @@
                                     if (miembros.length > maxVisibleImages) {
                                         // Si hay más de tres imágenes, mostrar el botón de más
                                         html += `
-                                                <button type="button" class="btn btn-xs rounded-circle" data-toggle="modal" data-target="#miembrosModal" style="background-color: #f7f3d2; width: 20px; height: 20px; font-size: 10px; line-height: 14px; border: none;">
-                                                    +
-                                                </button>
+                                        <button type="button" class="btn btn-xs rounded-circle" data-toggle="modal" data-target="#miembrosModal" style="background-color: #f7f3d2; width: 20px; height: 20px; font-size: 10px; line-height: 14px; border: none; border-radius: 50%;">
+                                            +3
+                                        </button>
                                         `;
 
                                         // Modal con las imágenes adicionales
