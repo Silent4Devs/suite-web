@@ -81,7 +81,7 @@ class ComiteseguridadController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_comite' => 'required',
+            'nombre_comite' => 'required|max:255',
             'descripcion' => 'required',
         ]);
 
@@ -103,7 +103,7 @@ class ComiteseguridadController extends Controller
         abort_if(Gate::denies('comformacion_comite_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'nombre_comite' => 'required',
+            'nombre_comite' => 'required|max:255',
             'descripcion' => 'required',
         ]);
 

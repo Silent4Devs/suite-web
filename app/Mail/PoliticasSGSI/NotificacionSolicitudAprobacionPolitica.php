@@ -14,8 +14,9 @@ class NotificacionSolicitudAprobacionPolitica extends Mailable
 
     public $nombre_politica;
 
-    public function __construct($nombre_politica)
+    public function __construct($id_politica, $nombre_politica)
     {
+        $this->id_politica = $id_politica;
         $this->nombre_politica = $nombre_politica;
     }
 
@@ -26,6 +27,6 @@ class NotificacionSolicitudAprobacionPolitica extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.politicas.notificacion-politica-participantes')->subject('Solicitud Aprobación de Politica: '.$this->nombre_politica);
+        return $this->view('mails.politicas.notificacion-politica-participantes')->subject('Solicitud Aprobación de Politica: ' . $this->nombre_politica);
     }
 }

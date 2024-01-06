@@ -109,7 +109,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -421,6 +421,10 @@ class AlcanceSgsiController extends Controller
                 ]);
             }
 
+            $alcance->update([
+                'estatus' => 'Aprobado',
+            ]);
+
             $this->correosAprobacion($proceso, $alcance);
         } else {
             // dd($participante_control);
@@ -456,6 +460,10 @@ class AlcanceSgsiController extends Controller
             'proceso_id' => $aprobacion->id,
         ]);
 
+        $alcance->update([
+            'estatus' => 'Rechazado',
+        ]);
+
         $aprobacion->update([
             'estatus' => 'Rechazado',
         ]);
@@ -489,6 +497,10 @@ class AlcanceSgsiController extends Controller
         // dd($confirmacion, $isSameEstatus);
         if ($isSameEstatus) {
             $proceso->update([
+                'estatus' => 'Aprobado',
+            ]);
+
+            $alcance->update([
                 'estatus' => 'Aprobado',
             ]);
             // dd($proceso, $alcance);
