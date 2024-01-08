@@ -151,35 +151,40 @@
                                 style="color: {{ $badgeColor }}; background-color: {{ $backgroundColor }}; border-radius: 7px; padding: 5px; font-weight: {{ $fontWeight }};">{{ $q->estatus_formateado }}</span>
 
 
-                        </td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    @can('revision_por_direccion_editar')
-                                        <li><a  href="/admin/minutasaltadireccions/{{ $q->id }}/edit"
-                                                class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i>
-                                            </a>&nbsp;Editar</li>
-                                    @endcan
-                                    @can('revision_por_direccion_ver')
-                                    <li>
-                                        <a href="javascript:void(0)" class="btn btn-sm abrir-modal"
-                                           title="Visualizar" onclick="openModal('{{ $q->id }}')">
-                                           <i class="fa fa-eye"></i> &nbsp; Ver
-                                        </a>
-                                    </li>
-                                    @endcan
-                                    @foreach ($q->planes as $plan)
-                                        @can('revision_por_direccion_plan_accion')
-                                            <li><a href="/admin/planes-de-accion/{{ $plan->id }}" class="btn btn-sm"
-                                                    title="Plan de Acción"><i class="fa fa-stream"></i></a>Plan de
-                                                Accion
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        {{-- @can('revision_por_direccion_editar')
+                                            <li><a onclick="openEdit('{{ $q->id }}')" class="btn btn-sm"
+                                                    title="Editar"><i class="fa fa-edit"></i>
+                                                </a>&nbsp;Editar</li>
+                                        @endcan --}}
+                                        @can('revision_por_direccion_editar')
+                                            <li><a href="{{ route('admin.minutasaltadireccions.edit', $q->id) }}"
+                                                    class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i>
+                                                </a>&nbsp;Editar</li>
+                                        @endcan
+                                        @can('revision_por_direccion_ver')
+                                            <li>
+                                                <a href="javascript:void(0)" class="btn btn-sm abrir-modal" title="Visualizar"
+                                                    onclick="openModal('{{ $q->id }}')">
+                                                    <i class="fa fa-eye"></i> &nbsp; Ver
+                                                </a>
                                             </li>
                                         @endcan
-                                    @endforeach
+                                        {{-- @foreach ($q->planes as $plan)
+                                            @can('revision_por_direccion_plan_accion')
+                                                <li><a href="/admin/planes-de-accion/{{ $plan->id }}" class="btn btn-sm"
+                                                        title="Plan de Acción"><i class="fa fa-stream"></i></a>Plan de
+                                                    Accion
+                                                </li>
+                                            @endcan
+                                        @endforeach
 
                                     @can('revision_por_direccion_visualizar_revisiones')
                                         <li><a class="btn btn-sm " title="Visualizar revisiones"
@@ -211,16 +216,29 @@
 
 <div id="modalContainer"></div>
 
-<!-- Modal -->
-@foreach ($query as $q)
-<div class="modal fade" id="participantsModal{{ $q->id }}" tabindex="-1" aria-labelledby="participantsModalLabel" aria-hidden="true">
-    <button type="button" style="position: relative; top: 7rem; right: 15rem;" class="close" data-dismiss="modal" aria-label="Close">
-        <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
-    </button>
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="text-align: center;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="participantsModalLabel"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Participantes</h5>
+    <!-- Modal -->
+    @foreach ($query as $q)
+        <div class="modal fade" id="participantsModal{{ $q->id }}" tabindex="-1"
+            aria-labelledby="participantsModalLabel" aria-hidden="true">
+            <button type="button" style="position: relative; top: 7rem; right: 15rem;" class="close" data-dismiss="modal"
+                aria-label="Close">
+                <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+            </button>
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="text-align: center;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="participantsModalLabel">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Participantes</h5>
+                    </div>
+                    <div class="modal-body">
+                        @foreach ($q->participantes as $index => $participante)
+                            <img src="{{ asset('storage/empleados/imagenes/' . $participante->avatar) }}"
+                                class="rounded-circle" alt="{{ $participante->name }}" title="{{ $participante->name }}"
+                                style="object-fit: cover; clip-path: circle(50%); height: 30px; width: 30px; margin-right: 10px;">
+                        @endforeach
+                    </div>
+                </div>
             </div>
             <div class="modal-body" style="display: flex; justify-content: center; align-items: center;">
                 @foreach ($q->participantes as $index => $participante)
@@ -230,8 +248,8 @@
                 @endforeach
             </div>
         </div>
-    </div>
-</div>
+    @endforeach
+@endsection
 
 @endforeach
 
@@ -244,7 +262,7 @@
     <script>
         function openModal(minutaId) {
             // Construir la URL con el ID correcto
-            var modalUrl = '{{ route("admin.minutasaltadireccions.show", ["minutasaltadireccion" => ":minutaId"]) }}';
+            var modalUrl = '{{ route('admin.minutasaltadireccions.show', ['minutasaltadireccion' => ':minutaId']) }}';
             modalUrl = modalUrl.replace(':minutaId', minutaId);
 
             // Cargar el contenido del modal desde la URL utilizando AJAX
@@ -264,170 +282,190 @@
             });
         }
 
+
+        function openEdit(minutaId) {
+            // Construir la URL con el ID correcto
+            var modalUrl = '{{ route('admin.minutasaltadireccions.edit', ['minutasaltadireccion' => ':minutaId']) }}';
+            modalUrl = modalUrl.replace(':minutaId', minutaId);
+
+            // Cargar el contenido del modal desde la URL utilizando AJAX
+            $.ajax({
+                url: modalUrl,
+                type: 'GET',
+                success: function(response) {
+                    console.log('test');
+                },
+                error: function(error) {
+                    console.error('Error al cargar el contenido del modal', error);
+                }
+            });
+        }
     </script>
 
+    <script>
+        $(function() {
+            let dtButtons = [];
+            @can('revision_por_direccion_eliminar')
+                let deleteButtonTrans =
+                    '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.minutasaltadireccions.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
+                        if (ids.length === 0) {
+                            alert(
+                                '{{ trans('global.datatables.zero_selected') }}'
+                            )
 
-        <script>
-            $(function() {
-                let dtButtons = [];
-                @can('revision_por_direccion_eliminar')
-                    let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                    let deleteButton = {
-                        text: deleteButtonTrans,
-                        url: "{{ route('admin.minutasaltadireccions.massDestroy') }}",
-                        className: 'btn-danger',
-                        action: function(e, dt, node, config) {
-                            var ids = $.map(dt.rows({
-                                selected: true
-                            }).data(), function(entry) {
-                                return entry.id
-                            });
+                            return
+                        }
 
-                            if (ids.length === 0) {
-                                alert('{{ trans('global.datatables.zero_selected') }}')
-
-                                return
-                            }
-
-                            if (confirm('{{ trans('global.areYouSure') }}')) {
-                                $.ajax({
-                                        headers: {
-                                            'x-csrf-token': _token
-                                        },
-                                        method: 'POST',
-                                        url: config.url,
-                                        data: {
-                                            ids: ids,
-                                            _method: 'DELETE'
-                                        }
-                                    })
-                                    .done(function() {
-                                        location.reload()
-                                    })
-                            }
+                        if (confirm(
+                                '{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
                         }
                     }
-                    //dtButtons.push(deleteButton)
-                @endcan
-                @can('revision_por_direccion_agregar')
-                    let btnAgregar = {
-                        text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                        titleAttr: 'Agregar nueva minuta de Sesión con alta Dirección',
-                        url: "{{ route('admin.minutasaltadireccions.create') }}",
-                        className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                        action: function(e, dt, node, config) {
-                            let {
-                                url
-                            } = config;
-                            window.location.href = url;
-                        }
-                    };
-                    let btnExport = {
-                        text: '<i  class="fas fa-download"></i>',
-                        titleAttr: 'Descargar plantilla',
-                        className: "btn btn_cargar",
-                        url: "{{ route('descarga-alta_direccion') }}",
-                        action: function(e, dt, node, config) {
-                            let {
-                                url
-                            } = config;
-                            window.location.href = url;
-                        }
-                    };
-                    let btnImport = {
-                        text: '<i class="fas fa-file-upload"></i>',
-                        titleAttr: 'Importar datos',
-                        className: "btn btn_cargar",
-                        action: function(e, dt, node, config) {
-                            $('#xlsxImportModal').modal('show');
-                        }
-                    };
+                }
+                //dtButtons.push(deleteButton)
+            @endcan
+            @can('revision_por_direccion_agregar')
+                let btnAgregar = {
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar nueva minuta de Sesión con alta Dirección',
+                    url: "{{ route('admin.minutasaltadireccions.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
+                };
+                let btnExport = {
+                    text: '<i  class="fas fa-download"></i>',
+                    titleAttr: 'Descargar plantilla',
+                    className: "btn btn_cargar",
+                    url: "{{ route('descarga-alta_direccion') }}",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
+                };
+                let btnImport = {
+                    text: '<i class="fas fa-file-upload"></i>',
+                    titleAttr: 'Importar datos',
+                    className: "btn btn_cargar",
+                    action: function(e, dt, node, config) {
+                        $('#xlsxImportModal').modal('show');
+                    }
+                };
 
-                    dtButtons.push(btnAgregar);
-                    dtButtons.push(btnExport);
-                    dtButtons.push(btnImport);
-                @endcan
-                let dtOverrideGlobals = {
-                    pageLength: 5,
-                    buttons: dtButtons,
-                    processing: true,
-                    serverSide: true,
-                    retrieve: true,
-                    aaSorting: [],
-                    // ajax: "{{ route('admin.minutasaltadireccions.index') }}",
-                    // columns: [{
-                    //         data: 'id',
-                    //         name: 'id'
-                    //     },
-                    //     {
-                    //         data: 'tema_reunion',
-                    //         name: 'tema_reunion'
-                    //     },
-                    //     {
-                    //         data: 'fechareunion',
-                    //         name: 'fechareunion'
-                    //     },
-                    //     {
-                    //         data: 'responsable',
-                    //         name: 'responsable',
-                    //         render: function(data, type, row, meta) {
-                    //             if (type === "empleadoText") {
-                    //                 return data.name;
-                    //             }
-                    //             let responsablereunion = "";
-                    //             if (data) {
-                    //                 responsablereunion += `
+                dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
+            @endcan
+            let dtOverrideGlobals = {
+                pageLength: 5,
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                // ajax: "{{ route('admin.minutasaltadireccions.index') }}",
+                // columns: [{
+                //         data: 'id',
+                //         name: 'id'
+                //     },
+                //     {
+                //         data: 'tema_reunion',
+                //         name: 'tema_reunion'
+                //     },
+                //     {
+                //         data: 'fechareunion',
+                //         name: 'fechareunion'
+                //     },
+                //     {
+                //         data: 'responsable',
+                //         name: 'responsable',
+                //         render: function(data, type, row, meta) {
+                //             if (type === "empleadoText") {
+                //                 return data.name;
+                //             }
+                //             let responsablereunion = "";
+                //             if (data) {
+                //                 responsablereunion += `
             //             <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
             //             `;
-                    //             }
-                    //             return responsablereunion;
-                    //         }
-                    //     },
-                    //     {
-                    //         data: 'participantes',
-                    //         name: 'participantes',
-                    //         render: function(data, type, row, meta) {
-                    //             let participantes = data;
-                    //             if (type === "empleadoText") {
-                    //                 let participantesTexto = "";
-                    //                 participantes.forEach(participante => {
-                    //                     participantesTexto += `
+                //             }
+                //             return responsablereunion;
+                //         }
+                //     },
+                //     {
+                //         data: 'participantes',
+                //         name: 'participantes',
+                //         render: function(data, type, row, meta) {
+                //             let participantes = data;
+                //             if (type === "empleadoText") {
+                //                 let participantesTexto = "";
+                //                 participantes.forEach(participante => {
+                //                     participantesTexto += `
             //             ${participante.name},
             //             `;
-                    //                 });
-                    //                 return participantesTexto.trim();
-                    //             }
-                    //             let html = '';
-                    //             participantes.forEach(participante => {
-                    //                 html += `
+                //                 });
+                //                 return participantesTexto.trim();
+                //             }
+                //             let html = '';
+                //             participantes.forEach(participante => {
+                //                 html += `
             //             <img src="{{ asset('storage/empleados/imagenes/') }}/${participante.avatar}"
             //                         class="rounded-circle" alt="${participante.name}"
             //                         title="${participante.name}" style="clip-path: circle(15px at 50% 50%);height: 30px;">
             //             `
-                    //             });
-                    //             return html;
-                    //         }
+                //             });
+                //             return html;
+                //         }
 
-                    //     },
-                    //     {
-                    //         data: 'estatus_formateado',
-                    //         name: 'estatus_formateado',
-                    //         render: function(data, type, row, meta) {
-                    //             let estatus = `
+                //     },
+                //     {
+                //         data: 'estatus_formateado',
+                //         name: 'estatus_formateado',
+                //         render: function(data, type, row, meta) {
+                //             let estatus = `
             //                 <span class="badge" style="color:${row.color_estatus}">${data}</span>
             //             `;
-                    //             return estatus;
-                    //         }
-                    //     },
-                    //     {
-                    //         data: 'id',
-                    //         render: function(data, type, row, meta) {
-                    //             let urlBotonEditar = `/admin/minutasaltadireccions/${data}/edit`;
-                    //             let urlBotonMostrar = `/admin/minutasaltadireccions/${data}`;
-                    //             let urlBotonEliminar = `/admin/minutasaltadireccions/${data}`;
+                //             return estatus;
+                //         }
+                //     },
+                //     {
+                //         data: 'id',
+                //         render: function(data, type, row, meta) {
+                //             let urlBotonEditar = `/admin/minutasaltadireccions/${data}/edit`;
+                //             let urlBotonMostrar = `/admin/minutasaltadireccions/${data}`;
+                //             let urlBotonEliminar = `/admin/minutasaltadireccions/${data}`;
 
-                    //             let htmlButtons = `
+                //             let htmlButtons = `
             //             @can('revision_por_direccion_editar')
             //                 <a href="${urlBotonEditar}" class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
             //             @endcan
@@ -456,57 +494,60 @@
             //                 <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlBotonEliminar}','${row.tema_reunion}')"><i class="fa fa-trash-alt"></i></button>
             //             @endcan
             //             `;
-                    //             return htmlButtons;
-                    //         }
-                    //     }
-                    // ],
-                    orderCellsTop: true,
-                    order: [
-                        [0, 'desc']
-                    ]
-                };
-                let table = $('.datatable-Minutasaltadireccion').DataTable(dtOverrideGlobals);
+                //             return htmlButtons;
+                //         }
+                //     }
+                // ],
+                orderCellsTop: true,
+                order: [
+                    [0, 'desc']
+                ]
+            };
+            let table = $('.datatable-Minutasaltadireccion').DataTable(
+                dtOverrideGlobals);
 
-                window.Eliminar = function(url, nombre) {
-                    Swal.fire({
-                        title: `¿Estás seguro de eliminar?`,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: '¡Sí, eliminar!',
-                        cancelButtonText: 'Cancelar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: "DELETE",
-                                headers: {
-                                    'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                url: url,
-                                beforeSend: function() {
-                                    Swal.fire(
-                                        '¡Estamos Eliminando!',
-                                    )
-                                },
-                                success: function(response) {
-                                    Swal.fire(
-                                        'Eliminado!',
-                                    )
-                                    table.ajax.reload();
-                                },
-                                error: function(error) {
-                                    console.log(error);
-                                    Swal.fire(
-                                        'Ocurrió un error',
-                                        `Error: ${error.responseJSON.message}`,
-                                        'error'
-                                    )
-                                }
-                            });
-                        }
-                    })
-                }
-            });
-        </script>
-    @endsection
+            window.Eliminar = function(url, nombre) {
+                Swal.fire({
+                    title: `¿Estás seguro de eliminar?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, eliminar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            headers: {
+                                'x-csrf-token': $(
+                                    'meta[name="csrf-token"]'
+                                ).attr('content')
+                            },
+                            url: url,
+                            beforeSend: function() {
+                                Swal.fire(
+                                    '¡Estamos Eliminando!',
+                                )
+                            },
+                            success: function(response) {
+                                Swal.fire(
+                                    'Eliminado!',
+                                )
+                                location.reload();
+                            },
+                            error: function(error) {
+                                console.log(error);
+                                Swal.fire(
+                                    'Ocurrió un error',
+                                    `Error: ${error.responseJSON.message}`,
+                                    'error'
+                                )
+                            }
+                        });
+                    }
+                })
+            }
+        });
+    </script>
+@endsection
