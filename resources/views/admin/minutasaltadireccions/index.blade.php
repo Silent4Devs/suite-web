@@ -2,7 +2,7 @@
 @section('content')
     @include('admin.listadistribucion.estilos')
     <style>
-            .boton-transparente {
+        .boton-transparente {
             background-color: transparent;
             border: none;
             /* Elimina el borde del botón si lo deseas */
@@ -59,8 +59,8 @@
             <h5 class="title-table-rds">Minutas Revisión por Dirección</h5>
         </div>
         @include('partials.flashMessages')
-        <div>
-            <table class="datatable-rds" id="datatable-Minutasaltadireccion" style="width: 100%">
+        <div class="datatable-rds">
+            <table class="" id="datatable-Minutasaltadireccion" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
                         {{-- <th>
@@ -107,43 +107,47 @@
                                     @endif
                                 @endforeach
                                 @if ($q->participantes->count() > 3)
-                                <button type="button" class="btn btn-round ml-2 rounded-circle" style="width: 25px; height: 25px; background-color: #fff8dc; padding: 0; position: relative; border: 1px solid black; border-radius: 50%;" data-bs-toggle="modal" data-bs-target="#participantsModal{{ $q->id }}">
-                                    <span style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $q->participantes->count() - 3 }}</span>
-                                </button>
+                                    <button type="button" class="btn btn-round ml-2 rounded-circle"
+                                        style="width: 25px; height: 25px; background-color: #fff8dc; padding: 0; position: relative; border: 1px solid black; border-radius: 50%;"
+                                        data-bs-toggle="modal" data-bs-target="#participantsModal{{ $q->id }}">
+                                        <span
+                                            style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $q->participantes->count() - 3 }}</span>
+                                    </button>
                                 @endif
 
                             </td>
 
                             <td>
                                 @php
-                                $badgeColor = '';
-                                $backgroundColor = '';
-                                $fontWeight = '300'; // Puedes ajustar este valor según tus preferencias
+                                    $badgeColor = '';
+                                    $backgroundColor = '';
+                                    $fontWeight = '300'; // Puedes ajustar este valor según tus preferencias
 
-                                switch ($q->estatus_formateado) {
-                                    case 'Rechazado':
-                                        $badgeColor = '#FF0000';
-                                        $backgroundColor = 'rgba(221, 4, 131, 0.1)';
-                                        break;
-                                    case 'En Revisión':
-                                        $badgeColor = '#FF9900';
-                                        $backgroundColor = 'rgba(255, 200, 0, 0.2)';
-                                        break;
-                                    case 'Publicado':
-                                        $badgeColor = '#039C55';
-                                        $backgroundColor = 'rgba(3, 156, 85, 0.1)';
-                                        break;
-                                    case 'En Borrador':
-                                        $badgeColor = '#0080FF';
-                                        $backgroundColor = 'rgba(0, 128, 255, 0.1)';
-                                        break;
-                                    default:
-                                        $badgeColor = 'blue';
-                                        $backgroundColor = 'rgba(0, 0, 255, 0.1)';
-                                }
+                                    switch ($q->estatus_formateado) {
+                                        case 'Rechazado':
+                                            $badgeColor = '#FF0000';
+                                            $backgroundColor = 'rgba(221, 4, 131, 0.1)';
+                                            break;
+                                        case 'En Revisión':
+                                            $badgeColor = '#FF9900';
+                                            $backgroundColor = 'rgba(255, 200, 0, 0.2)';
+                                            break;
+                                        case 'Publicado':
+                                            $badgeColor = '#039C55';
+                                            $backgroundColor = 'rgba(3, 156, 85, 0.1)';
+                                            break;
+                                        case 'En Borrador':
+                                            $badgeColor = '#0080FF';
+                                            $backgroundColor = 'rgba(0, 128, 255, 0.1)';
+                                            break;
+                                        default:
+                                            $badgeColor = 'blue';
+                                            $backgroundColor = 'rgba(0, 0, 255, 0.1)';
+                                    }
                                 @endphp
 
-                                <span class="badge" style="color: {{ $badgeColor }}; background-color: {{ $backgroundColor }}; border-radius: 7px; padding: 5px; font-weight: {{ $fontWeight }};">{{ $q->estatus_formateado }}</span>
+                                <span class="badge"
+                                    style="color: {{ $badgeColor }}; background-color: {{ $backgroundColor }}; border-radius: 7px; padding: 5px; font-weight: {{ $fontWeight }};">{{ $q->estatus_formateado }}</span>
 
 
                             </td>
@@ -157,7 +161,7 @@
                                         @can('revision_por_direccion_editar')
                                             <li><a  onclick="openEdit('{{ $q->id }}')"
                                                     class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i>
-                                                    </a>Editar</li>
+                                                </a>&nbsp;Editar</li>
                                         @endcan
                                         @can('revision_por_direccion_ver')
                                         <li>
@@ -167,11 +171,11 @@
                                             </a>
                                         </li>
                                         @endcan
-                                        @foreach ($q->planes as $plan)
+                                        {{-- @foreach ($q->planes as $plan)
                                             @can('revision_por_direccion_plan_accion')
                                                 <li><a href="/admin/planes-de-accion/{{ $plan->id }}" class="btn btn-sm"
                                                         title="Plan de Acción"><i class="fa fa-stream"></i></a>Plan de
-                                                        Accion
+                                                    Accion
                                                 </li>
                                             @endcan
                                         @endforeach
@@ -188,7 +192,7 @@
                                                             d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
                                                     </svg>
                                                 </a>Versiones</li>
-                                        @endcan
+                                        @endcan --}}
                                         @can('revision_por_direccion_eliminar')
                                             <li><button class="btn btn-sm text-danger" title="Eliminar"
                                                     onclick="Eliminar('/admin/minutasaltadireccions/{{ $q->id }}','{{ $q->tema_reunion }}')"><i
@@ -229,8 +233,6 @@
                 </div>
             </div>
         </div>
-    @endforeach
-@endsection
 
 @section('scripts')
     @parent
@@ -297,150 +299,168 @@
                             return entry.id
                         });
 
-                        if (ids.length === 0) {
-                            alert('{{ trans('global.datatables.zero_selected') }}')
+    @section('scripts')
+        @parent
+        <script>
+            $(function() {
+                let dtButtons = [];
+                @can('revision_por_direccion_eliminar')
+                    let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                    let deleteButton = {
+                        text: deleteButtonTrans,
+                        url: "{{ route('admin.minutasaltadireccions.massDestroy') }}",
+                        className: 'btn-danger',
+                        action: function(e, dt, node, config) {
+                            var ids = $.map(dt.rows({
+                                selected: true
+                            }).data(), function(entry) {
+                                return entry.id
+                            });
 
-                            return
+                            if (ids.length === 0) {
+                                alert('{{ trans('global.datatables.zero_selected') }}')
+
+                                return
+                            }
+
+                            if (confirm('{{ trans('global.areYouSure') }}')) {
+                                $.ajax({
+                                        headers: {
+                                            'x-csrf-token': _token
+                                        },
+                                        method: 'POST',
+                                        url: config.url,
+                                        data: {
+                                            ids: ids,
+                                            _method: 'DELETE'
+                                        }
+                                    })
+                                    .done(function() {
+                                        location.reload()
+                                    })
+                            }
                         }
-
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'DELETE'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
+                    }
+                    //dtButtons.push(deleteButton)
+                @endcan
+                @can('revision_por_direccion_agregar')
+                    let btnAgregar = {
+                        text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                        titleAttr: 'Agregar nueva minuta de Sesión con alta Dirección',
+                        url: "{{ route('admin.minutasaltadireccions.create') }}",
+                        className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                        action: function(e, dt, node, config) {
+                            let {
+                                url
+                            } = config;
+                            window.location.href = url;
                         }
-                    }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
-            @can('revision_por_direccion_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar nueva minuta de Sesión con alta Dirección',
-                    url: "{{ route('admin.minutasaltadireccions.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                let btnExport = {
-                    text: '<i  class="fas fa-download"></i>',
-                    titleAttr: 'Descargar plantilla',
-                    className: "btn btn_cargar",
-                    url: "{{ route('descarga-alta_direccion') }}",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                let btnImport = {
-                    text: '<i class="fas fa-file-upload"></i>',
-                    titleAttr: 'Importar datos',
-                    className: "btn btn_cargar",
-                    action: function(e, dt, node, config) {
-                        $('#xlsxImportModal').modal('show');
-                    }
-                };
+                    };
+                    let btnExport = {
+                        text: '<i  class="fas fa-download"></i>',
+                        titleAttr: 'Descargar plantilla',
+                        className: "btn btn_cargar",
+                        url: "{{ route('descarga-alta_direccion') }}",
+                        action: function(e, dt, node, config) {
+                            let {
+                                url
+                            } = config;
+                            window.location.href = url;
+                        }
+                    };
+                    let btnImport = {
+                        text: '<i class="fas fa-file-upload"></i>',
+                        titleAttr: 'Importar datos',
+                        className: "btn btn_cargar",
+                        action: function(e, dt, node, config) {
+                            $('#xlsxImportModal').modal('show');
+                        }
+                    };
 
-                dtButtons.push(btnAgregar);
-                dtButtons.push(btnExport);
-                dtButtons.push(btnImport);
-            @endcan
-            let dtOverrideGlobals = {
-                pageLength: 5,
-                buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                aaSorting: [],
-                // ajax: "{{ route('admin.minutasaltadireccions.index') }}",
-                // columns: [{
-                //         data: 'id',
-                //         name: 'id'
-                //     },
-                //     {
-                //         data: 'tema_reunion',
-                //         name: 'tema_reunion'
-                //     },
-                //     {
-                //         data: 'fechareunion',
-                //         name: 'fechareunion'
-                //     },
-                //     {
-                //         data: 'responsable',
-                //         name: 'responsable',
-                //         render: function(data, type, row, meta) {
-                //             if (type === "empleadoText") {
-                //                 return data.name;
-                //             }
-                //             let responsablereunion = "";
-                //             if (data) {
-                //                 responsablereunion += `
+                    dtButtons.push(btnAgregar);
+                    dtButtons.push(btnExport);
+                    dtButtons.push(btnImport);
+                @endcan
+                let dtOverrideGlobals = {
+                    pageLength: 5,
+                    buttons: dtButtons,
+                    processing: true,
+                    serverSide: true,
+                    retrieve: true,
+                    aaSorting: [],
+                    // ajax: "{{ route('admin.minutasaltadireccions.index') }}",
+                    // columns: [{
+                    //         data: 'id',
+                    //         name: 'id'
+                    //     },
+                    //     {
+                    //         data: 'tema_reunion',
+                    //         name: 'tema_reunion'
+                    //     },
+                    //     {
+                    //         data: 'fechareunion',
+                    //         name: 'fechareunion'
+                    //     },
+                    //     {
+                    //         data: 'responsable',
+                    //         name: 'responsable',
+                    //         render: function(data, type, row, meta) {
+                    //             if (type === "empleadoText") {
+                    //                 return data.name;
+                    //             }
+                    //             let responsablereunion = "";
+                    //             if (data) {
+                    //                 responsablereunion += `
             //             <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
             //             `;
-                //             }
-                //             return responsablereunion;
-                //         }
-                //     },
-                //     {
-                //         data: 'participantes',
-                //         name: 'participantes',
-                //         render: function(data, type, row, meta) {
-                //             let participantes = data;
-                //             if (type === "empleadoText") {
-                //                 let participantesTexto = "";
-                //                 participantes.forEach(participante => {
-                //                     participantesTexto += `
+                    //             }
+                    //             return responsablereunion;
+                    //         }
+                    //     },
+                    //     {
+                    //         data: 'participantes',
+                    //         name: 'participantes',
+                    //         render: function(data, type, row, meta) {
+                    //             let participantes = data;
+                    //             if (type === "empleadoText") {
+                    //                 let participantesTexto = "";
+                    //                 participantes.forEach(participante => {
+                    //                     participantesTexto += `
             //             ${participante.name},
             //             `;
-                //                 });
-                //                 return participantesTexto.trim();
-                //             }
-                //             let html = '';
-                //             participantes.forEach(participante => {
-                //                 html += `
+                    //                 });
+                    //                 return participantesTexto.trim();
+                    //             }
+                    //             let html = '';
+                    //             participantes.forEach(participante => {
+                    //                 html += `
             //             <img src="{{ asset('storage/empleados/imagenes/') }}/${participante.avatar}"
             //                         class="rounded-circle" alt="${participante.name}"
             //                         title="${participante.name}" style="clip-path: circle(15px at 50% 50%);height: 30px;">
             //             `
-                //             });
-                //             return html;
-                //         }
+                    //             });
+                    //             return html;
+                    //         }
 
-                //     },
-                //     {
-                //         data: 'estatus_formateado',
-                //         name: 'estatus_formateado',
-                //         render: function(data, type, row, meta) {
-                //             let estatus = `
+                    //     },
+                    //     {
+                    //         data: 'estatus_formateado',
+                    //         name: 'estatus_formateado',
+                    //         render: function(data, type, row, meta) {
+                    //             let estatus = `
             //                 <span class="badge" style="color:${row.color_estatus}">${data}</span>
             //             `;
-                //             return estatus;
-                //         }
-                //     },
-                //     {
-                //         data: 'id',
-                //         render: function(data, type, row, meta) {
-                //             let urlBotonEditar = `/admin/minutasaltadireccions/${data}/edit`;
-                //             let urlBotonMostrar = `/admin/minutasaltadireccions/${data}`;
-                //             let urlBotonEliminar = `/admin/minutasaltadireccions/${data}`;
+                    //             return estatus;
+                    //         }
+                    //     },
+                    //     {
+                    //         data: 'id',
+                    //         render: function(data, type, row, meta) {
+                    //             let urlBotonEditar = `/admin/minutasaltadireccions/${data}/edit`;
+                    //             let urlBotonMostrar = `/admin/minutasaltadireccions/${data}`;
+                    //             let urlBotonEliminar = `/admin/minutasaltadireccions/${data}`;
 
-                //             let htmlButtons = `
+                    //             let htmlButtons = `
             //             @can('revision_por_direccion_editar')
             //                 <a href="${urlBotonEditar}" class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
             //             @endcan
@@ -469,57 +489,57 @@
             //                 <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlBotonEliminar}','${row.tema_reunion}')"><i class="fa fa-trash-alt"></i></button>
             //             @endcan
             //             `;
-                //             return htmlButtons;
-                //         }
-                //     }
-                // ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
-            };
-            let table = $('.datatable-Minutasaltadireccion').DataTable(dtOverrideGlobals);
+                    //             return htmlButtons;
+                    //         }
+                    //     }
+                    // ],
+                    orderCellsTop: true,
+                    order: [
+                        [0, 'desc']
+                    ]
+                };
+                let table = $('.datatable-Minutasaltadireccion').DataTable(dtOverrideGlobals);
 
-            window.Eliminar = function(url, nombre) {
-                Swal.fire({
-                    title: `¿Estás seguro de eliminar?`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Sí, eliminar!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "DELETE",
-                            headers: {
-                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: url,
-                            beforeSend: function() {
-                                Swal.fire(
-                                    '¡Estamos Eliminando!',
-                                )
-                            },
-                            success: function(response) {
-                                Swal.fire(
-                                    'Eliminado!',
-                                )
-                                table.ajax.reload();
-                            },
-                            error: function(error) {
-                                console.log(error);
-                                Swal.fire(
-                                    'Ocurrió un error',
-                                    `Error: ${error.responseJSON.message}`,
-                                    'error'
-                                )
-                            }
-                        });
-                    }
-                })
-            }
-        });
-    </script>
-@endsection --}}
+                window.Eliminar = function(url, nombre) {
+                    Swal.fire({
+                        title: `¿Estás seguro de eliminar?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '¡Sí, eliminar!',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "DELETE",
+                                headers: {
+                                    'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: url,
+                                beforeSend: function() {
+                                    Swal.fire(
+                                        '¡Estamos Eliminando!',
+                                    )
+                                },
+                                success: function(response) {
+                                    Swal.fire(
+                                        'Eliminado!',
+                                    )
+                                    table.ajax.reload();
+                                },
+                                error: function(error) {
+                                    console.log(error);
+                                    Swal.fire(
+                                        'Ocurrió un error',
+                                        `Error: ${error.responseJSON.message}`,
+                                        'error'
+                                    )
+                                }
+                            });
+                        }
+                    })
+                }
+            });
+        </script>
+    @endsection

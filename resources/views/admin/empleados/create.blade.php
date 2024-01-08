@@ -242,7 +242,7 @@
                     </div>
                 @endcan
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}"  class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}"  class="btn" id="btn_cancelar" style="color:#057BE2; height: 3rem;">Cancelar</a>
                     <button class="btn btn-primary" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>
