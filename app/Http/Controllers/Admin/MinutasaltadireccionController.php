@@ -344,20 +344,20 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $minutasaltadireccion = Minutasaltadireccion::find($id);
-        $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
-        $actividades = $minutasaltadireccion->planes->first()->tasks;
-        $actividades = array_filter($actividades, function ($actividad) {
-            return intval($actividad->level) > 0;
-        });
+        // $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
+        // $actividades = $minutasaltadireccion->planes->first()->tasks;
+        // $actividades = array_filter($actividades, function ($actividad) {
+        //     return intval($actividad->level) > 0;
+        // });
 
-        $participantesWithAsistencia = $minutasaltadireccion->participantes()
-            ->withPivot('asistencia')
-            ->get();
-        // dd($participantesWithAsistencia);
+        // $participantesWithAsistencia = $minutasaltadireccion->participantes()
+        //     ->withPivot('asistencia')
+        //     ->get();
+        //  dd($participantesWithAsistencia);
 
-        $responsablereunions = Empleado::getaltaAll();
+        // $responsablereunions = Empleado::getaltaAll();
 
-        return view('admin.minutasaltadireccions.edit', compact('responsablereunions', 'participantesWithAsistencia', 'minutasaltadireccion', 'actividades'));
+        return view('admin.minutasaltadireccions.edit', compact('minutasaltadireccion'));
     }
 
     public function processUpdate($request, Minutasaltadireccion $minutasaltadireccion, $edit = false)
