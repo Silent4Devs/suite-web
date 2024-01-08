@@ -1,154 +1,153 @@
-
 @extends('layouts.admin')
 @section('content')
-@include('admin.listadistribucion.estilos')
-<style>
-    .boton-transparente {
-        background-color: transparent;
-        border: none;
-        /* Elimina el borde del botón si lo deseas */
-    }
+    @include('admin.listadistribucion.estilos')
+    <style>
+        .boton-transparente {
+            background-color: transparent;
+            border: none;
+            /* Elimina el borde del botón si lo deseas */
+        }
 
-    .boton-transparentev2 {
-        top: 214px;
-        width: 135px;
-        height: 40px;
-        /* UI Properties */
-        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-        border: 1px solid var(--unnamed-color-057be2);
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        border: 1px solid #057BE2;
-        opacity: 1;
-    }
+        .boton-transparentev2 {
+            top: 214px;
+            width: 135px;
+            height: 40px;
+            /* UI Properties */
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(--unnamed-color-057be2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #057BE2;
+            opacity: 1;
+        }
 
-    .icon {
-        opacity: 0.7;
-        /* Ajusta la opacidad de la imagen según tus necesidades */
-    }
+        .icon {
+            opacity: 0.7;
+            /* Ajusta la opacidad de la imagen según tus necesidades */
+        }
 
-    .textopdf {
-        font: var(--unnamed-font-style-normal) normal medium var(--unnamed-font-size-20)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
-        letter-spacing: var(--unnamed-character-spacing-0);
-        color: var(--unnamed-color-306ba9);
-        text-align: left;
-        font: normal normal medium 20px/20px Roboto;
-        letter-spacing: 0px;
-        color: #306BA9;
-        opacity: 1;
-        position: relative;
-        top: -2rem;
-        font-size: 15px;
-    }
-</style>
+        .textopdf {
+            font: var(--unnamed-font-style-normal) normal medium var(--unnamed-font-size-20)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-306ba9);
+            text-align: left;
+            font: normal normal medium 20px/20px Roboto;
+            letter-spacing: 0px;
+            color: #306BA9;
+            opacity: 1;
+            position: relative;
+            top: -2rem;
+            font-size: 15px;
+        }
+    </style>
 
-{{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
+    {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
 
-@can('revision_por_direccion_agregar')
-    <h5 class="col-12 titulo_general_funcion">
-        Revisión por dirección</h5>
-    <div style="margin-bottom: 10px; text-align:end;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-primary" href="{{ route('admin.minutasaltadireccions.create') }}">
-                Agregar Revisión
-            </a>
+    @can('revision_por_direccion_agregar')
+        <h5 class="col-12 titulo_general_funcion">
+            Revisión por dirección</h5>
+        <div style="margin-bottom: 10px; text-align:end;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-primary" href="{{ route('admin.minutasaltadireccions.create') }}">
+                    Agregar Revisión
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
+    @endcan
 
-<div class="card card-body">
-    <div class="card-header">
-        <h5 class="title-table-rds">Minutas Revisión por Dirección</h5>
-    </div>
-    @include('partials.flashMessages')
-    <div class="datatable-rds">
-        <table class="" id="datatable-Minutasaltadireccion" style="width: 100%">
-            <thead class="thead-dark">
-                <tr>
-                    {{-- <th>
+    <div class="card card-body">
+        <div class="card-header">
+            <h5 class="title-table-rds">Minutas Revisión por Dirección</h5>
+        </div>
+        @include('partials.flashMessages')
+        <div class="datatable-rds">
+            <table class="" id="datatable-Minutasaltadireccion" style="width: 100%">
+                <thead class="thead-dark">
+                    <tr>
+                        {{-- <th>
                         {{ trans('cruds.minutasaltadireccion.fields.id') }}
                     </th> --}}
-                    <th>
-                        Tema de la reunión
-                    </th>
-                    <th>
-                        Fecha
-                    </th>
-                    <th style="width: 8rem; text-align: start;">
-                        Elaboró
-                    </th>
-                    <th>
-                        Participantes
-                    </th>
-                    <th>
-                        Estatus
-                    </th>
-                    <th>
-                        Opciones
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($query as $q)
-                    <tr>
-                        {{-- <td>{{ $q->id }}</td> --}}
-                        <td>{{ $q->tema_reunion }}</td>
-                        <td>{{ $q->fechareunion }}</td>
-                        <td>
-                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $q->responsable->avatar ?? '' }}"
-                                title="{{ $q->responsable->name ?? '' }}" class="btn btn-round ml-2 rounded-circle"
-                                style="width: 50px; height:50px; background-color: #fff8dc;" />
-                        </td>
-                        <td>
-                            @foreach ($q->participantes as $index => $participante)
-                                @if ($index < 3)
-                                    <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
-                                        class="btn btn-round ml-2 rounded-circle" alt="{{ $participante->name }}"
-                                        title="{{ $participante->name }}"
-                                        style="width: 50px; height:50px; background-color: #fff8dc;">
+                        <th>
+                            Tema de la reunión
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th style="width: 8rem; text-align: start;">
+                            Elaboró
+                        </th>
+                        <th>
+                            Participantes
+                        </th>
+                        <th>
+                            Estatus
+                        </th>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($query as $q)
+                        <tr>
+                            {{-- <td>{{ $q->id }}</td> --}}
+                            <td>{{ $q->tema_reunion }}</td>
+                            <td>{{ $q->fechareunion }}</td>
+                            <td>
+                                <img src="{{ asset('storage/empleados/imagenes') }}/{{ $q->responsable->avatar ?? '' }}"
+                                    title="{{ $q->responsable->name ?? '' }}" class="btn btn-round ml-2 rounded-circle"
+                                    style="width: 50px; height:50px; background-color: #fff8dc;" />
+                            </td>
+                            <td>
+                                @foreach ($q->participantes as $index => $participante)
+                                    @if ($index < 3)
+                                        <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
+                                            class="btn btn-round ml-2 rounded-circle" alt="{{ $participante->name }}"
+                                            title="{{ $participante->name }}"
+                                            style="width: 50px; height:50px; background-color: #fff8dc;">
+                                    @endif
+                                @endforeach
+                                @if ($q->participantes->count() > 3)
+                                    <button type="button" class="btn btn-round ml-2 rounded-circle"
+                                        style="width: 25px; height: 25px; background-color: #fff8dc; padding: 0; position: relative; border: 1px solid black; border-radius: 50%;"
+                                        data-bs-toggle="modal" data-bs-target="#participantsModal{{ $q->id }}">
+                                        <span
+                                            style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $q->participantes->count() - 3 }}</span>
+                                    </button>
                                 @endif
-                            @endforeach
-                            @if ($q->participantes->count() > 3)
-                                <button type="button" class="btn btn-round ml-2 rounded-circle"
-                                    style="width: 25px; height: 25px; background-color: #fff8dc; padding: 0; position: relative; border: 1px solid black; border-radius: 50%;"
-                                    data-bs-toggle="modal" data-bs-target="#participantsModal{{ $q->id }}">
-                                    <span
-                                        style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $q->participantes->count() - 3 }}</span>
-                                </button>
-                            @endif
 
-                        </td>
+                            </td>
 
-                        <td>
-                            @php
-                                $badgeColor = '';
-                                $backgroundColor = '';
-                                $fontWeight = '300'; // Puedes ajustar este valor según tus preferencias
+                            <td>
+                                @php
+                                    $badgeColor = '';
+                                    $backgroundColor = '';
+                                    $fontWeight = '300'; // Puedes ajustar este valor según tus preferencias
 
-                                switch ($q->estatus_formateado) {
-                                    case 'Rechazado':
-                                        $badgeColor = '#FF0000';
-                                        $backgroundColor = 'rgba(221, 4, 131, 0.1)';
-                                        break;
-                                    case 'En Revisión':
-                                        $badgeColor = '#FF9900';
-                                        $backgroundColor = 'rgba(255, 200, 0, 0.2)';
-                                        break;
-                                    case 'Publicado':
-                                        $badgeColor = '#039C55';
-                                        $backgroundColor = 'rgba(3, 156, 85, 0.1)';
-                                        break;
-                                    case 'En Borrador':
-                                        $badgeColor = '#0080FF';
-                                        $backgroundColor = 'rgba(0, 128, 255, 0.1)';
-                                        break;
-                                    default:
-                                        $badgeColor = 'blue';
-                                        $backgroundColor = 'rgba(0, 0, 255, 0.1)';
-                                }
-                            @endphp
+                                    switch ($q->estatus_formateado) {
+                                        case 'Rechazado':
+                                            $badgeColor = '#FF0000';
+                                            $backgroundColor = 'rgba(221, 4, 131, 0.1)';
+                                            break;
+                                        case 'En Revisión':
+                                            $badgeColor = '#FF9900';
+                                            $backgroundColor = 'rgba(255, 200, 0, 0.2)';
+                                            break;
+                                        case 'Publicado':
+                                            $badgeColor = '#039C55';
+                                            $backgroundColor = 'rgba(3, 156, 85, 0.1)';
+                                            break;
+                                        case 'En Borrador':
+                                            $badgeColor = '#0080FF';
+                                            $backgroundColor = 'rgba(0, 128, 255, 0.1)';
+                                            break;
+                                        default:
+                                            $badgeColor = 'blue';
+                                            $backgroundColor = 'rgba(0, 0, 255, 0.1)';
+                                    }
+                                @endphp
 
-                            <span class="badge"
-                                style="color: {{ $badgeColor }}; background-color: {{ $backgroundColor }}; border-radius: 7px; padding: 5px; font-weight: {{ $fontWeight }};">{{ $q->estatus_formateado }}</span>
+                                <span class="badge"
+                                    style="color: {{ $badgeColor }}; background-color: {{ $backgroundColor }}; border-radius: 7px; padding: 5px; font-weight: {{ $fontWeight }};">{{ $q->estatus_formateado }}</span>
 
 
                             </td>
@@ -198,23 +197,23 @@
                                                         d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
                                                 </svg>
                                             </a>Versiones</li>
-                                    @endcan
-                                    @can('revision_por_direccion_eliminar')
-                                        <li><button class="btn btn-sm text-danger" title="Eliminar"
-                                                onclick="Eliminar('/admin/minutasaltadireccions/{{ $q->id }}','{{ $q->tema_reunion }}')"><i
-                                                    class="fa fa-trash-alt"></i></button>Eliminar</li>
-                                    @endcan
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                                    @endcan --}}
+                                        @can('revision_por_direccion_eliminar')
+                                            <li><button class="btn btn-sm text-danger" title="Eliminar"
+                                                    onclick="Eliminar('/admin/minutasaltadireccions/{{ $q->id }}','{{ $q->tema_reunion }}')"><i
+                                                        class="fa fa-trash-alt"></i></button>Eliminar</li>
+                                        @endcan
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-<div id="modalContainer"></div>
+    <div id="modalContainer"></div>
 
     <!-- Modal -->
     @foreach ($query as $q)
@@ -250,11 +249,6 @@
         </div>
     @endforeach
 @endsection
-
-@endforeach
-
-@endsection
-
 
 @section('scripts')
     @parent

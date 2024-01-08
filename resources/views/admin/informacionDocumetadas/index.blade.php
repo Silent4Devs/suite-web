@@ -1,124 +1,124 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.informacion-documetadas.index') }}
 
     @can('informacion_documetada_create')
-
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Información Documentada</strong></h3>
             </div>
-    @endcan
+        @endcan
 
 
         @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-InformacionDocumetada">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>
-                            {{ trans('cruds.informacionDocumetada.fields.id') }}
-                        </th>
-                        <th>
-                            Titulo&nbsp;del&nbsp;documento
-                        </th>
-                        <th>
-                            Tipo&nbsp;de&nbsp;documento
-                        </th>
-                        <th>
-                            {{ trans('cruds.informacionDocumetada.fields.identificador') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.informacionDocumetada.fields.version') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.informacionDocumetada.fields.politicas') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.informacionDocumetada.fields.contenido') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.informacionDocumetada.fields.elaboro') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.informacionDocumetada.fields.reviso') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.informacionDocumetada.fields.aprobacion') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.informacionDocumetada.fields.logotipo') }}
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\InformacionDocumetada::TIPODOCUMENTO_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($politica_sgsis as $key => $item)
-                                    <option value="{{ $item->politicasgsi }}">{{ $item->politicasgsi }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
-                </thead>
-            </table>
+        <div class="card">
+            <div class="card-body datatable-fix">
+                <table class="table table-bordered w-100 datatable-InformacionDocumetada">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>
+                                {{ trans('cruds.informacionDocumetada.fields.id') }}
+                            </th>
+                            <th>
+                                Titulo&nbsp;del&nbsp;documento
+                            </th>
+                            <th>
+                                Tipo&nbsp;de&nbsp;documento
+                            </th>
+                            <th>
+                                {{ trans('cruds.informacionDocumetada.fields.identificador') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.informacionDocumetada.fields.version') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.informacionDocumetada.fields.politicas') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.informacionDocumetada.fields.contenido') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.informacionDocumetada.fields.elaboro') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.informacionDocumetada.fields.reviso') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.informacionDocumetada.fields.aprobacion') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.informacionDocumetada.fields.logotipo') }}
+                            </th>
+                            <th>
+                                Opciones
+                            </th>
+                        </tr>
+                        {{-- <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search" strict="true">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach (App\Models\InformacionDocumetada::TIPODOCUMENTO_SELECT as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach ($politica_sgsis as $key => $item)
+                                <option value="{{ $item->politicasgsi }}">{{ $item->politicasgsi }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach ($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach ($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach ($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr> --}}
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
@@ -196,43 +196,55 @@
 
             @can('informacion_documetada_delete')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar información documentada',
-                url: "{{ route('admin.informacion-documetadas.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar información documentada',
+                    url: "{{ route('admin.informacion-documetadas.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
             @can('informacion_documetada_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.informacion-documetadas.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.informacion-documetadas.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -276,9 +288,10 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
 
-                            
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.elaboro.avatar}" title="${row.elaboro.name}"></img>`;
-                            
+
+                            let html =
+                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.elaboro.avatar}" title="${row.elaboro.name}"></img>`;
+
                             return `${row.elaboro ? html: ''}`;
                         }
                     },
@@ -286,9 +299,10 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
 
-                            
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reviso.avatar}" title="${row.reviso.name}"></img>`;
-                            
+
+                            let html =
+                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reviso.avatar}" title="${row.reviso.name}"></img>`;
+
                             return `${row.reviso ? html: ''}`;
                         }
                     },
@@ -296,9 +310,10 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
 
-                            
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.aprobacion.avatar}" title="${row.aprobacion.name}"></img>`;
-                            
+
+                            let html =
+                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.aprobacion.avatar}" title="${row.aprobacion.name}"></img>`;
+
                             return `${row.aprobacion ? html: ''}`;
                         }
                     },
@@ -332,6 +347,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection
