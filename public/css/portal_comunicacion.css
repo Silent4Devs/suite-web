@@ -59,11 +59,18 @@
 .doc-item-portal:nth-child(3n+3){background-color: #005C77;}
 
 .doc-item-portal>img {
-    height: 115px;
+    height: 120px;
 }
 
 .title-doc-portal {
     font-size: 18px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Número de líneas a mostrar */
+    -webkit-box-orient: vertical;
+    white-space: normal;
 }
 
 .doc-info {
@@ -73,6 +80,7 @@
 .caja-doc-etiquetas {
     display: flex;
     gap: 10px;
+    white-space: nowrap;
 }
 
 .caja-doc-etiquetas span {
