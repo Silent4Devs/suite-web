@@ -223,7 +223,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach ($participantesWithAsistencia as $participante)
+                                        @foreach ($participantesWithAsistencia as $participante)
                                             <tr>
                                                 <td>{{ $participante->id }}</td>
                                                 <td>{{ $participante->name }}</td>
@@ -231,7 +231,7 @@
                                                 <td>{{ $participante->email }}</td>
                                                 <td>{{ $participante->pivot->asistencia ?? '' }}</td>
                                             </tr>
-                                        @endforeach --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
                                 <input type="hidden" name="participantes" value="" id="participantes">

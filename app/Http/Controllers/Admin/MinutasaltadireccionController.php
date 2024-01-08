@@ -357,7 +357,12 @@ class MinutasaltadireccionController extends Controller
 
         $responsablereunions = Empleado::getaltaAll();
 
-        return view('admin.minutasaltadireccions.edit', compact('responsablereunions', 'participantesWithAsistencia', 'minutasaltadireccion', 'actividades'));
+        return view('admin.minutasaltadireccions.edit', compact(
+            'minutasaltadireccion',
+            'actividades',
+            'participantesWithAsistencia',
+            'responsablereunions'
+        ));
     }
 
     public function processUpdate($request, Minutasaltadireccion $minutasaltadireccion, $edit = false)

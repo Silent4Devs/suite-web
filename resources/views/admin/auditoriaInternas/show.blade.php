@@ -6,12 +6,12 @@
     <head>
         <meta charset="utf-8">
         <style>
-            body {
-                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-                text-align: justify;
-                font-size: 12px;
-                color: #6c6c6c;
-            }
+            /* body {
+                                                        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                                                        text-align: justify;
+                                                        font-size: 12px;
+                                                        color: #6c6c6c;
+                                                    } */
 
             table td {
                 border: none;
@@ -220,16 +220,22 @@
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
                     <div class="row">
-                        <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Regresar</a>
-                        <form method="POST"
-                            action="{{ route('admin.auditoria-internas.pdf', ['id' => $auditoriaInterna->id]) }}">
-                            @csrf
-                            <div class="justify-content-right">
+                        <div class="col-md-6">
+                            <a href="{{ route('admin.auditoria-internas.index') }}" class="btn btn_cancelar">Regresar</a>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end">
+                            <form method="POST"
+                                action="{{ route('admin.auditoria-internas.pdf', ['id' => $auditoriaInterna->id]) }}">
+                                @csrf
                                 <button type="submit" class="btn btn-success">
                                     <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
                                 </button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 mb-3">
+                        <br>
                     </div>
                     {{-- <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">

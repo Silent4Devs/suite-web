@@ -22,6 +22,7 @@
                                     </button>
                                 </form>
                             </div>
+                            <br>
                             <div class="card mt-6" style="width:750px; position: relative; right: -.8rem;">
                                 <div class="row col-12 ml-0"
                                     style="border-radius;

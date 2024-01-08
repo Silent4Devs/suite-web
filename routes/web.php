@@ -897,7 +897,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('alcance-sgsis', 'AlcanceSgsiController');
         Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
         Route::post('alcance-sgsis/pdf', 'AlcanceSgsiController@pdf')->name('alcance-sgsis.pdf');
-        Route::get('alcance-sgsis-revision/{id}', 'AlcanceSgsiController@revision')->name('politica-sgsis.revision');
+        Route::get('alcance-sgsis-revision/{id}', 'AlcanceSgsiController@revision')->name('alcance-sgsis.revision');
         Route::post('alcance-sgsis/{id}/aprobado', 'AlcanceSgsiController@aprobado')->name('alcance-sgsis.aprobado');
         Route::post('alcance-sgsis/{id}/rechazado', 'AlcanceSgsiController@rechazado')->name('alcance-sgsis.rechazado');
 
