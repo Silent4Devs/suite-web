@@ -180,7 +180,7 @@
                             <h4 class="title-card-img-iso">Política del sistema de gestión</h4>
                             <span>Completado</span>
                         </div>
-                        <a href="{{ route('admin.matriz-seguridad.sistema-gestion') }}" class="btn-entrar">
+                        <a href="{{ route('admin.politica-sgsis.index') }}" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>

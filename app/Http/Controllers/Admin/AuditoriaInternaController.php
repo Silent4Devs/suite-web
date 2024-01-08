@@ -136,7 +136,8 @@ class AuditoriaInternaController extends Controller
         $auditoriaInterna->equipo()->sync($request->equipo);
         $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-        return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna->id]);
+        return redirect()->route('admin.auditoria-internas.index', ['auditoriaInterna' => $auditoriaInterna]);
+        // return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna->id]);
     }
 
     public function edit($IDauditoriaInterna)
