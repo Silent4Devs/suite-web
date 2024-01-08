@@ -612,6 +612,7 @@
             activeMenuPaso(num_paso);
         });
 
+        //request
         function activeMenuPaso(num_paso) {
             $('.menu-pasos-guia ul li').removeClass('active-paso');
             $('.menu-pasos-guia ul li.paso-menu-' + num_paso).addClass('active-paso');
