@@ -160,54 +160,78 @@
                                         <h4 class="title-card-portal-c"> Menú </h4>
 
                                         <div class="menu-portal">
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">corporate_fare</i>
-                                                <span>Organización</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">description</i>
-                                                <span>Documentos</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">home_pin</i>
-                                                <span>Sedes</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">local_library</i>
-                                                <span>Políticas</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">mitre</i>
-                                                <span>Áreas</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">partner_exchange</i>
-                                                <span>Comités</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">flowsheet</i>
-                                                <span>Mapa de procesos</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">flag</i>
-                                                <span>Reportar</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">schema</i>
-                                                <span>Organigrama</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">border_all</i>
-                                                <span>FODA</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">person_book</i>
-                                                <span>Directorio</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">table_chart_view</i>
-                                                <span>Alcances</span>
-                                            </div>
+                                            <a href="{{ route('admin.organizacions.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">corporate_fare</i>
+                                                    <span>Organización</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.documentos.publicados') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">description</i>
+                                                    <span>Documentos</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.sedes.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">home_pin</i>
+                                                    <span>Sedes</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">local_library</i>
+                                                    <span>Políticas</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.areas.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">mitre</i>
+                                                    <span>Áreas</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.comiteseguridads.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">partner_exchange</i>
+                                                    <span>Comités</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.procesos.mapa') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">flowsheet</i>
+                                                    <span>Mapa de procesos</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ asset('admin/portal-comunicacion/reportes') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">flag</i>
+                                                    <span>Reportar</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.organigrama.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">schema</i>
+                                                    <span>Organigrama</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.foda-organizacions') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">border_all</i>
+                                                    <span>FODA</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.directorio.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">person_book</i>
+                                                    <span>Directorio</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.alcance-sgsis.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">table_chart_view</i>
+                                                    <span>Alcances</span>
+                                                </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -267,7 +291,6 @@
                                 <div class="doc-info">
                                     <span
                                         class="title-doc-portal">{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}</span>
-                                    <br>
                                     <span style="font-size: 12px;">
                                         Publicado: {{ Carbon\Carbon::parse($documento->fecha)->format('d/m/Y') }}
                                     </span>

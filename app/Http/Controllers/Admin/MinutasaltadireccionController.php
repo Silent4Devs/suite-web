@@ -17,6 +17,7 @@ use App\Models\ExternosMinutaDireccion;
 use App\Models\FilesRevisonDireccion;
 use App\Models\HistoralRevisionMinuta;
 use App\Models\Minutasaltadireccion;
+use App\Models\Organizacion;
 use App\Models\PlanImplementacion;
 use App\Models\RevisionMinuta;
 use App\Models\Team;
@@ -33,6 +34,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use PDF;
 
 class MinutasaltadireccionController extends Controller
 {
@@ -342,20 +344,20 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $minutasaltadireccion = Minutasaltadireccion::find($id);
-        $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
-        $actividades = $minutasaltadireccion->planes->first()->tasks;
-        $actividades = array_filter($actividades, function ($actividad) {
-            return intval($actividad->level) > 0;
-        });
+        // $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
+        // $actividades = $minutasaltadireccion->planes->first()->tasks;
+        // $actividades = array_filter($actividades, function ($actividad) {
+        //     return intval($actividad->level) > 0;
+        // });
 
-        $participantesWithAsistencia = $minutasaltadireccion->participantes()
-            ->withPivot('asistencia')
-            ->get();
-        // dd($participantesWithAsistencia);
+        // $participantesWithAsistencia = $minutasaltadireccion->participantes()
+        //     ->withPivot('asistencia')
+        //     ->get();
+        //  dd($participantesWithAsistencia);
 
-        $responsablereunions = Empleado::getaltaAll();
+        // $responsablereunions = Empleado::getaltaAll();
 
-        return view('admin.minutasaltadireccions.edit', compact('responsablereunions', 'participantesWithAsistencia', 'minutasaltadireccion', 'actividades'));
+        return view('admin.minutasaltadireccions.edit', compact('minutasaltadireccion'));
     }
 
     public function processUpdate($request, Minutasaltadireccion $minutasaltadireccion, $edit = false)
@@ -459,43 +461,21 @@ class MinutasaltadireccionController extends Controller
         }
     }
 
-    // public function show(Minutasaltadireccion $minutasaltadireccion)
-    // {
-    //     abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-    //     $minutasaltadireccion->load('responsable', 'team');
-
-    //     return view('admin.minutasaltadireccions.show', compact('minutasaltadireccion'));
-    // }
-
     public function show($id)
     {
+
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $minutasaltadireccion = Minutasaltadireccion::find($id);
 
-        $accesoparticipante = false;
-        // dd($id, $acceso->participantes);
+        $minutas = Minutasaltadireccion::with('responsable')->find($id);
+        $responsable = Empleado::where('id',  $minutas->responsable_id)->first();
+        $revision = RevisionMinuta::where('id',  $minutas->id)->first();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $direccion = $organizacion_actual->direccion;
+        $empresa_actual = $organizacion_actual->empresa;
+        $rfc = $organizacion_actual->rfc;
 
-        //Revisar que sea uno de los participantes
-        if ($minutasaltadireccion->participantes->contains('id', User::getCurrentUser()->empleado->id)) {
-            $accesoparticipante = true;
-        } else {
-            $accesoparticipante = false;
-        }
-
-        $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
-        $actividades = $minutasaltadireccion->planes->first()->tasks;
-        $actividades = array_filter($actividades, function ($actividad) {
-            return intval($actividad->level) > 0;
-        });
-
-        $participantesWithAsistencia = $minutasaltadireccion->participantes()
-            ->withPivot('asistencia')
-            ->get();
-
-        $comentarios = RevisionMinuta::select('comentarios')->where('minuta_id', '=', $minutasaltadireccion->id)->get();
-
-        return view('admin.minutasaltadireccions.revision', compact('participantesWithAsistencia', 'minutasaltadireccion', 'actividades', 'accesoparticipante', 'comentarios'));
+        return view('admin.minutasaltadireccions.revision', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision'));
     }
 
     public function aprobado($id, Request $request)
@@ -661,5 +641,23 @@ class MinutasaltadireccionController extends Controller
         $minuta->planes()->save($planImplementacion);
 
         return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+    }
+
+    public function pdf($id)
+    {
+        $minutas = Minutasaltadireccion::where('id', $id)->first();
+        $organizacions = Organizacion::getFirst();
+        $responsable = Empleado::where('id',  $minutas->responsable_id)->first();
+        $revision = RevisionMinuta::where('id',  $minutas->id)->first();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $direccion = $organizacion_actual->direccion;
+        $empresa_actual = $organizacion_actual->empresa;
+        $rfc = $organizacion_actual->rfc;
+
+        $pdf = PDF::loadView('minuta', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('minuta.pdf');
     }
 }
