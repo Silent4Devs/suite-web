@@ -353,7 +353,7 @@
                             <h4 class="title-card-img-iso">Transferencia de conocimiento</h4>
                             <span>Completado</span>
                         </div>
-                        <a href="#" class="btn-entrar">
+                        <a href="{{ route('admin.recursos.index') }}" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
@@ -653,7 +653,7 @@
                             <h4 class="title-card-img-iso">Registro mejora</h4>
                             <span>Completado</span>
                         </div>
-                        <a href="#" class="btn-entrar">
+                        <a href="{{ route('admin.reportes-mejoras') }}" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
