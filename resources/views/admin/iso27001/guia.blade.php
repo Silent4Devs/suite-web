@@ -12,6 +12,12 @@
         .container-fluid {
             padding: 0 !important;
         }
+
+        .card-iso-guia a.btn-entrar[href="#"] {
+            opacity: 1;
+            background-color: red;
+            color: #fff;
+        }
     </style>
     <div class="menu-pasos-guia scroll_estilo">
         <ul>
@@ -104,6 +110,32 @@
                     </div>
                     <div class="card-iso-guia">
                         <div class="img-card-iso">
+                            <img src="{{ asset('img/iso/iso8.png') }}" alt="">
+                        </div>
+                        <div class="info-iso">
+                            <h4 class="title-card-img-iso">Matriz de requisitos legales y regulatorios</h4>
+                            <span>Completado</span>
+                        </div>
+                        <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn-entrar">
+                            Entrar
+                            <i class="material-symbols-outlined"> arrow_right_alt</i>
+                        </a>
+                    </div>
+                    <div class="card-iso-guia">
+                        <div class="img-card-iso">
+                            <img src="{{ asset('img/iso/iso23.png') }}" alt="">
+                        </div>
+                        <div class="info-iso">
+                            <h4 class="title-card-img-iso">Análisis FODA</h4>
+                            <span>Completado</span>
+                        </div>
+                        <a href="{{ route('admin.entendimiento-organizacions.index') }}" class="btn-entrar">
+                            Entrar
+                            <i class="material-symbols-outlined"> arrow_right_alt</i>
+                        </a>
+                    </div>
+                    <div class="card-iso-guia">
+                        <div class="img-card-iso">
                             <img src="{{ asset('img/iso/iso4.png') }}" alt="">
                         </div>
                         <div class="info-iso">
@@ -161,6 +193,19 @@
                     </div>
                     <div class="card-iso-guia">
                         <div class="img-card-iso">
+                            <img src="{{ asset('img/iso/iso1.png') }}" alt="">
+                        </div>
+                        <div class="info-iso">
+                            <h4 class="title-card-img-iso">Revisión por dirección</h4>
+                            <span>Completado</span>
+                        </div>
+                        <a href="{{ route('admin.revision-direccions.index') }}" class="btn-entrar">
+                            Entrar
+                            <i class="material-symbols-outlined"> arrow_right_alt</i>
+                        </a>
+                    </div>
+                    <div class="card-iso-guia">
+                        <div class="img-card-iso">
                             <img src="{{ asset('img/iso/iso6.png') }}" alt="">
                         </div>
                         <div class="info-iso">
@@ -180,7 +225,7 @@
                             <h4 class="title-card-img-iso">Política del sistema de gestión</h4>
                             <span>Completado</span>
                         </div>
-                        <a href="{{ route('admin.politica-sgsis.index') }}" class="btn-entrar">
+                        <a href="{{ route('admin.matriz-seguridad.sistema-gestion') }}" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
@@ -249,7 +294,7 @@
                             <h4 class="title-card-img-iso">Declaración de aplicabilidad tabla</h4>
                             <span>Completado</span>
                         </div>
-                        <a href="{{ route('admin.declaracion-aplicabilidad-2022.tabla') }}" class="btn-entrar">
+                        <a href="{{ route('admin.declaracion-aplicabilidad.index') }}" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
@@ -308,7 +353,7 @@
                             <h4 class="title-card-img-iso">Transferencia de conocimiento</h4>
                             <span>Completado</span>
                         </div>
-                        <a href="" class="btn-entrar">
+                        <a href="#" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
@@ -321,7 +366,7 @@
                             <h4 class="title-card-img-iso">Competencias</h4>
                             <span>Completado</span>
                         </div>
-                        <a href="" class="btn-entrar">
+                        <a href="{{ route('admin.competencia.index') }}" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
@@ -348,6 +393,19 @@
                             <span>Completado</span>
                         </div>
                         <a href="{{ route('admin.material-sgsis.index') }}" class="btn-entrar">
+                            Entrar
+                            <i class="material-symbols-outlined"> arrow_right_alt</i>
+                        </a>
+                    </div>
+                    <div class="card-iso-guia">
+                        <div class="img-card-iso">
+                            <img src="{{ asset('img/iso/iso29.png') }}" alt="">
+                        </div>
+                        <div class="info-iso">
+                            <h4 class="title-card-img-iso">Control de accesos</h4>
+                            <span>Completado</span>
+                        </div>
+                        <a href="{{ route('admin.control-accesos.index') }}" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
@@ -422,7 +480,7 @@
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
                     </div>
-                    <div class="card-iso-guia">
+                    {{-- <div class="card-iso-guia">
                         <div class="img-card-iso">
                             <img src="{{ asset('img/iso/iso22.png') }}" alt="">
                         </div>
@@ -460,7 +518,7 @@
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
@@ -494,6 +552,19 @@
                     </div>
                     <div class="card-iso-guia">
                         <div class="img-card-iso">
+                            <img src="{{ asset('img/iso/iso22.png') }}" alt="">
+                        </div>
+                        <div class="info-iso">
+                            <h4 class="title-card-img-iso">Incidentes de seguridad</h4>
+                            <span>Completado</span>
+                        </div>
+                        <a href="{{ route('admin.incidentes-de-seguridads.index') }}" class="btn-entrar">
+                            Entrar
+                            <i class="material-symbols-outlined"> arrow_right_alt</i>
+                        </a>
+                    </div>
+                    <div class="card-iso-guia">
+                        <div class="img-card-iso">
                             <img src="{{ asset('img/iso/iso26.png') }}" alt="">
                         </div>
                         <div class="info-iso">
@@ -514,6 +585,19 @@
                             <span>Completado</span>
                         </div>
                         <a href="{{ route('admin.plan-auditoria.index') }}" class="btn-entrar">
+                            Entrar
+                            <i class="material-symbols-outlined"> arrow_right_alt</i>
+                        </a>
+                    </div>
+                    <div class="card-iso-guia">
+                        <div class="img-card-iso">
+                            <img src="{{ asset('img/iso/iso23.png') }}" alt="">
+                        </div>
+                        <div class="info-iso">
+                            <h4 class="title-card-img-iso">Informe de auditoría</h4>
+                            <span>Completado</span>
+                        </div>
+                        <a href="{{ route('admin.auditoria-internas.index') }}" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
@@ -569,7 +653,7 @@
                             <h4 class="title-card-img-iso">Registro mejora</h4>
                             <span>Completado</span>
                         </div>
-                        <a href="{{ route('admin.plan-mejoras.index') }}" class="btn-entrar">
+                        <a href="#" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
