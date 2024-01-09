@@ -1,7 +1,7 @@
 <div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
         <label for="search">Buscador</label>
-        <input type="text" wire:model.debounce.800ms="search" class="form-control" placeholder="Buscar...">
+        <input type="text" wire:model.live.debounce.800ms="search" class="form-control" placeholder="Buscar...">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
 
@@ -9,7 +9,7 @@
         style="margin-bottom: 0; margin-top: 1.87rem; display: flex; align-items: center; justify-content: center">
         <div class="col l3" style="margin: 0; text-align: end"><span>Mostrar</span></div>
         <div class="col l3" style="margin: 0">
-            <select class="select_pagination_cierre_contrato" wire:model="pagination">
+            <select class="select_pagination_cierre_contrato" wire:model.live="pagination">
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
@@ -99,7 +99,7 @@
                                 </a>
                             </td>
                             <td>
-                                <button wire:click="$emit('triggerDeleteCierre',{{ $em->id }})" class="btn red">
+                                <button wire:click="$dispatch('triggerDeleteCierre',{{ $em->id }})" class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </td>

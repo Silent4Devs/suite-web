@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label for="nombre">Nombre: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                id="nombre" aria-describedby="nombre" wire:model.defer="nombre"
+                                id="nombre" aria-describedby="nombre" wire:model="nombre"
                                 value="{{ old('nombre') }}" autocomplete="off">
                             <small>Ingresa el nombre del perfil</small>
                             @if ($errors->has('nombre'))
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label for="descripcion">Descripción: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                id="descripcion" aria-describedby="descripcion" wire:model.defer="descripcion"
+                                id="descripcion" aria-describedby="descripcion" wire:model="descripcion"
                                 value="{{ old('descripcion') }}" autocomplete="off">
                             <small>Ingresa el descripción del perfil</small>
                             @if ($errors->has('descripcion'))

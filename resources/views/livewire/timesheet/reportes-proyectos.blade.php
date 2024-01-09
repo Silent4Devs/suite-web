@@ -102,7 +102,7 @@
             <div class="row">
                 <div class="col-md-3 form-group">
                     <label class="form-label">Área</label>
-                    <select class="form-control" wire:model="area_id">
+                    <select class="form-control" wire:model.live="area_id">
                         <option selected value="0">Todas</option>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>

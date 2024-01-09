@@ -2,7 +2,7 @@
     <div class="col l6">
         <label for="search">Busca por nombre o descripción del
             entregable</label>
-        <input type="text" wire:model.debounce.800ms="search" class="form-control" placeholder="Buscar entregable">
+        <input type="text" wire:model.live.debounce.800ms="search" class="form-control" placeholder="Buscar entregable">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
 
@@ -10,7 +10,7 @@
         style="margin-bottom: 0; margin-top: 1.87rem; display: flex; align-items: center; justify-content: center">
         <div class="col l3" style="margin: 0; text-align: end"><span>Mostrar</span></div>
         <div class="col l3" style="margin: 0">
-            <select class="select_pagination_entregables" wire:model="pagination">
+            <select class="select_pagination_entregables" wire:model.live="pagination">
                 <option value="3">3</option>
                 <option value="5">5</option>
                 <option value="10">10</option>
@@ -159,7 +159,7 @@
                                 </a>
                             </td>
                             <td class="alineacion">
-                                <button wire:click="$emit('triggerDeleteEntregable',{{ $em->entregable_id }})"
+                                <button wire:click="$dispatch('triggerDeleteEntregable',{{ $em->entregable_id }})"
                                     class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>

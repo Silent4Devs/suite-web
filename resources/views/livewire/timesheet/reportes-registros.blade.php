@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-4 form-group" style="padding-left:0px !important;">
                 <label class="form-label">Área</label>
-                <select class="form-control" wire:model.lazy="area_id">
+                <select class="form-control" wire:model.blur="area_id">
                     <option selected value="0">Todas</option>
                     @foreach ($areas as $area)
                         <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -13,17 +13,17 @@
             </div>
             <div class="col-md-4 form-group">
                 <label class="form-label">Fecha de inicio</label>
-                <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model.lazy="fecha_inicio">
+                <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model.blur="fecha_inicio">
             </div>
             <div class="col-md-4 form-group">
                 <label class="form-label">Fecha de fin</label>
-                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.lazy="fecha_fin">
+                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.blur="fecha_fin">
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 form-group" style="padding-left:0px !important;">
                 <label class="form-label">Colaborador</label>
-                <select class="form-control" wire:model.lazy="emp_id">
+                <select class="form-control" wire:model.blur="emp_id">
                     <option selected value="0">Todos</option>
                     @foreach ($emp as $em)
                         <option value="{{ $em->id }}">{{ $em->name }}</option>
@@ -88,7 +88,7 @@
                                     <p class="m-0">Mostrando</p>
                                 </div>
                                 <div class="col-4 p-0">
-                                    <select name="" id="" class="form-control" wire:model="perPage">
+                                    <select name="" id="" class="form-control" wire:model.live="perPage">
                                         <option value="5">5</option>
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -115,7 +115,7 @@
                     <div class="row">
                         <div class="col-6 p-0"></div>
                         <div class="col-6 p-0">
-                            <input type="text" class="form-control" placeholder="Buscar..." wire:model="search">
+                            <input type="text" class="form-control" placeholder="Buscar..." wire:model.live="search">
                         </div>
                     </div>
                 </div>

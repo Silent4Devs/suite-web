@@ -2,7 +2,7 @@
     <div class="form-group col-md-3 col-sm-12" wire:ignore>
         <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
         <select class="form-control select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}"
-            name="confidencialidad" id="confidencialidad_informacion" wire:model="confidencialidad">
+            name="confidencialidad" id="confidencialidad_informacion" wire:model.live="confidencialidad">
             <option value="0" {{ $confidencialidad == 1 ? 'selected' : '' }}>0</option>
             <option value="1" {{ $confidencialidad == 1 ? 'selected' : '' }}>1</option>
             <option value="2" {{ $confidencialidad == 2 ? 'selected' : '' }}>2</option>
@@ -15,7 +15,7 @@
     <div class="form-group col-md-3 col-sm-12" wire:ignore>
         <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
         <select class="form-control select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}"
-            name="disponibilidad" id="disponibilidad_informacion" wire:model="disponibilidad">
+            name="disponibilidad" id="disponibilidad_informacion" wire:model.live="disponibilidad">
             <option value="0" {{ $disponibilidad == 0 ? 'selected' : '' }}>0</option>
             <option value="1" {{ $disponibilidad == 1 ? 'selected' : '' }}>1</option>
             <option value="2" {{ $disponibilidad == 2 ? 'selected' : '' }}>2</option>
@@ -29,7 +29,7 @@
     <div class="form-group col-md-3 col-sm-12" wire:ignore>
         <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Integridad</label><br>
         <select class="form-control select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}" name="integridad"
-            id="integridad_informacion" wire:model="integridad">
+            id="integridad_informacion" wire:model.live="integridad">
             <option value="0" {{ $integridad == 0 ? 'selected' : '' }}>0</option>
             <option value="1" {{ $integridad == 1 ? 'selected' : '' }}>1</option>
             <option value="2" {{ $integridad == 2 ? 'selected' : '' }}>2</option>
@@ -46,7 +46,7 @@
         <input class="mt-2 form-control {{ $errors->has('evaluación_riesgo') ? 'is-invalid' : '' }}" type="text"
             style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};" name="evaluación_riesgo"
             value="{{ old('evaluación_riesgo', '') }}" id="evaluación_riesgo_informacion"
-            wire:model.defer="evaluacion">
+            wire:model="evaluacion">
         <small class="text-danger errores evaluacion_riesgo_error"></small>
     </div>
 </div>

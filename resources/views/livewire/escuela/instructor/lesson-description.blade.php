@@ -8,8 +8,8 @@
                 <hr class="my-2">
 
                 @if ($lesson->description)
-                    <form wire:submit.prevent="update">
-                        <textarea wire:model="description.name" class="w-full form-input"></textarea>
+                    <form wire:submit="update">
+                        <textarea wire:model.live="description.name" class="w-full form-input"></textarea>
 
                         @error('description.name')
                             <span class="text-sm text-red-500">{{$message}}</span>
@@ -25,7 +25,7 @@
                     </form>
                 @else
                     <div>
-                        <textarea wire:model="name" class="w-full form-input" placeholder="Agregue una descripción de la lección"></textarea>
+                        <textarea wire:model.live="name" class="w-full form-input" placeholder="Agregue una descripción de la lección"></textarea>
 
                         @error('name')
                             <span class="text-sm text-red-500">{{$message}}</span>

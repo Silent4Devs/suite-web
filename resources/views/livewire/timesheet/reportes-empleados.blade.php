@@ -4,7 +4,7 @@
             <x-loading-indicator />
             <div class="col-md-3 form-group" style="padding-left:0 !important;">
                 <label class="form-label">Colaboradores del Área: </label>
-                <select class="form-control" wire:model="area_id">
+                <select class="form-control" wire:model.live="area_id">
                     <option selected value="0">Todas</option>
                     @foreach ($areas as $area)
                         <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -14,12 +14,12 @@
             <div class="col-md-3 form-group" wire:ignore>
                 <label class="form-label">Fecha de inicio</label>
                 <input id="fecha_dia_registros_inicio_empleados" class="form-control date_librery" type="date"
-                    name="fecha_inicio" wire:model="fecha_inicio">
+                    name="fecha_inicio" wire:model.live="fecha_inicio">
             </div>
             <div class="col-md-3 form-group" wire:ignore>
                 <label class="form-label">Fecha de fin</label>
                 <input id="fecha_dia_registros_fin_empleados" class="form-control date_librery" type="date"
-                    name="fecha_fin" wire:model="fecha_fin">
+                    name="fecha_fin" wire:model.live="fecha_fin">
             </div>
             <div class="col-md-2 form-group">
                 <label class="form-label">Horas totales</label>

@@ -4,8 +4,8 @@
     @foreach ($course->goals as $item)
                 @if ($goal->id == $item->id)
                         <div class="registro rounded p-2">
-                            <form wire:submit.prevent='update'>
-                                <input wire:model="goal.name" class="form-control">
+                            <form wire:submit='update'>
+                                <input wire:model.live="goal.name" class="form-control">
                                 @error('goal.name') <span class="text-danger">{{ $message }}</span> @enderror
                             </form>
                         </div>
@@ -27,12 +27,12 @@
 
     <div class="card shadow-none">
         <div class="card-body">
-            <form wire:submit.prevent="store" class="form-group">
+            <form wire:submit="store" class="form-group">
                 <div class="mt-2 row justify-content-start">
                     <div class="col-9 pl-0">
                         {!! Form::label('title', 'Agregar el nombre de la meta*',[
                         'class' => 'pl-0']) !!}
-                        <input wire:model="name" class="form-control" placeholder="Agregar el nombre de la meta">
+                        <input wire:model.live="name" class="form-control" placeholder="Agregar el nombre de la meta">
                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-3 d-flex justify-content-end">

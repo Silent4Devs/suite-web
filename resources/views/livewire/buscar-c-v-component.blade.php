@@ -118,13 +118,13 @@
                     <div class="col-12 mb-3">
                         <label class="text-muted" for=""><i class="fas fa-font mr-2"></i>Palabra Clave</label>
                         <input type="text" class="form-control input-tags" id="general" data-role="tagsinput"
-                            placeholder="Búsca en todo el curriculum" wire:model.debounce.800ms="general">
+                            placeholder="Búsca en todo el curriculum" wire:model.live.debounce.800ms="general">
                     </div>
                     <div class="col-sm-12 col-md-12 mb-3">
                         <label class="text-muted" for="tipoactivo_id"><i
                                 class="fas fa-puzzle-piece mr-2"></i>Área</label>
                         <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}"
-                            wire:model.debounce.800ms="area_id">
+                            wire:model.live.debounce.800ms="area_id">
                             <option value="">-- Seleccionar --</option>
                             @foreach ($areas as $area)
                                 <option value="{{ $area->id }}">
@@ -137,7 +137,7 @@
                     <div class="col-sm-12 col-md-12">
                         <label class="text-muted" for="tipoactivo_id"><i class="fas fa-user mr-2"></i>Empleado</label>
                         <select class="form-control {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}"
-                            wire:model.debounce.800ms="empleado_id" id="tipoactivo_id">
+                            wire:model.live.debounce.800ms="empleado_id" id="tipoactivo_id">
                             <option value="">-- Seleccionar --</option>
                             @foreach ($empleados as $empleado)
                                 <option value="{{ $empleado->id }}">
@@ -157,7 +157,7 @@
                     <div class="col-12">
                         <label class="text-muted" for=""><i class="fas fa-award mr-2"></i>Certificación</label>
                         <input type="text" class="form-control" placeholder="Certificación"
-                            wire:model.debounce.800ms="certificacion">
+                            wire:model.live.debounce.800ms="certificacion">
                     </div>
                     <div class="col-12 mt-3">
                         <p class="text-muted" style="border-bottom: 2px solid #345183">CURSOS / DIPLOMADOS</p>
@@ -166,7 +166,7 @@
                         <label class="text-muted" for=""><i
                                 class="fas fa-chalkboard-teacher mr-2"></i>Curso</label>
                         <input type="text" class="form-control" placeholder="Curso"
-                            wire:model.debounce.800ms="curso">
+                            wire:model.live.debounce.800ms="curso">
                     </div>
                     {{-- <div class="col-12 mt-3">
                         <p class="text-muted" style="border-bottom: 2px solid #345183">EXPERIENCIA</p>
@@ -174,12 +174,12 @@
                     <div class="col-12 mt-2">
                         <label class="text-muted" for=""><i class="fas fa-briefcase mr-2"></i>Puesto</label>
                         <input type="text" class="form-control" placeholder="Puesto"
-                            wire:model.debounce.800ms="puestoExperiencia">
+                            wire:model.live.debounce.800ms="puestoExperiencia">
                     </div> --}}
                     {{-- <div class="col-12 mt-2">
                         <label class="text-muted" for=""><i class="fas fa-pen-square mr-2"></i>Descripción</label>
                         <input type="text" class="form-control" placeholder="Descripción"
-                            wire:model.debounce.800ms="descripcionExperiencia">
+                            wire:model.live.debounce.800ms="descripcionExperiencia">
                     </div> --}}
                 </div>
             </div>

@@ -3,14 +3,14 @@
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-8">
             <label for="nombre" class="txt-tamaño">Nombre<font class="asterisco">*</font></label>
-            <input type="text" maxlength="250" wire:model.debounce.800ms="nombre" class="form-control" required>
+            <input type="text" maxlength="250" wire:model.live.debounce.800ms="nombre" class="form-control" required>
             @error('nombre')
                 <span class="red-text">{{ $message }}</span>
             @enderror
         </div>
         <div class="distancia form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">Métrica<font class="asterisco">*</font></label>
-            <input type="text" maxlength="250" wire:model.debounce.800ms="metrica" class="form-control" required>
+            <input type="text" maxlength="250" wire:model.live.debounce.800ms="metrica" class="form-control" required>
             @error('metrica')
                 <span class="red-text">{{ $message }}</span>
             @enderror
@@ -20,14 +20,14 @@
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-6">
             <label for="unidad" class="txt-tamaño">Unidad<font class="asterisco">*</font></label>
-            <input type="text" maxlength="128" wire:model.debounce.800ms="unidad" class="form-control" required>
+            <input type="text" maxlength="128" wire:model.live.debounce.800ms="unidad" class="form-control" required>
             @error('unidad')
                 <span class="red-text">{{ $message }}</span>
             @enderror
         </div>
         <div class="distancia form-group col-md-6">
             <label for="area" class="txt-tamaño">Área<font class="asterisco">*</font></label>
-            <input type="text" maxlength="250" wire:model.debounce.800ms="area" class="form-control" required>
+            <input type="text" maxlength="250" wire:model.live.debounce.800ms="area" class="form-control" required>
             @error('area')
                 <span class="red-text">{{ $message }}</span>
             @enderror
@@ -36,7 +36,7 @@
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">SLA comprometido<font class="asterisco">*</font></label>
-            <input type="number" wire:model.debounce.800ms="meta" class="form-control" required step="0.1"
+            <input type="number" wire:model.live.debounce.800ms="meta" class="form-control" required step="0.1"
                 max="100000000000">
             @error('meta')
                 <span class="red-text">{{ $message }}</span>
@@ -47,7 +47,7 @@
             <label for="no_contrato" class="txt-tamaño">Periodo
                 evaluación<font class="asterisco">*</font></label>
             <select class="browser-default form-control" name="periodo_evaluacion"
-                wire:model.debounce.800ms="periodo_evaluacion" class="form-control" required>
+                wire:model.live.debounce.800ms="periodo_evaluacion" class="form-control" required>
                 <option value="" disabled selected>Escoga una opción</option>
                 <option value="0">Por definir</option>
                 <option value="1">Unica vez</option>
@@ -70,7 +70,7 @@
             <label for="no_contrato" class="txt-tamaño">Revisiones
                 <font class="asterisco">*</font>
             </label>
-            <input id="revisiones_no" type="number" wire:model.debounce.800ms="revisiones" class="form-control"
+            <input id="revisiones_no" type="number" wire:model.live.debounce.800ms="revisiones" class="form-control"
                 required max="100000000000">
             @error('revisiones')
                 <span class="red-text">{{ $message }}</span>
@@ -81,7 +81,7 @@
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-12">
             <label for="descripcion" class="txt-tamaño">Descripción<font class="asterisco">*</font></label><br>
-            <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="form-control" required></textarea>
+            <textarea wire:model.live.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="form-control" required></textarea>
             @error('descripcion')
                 <span class="red-text">{{ $message }}</span>
             @enderror
@@ -90,7 +90,7 @@
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-12">
             <label for="info_consulta" class="txt-tamaño">Información<font class="asterisco">*</font></label><br>
-            <textarea wire:model.debounce.800ms="info_consulta" id="textarea2" class="form-control" style="padding:15px;"
+            <textarea wire:model.live.debounce.800ms="info_consulta" id="textarea2" class="form-control" style="padding:15px;"
                 required>
         </textarea>
             @error('info_consulta')

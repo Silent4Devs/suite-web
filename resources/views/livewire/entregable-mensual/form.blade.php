@@ -1,14 +1,14 @@
 <section id="form_entregable">
     <div>
         <!-- No Contrato Field -->
-        <input wire:model="contrato_id" type="hidden" value="{{ $contrato_id }}">
+        <input wire:model.live="contrato_id" type="hidden" value="{{ $contrato_id }}">
         <!-- Area Field -->
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <div class="distancia form-group col-md-8">
                 <label for="" class="txt-tamaño">Nombre entregable
                     <font class="asterisco">*</font>
                 </label>
-                <input type="text" maxlength="250" wire:model.debounce.800ms="nombre_entregable" class="form-control"
+                <input type="text" maxlength="250" wire:model.live.debounce.800ms="nombre_entregable" class="form-control"
                     required>
                 @error('nombre_entregable')
                     <span class="red-text">{{ $message }}</span>
@@ -20,7 +20,7 @@
                 <label for="" class="txt-tamaño">Descripción
                     <font class="asterisco">*</font>
                 </label>
-                <textarea wire:model.debounce.800ms="descripcion" style="padding:15px;" class="form-control" required></textarea>
+                <textarea wire:model.live.debounce.800ms="descripcion" style="padding:15px;" class="form-control" required></textarea>
                 @error('descripcion')
                     <span class="red-text">{{ $message }}</span>
                 @enderror
@@ -31,7 +31,7 @@
                 <div wire:ignore>
                     <label for="" class="txt-tamaño">Fecha
                         entrega inicial<font class="asterisco">*</font></label>
-                    <input type="date" wire:model.defer="plazo_entrega_inicio" class="form-control" min="1945-01-01"
+                    <input type="date" wire:model="plazo_entrega_inicio" class="form-control" min="1945-01-01"
                         required>
                 </div>
                 @error('plazo_entrega_inicio')
@@ -42,7 +42,7 @@
                 <div wire:ignore>
                     <label for="" class="txt-tamaño">Fecha
                         entrega final<font class="asterisco">*</font></label>
-                    <input type="date" wire:model.defer="plazo_entrega_termina" class="form-control" min="1945-01-01"
+                    <input type="date" wire:model="plazo_entrega_termina" class="form-control" min="1945-01-01"
                         required>
                 </div>
                 @error('plazo_entrega_termina')
@@ -53,7 +53,7 @@
                 <div wire:ignore>
                     <label for="" class="txt-tamaño">Fecha
                         entrega real<font class="asterisco">*</font></label>
-                    <input type="date" wire:model.fechas="entrega_real" class="form-control" min="1945-01-01"
+                    <input type="date" wire:model.live.fechas="entrega_real" class="form-control" min="1945-01-01"
                         required>
                 </div>
                 @error('entrega_real')
@@ -70,12 +70,12 @@
                     <label class="grey-text letra-ngt">
                         Si
                         <input type="checkbox" name="cumplimiento" class="cumplimiento form-control"
-                            wire:model.debounce.800ms="cumplimiento" required>
+                            wire:model.live.debounce.800ms="cumplimiento" required>
                         <span class="lever"></span>
                     </label>
                 </div> --}}
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" wire:model.debounce.800ms="cumplimiento" class="custom-control-input"
+                    <input type="checkbox" wire:model.live.debounce.800ms="cumplimiento" class="custom-control-input"
                         id="cumplimiento" name="cumplimiento">
                     <label class="custom-control-label" for="cumplimiento">No/Sí</label>
                 </div>
@@ -84,7 +84,7 @@
                 <label for="" class="txt-tamaño">Factura Relacionada
                     <font class="asterisco">*</font>
                 </label>
-                <select name="factura_id" id="factura_id" class="form-control" wire:model.defer="factura_id" required>
+                <select name="factura_id" id="factura_id" class="form-control" wire:model="factura_id" required>
                     <option value="">Sin factura</option>
                     @foreach ($facturas_entregables as $facturas)
                         }
@@ -104,7 +104,7 @@
                 <label for="" class="txt-tamaño">Observaciones
                     <font class="asterisco">*</font>
                 </label><br>
-                <textarea wire:model.debounce.800ms="observaciones" style="padding:15px;" class="form-control" required></textarea>
+                <textarea wire:model.live.debounce.800ms="observaciones" style="padding:15px;" class="form-control" required></textarea>
                 @error('observaciones')
                     <span class="red-text">{{ $message }}</span>
                 @enderror
@@ -117,11 +117,11 @@
                     <div class="custom-file">
                         {{-- <div class="btn" style="margin-right: 8px"> --}}
                         <span>PDF</span>
-                        <input class="form-control" type="file" wire:model.defer="pdf" accept=".pdf"
+                        <input class="form-control" type="file" wire:model="pdf" accept=".pdf"
                             id="upload{{ $iteration1 }}" readonly>
                         {{-- </div> --}}
                         {{-- <div class="file-path-wrapper">
-                            <input class="file-path validate" wire:model="pdf" placeholder="Elegir factura" readonly>
+                            <input class="file-path validate" wire:model.live="pdf" placeholder="Elegir factura" readonly>
                         </div> --}}
                     </div>
                 @endif
@@ -147,7 +147,7 @@
         </div>
 
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
-            <div class="input-field col l12 m12 s12" x-data="{ show: @entangle('aplica_deductiva') }">
+            <div class="input-field col l12 m12 s12" x-data="{ show: @entangle('aplica_deductiva').live }">
                 <div class="distancia form-group col-md-12" wire:ignore>
                     <label for="" class="txt-tamaño">¿Aplica
                         deductiva/penalización?<font class="asterisco">*</font></label>
@@ -155,12 +155,12 @@
                     <div class="switch">
                         <label class="grey-text letra-ngt">
                             <input type="checkbox" class="aplica_deductiva form-control"
-                                wire:model="aplica_deductiva" @change="show = !show">
+                                wire:model.live="aplica_deductiva" @change="show = !show">
                             <span class="lever"></span>
                         </label>
                     </div> --}}
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" wire:model="aplica_deductiva" class="custom-control-input"
+                        <input type="checkbox" wire:model.live="aplica_deductiva" class="custom-control-input"
                             id="aplica_deductiva" name="aplica_deductiva" @change="show = !show">
                         <label class="custom-control-label" for="aplica_deductiva">No/Sí</label>
                     </div>
@@ -171,7 +171,7 @@
                             <label for="" class="txt-tamaño">¿Por
                                 qué aplica la
                                 Deductiva/Penalización?<font class="asterisco">*</font></label>
-                            <textarea wire:model.debounce.800ms="justificacion_deductiva_penalizacion" style="padding:15px;"
+                            <textarea wire:model.live.debounce.800ms="justificacion_deductiva_penalizacion" style="padding:15px;"
                                 class="form-control"></textarea>
                             @error('justificacion_deductiva_penalizacion')
                                 <span class="red-text">{{ $message }}</span>
@@ -182,7 +182,7 @@
                         <div class="distancia form-group col-md-4">
                             <label for="" class="txt-tamaño">Monto Deductiva/Penalización</label>
                             <input type="number" max="100000000000"
-                                wire:model.debounce.800ms="deductiva_penalizacion"
+                                wire:model.live.debounce.800ms="deductiva_penalizacion"
                                 class="form-control deductiva_penalizacion">
                             @error('deductiva_penalizacion')
                                 <span class="red-text">{{ $message }}</span>
@@ -192,7 +192,7 @@
                             <label for="" class="txt-tamaño">Factura
                                 Relacionada<font class="asterisco">*</font></label>
                             <select name="deductiva_factura_id" id="deductiva_factura_id" class="form-control"
-                                wire:model.defer="deductiva_factura_id">
+                                wire:model="deductiva_factura_id">
                                 <option value="">Sin factura</option>
                                 @foreach ($facturas_entregables as $facturas)
                                     }
@@ -206,7 +206,7 @@
                         <div class="distancia form-group col-md-4">
                             <label for="" class="txt-tamaño">Nota
                                 de crédito<font class="asterisco">*</font></label>
-                            <input type="text" maxlength="250" wire:model.debounce.800ms="nota_credito"
+                            <input type="text" maxlength="250" wire:model.live.debounce.800ms="nota_credito"
                                 class="form-control">
                             @error('nota_credito')
                                 <span class="red-text">{{ $message }}</span>

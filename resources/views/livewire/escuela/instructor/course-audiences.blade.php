@@ -5,8 +5,8 @@
     @foreach ($course->audiences as $item)
         @if ($audience->id == $item->id)
             <div class="registro rounded p-2">
-                <form wire:submit.prevent='update'>
-                    <input wire:model.debounce.800ms="audience.name" class="form-control">
+                <form wire:submit='update'>
+                    <input wire:model.live.debounce.800ms="audience.name" class="form-control">
                     @error('audience.name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -30,13 +30,13 @@
 
     <article class="card shadow-none">
         <div class="card-body">
-            <form wire:submit.prevent="store" class="form-group">
+            <form wire:submit="store" class="form-group">
                 <div class="grid grid-cols-2 gap-4 mt-2 row justify-content-start">
                     <div class="col-9 pl-0">
                         {!! Form::label('title', 'Agregar el nombre del requisito*', [
                             'class' => 'pl-0',
                         ]) !!}
-                        <input wire:model.debounce.800ms="name" class="form-control"
+                        <input wire:model.live.debounce.800ms="name" class="form-control"
                             placeholder="Agregar la audiencia del curso">
                         @error('name')
                             <span class="text-danger">{{ $message }}</span>

@@ -14,7 +14,7 @@
                         {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Libera/Aplica Mantenimientos </h5>
 
                     <input id="cuestionario_id" name="cuestionario_id" type="hidden" value=" {{ $cuestionario_id }}"
-                        wire:model.defer="cuestionario_id">
+                        wire:model="cuestionario_id">
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -27,7 +27,7 @@
                                 class="fas fa-user-tag iconos-crear"></i>Interno / Externo:</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                            value="{{ old('nombe', '') }}"
-                            wire:model.defer="nombre" placeholder="...">
+                            wire:model="nombre" placeholder="...">
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}

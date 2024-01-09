@@ -10,7 +10,7 @@
                     <p lass="text-sm leading-5 text-gray-500" for="usuario">Usuario<span style="color:red">*</span></p>
                     <div class="mt-2">
                         <select class="form-control  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
-                            name="user_id" id="user_id" wire:model.defer="user_id">
+                            name="user_id" id="user_id" wire:model="user_id">
                             <option value="" selected>
                                 Selecciona una opción
                             </option>
@@ -36,12 +36,12 @@
     </div>
 </div>
 
-{{-- <form wire:submit.prevent="save()">
+{{-- <form wire:submit="save()">
     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left" style="min-width:500px;">
         <div class="mt-2">
             <p lass="text-sm leading-5 text-gray-500" for="usuario">Usuario<span style="color:red">*</span></p>
             <select class="form-input  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
-                name="user_id" id="user_id" wire:model.defer="user_id">
+                name="user_id" id="user_id" wire:model="user_id">
                 <option value="" selected>
                     Selecciona una opción
                 </option>

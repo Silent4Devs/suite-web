@@ -1,10 +1,10 @@
 <div>
     <div class="mb-3 row">
         <div class="col-8">
-            <input class="form-control" type="text" wire:model.debounce.800ms="search" placeholder="Buscar competencia...">
+            <input class="form-control" type="text" wire:model.live.debounce.800ms="search" placeholder="Buscar competencia...">
         </div>
         <div class="col-4">
-            <select wire:model.debounce.800ms="filter" class="form-control">
+            <select wire:model.live.debounce.800ms="filter" class="form-control">
                 @foreach ($tipos as $tipo)
                     <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
                 @endforeach
@@ -24,7 +24,7 @@
             <tbody>
                 @foreach ($competencias as $competencia)
                     <tr>
-                        <th scope="row"><input wire:model.debounce.800ms="selected" value="{{ $competencia->id }}" type="checkbox">
+                        <th scope="row"><input wire:model.live.debounce.800ms="selected" value="{{ $competencia->id }}" type="checkbox">
                         </th>
                         <td>{{ $competencia->nombre }}</td>
                         <td>{{ $competencia->tipo->nombre }}</td>

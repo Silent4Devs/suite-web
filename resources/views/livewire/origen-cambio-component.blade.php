@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <label>Origen del cambio <span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                id="nombre" aria-describedby="nombre" wire:model.defer="nombre"
+                                id="nombre" aria-describedby="nombre" wire:model="nombre"
                                 value="{{ old('nombre') }}" autocomplete="off">
                             @error('nombre')
                                 <span class="text-red">{{ $message }}</span>
@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
                             <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" 
-                                wire:model.defer="descripcion">{{ old('descripcion') }}</textarea>
+                                wire:model="descripcion">{{ old('descripcion') }}</textarea>
                             @error('descripcion')
                                 <span class="text-red">{{ $message }}</span>
                             @enderror

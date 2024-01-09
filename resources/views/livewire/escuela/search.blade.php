@@ -1,6 +1,6 @@
 <div>
     <form class="relative text-gray-600 mb-4 mt-4" autocomplete="off">
-        <input wire:model.debounce.800ms="search" type="search" name="serch" placeholder="Buscar cursos"
+        <input wire:model.live.debounce.800ms="search" type="search" name="serch" placeholder="Buscar cursos"
             class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none w-full">
 
         <button type="submit"

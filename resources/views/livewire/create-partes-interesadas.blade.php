@@ -23,12 +23,12 @@
                         {{-- <div class="form-group">
                             <label for="exampleInputEmail1" class="required">Necesidad</label>
                             <input type="text" class="form-control" id="necesidades" name="nececidades"
-                                aria-describedby="emailHelp" wire:model.defer="necesidades">
+                                aria-describedby="emailHelp" wire:model="necesidades">
                                 @error('necesidades') <span class="text-danger">{{ $message }}</span> @enderror
                         </div> --}}
                         <div class="form-group">
                             <label for="necesidades" class="required">Necesidad</label>
-                            <textarea required class="form-control" id="necesidades" id="necesidades" rows="4" wire:model.defer="necesidades"></textarea>
+                            <textarea required class="form-control" id="necesidades" id="necesidades" rows="4" wire:model="necesidades"></textarea>
                             @error('necesidades')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -36,20 +36,20 @@
                         {{-- <div class="form-group">
                             <label for="exampleInputPassword1" class="required">Expectativa</label>
                             <input type="text" class="form-control" id="expectativas" name="expectativas"
-                                wire:model.defer="expectativas">
+                                wire:model="expectativas">
                                 @error('expectativas') <span class="text-danger">{{ $message }}</span> @enderror
                         </div> --}}
                         <div class="form-group">
                             <label for="expectativas" class="required">Expectativa</label>
                             <textarea required class="form-control" id="expectativas" name="expectativas" rows="4"
-                                wire:model.defer="expectativas"></textarea>
+                                wire:model="expectativas"></textarea>
                             @error('expectativas')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="normasModel" class="required">Norma(s)</label>
-                            <select required multiple wire:model.defer="normasModel" class="select2">
+                            <select required multiple wire:model="normasModel" class="select2">
                                 @foreach ($normas as $norma)
                                     <option value="{{ $norma->id }}"
                                         {{ in_array($norma->id, $normasModel) ? 'selected' : '' }}>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <select multiple wire:model.defer="normasModel" class="form-control">
+                        <select multiple wire:model="normasModel" class="form-control">
                             @foreach ($normas as $norma)
                                 <option value="{{ $norma->id }}"
                                     {{ in_array($norma->id, $normasModel) ? 'selected' : '' }}>{{ $norma->norma }}
