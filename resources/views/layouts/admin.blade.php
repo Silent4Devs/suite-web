@@ -143,7 +143,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.desk.index') }}">
+                        <a onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                             <i class="bi bi-box-arrow-right"></i>
                             Cerrar sesión
                         </a>
