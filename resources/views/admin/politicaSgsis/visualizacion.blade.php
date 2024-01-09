@@ -61,7 +61,6 @@
 @endsection
 {{ Breadcrumbs::render('admin.politicaSgsis.visualizacion') }}
 <h5 class="col-12 titulo_general_funcion">Politícas de la Organización: <strong> {{ $organizacions->empresa }}</h5>
-    @if ($politicaSgsis)
         @foreach ($politicaSgsis as $data)
         <div class="encabezado">
             <h6><strong>{{ $data->nombre_politica ?: 'Nombre: No definido' }}</strong></h6>
@@ -79,10 +78,5 @@
             </div>
         </div>
         @endforeach
-    @else
-        <div class="row">
-            <h3>Sin registro</h3>
-        </div>
-    @endif
 
 @endsection

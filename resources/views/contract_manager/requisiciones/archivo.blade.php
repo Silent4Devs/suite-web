@@ -12,7 +12,7 @@
     word-wrap: break-word
     }
     </style>
-    <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
+    <h5 class="col-12 titulo_general_funcion">Requisiciónes Archivadas</h5>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
@@ -56,6 +56,13 @@
                     @endforeach
                 </tbody>
             </table>
+            <br>
+            <form class="text-right" action="{{ route('contract_manager.requisiciones') }}" method="GET">
+                @method('GET')
+                <button class="btn btn-primary" type="submit" title="Regresar">
+                    Regresar
+                </button>
+            </form>
         </div>
     </div>
 

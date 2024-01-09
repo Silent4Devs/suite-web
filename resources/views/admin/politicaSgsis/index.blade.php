@@ -338,12 +338,6 @@
             <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
             </button>
-            {{-- <form method="POST" action="{{ route('admin.politica-sgsis.pdf') }}">
-                            @csrf
-                            <button class="boton-transparente">
-                                <img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon">
-                            </button>
-                        </form> --}}
         </div>
         <h3 class="title-table-rds"> Politicas</h3>
         <table class="datatable datatable-Comiteseguridad" id="datatable-PoliticaSgsi">
@@ -416,7 +410,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -577,7 +571,7 @@
                         name: 'mostrar',
                         render: function(data, type, row) {
                             // Solo muestra el checkbox si el estatus es 'aprobado'
-                            if (row.estatus === 'Aprobado') {
+                            if (row.estatus === 'aprobado') {
                                 return `<input type="checkbox" class="redireccionar-checkbox" value="${row.id}" />`;
                             } else {
                                 return ''; // Si no es 'aprobado', no muestra nada

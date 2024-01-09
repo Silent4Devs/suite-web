@@ -122,7 +122,12 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
-
+        'snapshots' => [
+            'driver' => 'local',
+            'root' => '/var/tabantaj_dumps',
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
     ],
 
     /*

@@ -8,11 +8,14 @@ use App\Models\PreguntasTemplateAnalisisdeBrechas;
 use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class SeccionesTemplate extends Component
 {
+    use LivewireAlert;
+
     public $nombre_template = null;
-    public $normas;
+    public $norma;
     public $descripcion = null;
 
     public $color_estatus_1 = "#34B990";
@@ -62,7 +65,7 @@ class SeccionesTemplate extends Component
     public $datos_seccion = 1;
 
     public $template;
-
+    public $normas;
     public $seccion;
 
     public $s1;
@@ -158,7 +161,7 @@ class SeccionesTemplate extends Component
     {
         $this->normas = Norma::get();
 
-        return view('livewire.edit-secciones-template');
+        return view('livewire.secciones-template');
     }
 
     public function submitForm($data)
@@ -282,7 +285,14 @@ class SeccionesTemplate extends Component
                 }
             }
 
-            return redirect(route('admin.analisisdebrechas-2022.index'));
+            $this->alert('success', '¡El template ha sido creado con éxito!', [
+                'position' => 'center',
+                'timer' => 5000,
+                'toast' => true,
+                'text' => 'Se ha generado tu plantillas y tu cuestionario, lo puedes consultar y editar cuando lo necesites.',
+            ]);
+
+            return redirect(route('admin.analisisdebrechas-2022.create'));
         } else {
             switch ($this->datos_seccion) {
                 case '1':

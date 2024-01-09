@@ -118,10 +118,10 @@
     </div>
 </div>
 
-<div class="text-right form-group col-12" >
-    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2; width:6rem; height: 3rem;">Cancelar</a>
-    <button class="btn btn-primary" id="botonPrincipal" type="button">
-        Guardar y Notificar
+<div class="text-right form-group col-12">
+    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
+    <button class="btn btn-primary"  type="submit" style="width: 13%;">
+        {{ trans('global.save') }}
     </button>
 </div>
 

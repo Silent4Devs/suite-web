@@ -80,7 +80,7 @@
                     <tbody>
                         <tr>
                             <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
-                                <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;"></textarea>
+                                <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;">{!! htmlspecialchars_decode($minutas->tema_tratado) !!}</textarea>
                             </td>
                         </tr>
                     </tbody>
@@ -106,27 +106,6 @@
                             <td style="border: 1px solid #dddddd;">{{$minutas->fechareunion}}</td>
                             <td style="border: 1px solid #dddddd;">{{$revision->estatus}}</td>
                             <td style="border: 1px solid #dddddd;">{{$revision->cometarios}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-                    <thead>
-                        <tr>
-                            <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="6"><center>Próxima reunión</center></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="border: 1px solid #dddddd;">Fecha:</td>
-                            <td style="border: 1px solid #dddddd;"></td>
-                            <td style="border: 1px solid #dddddd;">Hora</td>
-                            <td style="border: 1px solid #dddddd;"></td>
-                            <td style="border: 1px solid #dddddd;">Lugar</td>
-                            <td style="border: 1px solid #dddddd;"></td>
-                        </tr>
-                        <tr>
-                            <td style="border: 1px solid #dddddd;" colspan="6">Proposito:</td>
                         </tr>
                     </tbody>
                 </table>
