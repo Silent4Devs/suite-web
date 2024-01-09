@@ -43,7 +43,7 @@
                             <label for="edit-lesson-name-{{ $section->id }}">Nombre</label><span
                                 style="color:red">*</span>
                             <div class="md:col-span-5">
-                                <input wire:model.live="lesson.name" id="edit-lesson-name-{{ $section->id }}"
+                                <input wire:model.defer="lesson.name" id="edit-lesson-name-{{ $section->id }}"
                                     type="text"
                                     class=" w-full form-control @if ($errors->has('lesson.name')) invalid @endif">
                                 @error('lesson.name')
@@ -55,8 +55,8 @@
                             <label for="edit-lesson-platform-{{ $section->id }}">Plataforma</label><span
                                 style="color:red">*</span>
                             <div class="md:col-span-5">
-                                <select wire:model.live="lesson.platform_id" id="edit-lesson-platform-{{ $section->id }}"
-                                    type="text"
+                                <select wire:model.defer="lesson.platform_id"
+                                    id="edit-lesson-platform-{{ $section->id }}" type="text"
                                     class="w-full form-control @if ($errors->has('lesson.platform')) invalid @endif">
                                     @foreach ($platforms as $platform)
                                         <option value="{{ $platform->id }}">{{ $platform->name }}</option>
@@ -71,7 +71,8 @@
                             <label for="edit-lesson-url-{{ $section->id }}">URL</label><span
                                 style="color:red">*</span>
                             <div class="md:col-span-5">
-                                <input wire:model.live="lesson.url" id="edit-lesson-url-{{ $section->id }}" type="text"
+                                <input wire:model.defer="lesson.url" id="edit-lesson-url-{{ $section->id }}"
+                                    type="text"
                                     class="form-control w-full @if ($errors->has('lesson.url')) invalid @endif">
                                 @error('lesson.url')
                                     <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>

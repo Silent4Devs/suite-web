@@ -72,7 +72,7 @@ class Puesto extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('Puestos_all', 3600 * 8, function () {
+        return Cache::remember('Puestos:Puestos_all', 3600 * 8, function () {
             return self::get();
         });
     }
@@ -106,6 +106,11 @@ class Puesto extends Model implements Auditable
     // {
     //     return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
     // }
+
+    public function puesto_empleados()
+    {
+        return $this->hasMany(Empleado::class, 'puesto_id', 'id')->alta()->select('id', 'name', 'puesto_id');
+    }
 
     public function empleados()
     {

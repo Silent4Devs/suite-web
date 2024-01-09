@@ -80,6 +80,15 @@
             transform: rotate(45deg);
         }
 
+        #btn_cancelar{
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        border: 1px solid var(--unnamed-color-057be2);
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #057BE2;
+        border-radius: 4px;
+        opacity: 1;
+        }
+
     </style>
     <h5 class="col-12 titulo_general_funcion">Editar: Competencia: ({{ $competencia->nombre }})</h5>
     <div class="mt-4 card">
@@ -92,8 +101,8 @@
                 <div class="container row">
                     <div class="col-12">
                         <div class="d-flex justify-content-end w-100">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                            <button type="submit" class="ml-2 btn btn-danger">Guardar</button>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+                            <button type="submit" class="ml-2 btn btn-primary">Guardar</button>
                         </div>
                     </div>
                 </div>

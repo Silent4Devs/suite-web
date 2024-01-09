@@ -28,7 +28,6 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
         $this->emp_id = $emp_id;
     }
 
-
     public function collection()
     {
         $query = Timesheet::leftJoin('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
@@ -38,6 +37,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
             ->leftJoin('timesheet_proyectos', 'timesheet_horas.proyecto_id', '=', 'timesheet_proyectos.id')
             ->select(
                 'timesheet.id',
+                'timesheet.estatus',
                 'fecha_dia',
                 'empleados.name as empleado_name',
                 'areas.area as empleado_area',
@@ -51,6 +51,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'timesheet_horas.horas_domingo',
                 'timesheet_proyectos.estatus'
             )
+            ->where('timesheet.estatus', '!=', 'papelera')
             ->where(function ($query) {
 
                 if ($this->fecha_inicio || $this->fecha_fin) {
@@ -95,13 +96,14 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                     $total_horas += floatval($horas->horas_sabado);
                     $total_horas += floatval($horas->horas_domingo);
                 }
+
                 return [
                     'Fecha Inicio Proyecto' => \Carbon\Carbon::parse($timesheet->fecha_dia)->format('d/m/Y'),
                     'Empleado' => $timesheet->empleado_name,
                     'Supervisor' => $timesheet->supervisor_name,
                     'Area' => $timesheet->empleado_area,
                     'Estatus Proyecto' => $timesheet->estatus,
-                    'Total de Horas' =>  $total_horas,
+                    'Total de Horas' => $total_horas,
                 ];
             });
 

@@ -264,6 +264,20 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getAltaDataColumns()
+    {
+        return Cache::remember('Empleados:empleados_alta_data_columns_all', 3600 * 6, function () {
+            return self::alta()->select('id', 'name', 'email', 'foto')->get();
+        });
+    }
+
+    public static function getDataColumns()
+    {
+        return Cache::remember('Empleados:empleados_data_columns_all', 3600 * 6, function () {
+            return self::select('id', 'name', 'email', 'foto')->get();
+        });
+    }
+
     public function getActualBirdthdayAttribute()
     {
         $birdthday = date('Y').'-'.Carbon::parse($this->cumpleaños)->format('m-d');

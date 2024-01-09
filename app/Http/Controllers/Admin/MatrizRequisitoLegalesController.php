@@ -6,34 +6,59 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
 use App\Http\Requests\StoreMatrizRequisitoLegaleRequest;
 use App\Http\Requests\UpdateMatrizRequisitoLegaleRequest;
+use App\Mail\MatrizEmail;
 use App\Models\Empleado;
 use App\Models\EvaluacionRequisitoLegal;
 use App\Models\EvidenciaMatrizRequisitoLegale;
+use App\Models\ListaDistribucion;
 use App\Models\MatrizRequisitoLegale;
 use App\Models\PlanImplementacion;
+use App\Models\ProcesosListaDistribucion;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class MatrizRequisitoLegalesController extends Controller
 {
+    public $modelo = 'MatrizRequisitoLegale';
+
     public function index(Request $request)
     {
+
         abort_if(Gate::denies('matriz_requisitos_legales_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         if ($request->ajax()) {
-            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado', 'evaluaciones')->orderBy('id')->get();
+            $matrizRequisitoLegales = MatrizRequisitoLegale::select('id', 'nombrerequisito', 'formacumple', 'fechaexpedicion')->orderBy('id')->get();
 
+            // dd($matrizRequisitoLegales);
+            //  $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado', 'evaluaciones')->orderBy('id')->get();
             return datatables()->of($matrizRequisitoLegales)->toJson();
         }
 
         $teams = Team::get();
 
-        return view('admin.matrizRequisitoLegales.index', compact('teams'));
+        $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+
+        if (! isset($modulo)) {
+            $listavacia = 'vacia';
+        } elseif ($modulo->participantes->isEmpty()) {
+            $listavacia = 'vacia';
+        } else {
+            foreach ($modulo->participantes as $participante) {
+                if ($participante->empleado->estatus != 'alta') {
+                    $listavacia = 'baja';
+
+                    return view('admin.matrizRequisitoLegales.index', compact('teams', 'listavacia'));
+                }
+            }
+            $listavacia = 'cumple';
+        }
+
+        return view('admin.matrizRequisitoLegales.index', compact('teams', 'listavacia'));
     }
 
     public function create()
@@ -107,18 +132,18 @@ class MatrizRequisitoLegalesController extends Controller
     {
         abort_if(Gate::denies('matriz_requisitos_legales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'nombrerequisito' => ['required', 'string'],
-            'formacumple' => ['nullable', 'string'],
-            'tipo' => ['required', 'string'],
-            'fechaexpedicion' => ['nullable'],
-            'fechavigor' => ['nullable', 'date'],
-            'periodicidad_cumplimiento' => ['required', 'string'],
-            'requisitoacumplir' => ['required'],
-            'cumplerequisito' => ['nullable', 'string'],
-            'medio' => ['nullable', 'string'],
-            'descripcion_cumplimiento' => ['nullable', 'string'],
-        ]);
+        // $request->validate([
+        //     'nombrerequisito' => ['required', 'string'],
+        //     'formacumple' => ['nullable', 'string'],
+        //     'tipo' => ['required', 'string'],
+        //     'fechaexpedicion' => ['nullable'],
+        //     'fechavigor' => ['nullable', 'date'],
+        //     'periodicidad_cumplimiento' => ['required', 'string'],
+        //     'requisitoacumplir' => ['required'],
+        //     'cumplerequisito' => ['nullable', 'string'],
+        //     'medio' => ['nullable', 'string'],
+        //     'descripcion_cumplimiento' => ['nullable', 'string'],
+        // ]);
 
         $matrizRequisitoLegale->update($request->all());
         $files = $request->file('files');
@@ -133,12 +158,44 @@ class MatrizRequisitoLegalesController extends Controller
             }
         }
 
+        $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
+        $creador = User::getCurrentUser()->empleado->id; // Replace 123 with your specific empleado_id value
+        // $no_niveles = $lista->niveles;
+        // dd($lista, $no_niveles);
+
+        $proceso = ProcesosListaDistribucion::where('modulo_id', '=', $lista->id)->where('proceso_id', '=', $matrizRequisitoLegale->id)->first();
+
+        $proceso->update([
+            'estatus' => 'Pendiente',
+        ]);
+
+        // dd($lista, $id_foda, $this->modelo, $proceso);
+
+        $containsValue = $lista->participantes->contains('empleado_id', $creador);
+
+        if (! $containsValue) {
+            // dd("Estoy en la lista");
+            $this->envioCorreos($proceso, $matrizRequisitoLegale->id);
+            // The collection contains the specific empleado_id value
+            // Your logic here...
+        }
+
         if (isset($request->plan_accion)) {
             // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
             $matrizRequisitoLegale->planes()->sync($request->plan_accion);
         }
 
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Editado con éxito');
+    }
+
+    public function envioCorreos($proceso, $id_matriz)
+    {
+        foreach ($proceso->participantes as $part) {
+            $emailAprobador = $part->participante->empleado->email;
+
+            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new MatrizEmail($id_matriz));
+        }
+        // dd("Se enviaron todos");
     }
 
     public function show(MatrizRequisitoLegale $matrizRequisitoLegale)

@@ -1,136 +1,162 @@
-<div class="form-group col-sm-12 col-md-12 col-lg-12">
-    <label class="required" for="analisis required"><i class="fas fa-file-invoice iconos-crear"></i>Nombre del Análisis</label>
-    <input required class="form-control" type="text" name="analisis" id="analisis"
-        value="{{ old('analisis', $entendimientoOrganizacion->analisis) }}">
-    @if ($errors->has('analisis'))
-        <div class="invalid-feedback  d-block">
-            {{ $errors->first('analisis') }}
-        </div>
-    @endif
-</div>
+<style>
+    label {
+        color: black !important;
+    }
 
-<div class="form-group col-sm-12 col-md-6 col-lg-6">
-    <label class="required" for="fecha"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de Creación</label>
-    <input required class="form-control" type="date" id="fecha" name="fecha"
-        value="{{ old('fecha', $entendimientoOrganizacion->fecha) }}">
-    @if ($errors->has('fecha'))
-        <div class="invalid-feedback  d-block">
-            {{ $errors->first('fecha') }}
-        </div>
-    @endif
-</div>
+    .card {
+        border-radius: 16px;
+        /* box-shadow: 0px 1px 4px #0000000F; */
+    }
 
+    .form-group .required::after {
+        content: " *";
+        color: unset;
+    }
+</style>
 
-
-<div class="form-group col-sm-12 col-md-6 col-lg-6">
-    <label class="required" for="id_elabora"><i class="fas fa-user-tie iconos-crear"></i>Realizó</label>
-    <select required class="form-control  {{ $errors->has(' id_elabora') ? 'is-invalid' : '' }}" name="id_elabora"
-        id="id_elabora">
-        <option value="">Seleccione una opción</option>
-        @foreach ($empleados as $empleado)
-            <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
-                data-area="{{ $empleado->area->area }}"
-                {{ old('id_elabora', $entendimientoOrganizacion->id_elabora) == $empleado->id ? 'selected' : '' }}>
-                {{ $empleado->name }}
-            </option>
-        @endforeach
-    </select>
-    @if ($errors->has('id_elabora'))
-        <div class="invalid-feedback">
-            {{ $errors->first('id_elabora') }}
-        </div>
-    @endif
-</div>
-
-
-<div class="form-group col-md-6">
-    <label for="id_puesto_asignada"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-    <div class="form-control" id="puesto_asignada" readonly></div>
-
-</div>
-
-
-<div class="form-group col-sm-12 col-md-6 col-lg-6">
-    <label for="id_area_asignada"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-    <div class="form-control" id="area_asignada" readonly></div>
-
-</div>
-
-
-<div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
-    <span class="ml-1" style="font-size: 17px; font-weight: bold;">
-        Participantes</span>
-</div>
-
-<div class="pl-3 row w-100">
-    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-        <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
-            participante<span class="text-danger">*</span></label>
-        <input type="hidden" id="id_empleado">
-        <input class="form-control" type="text" id="participantes_search" placeholder="Busca un empleado"
-            style="position: relative" autocomplete="off" />
-        <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-            style="position: absolute; top: 43px; right: 25px;"></i>
-        <div id="participantes_sugeridos"></div>
-        @if ($errors->has('participantes'))
-            <span class="text-danger">
-                {{ $errors->first('participantes') }}
+<div class="card shadow-sm">
+    <div class="card-body row">
+        <div class="col-12">
+            <span style="font-size: 17px; color:#306BA9;">
+                @if ($isEdit)
+                    Editar el análisis FODA
+                @else
+                    Crea el análisis FODA
+                @endif
             </span>
-        @endif
-        <span class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
-    </div>
-    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-        <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
-        <input class="form-control" type="text" id="email" placeholder="Correo del participante" readonly
-            style="cursor: not-allowed" />
-    </div>
-    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-        <label for="email"><i class="fas fa-suitcase iconos-crear"></i></i>Puesto</label>
-        <input class="form-control" type="text" id="puesto" placeholder="Puesto del participante" readonly
-            style="cursor: not-allowed" />
-    </div>
-    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-        <label for="area"><i class="fas fa-user-tag iconos-crear"></i></i>Área</label>
-        <input class="form-control" type="text" id="area" placeholder="Área del participante" readonly
-            style="cursor: not-allowed" />
-    </div>
-</div>
-<div class="col-12">
-    <button id="btn-suscribir-participante" type="submit" class="mr-3 btn btn-sm btn-outline-success"
-        style="float: right; position: relative;">
-        <i class="mr-1 fas fa-plus-circle"></i>
-        Agregar Participante
-    </button>
-</div>
-<div class="mt-3 col-12 w-100 datatable-fix">
-    <table class="table w-100" id="tbl-participantes">
-        <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Puesto</th>
-                {{-- <th scope="col">Área</th> --}}
-                <th>Correo</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if ($isEdit)
-                @foreach ($entendimientoOrganizacion->participantes as $participante)
-                    <tr>
-                        <td>{{ $participante->id }}</td>
-                        <td>{{ $participante->name }}</td>
-                        <td>{{ $participante->puesto }}</td>
-                        <td>{{ $participante->email }}</td>
-                    </tr>
-                @endforeach
+            <hr>
+        </div>
+        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+            <input required  maxlength="255" class="form-control" type="text" name="analisis" id="analisis"
+                value="{{ old('analisis', $entendimientoOrganizacion->analisis) }}" placeholder="">
+            @if ($errors->has('analisis'))
+                <div class="invalid-feedback  d-block">
+                    {{ $errors->first('analisis') }}
+                </div>
             @endif
-        </tbody>
-    </table>
+            <label for="analisis" class="required">Nombre del Análisis</label>
+        </div>
+        <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
+            <input required class="form-control" type="date" id="fecha" name="fecha"
+                value="{{ old('fecha', $entendimientoOrganizacion->fecha) }}" placeholder="">
+            @if ($errors->has('fecha'))
+                <div class="invalid-feedback  d-block">
+                    {{ $errors->first('fecha') }}
+                </div>
+            @endif
+            <label class="required" for="fecha">Fecha de Creación</label>
+        </div>
+        <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
+            <select required class="form-control  {{ $errors->has(' id_elabora') ? 'is-invalid' : '' }}"
+                name="id_elabora" id="id_elabora">
+                <option value="">Seleccione una opción</option>
+                @foreach ($empleados as $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                        data-area="{{ $empleado->area->area }}"
+                        {{ old('id_elabora', $entendimientoOrganizacion->id_elabora) == $empleado->id ? 'selected' : '' }}>
+                        {{ $empleado->name }}
+                    </option>
+                @endforeach
+            </select>
+            @if ($errors->has('id_elabora'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('id_elabora') }}
+                </div>
+            @endif
+            <label class="required" for="id_elabora">Realizó</label>
+        </div>
+        <div class="form-group anima-focus col-md-6">
+            <div class="form-control puesto-container" id="puesto_asignada" readonly></div>
+            <label for="id_puesto_asignada">Puesto</label>
+        </div>
+
+    </div>
 </div>
 
-<input type="hidden" name="participantes" value="" id="participantes">
+<div class="card shadow-sm">
+    <div class="card-body row">
+        <div class="col-12">
+            <span style="font-size: 17px; color:#306BA9;">
+                Participantes
+            </span>
+            <hr>
+        </div>
+        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+            <input type="hidden" id="id_empleado">
+            <input class="form-control" type="text" id="participantes_search" placeholder="Buscar participante *"
+                style="position: relative" autocomplete="off" />
+            <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
+                style="position: absolute; top: 43px; right: 25px;"></i>
+            <div id="participantes_sugeridos"></div>
+            @if ($errors->has('participantes'))
+                <span class="text-danger">
+                    {{ $errors->first('participantes') }}
+                </span>
+            @endif
+            <span class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
 
-@if ($isEdit)
+        </div>
+        <div class="form-group anima-focus  col-sm-12 col-md-12 col-lg-6">
+            <input class="form-control" type="text" id="email" placeholder="" readonly
+                style="cursor: not-allowed;" />
+            <label for="email">Email</label>
+        </div>
+        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+            <input class="form-control" type="text" id="puesto" placeholder="" readonly
+                style="cursor: not-allowed" />
+            <label for="email">Puesto</label>
+        </div>
+        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+            <input class="form-control" type="text" id="area" placeholder="" readonly
+                style="cursor: not-allowed" />
+            <label for="area">Área</label>
+        </div>
+        <div class="col-12">
+            <button id="btn-suscribir-participante" type="submit" class="btn text-primary"
+                style="float: right; position: relative;">
+                Agregar Participante <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="card shadow-sm">
+    <div class="card-body row">
+        <div class="col-12">
+            <span style="font-size: 17px; color:#306BA9;">
+                Participantes
+            </span>
+            <hr>
+        </div>
+        <div class="datatable-fix" style="margin: auto;">
+            <table id="tbl-participantes">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Puesto</th>
+                        {{-- <th scope="col">Área</th> --}}
+                        <th>Correo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($isEdit)
+                        @foreach ($entendimientoOrganizacion->participantes as $participante)
+                            <tr>
+                                <td>{{ $participante->id }}</td>
+                                <td>{{ $participante->name }}</td>
+                                <td>{{ $participante->puesto }}</td>
+                                <td>{{ $participante->email }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
+        </div>
+        <input type="hidden" name="participantes" value="" id="participantes">
+    </div>
+</div>
+
+{{-- @if ($isEdit)
     @livewire('fortalezas-component', ['foda_id' => $entendimientoOrganizacion->id])
 
     @livewire('oportunidades-component', ['foda_id' => $entendimientoOrganizacion->id])
@@ -138,16 +164,34 @@
     @livewire('debilidades-component', ['foda_id' => $entendimientoOrganizacion->id])
 
     @livewire('amenazas-component', ['foda_id' => $entendimientoOrganizacion->id])
-@endif
+@endif --}}
 
-<div class="text-right form-group col-12"><br>
-    <a href="{{ route('admin.entendimiento-organizacions.index') }}" class="btn_cancelar">Cancelar</a>
-    <button id="btnGuardar" class="btn btn-danger" type="submit">
-        {{ trans('global.save') }}
-    </button>
+<div class="row">
+    <div class="text-right form-group col-12"><br>
+        <a href="{{ route('admin.entendimiento-organizacions.index') }}" class="btn_cancelar">Cancelar</a>
+        <button id="btnGuardar" class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
 </div>
 
 @section('scripts')
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#id_elabora').change(function () {
+                // Obtiene el valor seleccionado y el atributo de datos asociados
+                var selectedOption = $(this).find(':selected');
+                var puesto = selectedOption.data('puesto');
+
+                // Actualiza el contenido del segundo div con el puesto correspondiente
+                $('.puesto-container').text(puesto);
+            });
+
+            // Disparar el evento change inicialmente para que refleje el valor predeterminado si es necesario
+            $('#id_elabora').change();
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function(e) {
 
@@ -165,8 +209,7 @@
                 document.getElementById('area_asignada').innerHTML = recortarTexto(area);
             })
 
-            function recortarTexto(texto, length = 40)
-            {
+            function recortarTexto(texto, length = 40) {
                 let trimmedString = texto?.length > length ?
                     texto.substring(0, length - 3) + "..." :
                     texto;
@@ -295,6 +338,4 @@
             document.getElementById('participantes').value = arrParticipantes;
         }
     </script>
-
-
 @endsection

@@ -1,0 +1,69 @@
+name: Security checks
+run-name: ${{ github.actor }} run security checks
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+jobs:
+  Security-checks:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ["8.2"]
+        dependency-stability: ["prefer-none"]
+
+    name: P${{ matrix.php-versions }} - L${{ matrix.laravel }} - ${{ matrix.dependency-stability }} - ${{ matrix.operating-system}}
+
+    steps:
+      - name: Install PHP versions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Get Composer Cache Directory 2
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v3
+        id: actions-cache
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Cache PHP dependencies
+        uses: actions/cache@v3
+        id: vendor-cache
+        with:
+          path: vendor
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
+
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Update Dependencies with latest stable
+        if: matrix.dependency-stability == 'prefer-stable'
+        run: composer update --prefer-stable
+      - name: Update Dependencies with lowest stable
+        if: matrix.dependency-stability == 'prefer-lowest'
+        run: composer update --prefer-stable --prefer-lowest
+
+      - name: Install Dependencies
+        if: steps.vendor-cache.outputs.cache-hit != 'true'
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Find security vulnerabilities in your PHP
+        uses: psalm/psalm-github-security-scan@1.2.1
+
+      - name: Checks composer.json for known vulnerabilities
+        uses: symfonycorp/security-checker-action@v4
+        with:
+          lock: ./composer.lock

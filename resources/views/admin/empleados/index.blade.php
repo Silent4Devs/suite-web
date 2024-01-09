@@ -1,82 +1,99 @@
 @extends('layouts.admin')
 @section('content')
-    <style type="text/css">
-    table{
-    table-layout: fixed;
-    width: 500px;
-   }
-
-   th, td {
-    border: 1px solid blue;
-    width: 130px;
-    word-wrap: break-word
-    }
-    </style>
     <h5 class="col-12 titulo_general_funcion">Empleados</h5>
-    <div class="mt-5 card">
-        <div class="card-body datatable-fix">
-            <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
-                @can('bd_empleados_configurar_vista_datos')
-                <div class="p-2">
-                    <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
-                        class="btn btn-success btn-sm active" role="button" aria-pressed="true"><i
-                            class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
-                </div>
-                @endcan
-                <div class="p-2">
-                    <a href="{{ route('admin.empleado.importar') }}" style="text-align: right;padding-right: 20px;"
-                        class="btn btn-success btn-sm active" role="button" aria-pressed="true"><i class="fas fa-file-upload"></i> Importar datos</a>
-                </div>
-            </div>
-            <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
-                <thead class="thead-dark">
+
+     <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.empleados.create') }}" type="button" class="btn btn-primary">Registrar Empleados</a>
+
+            <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
+            class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><i
+                class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
+
+                <a href="{{ route('admin.empleado.importar') }}" style="text-align: right;padding-right: 20px;"
+                        class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><i
+                            class="fas fa-file-upload"></i> Importar datos</a>
+        </div>
+    </div>
+        @include('partials.flashMessages')
+        <div class="datatable-fix datatable-rds">
+            <h3 class="title-table-rds"> Empleados</h3>
+             <table id="dom" class="datatable datatable-perspectiva">
+                <thead>
                     <tr>
-                        <th style="vertical-align: top">Avatar</th>
-                        <th style="vertical-align: top">N° Empleado</th>
-                        <th style="vertical-align: top">Nombre</th>
-                        <th style="vertical-align: top">Email</th>
-                        <th style="vertical-align: top">Telefono</th>
-                        <th style="vertical-align: top">Area</th>
-                        <th style="vertical-align: top">Puesto</th>
-                        <th style="vertical-align: top">Supervisor</th>
-                        <th style="vertical-align: top">Antiguedad</th>
-                        <th style="vertical-align: top">Estatus</th>
-                        <th style="vertical-align: top">Sede</th>
-                        <th style="vertical-align: top">Fecha Nacimiento</th>
-                        <th style="vertical-align: top">Opciones</th>
+                        <th>Avatar</th>
+                        <th>N° Empleado</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>Area</th>
+                        <th>Puesto</th>
+                        <th>Supervisor</th>
+                        <th>Antiguedad</th>
+                        <th>Estatus</th>
+                        <th>Sede</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>Opciones</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $empleados as $empleado )
-                    <tr>
-                        <td><img src="#" alt=""></td>
-                        <td>{{$empleado->n_empleado}}</td>
-                        <td>{{$empleado->name}}</td>
-                        <td>{{$empleado->email}}</td>
-                        <td>{{$empleado->telefono}}</td>
-                        <td>{{$empleado->area->area}}</td>
-                        <td>{{$empleado->puesto}}</td>
-                        <td>{{ optional($empleado->supervisor)->name}}</td>
-                        <td>{{$empleado->antiguedad}}</td>
-                        <td>{{$empleado->estatus }}</td>
-                        <td>{{ optional($empleado->sede)->sede}}</td>
-                        <td>{{ $empleado->cumpleaños}}</td>
-                        <td>
-                                <a href="{{ route('admin.empleados.edit',$empleado->id )}}"><i class="fas fa-edit"></i></a>
+                    @foreach ($empleados as $empleado)
+                        <tr>
+                            <td>
+                                <img src="{{ $empleado->avatar_ruta }}" width="40px;" alt="Avatar">
+                            </td>
+                            @if ($empleado->n_empleado)
+                                <td>{{ $empleado->n_empleado }}</td>
+                            @else
+                                <td>Sin Registro</td>
+                            @endif
+                            <td>{{ $empleado->name }}</td>
+                            @if ($empleado->email)
+                            <td>{{ $empleado->email }}</td>
+                            @else
+                                <td>Sin Registro</td>
+                            @endif
+                            @if ($empleado->telefono)
+                                <td>{{ $empleado->telefono }}</td>
+                            @else
+                                <td>Sin Registro</td>
+                            @endif
+                            <td>{{ $empleado->area->area }}</td>
+                            <td>{{ $empleado->puesto }}</td>
+                            @if (optional($empleado->supervisor)->name)
+                                <td>{{ optional($empleado->supervisor)->name }}</td>
+                            @else
+                                <td>Sin Registro</td>
+                            @endif
+                            <td>{{ $empleado->antiguedad }}</td>
+                            <td>{{ $empleado->estatus }}</td>
+                            @if (optional($empleado->sede)->sede)
+                                <td>{{ optional($empleado->sede)->sede }}</td>
+                            @else
+                                <td>Sin Registro</td>
+                            @endif
+                            @if ($empleado->cumpleaños)
+                                <td>{{ $empleado->cumpleaños }}</td>
+                            @else
+                                <td>Sin Registro</td>
+                            @endif
+                            <td>
+                                <a href="{{ route('admin.empleados.edit', $empleado->id) }}"><i
+                                        class="fas fa-edit"></i></a>
 
-                                <a href="{{ route('admin.empleados.show',$empleado->id )}}"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('admin.empleados.show', $empleado->id) }}"><i class="fas fa-eye"></i></a>
 
-                                <a href="{{ route('admin.empleado.solicitud-baja',$empleado->id ) }}"><i class="fas fa-trash-alt text-danger"></i></a>
+                                <a href="{{ route('admin.empleado.solicitud-baja', $empleado->id) }}"><i
+                                        class="fas fa-trash-alt text-danger"></i></a>
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
-        </div>
-    </div>
 
+        </div>
 
 @endsection
 
@@ -293,21 +310,6 @@
                 }
 
             ];
-            let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar empleado',
-                    url: "{{ route('admin.empleados.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-
-            dtButtons.push(btnAgregar);
-
             var table = $('#dom').DataTable({
                 buttons: dtButtons,
 

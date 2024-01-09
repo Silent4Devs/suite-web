@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exports\VistaGlobalDayOffExport;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\DayOff;
 use App\Models\SolicitudDayOff;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DayOffController extends Controller
 {
@@ -91,15 +93,22 @@ class DayOffController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         abort_if(Gate::denies('reglas_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre' => 'required|string',
-            'dias' => 'required|int',
-            'afectados' => 'required|int',
-            'tipo_conteo' => 'required|int',
-            'inicio_conteo' => 'required|int',
-            'periodo_corte' => 'required|int',
-        ]);
+        $request->validate(
+            [
+                'nombre' => 'required|string|max:255',
+                'dias' => 'required|int|gte:1|max:24',
+                'afectados' => 'required|int',
+                'tipo_conteo' => 'required|int',
+                'inicio_conteo' => 'required|int',
+                'periodo_corte' => 'required|int',
+                'meses' => 'required_if:inicio_conteo,2',
+            ],
+            [
+                'meses.required_if' => 'Debe espicificar el numero de meses',
+            ],
+        );
 
         if ($request->afectados == 2) {
             $areas = array_map(function ($value) {
@@ -111,7 +120,7 @@ class DayOffController extends Controller
             $vacacion = DayOff::create($request->all());
         }
 
-        Flash::success('Regla Days Off´s añadida satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.dayOff.index');
     }
@@ -130,7 +139,7 @@ class DayOffController extends Controller
         $areas = Area::getAll();
         $vacacion = DayOff::with('areas')->find($id);
         if (empty($vacacion)) {
-            Flash::error('Days Off´s not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.dayOff.index'));
         }
@@ -154,7 +163,7 @@ class DayOffController extends Controller
             $vacacion->update($request->all());
         }
 
-        Flash::success('Regla Days Off´s actualizada.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.dayOff.index'));
     }
@@ -173,42 +182,55 @@ class DayOffController extends Controller
         abort_if(Gate::denies('reglas_dayoff_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser()->empleado->id;
 
-        if ($request->ajax()) {
-            $query = SolicitudDayOff::with('empleado')->orderByDesc('id')->get();
-            $table = datatables()::of($query);
+        $solday = SolicitudDayOff::getAllwithEmpleados();
+        // if ($request->ajax()) {
+        //     $query = SolicitudDayOff::getAllwithEmpleados();
+        //     $table = datatables()::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        //     $table->addColumn('placeholder', '&nbsp;');
+        //     $table->addColumn('actions', '&nbsp;');
 
-            $table->editColumn('empleado', function ($row) {
-                return $row->empleado ? $row->empleado : '';
-            });
+        //     $table->editColumn('empleado', function ($row) {
+        //         return $row->empleado ? $row->empleado : '';
+        //     });
 
-            $table->editColumn('dias_solicitados', function ($row) {
-                return $row->dias_solicitados ? $row->dias_solicitados : '';
-            });
-            $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? $row->fecha_inicio : '';
-            });
-            $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : '';
-            });
-            $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion : '';
-            });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
+        //     $table->editColumn('dias_solicitados', function ($row) {
+        //         return $row->dias_solicitados ? $row->dias_solicitados : '';
+        //     });
+        //     $table->editColumn('fecha_inicio', function ($row) {
+        //         return $row->fecha_inicio ? $row->fecha_inicio : '';
+        //     });
+        //     $table->editColumn('fecha_fin', function ($row) {
+        //         return $row->fecha_fin ? $row->fecha_fin : '';
+        //     });
+        //     $table->editColumn('aprobacion', function ($row) {
+        //         return $row->aprobacion ? $row->aprobacion : '';
+        //     });
+        //     $table->editColumn('descripcion', function ($row) {
+        //         return $row->descripcion ? $row->descripcion : '';
+        //     });
 
-            $table->rawColumns(['actions', 'placeholder']);
+        //     $table->editColumn('año', function ($row) {
+        //         return $row->año ? $row->año : '';
+        //     });
 
-            return $table->make(true);
-        }
+        //     $table->rawColumns(['actions', 'placeholder']);
+
+        //     return $table->make(true);
+        // }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.dayOff.solicitudes', compact('logo_actual', 'empresa_actual'));
+        return view('admin.dayOff.solicitudes', compact('logo_actual', 'empresa_actual', 'solday'));
+    }
+
+    public function exportExcel()
+    {
+        abort_if(Gate::denies('reglas_dayoff_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $export = new VistaGlobalDayOffExport();
+
+        return Excel::download($export, 'Control_Ausencias_DayOff.xlsx');
     }
 }

@@ -59,7 +59,7 @@ class AreasObserver
 
     private function forgetCache()
     {
-        Cache::forget('areas_all');
+        Cache::forget('Areas:areas_all');
         Cache::forget('Areas:Areas_exists');
     }
 }

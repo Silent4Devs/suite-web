@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.32.1.
+ * Generated for Laravel 10.39.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -3520,6 +3520,18 @@
                         $instance->assertDispatchedWithoutChain($command, $callback);
         }
                     /**
+         * Create a new assertion about a chained batch.
+         *
+         * @param \Closure $callback
+         * @return \Illuminate\Support\Testing\Fakes\ChainedBatchTruthTest 
+         * @static 
+         */ 
+        public static function chainedBatch($callback)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        return $instance->chainedBatch($callback);
+        }
+                    /**
          * Assert if a batch was dispatched based on a truth-test callback.
          *
          * @param callable $callback
@@ -6743,13 +6755,14 @@
          *
          * @param string $path
          * @param string $data
+         * @param bool $lock
          * @return int 
          * @static 
          */ 
-        public static function append($path, $data)
+        public static function append($path, $data, $lock = false)
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
-                        return $instance->append($path, $data);
+                        return $instance->append($path, $data, $lock);
         }
                     /**
          * Get or set UNIX mode of a file or directory.
@@ -8228,6 +8241,18 @@
         {
                         /** @var \Illuminate\Translation\Translator $instance */
                         $instance->load($namespace, $group, $locale);
+        }
+                    /**
+         * Register a callback that is responsible for handling missing translation keys.
+         *
+         * @param callable|null $callback
+         * @return static 
+         * @static 
+         */ 
+        public static function handleMissingKeysUsing($callback)
+        {
+                        /** @var \Illuminate\Translation\Translator $instance */
+                        return $instance->handleMissingKeysUsing($callback);
         }
                     /**
          * Add a new namespace to the loader.
@@ -10176,6 +10201,18 @@
         {
                         /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getRedis();
+        }
+                    /**
+         * Get the maximum number of attempts for an object-based queue handler.
+         *
+         * @param mixed $job
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getJobTries($job)
+        {            //Method inherited from \Illuminate\Queue\Queue         
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getJobTries($job);
         }
                     /**
          * Get the backoff for an object-based queue handler.
@@ -13156,6 +13193,7 @@
      * @method static \Illuminate\Routing\RouteRegistrar controller(string $controller)
      * @method static \Illuminate\Routing\RouteRegistrar domain(string $value)
      * @method static \Illuminate\Routing\RouteRegistrar middleware(array|string|null $middleware)
+     * @method static \Illuminate\Routing\RouteRegistrar missing(\Closure $missing)
      * @method static \Illuminate\Routing\RouteRegistrar name(string $value)
      * @method static \Illuminate\Routing\RouteRegistrar namespace(string|null $value)
      * @method static \Illuminate\Routing\RouteRegistrar prefix(string $prefix)
@@ -13612,6 +13650,18 @@
         {
                         /** @var \Illuminate\Routing\Router $instance */
                         $instance->substituteImplicitBindings($route);
+        }
+                    /**
+         * Register a callback to to run after implicit bindings are substituted.
+         *
+         * @param callable $callback
+         * @return \Illuminate\Routing\Router 
+         * @static 
+         */ 
+        public static function substituteImplicitBindingsUsing($callback)
+        {
+                        /** @var \Illuminate\Routing\Router $instance */
+                        return $instance->substituteImplicitBindingsUsing($callback);
         }
                     /**
          * Register a route matched event listener.
@@ -14204,6 +14254,41 @@
                         return $instance->hasTable($table);
         }
                     /**
+         * Get the user-defined types that belong to the database.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getTypes()
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getTypes();
+        }
+                    /**
+         * Get all of the table names for the database.
+         *
+         * @deprecated Will be removed in a future Laravel version.
+         * @return array 
+         * @static 
+         */ 
+        public static function getAllTables()
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getAllTables();
+        }
+                    /**
+         * Get all of the view names for the database.
+         *
+         * @deprecated Will be removed in a future Laravel version.
+         * @return array 
+         * @static 
+         */ 
+        public static function getAllViews()
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getAllViews();
+        }
+                    /**
          * Drop all tables from the database.
          *
          * @return void 
@@ -14226,6 +14311,18 @@
                         $instance->dropAllViews();
         }
                     /**
+         * Get all of the type names for the database.
+         *
+         * @deprecated Will be removed in a future Laravel version.
+         * @return array 
+         * @static 
+         */ 
+        public static function getAllTypes()
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getAllTypes();
+        }
+                    /**
          * Drop all types from the database.
          *
          * @return void 
@@ -14235,39 +14332,6 @@
         {
                         /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
                         $instance->dropAllTypes();
-        }
-                    /**
-         * Get all of the table names for the database.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllTables()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getAllTables();
-        }
-                    /**
-         * Get all of the view names for the database.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllViews()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getAllViews();
-        }
-                    /**
-         * Get all of the type names for the database.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllTypes()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getAllTypes();
         }
                     /**
          * Get the columns for a given table.
@@ -14280,6 +14344,30 @@
         {
                         /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
                         return $instance->getColumns($table);
+        }
+                    /**
+         * Get the indexes for a given table.
+         *
+         * @param string $table
+         * @return array 
+         * @static 
+         */ 
+        public static function getIndexes($table)
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getIndexes($table);
+        }
+                    /**
+         * Get the foreign keys for a given table.
+         *
+         * @param string $table
+         * @return array 
+         * @static 
+         */ 
+        public static function getForeignKeys($table)
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getForeignKeys($table);
         }
                     /**
          * Set the default string length for migrations.
@@ -14334,6 +14422,40 @@
         public static function useNativeSchemaOperationsIfPossible($value = true)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
                         \Illuminate\Database\Schema\PostgresBuilder::useNativeSchemaOperationsIfPossible($value);
+        }
+                    /**
+         * Determine if the given view exists.
+         *
+         * @param string $view
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasView($view)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->hasView($view);
+        }
+                    /**
+         * Get the tables that belong to the database.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getTables()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getTables();
+        }
+                    /**
+         * Get the views that belong to the database.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getViews()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getViews();
         }
                     /**
          * Determine if the given table has a given column.
@@ -19778,159 +19900,6 @@
      
 }
 
-    namespace Laracasts\Flash { 
-            /**
-     * 
-     *
-     */ 
-        class Flash {
-                    /**
-         * Flash an information message.
-         *
-         * @param string|null $message
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function info($message = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->info($message);
-        }
-                    /**
-         * Flash a success message.
-         *
-         * @param string|null $message
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function success($message = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->success($message);
-        }
-                    /**
-         * Flash an error message.
-         *
-         * @param string|null $message
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function error($message = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->error($message);
-        }
-                    /**
-         * Flash a warning message.
-         *
-         * @param string|null $message
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function warning($message = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->warning($message);
-        }
-                    /**
-         * Flash a general message.
-         *
-         * @param string|null $message
-         * @param string|null $level
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function message($message = null, $level = null)
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->message($message, $level);
-        }
-                    /**
-         * Flash an overlay modal.
-         *
-         * @param string|null $message
-         * @param string $title
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function overlay($message = null, $title = 'Notice')
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->overlay($message, $title);
-        }
-                    /**
-         * Add an "important" flash to the session.
-         *
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function important()
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->important();
-        }
-                    /**
-         * Clear all registered messages.
-         *
-         * @return \Laracasts\Flash\FlashNotifier 
-         * @static 
-         */ 
-        public static function clear()
-        {
-                        /** @var \Laracasts\Flash\FlashNotifier $instance */
-                        return $instance->clear();
-        }
-                    /**
-         * Register a custom macro.
-         *
-         * @param string $name
-         * @param object|callable $macro
-         * @return void 
-         * @static 
-         */ 
-        public static function macro($name, $macro)
-        {
-                        \Laracasts\Flash\FlashNotifier::macro($name, $macro);
-        }
-                    /**
-         * Mix another object into the class.
-         *
-         * @param object $mixin
-         * @param bool $replace
-         * @return void 
-         * @throws \ReflectionException
-         * @static 
-         */ 
-        public static function mixin($mixin, $replace = true)
-        {
-                        \Laracasts\Flash\FlashNotifier::mixin($mixin, $replace);
-        }
-                    /**
-         * Checks if macro is registered.
-         *
-         * @param string $name
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasMacro($name)
-        {
-                        return \Laracasts\Flash\FlashNotifier::hasMacro($name);
-        }
-                    /**
-         * Flush the existing macros.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function flushMacros()
-        {
-                        \Laracasts\Flash\FlashNotifier::flushMacros();
-        }
-         
-    }
-     
-}
-
     namespace Jenssegers\Date { 
             /**
      * 
@@ -20932,141 +20901,6 @@
      
 }
 
-    namespace Laravel\Octane\Facades { 
-            /**
-     * 
-     *
-     * @see \Laravel\Octane\Octane
-     */ 
-        class Octane {
-                    /**
-         * Get a Swoole table instance.
-         *
-         * @static 
-         */ 
-        public static function table($table)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->table($table);
-        }
-                    /**
-         * Format an exception to a string that should be returned to the client.
-         *
-         * @static 
-         */ 
-        public static function formatExceptionForClient($e, $debug = false)
-        {
-                        return \Laravel\Octane\Octane::formatExceptionForClient($e, $debug);
-        }
-                    /**
-         * Concurrently resolve the given callbacks via background tasks, returning the results.
-         * 
-         * Results will be keyed by their given keys - if a task did not finish, the tasks value will be "false".
-         *
-         * @return array 
-         * @throws \Laravel\Octane\Exceptions\TaskException
-         * @throws \Laravel\Octane\Exceptions\TaskTimeoutException
-         * @static 
-         */ 
-        public static function concurrently($tasks, $waitMilliseconds = 3000)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->concurrently($tasks, $waitMilliseconds);
-        }
-                    /**
-         * Get the task dispatcher.
-         *
-         * @return \Laravel\Octane\Contracts\DispatchesTasks 
-         * @static 
-         */ 
-        public static function tasks()
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->tasks();
-        }
-                    /**
-         * Get the listeners that will prepare the Laravel application for a new request.
-         *
-         * @static 
-         */ 
-        public static function prepareApplicationForNextRequest()
-        {
-                        return \Laravel\Octane\Octane::prepareApplicationForNextRequest();
-        }
-                    /**
-         * Get the listeners that will prepare the Laravel application for a new operation.
-         *
-         * @static 
-         */ 
-        public static function prepareApplicationForNextOperation()
-        {
-                        return \Laravel\Octane\Octane::prepareApplicationForNextOperation();
-        }
-                    /**
-         * Get the container bindings / services that should be pre-resolved by default.
-         *
-         * @static 
-         */ 
-        public static function defaultServicesToWarm()
-        {
-                        return \Laravel\Octane\Octane::defaultServicesToWarm();
-        }
-                    /**
-         * Register a Octane route.
-         *
-         * @static 
-         */ 
-        public static function route($method, $uri, $callback)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->route($method, $uri, $callback);
-        }
-                    /**
-         * Determine if a route exists for the given method and URI.
-         *
-         * @static 
-         */ 
-        public static function hasRouteFor($method, $uri)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->hasRouteFor($method, $uri);
-        }
-                    /**
-         * Invoke the route for the given method and URI.
-         *
-         * @static 
-         */ 
-        public static function invokeRoute($request, $method, $uri)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->invokeRoute($request, $method, $uri);
-        }
-                    /**
-         * Get the registered Octane routes.
-         *
-         * @static 
-         */ 
-        public static function getRoutes()
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->getRoutes();
-        }
-                    /**
-         * Register a callback to be called every N seconds.
-         *
-         * @return \Laravel\Octane\Swoole\InvokeTickCallable 
-         * @static 
-         */ 
-        public static function tick($key, $callback, $seconds = 1, $immediate = true)
-        {
-                        /** @var \Laravel\Octane\Octane $instance */
-                        return $instance->tick($key, $callback, $seconds, $immediate);
-        }
-         
-    }
-     
-}
-
     namespace Livewire { 
             /**
      * 
@@ -21463,230 +21297,6 @@
         {
                         /** @var \Livewire\LivewireManager $instance */
                         return $instance->originalMethod();
-        }
-         
-    }
-     
-}
-
-    namespace Opcodes\LogViewer\Facades { 
-            /**
-     * 
-     *
-     * @see \Opcodes\LogViewer\LogViewerService
-     */ 
-        class LogViewer {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function basePathForLogs()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->basePathForLogs();
-        }
-                    /**
-         * 
-         *
-         * @return \Opcodes\LogViewer\LogFileCollection|\Opcodes\LogViewer\LogFile[] 
-         * @static 
-         */ 
-        public static function getFiles()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFiles();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getFilesGroupedByFolder()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFilesGroupedByFolder();
-        }
-                    /**
-         * Find the file with the given identifier or file name.
-         *
-         * @static 
-         */ 
-        public static function getFile($fileIdentifier)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFile($fileIdentifier);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getFolder($folderIdentifier)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFolder($folderIdentifier);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function supportsHostsFeature()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->supportsHostsFeature();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function resolveHostsUsing($callback)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->resolveHostsUsing($callback);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getHosts()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getHosts();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getHost($hostIdentifier)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getHost($hostIdentifier);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function clearFileCache()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->clearFileCache();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getRouteDomain()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getRouteDomain();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getRoutePrefix()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getRoutePrefix();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getRouteMiddleware()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getRouteMiddleware();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function auth($callback = null)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->auth($callback);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function lazyScanChunkSize()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->lazyScanChunkSize();
-        }
-                    /**
-         * Get the maximum number of bytes of the log that we should display.
-         *
-         * @static 
-         */ 
-        public static function maxLogSize()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->maxLogSize();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setMaxLogSize($bytes)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->setMaxLogSize($bytes);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function laravelRegexPattern()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->laravelRegexPattern();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function logMatchPattern()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->logMatchPattern();
-        }
-                    /**
-         * Determine if Log Viewer's published assets are up-to-date.
-         *
-         * @throws \RuntimeException
-         * @static 
-         */ 
-        public static function assetsAreCurrent()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->assetsAreCurrent();
-        }
-                    /**
-         * Get the current version of the Log Viewer
-         *
-         * @static 
-         */ 
-        public static function version()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->version();
         }
          
     }
@@ -24790,6 +24400,17 @@ namespace  {
                 /**
              * 
              *
+             * @see \Essa\APIToolKit\MacroServiceProvider::boot()
+             * @static 
+             */ 
+            public static function dynamicPaginate()
+            {
+                                return \Illuminate\Database\Eloquent\Builder::dynamicPaginate();
+            }
+             
+                /**
+             * 
+             *
              * @see \Hammerstone\FastPaginate\FastPaginate::paginate()
              * @param mixed $perPage
              * @param mixed $columns
@@ -27122,15 +26743,12 @@ namespace  {
             class Geocoder extends \Spatie\Geocoder\Facades\Geocoder {}
             class Form extends \Collective\Html\FormFacade {}
             class Html extends \Collective\Html\HtmlFacade {}
-            class Flash extends \Laracasts\Flash\Flash {}
             class Date extends \Jenssegers\Date\Date {}
             class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode {}
             class Alert extends \RealRashid\SweetAlert\Facades\Alert {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
-            class Octane extends \Laravel\Octane\Facades\Octane {}
             class Livewire extends \Livewire\Livewire {}
-            class LogViewer extends \Opcodes\LogViewer\Facades\LogViewer {}
             class Sentry extends \Sentry\Laravel\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class ResponseCache extends \Spatie\ResponseCache\Facades\ResponseCache {}

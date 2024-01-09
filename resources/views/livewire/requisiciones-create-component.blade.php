@@ -297,8 +297,8 @@
 
                                                             Detalles del producto <font class="asterisco">*</font>
                                                         </label>
-                                                        <input type="text" class="browser-default modal-detalles"
-                                                            name="detalles_{{ $i }}" required>
+                                                        <input type="text" required class="browser-default modal-detalles"
+                                                            name="detalles_{{ $i }}">
                                                     </div>
                                                     <div class="col s12 l3">
                                                         <input type="radio" class="modal-tipo"

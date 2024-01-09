@@ -25,9 +25,17 @@ class EvidenciaDocumentoEmpleadoArchivo extends Model implements Auditable
 
     public function getRutaDocumentoAttribute()
     {
-        $empleado = Empleado::select('id', 'name')->find($this->evidencia->empleados_documentos->id);
+        if ($this->evidencia->empleados_documentos) {
+            if ($this->evidencia->empleados_documentos->id) {
+                $empleado = Empleado::select('id', 'name')->find($this->evidencia->empleados_documentos->id);
 
-        return asset('storage/expedientes/'.Str::slug($empleado->name).'/'.$this->documento);
+                return asset('storage/expedientes/'.Str::slug($empleado->name).'/'.$this->documento);
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     public function getRutaAbsolutaDocumentoAttribute()

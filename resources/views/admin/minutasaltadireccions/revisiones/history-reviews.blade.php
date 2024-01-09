@@ -277,7 +277,6 @@
                 margin-left: -7px;
             }
         }
-
     </style>
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -304,31 +303,36 @@
                         <div class="icon"></div>
                         <div class="date-content">
                             <div class="date-outer"
-                                style="background-image: url('{{ asset('storage/empleados/imagenes') . '/' . $revision->empleado->avatar }}');clip-path: circle(50% at 50% 50%);background-position:center;background-size: cover;">
+                                style="background-image: url('{{ asset('storage/empleados/imagenes') . '/' }} . {{ $revision->empleado->avatar ?? '' }}');clip-path: circle(50% at 50% 50%);background-position:center;background-size: cover;">
                                 <span class="date" style="position: relative">
-                                    {{ $revision->foto }}
+                                    {{ $revision->foto ?? '' }}
                                 </span>
                             </div>
                         </div>
                         <div class="timeline-content">
-                            <h5 class="title">{{ $revision->empleado->name }}</h5>
+                            <h5 class="title">{{ $revision->empleado->name ?? '' }}</h5>
 
                             @switch($revision->estatus)
                                 @case(1)
                                     <span class="badge badge-primary">SIN RESPUESTA</span>
                                 @break
+
                                 @case(2)
                                     <span class="badge badge-success">APROBADO</span>
                                 @break
+
                                 @case(3)
                                     <span class="badge badge-danger">RECHAZADO</span>
                                 @break
+
                                 @case(4)
                                     <span class="badge badge-danger">RECHAZADO EN EL NIVEL ANTERIOR</span>
                                 @break
+
                                 @case(5)
                                     <span class="badge badge-danger">RECHAZADO POR EDICIÓN DE LA MINUTA</span>
                                 @break
+
                                 @default
                                     <span class="badge badge-primary">SIN RESPUESTA</span>
                             @endswitch
@@ -354,7 +358,6 @@
                         </div>
                     </div>
                     <!-- end experience section-->
-
                 @endforeach
 
             </div>

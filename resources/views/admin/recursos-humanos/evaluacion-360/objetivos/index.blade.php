@@ -37,69 +37,74 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered w-100 tblObjetivos">
-                <div class="mb-2 row">
-                    <div class="col-4">
-                        <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
-                        <select class="form-control" id="lista_areas">
-                            <option value="" disabled selected>-- Selecciona un área --</option>
-                            @foreach ($areas as $area)
-                                <option value="{{ $area->area }}">{{ $area->area }}</option>
-                            @endforeach
-                            <option value="">Todas</option>
-                        </select>
-                    </div>
-                    {{-- {{$puestos}} --}}
-                    <div class="col-4" id="puesto">
-                        <label for=""><i class="fas fa-filter"></i> Filtrar por puesto</label>
-                        <select class="form-control" id="lista_puestos">
-                            <option value="" disabled selected>-- Selecciona un puesto --</option>
-                            @foreach ($puestos as $puesto)
-                                <option value="{{ $puesto->puesto }}">{{ $puesto->puesto }}</option>
-                            @endforeach
-                            <option value="">Todos</option>
-                        </select>
-                    </div>
-                    <div class="col-4">
-                        <label for=""><i class="fas fa-filter"></i> Filtrar por perfil</label>
-                        <select class="form-control" id="lista_perfiles">
-                            <option value="" disabled selected>-- Selecciona un perfil --</option>
-                            @foreach ($perfiles as $perfil)
-                                <option value="{{ $perfil->nombre }}">{{ $perfil->nombre }}</option>
-                            @endforeach
-                            <option value="">Todos</option>
-                        </select>
-                    </div>
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
+                    <select class="form-control" id="lista_areas">
+                        <option value="" disabled selected>-- Selecciona un área --</option>
+                        @foreach ($areas as $area)
+                            <option value="{{ $area->area }}">{{ $area->area }}</option>
+                        @endforeach
+                        <option value="">Todas</option>
+                    </select>
                 </div>
-                <thead class="thead-dark" id="max">
-                    <tr>
-                        <th style="vertical-align: top">
-                            N° Empleado
-                        </th>
-                        <th style="vertical-align: top">
-                            Nombre
-                        </th>
-                        <th style="vertical-align: top">
-                            Puesto
-                        </th>
-                        <th style="vertical-align: top">
-                            Área
-                        </th>
-                        <th style="vertical-align: top">
-                            Perfil
-                        </th>
-                        <th style="vertical-align: top">
-                            Objetivos
-                            Asignados
-                        </th>
-                        <th style="vertical-align: top">
-                            Opciones
-                        </th>
-                    </tr>
+                {{-- {{$puestos}} --}}
+                <div class="col-4" id="puesto">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por puesto</label>
+                    <select class="form-control" id="lista_puestos">
+                        <option value="" disabled selected>-- Selecciona un puesto --</option>
+                        @foreach ($puestos as $puesto)
+                            <option value="{{ $puesto->puesto }}">{{ $puesto->puesto }}</option>
+                        @endforeach
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por perfil</label>
+                    <select class="form-control" id="lista_perfiles">
+                        <option value="" disabled selected>-- Selecciona un perfil --</option>
+                        @foreach ($perfiles as $perfil)
+                            <option value="{{ $perfil->nombre }}">{{ $perfil->nombre }}</option>
+                        @endforeach
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+            </div>
 
-                </thead>
-                <tbody></tbody>
-            </table>
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <h3 class="title-table-rds">Objetivos Estratégicos</h3>
+                <table class="datatable tblObjetivos">
+                    <thead class="thead-dark" id="max">
+                        <tr>
+                            <th style="vertical-align: top">
+                                N° Empleado
+                            </th>
+                            <th style="vertical-align: top">
+                                Nombre
+                            </th>
+                            <th style="vertical-align: top">
+                                Puesto
+                            </th>
+                            <th style="vertical-align: top">
+                                Área
+                            </th>
+                            <th style="vertical-align: top">
+                                Perfil
+                            </th>
+                            <th style="vertical-align: top">
+                                Objetivos
+                                Asignados
+                            </th>
+                            <th style="vertical-align: top">
+                                Opciones
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
 

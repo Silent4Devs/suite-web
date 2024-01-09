@@ -4,46 +4,51 @@
         @livewire('create-partes-interesadas',['id_interesado'=>$id_interesado])
     </div>
 
-    <table class="table">
-        <thead class="head-light">
-            <tr>
-                <th scope="col-6">Necesidades</th>
-                <th scope="col-6">Expectativas</th>
-                <th scope="col-6">Norma(s)</th>
-                <th scope="col-6">Opciones</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($datas as $data)
+<br>
+<br>
+<div class="card card-body">
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <table class="datatable">
+            <thead>
                 <tr>
-                    <th style="min-width:130px;">{{ $data->necesidades }}</th>
-                    <td style="min-width:100px;">{{ $data->expectativas }}</td>
-                    <td style="min-width:40px; position:relative">
-                        @if (!is_null($data->normas))
-                            <ul>
-                                @forelse ($data->normas as $norma)
-                                    <li> {{ $norma->norma }}</li>
-                                @empty
-                                    Sin normas
-                                @endforelse
-                            </ul>
-                        @endif
-                    </td>
-                    <td style="min-width:40px;">
-                        <i class="fas fa-edit"
-                            wire:click.prevent="$dispatch('editarParteInteresada',{{ $data->id }})"> </i>
-                        {{-- <i class="fas fa-project-diagram"
-                            wire:click.prevent="$dispatch('agregarNormas',{{ $data->id }})"> </i> --}}
-                        <i class="fas fa-trash-alt text-danger"
-                            wire:click.prevent="$dispatch('eliminarParteInteresada',{{ $data->id }})"> </i>
-                    </td>
-                    {{-- <td> @livewire('edit-partes-interesadas',['id_requisito'=>$data->id])</td> --}}
-                </tr>
-            @endforeach
+                    <th>Necesidades</th>
+                    <th>Expectativas</th>
+                    <th>Norma(s)</th>
+                    <th>Opciones</th>
 
-        </tbody>
-    </table>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($datas as $data)
+                    <tr>
+                        <th>{{ $data->necesidades }}</th>
+                        <td>{{ $data->expectativas }}</td>
+                        <td>
+                            @if (!is_null($data->normas))
+                                    @forelse ($data->normas as $norma)
+                                        <span> {{ $norma->norma }}</span>
+                                    @empty
+                                        Sin normas
+                                    @endforelse
+                            @endif
+                        </td>
+                        <td>
+                            <i class="fas fa-edit"
+                                wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})"> </i>
+                            {{-- <i class="fas fa-project-diagram"
+                                wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
+                            <i class="fas fa-trash-alt text-danger"
+                                wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"> </i>
+                        </td>
+                        {{-- <td> @livewire('edit-partes-interesadas',['id_requisito'=>$data->id])</td> --}}
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 </div>

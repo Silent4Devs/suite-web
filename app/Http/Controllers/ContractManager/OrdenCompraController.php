@@ -247,6 +247,10 @@ class OrdenCompraController extends Controller
             $requisicion->save();
             $user = 'lourdes.abadia@silent4business.com';
             $userEmail = $user;
+
+            $organizacion = Organizacion::getFirst();
+
+            Mail::to('ldelgadillo@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_comprador_orden') {
             $fecha = date('d-m-Y');

@@ -1,47 +1,54 @@
 pipeline {
-  agent any
-  stages {
-
-    stage('install') {
-      steps {
-        git branch: 'stagging', url: 'https://gitlab.com/silent4business/tabantaj.git'
-      }
-    }
-
-
-     stage('build') {
-      steps {
-        script{
-          try {
-                sh 'docker-compose exec php cp .env.example .env'
-                sh 'docker-compose exec php composer install --ignore-platform-reqs'
-                sh 'docker-compose exec php php artisan key:generate'
-                sh 'docker-compose exec php php artisan migrate'
-                sh 'docker-compose exec php chmod 777 -R storage'
-                sh 'docker-compose exec php php artisan optimize:clear'
-            } catch (Exception e) {
-              echo 'Exception occurred: ' + e.toString()
+    agent any
+    stages {
+        stage('Declarative: Checkout SCM') {
+            steps {
+                checkout scm
             }
         }
-      }
-    }
 
-     stage('Deploy via SSH') {
+       stage('Install') {
+            steps {
+                git branch: 'develop', url: 'https://github.com/Silent4Devs/suite-web.git'
+            }
+        }
+
+
+        stage('Build') {
             steps {
                 script {
-                   sshagent(['/root/.ssh/id_rsa']) {
-                        def remoteCommand = """
-                            cd /var/contenedor/tabantaj &&
-                            git pull origin stagging &&
-                            docker-compose up -d --build
-                        """
-                        sh "ssh desarrollo@192.168.9.78 '${remoteCommand}'"
+                    try {
+                        sh 'docker-compose exec php cp .env.example .env'
+                        sh 'docker-compose exec php composer install --ignore-platform-reqs'
+                        sh 'docker-compose exec php php artisan key:generate'
+                        sh 'docker-compose exec php php artisan migrate'
+                        sh 'docker-compose exec php chmod 777 -R storage'
+                        sh 'docker-compose exec php php artisan optimize:clear'
+                    } catch (Exception e) {
+                        echo 'Exception occurred: ' + e.toString()
                     }
-              }
-          }
-     }
+                }
+            }
+        }
 
 
-     }
+        stage('Deploy via SSH') {
+            steps {
+                script {
+                    sshagent(['/root/.ssh/id_rsa.pub']) {
+                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
+                    }
+                }
+            }
+        }
+
+
+        stage('Jenkis2 - Stage 1') {
+            steps {
+                script {
+                    load 'Jenkinsfilev1'
+                }
+            }
+        }
+    }
 }
-

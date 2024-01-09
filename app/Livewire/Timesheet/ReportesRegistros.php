@@ -256,8 +256,6 @@ class ReportesRegistros extends Component
             ]);
         }
 
-
-
         foreach ($tiemDup as $td) {
 
             $deletedDup = Timesheet::where('empleado_id', $td['empleado_id'])

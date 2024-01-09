@@ -3,7 +3,6 @@
 namespace App\Livewire\Timesheet;
 
 use App\Models\Empleado;
-use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
@@ -69,11 +68,21 @@ class TimesheetProyectoEmpleadosComponent extends Component
         // dd($empleado_add_proyecto);
 
         if ($this->proyecto->tipo == 'Externo') {
-            $this->validate([
-                'horas_asignadas' => ['required'],
-                'costo_hora' => ['required'],
-            ]);
+            if (isset($this->horas_asignadas) && isset($this->costo_hora)) {
+                $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
+                    'proyecto_id' => $this->proyecto->id,
+                    'empleado_id' => $empleado_add_proyecto->id,
+                    'area_id' => $empleado_add_proyecto->area_id,
+                    'horas_asignadas' => $this->horas_asignadas,
+                    'costo_hora' => $this->costo_hora,
+                ]);
+                $this->resetInput();
+            } else {
+                $this->dehydrate();
+            }
+        }
 
+        if ($this->proyecto->tipo != 'Externo') {
             $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,

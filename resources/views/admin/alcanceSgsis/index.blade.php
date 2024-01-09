@@ -1,6 +1,26 @@
 @extends('layouts.admin')
 @section('content')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
     <style>
+        @media print {
+            .print-none {
+                display: none !important;
+            }
+        }
+
+        .boton-cancelar {
+            background-color: white;
+            border-color: #057BE2;
+            font: 14px Roboto;
+            color: #057BE2;
+            border-radius: 4px;
+            width: 148px;
+            height: 48px;
+            align-content: center;
+        }
+
         .btn-outline-success {
             background: #788bac !important;
             color: white;
@@ -38,22 +58,16 @@
         }
 
         .table tr td:nth-child(2) {
-
             text-align: justify !important;
-
         }
 
         .table tr th:nth-child(3) {
-
             text-align: center !important;
-            min-width: 800px !important;
-
+            min-width: 200px !important;
         }
 
         .table tr td:nth-child(4) {
-
             text-align: center !important;
-
         }
 
         .table tr th:nth-child(4) {
@@ -61,144 +75,353 @@
             max-width: 120px !important;
             min-width: 120px !important;
             text-align: center !important;
-            text-align: center !important;
-
         }
 
         .table tr th:nth-child(2) {
             width: 400px !important;
-            max-width: 700px !important;
-            min-width: 700px !important;
+            max-width: 500px !important;
+            min-width: 100px !important;
             text-align: center !important;
-
-
         }
 
-        .table tr td:nth-child(5) {
 
+        .table tr td:nth-child(5) {
             max-width: 200px !important;
             min-width: 200px !important;
             width: 200px !important;
             text-align: center !important;
-
         }
 
         .table tr th:nth-child(5) {
-
             width: 200px !important;
             max-width: 200px !important;
             min-width: 200px !important;
             text-align: center !important;
-
         }
 
         .table tr td:nth-child(6) {
-
             max-width: 200px !important;
             min-width: 200px !important;
             width: 200px !important;
             text-align: center !important;
-
         }
 
         .table tr th:nth-child(6) {
-
             width: 200px !important;
             max-width: 200px !important;
             min-width: 200px !important;
             text-align: center !important;
-
         }
 
         .table tr td:nth-child(7) {
-
             max-width: 200px !important;
             min-width: 200px !important;
             width: 200px !important;
             text-align: center !important;
-
         }
 
         .table tr th:nth-child(7) {
-
             width: 200px !important;
             max-width: 200px !important;
             min-width: 200px !important;
             text-align: center !important;
-
         }
 
         .table tr td:nth-child(8) {
-
             max-width: 80px !important;
             min-width: 80px !important;
             width: 80px !important;
             text-align: center !important;
-
         }
 
         .table tr th:nth-child(8) {
-
             width: 80px !important;
             max-width: 80px !important;
             min-width: 80px !important;
             text-align: center !important;
-
         }
 
         .agregar {
             margin-right: 15px;
         }
+
+        .radius {
+            border-radius: 16px;
+        }
+
+        .titulo-card {
+
+            text-align: left;
+            font: 20px Roboto;
+            color: #606060;
+        }
+
+        .dt-buttons.btn-group {
+            display: none !important;
+        }
+
+        .modal-dialog {
+            max-width: var(--bs-modal-width);
+            margin-right: 0px;
+            margin-left: 180px;
+            margin-top: 180px;
+        }
+
+        .modal-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            color: var(--bs-modal-color);
+            pointer-events: auto;
+            background-color: var(--bs-modal-bg);
+            background-clip: padding-box;
+            border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+            border-radius: 16px;
+            outline: 0;
+            margin-top: 0px;
+            margin-bottom: 100px;
+        }
+
+        .boton-sin-borde {
+            border: none;
+            outline: none;
+            /* Esto elimina el contorno al hacer clic */
+        }
+
+        .boton-transparente {
+            background-color: transparent;
+            border: none;
+            /* Elimina el borde del botón si lo deseas */
+        }
+
+        .boton-transparentev2 {
+            top: 214px;
+            width: 135px;
+            height: 40px;
+            /* UI Properties */
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(--unnamed-color-057be2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #057BE2;
+            opacity: 1;
+        }
+
+        .icon {
+            opacity: 0.7;
+            /* Ajusta la opacidad de la imagen según tus necesidades */
+        }
+
+        .textopdf {
+            font: var(--unnamed-font-style-normal) normal medium var(--unnamed-font-size-20)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-306ba9);
+            text-align: left;
+            font: normal normal medium 20px/20px Roboto;
+            letter-spacing: 0px;
+            color: #306BA9;
+            opacity: 1;
+            position: relative;
+            left: 2.5rem;
+        }
+
+        .modal {
+            font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-14)/var(--unnamed-line-spacing-20) var(--unnamed-font-family-roboto);
+            letter-spacing: var(--unnamed-character-spacing-0);
+            color: var(--unnamed-color-606060);
+            text-align: left;
+            font: normal normal normal 14px/20px Roboto;
+            letter-spacing: 0px;
+            color: #606060;
+            opacity: 1;
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('determinacion_alcance_agregar')
-        <h5 class="col-12 titulo_general_funcion">Determinación de Alcance</h5>
-        <div class="mt-5 card">
-            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Determinación de Alcance</strong></h3>
-            </div> --}}
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modalvulnerabilidad', [
-                        'model' => 'Vulnerabilidad',
-                        'route' => 'admin.vulnerabilidads.parseCsvImport',
-                    ])
+        <div class="row d-flex align-items-center">
+            <h5 class="col-12 titulo_general_funcion">Determinación de Alcance</h5>
+            <div class="card radius" style="background-color: #5397D5;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:140px; height:117px;"
+                            class="mt-2 mb-2 ml-2 img-fluid">
+                    </div>
+                    <div class="col-md-10 mt-2">
+                        <div style="font:20px Segoe UI;color:white;" class="mr-2">
+                            ¿Qué es? Determinación de Alcance
+                        </div>
+                        <div style="font: 14px Segoe UI;color:white;"class="mt-3 mr-2">
+                            Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
+                            límites del proyecto.
+                        </div>
+                        <div style="font: 12px Segoe UI;color:white;"class="mr-5 mt-3 mb-3">
+                            Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
+                            que ayuda a evitar
+                            la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
+                            comprensión clara de lo que se espera.
+                        </div>
+                    </div>
                 </div>
             </div>
-            {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.alcance-sgsis.create') }}">
-                  Agregar <strong>+</strong>
-            </a>
-        </div>
-    </div> --}}
-        @endcan
 
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered datatable-AlcanceSgsi">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="min-width:75px;">{{ trans('cruds.alcanceSgsi.fields.id') }}</th>
-                        <th style="min-width:150px !important;">Nombre del Alcance</th>
-                        <th style="min-width:200px;">Descripción</th>
-                        <th>Norma</th>
-                        <th style="min-width:100px;">Fecha de publicación</th>
-                        <th style="min-width:100px;">Fecha de entrada en vigor</th>
-                        <th style="min-width:100px;">Revisó</th>
-                        <th style="min-width:150px !important;;">Puesto</th>
-                        <th style="min-width:150px;">Área</th>
-                        <th style="min-width:100px;">Fecha de revisión</th>
-                        <th style="min-width:100px;">Opciones</th>
-                    </tr>
-                </thead>
-            </table>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
+                    style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
+                        style="color: #ffffff; position: relative; right: 2rem;"></i>
+                </button>
+                <div class="modal-dialog" style="margin-top: 0px;">
+                    <div class="modal-content" style="width:1000px;">
+                        <div class="modal-body" style="border-radius: 0px;">
+                            <div class="print-none">
+                            </div>
+                            <div class="card col-sm-12 col-md-10"
+                                style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
+                                <div class="card-body" style="">
+                                    <div class="print-none" style="text-align:right;">
+                                        <form method="POST" style="position: relative; left: 10rem; "
+                                            action="{{ route('admin.alcance-sgsis.pdf') }}">
+                                            @csrf
+                                            <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                                                IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="card mt-5" style="width:900px;box-shadow:4px;">
+                                        <div class="row col-12 ml-0"
+                                            style="border-radius;
+                                        padding-left: 0px;padding-right: 0px;">
+                                            <div class="col-3" style="border-left: 25px solid #2395AA">
+                                                <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
+                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                            </div>
+                                            <div class="col-5 p-2 mt-3">
+                                                <br>
+                                                <span class=""
+                                                    style="color:black; position: relative; top: -1.5rem; right: 3rem;">
+                                                    {{ $empresa_actual }} <br>
+                                                    RFC: {{ $rfc }} <br>
+                                                    {{ $direccion }} <br>
+                                                </span>
+
+                                            </div>
+                                            <div class="col-4 pt-6 pl-6" style="background:#EEFCFF;">
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <span class="textopdf"> <strong> Reporte Determinación de
+                                                        Alcance</strong></span>
+                                            </div>
+                                            <br>
+                                            <div class="col-12 " style="background:#EEFCFF; border-right: 25px solid #2395AA;">
+                                                <div style="position: relative; right:1rem;  margin: 5%"><br>
+                                                    <h6 style="color:#306BA9;">Nombre del alcance</h6>
+                                                    <p>Alcance Del Sistema De Gestión De Continuidad Del Negocio</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @foreach ($alcanceSgsi as $alcanceSgs)
+                                            <div style="margin: 4%;">
+                                                <h5 style="color:#306BA9;">{{ $alcanceSgs->nombre }}</h5>
+                                                <p>Fecha de publicación: {{ $alcanceSgs->fecha_publicacion }} &nbsp;&nbsp;&nbsp;
+                                                    Fecha de revision: {{ $alcanceSgs->fecha_revision }}</p>
+                                                <p style="text-align: justify; position: relative; top: -23rem;">
+                                                    {!! $alcanceSgs->alcancesgsi !!}</p>
+                                            </div>
+                                            <hr>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.alcance-sgsis.create') }}" type="button" class="btn btn-primary">Registrar
+                Alcance</a>
         </div>
     </div>
+
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <div class="d-flex justify-content-end">
+            <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+            </button>
+        </div>
+        <h3 class="title-table-rds"> Alcances</h3>
+        <table class="datatable datatable-AlcanceSgsi">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="max-width:450px">Nombre</th>
+                    <th style="min-width:450px;">Alcance</th>
+                    <th style="max-width:85px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estatus</th>
+                    <th style="">Opciones</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    @if ($listavacia == 'vacia')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">No se ha agregado ningún colaborador a la lista</h4>
+                    <br><p>No se ha agregado un responsable al flujo de aprobación de esta vista.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra registrar información en este módulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to another view after user clicks OK
+                        window.location.href =
+                            '{{ route('admin.iso27001.guia') }}';
+                    }
+                });
+            });
+        </script>
+    @elseif ($listavacia == 'baja')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    // title: 'No es posible acceder a esta vista.',
+                    imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                    imageWidth: 100, // Set the width of the image as needed
+                    imageHeight: 100,
+                    html: `<h4 style="color:red;">Colaborador dado de baja</h4>
+                    <br><p>El colaborador responsable de este formulario ta no se encuentra dado de alta en el sistema.</p><br>
+                    <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este módulo.</p>`,
+                    // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to another view after user clicks OK
+                        window.location.href =
+                            '{{ route('admin.iso27001.index') }}';
+                    }
+                });
+            });
+        </script>
+    @endif
 @endsection
 @section('scripts')
     @parent
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
@@ -222,22 +445,6 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-                // {
-                //     extend: 'pdfHtml5',
-                //     title: `Alcance SGSIS ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Exportar PDF',
-                //     orientation: 'portrait',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     },
-                //     customize: function(doc) {
-                //         // doc.pageMargins = [20, 60, 20, 30];
-                //         // doc.styles.tableHeader.fontSize = 7.5;
-                //         // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                //     }
-                // },
                 {
                     extend: 'print',
                     title: `Alcance SGSIS ${new Date().toLocaleDateString().trim()}`,
@@ -251,7 +458,7 @@
                         var now = new Date();
                         var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
                         $(doc.document.body).prepend(`
-                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 0px">
                             <div class="col-2 p-2" style="border-right: 2px solid #ccc">
                                     <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
                                 </div>
@@ -387,10 +594,6 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.alcance-sgsis.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id',
-                    },
-                    {
                         data: 'nombre',
                         name: 'nombre',
                     },
@@ -399,45 +602,54 @@
                         name: 'alcancesgsi'
                     },
                     {
-                        data: 'norma',
-                        render: function(data, type, row, meta) {
-                            data = JSON.parse(data);
-                            let HTML = `<ul>`
-                            data.forEach(element => {
-                                HTML += `<li>${element.norma}</li>`
-                            });
-                            HTML += `</ul>`
-                            return HTML;
+                        data: 'estatus',
+                        name: 'estatus',
+                        render: function(data, type, row) {
+                            let color = '';
+                            let boxShadow = '';
+                            let backgroundColor = '';
+
+                            if (data === null) {
+                                return '<center><span style="color: #0000FF; opacity: 1; border-radius: 7px; background: #ADD8E6;">generar</span></center>';
+                            } else {
+                            // Asigna colores y sombras según el valor de 'estatus'
+                            switch (data) {
+                                case 'aprobado':
+                                    color = '#008F27'; // Verde
+                                    backgroundColor = 'rgba(0, 128, 0, 0.1)';
+                                    break;
+                                case 'rechazado':
+                                    color = '#dd0483'; // Rojo
+                                    backgroundColor = 'rgba(128, 0, 0, 0.1)';
+                                    break;
+                                case 'pendiente':
+                                    color = '#DD8E04'; // Naranja
+                                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
+                                    break;
+                                default:
+                                    color = '#464646'; // Negro
+                                    backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                            }
+
+                            const style = `
+                                background: #E9FFE8 0% 0% no-repeat padding-box;
+                                border-radius: 7px;
+                                opacity: 1;
+                                color: ${color};
+                                background-color: ${backgroundColor};
+                            `;
+
+                            return `<center><span style="${style}">${data}</span></center>`;
                         }
-                    },
-                    {
-                        data: 'fecha_publicacion',
-                        name: 'fecha_publicacion'
-                    },
-                    {
-                        data: 'fecha_entrada',
-                        name: 'fecha_entrada'
-                    },
-                    {
-                        data: 'reviso_alcance',
-                        name: 'reviso_alcance'
-                    },
-                    {
-                        data: 'puesto_reviso',
-                        name: 'puesto_reviso'
-                    },
-                    {
-                        data: 'area_reviso',
-                        name: 'area_reviso'
-                    },
-                    {
-                        data: 'fecha_revision',
-                        name: 'fecha_revision'
+                    }
                     },
                     {
                         data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
+                        name: '{{ trans('global.actions') }}',
+                        // render: function(data, type, full, meta) {
+                        // return data + '<button class="tu-clase-de-boton" style="border: none;"><i class="fas fa-arrow-down fa-sm" style="border: none;"></i></button>';
+                        // }
+                    },
                 ],
                 orderCellsTop: true,
                 order: [
@@ -445,18 +657,7 @@
                 ]
             };
             let table = $('.datatable-AlcanceSgsi').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+
         });
     </script>
 @endsection
