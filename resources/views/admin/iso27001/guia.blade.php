@@ -703,7 +703,7 @@
                             <h4 class="title-card-img-iso">Incidentes de seguridad</h4>
                             {{-- <span>Completado</span> --}}
                         </div>
-                        <a href="{{ route('admin.incidentes-de-seguridads.index') }}" class="btn-entrar">
+                        <a href="{{ route('admin.desk.index') }}" class="btn-entrar">
                             Entrar
                             <i class="material-symbols-outlined"> arrow_right_alt</i>
                         </a>
