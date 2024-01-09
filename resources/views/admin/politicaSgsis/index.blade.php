@@ -416,7 +416,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -577,7 +577,7 @@
                         name: 'mostrar',
                         render: function(data, type, row) {
                             // Solo muestra el checkbox si el estatus es 'aprobado'
-                            if (row.estatus === 'Aprobado') {
+                            if (row.estatus === 'aprobado') {
                                 return `<input type="checkbox" class="redireccionar-checkbox" value="${row.id}" />`;
                             } else {
                                 return ''; // Si no es 'aprobado', no muestra nada
