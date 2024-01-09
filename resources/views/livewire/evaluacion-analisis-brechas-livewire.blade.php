@@ -145,7 +145,7 @@
     </style>
 
         <div class="row mb-3 print-none">
-            @if ($template_general->secciones->count() > 1)
+            @if ($template_general->secciones->count() >= 1)
                 <div class="col-3 mt-4">
                     <div class="card shadow-sm card-analisis card-dash-analisis">
                         <div class="card-body" style="margin: 0px; padding:0px;">
@@ -427,7 +427,7 @@
                             </div>
                         <div class="col-1">
                             <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+                                {!!$imageImprimir!!}
                             </button>
                         </div>
                         </div>
@@ -502,17 +502,19 @@
                                     <div class="print-none" style="text-align:right;">
 
                                             <button class="boton-transparentev2"  style="color: #306BA9;" onclick="window.print()">
-                                                IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+                                                IMPRIMIR {!!$imageImprimir!!}
                                             </button>
 
                                     </div>
-                                    <div class="card mt-5" style="width:900px;box-shadow:4px;">
+                                    <div class="card mt-5" style="width:100%;box-shadow:4px;">
                                         <div class="row col-12 ml-0"
                                             style="border-radius;
                                             padding-left: 0px;padding-right: 0px;">
                                             <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
-                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                            <figure>
+                                                <img src="{{$logo_actual}}"  style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                            </figure>
+                                                    
                                             </div>
                                             <div class="col-5 p-2 mt-3">
                                                 <br>

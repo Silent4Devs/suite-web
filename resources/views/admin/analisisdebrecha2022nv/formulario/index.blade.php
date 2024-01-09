@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-    <livewire:evaluacion-analisis-brechas :id="$id" />
+    <livewire:evaluacion-analisis-brechas-livewire :id="$id" />
     {{-- @livewire('evaluacion-analisis-brechas', ['id' => $id]) --}}
 @endsection
 
