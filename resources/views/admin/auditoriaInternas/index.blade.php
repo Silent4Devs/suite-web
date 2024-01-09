@@ -81,9 +81,9 @@
                             <div class="btn" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </div>
-                            <div class="btn" onclick="viewAudit({{ $aud->id }})">
+                            {{-- <div class="btn" onclick="viewAudit({{ $aud->id }})">
                                 <i class="fa-solid fa-chevron-down"></i>
-                            </div>
+                            </div> --}}
                             <form id="deleteForm{{ $aud->id }}"
                                 action="{{ route('admin.auditoria-internas.destroy', $aud->id) }}" method="POST">
                                 <div class="dropdown-menu">
