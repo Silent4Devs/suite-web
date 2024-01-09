@@ -241,12 +241,35 @@
     @can('determinacion_alcance_agregar')
         <div class="row d-flex align-items-center">
             <h5 class="col-12 titulo_general_funcion">Determinación de Alcance</h5>
+            <div class="card radius" style="background-color: #5397D5;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:140px; height:117px;"
+                            class="mt-2 mb-2 ml-2 img-fluid">
+                    </div>
+                    <div class="col-md-10 mt-2">
+                        <div style="font:20px Segoe UI;color:white;" class="mr-2">
+                            ¿Qué es? Determinación de Alcance
+                        </div>
+                        <div style="font: 14px Segoe UI;color:white;"class="mt-3 mr-2">
+                            Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
+                            límites del proyecto.
+                        </div>
+                        <div style="font: 12px Segoe UI;color:white;"class="mr-5 mt-3 mb-3">
+                            Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
+                            que ayuda a evitar
+                            la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
+                            comprensión clara de lo que se espera.
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
                     style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
-                        style="color: #ffffff;"></i>
+                        style="color: #ffffff; position: relative; right: 2rem;"></i>
                 </button>
                 <div class="modal-dialog" style="margin-top: 0px;">
                     <div class="modal-content" style="width:1000px;">
@@ -336,9 +359,9 @@
         <table class="datatable datatable-AlcanceSgsi">
             <thead class="thead-dark">
                 <tr>
-                    <th style="max-width:500px">Nombre</th>
-                    <th style="min-width:500px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alcance</th>
-                    <th style="max-width:80px;">
+                    <th style="max-width:450px">Nombre</th>
+                    <th style="min-width:450px;">Alcance</th>
+                    <th style="max-width:85px;">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estatus</th>
                     <th style="">Opciones</th>
                 </tr>
@@ -587,7 +610,7 @@
                             let backgroundColor = '';
 
                             if (data === null) {
-                                return '<center><span style="color: red;  opacity: 1;  border-radius: 7px;  background: #E9FFE8 0% 0% no-repeat padding-box;  color = #dd0483; backgroundColor = rgba(128, 0, 0, 0.1);">Generar</span></center>';
+                                return '<center><span style="color: #0000FF; opacity: 1; border-radius: 7px; background: #ADD8E6;">generar</span></center>';
                             } else {
                             // Asigna colores y sombras según el valor de 'estatus'
                             switch (data) {

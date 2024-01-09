@@ -105,7 +105,8 @@
                                             <tbody>
                                                 <tr>
                                                     <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
-                                                        <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;"> {{$minutas->tema_tratado}} </textarea>
+                                                        <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;"> {!! htmlspecialchars_decode($minutas->tema_tratado) !!}
+                                                        </textarea>
                                                     </td>
                                                 </tr>
                                             </tbody>

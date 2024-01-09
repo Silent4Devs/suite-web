@@ -54,7 +54,7 @@
 </div>
 
 
-
+<div class="card card-body">
         <div class=" mb-3 text-right">
             @can('centro_atencion_quejas_clientes_agregar')
                 <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
@@ -69,7 +69,7 @@
 
 
          @include('partials.flashMessages')
-                <div class="datatable-fix datatable-rds">
+            <div class="datatable-fix datatable-rds">
                      <table class="datatable tabla_quejasclientes" id="tabla-procesos">
                         <thead>
                             <tr>
@@ -97,7 +97,9 @@
 
                         </tbody>
                 </table>
-                </div>
+            </div>
+
+</div>
 
 
 
