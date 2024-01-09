@@ -143,7 +143,8 @@
                         </a>
                     </li>
                     <li>
-                        <a onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                        <a onclick="event.preventDefault(); document.getElementById('logoutform').submit();"
+                            style="cursor: pointer;">
                             <i class="bi bi-box-arrow-right"></i>
                             Cerrar sesión
                         </a>

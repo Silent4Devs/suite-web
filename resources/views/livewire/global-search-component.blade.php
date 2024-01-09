@@ -17,7 +17,7 @@
                     @php
                         $cleanedUri = str_replace('admin/', '', $route['uri']);
                     @endphp
-                    <li class="list-group-item text-black"><a
+                    <li class="list-group-item text-black"><a style="color: black"
                             href="{{ url($route['uri']) }}">{{ ucfirst($cleanedUri) }}</a>
                     </li>
                 @endforeach
