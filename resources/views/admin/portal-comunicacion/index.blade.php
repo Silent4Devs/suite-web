@@ -226,7 +226,7 @@
                                                     <span>Directorio</span>
                                                 </div>
                                             </a>
-                                            <a href="{{ route('admin.alcance-sgsis.index') }}">
+                                            <a href="{{ route('admin.alcance-sgsis/visualizacion') }}">
                                                 <div class="item-menu-portal">
                                                     <i class="material-symbols-outlined">table_chart_view</i>
                                                     <span>Alcances</span>

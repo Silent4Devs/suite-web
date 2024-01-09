@@ -217,36 +217,25 @@
 
     <!-- Modal -->
     @foreach ($query as $q)
-        <div class="modal fade" id="participantsModal{{ $q->id }}" tabindex="-1"
-            aria-labelledby="participantsModalLabel" aria-hidden="true">
-            <button type="button" style="position: relative; top: 7rem; right: 15rem;" class="close" data-dismiss="modal"
-                aria-label="Close">
-                <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
-            </button>
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content" style="text-align: center;">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="participantsModalLabel">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Participantes</h5>
-                    </div>
-                    <div class="modal-body">
-                        @foreach ($q->participantes as $index => $participante)
-                            <img src="{{ asset('storage/empleados/imagenes/' . $participante->avatar) }}"
-                                class="rounded-circle" alt="{{ $participante->name }}" title="{{ $participante->name }}"
-                                style="object-fit: cover; clip-path: circle(50%); height: 30px; width: 30px; margin-right: 10px;">
-                        @endforeach
-                    </div>
+    <div class="modal fade" id="participantsModal{{ $q->id }}" tabindex="-1" aria-labelledby="participantsModalLabel" aria-hidden="true">
+        <button type="button" style="position: relative; top: 7rem; right: 15rem;" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+        </button>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="text-align: center;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="participantsModalLabel"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Participantes</h5>
+                </div>
+                <div class="modal-body" style="display: flex; justify-content: center; align-items: center;">
+                    @foreach ($q->participantes as $index => $participante)
+                        <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
+                            class="rounded-circle" alt="{{ $participante->name }}" title="{{ $participante->name }}"
+                            style="object-fit: cover; clip-path: circle(50%); height: 30px; width: 30px; margin-right: 10px;">
+                    @endforeach
                 </div>
             </div>
-            <div class="modal-body" style="display: flex; justify-content: center; align-items: center;">
-                @foreach ($q->participantes as $index => $participante)
-                    <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
-                        class="rounded-circle" alt="{{ $participante->name }}" title="{{ $participante->name }}"
-                        style="object-fit: cover; clip-path: circle(50%); height: 30px; width: 30px; margin-right: 10px;">
-                @endforeach
-            </div>
         </div>
+    </div>
     @endforeach
 @endsection
 

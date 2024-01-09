@@ -336,16 +336,10 @@
         <table class="datatable datatable-AlcanceSgsi">
             <thead class="thead-dark">
                 <tr>
-                    <th style="max-width:800px">Nombre</th>
-                    <th style="min-width:400px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alcance</th>
+                    <th style="max-width:500px">Nombre</th>
+                    <th style="min-width:500px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alcance</th>
                     <th style="max-width:80px;">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estatus</th>
-                    <th style="max-width:80px;">
-                        Fecha publicación
-                    </th>
-                    <th style="max-width:80px;">
-                        Fecha Revisión
-                    </th>
                     <th style="">Opciones</th>
                 </tr>
             </thead>
@@ -371,7 +365,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -625,24 +619,6 @@
                             return `<center><span style="${style}">${data}</span></center>`;
                         }
                     }
-0.1)';
-                            }
-
-                            const style = `
-                                background: #E9FFE8 0% 0% no-repeat padding-box;
-                                border-radius: 7px;
-                                opacity: 1;
-                                color: ${color};
-                                box-shadow: ${boxShadow};
-                                background-color: ${backgroundColor};
-                            `;
-
-                            return `<center><span style="${style}">${data}</span></center>`;
-                        }
-                    render: function(data, type, row) {
-                            // Renderizar contenido para la nueva columna 1
-                            return data;
-                        }
                     },
                     {
                         data: 'actions',
@@ -659,14 +635,6 @@
             };
             let table = $('.datatable-AlcanceSgsi').DataTable(dtOverrideGlobals);
 
-            // $('.datatable-AlcanceSgsi').on('click', '.tu-clase-de-boton', function () {
-            //     // Muestra las nuevas columnas
-            //     table.column('fecha_entrada:name').visible(true);
-            //     table.column('fecha_publicacion:name').visible(true);
-
-            //     // Vuelve a dibujar la tabla para reflejar los cambios
-            //     table.draw();
-            // });
         });
     </script>
 @endsection
