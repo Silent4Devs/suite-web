@@ -7,7 +7,7 @@
                 <div class="col-md-6">
                     <div class="anima-focus mb-3 ">
                         <input type="text" class="form-control" placeholder="" id="nombre_template"
-                            name="nombre_template" wire:model.defer="nombre_template" required>
+                            name="nombre_template" wire:model.defer="nombre_template" maxlength="200" required>
                         <label for="nombre_template">Nombre del Template <sup>*</sup></label>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_1" name="estatus_1" wire:model.defer="estatus_1"
-                                class="form-control" placeholder="" required>
+                                class="form-control" placeholder="" maxlength="200" required>
                             <label for="estatus_1">Estatus<sup>*</sup></label>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_2" name="estatus_2" wire:model.defer="estatus_2"
-                                class="form-control" placeholder="" required>
+                                class="form-control" placeholder="" maxlength="200" required>
                             <label for="estatus_2">Estatus <sup>*</sup></label>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_3" name="estatus_3" wire:model.defer="estatus_3"
-                                class="form-control" placeholder="">
+                                class="form-control" placeholder="" maxlength="200">
                             <label for="estatus_3">Estatus</label>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_4" name="estatus_4" wire:model.defer="estatus_4"
-                                class="form-control" placeholder="">
+                                class="form-control" placeholder="" maxlength="200">
                             <label for="estatus_4">Estatus</label>
                         </div>
                     </div>
@@ -666,7 +666,8 @@
                 <div class="col-6">
                 </div>
                 <div class="col-3">
-                    <button class="btn btn-outline-primary btn-block">Cancelar</button>
+                    <a href="{{ route('admin.analisisdebrechas-2022.create') }}"
+                        class="btn btn-outline-primary btn-block">Cancelar</a>
                 </div>
                 <div class="col-3">
                     <button class="btn btn-primary btn-block" type="submit">Generar Template</button>
