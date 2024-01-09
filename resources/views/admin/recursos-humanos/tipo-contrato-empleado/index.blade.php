@@ -106,23 +106,6 @@
                 }
 
             ];
-
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar documento',
-                url: "{{ route('admin.tipos-contratos-empleados.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-
-            @can('tipos_de_contrato_para_empleados_agregar')
-                dtButtons.push(btnAgregar);
-            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
