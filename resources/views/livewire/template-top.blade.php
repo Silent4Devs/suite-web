@@ -76,7 +76,6 @@
                                             </div>
                                         </div>
                                     @else
-                                        <p>No permitido</p>
                                     @endif
                                 </td>
                             </tr>
