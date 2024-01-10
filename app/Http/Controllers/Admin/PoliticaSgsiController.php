@@ -31,7 +31,7 @@ class PoliticaSgsiController extends Controller
 {
     use ObtenerOrganizacion;
 
-    // public $modelo = 'PoliticaSgsi';
+    public $modelo = 'PoliticaSgsi';
 
 
     public function index(Request $request)
@@ -39,7 +39,7 @@ class PoliticaSgsiController extends Controller
         abort_if(Gate::denies('politica_sistema_gestion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PoliticaSgsi::with(['team', 'reviso'])->select(sprintf('%s.*', (new PoliticaSgsi)->table))->orderByDesc('id');
+            $query = PoliticaSgsi::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -70,23 +70,8 @@ class PoliticaSgsiController extends Controller
                 return $row->politicasgsi ? html_entity_decode(strip_tags($row->politicasgsi), ENT_QUOTES, 'UTF-8') : '';
                 // return $row->politicasgsi ? strip_tags($row->politicasgsi) : '';
             });
-            $table->editColumn('fecha_publicacion', function ($row) {
-                return $row->fecha_publicacion ? $row->fecha_publicacion : '';
-            });
-            $table->editColumn('fecha_entrada', function ($row) {
-                return $row->fecha_entrada ? $row->fecha_entrada : '';
-            });
-            $table->addColumn('reviso_politica', function ($row) {
-                return $row->reviso ? $row->reviso->empleado->name : '';
-            });
-            $table->editColumn('puesto_reviso', function ($row) {
-                return $row->reviso ? $row->reviso->puesto : '';
-            });
-            $table->editColumn('area_reviso', function ($row) {
-                return $row->reviso ? $row->reviso->area->area : '';
-            });
-            $table->editColumn('fecha_revision', function ($row) {
-                return $row->fecha_revision ? $row->fecha_revision : '';
+            $table->editColumn('estatus', function ($row) {
+                return $row->estatus ? $row->estatus : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -106,7 +91,8 @@ class PoliticaSgsiController extends Controller
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
 
-        $modulo = ListaDistribucion::first();
+        $modulo = ListaDistribucion::with('participantes')->where('id', 7)->first();
+
 
         if (!isset($modulo)) {
             $listavacia = 'vacia';
@@ -259,7 +245,7 @@ class PoliticaSgsiController extends Controller
 
     public function visualizacion()
     {
-        $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
+        $politicaSgsis = PoliticaSgsi::where('estatus', 'Aprobado')->get();
         foreach ($politicaSgsis as $polsgsis) {
             if (!isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();

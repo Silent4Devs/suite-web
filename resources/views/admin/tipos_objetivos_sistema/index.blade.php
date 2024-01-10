@@ -39,6 +39,11 @@
     </style>
     {{-- {{ Breadcrumbs::render('admin.objetivosseguridads.index') }} --}}
     <h5 class="col-12 titulo_general_funcion">Tipos de Objetivos</h5>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.tipos-objetivos.create') }}" type="button" class="btn btn-primary">Registrar Tipos</a>
+        </div>
+    </div>
     <div class="mt-5 card">
 
         @include('partials.flashMessages')
@@ -166,19 +171,19 @@
             ];
 
             @can('objetivos_del_sistema_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar objetivo de seguridad',
-                    url: "{{ route('admin.tipos-objetivos.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                dtButtons.push(btnAgregar);
+                // let btnAgregar = {
+                //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                //     titleAttr: 'Agregar objetivo de seguridad',
+                //     url: "{{ route('admin.tipos-objetivos.create') }}",
+                //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                //     action: function(e, dt, node, config) {
+                //         let {
+                //             url
+                //         } = config;
+                //         window.location.href = url;
+                //     }
+                // };
+                // dtButtons.push(btnAgregar);
             @endcan
 
 
