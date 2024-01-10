@@ -239,6 +239,24 @@
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
+
+    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión </h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <h4> ¿Qué es? Política del Sistema de Gestión</h4>
+                <p>
+                    Es una declaración oficial de la dirección de una organización que establece sus intenciones y compromisos con respecto al sistema de gestión implementado en la organización.
+                </p>
+                <p>
+                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u otros ámbitos específicos.
+                </p>
+            </div>
+        </div>
+    </div>
+
     @can('politica_sistema_gestion_agregar')
         <div class="text-right">
             <div class="d-flex justify-content-end">
@@ -343,7 +361,7 @@
         <table class="datatable datatable-Comiteseguridad" id="datatable-PoliticaSgsi">
             <thead class="head-light">
                 <tr>
-                    <th style="min-width: 180px; max-width:180px;">
+                    <th style="min-width: 400px; max-width:400px;">
                         Nombre
                     </th>
                     <th style="min-width: 400px; max-width:400px;">
@@ -355,18 +373,13 @@
                     <th style="min-width: 80px; max-width:80px;">
                         Mostrar
                     </th>
-                    <th style="min-width: 80px; max-width:80px;">
-                        Fecha publicación
-                    </th>
-                    <th style="min-width: 80px; max-width:80px;">
-                        Fecha Revisión
-                    </th>
                     <th>Opciones</th>
                 </tr>
             </thead>
         </table>
     </div>
 
+{{--
     @if ($listavacia == 'vacia')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -415,7 +428,7 @@
                 });
             });
         </script>
-    @endif
+    @endif --}}
 @endsection
 @section('scripts')
     @parent
@@ -576,24 +589,6 @@
                             } else {
                                 return ''; // Si no es 'aprobado', no muestra nada
                             }
-                        }
-                    },
-                    {
-                        data: 'fecha_revision',
-                        name: 'fecha_revision',
-                        visible: false, // Inicialmente oculta
-                        render: function(data, type, row) {
-                            // Renderizar contenido para la nueva columna 1
-                            return data;
-                        }
-                    },
-                    {
-                        data: 'fecha_publicacion',
-                        name: 'fecha_publicacion',
-                        visible: false, // Inicialmente oculta
-                        render: function(data, type, row) {
-                            // Renderizar contenido para la nueva columna 2
-                            return data;
                         }
                     },
                     {

@@ -70,12 +70,30 @@
         }
     </style>
     <h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión</h5>
-    <div class="mt-5 card">
-
-        <div class="text-right mt-5 mr-5">
-            <a class="btn btn-danger" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
+        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+            <div class="d-flex" style="gap: 25px;">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+                <div>
+                    <br>
+                    <br>
+                    <h4>¿Qué es Indicadores del Sistema de Gestión?  </h4>
+                    <p>
+                        Marcadores que proporcionan la información necesaria.
+                    </p>
+                    <p>
+                        Para tomar decisiones y ajustar estrategias según sea necesario.
+                    </p>
+                </div>
+            </div>
         </div>
 
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.indicadores-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Indicador</a> &nbsp;
+                <a class="btn btn-primary" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
+            </div>
+        </div>
+    <div class="mt-5 card">
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-IndicadoresSgsi">
@@ -320,17 +338,17 @@
             ];
 
             @can('indicadores_sgsi_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar indicador SGSI',
-                url: "{{ route('admin.indicadores-sgsis.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
+                // let btnAgregar = {
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar indicador SGSI',
+                // url: "{{ route('admin.indicadores-sgsis.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config){
+                // let {url} = config;
+                // window.location.href = url;
+                // }
+                // };
+                // dtButtons.push(btnAgregar);
             @endcan
             @can('indicadores_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -387,7 +405,7 @@
                             let empleado = JSON.parse(row.responsable_name ? row.responsable_name : '{}');
                             if (type === "empleadoText") {
                                 return empleado.name;
-                            }      
+                            }
                             let responsable_name = "";
                             if (empleado) {
                                 responsable_name += `
@@ -395,7 +413,7 @@
                             `;
                             }
                             return responsable_name;
-                        }                        
+                        }
                     },
                     {
                         data: 'año',

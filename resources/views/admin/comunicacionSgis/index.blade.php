@@ -60,6 +60,28 @@
     {{ Breadcrumbs::render('admin.comunicacion-sgis.index') }}
 
     <h5 class="col-12 titulo_general_funcion">Comunicados Generales</h5>
+        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+            <div class="d-flex" style="gap: 25px;">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+                <div>
+                    <br>
+                    <br>
+                    <h4>¿Qué es Comunicados Generales?  </h4>
+                    <p>
+                        Anuncios o mensajes importantes.
+                    </p>
+                    <p>
+                        Que la organización comparte con todos sus colaboradores para comunicar aspectos importante.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.comunicacion-sgis.create') }}" type="button" class="btn btn-primary">Registrar Comunicado</a>
+            </div>
+        </div>
 
         <div class="mt-5 card">
 
@@ -173,18 +195,18 @@
             ];
 
             @can('comunicados_generales_agregar')
-                let btnAgregar = {
+                // let btnAgregar = {
 
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar comunicación SGSI',
-                url: "{{ route('admin.comunicacion-sgis.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar comunicación SGSI',
+                // url: "{{ route('admin.comunicacion-sgis.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config){
+                // let {url} = config;
+                // window.location.href = url;
+                // }
+                // };
+                // dtButtons.push(btnAgregar);
             @endcan
 
 

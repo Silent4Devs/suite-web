@@ -104,10 +104,27 @@
     </style>
 
     {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
+    <h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <br>
+                <h4>¿Qué es Indicadores del Sistema de Gestión?  </h4>
+                <p>
+                    Marcadores que proporcionan la información necesaria.
+                </p>
+                <p>
+                    Para tomar decisiones y ajustar estrategias según sea necesario.
+                </p>
+            </div>
+        </div>
+    </div>
 
     <form method="POST" action="{{ route('admin.indicadores-sgsis.store') }}" enctype="multipart/form-data">
         @csrf
-        <h5 class="col-12 titulo_general_funcion">Registrar: Indicadores del Sistema de Gestión</h5>
+
         <div class="mt-4 card">
             <div class="card-body">
                 <div class="row">
