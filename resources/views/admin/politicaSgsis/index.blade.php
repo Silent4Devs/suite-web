@@ -260,7 +260,7 @@
     @can('politica_sistema_gestion_agregar')
         <div class="text-right">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Politica</a>
+                <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Política</a>
             </div>
         </div>
     @endcan
@@ -379,7 +379,7 @@
         </table>
     </div>
 
-{{--
+
     @if ($listavacia == 'vacia')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -428,7 +428,7 @@
                 });
             });
         </script>
-    @endif --}}
+    @endif
 @endsection
 @section('scripts')
     @parent
@@ -541,50 +541,59 @@
                         }
                     },
                     {
-                        data: 'estatus',
-                        name: 'estatus',
-                        render: function(data, type, row) {
-                            let color = '';
-                            let boxShadow = '';
-                            let backgroundColor = '';
+    data: 'estatus',
+    name: 'estatus',
+    render: function(data, type, row) {
+        let color = '';
+        let boxShadow = '';
+        let backgroundColor = '';
+        let statusText = data;  // Por defecto, utiliza el valor existente.
 
-                            // Asigna colores y sombras según el valor de 'estatus'
-                            switch (data) {
-                                case 'Aprobado':
-                                    color = '#008F27'; // Verde
-                                    backgroundColor = 'rgba(0, 128, 0, 0.1)';
-                                    break;
-                                case 'Rechazado':
-                                    color = '#dd0483'; // Rojo
-                                    backgroundColor = 'rgba(128, 0, 0, 0.1)';
-                                    break;
-                                case 'Pendiente':
-                                    color = '#DD8E04'; // Naranja
-                                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
-                                    break;
-                                default:
-                                    color = '#464646'; // Negro
-                                    backgroundColor = 'rgba(0, 0, 0, 0.1)';
-                            }
+        if (!data || data.trim() === '') {
+            // Si el estatus está vacío, muestra un estatus específico.
+            statusText = 'Generar';
+            color = '#0000FF';  // Color gris para un estatus vacío.
+            backgroundColor = 'rgba(0, 0, 255, 0.1)';
+        } else {
+            // Aplica estilos según el valor del estatus.
+            switch (data) {
+                case 'Aprobado':
+                    color = '#008F27'; // Verde
+                    backgroundColor = 'rgba(0, 128, 0, 0.1)';
+                    break;
+                case 'Rechazado':
+                    color = '#dd0483'; // Rojo
+                    backgroundColor = 'rgba(255, 0, 0, 0.1)';
+                    break;
+                case 'Pendiente':
+                    color = '#DD8E04'; // Naranja
+                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
+                    break;
+                default:
+                    color = '#464646'; // Negro
+                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
+            }
+        }
 
-                            const style = `
-                            background: #E9FFE8 0% 0% no-repeat padding-box;
-                                border-radius: 7px;
-                                opacity: 1;
-                                color: ${color};
-                                box-shadow: ${boxShadow};
-                                background-color: ${backgroundColor};
-                            `;
+        const style = `
+            background: #E9FFE8 0% 0% no-repeat padding-box;
+            border-radius: 7px;
+            opacity: 1;
+            color: ${color};
+            box-shadow: ${boxShadow};
+            background-color: ${backgroundColor};
+        `;
 
-                            return `<center><span style="${style}">${data}</span></center>`;
-                        }
-                    },
+        return `<center><span style="${style}">${statusText}</span></center>`;
+    }
+},
+
                     {
                         data: 'mostrar',
                         name: 'mostrar',
                         render: function(data, type, row) {
                             // Solo muestra el checkbox si el estatus es 'aprobado'
-                            if (row.estatus === 'aprobado') {
+                            if (row.estatus === 'Aprobado') {
                                 return `<input type="checkbox" class="redireccionar-checkbox" value="${row.id}" />`;
                             } else {
                                 return ''; // Si no es 'aprobado', no muestra nada

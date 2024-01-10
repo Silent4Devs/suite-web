@@ -86,6 +86,13 @@
     </style>
 
     <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo </h5>
+
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.analisis-riesgos.create') }}" type="button" class="btn btn-primary">Registrar Matriz</a>
+            </div>
+        </div>
+
     <div class="mt-5 card">
         @include('partials.flashMessages')
         @can('matriz_de_riesgo_agregar')
@@ -276,18 +283,18 @@
             @endcan
 
 
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nuevo analisis de riesgos',
-                url: "{{ route('admin.analisis-riesgos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar nuevo analisis de riesgos',
+            //     url: "{{ route('admin.analisis-riesgos.create') }}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+            //     action: function(e, dt, node, config) {
+            //         let {
+            //             url
+            //         } = config;
+            //         window.location.href = url;
+            //     }
+            // };
             let btnExport = {
                 text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
@@ -309,9 +316,9 @@
                 }
             };
 
-            @can('matriz_de_riesgo_agregar')
-                dtButtons.push(btnAgregar);
-            @endcan
+            // @can('matriz_de_riesgo_agregar')
+            //     dtButtons.push(btnAgregar);
+            // @endcan
 
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
