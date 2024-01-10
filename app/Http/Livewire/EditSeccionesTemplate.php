@@ -8,9 +8,12 @@ use App\Models\PreguntasTemplateAnalisisdeBrechas;
 use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class EditSeccionesTemplate extends Component
 {
+    use LivewireAlert;
+
     public $id_template;
 
     public $nombre_template = '';
@@ -204,13 +207,14 @@ class EditSeccionesTemplate extends Component
             $this->$color_estatus_name = $parametro->color;
         }
 
-        $secInput = $template->secciones->where('numero_seccion', '=', $this->posicion_seccion);
+        // $secInput = $template->secciones->where('numero_seccion', '=', $this->posicion_seccion);
+        $secInput = $template->secciones;
         // dd($secInput);
         foreach ($secInput as $key => $sec) {
-            $descripcion_seccion_name = 'descripcion_s' . $this->posicion_seccion;
-            $porcentaje_seccion_name = 'porcentaje_seccion_' . $this->posicion_seccion;
-            $primera_pregunta_seccion_name = 'pregunta' . $this->posicion_seccion;
-            $preguntas_seccion_name = 'preguntas_s' . $this->posicion_seccion;
+            $descripcion_seccion_name = 'descripcion_s' . $sec->numero_seccion;
+            $porcentaje_seccion_name = 'porcentaje_seccion_' . $sec->numero_seccion;
+            $primera_pregunta_seccion_name = 'pregunta' . $sec->numero_seccion;
+            $preguntas_seccion_name = 'preguntas_s' . $sec->numero_seccion;
 
             $this->$descripcion_seccion_name = $sec->descripcion;
             $this->$porcentaje_seccion_name = $sec->porcentaje_seccion;
@@ -224,8 +228,6 @@ class EditSeccionesTemplate extends Component
                 }
                 $primpreg++;
             }
-
-            // dd($this->preguntas_s2);
 
             // dd($seccion);
         }
