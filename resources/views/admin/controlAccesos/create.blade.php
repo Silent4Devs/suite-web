@@ -9,7 +9,7 @@
             <div>
                 <br>
                 <br>
-                <h4>¿Qué es Control de Accesos? </h4>
+                <h4>¿Qué es Control de Accesos?</h4>
                 <p>
                     Garantiza que las personas adecuadas tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
                 </p>
