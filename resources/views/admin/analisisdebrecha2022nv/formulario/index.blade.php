@@ -84,10 +84,10 @@
                     letter-spacing: 0px;
                     color: #FFFFFF;
                     opacity: 1;">
-                        Es una herramienta qye ayuda a las organizaciones a visualizar las brechas entre el estado actual y el
-                        estado deseado. Este dashboard suele incluir indicadores clave de rendimiento KPI que miden el desempeño de la organizacion en las areas que se estan analizando.<br>
-                        Al proporcionar una visión general de las brechas, ell dashboard
-                        puede ayudar a las organizaciones a priorizar las areas de mejora y a tomar medidas para cerrar las brechas
+                        Es una herramienta que ayuda a las organizaciones a visualizar las brechas entre el estado actual y el
+                        estado deseado. Este dashboard suele incluir indicadores clave de rendimiento KPI que miden el desempeño de la organización en las areas que se estan analizando.<br>
+                        Al proporcionar una visión general de las brechas, el dashboard
+                        puede ayudar a las organizaciones a priorizar las areas de mejora y a tomar medidas para cerrar las brechas.
                     </p>
                 </div>
             </div>
