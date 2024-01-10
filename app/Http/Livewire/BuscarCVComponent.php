@@ -148,8 +148,7 @@ class BuscarCVComponent extends Component
             ->when($this->general, function ($qGeneral) {
                 $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
             })
-            ->fastPaginate(15);
-
+            ->fastPaginate(18);
         $this->empleado_id = null;
 
         $this->lista_docs = ListaDocumentoEmpleado::getAll();
