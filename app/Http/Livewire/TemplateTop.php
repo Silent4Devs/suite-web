@@ -9,15 +9,17 @@ class TemplateTop extends Component
 {
     public $registrosactivos = 0;
 
-    public $limit_registros = 2;
+    public $limit_registros = 8;
+
+    protected $listeners = ['destroy'];
 
     public function mount()
     {
-        $this->registrosactivos = TemplateAnalisisdeBrechas::where('top', true)->count();
     }
 
     public function render()
     {
+        $this->registrosactivos = TemplateAnalisisdeBrechas::where('top', true)->count();
         $top_analisis = TemplateAnalisisdeBrechas::get();
 
         return view('livewire.template-top', compact('top_analisis'));
@@ -37,4 +39,13 @@ class TemplateTop extends Component
         }
 
     }
+
+    public function destroy($id)
+    {
+        TemplateAnalisisdeBrechas::destroy($id);
+    }
+
+
+
+
 }

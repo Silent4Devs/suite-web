@@ -252,7 +252,7 @@ class SeccionesTemplate extends Component
                     return null;
                 }
 
-                return redirect(route('admin.analisisdebrechas-2022.index'));
+                return redirect(url('/admin/analisis-brechas-2022-inicio'));
             } else {
                 if ($this->secciones == 1) {
                     $porcentaje = 100;
