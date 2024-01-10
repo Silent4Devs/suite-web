@@ -1,44 +1,42 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
 
-<style>
-    .btn-outline-success {
-        background: #788bac !important;
-        color: white;
-        border: none;
-    }
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
 
-    .btn-outline-success:focus {
-        border-color: #345183 !important;
-        box-shadow: none;
-    }
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
 
-    .btn-outline-success:active {
-        box-shadow: none !important;
-    }
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
 
-    .btn-outline-success:hover {
-        background: #788bac;
-        color: white;
+        }
 
-    }
-
-    .btn_cargar {
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 35px;
-        height: 35px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-
-</style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+    </style>
     {{-- {{ Breadcrumbs::render('admin.objetivosseguridads.index') }} --}}
     <h5 class="col-12 titulo_general_funcion">Tipos de Objetivos</h5>
     <div class="mt-5 card">
@@ -48,10 +46,10 @@
             <table class="table table-bordered" id="tblTiposObjetivosSistema" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="min-width:450px !important;">
+                        <th>
                             Nombre
                         </th>
-                        <th style="min-width:150px !important;">
+                        <th>
                             Descripción
                         </th>
                         <th>
