@@ -154,13 +154,13 @@
             <div class="item-content-menu-header" style="background-color: #fff;">
                 <span class="title-item-menu-header">MÓDULOS TABANTAJ</span>
                 <div class="menu-blocks-mod-header">
-                    <a href="{{ asset('admin/recursos') }}">
+                    <a href="{{ asset('admin/capacitaciones-inicio') }}">
                         <div class="caja-icon-mod-header" style="background: #9CEBFF;">
                             <i class="material-symbols-outlined">school</i>
                         </div>
                         <span>Capacitaciones</span>
                     </a>
-                    <a href="{{ asset('contract_manager/requisiciones') }}  ">
+                    <a href="{{ asset('contract_manager/katbol') }}  ">
                         <div class="caja-icon-mod-header" style="background: #BFFFE9;">
                             <i class="material-symbols-outlined">request_quote</i>
                         </div>

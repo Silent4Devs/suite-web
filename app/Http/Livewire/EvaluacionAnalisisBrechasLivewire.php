@@ -3,18 +3,18 @@
 namespace App\Http\Livewire;
 
 use App\Models\RespuestasEvaluacionAnalisisBrechas;
-use App\Models\TemplateAnalisisdeBrechas;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use PDF;
+use App\Models\Iso27\AnalisisBrechasIso;
+use App\Models\EvaluacionAnalisisBrechas;
 
-class EvaluacionAnalisisBrechas extends Component
+class EvaluacionAnalisisBrechasLivewire extends Component
 {
     use ObtenerOrganizacion;
 
-    public $itemId; // Renamed from $id
-
+    public $itemId;
+    public $analisisId; // Renamed from $id
     public $seccion_vista = 0;
 
     public $selectedValues;
@@ -36,27 +36,42 @@ class EvaluacionAnalisisBrechas extends Component
     public $results;
 
     public $grafica_cuentas2 = [];
+    public $grafica_colores2= [];
+    public $resultskeys = [];
 
-    public $grafica_colores2 = [];
+    // public $imageImprimir ;
+    public $logo_actual;
+
 
     public function mount($id)
     {
-        $this->itemId = $id;
+
+        $this->analisisId = $id;
+        $this->imageImprimir = file_get_contents(public_path('imprimir.svg'));
     }
 
     public function render()
     {
-        $template_general = TemplateAnalisisdeBrechas::with('parametros')
+        // $analisisBrecha = AnalisisBrechasIso::with('evaluacionTemplateAnalisisBrechas')->find($this->analisisId);
+
+        $analisisBrecha = AnalisisBrechasIso::with('evaluacionAnalisisBrechas')->find($this->analisisId);
+        // dd($analisisBrecha->evaluacionAnalisisBrechas);
+
+
+        $this->itemId = $analisisBrecha->evaluacionAnalisisBrechas->id;
+
+        $template_general = EvaluacionAnalisisBrechas::with('parametros')
             ->with('secciones')
             ->find($this->itemId);
 
         if ($this->seccion_vista != 0) {
 
-            $template = TemplateAnalisisdeBrechas::with('parametros')
+            $template = EvaluacionAnalisisBrechas::with('parametros')
                 ->withwhereHas('secciones', function ($query) {
                     return $query->with('preguntas.respuesta')->where('numero_seccion', '=', $this->seccion_vista);
                 })
                 ->find($this->itemId);
+
 
             foreach ($template->secciones as $key => $seccion) {
                 foreach ($seccion->preguntas as $key => $pregunta) {
@@ -92,26 +107,25 @@ class EvaluacionAnalisisBrechas extends Component
         } else {
             $template = $template_general;
             $result = $this->sumaParametrosTotal();
-            // $result2 = $this->sumaParametrosSeccion(1);
             $result2 = [];
-            for ($i = 1; $i <= 3; $i++) {
+            $limit = $template->no_secciones;
+            for ($i = 1; $i <= $limit; $i++) {
                 $result3 = $this->sumaParametrosSeccion($i);
                 array_push($result2, $result3);
             }
             $this->results = $result2;
-            // dd($result2[1]['counts']);
+            
 
             $this->cuentas = $result['counts'];
-            // dd($this->cuentas, $this->results[0]);
+            
             $peso_parametros = $result['porcentaje_parametros'];
-            // $this->pesos_parametros = $result2['porcentaje_parametros'];
+            
             $totalCount = $result['totalCount'];
             $totalPorcentaje = $result['total_porcentaje'];
-            // dd($result);
 
             $sectionPercentages = $this->porcentajeTotal();
 
-            // dd($this->porcentajeTotal());
+            
 
             $grafica_cuentas = [];
             $grafica_colores = [];
@@ -123,12 +137,21 @@ class EvaluacionAnalisisBrechas extends Component
                 }
             }
             $this->grafica_cuentas2 = $grafica_cuentas;
+            
+            $resultskeys = [];
+            $keys = $template->secciones->keys();
+        foreach($keys as $key){
+            $key=$key+1;
+            $resultkey = $this->sumaParametrosSeccion($key);
+            
+            array_push($resultskeys,$resultkey['counts']);
+        }
+        $this->grafica_colores2 = $grafica_colores;
+        $this->resultskeys = $resultskeys;
 
-            $this->grafica_colores2 = $grafica_colores;
+        $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+        $this->emit('renderGraficsModal', $this->grafica_cuentas2,$resultskeys);
 
-            $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
-
-            //apartado para imprimir
 
         }
 
@@ -140,14 +163,19 @@ class EvaluacionAnalisisBrechas extends Component
         // dd($cuentas);
         // dd($sectionPercentages);
         $organizacion_actual = $this->obtenerOrganizacion();
-        $logo_actual = $organizacion_actual->logo;
+        $this->logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
 
+        // dd($this->logo_actual);
+
+        // $this->imageImprimir = public_path('imprimir.svg');
+        
+
         $this->emit('renderAreas1');
 
-        return view('livewire.evaluacion-analisis-brechas', compact(
+        return view('livewire.evaluacion-analisis-brechas-livewire', compact(
             'template',
             'template_general',
             // 'cuentas',
@@ -155,13 +183,13 @@ class EvaluacionAnalisisBrechas extends Component
             'sectionPercentages',
             'peso_parametros',
             'totalPorcentaje',
-            'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'
+            'organizacion_actual', 'empresa_actual', 'direccion', 'rfc'
         ));
     }
 
     public function sumaParametrosSeccion($sec_param)
     {
-        $template = TemplateAnalisisdeBrechas::with('parametros')
+        $template = EvaluacionAnalisisBrechas::with('parametros')
             ->withwhereHas('secciones', function ($query) use ($sec_param) {
                 return $query->with('preguntas.respuesta')->where('numero_seccion', '=', $sec_param);
             })
@@ -210,7 +238,7 @@ class EvaluacionAnalisisBrechas extends Component
 
     public function porcentajeSeccion($sec_porc)
     {
-        $template = TemplateAnalisisdeBrechas::with('parametros')
+        $template = EvaluacionAnalisisBrechas::with('parametros')
             ->withwhereHas('secciones', function ($query) use ($sec_porc) {
                 return $query->with('preguntas.respuesta')->where('numero_seccion', '=', $sec_porc);
             })
@@ -244,7 +272,7 @@ class EvaluacionAnalisisBrechas extends Component
     // y debe ser por seccion, podria ser util
     public function sumaParametrosTotal()
     {
-        $template = TemplateAnalisisdeBrechas::with('parametros')
+        $template = EvaluacionAnalisisBrechas::with('parametros')
             ->with(['secciones.preguntas.respuesta']) // Eager load necessary relationships
             ->find($this->itemId);
 
@@ -290,7 +318,7 @@ class EvaluacionAnalisisBrechas extends Component
     public function porcentajeTotal()
     {
         $percentage = 0;
-        $template = TemplateAnalisisdeBrechas::with('parametros')
+        $template = EvaluacionAnalisisBrechas::with('parametros')
             ->with(['secciones' => function ($query) {
                 $query->with(['preguntas' => function ($query) {
                     $query->with('respuesta');
@@ -331,6 +359,8 @@ class EvaluacionAnalisisBrechas extends Component
     public function changeSeccion($newSeccion)
     {
         $this->seccion_vista = $newSeccion;
+        
+        
     }
 
     public function saveDataParametros($preguntaID, $parametroID)
@@ -343,8 +373,8 @@ class EvaluacionAnalisisBrechas extends Component
         // dd($this->selectedValues);
 
         RespuestasEvaluacionAnalisisBrechas::updateOrCreate(
-            ['pregunta_id' => $preguntaID], // Search criteria
-            ['parametro_id' => $parametroID, 'some_field' => $parametroID] // Values to update or create
+            ['pregunta_id' => $preguntaID, 'ev_analisis_template_id' => $this->itemId ], // Search criteria
+            ['parametro_id' => $parametroID], // Values to update or create
         );
     }
 
@@ -374,53 +404,11 @@ class EvaluacionAnalisisBrechas extends Component
         }
     }
 
-    public function pdf()
+    public function eventoRefrescar()
     {
-        $template = TemplateAnalisisdeBrechas::with('parametros')
-            ->with('secciones')
-            ->find($this->itemId);
-        $resultados = [];
-
-        for ($i = 1; $i <= 3; $i++) {
-            $result = $this->sumaParametrosSeccion($i);
-            array_push($resultados, $result);
-        }
-
-        // dd($resultados);
-        $cuentas = $result['counts'];
-        $peso_parametros = $result['porcentaje_parametros'];
-        $totalCount = $result['totalCount'];
-        $totalPorcentaje = $result['total_porcentaje'];
-
-        // dd($template, $template->parametros);
-        // dd($result);
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
-        $empresa_actual = $organizacion_actual->empresa;
-        $direccion = $organizacion_actual->direccion;
-        $rfc = $organizacion_actual->rfc;
-
-        $sectionPercentages = $this->porcentajeTotal();
-        $results = $this->results;
-
-        $pdf = PDF::loadView('evaluacion-analisis-brechas-pdf', compact('organizacion_actual', 'logo_actual', 'empresa_actual',
-            'direccion', 'rfc', 'template', 'sectionPercentages', 'result', 'cuentas', 'peso_parametros', 'totalCount', 'totalPorcentaje',
-            'results'
-        ));
-        $pdf->setPaper('A4', 'portrait');
-
-        $pdfFileName = 'mi-archivo.pdf';
-        $pdfFilePath = 'documentos_analisis/'.$pdfFileName; // Ruta dentro del directorio storage
-
-        // Almacenar el PDF en el sistema de archivos de Laravel
-        Storage::put($pdfFilePath, $pdf->output());
-
-        $pdfFileUrl = Storage::url($pdfFilePath);
-        // dd($pdfFileUrl);
-
-        // Descargar el archivo PDF
-        // return response()->download(storage_path('app/public/storage/documentos_analisis'), $pdfFileName);
-        return response()->download(storage_path('app/documentos_analisis/'.$pdfFileName));
-
     }
+
+    
 }

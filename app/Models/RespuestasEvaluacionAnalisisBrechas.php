@@ -16,22 +16,23 @@ class RespuestasEvaluacionAnalisisBrechas extends Model
         'parametro_id',
         'evidencia',
         'recomendacion',
+        'ev_analisis_template_id',
     ];
 
     public $timestamps = false;
 
     public function parametro()
     {
-        return $this->belongsTo(ParametrosTemplateAnalisisdeBrechas::class, 'parametro_id', 'id');
+        return $this->belongsTo(ParametrosEvaluacionAnalisisBrechas::class, 'parametro_id', 'id');
     }
 
     public function preguntas()
     {
-        return $this->belongsTo(PreguntasTemplateAnalisisdeBrechas::class, 'pregunta_id', 'id');
+        return $this->belongsTo(PreguntasEvaluacionAnalisisBrechas::class, 'pregunta_id', 'id');
     }
 
     public function evaluacion()
     {
-        return $this->belongsTo(EvaluacionTemplatesAnalisisBrechas::class, 'ev_analisis_template_id', 'id');
+        return $this->belongsTo(EvaluacionAnalisisBrechas::class, 'ev_analisis_template_id', 'id');
     }
 }

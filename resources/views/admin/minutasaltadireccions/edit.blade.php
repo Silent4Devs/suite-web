@@ -8,29 +8,25 @@
     </style>
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Minutas de Sesiones de Alta Dirección</h5>
-    <div class="card card-body instrucciones">
-        <div class="row">
-            <div class="col-md-4 col-sm-6"> <!-- Adjust column size based on screen size -->
-                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="Onboarding"
-                    style="max-width: 180px; max-height:180px;">
-            </div>
-            <div class="col-md-8 col-sm-6"> <!-- Adjust column size based on screen size -->
-                <div>
-                    <h5>¿Qué es? Revisión por Dirección.</h5>
-                    <p>Proceso fundamental en el contexto de los sistemas de gestión.</p>
-                    <p>Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
-                        desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar
-                        que
-                        el
-                        sistema de gestión esté funcionando de manera eficaz y que se estén cumpliendo los objetivos y metas
-                        establecidos. Como evidencia de este punto se propone la generación de una minuta.</p>
-                </div>
+
+    <h5 class="col-12 titulo_general_funcion">Editar: Minutas de Sesiones de Alta Dirección</h5>
+
+    <div class="card card-body" style="background-color: #306BA9; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <h4> ¿Qué es? Revisión por Dirección.</h4>
+                <p>Proceso fundamental en el contexto de los sistemas de gestión.</p>
+                <p>Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
+                    desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar
+                    que
+                    el
+                    sistema de gestión esté funcionando de manera eficaz y que se estén cumpliendo los objetivos y metas
+                    establecidos. Como evidencia de este punto se propone la generación de una minuta.</p>
             </div>
         </div>
     </div>
-
-
     <form method="POST" id="formularioEditMinutas" enctype="multipart/form-data">
         @csrf
         @method('PATCH')

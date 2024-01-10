@@ -2,7 +2,23 @@
 @section('content')
     {{ Breadcrumbs::render('admin.comiteseguridads.index') }}
     @can('comformacion_comite_seguridad_agregar')
-        <h5 class="col-12 titulo_general_funcion">Conformación del Comité</h5>
+
+    <h5 class="col-12 titulo_general_funcion">Conformación del Comité</h5>
+    <div class="card card-body" style="background-color: #306BA9; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <h4> ¿Qué es? Conformación del Comité</h4>
+                <p>
+                    Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para abordar un tema o llevar a cabo una tarea específica en una organización o proyecto.
+                </p>
+                <p>
+                    Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de problemas  la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre otros.
+                </p>
+            </div>
+        </div>
+    </div>
         <div class="text-right">
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('admin.comiteseguridads.create') }}" type="button" class="btn btn-primary">Registrar Comité</a>
