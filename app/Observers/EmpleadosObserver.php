@@ -65,5 +65,6 @@ class EmpleadosObserver
         Cache::forget('Empleados:empleados_alta_area_sede_supervisor');
         Cache::forget('Empleados:empleados_alta_data_columns_all');
         Cache::forget('Empleados:empleados_data_columns_all');
+        Cache::forget('Empleados:empleados_alta_WithCertificacionesCursosExperiencia');
     }
 }
