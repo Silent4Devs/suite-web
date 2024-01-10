@@ -61,13 +61,21 @@
 @section('content')
     {{ Breadcrumbs::render('admin.comiteseguridads.create') }}
     <h5 class="col-12 titulo_general_funcion">Registrar: Conformación del Comité</h5>
-    <div class="mt-4 card" id="card">
-        <img src="{{ url('comite.png') }}" class="imgdoc" alt="">
-        <div class="small">
-          <h2 class="h2doc">¿Qué es? Conformación del Comité</h2>
-          <p class="pdoc">Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para abordar un tema o llevar a cabo una tarea específica en una organización o proyecto. <br> <br> Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de problemas, la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre otros.</p>
+    <div class="card card-body" style="background-color: #306BA9; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <h4> ¿Qué es? Conformación del Comité</h4>
+                <p>
+                    Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para abordar un tema o llevar a cabo una tarea específica en una organización o proyecto.
+                </p>
+                <p>
+                    Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de problemas  la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre otros.
+                </p>
+            </div>
         </div>
-       </div>
+    </div>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" action="{{ route('admin.comiteseguridads.store') }}" enctype="multipart/form-data"

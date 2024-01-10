@@ -7,25 +7,25 @@
     </style>
     @include('admin.listadistribucion.estilos')
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Revisión por dirección</h5>
 
-    <div class="card card-body instrucciones">
-        <div class="row">
-            <div class="col-md-3 col-3 justify-content-center">
-                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="Onboarding" style="width: 180px; height:180px;">
-            </div>
-            <div class="col-md-9 col-9">
-                <h5>¿Qué es? Revisión por Dirección.</h5>
+    <h5 class="col-12 titulo_general_funcion">Agregar: Minutas de Sesiones de Alta Dirección</h5>
+
+    <div class="card card-body" style="background-color: #306BA9; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <h4> ¿Qué es? Revisión por Dirección.</h4>
                 <p>Proceso fundamental en el contexto de los sistemas de gestión.</p>
                 <p>Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
-                    desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar que
+                    desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar
+                    que
                     el
                     sistema de gestión esté funcionando de manera eficaz y que se estén cumpliendo los objetivos y metas
                     establecidos. Como evidencia de este punto se propone la generación de una minuta.</p>
             </div>
         </div>
     </div>
-
 
     <form method="POST" action="{{ route('admin.minutasaltadireccions.store') }}" enctype="multipart/form-data">
         @csrf

@@ -54,7 +54,7 @@
             filter: invert(100%);
         }
 
-        
+
         .btn-outline-success {
             background: #788bac !important;
             color: white;
@@ -96,6 +96,13 @@
     {{ Breadcrumbs::render('admin.evidencias-sgsis.index') }}
 
     <h5 class="col-12 titulo_general_funcion">Evidencia de Asignación de Recursos al SGSI</h5>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.evidencias-sgsis.create') }}" type="button" class="btn btn-primary">Registrar
+                Evidencia</a>
+        </div>
+    </div>
+
 
     @can('evidencia_asignacion_recursos_sgsi_agregar')
         <div class="mt-5 card">
@@ -103,7 +110,7 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered datatable-EvidenciasSgsi" style="width: 100%">
+            <table class="datatable  datatable-EvidenciasSgsi">
                 <thead class="thead-dark">
                     <tr>
                         <th>
@@ -290,21 +297,6 @@
                     }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
-            @can('evidencia_asignacion_recursos_sgsi_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar nueva Evidencia de Asignación de Recursos al SGSI',
-                    url: "{{ route('admin.evidencias-sgsis.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                dtButtons.push(btnAgregar);
             @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
