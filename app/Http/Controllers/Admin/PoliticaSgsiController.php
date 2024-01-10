@@ -195,7 +195,11 @@ class PoliticaSgsiController extends Controller
 
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
         $proceso = ProcesosListaDistribucion::with('comentarios')->where('modulo_id', '=', $lista->id)->where('proceso_id', '=', $politicaSgsi->id)->first();
-        $comentarios = $proceso->comentarios;
+        if (isset($proceso->comentarios)) {
+            $comentarios = $proceso->comentarios;
+        } else {
+            $comentarios = [];
+        }
         // dd($politicaSgsi);
 
         return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados', 'fecha_publicacion', 'fecha_revision', 'comentarios'));
