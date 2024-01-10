@@ -127,7 +127,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
@@ -185,7 +185,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -325,7 +325,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -343,7 +343,7 @@ class EntendimientoOrganizacionController extends Controller
         return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia'));
     }
 
-    public function adminShow($entendimientoOrganizacion)
+    public function revision($entendimientoOrganizacion)
     {
         abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -521,6 +521,10 @@ class EntendimientoOrganizacionController extends Controller
                 ]);
             }
 
+            $foda->update([
+                'estatus' => 'Aprobado',
+            ]);
+
             $this->correosAprobacion($proceso, $foda);
         } else {
             // dd($participante_control);
@@ -557,6 +561,10 @@ class EntendimientoOrganizacionController extends Controller
             'proceso_id' => $aprobacion->id,
         ]);
 
+        $foda->update([
+            'estatus' => 'Rechazado',
+        ]);
+
         $aprobacion->update([
             'estatus' => 'Rechazado',
         ]);
@@ -589,13 +597,18 @@ class EntendimientoOrganizacionController extends Controller
         });
         // dd($confirmacion, $isSameEstatus);
         if ($isSameEstatus) {
+            $proceso->update([
+                'estatus' => 'Aprobado',
+            ]);
+
+            $foda->update([
+                'estatus' => 'Aprobado',
+            ]);
+
             $this->correosAprobacion($proceso->id, $foda);
         } else {
             $this->siguienteCorreo($proceso, $foda);
         }
-        // else {
-        //     // There are records with different 'estatus' values
-        // }
     }
 
     public function siguienteCorreo($proceso, $foda)

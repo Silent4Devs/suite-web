@@ -136,7 +136,8 @@ class AuditoriaInternaController extends Controller
         $auditoriaInterna->equipo()->sync($request->equipo);
         $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-        return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna->id]);
+        return redirect()->route('admin.auditoria-internas.index', ['auditoriaInterna' => $auditoriaInterna]);
+        // return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna->id]);
     }
 
     public function edit($IDauditoriaInterna)
@@ -365,7 +366,7 @@ class AuditoriaInternaController extends Controller
         $auditoriaInterna = AuditoriaInterna::find($id);
         $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team', 'reportes.empleado', 'reportes.hallazgos');
 
-        $pdf = PDF::loadView('admin\auditoriaInternas\auditoria_interna_pdf', compact('auditoriaInterna'));
+        $pdf = PDF::loadView('admin.auditoriaInternas.auditoria_interna_pdf', compact('auditoriaInterna'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('auditoria_Interna.pdf');

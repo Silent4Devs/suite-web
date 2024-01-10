@@ -49,12 +49,14 @@
         }
 
     #btn_cancelar{
-    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    border: 1px solid var(--unnamed-color-057be2);
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border: 1px solid #057BE2;
-    opacity: 1;
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        border: 1px solid var(--unnamed-color-057be2);
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #057BE2;
+        opacity: 1;
+        color: #057BE2;
     }
+
 </style>
 @section('content')
     {{ Breadcrumbs::render('admin.comiteseguridads.create') }}
@@ -86,11 +88,14 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2; width:6rem; height: 3rem;">Cancelar</a>
-                    <button class="btn btn-primary" type="submit">
+                    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
+                    <button class="btn btn-primary"  type="submit" style="width: 13%;">
                         {{ trans('global.save') }}
                     </button>
                 </div>
+
+
+
             </form>
         </div>
     </div>

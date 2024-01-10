@@ -75,58 +75,45 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-7">
                     <div class="card carrusel-vertical-boletin" style="background-color: #F8E1E1;">
                         <div class="card-body">
                             <h4 class="title-card-portal-c">Boletín</h4>
                             <div class="caja-img-carrusel-vertical">
-                                <img src="https://1.bp.blogspot.com/-UoYVfbN-PIk/YYbmcUxfbLI/AAAAAAAAEuA/XymxRDvsPP8ODUT8mnXf7fzXehAlPifugCLcBGAsYHQ/s2000/1.png"
-                                    alt="" class="active-carrusel-vertical" id="img-crr-v-1">
-                                <img src="https://p.calameoassets.com/220407180419-11eebf2100c28e2638d89473f1717eb7/p1.jpg"
-                                    alt="" id="img-crr-v-2">
-                                <img src="https://www.gob.mx/cms/uploads/image/file/281561/no_circula_viernes.jpg"
-                                    alt="" id="img-crr-v-3">
+                                <img id="comunicado-carrusel-primer-item" src="{{ asset('img/Carrusel_inicio.png') }}"
+                                    class="item-main-carrusel">
+                                @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
+                                    @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
+                                        <video id="comunicado-carrusel-{{ $carrusel->id }}" muted controls
+                                            src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
+                                            width="100%" class="d-none item-main-carrusel"></video>
+                                    @else
+                                        <img id="comunicado-carrusel-{{ $carrusel->id }}"
+                                            src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
+                                            class="d-none item-main-carrusel">
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                         <div class="menu-carrusel-vertical scroll_estilo">
-                            <div class="caja-img-menu-crr-vertical">
-                                <img src="https://1.bp.blogspot.com/-UoYVfbN-PIk/YYbmcUxfbLI/AAAAAAAAEuA/XymxRDvsPP8ODUT8mnXf7fzXehAlPifugCLcBGAsYHQ/s2000/1.png"
-                                    alt="" class="active-carrusel-vertical">
+                            <div class="caja-img-menu-crr-vertical" onclick="boletin('comunicado-carrusel-primer-item')">
+                                <img src="{{ asset('img/Carrusel_inicio.png') }}" alt="">
                             </div>
-                            <div class="caja-img-menu-crr-vertical">
-                                <img src="https://p.calameoassets.com/220407180419-11eebf2100c28e2638d89473f1717eb7/p1.jpg"
-                                    alt="">
-                            </div>
-                            <div class="caja-img-menu-crr-vertical">
-                                <img src="https://www.gob.mx/cms/uploads/image/file/281561/no_circula_viernes.jpg"
-                                    alt="">
-                            </div>
-
-                            <div class="caja-img-menu-crr-vertical">
-                                <img src="https://1.bp.blogspot.com/-UoYVfbN-PIk/YYbmcUxfbLI/AAAAAAAAEuA/XymxRDvsPP8ODUT8mnXf7fzXehAlPifugCLcBGAsYHQ/s2000/1.png"
-                                    alt="">
-                            </div>
-                            <div class="caja-img-menu-crr-vertical">
-                                <img src="https://p.calameoassets.com/220407180419-11eebf2100c28e2638d89473f1717eb7/p1.jpg"
-                                    alt="">
-                            </div>
-                            <div class="caja-img-menu-crr-vertical">
-                                <img src="https://www.gob.mx/cms/uploads/image/file/281561/no_circula_viernes.jpg"
-                                    alt="">
-                            </div>
-
-                            <div class="caja-img-menu-crr-vertical">
-                                <img src="https://1.bp.blogspot.com/-UoYVfbN-PIk/YYbmcUxfbLI/AAAAAAAAEuA/XymxRDvsPP8ODUT8mnXf7fzXehAlPifugCLcBGAsYHQ/s2000/1.png"
-                                    alt="">
-                            </div>
-                            <div class="caja-img-menu-crr-vertical">
-                                <img src="https://p.calameoassets.com/220407180419-11eebf2100c28e2638d89473f1717eb7/p1.jpg"
-                                    alt="">
-                            </div>
-                            <div class="caja-img-menu-crr-vertical">
-                                <img src="https://www.gob.mx/cms/uploads/image/file/281561/no_circula_viernes.jpg"
-                                    alt="">
-                            </div>
+                            @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
+                                @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
+                                    <div class="caja-img-menu-crr-vertical"
+                                        onclick="boletin('comunicado-carrusel-{{ $carrusel->id }}')">
+                                        <img src="{{ asset('img/example-remove/play_video.png') }}" alt="">
+                                    </div>
+                                @else
+                                    <div class="caja-img-menu-crr-vertical"
+                                        onclick="boletin('comunicado-carrusel-{{ $carrusel->id }}')">
+                                        <img src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
+                                            alt="">
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -139,12 +126,30 @@
                             <div class=" card card-body">
                                 <h4 class="title-card-portal-c">Aplicaciones más usadas</h4>
                                 <div class="d-flex justify-content-between" style="gap: 22px; flex-wrap:wrap;">
-                                    <div class="item-app-mu">Aplicación más usuada</div>
-                                    <div class="item-app-mu">Aplicación más usuada</div>
-                                    <div class="item-app-mu">Aplicación más usuada</div>
-                                    <div class="item-app-mu">Aplicación más usuada</div>
-                                    <div class="item-app-mu">Aplicación más usuada</div>
-                                    <div class="item-app-mu">Aplicación más usuada</div>
+
+                                    <a href="{{ route('admin.timesheet-inicio') }}" class="item-app-mu">
+                                        Timesheet
+                                    </a>
+
+                                    <a href="{{ route('admin.inicio-Usuario.index') }}" class="item-app-mu">
+                                        Mi perfil
+                                    </a>
+
+                                    <a href="{{ route('admin.systemCalendar') }}" class="item-app-mu">
+                                        Calendario
+                                    </a>
+
+                                    <a href="{{ route('admin.desk.index') }}" class="item-app-mu">
+                                        Centro de atención
+                                    </a>
+
+                                    <a href="{{ asset('admin/recursos') }}" class="item-app-mu">
+                                        Capacitaciones
+                                    </a>
+
+                                    <a href="{{ route('admin.iso27001.inicio-guia') }}" class="item-app-mu">
+                                        Gestión Normativa
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -155,54 +160,78 @@
                                         <h4 class="title-card-portal-c"> Menú </h4>
 
                                         <div class="menu-portal">
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">corporate_fare</i>
-                                                <span>Organización</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">description</i>
-                                                <span>Documentos</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">home_pin</i>
-                                                <span>Sedes</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">local_library</i>
-                                                <span>Políticas</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">mitre</i>
-                                                <span>Áreas</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">partner_exchange</i>
-                                                <span>Comités</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">flowsheet</i>
-                                                <span>Mapa de procesos</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">flag</i>
-                                                <span>Reportar</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">schema</i>
-                                                <span>Organigrama</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">border_all</i>
-                                                <span>FODA</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">person_book</i>
-                                                <span>Directorio</span>
-                                            </div>
-                                            <div class="item-menu-portal">
-                                                <i class="material-symbols-outlined">table_chart_view</i>
-                                                <span>Alcances</span>
-                                            </div>
+                                            <a href="{{ route('admin.organizacions.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">corporate_fare</i>
+                                                    <span>Organización</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.documentos.publicados') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">description</i>
+                                                    <span>Documentos</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.sedes.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">home_pin</i>
+                                                    <span>Sedes</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">local_library</i>
+                                                    <span>Políticas</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.areas.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">mitre</i>
+                                                    <span>Áreas</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.comiteseguridads.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">partner_exchange</i>
+                                                    <span>Comités</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.procesos.mapa') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">flowsheet</i>
+                                                    <span>Mapa de procesos</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ asset('admin/portal-comunicacion/reportes') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">flag</i>
+                                                    <span>Reportar</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.organigrama.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">schema</i>
+                                                    <span>Organigrama</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.foda-organizacions') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">border_all</i>
+                                                    <span>FODA</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.directorio.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">person_book</i>
+                                                    <span>Directorio</span>
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('admin.alcance-sgsis/visualizacion') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">table_chart_view</i>
+                                                    <span>Alcances</span>
+                                                </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +291,6 @@
                                 <div class="doc-info">
                                     <span
                                         class="title-doc-portal">{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}</span>
-                                    <br>
                                     <span style="font-size: 12px;">
                                         Publicado: {{ Carbon\Carbon::parse($documento->fecha)->format('d/m/Y') }}
                                     </span>
@@ -299,7 +327,7 @@
                 <h3 class="title-card-portal-c">Nuevos ingresos</h3>
 
                 <div class="carrusel-portal carr-port-nuevo">
-                    <button>
+                    <button onclick="carruselPortal('retreat');">
                         <i class="material-symbols-outlined">arrow_back_ios</i>
                     </button>
                     <div class="caja-items-carrusel-portal">
@@ -316,20 +344,20 @@
                                     </p>
                                 </div>
                                 <hr>
-                                @php
+                                {{-- @php
                                     $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
                                     $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $nuv->cumpleaños);
                                     $mes = $meses[$fecha->format('n') - 1];
                                     $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
-                                @endphp
+                                @endphp --}}
                                 <div>
                                     <strong> Fecha de ingreso </strong> <br>
-                                    {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d-m-Y') }}
+                                    {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d/m/Y') }}
                                 </div>
                             </div>
                         @endforeach
                     </div>
-                    <button>
+                    <button onclick="carruselPortal('advance');">
                         <i class="material-symbols-outlined">arrow_forward_ios</i>
                     </button>
                 </div>
@@ -341,13 +369,13 @@
                 <h3 class="title-card-portal-c mt-5">Cumpleaños</h3>
 
                 <div class="carrusel-portal carr-port-cumple">
-                    <button>
+                    <button onclick="carruselPortal('retreat');">
                         <i class="material-symbols-outlined">arrow_back_ios</i>
                     </button>
                     <div class="caja-items-carrusel-portal">
                         @forelse($cumpleaños as $cumple)
                             <div class="item-carrusel-portal">
-                                <div class="img-person" style="width: 80px; min-width: 80px; height: 80px;">
+                                <div class="img-person ml-3" style="width: 80px; min-width: 80px; height: 80px;">
                                     <img src="{{ $cumple->avatar_ruta }}" alt="">
                                 </div>
                                 <div style="width: 100%">
@@ -368,14 +396,14 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <i class="material-symbols-outlined" style="font-size: 50px;">thumb_up</i>
+                                    {{-- <i class="material-symbols-outlined" style="font-size: 50px;">thumb_up</i> --}}
                                 </div>
                                 <img src="{{ asset('img/example-remove/cumple_portal.png') }}" alt=""
                                     class="cumple-img-portal">
                             </div>
                         @endforeach
                     </div>
-                    <button>
+                    <button onclick="carruselPortal('advance');">
                         <i class="material-symbols-outlined">arrow_forward_ios</i>
                     </button>
                 </div>
@@ -417,5 +445,21 @@
         // Mostrar la fecha en la consola
         console.log(fechaHumana); // Ejemplo: "martes, 21 de diciembre de 2023"
         document.getElementById('fecha-completa').innerHTML = fechaHumana;
+
+        function boletin(id) {
+            console.log(id);
+            $('.caja-img-carrusel-vertical .item-main-carrusel').addClass('d-none');
+            $('#' + id).removeClass('d-none');
+        }
+
+        function carruselPortal(tipo) {
+            if (tipo == 'advance') {
+                console.log('iso');
+                document.querySelector('.carrusel-portal:hover .caja-items-carrusel-portal').scrollLeft += 400;
+            }
+            if (tipo == 'retreat') {
+                document.querySelector('.carrusel-portal:hover .caja-items-carrusel-portal').scrollLeft -= 400;
+            }
+        }
     </script>
 @endsection

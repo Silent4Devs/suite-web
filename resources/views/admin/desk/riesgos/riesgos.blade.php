@@ -37,64 +37,44 @@
     </div>
 </div>
 
-<div class="datatable-fix" style="width: 100%;">
+
+
+<div class="card card-body">
     @can('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado')
     <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/riesgos')}}">Crear reporte</a>
     </div>
     @endcan
-   <table class="table tabla_riesgos">
-   		<thead>
-            <tr>
-       			<th>Folio</th>
-       			<th style="min-width:200px;">Título</th>
-                <th style="min-width:200px;">Fecha de identificación</th>
-                <th style="min-width:200px;">Fecha de recepción del reporte</th>
-                <th style="min-width:200px;">Fecha de cierre</th>
-       			<th style="min-width: 500px;">Descripción</th>
-                <th style="min-width: 500px;">Comentarios</th>
-                <th style="min-width:200px;">Estatus</th>
-                <th style="min-width:200px;">Sede</th>
-                <th style="min-width:200px;">Ubicación</th>
-       			<th style="min-width:200px;">Procesos afectados</th>
-                <th style="min-width:200px;">Áreas afectadas</th>
-                <th style="min-width:200px;">Activos afectados</th>
-       			<th style="min-width: 500px;">Fecha</th>
-       			<th style="min-width:200px;">Quién reportó</th>
-       			<th style="min-width:200px;">Correo</th>
-       			<th style="min-width:200px;">Teléfono</th>
-       			<th>Opciones</th>
-            </tr>
-   		</thead>
-   		<tbody>
-   			{{-- @foreach($riesgos_identificados as $riesgo)
-	   			<tr>
-	       			<td>{{ $riesgo->folio }}</td>
-	       			<td>{{ $riesgo->titulo}}</td>
-                    <td>{{ $riesgo->fecha_creacion}}</td>
-                    <td>{{ $riesgo->fecha_reporte}}</td>
-                    <td>{{ $riesgo->fecha_de_cierre}}</td>
-                    <td>{{ $riesgo->descripcion }}</td>
-                    <td>{{ $riesgo->comentarios }}</td>
-                    <td>{{ $riesgo->estatus }}</td>
-                    <td>{{ $riesgo->sede }}</td>
-                    <td>{{ $riesgo->ubicacion }}</td>
-	       			<td>{{ $riesgo->procesos_afectados }}</td>
-                    <td>{{ $riesgo->areas_afectados }}</td>
-                    <td>{{ $riesgo->activos_afectados }}</td>
-	       			<td>{{ $riesgo->fecha }}</td>
-	       			<td>
-                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $riesgo->reporto->avatar }}" title="{{ $riesgo->reporto->name }}">
-                    </td>
-	       			<td>{{ $riesgo->reporto->email }}</td>
-	       			<td>{{ $riesgo->reporto->telefono }}</td>
-	       			<td>
-	       				<a href="{{ route('admin.desk.riesgos-edit', $riesgo->id) }}"><i class="fas fa-edit"></i></a>
-	       			</td>
-	   			</tr>
-   			@endforeach --}}
-   		</tbody>
-   </table>
+
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <table class="datatable tabla_riesgos">
+            <thead>
+             <tr>
+                 <th>Folio</th>
+                 <th style="min-width:200px;">Título</th>
+                 <th style="min-width:200px;">Fecha de identificación</th>
+                 <th style="min-width:200px;">Fecha de recepción del reporte</th>
+                 <th style="min-width:200px;">Fecha de cierre</th>
+                 <th style="min-width: 500px;">Descripción</th>
+                 <th style="min-width: 500px;">Comentarios</th>
+                 <th style="min-width:200px;">Estatus</th>
+                 <th style="min-width:200px;">Sede</th>
+                 <th style="min-width:200px;">Ubicación</th>
+                 <th style="min-width:200px;">Procesos afectados</th>
+                 <th style="min-width:200px;">Áreas afectadas</th>
+                 <th style="min-width:200px;">Activos afectados</th>
+                 <th style="min-width: 500px;">Fecha</th>
+                 <th style="min-width:200px;">Quién reportó</th>
+                 <th style="min-width:200px;">Correo</th>
+                 <th style="min-width:200px;">Teléfono</th>
+                 <th>Opciones</th>
+             </tr>
+            </thead>
+            <tbody>
+            </tbody>
+    </table>
+    </div>
 </div>
 
 

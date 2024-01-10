@@ -276,10 +276,18 @@
                                     <div class="row col-12 ml-0"
                                         style="border-radius;
                                         padding-left: 0px;padding-right: 0px;">
-                                        <div class="col-3" style="border-left: 25px solid #2395AA">
-                                            <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
-                                                style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
-                                        </div>
+                                        @if ($logo_actual != null)
+                                            <div class="col-3" style="border-left: 25px solid #2395AA">
+                                                <img src=" {{ $logo_actual }}" class="mt-2 img-fluid"
+                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                            </div>
+                                        @else
+                                            <div class="col-3" style="border-left: 25px solid #2395AA">
+                                                <img src="{{ asset('img/tabantaj_fondo_blanco.PNG') }}"
+                                                    class="mt-2 img-fluid"
+                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                            </div>
+                                        @endif
                                         <div class="col-5 p-2 mt-3">
                                             <br>
                                             <span class=""
@@ -330,12 +338,6 @@
             <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
             </button>
-            {{-- <form method="POST" action="{{ route('admin.politica-sgsis.pdf') }}">
-                            @csrf
-                            <button class="boton-transparente">
-                                <img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon">
-                            </button>
-                        </form> --}}
         </div>
         <h3 class="title-table-rds"> Politicas</h3>
         <table class="datatable datatable-Comiteseguridad" id="datatable-PoliticaSgsi">
@@ -408,7 +410,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -535,15 +537,15 @@
 
                             // Asigna colores y sombras según el valor de 'estatus'
                             switch (data) {
-                                case 'aprobado':
+                                case 'Aprobado':
                                     color = '#008F27'; // Verde
                                     backgroundColor = 'rgba(0, 128, 0, 0.1)';
                                     break;
-                                case 'rechazado':
+                                case 'Rechazado':
                                     color = '#dd0483'; // Rojo
                                     backgroundColor = 'rgba(128, 0, 0, 0.1)';
                                     break;
-                                case 'pendiente':
+                                case 'Pendiente':
                                     color = '#DD8E04'; // Naranja
                                     backgroundColor = 'rgba(255, 165, 0, 0.1)';
                                     break;

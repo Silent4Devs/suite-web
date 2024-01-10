@@ -33,6 +33,8 @@
     border: 1px solid #D8D1EF;
     padding: 20px;
     border-radius: 400px;
+    width: 47%;
+    text-align: center;
 }
 
 .caja-documentos {
@@ -44,7 +46,7 @@
 
 .doc-item-portal {
     width: 100%;
-    height: 115px;
+    /* height: 115px; */
     border-radius: 16px;
     color: #fff;
     display: flex !important;
@@ -57,11 +59,18 @@
 .doc-item-portal:nth-child(3n+3){background-color: #005C77;}
 
 .doc-item-portal>img {
-    height: 115px;
+    height: 120px;
 }
 
 .title-doc-portal {
     font-size: 18px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Número de líneas a mostrar */
+    -webkit-box-orient: vertical;
+    white-space: normal;
 }
 
 .doc-info {
@@ -71,6 +80,7 @@
 .caja-doc-etiquetas {
     display: flex;
     gap: 10px;
+    white-space: nowrap;
 }
 
 .caja-doc-etiquetas span {
@@ -100,7 +110,15 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    overflow: hidden;
+
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+.caja-items-carrusel-portal::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
 }
 
 .item-carrusel-portal{
@@ -114,6 +132,7 @@
     border: 1px solid #D9D9D9;
     padding: 25px;
     box-sizing: border-box;
+    scroll-snap-align: start;
 }
 .carrusel-portal button{
     border: none;
@@ -139,9 +158,10 @@
 }
 .carr-port-cumple .item-carrusel-portal{
     background-color: #EFA001;
+    padding: 0 !important;
 }
 .cumple-img-portal{
-    height: 100px;
+    height: 110px;
 }
 
 .carrusel-vertical-boletin{
@@ -159,13 +179,7 @@
     object-fit: contain;
     width: 100%;
     height: 100%;
-    display: none;
     border-radius: 20px !important;
-}
-.active-carrusel-vertical{
-    display: block !important;
-
-    filter: blur(0px) !important;
 }
 .menu-carrusel-vertical{
     width: 225px;
@@ -185,7 +199,6 @@
     object-fit: cover;
     width: 100%;
     height: 100%;
-    filter: blur(1px) opacity(0.5);
 }
 .comunicado-item-portal{
     display: flex;
@@ -344,3 +357,5 @@
 #fecha-completa{
     text-transform: capitalize;
 }
+
+

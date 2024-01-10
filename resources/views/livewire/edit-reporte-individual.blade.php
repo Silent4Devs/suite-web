@@ -417,7 +417,8 @@
                             </div>
                         @else
                             <div class="row" style="justify-content: center; display: flex;">
-                                <h4>No se ha firmado el reporte</h4>
+                                <img width="450" height="250" style="border: 1px solid black;"
+                                    alt="No se ha Firmado el reporte" src="{{ asset('img/firma.png') }}">
                             </div>
                         @endif
                     </div>

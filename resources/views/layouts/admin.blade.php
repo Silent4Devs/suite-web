@@ -142,6 +142,13 @@
                             Centro de atención
                         </a>
                     </li>
+                    <li>
+                        <a onclick="event.preventDefault(); document.getElementById('logoutform').submit();"
+                            style="cursor: pointer;">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Cerrar sesión
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="item-content-menu-header" style="background-color: #fff;">
