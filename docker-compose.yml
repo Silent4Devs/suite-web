@@ -164,6 +164,7 @@ services:
     tty: true
     volumes:
       - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
+      - ./infra/redis/sysctl.conf:/etc/sysctl.conf # Mount the sysctl configuration file
     networks:
       - tabantajnetwork
     mem_limit: 2g
