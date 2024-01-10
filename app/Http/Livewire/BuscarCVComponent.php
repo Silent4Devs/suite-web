@@ -122,8 +122,7 @@ class BuscarCVComponent extends Component
             $this->empleados = Empleado::getAltaEmpleados();
         }
 
-        $empleadosCV = Empleado::alta()
-            ->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
+        $empleadosCV = Empleado::getAltaEmpleadosWithCertificacionesCursosExperiencia()
             ->when($this->empleado_id, function ($q3) {
                 $q3->where('id', $this->empleado_id);
             })

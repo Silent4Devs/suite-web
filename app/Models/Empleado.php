@@ -210,6 +210,13 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getAltaEmpleadosWithCertificacionesCursosExperiencia()
+    {
+        return Cache::remember('Empleados:empleados_alta_WithCertificacionesCursosExperiencia', 3600 * 7, function () {
+            return self::with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->alta()->get();
+        });
+    }
+
     public static function getAltaEmpleadosWithAreaSedeSupervisor()
     {
         return Cache::remember('Empleados:empleados_alta_area_sede_supervisor', 3600 * 8, function () {
