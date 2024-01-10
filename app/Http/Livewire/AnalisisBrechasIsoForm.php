@@ -49,11 +49,11 @@ class AnalisisBrechasIsoForm extends Component
         $this->fecha = Carbon::now()->format('d-m-y');
         $empleados = Empleado::getaltaAll();
         $analisis_brechas = AnalisisBrechasIso::get();
-        $templates = TemplateAnalisisdeBrechas::where('top',true)->get();
+        $templates = TemplateAnalisisdeBrechas::where('top', true)->get();
         $normas = Norma::get();
         $this->imagenID = asset('img\alert_template_analisis_brechas_id.png');
 
-        return view('livewire.analisis-brechas-iso-form', compact('empleados','analisis_brechas','templates', "normas"));
+        return view('livewire.analisis-brechas-iso-form', compact('empleados', 'analisis_brechas', 'templates', "normas"));
     }
 
     private function resetInput()
@@ -77,9 +77,7 @@ class AnalisisBrechasIsoForm extends Component
             return;
         }
 
-         $this->emit('selectedCardAlert');
-
-
+        $this->emit('selectedCardAlert');
     }
 
     public function SelectCard($index)
@@ -117,85 +115,73 @@ class AnalisisBrechasIsoForm extends Component
         AnalisisBrechasIso::destroy($id);
     }
 
-    public function evaluacion(){
+    public function evaluacion()
+    {
 
         DB::beginTransaction();
 
         try {
 
             $analisisBrechaIso = AnalisisBrechasIso::create([
-                    'nombre' => $this->name,
-                    'fecha' => $this->fecha,
-                    'porcentaje_implementacion' => 0,
-                    'id_elaboro' => $this->id_elaboro,
-                    'estatus' => 1,
-                    'norma_id' => $this->norma_id,
+                'nombre' => $this->name,
+                'fecha' => $this->fecha,
+                'porcentaje_implementacion' => 0,
+                'id_elaboro' => $this->id_elaboro,
+                'estatus' => 1,
+                'norma_id' => $this->norma_id,
             ]);
 
-            $dataCieContIso = new GenerateAnalisisBIso();
-            $datosgapunoIso = $dataCieContIso->TraerDatos($analisisBrechaIso->id);
-            GapUnoConcentratoIso::insert($datosgapunoIso);
-            $datosgapdosIso = $dataCieContIso->TraerDatosDos($analisisBrechaIso->id);
-            GapDosConcentradoIso::insert($datosgapdosIso);
-            $datosgaptresIso = $dataCieContIso->TraerDatosTres($analisisBrechaIso->id);
-            GapTresConcentradoIso::insert($datosgaptresIso);
-    
-    
             $template_general = TemplateAnalisisdeBrechas::with('parametros')
-            ->with('secciones')
-            ->find($this->selectedCard);
-                
+                ->with('secciones')
+                ->find($this->selectedCard);
+
             $parametros_generales = $template_general->parametros;
             $secciones_generales = $template_general->secciones;
-            
-    
+
+
             $evaluacion = EvaluacionAnalisisBrechas::create([
-                'analisis_brechas_id' => $analisisBrechaIso->id ,
+                'analisis_brechas_id' => $analisisBrechaIso->id,
                 'nombre_evaluacion' => $template_general->nombre_template,
                 'norma_id' => $template_general->norma_id,
                 'descripcion' => $template_general->descripcion,
                 'no_secciones' => $template_general->no_secciones,
             ]);
-                
-            foreach($parametros_generales as $parametro_general){
-                    ParametrosEvaluacionAnalisisBrechas::create([
-                        'evaluacion_id' => $evaluacion->id,
-                        'estatus' => $parametro_general->estatus,
-                        'color' => $parametro_general->color,
-                        'valor' => $parametro_general->valor,
-                        'descripcion' => $parametro_general->descripcion,
-                    ]);
-            }
-    
-            foreach($secciones_generales as $seccion_general){
-                        
-                    $seccion = SeccionesEvaluacionAnalisisBrechas::create([
-                        'evaluacion_id' => $evaluacion->id,
-                        'numero_seccion' => $seccion_general->numero_seccion,
-                        'descripcion' => $seccion_general->descripcion,
-                        'porcentaje_seccion' => $seccion_general->porcentaje_seccion,
-                    ]);
 
-                    $preguntas_generales = $seccion_general->preguntas;
-                    
-                    foreach($preguntas_generales as $pregunta_general){
-                        PreguntasEvaluacionanalisisBrechas::create([
-                            'seccion_id' => $seccion->id,
-                            'pregunta' => $pregunta_general->pregunta,
-                            'numero_pregunta' => $pregunta_general->numero_pregunta,
-                        ]);
-                    }
-    
+            foreach ($parametros_generales as $parametro_general) {
+                ParametrosEvaluacionAnalisisBrechas::create([
+                    'evaluacion_id' => $evaluacion->id,
+                    'estatus' => $parametro_general->estatus,
+                    'color' => $parametro_general->color,
+                    'valor' => $parametro_general->valor,
+                    'descripcion' => $parametro_general->descripcion,
+                ]);
+            }
+
+            foreach ($secciones_generales as $seccion_general) {
+
+                $seccion = SeccionesEvaluacionAnalisisBrechas::create([
+                    'evaluacion_id' => $evaluacion->id,
+                    'numero_seccion' => $seccion_general->numero_seccion,
+                    'descripcion' => $seccion_general->descripcion,
+                    'porcentaje_seccion' => $seccion_general->porcentaje_seccion,
+                ]);
+
+                $preguntas_generales = $seccion_general->preguntas;
+
+                foreach ($preguntas_generales as $pregunta_general) {
+                    PreguntasEvaluacionanalisisBrechas::create([
+                        'seccion_id' => $seccion->id,
+                        'pregunta' => $pregunta_general->pregunta,
+                        'numero_pregunta' => $pregunta_general->numero_pregunta,
+                    ]);
+                }
             }
 
             DB::commit();
-
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollback();
-            
         }
-
     }
 
     public function analisis($id)
@@ -204,7 +190,7 @@ class AnalisisBrechasIsoForm extends Component
         // dd($test2);
 
         // return redirect()->route('admin.formulario',$test2->evaluacionTemplateAnalisisBrechas->id);
-        return redirect()->route('admin.formulario',$id);
+        return redirect()->route('admin.formulario', $id);
 
         // dd($test2->evaluacionTemplateAnalisisBrechas->id);
 
