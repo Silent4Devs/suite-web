@@ -89,6 +89,28 @@
     {{ Breadcrumbs::render('admin.control-accesos.index') }}
 
     <h5 class="col-12 titulo_general_funcion">Control de Acceso</h5>
+        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+            <div class="d-flex" style="gap: 25px;">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+                <div>
+                    <br>
+                    <br>
+                    <h4>¿Qué es Control de Accesos? </h4>
+                    <p>
+                        Garantiza que las personas adecuadas.
+                    </p>
+                    <p>
+                        Tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.control-accesos.create') }}" type="button" class="btn btn-primary">Registrar Control</a>
+            </div>
+        </div>
 
         <div class="mt-5 card">
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -206,17 +228,17 @@
             ];
 
             @can('control_de_accesos_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar control de acceso',
-                url: "{{ route('admin.control-accesos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
+                // let btnAgregar = {
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar control de acceso',
+                // url: "{{ route('admin.control-accesos.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config){
+                // let {url} = config;
+                // window.location.href = url;
+                // }
+                // };
+                // dtButtons.push(btnAgregar);
             @endcan
             @can('control_de_accesos_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';

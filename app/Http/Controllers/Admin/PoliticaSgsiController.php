@@ -31,7 +31,8 @@ class PoliticaSgsiController extends Controller
 {
     use ObtenerOrganizacion;
 
-    public $modelo = 'PoliticaSgsi';
+    // public $modelo = 'PoliticaSgsi';
+
 
     public function index(Request $request)
     {
@@ -105,7 +106,7 @@ class PoliticaSgsiController extends Controller
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
 
-        $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $modulo = ListaDistribucion::first();
 
         if (!isset($modulo)) {
             $listavacia = 'vacia';

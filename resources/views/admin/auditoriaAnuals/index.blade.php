@@ -60,6 +60,28 @@
 
 
     <h5 class="col-12 titulo_general_funcion">Programa Anual de Auditoría</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <br>
+                <h4>¿Qué es Programa Anual de Auditoria?   </h4>
+                <p>
+                    Plan para evaluar regularmente el sistema de seguridad de la información de la empresa.
+                </p>
+                <p>
+                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es necesario.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.auditoria-anuals.create') }}" type="button" class="btn btn-primary">Registrar Programa</a> &nbsp;
+        </div>
+    </div>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -197,19 +219,19 @@
             ];
 
             @can('programa_anual_auditoria_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar programa anual de auditoría',
-                    url: "{{ route('admin.auditoria-anuals.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                dtButtons.push(btnAgregar);
+                // let btnAgregar = {
+                //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                //     titleAttr: 'Agregar programa anual de auditoría',
+                //     url: "{{ route('admin.auditoria-anuals.create') }}",
+                //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                //     action: function(e, dt, node, config) {
+                //         let {
+                //             url
+                //         } = config;
+                //         window.location.href = url;
+                //     }
+                // };
+                // dtButtons.push(btnAgregar);
             @endcan
             @can('programa_anual_auditoria_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';

@@ -46,6 +46,24 @@
 
     {{ Breadcrumbs::render('admin.recursos.index') }}
 
+    <h5 class="col-12 titulo_general_funcion">Transferencia de conocimiento</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <br>
+                <h4> ¿Qué es Transferencia de conocimiento?  </h4>
+                <p>
+                    Garantizar que todos en la empresa tengan el conocimiento.
+                </p>
+                <p>
+                    Asegurando que el conocimiento se comparta y perdure.
+                </p>
+            </div>
+        </div>
+    </div>
+
             <div class="text-right">
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('admin.recursos.create') }}" type="button" class="btn btn-primary">Registrar Capacitaciones</a>
@@ -200,36 +218,25 @@
             ];
 
             @can('capacitaciones_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar curso y capacitación',
-                url: "{{ route('admin.recursos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                action: function(e, dt, node, config) {
-                $('#').modal('show');
-                }
-                };
-                let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xlsxImportModal').modal('show');
-                }
-                };
+                // let btnExport = {
+                // text: '<i class="fas fa-download"></i>',
+                // titleAttr: 'Descargar plantilla',
+                // className: "btn btn_cargar" ,
+                // action: function(e, dt, node, config) {
+                // $('#').modal('show');
+                // }
+                // };
+                // let btnImport = {
+                // text: '<i class="fas fa-file-upload"></i>',
+                // titleAttr: 'Importar datos',
+                // className: "btn btn_cargar",
+                // action: function(e, dt, node, config) {
+                // $('#xlsxImportModal').modal('show');
+                // }
+                // };
 
-                dtButtons.push(btnAgregar);
-                dtButtons.push(btnExport);
-                dtButtons.push(btnImport);
+                // dtButtons.push(btnExport);
+                // dtButtons.push(btnImport);
             @endcan
             @can('capacitaciones_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';

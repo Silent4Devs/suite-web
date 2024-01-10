@@ -2,7 +2,23 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.control-accesos.create') }}
-<h5 class="col-12 titulo_general_funcion">Registrar: Control de Acceso</h5>
+    <h5 class="col-12 titulo_general_funcion">Control de Acceso</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <br>
+                <h4>¿Qué es Control de Accesos? </h4>
+                <p>
+                    Garantiza que las personas adecuadas.
+                </p>
+                <p>
+                    Tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
+                </p>
+            </div>
+        </div>
+    </div>
 <div class="card mt-4">
     <div class="card-body">
         <form method="POST" action="{{ route("admin.control-accesos.store") }}" enctype="multipart/form-data" class="row">

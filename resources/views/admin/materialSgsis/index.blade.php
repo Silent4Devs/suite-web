@@ -143,6 +143,28 @@
     {{ Breadcrumbs::render('admin.material-sgsis.index') }}
 
         <h5 class="col-12 titulo_general_funcion">Material SGSI</h5>
+        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+            <div class="d-flex" style="gap: 25px;">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+                <div>
+                    <br>
+                    <br>
+                    <h4>¿Qué es Material SGSI?   </h4>
+                    <p>
+                        Recursos educativos diseñados para enseñar.
+                    </p>
+                    <p>
+                        A los colaboradores sobre las prácticas y requisitos de seguridad de la información establecidos por la norma.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.material-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Material</a>
+            </div>
+        </div>
         <div class="mt-5 card">
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
@@ -334,17 +356,17 @@
             ];
 
             @can('material_sgsi_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar material SGSI',
-                url: "{{ route('admin.material-sgsis.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
+                // let btnAgregar = {
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar material SGSI',
+                // url: "{{ route('admin.material-sgsis.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config){
+                // let {url} = config;
+                // window.location.href = url;
+                // }
+                // };
+                // dtButtons.push(btnAgregar);
             @endcan
             @can('material_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
