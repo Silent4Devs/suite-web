@@ -27,6 +27,6 @@ class NotificacionSolicitudAprobacionPolitica extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.politicas.notificacion-politica-participantes')->subject('Solicitud Aprobación de Politica: ' . $this->nombre_politica);
+        return $this->view('mails.politicas.notificacion-politica-participantes')->subject('Solicitud Aprobación de Politica: '.$this->nombre_politica);
     }
 }

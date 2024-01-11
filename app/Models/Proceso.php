@@ -88,7 +88,7 @@ class Proceso extends Model implements Auditable
 
     public function getNameAttribute()
     {
-        return $this->codigo . ' ' . $this->nombre;
+        return $this->codigo.' '.$this->nombre;
     }
 
     public function getContentAttribute()

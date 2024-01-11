@@ -22,7 +22,6 @@ return new class extends Migration
             $table->foreign('parametro_id')->references('id')->on('parametros_evaluacion_analisis_brechas')->onDelete('cascade');
             $table->foreign('ev_analisis_template_id')->references('id')->on('evaluacion_analisis_brechas')->onDelete('cascade');
 
-
         });
     }
 
