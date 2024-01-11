@@ -12,7 +12,8 @@
 
     <div class="card card-body" style="background-color: #306BA9; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="jpg" style="width:200px;"
+                class="mt-2 mb-2 ml-2 img-fluid">
             <div>
                 <br>
                 <h4> ¿Qué es? Revisión por Dirección.</h4>
@@ -344,8 +345,9 @@
 
 
         <div class="text-right form-group col-12">
-            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
-            <button class="btn btn-primary"  type="submit" style="width: 13%;">
+            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
+                style="text-decoration: none;">Cancelar</a>
+            <button id="btnGuardar" class="btn btn-primary" type="submit" style="width: 13%;">
                 {{ trans('global.save') }}
             </button>
         </div>
