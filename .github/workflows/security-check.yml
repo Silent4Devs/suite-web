@@ -30,7 +30,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libzip-dev libpng-dev libjpeg-dev libwebp-dev libexif-dev
-          sudo docker-php-ext-install zip gd exif
+          sudo apt-get install zip gd exif
 
       - name: Get Composer Cache Directory
         id: composer-cache
