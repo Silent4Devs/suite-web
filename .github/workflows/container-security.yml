@@ -1,9 +1,18 @@
-name: Security Workflow
+name: Security Container Workflow
+run-name: ${{ github.actor }} run Security container scanning
 
 on:
   push:
     branches:
-      - main
+      - develop
+  pull_request:
+    branches:
+      - develop
+      - feature/*
+      - hotfix/*
+      - release/*
+      - fix/*
+      - refactor/*
 
 jobs:
   code-scanning:
