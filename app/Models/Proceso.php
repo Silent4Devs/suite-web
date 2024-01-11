@@ -74,10 +74,10 @@ class Proceso extends Model implements Auditable
     }
 
     //Redis methods
-    public static function getAll($columns = ['id', 'codigo', 'nombre'])
+    public static function getAll($columns = ['id', 'codigo', 'nombre', 'id_macroproceso', 'descripcion'])
     {
         return Cache::remember('procesos_all', 3600 * 24, function () use ($columns) {
-            return self::select($columns)->get();
+            return self::select($columns)->with('macroproceso')->get();
         });
     }
 
@@ -88,7 +88,7 @@ class Proceso extends Model implements Auditable
 
     public function getNameAttribute()
     {
-        return $this->codigo.' '.$this->nombre;
+        return $this->codigo . ' ' . $this->nombre;
     }
 
     public function getContentAttribute()
