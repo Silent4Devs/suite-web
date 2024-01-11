@@ -2,15 +2,32 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.material-sgsis.create') }}
-<h5 class="col-12 titulo_general_funcion">Registrar: Material SGSI</h5>
+    <h5 class="col-12 titulo_general_funcion">Material SGSI</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <br>
+                <h4>¿Qué es Material SGSI?   </h4>
+                <p>
+                    Recursos educativos diseñados para enseñar a los colaboradores sobre las prácticas y requisitos  de seguridad de la información establecidos por la norma.
+                </p>
+                <p>
+                    La interactividad y la relevancia son clave para asegurar una comprensión efectiva de los principios de seguridad de la información.
+                </p>
+            </div>
+        </div>
+    </div>
+
 <div class="card mt-4">
     <div class="card-body">
         <form method="POST" action="{{ route("admin.material-sgsis.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group col-12">
-                <label class="required" for="nombre"><i class="fas fa-file  iconos-crear"></i>Nombre del material de capacitación</label>
-                <input class="form-control{{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+            <div class="form-group col-12 anima-focus">
+                <input class="form-control{{ $errors->has('nombre') ? 'is-invalid' : '' }}" placeholder="" type="text"
                 name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
+                {!! Form::label('nombre', 'Nombre del material de capacitación*', ['class' => 'asterisco']) !!}
                 @if($errors->has('nombre'))
                     <div class="invalid-feedback">
                         {{ $errors->first('nombre') }}
@@ -18,10 +35,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
             </div>
-            <div class="form-group col-12">
-                <label class="required" for="objetivo"><i class="fas fa-bullseye  iconos-crear"></i>Objetivo</label>
+            <div class="form-group col-12 anima-focus">
                 <textarea class="form-control{{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
                     name="objetivo" id="objetivo" value="{{ old('objetivo', '') }}" required></textarea>
+                    {!! Form::label('objetivo', 'Objetivo*', ['class' => 'asterisco']) !!}
                 @if($errors->has('objetivo'))
                     <div class="invalid-feedback">
                         {{ $errors->first('objetivo') }}
@@ -29,8 +46,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label class="required"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.personalobjetivo') }}</label>
+            <div class="form-group col-md-6 anima-focus">
                 <select required class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}"
                     name="personalobjetivo" id="personalobjetivo">
                     <option value disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -38,6 +54,7 @@
                         <option value="{{ $key }}" {{ old('personalobjetivo', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
+                {!! Form::label('personalobjetivo', 'Personal*', ['class' => 'asterisco']) !!}
                 @if($errors->has('personalobjetivo'))
                     <div class="invalid-feedback">
                         {{ $errors->first('personalobjetivo') }}
@@ -45,13 +62,13 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.personalobjetivo_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label class="required" for="arearesponsable_id"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.arearesponsable') }}</label>
-                <select required class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" name="arearesponsable_id" id="arearesponsable_id">
+            <div class="form-group col-md-6 anima-focus">
+                <select  required class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" name="arearesponsable_id" id="arearesponsable_id">
                     @foreach($arearesponsables as $id => $arearesponsable)
                         <option value="{{ $id }}" {{ old('arearesponsable_id') == $id ? 'selected' : '' }}>{{ $arearesponsable }}</option>
                     @endforeach
                 </select>
+                {!! Form::label('arearesponsable_id', 'Área*', ['class' => 'asterisco']) !!}
                 @if($errors->has('arearesponsable'))
                     <div class="invalid-feedback">
                         {{ $errors->first('arearesponsable') }}
@@ -59,8 +76,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.arearesponsable_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label class="required"><i class="fas fa-clipboard-check iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.tipoimparticion') }}</label>
+            <div class="form-group col-md-6 anima-focus">
                 <select required class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}"
                     name="tipoimparticion" id="tipoimparticion">
                     <option value disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -68,6 +84,7 @@
                         <option value="{{ $key }}" {{ old('tipoimparticion', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
+                {!! Form::label('tipoimparticion', 'Impartición*', ['class' => 'asterisco']) !!}
                 @if($errors->has('tipoimparticion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('tipoimparticion') }}
@@ -75,10 +92,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.tipoimparticion_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label class="required" for="fechacreacion_actualizacion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
-                <input class="form-control {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
+            <div class="form-group col-md-6 anima-focus">
+                <input placeholder="" class="form-control {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
                 name="fechacreacion_actualizacion" id="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion') }}" required>
+                {!! Form::label('fechacreacion_actualizacion', 'Fecha de creación*', ['class' => 'asterisco']) !!}
                 @if($errors->has('fechacreacion_actualizacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechacreacion_actualizacion') }}
@@ -88,9 +105,9 @@
             </div>
 
 
-            <div class="form-group col-12">
-                <label for="documento"><i class="fas fa-file iconos-crear"></i>Material(Archivo PDF)</label>
+            <div class="form-group col-12 anima-focus">
                 <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
+                {!! Form::label('documento', 'Material(Archivo PDF)*', ['class' => 'asterisco']) !!}
             </div>
 
             {{-- <div class="form-group col-12">

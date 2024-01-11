@@ -96,6 +96,22 @@
     {{ Breadcrumbs::render('admin.evidencias-sgsis.index') }}
 
     <h5 class="col-12 titulo_general_funcion">Evidencia de Asignación de Recursos al SGSI</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <br>
+                <h4> ¿Qué es Evidencia de asignación de recurso al SGI? </h4>
+                <p>
+                    Registro de información y documentación que le permita a la organización mostrar que ha   destinado los recursos necesarios.
+                </p>
+                <p>
+                    Para implementar y mantener su Sistema de Gestión de la Seguridad de la Información (SGI).
+                </p>
+            </div>
+        </div>
+    </div>
     <div class="text-right">
         <div class="d-flex justify-content-end">
             <a href="{{ route('admin.evidencias-sgsis.create') }}" type="button" class="btn btn-primary">Registrar

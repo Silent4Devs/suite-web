@@ -606,7 +606,7 @@
                             let backgroundColor = '';
 
                             if (data === null) {
-                                return '<center><span style="color: #0000FF; opacity: 1; border-radius: 7px; background: #ADD8E6;">generar</span></center>';
+                                return '<center><span style="color: #0000FF; opacity: 1; border-radius: 7px; background: #ADD8E6;">Generar</span></center>';
                             } else {
                             // Asigna colores y sombras según el valor de 'estatus'
                             switch (data) {

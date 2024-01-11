@@ -2,7 +2,23 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.recursos.create') }}
-    <h5 class="col-12 titulo_general_funcion"> Editar: Capacitación</h5>
+    <h5 class="col-12 titulo_general_funcion">Transferencia de conocimiento</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <br>
+                <h4> ¿Qué es Transferencia de conocimiento?  </h4>
+                <p>
+                    Garantizar que todos en la empresa tengan el conocimiento.
+                </p>
+                <p>
+                    Asegurando que el conocimiento se comparta y perdure.
+                </p>
+            </div>
+        </div>
+    </div>
     @include('admin.recursos.styles.style')
     <div class="mt-4 card">
         <div class="card-body">

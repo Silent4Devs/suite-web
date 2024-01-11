@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Iso27\AnalisisBrechasIso;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,9 +32,8 @@ class EvaluacionAnalisisBrechas extends Model
         return $this->hasMany(ParametrosEvaluacionAnalisisBrechas::class, 'evaluacion_id', 'id');
     }
 
-    public function analisisBrechasIsos(){
-        return $this->belongsTo(AnalisisBrechasIso::class, 'analisis_brechas_id','id');
+    public function analisisBrechasIsos()
+    {
+        return $this->belongsTo(AnalisisBrechasIso::class, 'analisis_brechas_id', 'id');
     }
-
-   
 }
