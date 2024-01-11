@@ -129,18 +129,26 @@
         </ul>
     </div>
     <div class="content-guia-iso">
-        <div class="pl-3 py-2" style="background-color: #EFF1F5;">
-            <h3 class="title-guia-iso">GESTIÓN NORMATIVA</h3>
-            @can('control_versiones_iso')
-                <div class="d-flex">
-                    <input id="toggle" class="toggle" type="checkbox" role="switch" name="toggle" value="true"
-                        @if ($version_iso === true) checked @endif style="align-content: center">
-                    <label for="toggle" class="slot">
-                        <span class="slot__label">&nbsp;&nbsp;&nbsp;&nbsp;Norma ISO 27001:2022</span>
-                        <span class="slot__label">&nbsp;&nbsp;&nbsp;&nbsp;Norma ISO 27001:2013</span>
-                    </label>
-                </div>
-            @endcan
+        <div class="pl-3 py-2 row" style="background-color: #EFF1F5;">
+            <div class="col-6">
+                <h3 class="title-guia-iso">GESTIÓN NORMATIVA</h3>
+                @can('control_versiones_iso')
+                    <div class="d-flex">
+                        <input id="toggle" class="toggle" type="checkbox" role="switch" name="toggle" value="true"
+                            @if ($version_iso === true) checked @endif style="align-content: center">
+                        <label for="toggle" class="slot">
+                            <span class="slot__label">&nbsp;&nbsp;&nbsp;&nbsp;Norma ISO 27001:2022</span>
+                            <span class="slot__label">&nbsp;&nbsp;&nbsp;&nbsp;Norma ISO 27001:2013</span>
+                        </label>
+                    </div>
+                @endcan
+            </div>
+            <div class="col-6" style="text-align: right;">
+                <a href="{{ route('admin.dashboard_auditorias') }}" class="btn btn-success">
+                    <i class="fas fa-chart-pie mr-2"></i>
+                    DASHBOARD
+                </a>
+            </div>
         </div>
 
         <div class="card card-body card-main-iso" style="border-radius: 0px !important;">
