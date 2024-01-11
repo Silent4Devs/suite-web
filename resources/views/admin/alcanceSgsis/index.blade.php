@@ -408,7 +408,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });

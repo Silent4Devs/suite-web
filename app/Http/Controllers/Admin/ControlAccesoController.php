@@ -114,8 +114,9 @@ class ControlAccesoController extends Controller
         abort_if(Gate::denies('control_de_accesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = DocumentoControlAcceso::get();
         $controlAcceso->load('team');
+        $responsables = Empleado::getAll();
 
-        return view('admin.controlAccesos.edit', compact('controlAcceso', 'documentos'));
+        return view('admin.controlAccesos.edit', compact('controlAcceso', 'documentos', 'responsables'));
     }
 
     public function update(UpdateControlAccesoRequest $request, ControlAcceso $controlAcceso)

@@ -31,49 +31,50 @@ class ProcesoController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('procesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if ($request->ajax()) {
-            $query = Proceso::getAll();
-            $table = DataTables::of($query);
+        $query = Proceso::getAll();
 
-            $table->addColumn('actions', '&nbsp;');
-            $table->addIndexColumn();
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'procesos_ver';
-                $editGate = 'procesos_editar';
-                $deleteGate = 'procesos_eliminar';
-                $crudRoutePart = 'procesos';
+        // dd($query);
+        // if ($request->ajax()) {
+        //     $query = Proceso::getAll();
+        //     $table = DataTables::of($query);
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        //     $table->addColumn('actions', '&nbsp;');
+        //     $table->addIndexColumn();
+        //     $table->editColumn('actions', function ($row) {
+        //         $viewGate = 'procesos_ver';
+        //         $editGate = 'procesos_editar';
+        //         $deleteGate = 'procesos_eliminar';
+        //         $crudRoutePart = 'procesos';
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('codigo', function ($row) {
-                return $row->codigo ? $row->codigo : '';
-            });
-            $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : '';
-            });
-            $table->editColumn('macroproceso', function ($row) {
-                return $row->macroproceso->nombre ? $row->macroproceso->nombre : '';
-            });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
+        //         return view('partials.datatablesActions', compact(
+        //             'viewGate',
+        //             'editGate',
+        //             'deleteGate',
+        //             'crudRoutePart',
+        //             'row'
+        //         ));
+        //     });
 
-            // $table->rawColumns(['actions']);
+        //     $table->editColumn('id', function ($row) {
+        //         return $row->id ? $row->id : '';
+        //     });
+        //     $table->editColumn('codigo', function ($row) {
+        //         return $row->codigo ? $row->codigo : '';
+        //     });
+        //     $table->editColumn('nombre', function ($row) {
+        //         return $row->nombre ? $row->nombre : '';
+        //     });
+        //     $table->editColumn('macroproceso', function ($row) {
+        //         return $row->macroproceso->nombre ? $row->macroproceso->nombre : '';
+        //     });
+        //     $table->editColumn('descripcion', function ($row) {
+        //         return $row->descripcion ? $row->descripcion : '';
+        //     });
 
-            return $table->make(true);
-        }
+        //     return $table->make(true);
+        // }
 
-        return view('admin.procesos.index');
+        return view('admin.procesos.index', compact('query'));
     }
 
     /**

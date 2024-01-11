@@ -166,7 +166,8 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
 
     public function participantes()
     {
-        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->alta()->with('area');
+        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')
+            ->select('empleados.id', 'name', 'foto', 'area_id')->alta()->with('area');
     }
 
     public function participantesCorreo()

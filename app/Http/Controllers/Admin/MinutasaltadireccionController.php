@@ -77,6 +77,7 @@ class MinutasaltadireccionController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($request->all());
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -184,18 +185,18 @@ class MinutasaltadireccionController extends Controller
         $id_minuta = $minutasaltadireccion->id;
         $tema_minuta = $minutasaltadireccion->tema_reunion;
         foreach ($minutasaltadireccion->participantesCorreo as $participante) {
-            //Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
         }
 
         foreach ($minutasaltadireccion->externos as $externo) {
-            //Mail::to(removeUnicodeCharacters($externo->emailEXT))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+            Mail::to(removeUnicodeCharacters($externo->emailEXT))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
         }
     }
 
     public function initReviews($minutasaltadireccion)
     {
         // Almacenamiento de revisiones vinculado a participantes y minutas
-        // //Mail::to(removeUnicodeCharacters($minutasaltadireccion->responsable->email))->send(new MinutaConfirmacionSolicitud($minutasaltadireccion));
+        Mail::to(removeUnicodeCharacters($minutasaltadireccion->responsable->email))->send(new MinutaConfirmacionSolicitud($minutasaltadireccion));
         $numero_revision = RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision') ? intval(RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision')) + 1 : 1;
         //Historial#
         $historialRevisionMinuta = HistoralRevisionMinuta::create([
@@ -212,7 +213,7 @@ class MinutasaltadireccionController extends Controller
                 'no_revision' => strval($numero_revision),
                 'minuta_id' => $minutasaltadireccion->id,
             ]);
-            // //Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudDeAprobacion($minutasaltadireccion, $revisor, $historialRevisionMinuta));
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudDeAprobacion($minutasaltadireccion, $revisor, $historialRevisionMinuta));
         }
 
         $this->enviarCorreosParticipantes($minutasaltadireccion);
@@ -247,19 +248,19 @@ class MinutasaltadireccionController extends Controller
 
             foreach ($actividades as $actividad) {
                 $asignados = [];
-
+                // dd($actividad, $actividad[5]->participantes_id);
                 if ($edit) {
-                    if (gettype($actividad[7]) == 'string') {
-                        if (str_contains($actividad[7], ',')) {
-                            $asignados = explode(',', $actividad[7]);
+                    if (gettype($actividad[5]->participantes_id) == 'string') {
+                        if (str_contains($actividad[5]->participantes_id, ',')) {
+                            $asignados = explode(',', $actividad[5]->participantes_id);
                         } else {
-                            array_push($asignados, $actividad[7]);
+                            array_push($asignados, $actividad[5]->participantes_id);
                         }
                     } else {
-                        $asignados = $actividad[7];
+                        $asignados = $actividad[5]->participantes_id;
                     }
                 } else {
-                    $asignados = $actividad[7];
+                    $asignados = $actividad[5]->participantes_id;
                 }
                 $assigs = [];
                 foreach ($asignados as $asignado) {
@@ -274,21 +275,21 @@ class MinutasaltadireccionController extends Controller
                 }
 
                 $tasks[] = [
-                    'id' => $actividad[0],
-                    'end' => strtotime($actividad[4]) * 1000,
-                    'name' => $actividad[2],
+                    'id' => $actividad[5]->id,
+                    'end' => strtotime($actividad[2]) * 1000,
+                    'name' => $actividad[0],
                     'level' => 1,
-                    'start' => strtotime($actividad[3]) * 1000,
+                    'start' => strtotime($actividad[1]) * 1000,
                     'canAdd' => true,
                     'status' => 'STATUS_ACTIVE',
                     'canWrite' => true,
-                    'duration' => $actividad[5],
+                    'duration' => $actividad[5]->duration,
                     'progress' => 0,
                     'canDelete' => true,
                     'collapsed' => false,
                     'relevance' => '0',
                     'canAddIssue' => true,
-                    'description' => $actividad[8],
+                    'description' => $actividad[4],
                     'endIsMilestone' => false,
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
@@ -344,15 +345,12 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $minutasaltadireccion = Minutasaltadireccion::with([
-            'participantes' => function ($query) {
-                $query->select('name', 'foto');
-            },
+            'participantes',
             'planes',
             'documentos',
             'externos'
         ])
-            ->where('id', $id)
-            ->first();
+            ->find($id);
 
 
         $actividades = array_filter($minutasaltadireccion->planes->first()->tasks, function ($actividad) {
@@ -360,7 +358,7 @@ class MinutasaltadireccionController extends Controller
         });
 
         $participantesWithAsistencia = $minutasaltadireccion->participantes()
-            ->select('name', 'area_id', 'foto')
+            // ->select('name', 'area_id', 'foto')
             ->withPivot('asistencia')
             ->get();
 
@@ -472,7 +470,7 @@ class MinutasaltadireccionController extends Controller
         $revisiones = RevisionMinuta::where('minuta_id', $minuta->id)->where('no_revision', $revision_actual)->get();
         foreach ($revisiones as $revision) {
             $mail = $revision->empleado->email;
-            //Mail::to(removeUnicodeCharacters($mail))->send(new MinutaRechazoPorEdicion($minuta, $revision));
+            Mail::to(removeUnicodeCharacters($mail))->send(new MinutaRechazoPorEdicion($minuta, $revision));
         }
     }
 
@@ -531,11 +529,11 @@ class MinutasaltadireccionController extends Controller
         $emailresponsable = $minuta->responsable->email;
         $tema_minuta = $minuta->tema_reunion;
 
-        //Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaRechazadaResponsable($minuta->id, $tema_minuta, User::getCurrentUser()->empleado->name));
+        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaRechazadaResponsable($minuta->id, $tema_minuta, User::getCurrentUser()->empleado->name));
 
         foreach ($minuta->participantes as $participante) {
 
-            //Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionMinutaRechazada($tema_minuta));
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionMinutaRechazada($tema_minuta));
         }
 
         return redirect(route('admin.minutasaltadireccions.index'));
@@ -557,7 +555,7 @@ class MinutasaltadireccionController extends Controller
             $emailresponsable = $minuta->responsable->email;
             $tema_minuta = $minuta->tema_reunion;
             // All records in $confirmacion have 'estatus' equal to 2
-            //Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaAprobada($responsable, $tema_minuta));
+            Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaAprobada($responsable, $tema_minuta));
             $minuta->update([
                 'estatus' => Minutasaltadireccion::PUBLICADO,
             ]);

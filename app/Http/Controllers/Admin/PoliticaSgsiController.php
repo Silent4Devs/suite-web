@@ -90,9 +90,9 @@ class PoliticaSgsiController extends Controller
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
 
-        $modulo = ListaDistribucion::with('participantes')->where('id', 7)->first();
+        $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-
+        $listavacia = 'cumple';
         if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
@@ -115,7 +115,6 @@ class PoliticaSgsiController extends Controller
                     ));
                 }
             }
-            $listavacia = 'cumple';
         }
 
         return view('admin.politicaSgsis.index', compact(
@@ -307,7 +306,7 @@ class PoliticaSgsiController extends Controller
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
-                //Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
                 // dd('primer usuario', $part->participante);
             }
         }
@@ -320,7 +319,7 @@ class PoliticaSgsiController extends Controller
 
                 if ($part->participante->numero_orden == 1) {
                     $emailAprobador = $part->participante->empleado->email;
-                    //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                    Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
                     break;
                 }
                 // }
@@ -463,7 +462,7 @@ class PoliticaSgsiController extends Controller
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
 
-            //Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionAprobacionPolitica($politica->nombre_politica));
+            Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionAprobacionPolitica($politica->nombre_politica));
             // dd('primer usuario', $part->participante);
         }
     }
@@ -499,10 +498,10 @@ class PoliticaSgsiController extends Controller
         // $responsable = $minuta->responsable->name;
         $emailresponsable = $politica->reviso->email;
         // dd($emailresponsable);
-        //Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoPoliticaLider($politica->id, $politica->nombre_politica));
+        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoPoliticaLider($politica->id, $politica->nombre_politica));
 
         foreach ($aprobacion->participantes as $participante) {
-            //Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoPolitica($politica));
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoPolitica($politica));
         }
 
         return redirect(route('admin.politica-sgsis.index'));
@@ -546,7 +545,7 @@ class PoliticaSgsiController extends Controller
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
-                            //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
                             break;
                         }
                     }

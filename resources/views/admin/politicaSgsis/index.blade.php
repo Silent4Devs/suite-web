@@ -243,15 +243,19 @@
     <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión </h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;"
+                class="mt-2 mb-2 ml-2 img-fluid">
             <div>
                 <br>
                 <h4> ¿Qué es? Política del Sistema de Gestión</h4>
                 <p>
-                    Es una declaración oficial de la dirección de una organización que establece sus intenciones y compromisos con respecto al sistema de gestión implementado en la organización.
+                    Es una declaración oficial de la dirección de una organización que establece sus intenciones y
+                    compromisos con respecto al sistema de gestión implementado en la organización.
                 </p>
                 <p>
-                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u otros ámbitos específicos.
+                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
+                    organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
+                    otros ámbitos específicos.
                 </p>
             </div>
         </div>
@@ -260,7 +264,8 @@
     @can('politica_sistema_gestion_agregar')
         <div class="text-right">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Política</a>
+                <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar
+                    Política</a>
             </div>
         </div>
     @endcan
@@ -399,7 +404,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -541,41 +546,41 @@
                         }
                     },
                     {
-    data: 'estatus',
-    name: 'estatus',
-    render: function(data, type, row) {
-        let color = '';
-        let boxShadow = '';
-        let backgroundColor = '';
-        let statusText = data;  // Por defecto, utiliza el valor existente.
+                        data: 'estatus',
+                        name: 'estatus',
+                        render: function(data, type, row) {
+                            let color = '';
+                            let boxShadow = '';
+                            let backgroundColor = '';
+                            let statusText = data; // Por defecto, utiliza el valor existente.
 
-        if (!data || data.trim() === '') {
-            // Si el estatus está vacío, muestra un estatus específico.
-            statusText = 'Generar';
-            color = '#0000FF';  // Color gris para un estatus vacío.
-            backgroundColor = 'rgba(0, 0, 255, 0.1)';
-        } else {
-            // Aplica estilos según el valor del estatus.
-            switch (data) {
-                case 'Aprobado':
-                    color = '#008F27'; // Verde
-                    backgroundColor = 'rgba(0, 128, 0, 0.1)';
-                    break;
-                case 'Rechazado':
-                    color = '#dd0483'; // Rojo
-                    backgroundColor = 'rgba(255, 0, 0, 0.1)';
-                    break;
-                case 'Pendiente':
-                    color = '#DD8E04'; // Naranja
-                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
-                    break;
-                default:
-                    color = '#464646'; // Negro
-                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
-            }
-        }
+                            if (!data || data.trim() === '') {
+                                // Si el estatus está vacío, muestra un estatus específico.
+                                statusText = 'Generar';
+                                color = '#0000FF'; // Color gris para un estatus vacío.
+                                backgroundColor = 'rgba(0, 0, 255, 0.1)';
+                            } else {
+                                // Aplica estilos según el valor del estatus.
+                                switch (data) {
+                                    case 'Aprobado':
+                                        color = '#008F27'; // Verde
+                                        backgroundColor = 'rgba(0, 128, 0, 0.1)';
+                                        break;
+                                    case 'Rechazado':
+                                        color = '#dd0483'; // Rojo
+                                        backgroundColor = 'rgba(255, 0, 0, 0.1)';
+                                        break;
+                                    case 'Pendiente':
+                                        color = '#DD8E04'; // Naranja
+                                        backgroundColor = 'rgba(255, 165, 0, 0.1)';
+                                        break;
+                                    default:
+                                        color = '#464646'; // Negro
+                                        backgroundColor = 'rgba(255, 165, 0, 0.1)';
+                                }
+                            }
 
-        const style = `
+                            const style = `
             background: #E9FFE8 0% 0% no-repeat padding-box;
             border-radius: 7px;
             opacity: 1;
@@ -584,9 +589,9 @@
             background-color: ${backgroundColor};
         `;
 
-        return `<center><span style="${style}">${statusText}</span></center>`;
-    }
-},
+                            return `<center><span style="${style}">${statusText}</span></center>`;
+                        }
+                    },
 
                     {
                         data: 'mostrar',
