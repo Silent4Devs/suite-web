@@ -179,14 +179,14 @@
                         <label for="" class="txt-tamaño">
                             Nombre Comercial
                         </label>
-                        <input type="text" id="proveedor-nombre" name="nombre" value="" readonly
+                        <input type="text" id="proveedor-nombre" name="nombre" value=""
                             class="browser-default">
                     </div>
                     <div class="col s12 l3 ">
                         <label for="" class="txt-tamaño">
                             RFC
                         </label>
-                        <input type="text" id="proveedor-rfc" name="rfc" value="" readonly
+                        <input type="text" id="proveedor-rfc" name="rfc" value=""
                             class="browser-default">
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                         <label for="" class="txt-tamaño">
                             Nombre del contacto
                         </label>
-                        <input type="text" id="proveedor-contacto" value="" name="contacto" readonly
+                        <input type="text" id="proveedor-contacto" value="" name="contacto"
                             class="browser-default">
                     </div>
                     <div class="col s12 l9 ">
@@ -403,7 +403,7 @@
         <div class="caja-input-dinero">
             <input id="input-total-serv{{ $count }}" type="text" name="total{{ $count }}"
                 data-count="{{ $count }}" class="mod-total browser-default" required
-                value="{{ $producto->total }}" readonly>
+                value="{{ $producto->total }}">
         </div>
     </div>
 </div>
@@ -427,7 +427,7 @@
                 </label>
                 <div class="caja-input-dinero">
                     <input type="text" id="sub_total_calculado" name="sub_total" class="browser-default" required
-                        value="{{ $requisicion->sub_total }}" style="background: rgb(250, 249, 249);" readonly>
+                        value="{{ $requisicion->sub_total }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
         </div>
@@ -438,7 +438,7 @@
                 </label>
                 <div class="caja-input-dinero">
                     <input type="text" id="iva_calculado" name="iva" class="browser-default" required
-                        value="{{ $requisicion->iva }}" style="background: rgb(250, 249, 249);" readonly>
+                        value="{{ $requisicion->iva }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
         </div>
@@ -449,8 +449,7 @@
                 </label>
                 <div class="caja-input-dinero">
                     <input type="text" id="iva_retenido_calculado" name="iva_retenido" class="browser-default"
-                        required value="{{ $requisicion->iva_retenido }}" style="background: rgb(250, 249, 249);"
-                        readonly>
+                        required value="{{ $requisicion->iva_retenido }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
         </div>
@@ -461,8 +460,7 @@
                 </label>
                 <div class="caja-input-dinero">
                     <input type="text" id="isr_retenido_calculado" name="isr_retenido" class="browser-default"
-                        required value="{{ $requisicion->isr_retenido }}" style="background: rgb(250, 249, 249);"
-                        readonly>
+                        required value="{{ $requisicion->isr_retenido }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
         </div>
@@ -473,7 +471,7 @@
                 </label>
                 <div class="caja-input-dinero">
                     <input type="text" id="total_calculado" name="total" class="browser-default" required
-                        value="{{ $requisicion->total }}" style="background: rgb(250, 249, 249);" readonly>
+                        value="{{ $requisicion->total }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
         </div>
