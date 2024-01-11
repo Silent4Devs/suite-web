@@ -1,5 +1,5 @@
 name: Security checks
-run-name: ${{ github.actor }} run security checks
+
 on:
   push:
     branches:
@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - develop
+
 jobs:
   Security-checks:
     runs-on: ubuntu-latest
@@ -25,7 +26,13 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
 
-      - name: Get Composer Cache Directory 2
+      - name: Install PHP extensions
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libzip-dev libpng-dev libjpeg-dev libwebp-dev libexif-dev
+          sudo docker-php-ext-install zip gd exif
+
+      - name: Get Composer Cache Directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
@@ -45,20 +52,20 @@ jobs:
           path: vendor
           key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
 
-
       - name: Check out repository code
         uses: actions/checkout@v3
 
       - name: Update Dependencies with latest stable
         if: matrix.dependency-stability == 'prefer-stable'
         run: composer update --prefer-stable
+
       - name: Update Dependencies with lowest stable
         if: matrix.dependency-stability == 'prefer-lowest'
         run: composer update --prefer-stable --prefer-lowest
 
       - name: Install Dependencies
         if: steps.vendor-cache.outputs.cache-hit != 'true'
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-req=ext-zip --ignore-platform-req=ext-gd --ignore-platform-req=ext-exif
 
       - name: Find security vulnerabilities in your PHP
         uses: psalm/psalm-github-security-scan@1.2.1

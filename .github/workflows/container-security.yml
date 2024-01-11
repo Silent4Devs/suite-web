@@ -1,55 +1,55 @@
-name: Security Container Workflow
-run-name: ${{ github.actor }} run Security container scanning
+# name: Security Container Workflow
+# run-name: ${{ github.actor }} run Security container scanning
 
-on:
-  push:
-    branches:
-      - develop
-  pull_request:
-    branches:
-      - develop
-      - feature/*
-      - hotfix/*
-      - release/*
-      - fix/*
-      - refactor/*
+# on:
+#   push:
+#     branches:
+#       - develop
+#   pull_request:
+#     branches:
+#       - develop
+#       - feature/*
+#       - hotfix/*
+#       - release/*
+#       - fix/*
+#       - refactor/*
 
-jobs:
-  code-scanning:
-    runs-on: ubuntu-latest
+# jobs:
+#   code-scanning:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18'
 
-      - name: Install Dependencies
-        run: npm install
+#       - name: Install Dependencies
+#         run: npm install
 
-      - name: Run CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+#       - name: Run CodeQL Analysis
+#         uses: github/codeql-action/analyze@v2
 
-  container-scanning:
-    runs-on: ubuntu-latest
+#   container-scanning:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v1
+#       - name: Set up Docker
+#         uses: docker/setup-buildx-action@v1
 
-      - name: Build and Run Docker Compose
-        run: docker-compose up --build -d
+#       - name: Build and Run Docker Compose
+#         run: docker-compose up --build -d
 
-      - name: Run Trivy for Container Scanning
-        run: |
-          docker pull aquasec/trivy
-          docker run --rm -v $(pwd):/root -w /root aquasec/trivy --exit-code 0 --severity HIGH,CRITICAL --no-progress tu_usuario/tu_proyecto:$GITHUB_SHA
+#       # - name: Run Trivy for Container Scanning
+#       #   run: |
+#       #     docker pull aquasec/trivy
+#       #     docker run --rm -v $(pwd):/root -w /root aquasec/trivy --exit-code 0 --severity HIGH,CRITICAL --no-progress tu_usuario/tu_proyecto:$GITHUB_SHA
 
-      - name: Tear Down Docker Compose
-        run: docker-compose down
+#       - name: Tear Down Docker Compose
+#         run: docker-compose down
