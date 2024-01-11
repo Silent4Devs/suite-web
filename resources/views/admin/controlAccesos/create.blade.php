@@ -9,7 +9,7 @@
             <div>
                 <br>
                 <br>
-                <h4>¿Qué es Control de Accesos?</h4>
+                <h4>¿Qué es Control de Accesos? </h4>
                 <p>
                     Garantiza que las personas adecuadas tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
                 </p>
@@ -39,8 +39,11 @@
 
                 </div>
 
-                <div class="form-group col-sm-4 mt-3 anima-focus">
+                <div class="form-group col-sm-4 mt-3">
                     <div class="form-group">
+                        <label class="required" for='responsable_id'><i
+                                class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                        <select
                             class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
                             name='responsable_id' id='responsable_id' required>
                             <option value="">Seleccione un responsable</option>
@@ -52,7 +55,6 @@
                                     {{ $responsable->name }}</option>
                             @endforeach
                         </select>
-                        {!! Form::label('responsable_id', 'Responsable*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('responsable_id'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('responsable_id') }}
@@ -77,10 +79,13 @@
                     Periodo</span>
             </div>
 
-            <div class="form-group col-sm-12 col-md-12 col-lg-6 anima-focus">
+            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                <label class="required" for="fecha_inicio">
+                    Fecha Inicio
+                </label>
                 <input required class="form-control" type="date" min="1945-01-01"
                 id="fecha_inicio" name="fecha_inicio" value="{{ old('fecha_inicio')}}">
-                {!! Form::label('fecha_inicio', 'Fecha inicio*', ['class' => 'asterisco']) !!}
+                
                 <span class="fecha_inicio_error text-danger errores"></span>
                 @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback">
@@ -91,7 +96,6 @@
 
             <div class="form-group col-sm-12 col-md-12 col-lg-6">
                 <label class="required" for="fecha_fin">
-                    <i class="fas fa-calendar-alt iconos-crear"></i>
                     Fecha Fin
                 </label>
                 <input required class="form-control" type="date" min="1945-01-01"

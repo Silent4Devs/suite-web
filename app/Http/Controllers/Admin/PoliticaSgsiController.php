@@ -90,7 +90,7 @@ class PoliticaSgsiController extends Controller
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
 
-        $modulo = ListaDistribucion::with('participantes')->where('id', 7)->first();
+        $modulo = ListaDistribucion::with('participantes')->where('id', 3)->first();
 
 
         if (!isset($modulo)) {
