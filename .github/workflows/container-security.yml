@@ -1,0 +1,48 @@
+name: Security Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  code-scanning:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+  container-scanning:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v2
+        with:
+          docker-version: '20.10.9'
+
+      - name: Build and Run Docker Compose
+        run: docker-compose up --build -d
+
+      - name: Run Trivy for Container Scanning
+        run: |
+          docker pull aquasec/trivy
+          docker run --rm -v $(pwd):/root -w /root aquasec/trivy --exit-code 0 --severity HIGH,CRITICAL --no-progress tu_usuario/tu_proyecto:$GITHUB_SHA
+
+      - name: Tear Down Docker Compose
+        run: docker-compose down
