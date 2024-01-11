@@ -3,6 +3,10 @@
 
 
     <style>
+        .bg-primary {
+            background-color: #ffffff !important;
+        }
+
         .caja_nuevo {
             display: inline-block;
             width: 100%;
@@ -81,7 +85,7 @@
                     @if ($documento->archivo)
                         @can('documentos_download')
                             <embed src="{{ asset($path_documento . '/' . $documento->archivo) }}" class="mt-5 w-100"
-                                style="height: 800px" frameborder="0" id="pdf">
+                                style="height: 800px;" frameborder="0" id="pdf">
                         @else
                             {{-- Oculta el panel --}}
                             {{-- <embed id="documento" src="{{ asset($path_documento . '/' . $documento->archivo) }}#toolbar=0&navpanes=0"
