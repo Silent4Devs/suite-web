@@ -29,9 +29,9 @@ class IncidentesDayOffController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'amenazas_ver';
-                $editGate = 'amenazas_editar';
-                $deleteGate = 'amenazas_eliminar';
+                $viewGate = 'incidentes_dayoff_acceder';
+                $editGate = 'incidentes_dayoff_editar';
+                $deleteGate = 'incidentes_dayoff_acceder';
                 $crudRoutePart = 'incidentes-dayoff';
 
                 return view('partials.datatablesActions', compact(
@@ -126,19 +126,19 @@ class IncidentesDayOffController extends Controller
             return redirect()->back()->withErrors($errors)->withInput();
         }
 
-        if (! empty($empleados)) {
+        if (!empty($empleados)) {
             $empleados = array_map(function ($value) {
                 return intval($value);
             }, $request->empleados);
         }
 
-        if (! empty($puestos)) {
+        if (!empty($puestos)) {
             $puestos = array_map(function ($value) {
                 return intval($value);
             }, $request->puestos);
         }
 
-        if (! empty($areas)) {
+        if (!empty($areas)) {
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
@@ -220,19 +220,19 @@ class IncidentesDayOffController extends Controller
         $vacacion = IncidentesDayoff::find($id);
 
         $vacacion->update($request->all());
-        if (! empty($empleados)) {
+        if (!empty($empleados)) {
             $empleados = array_map(function ($value) {
                 return intval($value);
             }, $request->empleados);
         }
 
-        if (! empty($puestos)) {
+        if (!empty($puestos)) {
             $puestos = array_map(function ($value) {
                 return intval($value);
             }, $request->puestos);
         }
 
-        if (! empty($areas)) {
+        if (!empty($areas)) {
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
