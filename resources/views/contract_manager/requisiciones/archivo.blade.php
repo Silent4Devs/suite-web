@@ -38,7 +38,11 @@
                         <td>{{$requisicion->referencia}}</td>
                         <td>{{$requisicion->proveedor_catalogo}}</td>
                         <td>{{$requisicion->estado}}</td>
-                        <td>{{$requisicion->contrato->nombre_servicio ?? "Sin registro" }}</td>
+
+                        <td>
+                            {{ !empty($requisicion->contrato->nombre_servicio) ? $requisicion->contrato->nombre_servicio : "Sin registro" }}
+                        </td>
+
                         <td>{{$requisicion->area}}</td>
                         <td>{{$requisicion->user}}</td>
                         <td>
@@ -82,7 +86,7 @@
                  cancelButtonText: 'Cancelar'
              }).then((result) => {
                  if (result.isConfirmed) {
-                     // Coloca aquí la lógica para eliminar el elemento
+                     // Coloca aquí la lógica para eliminar el elemet
                      // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
                      // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                      Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
