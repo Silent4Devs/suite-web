@@ -109,7 +109,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel' . $i][] =
+                    $participantes_seleccionados['nivel'.$i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -150,7 +150,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel' . $i][] =
+                    $participantes_seleccionados['nivel'.$i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -185,7 +185,7 @@ class ListaDistribucionController extends Controller
 
         $data = [];
         for ($i = 1; $i <= $request->niveles; $i++) {
-            $nivelArrayName = 'nivel' . $i;
+            $nivelArrayName = 'nivel'.$i;
             if (isset($nivelArrayName)) {
                 $data[$i] = $request->$nivelArrayName;
                 // $data[$nivelArrayName] = $nivelArrayName;

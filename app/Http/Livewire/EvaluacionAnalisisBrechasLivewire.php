@@ -2,19 +2,20 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\EvaluacionAnalisisBrechas;
+use App\Models\Iso27\AnalisisBrechasIso;
 use App\Models\RespuestasEvaluacionAnalisisBrechas;
 use App\Traits\ObtenerOrganizacion;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use App\Models\Iso27\AnalisisBrechasIso;
-use App\Models\EvaluacionAnalisisBrechas;
 
 class EvaluacionAnalisisBrechasLivewire extends Component
 {
     use ObtenerOrganizacion;
 
     public $itemId;
+
     public $analisisId; // Renamed from $id
+
     public $seccion_vista = 0;
 
     public $selectedValues;
@@ -36,12 +37,13 @@ class EvaluacionAnalisisBrechasLivewire extends Component
     public $results;
 
     public $grafica_cuentas2 = [];
-    public $grafica_colores2= [];
+
+    public $grafica_colores2 = [];
+
     public $resultskeys = [];
 
     // public $imageImprimir ;
     public $logo_actual;
-
 
     public function mount($id)
     {
@@ -57,7 +59,6 @@ class EvaluacionAnalisisBrechasLivewire extends Component
         $analisisBrecha = AnalisisBrechasIso::with('evaluacionAnalisisBrechas')->find($this->analisisId);
         // dd($analisisBrecha->evaluacionAnalisisBrechas);
 
-
         $this->itemId = $analisisBrecha->evaluacionAnalisisBrechas->id;
 
         $template_general = EvaluacionAnalisisBrechas::with('parametros')
@@ -71,7 +72,6 @@ class EvaluacionAnalisisBrechasLivewire extends Component
                     return $query->with('preguntas.respuesta')->where('numero_seccion', '=', $this->seccion_vista);
                 })
                 ->find($this->itemId);
-
 
             foreach ($template->secciones as $key => $seccion) {
                 foreach ($seccion->preguntas as $key => $pregunta) {
@@ -114,18 +114,15 @@ class EvaluacionAnalisisBrechasLivewire extends Component
                 array_push($result2, $result3);
             }
             $this->results = $result2;
-            
 
             $this->cuentas = $result['counts'];
-            
+
             $peso_parametros = $result['porcentaje_parametros'];
-            
+
             $totalCount = $result['totalCount'];
             $totalPorcentaje = $result['total_porcentaje'];
 
             $sectionPercentages = $this->porcentajeTotal();
-
-            
 
             $grafica_cuentas = [];
             $grafica_colores = [];
@@ -137,21 +134,20 @@ class EvaluacionAnalisisBrechasLivewire extends Component
                 }
             }
             $this->grafica_cuentas2 = $grafica_cuentas;
-            
+
             $resultskeys = [];
             $keys = $template->secciones->keys();
-        foreach($keys as $key){
-            $key=$key+1;
-            $resultkey = $this->sumaParametrosSeccion($key);
-            
-            array_push($resultskeys,$resultkey['counts']);
-        }
-        $this->grafica_colores2 = $grafica_colores;
-        $this->resultskeys = $resultskeys;
+            foreach ($keys as $key) {
+                $key = $key + 1;
+                $resultkey = $this->sumaParametrosSeccion($key);
 
-        $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
-        $this->emit('renderGraficsModal', $this->grafica_cuentas2,$resultskeys);
+                array_push($resultskeys, $resultkey['counts']);
+            }
+            $this->grafica_colores2 = $grafica_colores;
+            $this->resultskeys = $resultskeys;
 
+            $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+            $this->emit('renderGraficsModal', $this->grafica_cuentas2, $resultskeys);
 
         }
 
@@ -171,7 +167,6 @@ class EvaluacionAnalisisBrechasLivewire extends Component
         // dd($this->logo_actual);
 
         // $this->imageImprimir = public_path('imprimir.svg');
-        
 
         $this->emit('renderAreas1');
 
@@ -359,8 +354,7 @@ class EvaluacionAnalisisBrechasLivewire extends Component
     public function changeSeccion($newSeccion)
     {
         $this->seccion_vista = $newSeccion;
-        
-        
+
     }
 
     public function saveDataParametros($preguntaID, $parametroID)
@@ -373,7 +367,7 @@ class EvaluacionAnalisisBrechasLivewire extends Component
         // dd($this->selectedValues);
 
         RespuestasEvaluacionAnalisisBrechas::updateOrCreate(
-            ['pregunta_id' => $preguntaID, 'ev_analisis_template_id' => $this->itemId ], // Search criteria
+            ['pregunta_id' => $preguntaID, 'ev_analisis_template_id' => $this->itemId], // Search criteria
             ['parametro_id' => $parametroID], // Values to update or create
         );
     }
@@ -409,6 +403,4 @@ class EvaluacionAnalisisBrechasLivewire extends Component
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
     }
-
-    
 }

@@ -44,8 +44,4 @@ class TemplateTop extends Component
     {
         TemplateAnalisisdeBrechas::destroy($id);
     }
-
-
-
-
 }

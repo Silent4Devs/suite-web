@@ -6,7 +6,6 @@ use App\Models\ParametrosTemplateAnalisisdeBrechas;
 use App\Models\PreguntasTemplateAnalisisdeBrechas;
 use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TemplateSeeder extends Seeder
@@ -32,22 +31,22 @@ class TemplateSeeder extends Seeder
                     'template_id' => $template->id,
                     'estatus' => 'Cumple Satisfactoriamente',
                     'valor' => 2,
-                    'color' => "#34B990",
-                    'descripcion' => 'El requerimiento se cumple en su totalidad.'
+                    'color' => '#34B990',
+                    'descripcion' => 'El requerimiento se cumple en su totalidad.',
                 ],
                 [
                     'template_id' => $template->id,
                     'estatus' => 'Cumple Parcialmente',
                     'valor' => 1,
-                    'color' => "#73A7D5",
-                    'descripcion' => 'El requerimiento se cumple parcialmente.'
+                    'color' => '#73A7D5',
+                    'descripcion' => 'El requerimiento se cumple parcialmente.',
                 ],
                 [
                     'template_id' => $template->id,
                     'estatus' => 'No Cumple',
                     'valor' => 0,
-                    'color' => "#F59595",
-                    'descripcion' => 'El requerimiento no es cumplido.'
+                    'color' => '#F59595',
+                    'descripcion' => 'El requerimiento no es cumplido.',
                 ],
             ]
         );
@@ -56,14 +55,14 @@ class TemplateSeeder extends Seeder
             'template_id' => $template->id,
             'numero_seccion' => '1',
             'descripcion' => 'Definicion del Marco de Seguridad y Privacidad de la Organización. Tiene un peso del 30% del total del componente: 10% - Diagnostico de Seguridad y Privacidad , 20% - Proposito de Seguridad y Privacidad de la Informacion.',
-            'porcentaje_seccion' => '30'
+            'porcentaje_seccion' => '30',
         ]);
 
         $seccion2 = SeccionesTemplateAnalisisdeBrechas::create([
             'template_id' => $template->id,
             'numero_seccion' => '2',
             'descripcion' => 'Implementacion del Plan de Seguridad y Privacidad. Tiene un peso del 40% del total del componente: 20% - Identificacion y analisis de riesgos, 20% - Plan de tratamiento de riesgos, clasificacion y gestion de controles.',
-            'porcentaje_seccion' => '40'
+            'porcentaje_seccion' => '40',
         ]);
 
         $seccion3 =
@@ -71,7 +70,7 @@ class TemplateSeeder extends Seeder
                 'template_id' => $template->id,
                 'numero_seccion' => '3',
                 'descripcion' => 'Monitoreo y mejoramiento continuo. Tiene un peso del 30% del total del componente: 20% - Actividades de seguimiento, medicion, analisis y evaluacion. 10% - Revision e Implementacion de Acciones de Mejora.',
-                'porcentaje_seccion' => '30'
+                'porcentaje_seccion' => '30',
             ]);
 
         $preguntas1 = PreguntasTemplateAnalisisdeBrechas::insert([

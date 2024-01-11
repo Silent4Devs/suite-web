@@ -7,55 +7,81 @@ use App\Models\ParametrosTemplateAnalisisdeBrechas;
 use App\Models\PreguntasTemplateAnalisisdeBrechas;
 use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class SeccionesTemplate extends Component
 {
     use LivewireAlert;
 
     public $nombre_template = null;
+
     public $norma;
+
     public $descripcion = null;
 
-    public $color_estatus_1 = "#34B990";
-    public $color_estatus_2 = "#73A7D5";
-    public $color_estatus_3 = "#F59595";
-    public $color_estatus_4 = "#EEEEEE";
+    public $color_estatus_1 = '#34B990';
+
+    public $color_estatus_2 = '#73A7D5';
+
+    public $color_estatus_3 = '#F59595';
+
+    public $color_estatus_4 = '#EEEEEE';
 
     public $estatus_1;
+
     public $estatus_2;
+
     public $estatus_3;
+
     public $estatus_4;
 
     public $valor_estatus_1;
+
     public $valor_estatus_2;
+
     public $valor_estatus_3;
+
     public $valor_estatus_4;
 
     public $descripcion_parametros_1;
+
     public $descripcion_parametros_2;
+
     public $descripcion_parametros_3;
+
     public $descripcion_parametros_4;
 
     public $descripcion_s1;
+
     public $descripcion_s2;
+
     public $descripcion_s3;
+
     public $descripcion_s4;
 
     public $pregunta1;
+
     public $pregunta2;
+
     public $pregunta3;
+
     public $pregunta4;
 
     public $preguntas_s1 = [];
+
     public $preguntas_s2 = [];
+
     public $preguntas_s3 = [];
+
     public $preguntas_s4 = [];
 
     public $porcentaje_seccion_1;
+
     public $porcentaje_seccion_2;
+
     public $porcentaje_seccion_3;
+
     public $porcentaje_seccion_4;
 
     public $secciones = 1;
@@ -65,7 +91,9 @@ class SeccionesTemplate extends Component
     public $datos_seccion = 1;
 
     public $template;
+
     public $normas;
+
     public $seccion;
 
     public $s1;
@@ -197,7 +225,7 @@ class SeccionesTemplate extends Component
 
             if ($this->secciones > 1 && $this->secciones <= 4) {
                 for ($i = 1; $i < $this->secciones; $i++) {
-                    $numeroSeccion = 's' . $i;
+                    $numeroSeccion = 's'.$i;
                     // dd($this->$numeroSeccion);
                     $this->$numeroSeccion['seccion']['porcentaje_seccion'];
                     $seccion = SeccionesTemplateAnalisisdeBrechas::create([
@@ -221,21 +249,21 @@ class SeccionesTemplate extends Component
                     }
                 }
 
-                $porcentaje += $data['porcentaje_seccion_' . $this->datos_seccion];
+                $porcentaje += $data['porcentaje_seccion_'.$this->datos_seccion];
 
                 if ($porcentaje == 100) {
 
                     $seccion = SeccionesTemplateAnalisisdeBrechas::create([
                         'template_id' => $template->id,
                         'numero_seccion' => $this->datos_seccion,
-                        'descripcion' => $data['descripcion_s' . $this->datos_seccion],
-                        'porcentaje_seccion' => $data['porcentaje_seccion_' . $this->datos_seccion],
+                        'descripcion' => $data['descripcion_s'.$this->datos_seccion],
+                        'porcentaje_seccion' => $data['porcentaje_seccion_'.$this->datos_seccion],
                     ]);
 
                     $numero = 1;
 
                     foreach ($data as $key => $value) {
-                        if (preg_match('/^pregunta' . $this->secciones . '/', $key, $matches) || preg_match('/^pregunta' . $this->secciones . '_(\d+)$/', $key, $matches)) {
+                        if (preg_match('/^pregunta'.$this->secciones.'/', $key, $matches) || preg_match('/^pregunta'.$this->secciones.'_(\d+)$/', $key, $matches)) {
 
                             $preguntas = PreguntasTemplateAnalisisdeBrechas::create([
                                 'seccion_id' => $seccion->id,
@@ -261,7 +289,7 @@ class SeccionesTemplate extends Component
                 $seccion = SeccionesTemplateAnalisisdeBrechas::create([
                     'template_id' => $template->id,
                     'numero_seccion' => $this->datos_seccion,
-                    'descripcion' => $data['descripcion_s' . $this->datos_seccion],
+                    'descripcion' => $data['descripcion_s'.$this->datos_seccion],
                     'porcentaje_seccion' => $porcentaje,
                 ]);
 
@@ -300,8 +328,8 @@ class SeccionesTemplate extends Component
 
                     $seccion = [
                         'numero_seccion' => $this->datos_seccion,
-                        'descripcion' => $data['descripcion_s' . $this->datos_seccion],
-                        'porcentaje_seccion' => $data['porcentaje_seccion_' . $this->datos_seccion],
+                        'descripcion' => $data['descripcion_s'.$this->datos_seccion],
+                        'porcentaje_seccion' => $data['porcentaje_seccion_'.$this->datos_seccion],
                     ];
 
                     $preguntas1 = $this->preguntas($data, 1);
@@ -321,8 +349,8 @@ class SeccionesTemplate extends Component
 
                     $seccion = [
                         'numero_seccion' => $this->datos_seccion,
-                        'descripcion' => $data['descripcion_s' . $this->datos_seccion],
-                        'porcentaje_seccion' => $data['porcentaje_seccion_' . $this->datos_seccion],
+                        'descripcion' => $data['descripcion_s'.$this->datos_seccion],
+                        'porcentaje_seccion' => $data['porcentaje_seccion_'.$this->datos_seccion],
                     ];
 
                     $preguntas2 = $this->preguntas($data, 2);
@@ -340,8 +368,8 @@ class SeccionesTemplate extends Component
 
                     $seccion = [
                         'numero_seccion' => $this->datos_seccion,
-                        'descripcion' => $data['descripcion_s' . $this->datos_seccion],
-                        'porcentaje_seccion' => $data['porcentaje_seccion_' . $this->datos_seccion],
+                        'descripcion' => $data['descripcion_s'.$this->datos_seccion],
+                        'porcentaje_seccion' => $data['porcentaje_seccion_'.$this->datos_seccion],
                     ];
 
                     $preguntas3 = $this->preguntas($data, 3);
@@ -390,7 +418,7 @@ class SeccionesTemplate extends Component
 
             if (
                 isset($values[$estatusKey]) && isset($values[$valorKey]) &&
-                !empty($values[$estatusKey]) && !empty($values[$valorKey])
+                ! empty($values[$estatusKey]) && ! empty($values[$valorKey])
             ) {
                 $groupedValues["group_{$i}"] = [
                     'estatus' => $values[$estatusKey],
@@ -409,7 +437,7 @@ class SeccionesTemplate extends Component
         $result = [];
         // $numero = 1;
         foreach ($data as $key => $value) {
-            if (preg_match('/^pregunta' . $seccion . '/', $key, $matches) || preg_match('/^pregunta' . $seccion . '_(\d+)$/', $key, $matches)) {
+            if (preg_match('/^pregunta'.$seccion.'/', $key, $matches) || preg_match('/^pregunta'.$seccion.'_(\d+)$/', $key, $matches)) {
 
                 // dd($value);
                 // $index = intval($matches[1]);

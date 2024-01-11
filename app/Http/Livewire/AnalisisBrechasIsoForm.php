@@ -2,22 +2,17 @@
 
 namespace App\Http\Livewire;
 
-use App\Functions\GenerateAnalisisBIso;
 use App\Models\Empleado;
-use App\Models\Iso27\AnalisisBrechasIso;
-use Livewire\Component;
-use Carbon\Carbon;
-use App\Models\Iso27\GapDosConcentradoIso;
-use App\Models\Iso27\GapTresConcentradoIso;
-use App\Models\Iso27\GapUnoConcentratoIso;
-use App\Models\Norma;
-use App\Models\TemplateAnalisisdeBrechas;
-use App\Models\EvaluacionTemplatesAnalisisBrechas;
-use Illuminate\Support\Facades\DB;
 use App\Models\EvaluacionAnalisisBrechas;
+use App\Models\Iso27\AnalisisBrechasIso;
+use App\Models\Norma;
 use App\Models\ParametrosEvaluacionAnalisisBrechas;
-use App\Models\SeccionesEvaluacionAnalisisBrechas;
 use App\Models\PreguntasEvaluacionanalisisBrechas;
+use App\Models\SeccionesEvaluacionAnalisisBrechas;
+use App\Models\TemplateAnalisisdeBrechas;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Livewire\Component;
 
 class AnalisisBrechasIsoForm extends Component
 {
@@ -38,6 +33,7 @@ class AnalisisBrechasIsoForm extends Component
     public $view = 'create';
 
     protected $listeners = ['destroy'];
+
     public $imagenID;
 
     public function mount()
@@ -53,7 +49,7 @@ class AnalisisBrechasIsoForm extends Component
         $normas = Norma::get();
         $this->imagenID = asset('img\alert_template_analisis_brechas_id.png');
 
-        return view('livewire.analisis-brechas-iso-form', compact('empleados', 'analisis_brechas', 'templates', "normas"));
+        return view('livewire.analisis-brechas-iso-form', compact('empleados', 'analisis_brechas', 'templates', 'normas'));
     }
 
     private function resetInput()
@@ -137,7 +133,6 @@ class AnalisisBrechasIsoForm extends Component
 
             $parametros_generales = $template_general->parametros;
             $secciones_generales = $template_general->secciones;
-
 
             $evaluacion = EvaluacionAnalisisBrechas::create([
                 'analisis_brechas_id' => $analisisBrechaIso->id,

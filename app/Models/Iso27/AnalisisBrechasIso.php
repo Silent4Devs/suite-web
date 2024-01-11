@@ -3,9 +3,9 @@
 namespace App\Models\Iso27;
 
 use App\Models\Empleado;
+use App\Models\EvaluacionAnalisisBrechas;
 use App\Models\EvaluacionTemplatesAnalisisBrechas;
 use App\Models\Norma;
-use App\Models\EvaluacionAnalisisBrechas;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('no_secciones');
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('analisis_brechas_id')->references('id')->on('analisis_brechas_isos')->onDelete('cascade');
             $table->foreign('norma_id')->references('id')->on('normas')->onDelete('cascade');
         });

@@ -31,6 +31,6 @@ class TemplateAnalisisdeBrechas extends Model
 
     public function evaluacionTemplatesAnalisisBrechas($id)
     {
-        return self::select('id','nombre_template','norma_id','descripcion','no_secciones','top')->findOrFail($id);
+        return self::select('id', 'nombre_template', 'norma_id', 'descripcion', 'no_secciones', 'top')->findOrFail($id);
     }
 }

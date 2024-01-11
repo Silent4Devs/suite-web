@@ -33,7 +33,6 @@ class PoliticaSgsiController extends Controller
 
     public $modelo = 'PoliticaSgsi';
 
-
     public function index(Request $request)
     {
         abort_if(Gate::denies('politica_sistema_gestion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -93,7 +92,7 @@ class PoliticaSgsiController extends Controller
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         $listavacia = 'cumple';
-        if (!isset($modulo)) {
+        if (! isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -245,7 +244,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsis = PoliticaSgsi::where('estatus', 'Aprobado')->get();
         foreach ($politicaSgsis as $polsgsis) {
-            if (!isset($polsgsis->reviso)) {
+            if (! isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                 $polsgsis->estemp = 'baja';
             } else {
@@ -486,7 +485,7 @@ class PoliticaSgsiController extends Controller
 
         $politica->update(
             [
-                'estatus' => 'Rechazado'
+                'estatus' => 'Rechazado',
             ]
         );
 
@@ -522,7 +521,7 @@ class PoliticaSgsiController extends Controller
             ]);
 
             $politica->update([
-                'estatus' => 'Aprobado'
+                'estatus' => 'Aprobado',
             ]);
 
             // dd($proceso, $politica);
