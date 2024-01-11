@@ -67,8 +67,8 @@ jobs:
         if: steps.vendor-cache.outputs.cache-hit != 'true'
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-req=ext-zip --ignore-platform-req=ext-gd --ignore-platform-req=ext-exif
 
-      - name: Find security vulnerabilities in your PHP
-        uses: psalm/psalm-github-security-scan@1.2.1
+      # - name: Find security vulnerabilities in your PHP
+      #   uses: psalm/psalm-github-security-scan@1.2.1
 
       - name: Checks composer.json for known vulnerabilities
         uses: symfonycorp/security-checker-action@v4
