@@ -109,7 +109,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -489,7 +489,9 @@ class AlcanceSgsiController extends Controller
     public function confirmacionAprobacion($proceso, $alcance)
     {
         $confirmacion = ControlListaDistribucion::with('proceso')->where('proceso_id', '=', $proceso->id)
-            ->get();
+            ->withwhereHas('participante', function ($query) {
+                return $query->where('nivel', '>', 0);
+            })->get();
 
         $isSameEstatus = $confirmacion->every(function ($record) {
             return $record->estatus == 'Aprobado'; // Assuming 'estatus' is the column name
