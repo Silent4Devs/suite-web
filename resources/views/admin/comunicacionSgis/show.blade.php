@@ -80,10 +80,10 @@
                     <br>
                     <h4>¿Qué es Comunicados Generales?  </h4>
                     <p>
-                        Anuncios o mensajes importantes.
+                        Anuncios o mensajes importantes  que la organización comparte con todos sus colaboradores para comunicar aspectos importante.
                     </p>
                     <p>
-                        Que la organización comparte con todos sus colaboradores para comunicar aspectos importante.
+    
                     </p>
                 </div>
             </div>

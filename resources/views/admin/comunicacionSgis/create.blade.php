@@ -11,22 +11,22 @@
     </style>
 
 <h5 class="col-12 titulo_general_funcion">Comunicados Generales</h5>
-<div class="card card-body" style="background-color: #5397D5; color: #fff;">
-    <div class="d-flex" style="gap: 25px;">
-        <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
-        <div>
-            <br>
-            <br>
-            <h4>¿Qué es Comunicados Generales?  </h4>
-            <p>
-                Anuncios o mensajes importantes.
-            </p>
-            <p>
-                Que la organización comparte con todos sus colaboradores para comunicar aspectos importante.
-            </p>
+        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+            <div class="d-flex" style="gap: 25px;">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+                <div>
+                    <br>
+                    <br>
+                    <h4>¿Qué es Comunicados Generales?  </h4>
+                    <p>
+                        Anuncios o mensajes importantes  que la organización comparte con todos sus colaboradores para comunicar aspectos importante.
+                    </p>
+                    <p>
+    
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
     <div class="mt-4 card">
 

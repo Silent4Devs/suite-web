@@ -100,7 +100,6 @@
                     Garantiza que las personas adecuadas tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
                 </p>
                 <p>
-                    Garantiza que las personas adecuadas tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
                     Esencial para garantizar la seguridad y la integridad de la información, así como para proteger los activos críticos de una organización.
                 </p>
             </div>

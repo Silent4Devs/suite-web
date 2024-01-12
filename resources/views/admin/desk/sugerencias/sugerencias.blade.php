@@ -38,12 +38,13 @@
 </div>
 
 
+@can('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia')
+<div class="mb-3 text-right">
+    <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/sugerencias')}}">Crear reporte</a>
+</div>
+@endcan
+
 <div class="card card-body">
-    @can('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia')
-    <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/sugerencias')}}">Crear reporte</a>
-    </div>
-    @endcan
 
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">

@@ -53,21 +53,16 @@
     </div>
 </div>
 
+<div class=" mb-3 text-right">
+    @can('centro_atencion_quejas_clientes_agregar')
+        <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
+    @endcan
 
+    @can('centro_atencion_quejas_cliente_dashboard')
+        <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
+    @endcan
+</div>
 <div class="card card-body">
-        <div class=" mb-3 text-right">
-            @can('centro_atencion_quejas_clientes_agregar')
-                <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
-            @endcan
-
-            @can('centro_atencion_quejas_cliente_dashboard')
-                <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
-            @endcan
-        </div>
-
-
-
-
          @include('partials.flashMessages')
             <div class="datatable-fix datatable-rds">
                      <table class="datatable tabla_quejasclientes" id="tabla-procesos">
