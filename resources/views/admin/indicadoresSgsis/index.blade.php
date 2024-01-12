@@ -78,10 +78,9 @@
                     <br>
                     <h4>¿Qué es Indicadores del Sistema de Gestión?  </h4>
                     <p>
-                        Marcadores que proporcionan la información necesaria.
+                        Marcadores que proporcionan la información necesaria para tomar decisiones y ajustar estrategias según sea necesario.
                     </p>
                     <p>
-                        Para tomar decisiones y ajustar estrategias según sea necesario.
                     </p>
                 </div>
             </div>

@@ -82,11 +82,11 @@
 </div>
 
 
-<div class="card card-body">
-    <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
-    </div>
+<div class="mb-3 text-right">
+    <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
+</div>
 
+<div class="card card-body">
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
         <table class="datatable tabla_incidentes_seguridad">

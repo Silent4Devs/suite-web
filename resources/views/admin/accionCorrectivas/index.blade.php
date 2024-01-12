@@ -77,9 +77,16 @@
             </div>
         </div>
     </div>
+
     <div class="caja_caja_secciones">
         <div class="caja_secciones">
             <section id="indexAc">
+                <div class="text-right">
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn btn-primary">Registrar Acción</a> 
+                    </div>
+                </div>
+                
                 <div class="mt-1 card">
                     <div class="container">
                         <div class="row">
@@ -93,9 +100,9 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="card">
                         <div class="card-body datatable-fix">
-
                             <table class="table table-bordered w-100 datatable-AccionCorrectiva">
                                 <thead class="thead-dark">
                                     <tr>
@@ -160,6 +167,11 @@
             </section>
 
             <section id="aprobaciones" class="caja_tab_reveldada">
+                <div class="text-right">
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn btn-primary">Registrar Solicitud</a> 
+                    </div>
+                </div>
                 <div class="mt-1 card">
                     <div class="card-body datatable-fix">
                         <table id="tabla_usuario_aprobaciones" class="table">
@@ -272,18 +284,18 @@
 
             ];
             let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar acciones correctivas',
-                url: "{{ route('admin.accion-correctivas.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar acciones correctivas',
+                // url: "{{ route('admin.accion-correctivas.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config) {
+                //     let {
+                //         url
+                //     } = config;
+                //     window.location.href = url;
+                // }
             };
-            dtButtons.push(btnAgregar);
+            // dtButtons.push(btnAgregar);
 
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
@@ -613,18 +625,18 @@
             ];
 
             let btnAgregarAprobacion = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar acciones correctivas',
-                url: "{{ route('admin.accion-correctivas.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar acciones correctivas',
+                // url: "{{ route('admin.accion-correctivas.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config) {
+                //     let {
+                //         url
+                //     } = config;
+                //     window.location.href = url;
+                // }
             };
-            dtButtonsAprobacion.push(btnAgregarAprobacion);
+            // dtButtonsAprobacion.push(btnAgregarAprobacion);
 
             let deleteButtonTransAprobacion = '{{ trans('global.datatables.delete') }}';
             let deleteButtonAprobacion = {
