@@ -70,15 +70,19 @@
     <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión </h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;"
+                class="mt-2 mb-2 ml-2 img-fluid">
             <div>
                 <br>
                 <h4> ¿Qué es? Política del Sistema de Gestión</h4>
                 <p>
-                    Es una declaración oficial de la dirección de una organización que establece sus intenciones y compromisos con respecto al sistema de gestión implementado en la organización.
+                    Es una declaración oficial de la dirección de una organización que establece sus intenciones y
+                    compromisos con respecto al sistema de gestión implementado en la organización.
                 </p>
                 <p>
-                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u otros ámbitos específicos.
+                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
+                    organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
+                    otros ámbitos específicos.
                 </p>
             </div>
         </div>
@@ -123,7 +127,8 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.politica-sgsis.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
+                    <a href="{{ route('admin.politica-sgsis.index') }}" class="btn_cancelar"
+                        style="text-decoration: none;">Cancelar</a>
                     <button class="btn btn-primary" type="submit" style="color: white">
                         {{ trans('global.save') }}
                     </button>
@@ -134,9 +139,9 @@
 
     <div class="mt-4 card">
         <div class="card-body">
-            <h5>Historial Comentarios Alta dirección</h5>
+            <h5>Historial de Comentarios</h5>
             <br>
-            <h6>COMENTARIO DEL COLABORADOR</h6>
+            <h6>Comentario del colaborador.</h6>
             <ol>
                 @foreach ($comentarios as $c)
                     <li>{{ $c->comentario }}</li>
