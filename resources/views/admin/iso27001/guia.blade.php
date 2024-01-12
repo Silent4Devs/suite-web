@@ -98,31 +98,37 @@
     </style>
     <div class="menu-pasos-guia scroll_estilo">
         <ul>
-            <li data-id="content-guia-iso-1" class="paso-menu-1 active-paso">
+            <a href="{{ route('admin.dashboard_auditorias') }}">
+                <li data-id="content-guia-iso-1" class="paso-menu-0" style="position: relative; top: -4.4rem; border: 1px solid #EFF1F5; height: 4.2rem;";>
+                    <i class="material-icons-outlined">dashboard</i>
+                    Dashboard
+                </li>
+            </a> 
+            <li data-id="content-guia-iso-1" class="paso-menu-1" style="position: relative; top: -3rem;" >
                 <i class="material-symbols-outlined">article</i>
                 Contexto
             </li>
-            <li data-id="content-guia-iso-2" class="paso-menu-2">
+            <li data-id="content-guia-iso-2" class="paso-menu-0" style="position: relative; top: -3rem;" >
                 <i class="material-symbols-outlined">military_tech</i>
                 Liderazgo
             </li>
-            <li data-id="content-guia-iso-3" class="paso-menu-3">
+            <li data-id="content-guia-iso-3" class="paso-menu-3" style="position: relative; top: -3rem;">
                 <i class="material-symbols-outlined">newsmode</i>
                 Planificación
             </li>
-            <li data-id="content-guia-iso-4" class="paso-menu-4">
+            <li data-id="content-guia-iso-4" class="paso-menu-4" style="position: relative; top: -3rem;">
                 <i class="material-symbols-outlined">shield_question</i>
                 Soporte
             </li>
-            <li data-id="content-guia-iso-5" class="paso-menu-5">
+            <li data-id="content-guia-iso-5" class="paso-menu-5" style="position: relative; top: -3rem;">
                 <i class="material-symbols-outlined">business_center</i>
                 Operación
             </li>
-            <li data-id="content-guia-iso-6" class="paso-menu-6">
+            <li data-id="content-guia-iso-6" class="paso-menu-6" style="position: relative; top: -3rem;">
                 <i class="material-symbols-outlined">editor_choice</i>
                 Evaluación
             </li>
-            <li data-id="content-guia-iso-7" class="paso-menu-7">
+            <li data-id="content-guia-iso-7" class="paso-menu-7" style="position: relative; top: -3rem;">
                 <i class="material-symbols-outlined">star</i>
                 Mejora
             </li>
@@ -143,12 +149,12 @@
                     </div>
                 @endcan
             </div>
-            <div class="col-6" style="text-align: right;">
+            {{-- <div class="col-6" style="text-align: right;">
                 <a href="{{ route('admin.dashboard_auditorias') }}" class="btn btn-success">
                     <i class="fas fa-chart-pie mr-2"></i>
                     DASHBOARD
                 </a>
-            </div>
+            </div> --}}
         </div>
 
         <div class="card card-body card-main-iso" style="border-radius: 0px !important;">

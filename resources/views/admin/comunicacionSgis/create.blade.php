@@ -19,10 +19,10 @@
                     <br>
                     <h4>¿Qué es Comunicados Generales?  </h4>
                     <p>
-                        Anuncios o mensajes importantes  que la organización comparte con todos sus colaboradores para comunicar aspectos importante.
+                        Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar aspectos importantes.
                     </p>
                     <p>
-    
+                        Son fundamentales ya que contribuye a la concientización y comprensión general.
                     </p>
                 </div>
             </div>

@@ -119,10 +119,10 @@
                     <br>
                     <h4> ¿Qué es Concientización SGI?   </h4>
                     <p>
-                        Proporcionar a todos en la empresa el conocimiento y la comprensión.
+                        Proporcionar el conocimiento y la comprensión necesarios para ser parte activa en la seguridad de la información.
                     </p>
                     <p>
-                        Necesarios para ser parte activa en la seguridad de la información.
+                        Implica que todos los miembros de la organización, desde la alta dirección hasta los empleados de todos los niveles, estén conscientes de los riesgos asociados con la seguridad de la información.
                     </p>
                 </div>
             </div>

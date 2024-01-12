@@ -128,7 +128,7 @@ class InicioUsuarioController extends Controller
         $solicitud_dayoff = 0;
         $solicitud_permiso = 0;
         $solicitudes_pendientes = 0;
-        $cacheKey = 'AuditoriaInterna:auditoria_internas_'.$usuario->id;
+        $cacheKey = 'AuditoriaInterna:auditoria_internas_' . $usuario->id;
         $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($usuario, $empleado) {
             return AuditoriaInterna::where(function ($query) use ($usuario, $empleado) {
                 $query->whereHas('equipo', function ($subquery) use ($empleado) {
@@ -137,7 +137,7 @@ class InicioUsuarioController extends Controller
             })->distinct()->get();
         });
 
-        $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
+        $cacheKeyRecursos = 'Recursos:recursos_' . $usuario->id;
         $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
             return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
@@ -202,7 +202,7 @@ class InicioUsuarioController extends Controller
 
         $panel_rules = PanelInicioRule::getAll();
 
-        if (! is_null($usuario->empleado)) {
+        if (!is_null($usuario->empleado)) {
             $activos = Activo::select('*')->where('id_responsable', '=', $usuario->empleado->id)->get();
             if ($usuario->empleado->cumpleaños) {
                 $cumpleaños_usuario = Carbon::parse($usuario->empleado->cumpleaños)->format('d-m');
@@ -236,7 +236,7 @@ class InicioUsuarioController extends Controller
                     }]);
                 }]
             )->find($usuario->empleado->id)->puestoRelacionado;
-            $competencias = ! is_null($competencias) ? $competencias->competencias : collect();
+            $competencias = !is_null($competencias) ? $competencias->competencias : collect();
 
             $quejas = Quejas::getAll()->where('empleado_quejo_id', $usuario->empleado->id);
             $denuncias = Denuncias::getAll()->where('empleado_denuncio_id', $usuario->empleado->id);
