@@ -8,12 +8,11 @@
             <div>
                 <br>
                 <br>
-                <h4>¿Qué es Control de Accesos? </h4>
+                <h4>¿Qué es Control de Accesos?</h4>
                 <p>
                     Garantiza que las personas adecuadas tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
                 </p>
                 <p>
-                    Garantiza que las personas adecuadas tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
                     Esencial para garantizar la seguridad y la integridad de la información, así como para proteger los activos críticos de una organización.
                 </p>
             </div>
@@ -41,14 +40,14 @@
 
                 <div class="form-group col-sm-4 mt-3 anima-focus">
                     <select
-                        class="form-control {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
+                        class="form-control {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}" onchange="printarea();"
                         name='responsable_id' id='responsable_id' required>
                         <option value="">Seleccione un responsable</option>
                         @foreach ($responsables as $responsable)
                             <option value="{{ $responsable->id }}"
                                 data-area="{{ $responsable->area->area }}"
                                 data-puesto="{{ $responsable->puesto }}"
-                                {{ old('responsable_id') == $responsable->id ? 'selected' : '' }}>
+                                {{ old('responsable_id',$controlAcceso->responsable_id) == $responsable->id ? 'selected' : '' }}>
                                 {{ $responsable->name }}</option>
                         @endforeach
                     </select>
@@ -212,6 +211,28 @@
     </div>
 @endsection
 
+<script>
+    function printarea() {
+        // Obtiene el elemento select y la opción seleccionada
+        var select = document.getElementById('responsable_id');
+        var selectedOption = select.options[select.selectedIndex];
+
+        // Accede a los atributos personalizados data-area y data-puesto
+        var area = selectedOption.getAttribute('data-area');
+        var puesto = selectedOption.getAttribute('data-puesto');
+
+        // Actualiza el contenido de los elementos div correspondientes
+        document.getElementById('responsable_puesto').textContent = puesto;
+        document.getElementById('responsable_area').textContent = area;
+        
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        printarea();
+    });
+</script>
+
+
 @section(' scripts')
     <script>
         Dropzone.options.archivoDropzone = {
@@ -263,26 +284,5 @@
             }
         }
     </script>
-
-<script>
-    $(document).ready(function () {
-        $('#responsable_id').on('change', function () {
-            var selectedOption = $(this).find(':selected');
-            var area = selectedOption.data('area');
-            var puesto = selectedOption.data('puesto');
-            
-            // Actualizar los elementos correspondientes
-            // $('#responsable_area').text(area);
-            // $('#responsable_puesto').text(puesto);
-            
-            // También puedes asignar los valores a los campos de input si es necesario
-            $('#responsable_area_input').val(area);
-            $('#responsable_puesto_input').val(puesto);
-        });
-    });
-</script>
-
-
-
 
 @endsection

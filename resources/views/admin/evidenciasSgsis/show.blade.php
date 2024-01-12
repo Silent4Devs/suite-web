@@ -11,15 +11,14 @@
                 <br>
                 <h4> ¿Qué es Evidencia de asignación de recurso al SGI? </h4>
                 <p>
-                    Registro de información y documentación que le permita a la organización mostrar que ha   destinado los recursos necesarios.
+                    Registro de información y documentación que le permita a la organización mostrar que ha   destinado los recursos necesarios para implementar y mantener su Sistema de Gestión de la Seguridad de la Información (SGI).
                 </p>
                 <p>
-                    Para implementar y mantener su Sistema de Gestión de la Seguridad de la Información (SGI).
+                    La evidencia de esta asignación es fundamental para demostrar el compromiso de la organización con la seguridad de la información.
                 </p>
             </div>
         </div>
     </div>
-
 <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.evidenciasSgsi.title') }}

@@ -129,10 +129,10 @@
             <br>
             <h4>¿Qué es Partes Interesadas?</h4>
             <p>
-                Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información de la organización.
+                Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información de la organización, Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre otros.
             </p>
             <p>
-              Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre otros.
+
             </p>
         </div>
     </div>

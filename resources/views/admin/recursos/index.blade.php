@@ -55,10 +55,10 @@
                 <br>
                 <h4> ¿Qué es Transferencia de conocimiento?  </h4>
                 <p>
-                    Garantizar que todos en la empresa tengan el conocimiento.
+                    Garantizar que todos en la empresa tengan el conocimiento certificando que este se comparta y perdure.
                 </p>
                 <p>
-                    Asegurando que el conocimiento se comparta y perdure.
+                    Esto asegura que todos los miembros del personal comprendan las prácticas y directrices establecidas por la organización.
                 </p>
             </div>
         </div>
