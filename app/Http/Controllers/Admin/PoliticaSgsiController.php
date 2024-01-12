@@ -92,7 +92,7 @@ class PoliticaSgsiController extends Controller
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         $listavacia = 'cumple';
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -244,7 +244,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsis = PoliticaSgsi::where('estatus', 'Aprobado')->get();
         foreach ($politicaSgsis as $polsgsis) {
-            if (! isset($polsgsis->reviso)) {
+            if (!isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                 $polsgsis->estemp = 'baja';
             } else {
@@ -329,7 +329,7 @@ class PoliticaSgsiController extends Controller
 
     public function revision($id)
     {
-        abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('politica_sistema_gestion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd('Llega', $politicaSgsi);
 
         $politicaSgsi = PoliticaSgsi::find($id);
@@ -344,9 +344,8 @@ class PoliticaSgsiController extends Controller
         $no_niveles = $modulo->niveles;
         // dd($proceso);
         if ($proceso->estatus == 'Pendiente') {
-            for ($i = 1; $i <= $no_niveles; $i++) {
+            for ($i = 0; $i <= $no_niveles; $i++) {
                 foreach ($proceso->participantes as $part) {
-                    // dd($part, $part->participante, $part->participante->control($proceso->id), $part->estatus);
                     if (
                         $part->participante->nivel == $i && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
@@ -509,7 +508,9 @@ class PoliticaSgsiController extends Controller
     public function confirmacionAprobacion($proceso, $politica)
     {
         $confirmacion = ControlListaDistribucion::with('proceso')->where('proceso_id', '=', $proceso->id)
-            ->get();
+            ->withwhereHas('participante', function ($query) {
+                return $query->where('nivel', '>', 0);
+            })->get();
 
         $isSameEstatus = $confirmacion->every(function ($record) {
             return $record->estatus == 'Aprobado'; // Assuming 'estatus' is the column name

@@ -11,7 +11,7 @@
     </style>
 
     <div class="print-none">
-        {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
+        {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
     </div>
     <div class="mt-4 row justify-content-center">
         <div class="card col-sm-12 col-md-10" style="border-radius: 16px; height:1556px;">
@@ -40,7 +40,6 @@
                         <span class="" style="color:#306BA9; font-size:20px;font-weight:bold;">
                             Política del Sistema de Gestión
                         </span>
-
                     </div>
                     <div class="col-4 pt-5 pl-5" style="background:#EEFCFF;">
                         <span class="" style="font-size:14px;color:#345183;background:#EEFCFF;">Fecha de revisión:
@@ -56,7 +55,7 @@
                     <div class="col-md-11" style="padding-right:0px; padding-left:14px;">
                         <div class="card mb-1" style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
                             <div class="mt-4" style="font-weight: bold;margin-left:55px;font-size:14px; color:#306BA9;">
-                                Nombre del alcance
+                                Nombre de la política
                             </div>
                             <div class="px-2 mt-2 ml-5 mr-5 mb-4" style="font-size:14px; color:#606060;">
                                 {!! $politicaSgsi->nombre_politica !!}
@@ -77,7 +76,6 @@
                     </div>
                 </div>
 
-                <div class="border-bottom" style="margin-top:100px;"> </div>
 
             </div>
         </div>

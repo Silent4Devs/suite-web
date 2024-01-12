@@ -127,7 +127,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
@@ -185,7 +185,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -327,7 +327,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $listavacia = 'cumple';
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -590,8 +590,10 @@ class EntendimientoOrganizacionController extends Controller
 
     public function confirmacionAprobacion($proceso, $foda)
     {
-        $confirmacion = ControlListaDistribucion::where('proceso_id', '=', $proceso->id)
-            ->get();
+        $confirmacion = ControlListaDistribucion::with('proceso')->where('proceso_id', '=', $proceso->id)
+            ->withwhereHas('participante', function ($query) {
+                return $query->where('nivel', '>', 0);
+            })->get();
 
         $isSameEstatus = $confirmacion->every(function ($record) {
             return $record->estatus == 'Aprobado'; // Assuming 'estatus' is the column name

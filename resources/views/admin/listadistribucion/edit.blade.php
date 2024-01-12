@@ -116,6 +116,9 @@
                             </div>
                         </div>
                         <div>
+                            @error('nivel_null')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             @for ($i = 1; $i < 6; $i++)
                                 <div class="form-row nivel{{ $i }}Div" style="display: none;">
                                     <div class="mt-4 mb-1">
@@ -142,9 +145,11 @@
                 </div>
             </div>
         </div>
-        <div  style="position: relative; left: 65rem;">
-            <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
-            <button type="submit" class="btn btn-primary" style="width: 8rem;">Crear</button>
+        <div class="col-12">
+            <div  style="position: relative; text-align:end;">
+                <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+                <button type="submit" class="btn btn-primary" style="width: 8rem;">Editar</button>
+            </div>
         </div>
     </form>
 @endsection
