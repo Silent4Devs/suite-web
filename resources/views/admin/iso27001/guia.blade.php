@@ -99,16 +99,16 @@
     <div class="menu-pasos-guia scroll_estilo">
         <ul>
             <a href="{{ route('admin.dashboard_auditorias') }}">
-                <li data-id="content-guia-iso-1" class="paso-menu-0" style="position: relative; top: -4.4rem; border: 1px solid #EFF1F5; height: 4.2rem;";>
+                <li  data-id="content-guia-iso-1"  style="position: relative; top: -4.4rem; border: 1px solid #EFF1F5; height: 4.2rem;";>
                     <i class="material-icons-outlined">dashboard</i>
                     Dashboard
                 </li>
             </a> 
-            <li data-id="content-guia-iso-1" class="paso-menu-1" style="position: relative; top: -3rem;" >
+            <li data-id="content-guia-iso-1" class="paso-menu" style="position: relative; top: -3rem;" >
                 <i class="material-symbols-outlined">article</i>
                 Contexto
             </li>
-            <li data-id="content-guia-iso-2" class="paso-menu-0" style="position: relative; top: -3rem;" >
+            <li data-id="content-guia-iso-2" class="paso-menu-2" style="position: relative; top: -3rem;" >
                 <i class="material-symbols-outlined">military_tech</i>
                 Liderazgo
             </li>
@@ -158,7 +158,6 @@
         </div>
 
         <div class="card card-body card-main-iso" style="border-radius: 0px !important;">
-
             <div id="content-guia-iso-1" class="paso-iso-guia active-iso-paso">
                 <h4 class="title-info-iso">Contexto</h4>
 
@@ -168,90 +167,6 @@
                     <li>Determinación de alcance del sistema de gestión de la seguridad de la información</li>
                     <li>Sistema de gestión de seguridad de la información</li>
                 </ul>
-
-                <div class="caja-cards-iso-guia mt-5">
-                    @if ($version_iso === true)
-                        <div class="card-iso-guia">
-                            <div class="img-card-iso">
-                                <img src="{{ asset('img/iso/iso1.png') }}" alt="">
-                            </div>
-                            <div class="info-iso">
-                                <h4 class="title-card-img-iso">Análisis de brechas</h4>
-                                {{-- <span>Completado</span> --}}
-                            </div>
-                            <a href="{{ route('admin.analisisdebrechas.index') }}" class="btn-entrar">
-                                Entrar
-                                <i class="material-symbols-outlined"> arrow_right_alt</i>
-                            </a>
-                        </div>
-                    @else
-                        <div class="card-iso-guia">
-                            <div class="img-card-iso">
-                                <img src="{{ asset('img/iso/iso1.png') }}" alt="">
-                            </div>
-                            <div class="info-iso">
-                                <h4 class="title-card-img-iso">Análisis de brechas</h4>
-                                {{-- <span>Completado</span> --}}
-                            </div>
-                            <a href="{{ route('admin.analisisdebrechas-2022.create') }}" class="btn-entrar">
-                                Entrar
-                                <i class="material-symbols-outlined"> arrow_right_alt</i>
-                            </a>
-                        </div>
-                    @endif
-                    <!--<div class="card-iso-guia">
-                                                                <div class="img-card-iso">
-                                                                    <img src="{{ asset('img/iso/iso2.png') }}" alt="">
-                                                                </div>
-                                                                <div class="info-iso">
-                                                                        <h4 class="title-card-img-iso">Plan de implementación</h4>
-                                                                        {{-- <span>Completado</span> --}}
-                                                                    </div>
-                                                                    <a href="{{ route('admin.planTrabajoBase.index') }}" class="btn-entrar">
-                                                                        Entrar
-                                                                        <i class="material-symbols-outlined"> arrow_right_alt</i>
-                                                                    </a>
-                                                            </div>-->
-                    <div class="card-iso-guia">
-                        <div class="img-card-iso">
-                            <img src="{{ asset('img/iso/iso3.png') }}" alt="">
-                        </div>
-                        <div class="info-iso">
-                            <h4 class="title-card-img-iso">Partes interesadas</h4>
-                            {{-- <span>Completado</span> --}}
-                        </div>
-                        <a href="{{ route('admin.partes-interesadas.index') }}" class="btn-entrar">
-                            Entrar
-                            <i class="material-symbols-outlined"> arrow_right_alt</i>
-                        </a>
-                    </div>
-                    <div class="card-iso-guia">
-                        <div class="img-card-iso">
-                            <img src="{{ asset('img/iso/iso23.png') }}" alt="">
-                        </div>
-                        <div class="info-iso">
-                            <h4 class="title-card-img-iso">Análisis FODA</h4>
-                            {{-- <span>Completado</span> --}}
-                        </div>
-                        <a href="{{ route('admin.entendimiento-organizacions.index') }}" class="btn-entrar">
-                            Entrar
-                            <i class="material-symbols-outlined"> arrow_right_alt</i>
-                        </a>
-                    </div>
-                    <div class="card-iso-guia">
-                        <div class="img-card-iso">
-                            <img src="{{ asset('img/iso/iso4.png') }}" alt="">
-                        </div>
-                        <div class="info-iso">
-                            <h4 class="title-card-img-iso">Determinación de alcance</h4>
-                            {{-- <span>Completado</span> --}}
-                        </div>
-                        <a href="{{ route('admin.alcance-sgsis.index') }}" class="btn-entrar">
-                            Entrar
-                            <i class="material-symbols-outlined"> arrow_right_alt</i>
-                        </a>
-                    </div>
-                </div>
 
                 <div class="text-right mt-4">
                     <button class="btn btn-netx">Siguiente paso</button>
