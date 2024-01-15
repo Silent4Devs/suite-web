@@ -1,5 +1,9 @@
 <div>
     <style>
+        textarea {
+            height: 225px !important;
+        }
+
         .btn:focus {
             box-shadow: none !important;
             outline: none !important;
@@ -93,26 +97,26 @@
     </style>
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
     <x-loading-indicator />
-    <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios </h5>
-    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
-        <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;"
-                class="mt-2 mb-2 ml-2 img-fluid">
-            <div>
-                <br>
-                <h4> ¿Qué es? Matriz de Requisitos Legales y Regulatorios</h4>
-                <p>
-                    Es una herramienta utilizada en el ámbito empresarial y de gestión para
-                    rastrear y gestionar los requisitos legales y regulaciones aplicables a una organización.
-                </p>
-                <p>
-                    Esta matriz tiene como objetivo principal ayudar a las empresas a garantizar que están
-                    cumpliendo con todas las leyes, regulaciones y normativas relevantes que se aplican a sus
-                    operaciones.
-                </p>
+    <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
+        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+            <div class="d-flex" style="gap: 25px;">
+                <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+                <div>
+                    <br>
+                    <h4>¿Qué es? Matriz de Requisitos Legales y Regulatorios</h4>
+                    <p>
+                        Es una herramienta utilizada en el ámbito empresarial y de gestión para
+                        rastrear y gestionar los requisitos legales y regulaciones aplicables a una organización.
+                    </p>
+                    <p>
+                        Esta matriz tiene como objetivo principal ayudar a las empresas a garantizar que están
+                        cumpliendo con todas las leyes, regulaciones y normativas relevantes que se aplican a sus
+                        operaciones.
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
+
     <form wire:submit.prevent='save'>
         <div class="mt-4 card" style="border-radius: 8px;">
             <div class="card-body pb-0">
@@ -147,9 +151,9 @@
                         {!! Form::label(
                             'formacumple',
                             'Cláusula,
-                                                                                                                                sección o
-                                                                                                                                apartado
-                                                                                                                                aplicable*',
+                                                                                                                                                                                                                                sección o
+                                                                                                                                                                                                                                apartado
+                                                                                                                                                                                                                                aplicable*',
                             ['class' => 'asterisco'],
                         ) !!}
                     </div>
@@ -184,7 +188,7 @@
                     <br>
                     <div class="form-group col-sm-12 mt-4 anima-focus h-300">
                         <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
-                            style="height: 200px; width: 100%;" name="requisitoacumplir" placeholder="" id="requisitoacumplir"
+                            style="height: 225px !important; width: 100%;" name="requisitoacumplir" placeholder="" id="requisitoacumplir"
                             wire:model.defer='alcance.requisitoacumplir'>{{ old('requisitoacumplir') }}</textarea>
                         {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
                     </div>
@@ -247,9 +251,9 @@
                             {!! Form::label(
                                 'formacumple',
                                 'Cláusula,
-                                                                                                                                                    sección o
-                                                                                                                                                    apartado
-                                                                                                                                                    aplicable*',
+                                                                                                                                                                                                                                                                    sección o
+                                                                                                                                                                                                                                                                    apartado
+                                                                                                                                                                                                                                                                    aplicable*',
                                 ['class' => 'asterisco'],
                             ) !!}
                         </div>
@@ -267,7 +271,7 @@
                                     {!! Form::label(
                                         'fechaexpedicion',
                                         'Fecha de
-                                                                                                                                                                                            publicación*',
+                                                                                                                                                                                                                                                                                                                                            publicación*',
                                         ['class' => 'asterisco'],
                                     ) !!}
                                 </div>
@@ -283,7 +287,7 @@
                                     {!! Form::label(
                                         'fechavigor',
                                         'Fecha de
-                                                                                                                                                                                            publicación*',
+                                                                                                                                                                                                                                                                                                                                            publicación*',
                                         ['class' => 'asterisco'],
                                     ) !!}
                                 </div>
@@ -295,7 +299,7 @@
                         <br>
                         <div class="form-group col-sm-12 mt-4 anima-focus h-300">
                             <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
-                                style="height: 200px;" name="requisitoacumplir.{{ $key }}" placeholder=""
+                                style="height: 225px !important;" name="requisitoacumplir.{{ $key }}" placeholder=""
                                 id="requisitoacumplir.{{ $key }}" wire:model.defer='alcance_s1.{{ $key }}.requisitoacumplir'>{{ old('requisitoacumplir') }}</textarea>
                             {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
                         </div>

@@ -65,13 +65,13 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.comiteseguridads.create') }}
-    <h5 class="col-12 titulo_general_funcion">Editar: Conformación del Comité</h5>
-    <div class="card card-body" style="background-color: #306BA9; color: #fff;">
+    <h5 class="col-12 titulo_general_funcion">Conformación del Comité</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
             <div>
                 <br>
-                <h4> ¿Qué es? Conformación del Comité</h4>
+                <h4>¿Qué es Conformación del Comité?</h4>
                 <p>
                     Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para abordar un tema o llevar a cabo una tarea específica en una organización o proyecto.
                 </p>
