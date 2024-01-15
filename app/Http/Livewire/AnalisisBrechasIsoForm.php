@@ -175,6 +175,7 @@ class AnalisisBrechasIsoForm extends Component
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
+            dd($th);
             DB::rollback();
         }
     }

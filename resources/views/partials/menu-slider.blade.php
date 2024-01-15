@@ -87,19 +87,19 @@
         <div class="item-ms
             ">
 
-            <a href="{{ route('admin.carpeta.index') }}">
+            <a href="{{ route('admin.documentos.index') }}">
                 <i class="material-symbols-outlined">description</i>
                 <span>Documentos</span>
             </a>
         </div>
         <div class="item-ms">
-            <a href="{{ asset('admin/recursos') }}">
+            <a href="{{ asset('/admin/mis-cursos') }}">
                 <i class="material-symbols-outlined">school</i>
                 <span>Capacitaciones</span>
             </a>
         </div>
         <div class="item-ms">
-            <a href="">
+            <a href="{{ route('admin.solicitud') }}">
                 <i class="material-symbols-outlined">assignment_turned_in</i>
                 <span>Solicitudes</span>
             </a>

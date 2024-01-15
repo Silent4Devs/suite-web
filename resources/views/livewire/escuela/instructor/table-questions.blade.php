@@ -27,50 +27,52 @@
         </div>
     </div>
     {{-- <x-table-responsive> --}}
-    <table class="table">
-        <thead class="bg-gray-50">
-            <tr>
-                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    ID
-                </th>
-                <th scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Pregunta
-                </th>
-                <th scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Descripción
-                </th>
-                <th scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Opciones
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($evaluation->questions as $question)
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $loop->iteration }}.-
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $question->question }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $question->explanation }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        @livewire('escuela.instructor.questions', ['evaluation_id' => $evaluation->id, 'questionModel' => $question, 'edit' => true], key($question->id))
-                        <i style="font-size:10px;" class="ml-2 fa-regular fa-trash-can"
-                            wire:click.prevent="destroy({{ $question->id }})">
-                        </i>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+        <div class="datatable-rds datatable-fix">
+            <table class="table" id="datatable_questions-cursos">
+                <thead >
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                            ID
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                            Pregunta
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                            Descripción
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($evaluation->questions as $question)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ $loop->iteration }}.-
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ $question->question }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ $question->explanation }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @livewire('escuela.instructor.questions', ['evaluation_id' => $evaluation->id, 'questionModel' => $question, 'edit' => true], key($question->id))
+                                <i style="font-size:10px;" class="ml-2 fa-regular fa-trash-can"
+                                    wire:click.prevent="destroy({{ $question->id }})">
+                                </i>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
-    <a class="btn advance mb-3" href="{{ route('admin.courses.edit', $course) }}" role="button">REGRESAR</a>
+    <a class="btn advance mt-3 mb-3" href="{{ route('admin.courses.edit', $course) }}" role="button">REGRESAR</a>
 
     {{-- </x-table-responsive> --}}
     {{-- @push('js')

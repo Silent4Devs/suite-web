@@ -42,25 +42,29 @@
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
 
-    <h5 class="col-12 titulo_general_funcion">Minutas de Sesiones de Alta Dirección</h5>
 
-    <div class="card card-body" style="background-color: #306BA9; color: #fff;">
+    <h5 class="col-12 titulo_general_funcion">Minutas de Sesiones de Alta Dirección</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="jpg" style="width:200px;"
-                class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
             <div>
                 <br>
-                <h4> ¿Qué es? Revisión por Dirección.</h4>
-                <p>Proceso fundamental en el contexto de los sistemas de gestión.</p>
-                <p>Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
+                <h4>¿Qué es Minutas de Sesiones de Alta Dirección?</h4>
+                <p>
+                    Proceso fundamental en el contexto de los sistemas de gestión.
+                </p>
+                <p>
+                    Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
                     desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar
                     que
                     el
                     sistema de gestión esté funcionando de manera eficaz y que se estén cumpliendo los objetivos y metas
-                    establecidos. Como evidencia de este punto se propone la generación de una minuta.</p>
+                    establecidos. Como evidencia de este punto se propone la generación de una minuta.
+                </p>
             </div>
         </div>
     </div>
+
     @can('revision_por_direccion_agregar')
         <div style="margin-bottom: 10px; text-align:end;" class="row">
             <div class="col-lg-12">

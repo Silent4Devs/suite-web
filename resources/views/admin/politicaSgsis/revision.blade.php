@@ -8,6 +8,13 @@
                 display: none !important;
             }
         }
+
+        .btn-verde {
+            background-color: #00B212 !important;
+            border-radius: 4px;
+            opacity: 1;
+            color: #fff;
+        }
     </style>
 
     <div class="print-none">
@@ -55,7 +62,7 @@
                     <div class="col-md-11" style="padding-right:0px; padding-left:14px;">
                         <div class="card mb-1" style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
                             <div class="mt-4" style="font-weight: bold;margin-left:55px;font-size:14px; color:#306BA9;">
-                                Nombre de la política
+                                Nombre de la Política:
                             </div>
                             <div class="px-2 mt-2 ml-5 mr-5 mb-4" style="font-size:14px; color:#606060;">
                                 {!! $politicaSgsi->nombre_politica !!}
@@ -69,7 +76,7 @@
                 </div>
                 <div class="mt-4 mb-3  dato_mairg" style="">
                     <span style="font-size:14px; color:#306BA9;margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
-                        Alcance
+                        Política:
                     </span>
                     <div class="px-2 mt-2 ml-5 mr-5" style="font-size:14px; color:#606060;">
                         {!! $politicaSgsi->politicasgsi !!}
@@ -142,7 +149,7 @@
 
             <div class="row">
                 <div class="text-center form-group col-12">
-                    <button class="btn aprobar" id="aprobado" type="submit">
+                    <button class="btn btn-verde" id="aprobado" type="submit">
                         Aprobar Solicitud
                     </button>
                 </div>
@@ -187,7 +194,7 @@
                 if (comentario_if == '' || comentario_if == null) {
                     e.preventDefault();
                     Swal.fire(
-                        'Debe escribir comentarios de retroalimentacion al rechazar el Analisis',
+                        'Debe escribir comentarios de retroalimentacion al rechazar la Política del SGI',
                         '',
                         'info');
                 } else {

@@ -5,8 +5,9 @@
     @livewire('escuela.estudiantes-crear', ['course' => $course])
 
     @if ($students->count())
-        <table class="table table-bordered w-100 datatable-User">
-            <thead class="thead-dark">
+    <div class="datatable-rds datatable-fix">
+        <table id="datatable_students" class="table w-100 ">
+            <thead >
                 <tr>
                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left ">
                         Nombre
@@ -19,7 +20,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody class="">
+            <tbody >
                 @foreach ($students as $student)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -44,15 +45,18 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="px-6 py-4">
+        {{-- <div class="px-6 py-4">
             {{ $students->links() }}
-        </div>
+        </div> --}}
+    </div>
     @else
         <div class="card-body">
             <p>No hay usuarios registrados con estos parametros ...</p>
         </div>
     @endif
+
 </div>
+
 {{-- @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 @stop

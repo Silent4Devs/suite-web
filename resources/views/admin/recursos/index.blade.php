@@ -49,11 +49,10 @@
     <h5 class="col-12 titulo_general_funcion">Transferencia de conocimiento</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
             <div>
                 <br>
-                <br>
-                <h4> ¿Qué es Transferencia de conocimiento?  </h4>
+                <h4>¿Qué es Transferencia de conocimiento?</h4>
                 <p>
                     Garantizar que todos en la empresa tengan el conocimiento certificando que este se comparta y perdure.
                 </p>
@@ -63,7 +62,6 @@
             </div>
         </div>
     </div>
-
             <div class="text-right">
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('admin.recursos.create') }}" type="button" class="btn btn-primary">Registrar Capacitaciones</a>

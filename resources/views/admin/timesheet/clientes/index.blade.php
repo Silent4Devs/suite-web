@@ -28,6 +28,15 @@
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Clientes</font>
     </h5>
 
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.timesheet-clientes-create') }}" type="button" class="btn btn-primary">Registrar TimeSheet</a> &nbsp;
+        </div>
+    </div>
+<br>
+<br>
+
     <div class="card card-body">
         <div class="row">
             @include('partials.flashMessages')
@@ -240,18 +249,18 @@
                 }
             ];
             let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar sede',
-                url: "{{ route('admin.timesheet-clientes-create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar sede',
+                // url: "{{ route('admin.timesheet-clientes-create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config) {
+                //     let {
+                //         url
+                //     } = config;
+                //     window.location.href = url;
+                // }
             };
-            dtButtons.push(btnAgregar);
+            // dtButtons.push(btnAgregar);
 
 
 
