@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Support\Facades\Cache;
 
 class UsersObserver
@@ -60,7 +61,7 @@ class UsersObserver
     private function forgetCache()
     {
         Cache::forget('Users:users_all');
-        Cache::forget('Auth_user:user'.auth()->user()->id);
+        // Cache::forget('Auth_user:user' . auth()->user()->id);
         Cache::forget('Users:users_exists');
         Cache::forget('Users:user_with_role');
     }
