@@ -57,6 +57,7 @@ class AlcanceSgsi extends Model implements Auditable
         'fecha_revision',
         'id_reviso_alcance',
         'norma_id',
+        'estatus',
     ];
 
     public function getFechaPublicacionAttribute($value)
@@ -81,7 +82,7 @@ class AlcanceSgsi extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso_alcance')->alta()->with('area');
+        return $this->belongsTo(Empleado::class, 'id_reviso_alcance')->alta()->with('area')->select('id', 'name', 'email', 'area_id');
     }
 
     public function norma()

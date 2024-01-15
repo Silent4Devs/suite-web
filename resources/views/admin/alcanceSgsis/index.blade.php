@@ -240,19 +240,24 @@
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('determinacion_alcance_agregar')
         <div class="row d-flex align-items-center">
+
+
             <h5 class="col-12 titulo_general_funcion">Determinación de Alcance </h5>
             <div class="card card-body" style="background-color: #5397D5; color: #fff;">
                 <div class="d-flex" style="gap: 25px;">
-                    <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+                    <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;"
+                        class="mt-2 mb-2 ml-2 img-fluid">
                     <div>
                         <br>
-                        <h4> ¿Qué es? Determinación de Alcance</h4>
+                        <h4>¿Qué es? Determinación de Alcance</h4>
                         <p>
-                            Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
+                            Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de
+                            los
                             límites del proyecto.
                         </p>
                         <p>
-                            Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
+                            Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto,
+                            ya
                             que ayuda a evitar
                             la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
                             comprensión clara de lo que se espera.
@@ -320,7 +325,8 @@
                                         @foreach ($alcanceSgsi as $alcanceSgs)
                                             <div style="margin: 4%;">
                                                 <h5 style="color:#306BA9;">{{ $alcanceSgs->nombre }}</h5>
-                                                <p>Fecha de publicación: {{ $alcanceSgs->fecha_publicacion }} &nbsp;&nbsp;&nbsp;
+                                                <p>Fecha de publicación: {{ $alcanceSgs->fecha_publicacion }}
+                                                    &nbsp;&nbsp;&nbsp;
                                                     Fecha de revision: {{ $alcanceSgs->fecha_revision }}</p>
                                                 <p style="text-align: justify; position: relative; top: -23rem;">
                                                     {!! $alcanceSgs->alcancesgsi !!}</p>
@@ -608,26 +614,26 @@
                             if (data === null) {
                                 return '<center><span style="color: #0000FF; opacity: 1; border-radius: 7px; background: #ADD8E6;">Generar</span></center>';
                             } else {
-                            // Asigna colores y sombras según el valor de 'estatus'
-                            switch (data) {
-                                case 'aprobado':
-                                    color = '#008F27'; // Verde
-                                    backgroundColor = 'rgba(0, 128, 0, 0.1)';
-                                    break;
-                                case 'rechazado':
-                                    color = '#dd0483'; // Rojo
-                                    backgroundColor = 'rgba(128, 0, 0, 0.1)';
-                                    break;
-                                case 'pendiente':
-                                    color = '#DD8E04'; // Naranja
-                                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
-                                    break;
-                                default:
-                                    color = '#464646'; // Negro
-                                    backgroundColor = 'rgba(0, 0, 0, 0.1)';
-                            }
+                                // Asigna colores y sombras según el valor de 'estatus'
+                                switch (data) {
+                                    case 'Aprobado':
+                                        color = '#008F27'; // Verde
+                                        backgroundColor = 'rgba(0, 128, 0, 0.1)';
+                                        break;
+                                    case 'Rechazado':
+                                        color = '#dd0483'; // Rojo
+                                        backgroundColor = 'rgba(128, 0, 0, 0.1)';
+                                        break;
+                                    case 'Pendiente':
+                                        color = '#DD8E04'; // Naranja
+                                        backgroundColor = 'rgba(255, 165, 0, 0.1)';
+                                        break;
+                                    default:
+                                        color = '#464646'; // Negro
+                                        backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                                }
 
-                            const style = `
+                                const style = `
                                 background: #E9FFE8 0% 0% no-repeat padding-box;
                                 border-radius: 7px;
                                 opacity: 1;
@@ -635,9 +641,9 @@
                                 background-color: ${backgroundColor};
                             `;
 
-                            return `<center><span style="${style}">${data}</span></center>`;
+                                return `<center><span style="${style}">${data}</span></center>`;
+                            }
                         }
-                    }
                     },
                     {
                         data: 'actions',

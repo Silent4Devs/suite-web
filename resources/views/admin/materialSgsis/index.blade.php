@@ -142,19 +142,18 @@
 
     {{ Breadcrumbs::render('admin.material-sgsis.index') }}
 
-    <h5 class="col-12 titulo_general_funcion">Material SGSI</h5>
+    <h5 class="col-12 titulo_general_funcion">Material SGSI  </h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
             <div>
                 <br>
-                <br>
-                <h4>¿Qué es Material SGSI?   </h4>
+                <h4>¿Qué es Material SGSI?</h4>
                 <p>
-                    Recursos educativos diseñados para enseñar a los colaboradores sobre las prácticas y requisitos  de seguridad de la información establecidos por la norma.
+                    Recursos educativos diseñados para enseñar a los colaboradores sobre las prácticas y requisitos de seguridad de la información establecidos por la norma.
                 </p>
                 <p>
-                    La interactividad y la relevancia son clave para asegurar una comprensión efectiva de los principios de seguridad de la información.
+                    Útil para crear y mantener programas de formación y concientización en seguridad de la información.
                 </p>
             </div>
         </div>

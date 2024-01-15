@@ -42,14 +42,14 @@
 
     @can('plan_auditorium_create')
     @endcan
+
     <h5 class="col-12 titulo_general_funcion">Plan de Auditoría</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
             <div>
                 <br>
-                <br>
-                <h4>¿Qué es Plan de auditoria?    </h4>
+                <h4>¿Qué es Plan de Auditoría?</h4>
                 <p>
                     Plan que establece los detalles de cómo se llevará a cabo una auditoría.
                 </p>

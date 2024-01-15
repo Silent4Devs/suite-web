@@ -73,6 +73,10 @@ class AlcanceSgsiController extends Controller
                 return $row->normas ? $row->normas : '';
             });
 
+            $table->editColumn('estatus', function ($row) {
+                return $row->estatus ? $row->estatus : '';
+            });
+
             $table->editColumn('fecha_publicacion', function ($row) {
                 return $row->fecha_publicacion ? $row->fecha_publicacion : '';
             });
@@ -153,7 +157,8 @@ class AlcanceSgsiController extends Controller
             'alcancesgsi' => $request->input('alcancesgsi'),
             'fecha_publicacion' => $request->input('fecha_publicacion'),
             'fecha_revision' => $request->input('fecha_revision'),
-            'estatus' => 'pendiente',
+            'estatus' => 'Pendiente',
+            'id_reviso_alcance' => User::getCurrentUser()->empleado->id, //Para saber quien lo elaboro/responsable
         ]);
 
         $this->solicitudAprobacion($alcanceSgsi->id);
@@ -202,7 +207,7 @@ class AlcanceSgsiController extends Controller
             'alcancesgsi' => $request->input('alcancesgsi'),
             'fecha_publicacion' => $request->input('fecha_publicacion'),
             'fecha_revision' => $request->input('fecha_revision'),
-            'estatus' => 'pendiente',
+            'estatus' => 'Pendiente',
         ]);
 
         $this->solicitudAprobacion($alcanceSgsi->id);
@@ -476,7 +481,7 @@ class AlcanceSgsiController extends Controller
         // $responsable = $minuta->responsable->name;
         $emailresponsable = $alcance->empleado->email;
         $alcance_nombre = $alcance->nombre;
-        // dd($emailresponsable);
+        // dd($emailresponsable, $alcance_nombre);
         Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoAlcanceLider($alcance->id, $alcance_nombre));
 
         foreach ($aprobacion->participantes as $participante) {
@@ -514,7 +519,7 @@ class AlcanceSgsiController extends Controller
 
     public function visualizacion()
     {
-        $alcances = AlcanceSgsi::where('estatus', 'aprobado')->get();
+        $alcances = AlcanceSgsi::where('estatus', 'Aprobado')->get();
 
         $organizacions = Organizacion::getFirst();
 
