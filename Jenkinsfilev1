@@ -1,8 +1,47 @@
-// Jenkinsfilev1
+pipeline {
+    agent any
+    stages {
+        stage('Declarative: Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
 
-// Este Jenkinsfilev1 no contiene un bloque pipeline adicional
-sh 'cd Testing/Calendario'
-sh 'pip install pytest'
-sh 'pip install selenium'
-// sh 'pytest test_calendario'
-// Puedes agregar más pasos según sea necesario
+       stage('Install') {
+            steps {
+                git branch: 'silent/master', url: 'https://github.com/Silent4Devs/suite-web.git'
+            }
+        }
+
+
+        stage('Build') {
+            steps {
+                script {
+                    try {
+                        sh 'sudo docker-compose exec php cp .env.example .env'
+                        sh 'sudo docker-compose exec php composer install --ignore-platform-reqs'
+                        sh 'sudo docker-compose exec php php artisan key:generate'
+                        sh 'sudo docker-compose exec php php artisan migrate'
+                        sh 'sudo docker-compose exec php chmod 777 -R storage'
+                        sh 'sudo docker-compose exec php php artisan optimize:clear'
+                    } catch (Exception e) {
+                        echo 'Exception occurred: ' + e.toString()
+                    }
+                }
+            }
+        }
+
+
+        stage('Deploy via SSH') {
+            steps {
+                script {
+                    sshagent(['/root/.ssh/id_rsa.pub']) {
+                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.111:/var/contenedor/suite-web'
+                    }
+                }
+            }
+        }
+
+    }
+}
+
