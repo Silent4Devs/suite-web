@@ -240,6 +240,8 @@
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('determinacion_alcance_agregar')
         <div class="row d-flex align-items-center">
+
+
             <h5 class="col-12 titulo_general_funcion">Determinación de Alcance </h5>
             <div class="card card-body" style="background-color: #5397D5; color: #fff;">
                 <div class="d-flex" style="gap: 25px;">
@@ -247,7 +249,7 @@
                         class="mt-2 mb-2 ml-2 img-fluid">
                     <div>
                         <br>
-                        <h4> ¿Qué es? Determinación de Alcance</h4>
+                        <h4>¿Qué es? Determinación de Alcance</h4>
                         <p>
                             Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de
                             los

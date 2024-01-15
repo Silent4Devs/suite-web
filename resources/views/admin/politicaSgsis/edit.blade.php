@@ -67,17 +67,16 @@
 </style>
 @section('content')
     {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
-    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión </h5>
+    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;"
-                class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
             <div>
                 <br>
-                <h4> ¿Qué es? Política del Sistema de Gestión</h4>
+                <h4>¿Qué es? Política del Sistema de Gestión</h4>
                 <p>
                     Es una declaración oficial de la dirección de una organización que establece sus intenciones y
-                    compromisos con respecto al sistema de gestión implementado en la organización.
+                        compromisos con respecto al sistema de gestión implementado en la organización.
                 </p>
                 <p>
                     La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la

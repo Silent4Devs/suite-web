@@ -3,22 +3,21 @@
 
     {{ Breadcrumbs::render('admin.concientizacion-sgis.create') }}
     <h5 class="col-12 titulo_general_funcion">Concientización SGSI</h5>
-        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
-            <div class="d-flex" style="gap: 25px;">
-                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
-                <div>
-                    <br>
-                    <br>
-                    <h4> ¿Qué es Concientización SGI?   </h4>
-                    <p>
-                        Proporcionar el conocimiento y la comprensión necesarios para ser parte activa en la seguridad de la información.
-                    </p>
-                    <p>
-                        Implica que todos los miembros de la organización, desde la alta dirección hasta los empleados de todos los niveles, estén conscientes de los riesgos asociados con la seguridad de la información.
-                    </p>
-                </div>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Concientización SGSI?</h4>
+                <p>
+                    Proporcionar el conocimiento y la comprensión necesarios para ser parte activa en la seguridad de la información.
+                </p>
+                <p>
+                    Implica que todos los miembros de la organización, desde la alta dirección hasta los empleados de todos los niveles, estén conscientes de los riesgos asociados con la seguridad de la información.
+                </p>
             </div>
         </div>
+    </div>
 <div class="card mt-4">
 
 
