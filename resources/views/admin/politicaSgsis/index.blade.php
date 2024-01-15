@@ -418,7 +418,7 @@
                     imageWidth: 100, // Set the width of the image as needed
                     imageHeight: 100,
                     html: `<h4 style="color:red;">Colaborador dado de baja</h4>
-                <br><p>El colaborador responsable de este formulario ta no se encuentra dado de alta en el sistema.</p><br>
+                <br><p>El colaborador responsable de este formulario ya no se encuentra dado de alta en el sistema.</p><br>
                 <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este módulo.</p>`,
                     // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
                     showCancelButton: false,

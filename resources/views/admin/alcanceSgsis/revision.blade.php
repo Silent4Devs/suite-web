@@ -8,6 +8,13 @@
                 display: none !important;
             }
         }
+
+        .btn-verde {
+            background-color: #00B212 !important;
+            border-radius: 4px;
+            opacity: 1;
+            color: #fff;
+        }
     </style>
 
     <div class="print-none">
@@ -144,7 +151,7 @@
 
             <div class="row">
                 <div class="text-center form-group col-12">
-                    <button class="btn aprobar" id="aprobado" type="submit">
+                    <button class="btn btn-verde" id="aprobado" type="submit">
                         Aprobar Solicitud
                     </button>
                 </div>
@@ -190,7 +197,7 @@
                 if (comentario_if == '' || comentario_if == null) {
                     e.preventDefault();
                     Swal.fire(
-                        'Debe escribir comentarios de retroalimentacion al rechazar el Analisis',
+                        'Debe escribir comentarios de retroalimentacion al rechazar el Alcance del SGI.',
                         '',
                         'info');
                 } else {

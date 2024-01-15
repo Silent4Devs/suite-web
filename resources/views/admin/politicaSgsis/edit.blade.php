@@ -129,7 +129,7 @@
                     <a href="{{ route('admin.politica-sgsis.index') }}" class="btn_cancelar"
                         style="text-decoration: none;">Cancelar</a>
                     <button class="btn btn-primary" type="submit" style="color: white">
-                        {{ trans('global.save') }}
+                        Guardar y enviar a aprobación
                     </button>
                 </div>
             </form>
