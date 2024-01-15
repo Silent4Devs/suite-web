@@ -28,7 +28,7 @@ class TableQuizDetails extends Component
 
     public function mount($course_id)
     {
-        $this->students = $this->course->students;
+        // $this->students = $this->course->students;
         $this->course_id = $course_id;
     }
 
@@ -36,6 +36,7 @@ class TableQuizDetails extends Component
     {
         $this->course = Course::getAll()->find($this->course_id);
         $this->evaluations = Evaluation::where('course_id', $this->course_id)->get();
+        $this->students = $this->course->students;
         // $students = $this->course->students()->where('name', 'LIKE', "%{$this->search}%")->get();
 
         return view('livewire.escuela.instructor.table-quiz-details');
