@@ -104,18 +104,18 @@
     </style>
 
     {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
-    <h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión</h5>
+    <h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión  </h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
             <div>
                 <br>
-                <br>
-                <h4>¿Qué es Indicadores del Sistema de Gestión?  </h4>
+                <h4>¿Qué es Indicadores del Sistema de Gestión?</h4>
                 <p>
-                    Marcadores que proporcionan la información necesaria para tomar decisiones y ajustar estrategias según sea necesario.
+                    Medidas cuantitativas o cualitativas que se utilizan para evaluar el rendimiento y la eficacia de un Sistema de Gestión específico en una organización.
                 </p>
                 <p>
+                    Los marcadores proporcionan la información necesaria para tomar decisiones y ajustar estrategias según sea necesario.
                 </p>
             </div>
         </div>
@@ -307,7 +307,7 @@
                     </div>
 
                     <div class="form-group col-sm-2 anima-focus">
-                            <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }} 
+                            <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}
                                 type="text" name="ano"  id="ano" value="{{ old('ano', '') }}" required>
                                 {!! Form::label('ano', 'Año*', ['class' => 'asterisco']) !!}
                             @if ($errors->has('ano'))

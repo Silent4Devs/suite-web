@@ -59,23 +59,28 @@
     {{ Breadcrumbs::render('admin.auditoria-anuals.index') }}
 
 
-    <h5 class="col-12 titulo_general_funcion">Programa Anual de Auditoría</h5>
-    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
-        <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
-            <div>
-                <br>
-                <br>
-                <h4>¿Qué es Programa Anual de Auditoria?   </h4>
-                <p>
-                    Plan para evaluar regularmente el sistema de seguridad de la información de la empresa.
-                </p>
-                <p>
-                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es necesario.
-                </p>
+    <h5 class="col-12 titulo_general_funcion">Programa Anual de Auditoría </h5>
+            <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+                <div class="d-flex" style="gap: 25px;">
+                    <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+                    <div>
+                        <br>
+                        <h4>¿Qué es Programa Anual de Auditoria?</h4>
+                        <p>
+                            Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
+                            límites del proyecto.
+                        </p>
+                        <p>
+                            Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
+                            que ayuda a evitar
+                            la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
+                            comprensión clara de lo que se espera.
+                        </p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+
+
 
     <div class="text-right">
         <div class="d-flex justify-content-end">

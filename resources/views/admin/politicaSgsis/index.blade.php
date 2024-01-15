@@ -240,26 +240,26 @@
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
 
-    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión </h5>
-    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
-        <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;"
-                class="mt-2 mb-2 ml-2 img-fluid">
-            <div>
-                <br>
-                <h4> ¿Qué es? Política del Sistema de Gestión</h4>
-                <p>
-                    Es una declaración oficial de la dirección de una organización que establece sus intenciones y
+<h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
+<div class="card card-body" style="background-color: #5397D5; color: #fff;">
+    <div class="d-flex" style="gap: 25px;">
+        <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+        <div>
+            <br>
+            <h4>¿Qué es? Política del Sistema de Gestión</h4>
+            <p>
+                Es una declaración oficial de la dirección de una organización que establece sus intenciones y
                     compromisos con respecto al sistema de gestión implementado en la organización.
-                </p>
-                <p>
-                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
-                    organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
-                    otros ámbitos específicos.
-                </p>
-            </div>
+            </p>
+            <p>
+                La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
+                organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
+                otros ámbitos específicos.
+            </p>
         </div>
     </div>
+</div>
+
 
     @can('politica_sistema_gestion_agregar')
         <div class="text-right">
