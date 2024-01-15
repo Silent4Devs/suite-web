@@ -27,6 +27,6 @@ class NotificacionRechazoPolitica extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.politicas.notificacion-politica-rechazada')->subject('Política del SGSI Rechazada: '.$this->analisis)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.politicas.notificacion-politica-rechazada')->subject('Política del SGSI Rechazada: ' . $this->analisis);
     }
 }

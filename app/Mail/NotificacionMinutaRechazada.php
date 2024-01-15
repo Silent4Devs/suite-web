@@ -24,6 +24,6 @@ class NotificacionMinutaRechazada extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.minutas.notificacion-minuta-rechazada')->subject('Minuta Rechazada: '.$this->tema_minuta)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.minutas.notificacion-minuta-rechazada')->subject('Minuta Rechazada: ' . $this->tema_minuta);
     }
 }

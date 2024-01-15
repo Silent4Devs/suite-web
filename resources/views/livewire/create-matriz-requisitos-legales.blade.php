@@ -1,5 +1,9 @@
 <div>
     <style>
+        textarea {
+            height: 225px !important;
+        }
+
         .btn:focus {
             box-shadow: none !important;
             outline: none !important;
@@ -147,9 +151,9 @@
                         {!! Form::label(
                             'formacumple',
                             'Cláusula,
-                                                                                                                                sección o
-                                                                                                                                apartado
-                                                                                                                                aplicable*',
+                                                                                                                                                                                                                                sección o
+                                                                                                                                                                                                                                apartado
+                                                                                                                                                                                                                                aplicable*',
                             ['class' => 'asterisco'],
                         ) !!}
                     </div>
@@ -184,7 +188,7 @@
                     <br>
                     <div class="form-group col-sm-12 mt-4 anima-focus h-300">
                         <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
-                            style="height: 200px; width: 100%;" name="requisitoacumplir" placeholder="" id="requisitoacumplir"
+                            style="height: 225px !important; width: 100%;" name="requisitoacumplir" placeholder="" id="requisitoacumplir"
                             wire:model.defer='alcance.requisitoacumplir'>{{ old('requisitoacumplir') }}</textarea>
                         {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
                     </div>
@@ -247,9 +251,9 @@
                             {!! Form::label(
                                 'formacumple',
                                 'Cláusula,
-                                                                                                                                                    sección o
-                                                                                                                                                    apartado
-                                                                                                                                                    aplicable*',
+                                                                                                                                                                                                                                                                    sección o
+                                                                                                                                                                                                                                                                    apartado
+                                                                                                                                                                                                                                                                    aplicable*',
                                 ['class' => 'asterisco'],
                             ) !!}
                         </div>
@@ -267,7 +271,7 @@
                                     {!! Form::label(
                                         'fechaexpedicion',
                                         'Fecha de
-                                                                                                                                                                                            publicación*',
+                                                                                                                                                                                                                                                                                                                                            publicación*',
                                         ['class' => 'asterisco'],
                                     ) !!}
                                 </div>
@@ -283,7 +287,7 @@
                                     {!! Form::label(
                                         'fechavigor',
                                         'Fecha de
-                                                                                                                                                                                            publicación*',
+                                                                                                                                                                                                                                                                                                                                            publicación*',
                                         ['class' => 'asterisco'],
                                     ) !!}
                                 </div>
@@ -295,7 +299,7 @@
                         <br>
                         <div class="form-group col-sm-12 mt-4 anima-focus h-300">
                             <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
-                                style="height: 200px;" name="requisitoacumplir.{{ $key }}" placeholder=""
+                                style="height: 225px !important;" name="requisitoacumplir.{{ $key }}" placeholder=""
                                 id="requisitoacumplir.{{ $key }}" wire:model.defer='alcance_s1.{{ $key }}.requisitoacumplir'>{{ old('requisitoacumplir') }}</textarea>
                             {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
                         </div>
