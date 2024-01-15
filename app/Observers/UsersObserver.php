@@ -61,7 +61,6 @@ class UsersObserver
     private function forgetCache()
     {
         Cache::forget('Users:users_all');
-        // Cache::forget('Auth_user:user' . auth()->user()->id);
         Cache::forget('Users:users_exists');
         Cache::forget('Users:user_with_role');
     }
