@@ -12,6 +12,14 @@
 
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Proveedores</h5>
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('contract_manager.proveedores.create') }}" type="button" class="btn btn-primary">Registrar Proveedor</a> &nbsp; &nbsp;
+            <a href="{{ route('contract_manager.proveedores.view_archivados') }}" type="button" class="btn btn-primary">Archivados</a>
+        </div>
+    </div>
+
     <div class="mt-5 card">
 
         <div class="card-body datatable-fix">
@@ -116,30 +124,30 @@
             ];
             let btnAgregar = {
                 @can('katbol_proveedores_ordenes_compra_agregar')
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar proveedor',
-                    url: "{{ route('contract_manager.proveedores.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
+                    // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    // titleAttr: 'Agregar proveedor',
+                    // url: "{{ route('contract_manager.proveedores.create') }}",
+                    // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    // action: function(e, dt, node, config) {
+                    //     let {
+                    //         url
+                    //     } = config;
+                    //     window.location.href = url;
+                    // }
                 @endcan
             };
             let btnArchivar = {
                 @can('katbol_proveedores_ordenes_compra_archivar')
-                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
-                    titleAttr: 'Archivar proveedor',
-                    url: "{{ route('contract_manager.proveedores.view_archivados') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
+                    // text: '<i class="fa-solid fa-box-archive"></i> Archivados',
+                    // titleAttr: 'Archivar proveedor',
+                    // url: "{{ route('contract_manager.proveedores.view_archivados') }}",
+                    // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    // action: function(e, dt, node, config) {
+                    //     let {
+                    //         url
+                    //     } = config;
+                    //     window.location.href = url;
+                    // }
                 @endcan
             };
             dtButtons.push(btnAgregar, btnArchivar);

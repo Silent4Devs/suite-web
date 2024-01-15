@@ -6,9 +6,9 @@
         <form method="POST" action="{{ route("contract_manager.centro-costos.store") }}" enctype="multipart/form-data">
             @csrf
           <div class="row">
-            <div class="form-group col-md-12 col-sm-12">
-                <label class="required" for="clave">&nbsp;&nbsp;Clave</label>
+            <div class="form-group col-md-12 col-sm-12 anima-focus">
                 <input class="form-control {{ $errors->has('clave') ? 'is-invalid' : '' }}" type="number" name="clave" id="clave" value="{{ old('clave') }}" required>
+                {!! Form::label('clave', 'Clave*', ['class' => 'asterisco']) !!}
                 @if($errors->has('clave'))
                     <div class="invalid-feedback">
                         {{ $errors->first('clave') }}
@@ -16,9 +16,9 @@
                 @endif
                 <span class="help-block"></span>
             </div>
-            <div class="form-group col-md-12 col-sm-12">
-                <label class="required" for="descripcion">&nbsp;&nbsp;Descripción</label>
+            <div class="form-group col-md-12 col-sm-12 anima-focus">
                 <input class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"  name="descripcion" id="descripcion" required>
+                {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('descripcion') }}

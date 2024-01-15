@@ -14,11 +14,12 @@
 
     {{ Breadcrumbs::render('admin.auditoria-internas.create') }}
 
-    <h5 class="col-12 titulo_general_funcion">Crear Informe de Auditoria</h5>
-    <div class="card card-body" style="background-color: #7587D0; color: #fff;">
+    <h5 class="col-12 titulo_general_funcion">Informe de Auditoría  </h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
             <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
             <div>
+                <br>
                 <h4>¿Qué es Informe de auditoría?</h4>
                 <p>
                     Es un documento que describe los resultados de una auditoría.
