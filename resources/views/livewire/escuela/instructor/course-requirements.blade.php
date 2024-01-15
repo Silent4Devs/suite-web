@@ -31,11 +31,12 @@
         <div class="card-body">
             <form wire:submit.prevent="store" class="form-group">
                 <div class="grid grid-cols-2 gap-4 mt-2 row justify-content-start">
-                    <div class="col-9 pl-0">
-                        {!! Form::label('title', 'Agregar el nombre del requisito*',[
-                        'class' => 'pl-0']) !!}
-                        <input wire:model="name" class="form-control" placeholder="Agregar el nombre del requisito">
+                    <div class="form-group col-9 pl-0 anima-focus">
+                        {{-- {!! Form::label('title', 'Agregar el nombre del requisito*',[
+                        'class' => 'pl-0']) !!} --}}
+                        <input wire:model="name" class="form-control" placeholder="">
                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                        <label for="name">Agregar el nombre del requisito*</label>
                     </div>
                     <div class="col-3 d-flex justify-content-end">
                         <button type="submit" class="btn btn-light text-primary">Agregar <i class="fa-solid fa-plus"></i></button>

@@ -7,21 +7,21 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <div>
-                    <label>Pregunta<span style="color:red">*</span></label>
-                    <input class="form-control" type="text" value="" id="title"
+                <div class="form-group anima-focus">
+                    <input class="form-control" type="text" value="" id="title" placeholder=""
                         wire:model.defer="question">
                     @error('question')
                         <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>
                     @enderror
+                    <label>Pregunta*</label>
                 </div>
-                <div>
-                    <label>Descripción</label>
-                    <input class="form-control" type="text" value="" id="title"
+                <div class="form-group anima-focus">
+                    <input class="form-control" type="text" value="" id="title" placeholder=""
                         wire:model.defer="explanation">
                     @error('explanation')
                         <p class="text-xs text-red-700">El campo descripción es obligatorio.</p>
                     @enderror
+                    <label>Descripción</label>
                 </div>
                 <div class="mt-4">
                     @foreach ($answers as $key => $answer)

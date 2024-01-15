@@ -126,7 +126,7 @@
                             {{ $errors->first('fecha') }}
                         </div>
                     @endif
-                    <label for="fecha">Fecha</label>
+                    <label for="fecha" style="background-color: transparent;">Fecha</label>
                 </div>
                 {{ Form::hidden('fecha', date('Y-m-d')) }}
             </div>

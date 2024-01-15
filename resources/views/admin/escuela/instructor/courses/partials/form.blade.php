@@ -1,23 +1,45 @@
-<div class="form-group">
-    <div class="grid grid-cols-2 gap-4 mt-2 row justify-content-start">
-        <div class="col-6">
+<div class="form-group" >
+    <div class="mt-2 row justify-content-start">
+        <div class="form-group col-6 anima-focus">
             {{-- {!! Form::label('title', 'Título del curso',['class'=> 'mt-8 mb-2 font-bold']) !!} --}}
-            <label class="required" for="title">Titulo del curso:</label>
             {!! Form::text('title', null, [
                 'class' => 'form-control ' . ($errors->has('title') ? ' border-red-600' : ''),
+                'placeholder' => "",
             ]) !!}
             @error('title')
                 <p class="text-danger">{{ $errors->first('title') }}</p>
             @enderror
+            <label for="title">Titulo del curso*:</label>
         </div>
-        <div class="col-6">
-            <label class="required" for="slug">Slug del curso:</label>
+        <div class="form-group col-6 anima-focus">
             {!! Form::text('slug', null, [
                 'class' => 'form-control' . ($errors->has('slug') ? ' border-red-600' : ''),
+                'placeholder' => ""
             ]) !!}
             @error('slug')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
+            <label for="slug">Slug del curso*:</label>
+        </div>
+        <div class="form-group col-12 anima-focus">
+            {!! Form::text('subtitle', null, [
+                'class' => 'form-control' . ($errors->has('subtitle') ? ' border-red-600' : ''),
+                'placeholder' => ""
+            ]) !!}
+            @error('subtitle')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+            <label class="required mt-3" for="subtitle">Subtítulo del curso:</label>
+        </div>
+        <div class="form-group col-12 anima-focus">
+            {!! Form::textarea('description', null, [
+                'class' => 'form-control' . ($errors->has('description') ? ' border-red-600' : ''),
+                'placeholder' => ""
+            ]) !!}
+            @error('description')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+            <label  for="description">Descripción del curso:</label>
         </div>
     </div>
     {{-- <input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" id="title"
@@ -27,27 +49,13 @@
         @endif
         <span class="text-danger puesto_error error-ajax"></span> --}}
 
-    {{-- {!! Form::label('subtitle', 'Subtítulo del curso:') !!} --}}
-    <label class="required mt-3" for="subtitle">Subtítulo del curso:</label>
-    {!! Form::text('subtitle', null, [
-        'class' => 'form-control' . ($errors->has('subtitle') ? ' border-red-600' : ''),
-    ]) !!}
-    @error('subtitle')
-        <p class="text-danger">{{ $message }}</p>
-    @enderror
-    {{-- {!! Form::label('description', 'Descripción del curso:') !!} --}}
-    <label class="required mt-3" for="description">Descripción del curso:</label>
-    {!! Form::textarea('description', null, [
-        'class' => 'form-control' . ($errors->has('description') ? ' border-red-600' : ''),
-    ]) !!}
-    @error('description')
-        <p class="text-danger">{{ $message }}</p>
-    @enderror
+        {{-- {!! Form::label('subtitle', 'Subtítulo del curso:') !!} --}}
+        {{-- {!! Form::label('description', 'Descripción del curso:') !!} --}}
+
 
     <div class="mt-3 row justify-content-start">
-        <div class="col-6">
+        <div class="form-group col-6 anima-focus">
             {{-- {!! Form::label('category_id', 'Categoría') !!} --}}
-            <label class="required" for="category_id">Categoría</label>
             {!! Form::select('category_id', $categories, null, [
                 'class' => 'form-control',
                 'placeholder' => 'Seleccione una opción',
@@ -55,10 +63,10 @@
             @error('category_id')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
+            <label  for="category_id">Categoría*</label>
         </div>
-        <div class="col-6">
+        <div class="form-group col-6 anima-focus">
             {{-- {!! Form::label('level_id', 'Niveles') !!} --}}
-            <label class="required" for="level_id">Niveles</label>
             {!! Form::select('level_id', $levels, null, [
                 'class' => 'form-control',
                 'placeholder' => 'Seleccione una opción',
@@ -66,6 +74,7 @@
             @error('level_id')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
+            <label  for="level_id">Niveles*</label>
         </div>
         {{-- <div>
             {!! Form::label('price_id', 'Precio') !!}
