@@ -120,7 +120,7 @@
             <div class="row">
                 <div class="form-group col-md-3 col-lg-3 col-sm-12 anima-focus">
                     <input class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
-                        id="fecha" value="{{ date('d-m-Y') }}" min="1945-01-01" disabled wire:model.defer="fecha">
+                        id="fecha" min="1945-01-01" disabled wire:model.defer="fecha">
                     @if ($errors->has('fecha'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha') }}
