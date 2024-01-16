@@ -817,13 +817,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // Entendimiento Organizacions
         Route::delete('entendimiento-organizacions/destroy', 'EntendimientoOrganizacionController@massDestroy')->name('entendimiento-organizacions.massDestroy');
         Route::post('entendimiento-organizacions/copiar', 'EntendimientoOrganizacionController@duplicarFoda')->name('entendimiento-organizacions.duplicarFoda');
-        Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController')->parameters([
-            'entendimiento-organizacions' => 'entendimiento_organizacion'
-        ])->except(['index']);
-
-        Route::get('entendimiento-organizacions/{acceso_restringido?}', 'EntendimientoOrganizacionController@index')
-            ->name('entendimiento-organizacions.index');
-
+        Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController');
         Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
         Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
         Route::get('entendimiento-organizacions-foda-organizacions', 'EntendimientoOrganizacionController@cardFoda')->name('foda-organizacions');
