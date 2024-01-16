@@ -42,7 +42,8 @@ class AnalisisBrechasIsoForm extends Component
 
     public function render()
     {
-        $this->fecha = Carbon::now()->format('d-m-y');
+        $this->fecha = Carbon::today()->format('d-m-Y');
+        // dd($this->fecha);
         $empleados = Empleado::getaltaAll();
         $analisis_brechas = AnalisisBrechasIso::get();
         $templates = TemplateAnalisisdeBrechas::where('top', true)->get();
@@ -117,7 +118,7 @@ class AnalisisBrechasIsoForm extends Component
         DB::beginTransaction();
 
         try {
-
+            $this->fecha = Carbon::today()->format('Y-m-d');
             $analisisBrechaIso = AnalisisBrechasIso::create([
                 'nombre' => $this->name,
                 'fecha' => $this->fecha,

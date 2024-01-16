@@ -80,7 +80,7 @@ class IndicadoresSgsi extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_empleado')->alta();
+        return $this->belongsTo(Empleado::class, 'id_empleado')->select(['name', 'foto']);
     }
 
     public function proceso()
