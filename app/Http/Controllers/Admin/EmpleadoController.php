@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\EmpleadosGeneralExport;
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
 use App\Mail\EnviarCorreoBienvenidaTabantaj;
@@ -39,6 +40,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmpleadoController extends Controller
 {
@@ -1608,5 +1610,14 @@ class EmpleadoController extends Controller
     public function importar()
     {
         return view('admin.empleados.importar');
+    }
+
+    public function exportExcel()
+    {
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd('Si llega', $query);
+        $export = new EmpleadosGeneralExport();
+
+        return Excel::download($export, 'Empleados.xlsx');
     }
 }

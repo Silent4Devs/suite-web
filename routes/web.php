@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleado/update-profile', 'EmpleadoController@updateInformationProfile')->name('empleado.update-profile');
     Route::post('empleado/update-related-info-profile', 'EmpleadoController@updateInformacionRelacionadaProfile')->name('empleado.update-related-info-profile');
     Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
+    Route::get('ExportEmpleadosGeneral', 'EmpleadoController@exportExcel')->name('empleados.excel');
 
     Route::post('empleado-deletemultiple', 'EmpleadoController@borradoMultiple')->name('empleado.deleteMultiple');
     Route::post('empleados/update/{certificacion}/competencias-certificaciones', 'EmpleadoController@updateCertificaciones')->name('empleados.updateCertificaciones');
@@ -816,7 +817,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // Entendimiento Organizacions
         Route::delete('entendimiento-organizacions/destroy', 'EntendimientoOrganizacionController@massDestroy')->name('entendimiento-organizacions.massDestroy');
         Route::post('entendimiento-organizacions/copiar', 'EntendimientoOrganizacionController@duplicarFoda')->name('entendimiento-organizacions.duplicarFoda');
-        Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController');
+        Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController')->parameters([
+            'entendimiento-organizacions' => 'entendimiento_organizacion'
+        ])->except(['index']);
+
+        Route::get('entendimiento-organizacions/{acceso_restringido?}', 'EntendimientoOrganizacionController@index')
+            ->name('entendimiento-organizacions.index');
+
         Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
         Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
         Route::get('entendimiento-organizacions-foda-organizacions', 'EntendimientoOrganizacionController@cardFoda')->name('foda-organizacions');

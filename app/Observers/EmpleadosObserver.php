@@ -55,6 +55,7 @@ class EmpleadosObserver
     private function forgetCache()
     {
         Cache::forget('Empleados:empleados_all');
+        Cache::forget('Empleados:empleados_all_borrados');
         Cache::forget('Empleados:empleados_alta');
         Cache::forget('Empleados:empleados_alta_all');
         Cache::forget('Empleados:empleados_reportes_all');

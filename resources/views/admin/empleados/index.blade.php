@@ -14,6 +14,19 @@
         }
     </style>
     <h5 class="col-12 titulo_general_funcion">Empleados</h5>
+
+    @can('bd_empleados_acceder')
+        <div class="row mb-4">
+            <div class="col-12 text-right">
+                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
+                    href="{{ url('admin/ExportEmpleadosGeneral') }}">
+                    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                    Exportar Excel
+                </a>
+            </div>
+        </div>
+    @endcan
+
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
@@ -62,7 +75,7 @@
                             @endif
                             <td>{{ $empleado->name }}</td>
                             @if ($empleado->email)
-                            <td>{{ $empleado->email }}</td>
+                                <td>{{ $empleado->email }}</td>
                             @else
                                 <td>Sin Registro</td>
                             @endif
