@@ -27,7 +27,6 @@ class IndicadoresSgsiController extends Controller
         $usuario = User::getCurrentUser();
         $area_empleado = $usuario->empleado->area->id;
         $isAdmin = in_array('Admin', $usuario->roles->pluck('title')->toArray());
-        dd($isAdmin);
         if ($request->ajax()) {
             if ($isAdmin) {
                 $query = IndicadoresSgsi::orderBy('id')->get();
