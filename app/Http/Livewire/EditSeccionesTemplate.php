@@ -23,36 +23,37 @@ class EditSeccionesTemplate extends Component
     public $descripcion = '';
 
     public $estatus_1 = '';
-
     public $estatus_2 = '';
-
     public $estatus_3 = '';
-
     public $estatus_4 = '';
 
     public $valor_estatus_1 = '';
-
     public $valor_estatus_2 = '';
-
     public $valor_estatus_3 = '';
-
     public $valor_estatus_4 = '';
 
     public $descripcion_parametros_1 = '';
-
     public $descripcion_parametros_2 = '';
-
     public $descripcion_parametros_3 = '';
-
     public $descripcion_parametros_4 = '';
 
     public $color_estatus_1 = '';
-
     public $color_estatus_2 = '';
-
     public $color_estatus_3 = '';
-
     public $color_estatus_4 = '';
+
+    public $porcentaje_seccion_1;
+    public $porcentaje_seccion_2;
+    public $porcentaje_seccion_3;
+    public $porcentaje_seccion_4;
+
+    public $descripcion_s1;
+
+    public $descripcion_s2;
+
+    public $descripcion_s3;
+
+    public $descripcion_s4;
 
     public $normas;
 
