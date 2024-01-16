@@ -240,25 +240,25 @@
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
 
-<h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
-<div class="card card-body" style="background-color: #5397D5; color: #fff;">
-    <div class="d-flex" style="gap: 25px;">
-        <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
-        <div>
-            <br>
-            <h4>¿Qué es? Política del Sistema de Gestión</h4>
-            <p>
-                Es una declaración oficial de la dirección de una organización que establece sus intenciones y
+    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es? Política del Sistema de Gestión</h4>
+                <p>
+                    Es una declaración oficial de la dirección de una organización que establece sus intenciones y
                     compromisos con respecto al sistema de gestión implementado en la organización.
-            </p>
-            <p>
-                La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
-                organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
-                otros ámbitos específicos.
-            </p>
+                </p>
+                <p>
+                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
+                    organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
+                    otros ámbitos específicos.
+                </p>
+            </div>
         </div>
     </div>
-</div>
 
 
     @can('politica_sistema_gestion_agregar')
@@ -599,7 +599,10 @@
                         render: function(data, type, row) {
                             // Solo muestra el checkbox si el estatus es 'aprobado'
                             if (row.estatus === 'Aprobado') {
-                                return `<input type="checkbox" class="redireccionar-checkbox" value="${row.id}" />`;
+                                // Check the checkbox if mostrar is true, otherwise, leave it unchecked
+                                var isChecked = row.mostrar ? 'checked' : '';
+
+                                return `<input type="checkbox" class="redireccionar-checkbox" value="${row.id}" ${isChecked} />`;
                             } else {
                                 return ''; // Si no es 'aprobado', no muestra nada
                             }
@@ -621,11 +624,31 @@
 
 
             $('#datatable-PoliticaSgsi').on('click', '.redireccionar-checkbox', function() {
-                // Obtiene el valor de la casilla de verificación
+                // Obtain the value of the checkbox
                 var valorCheckbox = $(this).val();
+                var id = valorCheckbox; // Replace with the actual value of your {id} parameter
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                // Use AJAX to send the value to a Laravel controller
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/politica-sgsis/cambioMostrar', // Include the actual id value
 
-                // Redirecciona a la otra vista usando Laravel
-                window.location.href = '/admin/politica-sgsis/visualizacion/';
+                    data: {
+                        valorCheckbox: valorCheckbox
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function(response) {
+                        // Handle the success response from the controller
+                        // console.log('Success:', response);
+                        // You can perform additional actions here if needed
+                    },
+                    error: function(error) {
+                        // Handle any errors that occur during the AJAX request
+                        // console.log('Error:', error);
+                    }
+                });
             });
 
             let table = $('#datatable-PoliticaSgsi').DataTable(dtOverrideGlobals);

@@ -36,7 +36,6 @@ class PoliticaSgsiController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('politica_sistema_gestion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         if ($request->ajax()) {
             $query = PoliticaSgsi::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -70,6 +69,10 @@ class PoliticaSgsiController extends Controller
             });
             $table->editColumn('estatus', function ($row) {
                 return $row->estatus ? $row->estatus : '';
+            });
+
+            $table->editColumn('mostrar', function ($row) {
+                return $row->mostrar ? $row->mostrar : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -240,9 +243,29 @@ class PoliticaSgsiController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
+    public function cambioMostrar(Request $request)
+    {
+        $id = $request->input('valorCheckbox');
+        // dd($valorCheckbox);
+        // Your logic here
+        $politica = PoliticaSgsi::find($id);
+
+        if ($politica->mostrar == false) {
+            $politica->update([
+                'mostrar' => true,
+            ]);
+        } elseif ($politica->mostrar == true) {
+            $politica->update([
+                'mostrar' => false,
+            ]);
+        }
+        // Return a response if needed
+        return response()->json(['message' => 'Success', 'valorCheckbox' => $id]);
+    }
+
     public function visualizacion()
     {
-        $politicaSgsis = PoliticaSgsi::where('estatus', 'Aprobado')->get();
+        $politicaSgsis = PoliticaSgsi::where('estatus', 'Aprobado')->where('mostrar', '=', true)->get();
         foreach ($politicaSgsis as $polsgsis) {
             if (!isset($polsgsis->reviso)) {
                 $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
@@ -334,6 +357,7 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsi = PoliticaSgsi::find($id);
         // dd($politicaSgsi);
+        $politicaSgsi->load('team');
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
         $proceso = ProcesosListaDistribucion::with('participantes')
@@ -342,6 +366,8 @@ class PoliticaSgsiController extends Controller
             ->first();
 
         $no_niveles = $modulo->niveles;
+
+        $acceso_restringido = 'correcto';
         // dd($proceso);
         if ($proceso->estatus == 'Pendiente') {
             for ($i = 0; $i <= $no_niveles; $i++) {
@@ -358,29 +384,31 @@ class PoliticaSgsiController extends Controller
                             ) {
                                 // dd($proceso);
                                 // dd($politicaSgsi, $part);
-                                $politicaSgsi->load('team');
 
                                 // dd($politicaSgsi);
-                                return view('admin.politicaSgsis.revision', compact('politicaSgsi'));
+                                return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                                 break;
                             } else {
-                                return redirect(route('admin.politica-sgsis.index'));
+                                $acceso_restringido = 'turno';
+                                return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                             }
                         }
                     } elseif (
                         $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
-                        $politicaSgsi->load('team');
 
                         // dd($politicaSgsi);
-                        return view('admin.politicaSgsis.revision', compact('politicaSgsi'));
+                        return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                         break;
                     }
                 }
             }
+            $acceso_restringido = 'denegado';
+            return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
         } else {
-            return redirect(route('admin.politica-sgsis.index'));
+            $acceso_restringido = 'aprobado';
+            return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
         }
     }
 
