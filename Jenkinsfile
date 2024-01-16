@@ -42,13 +42,5 @@ pipeline {
             }
         }
 
-
-        stage('Jenkis2 - Stage 1') {
-            steps {
-                script {
-                    load 'Jenkinsfilev1'
-                }
-            }
-        }
     }
 }

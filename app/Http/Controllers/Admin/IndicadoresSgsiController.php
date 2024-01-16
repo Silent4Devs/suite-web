@@ -27,6 +27,7 @@ class IndicadoresSgsiController extends Controller
         $usuario = User::getCurrentUser();
         $area_empleado = $usuario->empleado->area->id;
         $isAdmin = in_array('Admin', $usuario->roles->pluck('title')->toArray());
+        dd($isAdmin);
         if ($request->ajax()) {
             if ($isAdmin) {
                 $query = IndicadoresSgsi::orderBy('id')->get();
@@ -94,26 +95,16 @@ class IndicadoresSgsiController extends Controller
                 return $row->id ? $row->id : '';
             });
 
-            /*$table->editColumn('meta', function ($row) {
-                return $row->meta ? $row->meta : "";
-            });
-
-            $table->editColumn('responsable', function ($row) {
-                return $row->id_empleado ? $row->id_empleado : "";
-            });*/
-
             $table->rawColumns(['actions', 'placeholder', 'responsable']);
 
             return $table->make(true);
         }
 
-        /*$users = User::getAll();
-        $teams = Team::get();*/
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.indicadoresSgsis.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.indicadoresSgsis.index', compact('logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -284,7 +275,7 @@ class IndicadoresSgsiController extends Controller
             $chars = ['$', '/', '*', '-', '+'];
             $onlyconsonants = $formula_r;
             foreach ($chars as $key => $char) {
-                $onlyconsonants = str_replace($char, '!'.$char, $onlyconsonants);
+                $onlyconsonants = str_replace($char, '!' . $char, $onlyconsonants);
             }
 
             $formula_array = explode('!', $onlyconsonants);
