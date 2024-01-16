@@ -110,9 +110,6 @@
                         <th>
                             Responsable
                         </th>
-                        {{--<th>
-                            Proceso
-                        </th>--}}
                         <th>
                             Año
                         </th>
@@ -131,114 +128,10 @@
                         <th>
                             Indicadores
                         </th>
-                        {{--<th>
-                            Meta
-                        </th>
-                        <th>
-                            No. revisiones
-                        </th>
-                        <th>
-                            Resultado
-                        </th>
-                        <th>
-                            Responsable
-                        </th>--}}
                         <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\IndicadoresSgsi::FRECUENCIA_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\IndicadoresSgsi::UNIDADMEDIDA_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\IndicadoresSgsi::SEMAFORO_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -336,19 +229,6 @@
 
             ];
 
-            @can('indicadores_sgsi_agregar')
-                // let btnAgregar = {
-                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                // titleAttr: 'Agregar indicador SGSI',
-                // url: "{{ route('admin.indicadores-sgsis.create') }}",
-                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                // action: function(e, dt, node, config){
-                // let {url} = config;
-                // window.location.href = url;
-                // }
-                // };
-                // dtButtons.push(btnAgregar);
-            @endcan
             @can('indicadores_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
@@ -418,10 +298,6 @@
                         data: 'año',
                         name: 'año',
                     },
-                    /*{
-                        data: 'proceso',
-                        name: 'proceso'
-                    },*/
                     {
                         data: 'descripcion',
                         name: 'descripcion'
@@ -449,18 +325,6 @@
                             `;
                         }
                     },
-                    /*{
-                        data: 'meta',
-                        name: 'meta'
-                    },
-                    {
-                        data: 'revisiones',
-                        name: 'revisiones'
-                    },
-                    {
-                        data: 'responsable',
-                        name: 'responsable'
-                    },*/
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
