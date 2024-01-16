@@ -324,12 +324,18 @@ class AlcanceSgsiController extends Controller
         // dd($alcanceSgsi);
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
+        $alcanceSgsi->load('team');
+        $normas = Norma::get();
+
         $proceso = ProcesosListaDistribucion::with('participantes')
             ->where('modulo_id', '=', $modulo->id)
             ->where('proceso_id', '=', $alcanceSgsi->id)
             ->first();
 
         $no_niveles = $modulo->niveles;
+
+        $acceso_restringido = 'correcto';
+
         if ($proceso->estatus == 'Pendiente') {
             for ($i = 1; $i <= $no_niveles; $i++) {
                 foreach ($proceso->participantes as $part) {
@@ -346,29 +352,29 @@ class AlcanceSgsiController extends Controller
                             ) {
                                 // dd($proceso);
                                 // dd($alcanceSgsi, $part);
-                                $alcanceSgsi->load('team');
-                                $normas = Norma::get();
 
-                                return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas'));
+                                return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
                                 break;
                             } else {
-                                return redirect(route('admin.alcance-sgsis.index'));
+                                $acceso_restringido = 'turno';
+                                return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
                             }
                         }
                     } elseif (
                         $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
-                        $alcanceSgsi->load('team');
-                        $normas = Norma::get();
 
-                        return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas'));
+                        return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
                         break;
                     }
                 }
             }
+            $acceso_restringido = 'denegado';
+            return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
         } else {
-            return redirect(route('admin.alcance-sgsis.index'));
+            $acceso_restringido = 'aprobado';
+            return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
         }
     }
 
