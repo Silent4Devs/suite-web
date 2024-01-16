@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Support\Facades\Cache;
 
 class UsersObserver
