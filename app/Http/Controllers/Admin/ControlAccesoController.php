@@ -27,7 +27,7 @@ class ControlAccesoController extends Controller
         abort_if(Gate::denies('control_de_accesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ControlAcceso::with(['team', 'documentos_controlA'])->select(sprintf('%s.*', (new ControlAcceso)->table))->orderByDesc('id');
+            $query = ControlAcceso::with(['documentos_controlA'])->select(sprintf('%s.*', (new ControlAcceso)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
