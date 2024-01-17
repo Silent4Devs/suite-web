@@ -33,7 +33,7 @@ pipeline {
         stage('Deploy via SSH') {
             steps {
                 script {
-                    sshagent(['/home/desarrollo/.ssh/id_rsa']) {
+                    sshagent(['/home/desarrollo/.ssh/id_rsa.pub']) {
                         sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.111:/var/contenedor/suite-web'
                     }
                 }
