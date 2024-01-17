@@ -184,24 +184,24 @@
         @case('turno')
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    Swal.fire({
-                        // title: 'No es posible acceder a esta vista.',
-                        imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
-                        imageWidth: 100, // Set the width of the image as needed
-                        imageHeight: 100,
-                        html: `<h4 style="color:red;">Aun no es tu turno de revisar la Política.</h4>
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">Aun no es tu turno de revisar la Política.</h4>
             <br><p>No es tu turno de revisar el flujo de la Política en la lista de aprobación.</p><br>`,
-                        // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
-                        showCancelButton: false,
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Redirect to another view after user clicks OK
-                            window.location.href =
-                                '{{ route('admin.politica-sgsis.index') }}';
-                        }
-                    });
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.politica-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
                 });
             </script>
         @break
@@ -209,24 +209,23 @@
         @case('aprobado')
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    Swal.fire({
-                        // title: 'No es posible acceder a esta vista.',
-                        imageUrl: `{{ asset('img/errors/circulo_denegado.svg') }}`, // Replace with the path to your image
-                        imageWidth: 100, // Set the width of the image as needed
-                        imageHeight: 100,
-                        html: `<h4 style="color:red;">Se ha aprobado/rechazado el registro al que se intenta acceder</h4>
-        <br><p>Ya no es necesario volverlo a revisar.</p><br>`,
-                        // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
-                        showCancelButton: false,
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Redirect to another view after user clicks OK
-                            window.location.href =
-                                '{{ route('admin.politica-sgsis.index') }}';
-                        }
-                    });
+                    setTimeout(function() {
+                        Swal.fire({
+                            imageUrl: `{{ asset('img/errors/circulo_denegado.svg') }}`,
+                            imageWidth: 100,
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">Se ha aprobado/rechazado el registro al que se intenta acceder</h4>
+            <br><p>Ya no es necesario volverlo a revisar.</p><br>`,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+
+                        // Redirect after 5 seconds (adjust the time as needed)
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.politica-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
                 });
             </script>
         @break
@@ -234,23 +233,22 @@
         @case('denegado')
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    Swal.fire({
-                        // title: 'No es posible acceder a esta vista.',
-                        imageUrl: `{{ asset('img/errors/ojo_denegado.svg') }}`, // Replace with the path to your image
-                        imageWidth: 100, // Set the width of the image as needed
-                        imageHeight: 100,
-                        html: `<h4 style="color:red;">No tienes permiso para acceder a esta vista</h4>`,
-                        // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
-                        showCancelButton: false,
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Redirect to another view after user clicks OK
-                            window.location.href =
-                                '{{ route('admin.politica-sgsis.index') }}';
-                        }
-                    });
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/ojo_denegado.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">No tienes permiso para acceder a esta vista</h4>`,
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.politica-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
                 });
             </script>
         @break
@@ -258,25 +256,22 @@
         @default
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    Swal.fire({
-                        // title: 'No es posible acceder a esta vista.',
-                        imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
-                        imageWidth: 100, // Set the width of the image as needed
-                        imageHeight: 100,
-                        html: `<h4 style="color:red;">Colaborador dado de baja</h4>
-            <br><p>El colaborador responsable de este formulario ta no se encuentra dado de alta en el sistema.</p><br>
-            <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este módulo.</p>`,
-                        // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
-                        showCancelButton: false,
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Redirect to another view after user clicks OK
-                            window.location.href =
-                                '{{ route('admin.iso27001.guia') }}';
-                        }
-                    });
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/ojo_denegado.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">No tienes permiso para acceder a esta vista</h4>`,
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.politica-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
                 });
             </script>
     @endswitch
