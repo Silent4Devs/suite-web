@@ -8,6 +8,7 @@ use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\EmpleadoController;
 
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
@@ -63,7 +64,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleado/update-profile', 'EmpleadoController@updateInformationProfile')->name('empleado.update-profile');
     Route::post('empleado/update-related-info-profile', 'EmpleadoController@updateInformacionRelacionadaProfile')->name('empleado.update-related-info-profile');
     Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
-    Route::get('ExportEmpleadosGeneral', 'EmpleadoController@exportExcel')->name('empleados.excel');
 
     Route::post('empleado-deletemultiple', 'EmpleadoController@borradoMultiple')->name('empleado.deleteMultiple');
     Route::post('empleados/update/{certificacion}/competencias-certificaciones', 'EmpleadoController@updateCertificaciones')->name('empleados.updateCertificaciones');
@@ -130,7 +130,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
 
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
+        //Se puso aqui debido a problema de cross-origin
+        Route::get('ExportEmpleadosGeneral', 'EmpleadoController@exportExcel')->name('descarga-empleados-general');
+
         // Visitantes
+
         Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
         Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
         Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
