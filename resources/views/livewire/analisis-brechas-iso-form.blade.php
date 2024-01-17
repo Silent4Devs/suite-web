@@ -206,7 +206,7 @@
                     @endif
                 </div>
 
-                <div class="form-group col-md-3 col-sm-3 col-lg-3 anima-focus">
+                <div wire:ignore class="form-group col-md-3 col-sm-3 col-lg-3 anima-focus">
                     <div class="form-control" id="id_puesto" readonly></div>
                     <label for="id_puesto">Puesto</label>
                 </div>
@@ -217,7 +217,7 @@
                 @endif
 
 
-                <div class="form-group col-md-3 col-sm-3 col-lg-3 anima-focus">
+                <div wire:ignore class="form-group col-md-3 col-sm-3 col-lg-3 anima-focus">
                     <div class="form-control" id="id_area" readonly></div>
                     <label for="id_area"><i class="fas fa-street-viewa iconos-crear"></i>Área</label>
                 </div>

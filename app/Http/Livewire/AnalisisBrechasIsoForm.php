@@ -57,6 +57,7 @@ class AnalisisBrechasIsoForm extends Component
     {
         $this->name = null;
         $this->id_elaboro = '';
+        $this->view = 'create';
     }
 
     public function save()
@@ -99,12 +100,14 @@ class AnalisisBrechasIsoForm extends Component
 
     public function update()
     {
+        $this->fecha = Carbon::today()->format('Y-m-d');
         $analisis_brechas = AnalisisBrechasIso::find($this->analisis_id);
         $analisis_brechas->update([
             'nombre' => $this->name,
             'fecha' => $this->fecha,
             'id_elaboro' => $this->id_elaboro,
         ]);
+        $this->resetInput();
     }
 
     public function destroy($id)
