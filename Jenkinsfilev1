@@ -30,14 +30,6 @@ pipeline {
             }
         }
 
-        stage('Accept Host Key') {
-            steps {
-                script {
-                    sh 'ssh -o StrictHostKeyChecking=no desarrollo@192.168.9.111 exit'
-                }
-            }
-        }
-
         stage('Deploy via SSH') {
             steps {
                 script {
