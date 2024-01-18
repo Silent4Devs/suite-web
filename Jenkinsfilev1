@@ -14,7 +14,7 @@ pipeline {
             }
         }
 
-        stage('Install') {
+        stage('Install Repo') {
             steps {
                 git branch: 'silent/master', url: 'https://github.com/Silent4Devs/suite-web.git'
             }
