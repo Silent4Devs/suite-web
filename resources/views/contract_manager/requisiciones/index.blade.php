@@ -13,7 +13,7 @@
             word-wrap: break-word
         }
     </style>
-    <h5 class="col-12 titulo_general_funcion">Requisiciónes Despligue</h5>
+    <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
