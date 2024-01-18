@@ -7,7 +7,7 @@ pipeline {
             }
         }
 
-       stage('Install') {
+        stage('Install') {
             steps {
                 git branch: 'silent/master', url: 'https://github.com/Silent4Devs/suite-web.git'
             }
@@ -33,17 +33,14 @@ pipeline {
         stage('Deploy via SSH') {
             steps {
                 script {
-
-                     sh 'ssh desarrollo@192.168.9.111'
-
-
-                    // sshagent(['/root/.ssh/id_rsa.pub']) {
-                    // sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.111:/var/contenedor/suite-web'
-                    // }
+                    // Conectarse por SSH al servidor y realizar el git pull
+                    sshagent(['jenkis123']) {
+                        sh '''
+                            ssh desarrollo@192.168.9.111 "cd /var/contenedores/tabantaj && sudo git pull"
+                        '''
+                    }
                 }
             }
         }
-
     }
 }
-
