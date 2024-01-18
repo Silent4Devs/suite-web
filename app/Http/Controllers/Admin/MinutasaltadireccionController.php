@@ -354,15 +354,20 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $minutasaltadireccion = Minutasaltadireccion::with([
             'participantes',
-            'planes',
+            // 'planes',
             'documentos',
             'externos',
         ])
             ->find($id);
 
-        $actividades = array_filter($minutasaltadireccion->planes->first()->tasks, function ($actividad) {
+        $planes_minuta =  Minutasaltadireccion::with(
+            'planes'
+        )
+            ->find($id);
+        $actividades = array_filter($planes_minuta->planes->first()->tasks, function ($actividad) {
             return intval($actividad->level) > 0;
         });
+        // dd($planes_minuta, $actividades);
 
         $participantesWithAsistencia = $minutasaltadireccion->participantes()
             // ->select('name', 'area_id', 'foto')
