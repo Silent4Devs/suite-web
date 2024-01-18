@@ -1,7 +1,14 @@
 pipeline {
     agent any
+
+    environment {
+        SSH_USER = 'desarrollo'
+        SSH_PASSWORD = 'Tabantaj.int'
+        SERVER_IP = '192.168.9.111'
+    }
+
     stages {
-        stage('Declarative: Checkout SCM') {
+        stage('Declarativo: Checkout SCM') {
             steps {
                 checkout scm
             }
@@ -24,7 +31,7 @@ pipeline {
                         sh 'docker-compose exec php chmod 777 -R storage'
                         sh 'docker-compose exec php php artisan optimize:clear'
                     } catch (Exception e) {
-                        echo 'Exception occurred: ' + e.toString()
+                        echo 'Ocurrió una excepción: ' + e.toString()
                     }
                 }
             }
@@ -33,10 +40,10 @@ pipeline {
         stage('Deploy via SSH') {
             steps {
                 script {
-                    // Conectarse por SSH al servidor y realizar el git pull
-                    sshagent(['Tabantaj.int']) {
-                         sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.111:/var/contenedor/suite-web'
-                    }
+                    // Utilizar sshpass para conectarse por SSH con usuario y contraseña
+                    sh '''
+                        sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedores/tabantaj && sudo git pull"
+                    '''
                 }
             }
         }
