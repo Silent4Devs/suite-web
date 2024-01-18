@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     // Conectarse por SSH al servidor y realizar el git pull
-                    sshagent(['jenkis123']) {
+                    sshagent(['6e76d645d6e8abc2c32eb77dcb4a2196']) {
                         sh '''
                             ssh desarrollo@192.168.9.111 "cd /var/contenedores/tabantaj && sudo git pull"
                         '''
