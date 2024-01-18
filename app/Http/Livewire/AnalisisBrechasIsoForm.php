@@ -7,7 +7,7 @@ use App\Models\EvaluacionAnalisisBrechas;
 use App\Models\Iso27\AnalisisBrechasIso;
 use App\Models\Norma;
 use App\Models\ParametrosEvaluacionAnalisisBrechas;
-use App\Models\PreguntasEvaluacionanalisisBrechas;
+use App\Models\PreguntasEvaluacionAnalisisBrechas;
 use App\Models\SeccionesEvaluacionAnalisisBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
 use Carbon\Carbon;
@@ -168,7 +168,7 @@ class AnalisisBrechasIsoForm extends Component
                 $preguntas_generales = $seccion_general->preguntas;
 
                 foreach ($preguntas_generales as $pregunta_general) {
-                    PreguntasEvaluacionanalisisBrechas::create([
+                    PreguntasEvaluacionAnalisisBrechas::create([
                         'seccion_id' => $seccion->id,
                         'pregunta' => $pregunta_general->pregunta,
                         'numero_pregunta' => $pregunta_general->numero_pregunta,
