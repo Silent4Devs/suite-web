@@ -35,9 +35,7 @@ pipeline {
                 script {
                     // Conectarse por SSH al servidor y realizar el git pull
                     sshagent(['Tabantaj.int']) {
-                        sh '''
-                            ssh desarrollo@192.168.9.111 "cd /var/contenedores/tabantaj && sudo git pull"
-                        '''
+                         sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.111:/var/contenedor/suite-web'
                     }
                 }
             }
