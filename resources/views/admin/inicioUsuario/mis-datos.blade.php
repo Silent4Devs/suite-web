@@ -408,7 +408,7 @@ if (!is_null($organizacion)) {
                                             @if ($usuario->empleado->puesto)
                                                 <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}"
                                                     style="">
-                                                    Ver Perfil Profesional  saul1
+                                                    Ver Perfil Profesional
                                                 </a>
                                             @endif
                                         @endif
