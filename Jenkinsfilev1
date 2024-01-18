@@ -40,9 +40,8 @@ pipeline {
         stage('Deploy via SSH') {
             steps {
                 script {
-                    // Utilizar sshpass para conectarse por SSH con usuario y contraseña
                     sh '''
-                        echo $SSH_PASSWORD | sshpass -p - ssh -tt $SSH_USER@$SERVER_IP "cd /var/contenedores/tabantaj"
+                       sshpass -p - ssh -tt $SSH_USER@$SERVER_IP "cd /var/contenedores/tabantaj && sudo -S git pull"
                     '''
                 }
             }
