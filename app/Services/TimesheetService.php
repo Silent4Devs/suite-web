@@ -72,7 +72,7 @@ class TimesheetService
     public function totalRegisterByAreas(): array
     {
         $array = [];
-        $areas = $this->areaRepo->find();
+        $areas = $this->areaRepo->find(['id', 'area']);
         $participacion_total = 0;
         $hoy = $this->carbon->now();
         $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
@@ -96,7 +96,7 @@ class TimesheetService
                 $rechazado = 0;
                 $aprobado = 0;
                 $timesheets_empleado = $empleado->timesheet;
-                if (! $timesheets_empleado->isEmpty()) {
+                if (!$timesheets_empleado->isEmpty()) {
                     foreach ($timesheets_empleado as $timesheet) {
                         switch ($timesheet->estatus) {
                             case 'aprobado':
@@ -172,7 +172,7 @@ class TimesheetService
     public function getRegistersByProyects(): array
     {
         // Obtenemos la lista de los proyectos
-        $proyectos = $this->timesheetProyectoRepo->find();
+        $proyectos = $this->timesheetProyectoRepo->find(['id', 'proyecto', 'estatus']);
         $proyectos_array = [];
         $cancelados = 0;
         $terminados = 0;
@@ -237,7 +237,7 @@ class TimesheetService
     {
         $total = 0;
         foreach ($tareas as $tarea) {
-            if (! $tarea->horas->isEmpty()) {
+            if (!$tarea->horas->isEmpty()) {
                 foreach ($tarea->horas as $horas) {
                     $total += floatval($horas->horas_lunes);
                     $total += floatval($horas->horas_martes);
