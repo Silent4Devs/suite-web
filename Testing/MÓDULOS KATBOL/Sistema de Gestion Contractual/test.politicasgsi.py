@@ -81,7 +81,6 @@ informacion_btn=WebDriverWait(driver, 10).until(EC.presence_of_element_located((
 informacion_btn_url=informacion_btn.get_attribute("href")
 informacion_btn.click()
 
-
 #LIDERAZGO
 print("Dando click a Liderazgo")
 liderazgo_btn=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,liderazgo_btn_xpath) ))
