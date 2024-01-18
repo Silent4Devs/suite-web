@@ -873,7 +873,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('entendimiento-organizacions-foda-revision/{id}', 'EntendimientoOrganizacionController@revision')->name('foda.revision');
         Route::post('entendimiento-organizacions-foda-revision/{id}/aprobado', 'EntendimientoOrganizacionController@aprobado')->name('foda-organizacions.aprobado');
         Route::post('entendimiento-organizacions-foda-revision/{id}/rechazado', 'EntendimientoOrganizacionController@rechazado')->name('foda-organizacions.rechazado');
-        Route::post('entendimiento-organizacions/{minuta}/solicitud-aprobacion', 'EntendimientoOrganizacionController@solicitudAprobacion')->name('foda-organizacions.solicitudAprobacion');
+        Route::post('entendimiento-organizacions/{id}/solicitud-aprobacion', 'EntendimientoOrganizacionController@solicitudAprobacion')->name('foda-organizacions.solicitudAprobacion');
 
         Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
         Route::get('partes-interesadas/{id}/edit', 'PartesInteresadasController@edit')->name('partes-interesadas.edit');
@@ -928,6 +928,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('minutasaltadireccions/media', 'MinutasaltadireccionController@storeMedia')->name('minutasaltadireccions.storeMedia');
         Route::post('minutasaltadireccions/ckmedia', 'MinutasaltadireccionController@storeCKEditorImages')->name('minutasaltadireccions.storeCKEditorImages');
         Route::get('minutasaltadireccions/{id}/show', 'MinutasaltadireccionController@show')->name('minutasaltadireccions.show');
+        Route::get('minutasaltadireccions-revision/{id}', 'MinutasaltadireccionController@revision')->name('minutasaltadireccions.revision');
         Route::post('minutasaltadireccions/{minuta}/aprobado', 'MinutasaltadireccionController@aprobado')->name('minutasaltadireccions.aprobado');
         Route::post('minutasaltadireccions/{minuta}/rechazado', 'MinutasaltadireccionController@rechazado')->name('minutasaltadireccions.rechazado');
         Route::resource('minutasaltadireccions', 'MinutasaltadireccionController');

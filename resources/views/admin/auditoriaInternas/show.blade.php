@@ -7,11 +7,11 @@
         <meta charset="utf-8">
         <style>
             /* body {
-                                                        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-                                                        text-align: justify;
-                                                        font-size: 12px;
-                                                        color: #6c6c6c;
-                                                    } */
+                                                                    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                                                                    text-align: justify;
+                                                                    font-size: 12px;
+                                                                    color: #6c6c6c;
+                                                                } */
 
             table td {
                 border: none;
@@ -268,9 +268,9 @@
 
                                     <div class="col-6">
                                         <div class="info-header">
-                                            {{ $organizacion->empresa }} <br>
-                                            {{ $organizacion->rfc }} <br>
-                                            {{ $organizacion->direccion }} <br>
+                                            {{ $organizacion->empresa ?? '' }} <br>
+                                            {{ $organizacion->rfc ?? '' }} <br>
+                                            {{ $organizacion->direccion ?? '' }} <br>
                                         </div>
                                     </div>
                                     <div class="col-4" style="text-align: right;">
@@ -288,7 +288,7 @@ letter-spacing: 0px;
 color: #606060;
 text-transform: uppercase;
 opacity: 1;">
-                                            ID AUDITORÍA: {{ $auditoriaInterna->id_auditoria }}</p>
+                                            ID AUDITORÍA: {{ $auditoriaInterna->id_auditoria ?? '' }}</p>
                                         <p
                                             style="text-align: left;
 font: normal normal medium 14px/20px Roboto;
@@ -311,28 +311,28 @@ opacity: 1;">
                                 <div class="row">
                                     <div class="col-3">
                                         <p><strong>Nombre de la auditoria:</strong></p>
-                                        <p>{{ $auditoriaInterna->nombre_auditoria }}</p>
+                                        <p>{{ $auditoriaInterna->nombre_auditoria ?? '' }}</p>
                                     </div>
                                     <div class="col-6">
                                         <p><strong>Equipo Auditoria:</strong></p><br>
                                         <div class="row">
                                             @foreach ($auditoriaInterna->equipo as $equipo)
                                                 <div class="col-4">
-                                                    <p>{{ $equipo->name }}</p>
+                                                    <p>{{ $equipo->name ?? '' }}</p>
                                                 </div>
                                             @endforeach
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <p><strong>Nombre Auditor externo</strong></p>
-                                        <p>{{ $auditoriaInterna->auditor_externo }}</p>
+                                        <p>{{ $auditoriaInterna->auditor_externo ?? '' }}</p>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-3">
                                         <p><strong>Área:</strong></p>
-                                        <p>{{ $auditoriaInterna->lider->area->area }}</p>
+                                        <p>{{ $auditoriaInterna->lider->area->area ?? '' }}</p>
                                     </div>
                                 </div>
 
@@ -365,11 +365,11 @@ opacity: 1;">
                                     <td style="text-align: left;" colspan="2">
                                         <p style="font: normal medium 16px/19px;"><strong>
                                                 Hallazgos del
-                                                equipo: {{ $reporte->empleado->name }}</strong></p>
+                                                equipo: {{ $reporte->empleado->name ?? '' }}</strong></p>
                                     </td>
                                     <td style="text-align: right;">
                                         <p style="font: normal medium 16px/19px;"> <strong>Área Relacionada:
-                                                {{ $reporte->empleado->area->area }}</strong></p>
+                                                {{ $reporte->empleado->area->area ?? '' }}</strong></p>
                                     </td>
                                 </tr>
                             </thead>
@@ -381,29 +381,31 @@ opacity: 1;">
                                                 <div class="row">
                                                     <div class="col-3" style="margin-bottom: 10px;">
                                                         <p><strong>Clausula</strong></p>
-                                                        <p>{{ $hallazgos->clausula->nombre_clausulas }}</p>
+                                                        <p>{{ $hallazgos->clausula->nombre_clausulas ?? '' }}</p>
                                                     </div>
                                                     <div class="col-5" style="margin-bottom: 10px;">
                                                         <p><strong>Subtema y Titulo</strong></p>
-                                                        <p>{{ $hallazgos->no_tipo }} &nbsp; {{ $hallazgos->titulo }}</p>
+                                                        <p>{{ $hallazgos->no_tipo ?? '' }} &nbsp;
+                                                            {{ $hallazgos->titulo ?? '' }}</p>
                                                     </div>
                                                     <div class="col-4" style="margin-bottom: 10px;">
                                                         <p><strong>Requisito</strong></p>
-                                                        <p>{{ $hallazgos->incumplimiento_requisito }}</p>
+                                                        <p>{{ $hallazgos->incumplimiento_requisito ?? '' }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-5" style="margin-bottom: 10px;">
                                                         <p><strong>Descripción:</strong></p>
-                                                        <p>{{ $hallazgos->descripcion }}</p>
+                                                        <p>{{ $hallazgos->descripcion ?? '' }}</p>
                                                     </div>
                                                     <div class="col-4" style="margin-bottom: 10px;">
                                                         <p><strong>Proceso Relacionado:</strong></p>
-                                                        <p>{{ $hallazgos->procesos->nombre }}</p>
+                                                        <p>{{ $hallazgos->procesos->nombre ?? '' }}</p>
                                                     </div>
                                                     <div class="col-3" style="margin-bottom: 10px;">
                                                         <p><strong>Clasificación:</strong></p>
-                                                        <p>{{ $hallazgos->clasificacion->nombre_clasificaciones }}</p>
+                                                        <p>{{ $hallazgos->clasificacion->nombre_clasificaciones ?? '' }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div class="row">

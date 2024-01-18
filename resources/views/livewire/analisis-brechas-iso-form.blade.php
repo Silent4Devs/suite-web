@@ -38,6 +38,7 @@
             width: 239px;
             height: auto;
             background-color: #fff;
+            cursor: pointer;
             /* box-shadow: 0px 3px 6px #00000029; */
         }
 
