@@ -42,7 +42,7 @@ pipeline {
                 script {
                     // Utilizar sshpass para conectarse por SSH con usuario y contraseña
                     sh '''
-                        echo $SSH_PASSWORD | sshpass -p - ssh -tt $SSH_USER@$SERVER_IP "cd /var/contenedores/tabantaj && sudo git pull"
+                        echo $SSH_PASSWORD | sshpass -p - ssh -tt $SSH_USER@$SERVER_IP "cd /var/contenedores/tabantaj"
                     '''
                 }
             }
