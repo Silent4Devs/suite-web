@@ -269,7 +269,15 @@ class Empleado extends Model implements Auditable
     public static function getaltaAllWithAreaObjetivoPerfil()
     {
         return Cache::remember('Empleados:empleados_alta_all_area', 3600 * 6, function () {
-            return self::alta()->with(['objetivos', 'area', 'perfil'])->get();
+            return self::alta()->select(
+                'n_empleado',
+                'name',
+                'puesto_id',
+                'area_id',
+                'perfil_empleado_id',
+                'id',
+                'foto'
+            )->with(['objetivos', 'area', 'perfil', 'puestoRelacionado'])->get();
         });
     }
 
