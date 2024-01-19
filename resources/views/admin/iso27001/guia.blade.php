@@ -189,7 +189,7 @@
                             @if ($version_iso === true)
                                 <div class="card-iso-guia">
                                     <div class="img-card-iso">
-                                        <img src="{{ asset('img/iso/iso1.png') }}" alt="">
+                                        <img src="{{ asset('img/iso/iso1.webp') }}" alt="">
                                     </div>
                                     <div class="info-iso">
                                         <h4 class="title-card-img-iso">Análisis de brechas</h4>
@@ -203,7 +203,7 @@
                             @else
                                 <div class="card-iso-guia">
                                     <div class="img-card-iso">
-                                        <img src="{{ asset('img/iso/iso1.png') }}" alt="">
+                                        <img src="{{ asset('img/iso/iso1.webp') }}" alt="">
                                     </div>
                                     <div class="info-iso">
                                         <h4 class="title-card-img-iso">Análisis de brechas</h4>
@@ -217,22 +217,22 @@
                             @endif
                         @endcan
                         <!--<div class="card-iso-guia">
-                                                                                                                                                                                                                                                                                                                                                                <div class="img-card-iso">
-                                                                                                                                                                                                                                                                                                                                                                    <img src="{{ asset('img/iso/iso2.png') }}" alt="">
-                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                <div class="info-iso">
-                                                                                                                                                                                                                                                                                                                                                                        <h4 class="title-card-img-iso">Plan de implementación</h4>
-                                                                                                                                                                                                                                                                                                                                                                        {{-- <span>Completado</span> --}}
-                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                    <a href="{{ route('admin.planTrabajoBase.index') }}" class="btn-entrar">
-                                                                                                                                                                                                                                                                                                                                                                        Entrar
-                                                                                                                                                                                                                                                                                                                                                                        <i class="material-symbols-outlined"> arrow_right_alt</i>
-                                                                                                                                                                                                                                                                                                                                                                    </a>
-                                                                                                                                                                                                                                                                                                                                                            </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="img-card-iso">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <img src="{{ asset('img/iso/iso2.webp') }}" alt="">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="info-iso">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <h4 class="title-card-img-iso">Plan de implementación</h4>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- <span>Completado</span> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <a href="{{ route('admin.planTrabajoBase.index') }}" class="btn-entrar">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Entrar
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="material-symbols-outlined"> arrow_right_alt</i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>-->
                         @can('partes_interesadas_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso3.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso3.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Partes interesadas</h4>
@@ -247,7 +247,7 @@
                         @can('analisis_foda_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso23.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso23.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Análisis FODA</h4>
@@ -262,7 +262,7 @@
                         @can('determinacion_alcance_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso4.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso4.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Determinación de alcance</h4>
@@ -309,7 +309,7 @@
                         @can('politica_sistema_gestion_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso7.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso7.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Política del sistema de gestión</h4>
@@ -324,7 +324,7 @@
                         @can('comformacion_comite_seguridad_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso5.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso5.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Conformación del comité</h4>
@@ -337,18 +337,18 @@
                             </div>
                         @endcan
                         <!--                    <div class="card-iso-guia">
-                                                                                                                                                                                                                                                                                                                                                            <div class="img-card-iso">
-                                                                                                                                                                                                                                                                                                                                                                <img src="{{ asset('img/iso/iso1.png') }}" alt="">
-                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                            <div class="info-iso">
-                                                                                                                                                                                                                                                                                                                                                                <h4 class="title-card-img-iso">Revisión por dirección</h4>
-                                                                                                                                                                                                                                                                                                                                                                {{-- <span>Completado</span> --}}
-                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn-entrar">
-                                                                                                                                                                                                                                                                                                                                                                Entrar
-                                                                                                                                                                                                                                                                                                                                                                <i class="material-symbols-outlined"> arrow_right_alt</i>
-                                                                                                                                                                                                                                                                                                                                                            </a>
-                                                                                                                                                                                                                                                                                                                                                        </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="img-card-iso">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <img src="{{ asset('img/iso/iso1.webp') }}" alt="">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="info-iso">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <h4 class="title-card-img-iso">Revisión por dirección</h4>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- <span>Completado</span> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn-entrar">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Entrar
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="material-symbols-outlined"> arrow_right_alt</i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>-->
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
@@ -370,7 +370,7 @@
                         @can('menu_analisis_riesgo_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso8.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso8.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Análisis de riesgos</h4>
@@ -386,7 +386,7 @@
                             @can('asignacion_de_controles_acceder')
                                 <div class="card-iso-guia">
                                     <div class="img-card-iso">
-                                        <img src="{{ asset('img/iso/iso9.png') }}" alt="">
+                                        <img src="{{ asset('img/iso/iso9.webp') }}" alt="">
                                     </div>
                                     <div class="info-iso">
                                         <h4 class="title-card-img-iso">Asignación de controles</h4>
@@ -401,7 +401,7 @@
                             @can('declaracion_de_aplicabilidad_acceder')
                                 <div class="card-iso-guia">
                                     <div class="img-card-iso">
-                                        <img src="{{ asset('img/iso/iso10.png') }}" alt="">
+                                        <img src="{{ asset('img/iso/iso10.webp') }}" alt="">
                                     </div>
                                     <div class="info-iso">
                                         <h4 class="title-card-img-iso">Declaración de aplicabilidad</h4>
@@ -432,7 +432,7 @@
                             @can('asignacion_de_controles_acceder')
                                 <div class="card-iso-guia">
                                     <div class="img-card-iso">
-                                        <img src="{{ asset('img/iso/iso9.png') }}" alt="">
+                                        <img src="{{ asset('img/iso/iso9.webp') }}" alt="">
                                     </div>
                                     <div class="info-iso">
                                         <h4 class="title-card-img-iso">Asignación de controles</h4>
@@ -447,7 +447,7 @@
                             @can('declaracion_de_aplicabilidad_acceder')
                                 <div class="card-iso-guia">
                                     <div class="img-card-iso">
-                                        <img src="{{ asset('img/iso/iso10.png') }}" alt="">
+                                        <img src="{{ asset('img/iso/iso10.webp') }}" alt="">
                                     </div>
                                     <div class="info-iso">
                                         <h4 class="title-card-img-iso">Declaración de aplicabilidad</h4>
@@ -478,7 +478,7 @@
                         @can('objetivos_del_sistema_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso12.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso12.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Tipos de objetivos</h4>
@@ -491,7 +491,7 @@
                             </div>
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso13.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso13.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Objetivos</h4>
@@ -526,7 +526,7 @@
                     <div class="caja-cards-iso-guia mt-5">
                         <div class="card-iso-guia">
                             <div class="img-card-iso">
-                                <img src="{{ asset('img/iso/iso14.png') }}" alt="">
+                                <img src="{{ asset('img/iso/iso14.webp') }}" alt="">
                             </div>
                             <div class="info-iso">
                                 <h4 class="title-card-img-iso">Transferencia de conocimiento</h4>
@@ -539,7 +539,7 @@
                         </div>
                         <div class="card-iso-guia">
                             <div class="img-card-iso">
-                                <img src="{{ asset('img/iso/iso15.png') }}" alt="">
+                                <img src="{{ asset('img/iso/iso15.webp') }}" alt="">
                             </div>
                             <div class="info-iso">
                                 <h4 class="title-card-img-iso">Competencias</h4>
@@ -553,7 +553,7 @@
                         @can('concientizacion_sgsi_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso16.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso16.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Concientización SGI</h4>
@@ -568,7 +568,7 @@
                         @can('material_sgsi_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso17.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso17.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Material SGSI</h4>
@@ -583,7 +583,7 @@
                         @can('comunicados_generales_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso18.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso18.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Comunicados generales</h4>
@@ -598,7 +598,7 @@
                         @can('informacion_documentada_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso19.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso19.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Información documentada</h4>
@@ -613,7 +613,7 @@
                         @can('evidencia_asignacion_recursos_sgsi_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso6.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso6.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Evidencias de asignación de recursos al SGSI</h4>
@@ -647,7 +647,7 @@
                         @can('planificacion_y_control_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso20.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso20.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Planificación y control</h4>
@@ -662,7 +662,7 @@
                         @can('tratamiento_de_los_riesgos_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso21.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso21.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Tratamiento de riesgos</h4>
@@ -677,7 +677,7 @@
                         @can('centro_atencion_incidentes_de_seguridad_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso24.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso24.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Incidentes de seguridad</h4>
@@ -692,7 +692,7 @@
                         @can('matriz_requisitos_legales_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso22.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso22.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Matriz de requisitos legales y regulatorios</h4>
@@ -707,7 +707,7 @@
                         @can('control_de_accesos_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso23.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso23.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Control de accesos</h4>
@@ -741,7 +741,7 @@
                         @can('indicadores_sgsi_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso25.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso25.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Indicadores del sistema de gestión</h4>
@@ -756,7 +756,7 @@
                         @can('programa_anual_auditoria_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso26.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso26.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Programa anual de auditoría</h4>
@@ -771,7 +771,7 @@
                         @can('plan_de_auditoria_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso27.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso27.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Plan de auditoría</h4>
@@ -786,7 +786,7 @@
                         @can('auditoria_interna_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso23.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso23.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Informe de auditoría</h4>
@@ -801,7 +801,7 @@
                         @can('revision_por_direccion_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso28.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso28.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Revisión por dirección</h4>
@@ -834,7 +834,7 @@
                         @can('accion_correctiva_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso29.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso29.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Acción correctiva</h4>
@@ -849,7 +849,7 @@
                         @can('centro_atencion_mejoras_acceder')
                             <div class="card-iso-guia">
                                 <div class="img-card-iso">
-                                    <img src="{{ asset('img/iso/iso30.png') }}" alt="">
+                                    <img src="{{ asset('img/iso/iso30.webp') }}" alt="">
                                 </div>
                                 <div class="info-iso">
                                     <h4 class="title-card-img-iso">Registro mejora</h4>

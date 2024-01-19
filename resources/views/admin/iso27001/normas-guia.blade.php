@@ -11,7 +11,7 @@
             <a href="#" class="disabled">
                 <div class="card card-norma" style="background-color: #FFF0C5;">
                     <div class="card-img">
-                        <img src="{{ asset('img/iso/iso23.png') }}" alt="">
+                        <img src="{{ asset('img/iso/iso23.webp') }}" alt="">
                     </div>
                     <div class="card-body">
                         <h4 class="mb-4">CONTINUIDAD DE NEGOCIO 22301</h4>
@@ -30,7 +30,7 @@
 
                 <div class="card card-norma" style="background-color: #FFD4DB;">
                     <div class="card-img">
-                        <img src="{{ asset('img/iso/iso28.png') }}" alt="">
+                        <img src="{{ asset('img/iso/iso28.webp') }}" alt="">
                     </div>
                     <div class="card-body">
                         <h4 class="mb-4">GESTIÓN DE LA CALIDAD 9001</h4>
@@ -50,7 +50,7 @@
             <a href="{{ route('admin.iso27001.guia') }}">
                 <div class="card card-norma" style="background-color: #E1E7FF;">
                     <div class="card-img">
-                        <img src="{{ asset('img/iso/iso14.png') }}" alt="">
+                        <img src="{{ asset('img/iso/iso14.webp') }}" alt="">
                     </div>
                     <div class="card-body">
                         <h4 class="mb-4">SEGURIDAD DE LA INFORMACIÓN 27001</h4>
@@ -71,7 +71,7 @@
             <a href="#" class="disabled">
                 <div class="card card-norma" style="background-color: #BED6F9;">
                     <div class="card-img">
-                        <img src="{{ asset('img/iso/iso22.png') }}" alt="">
+                        <img src="{{ asset('img/iso/iso22.webp') }}" alt="">
                     </div>
                     <div class="card-body">
                         <h4 class="mb-4">GESTIÓN DEL SERVICIO 2000</h4>

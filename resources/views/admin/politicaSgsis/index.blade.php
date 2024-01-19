@@ -306,7 +306,7 @@
                                             </div>
                                         @else
                                             <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                <img src="{{ asset('img/tabantaj_fondo_blanco.PNG') }}"
+                                                <img src="{{ asset('img/tabantaj_fondo_blanco.webp') }}"
                                                     class="mt-2 img-fluid"
                                                     style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
                                             </div>
