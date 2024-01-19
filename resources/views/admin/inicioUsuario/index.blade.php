@@ -32,9 +32,9 @@
                                 alt="">
                         </div>
                         <div class="mt-4">
-                            <a href="">Ver perfil profesional</a> <br>
-                            <a href="">Ver perfil de puesto</a> <br>
-                            <a href="">Mi expediente</a>
+                            <a href="{{route('admin.miCurriculum', $usuario->empleado->id)}}">Ver perfil profesional</a> <br>
+                            <a href="{{route('admin.inicio-Usuario.perfil-puesto')}}">Ver perfil de puesto</a> <br>
+                            <a href="{{route('admin.inicio-Usuario.expediente', auth()->user()->empleado->id) }}">Mi expediente</a>
                         </div>
                         <div class="mt-4">
                             <strong>Email</strong><br>

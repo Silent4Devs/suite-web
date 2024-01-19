@@ -119,8 +119,8 @@
                 </thead>
                 <tbody>
                     @if (isset($actividades))
-                        @foreach ($actividades->task as $actividad)
-                            @php
+                        @foreach ($actividades as $actividad)
+                            {{-- @php
                                 $estatus = 'Completado';
                                 $color = 'rgb(0,200,117)';
                                 $textColor = 'white';
@@ -154,8 +154,26 @@
                                         $estatus = 'Indefinido';
                                         break;
                                 }
-                            @endphp
+                            @endphp --}}
                             <tr>
+                                <td>{{ $actividad->name }}</td>
+                                <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->start) / 1000)->toDateTimeString())->format('Y-m-d') }}
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->end) / 1000)->toDateTimeString())->format('Y-m-d') }}
+                                </td>
+                                <td>
+                                    @foreach ($actividad->assigs as $assig)
+                                        @php
+                                            $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
+                                        @endphp
+                                        <img src="{{ $empleado->avatar_ruta }}" id="res_{{ $empleado->id }}"
+                                            alt="{{ $empleado->name }}" title="{{ $empleado->name }}"
+                                            style="clip-path: circle(15px at 50% 50%);width: 45px;" />
+                                    @endforeach
+                                </td>
+                                <td>{{ $actividad->description }}</td>
+                            </tr>
+                            {{-- <tr>
                                 <td>{{ $actividad->id }}</td>
                                 <td style="background: {{ $color }}; color:{{ $textColor }}">
                                     {{ $estatus }}
@@ -192,7 +210,7 @@
                                         onclick="event.preventDefault(); EliminarFila(this)"><i
                                             class="fa fa-trash-alt"></i></button>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         @endforeach
                     @endif
                 </tbody>

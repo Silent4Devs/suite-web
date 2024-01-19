@@ -7,7 +7,7 @@ use App\Models\EvaluacionAnalisisBrechas;
 use App\Models\Iso27\AnalisisBrechasIso;
 use App\Models\Norma;
 use App\Models\ParametrosEvaluacionAnalisisBrechas;
-use App\Models\PreguntasEvaluacionanalisisBrechas;
+use App\Models\PreguntasEvaluacionAnalisisBrechas;
 use App\Models\SeccionesEvaluacionAnalisisBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
 use Carbon\Carbon;
@@ -57,6 +57,7 @@ class AnalisisBrechasIsoForm extends Component
     {
         $this->name = null;
         $this->id_elaboro = '';
+        $this->view = 'create';
     }
 
     public function save()
@@ -99,12 +100,14 @@ class AnalisisBrechasIsoForm extends Component
 
     public function update()
     {
+        $this->fecha = Carbon::today()->format('Y-m-d');
         $analisis_brechas = AnalisisBrechasIso::find($this->analisis_id);
         $analisis_brechas->update([
             'nombre' => $this->name,
             'fecha' => $this->fecha,
             'id_elaboro' => $this->id_elaboro,
         ]);
+        $this->resetInput();
     }
 
     public function destroy($id)
@@ -165,7 +168,7 @@ class AnalisisBrechasIsoForm extends Component
                 $preguntas_generales = $seccion_general->preguntas;
 
                 foreach ($preguntas_generales as $pregunta_general) {
-                    PreguntasEvaluacionanalisisBrechas::create([
+                    PreguntasEvaluacionAnalisisBrechas::create([
                         'seccion_id' => $seccion->id,
                         'pregunta' => $pregunta_general->pregunta,
                         'numero_pregunta' => $pregunta_general->numero_pregunta,

@@ -329,6 +329,7 @@
 
         {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
 
+
         @include('admin.planesDeAccion.actividades.tabla', [
             'empleados' => $responsablereunions,
             'actividades' => $actividades,
@@ -338,18 +339,15 @@
 
         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
 
-        <div class="row">
-            <div class="text-right col-12">
-                <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
-                    style="float: left; position: relative;">Cancelar</a>
-                <button class="btn btn-danger" id="btnGuardar" type="submit" style="float: left; position: relative;">
-                    Actualizar
-                </button>
-                <button class="btn btn-danger" id="btnUpdateAndReview" type="submit"
-                    style="float: left; position: relative;">
-                    Actualizar y enviar a revisión
-                </button>
-            </div>
+        <div class="text-right form-group col-12">
+            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
+                style="text-decoration: none;">Cancelar</a>
+            <button class="btn btn-danger" id="btnGuardar" type="submit" style="width: 13%;">
+                Actualizar
+            </button>
+            <button class="btn btn-danger" id="btnUpdateAndReview" type="submit" style="width: 25%;">
+                Actualizar y enviar a revisión
+            </button>
         </div>
     </form>
 @endsection
@@ -475,26 +473,28 @@
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                        let lista = "<ul class='list-group id=empleados-lista' >";
-                        $.each(data.usuarios, function(ind, usuario) {
-                            var result = `{"id":"${usuario.id}",
+                        if ($("#participantes_search").val().trim() !== "") {
+                            let lista = "<ul class='list-group id=empleados-lista' >";
+                            $.each(data.usuarios, function(ind, usuario) {
+                                var result = `{"id":"${usuario.id}",
                                 "name":"${usuario.name}",
                                 "email":"${usuario.email}",
                                 "puesto":"${usuario.puesto}",
                                 "area":"${usuario.area.area}"
                                 }`;
-                            lista +=
-                                "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
-                                result + ")' >" +
-                                usuario.name + "</button>";
-                        });
-                        lista += "</ul>";
+                                lista +=
+                                    "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
+                                    result + ")' >" +
+                                    usuario.name + "</button>";
+                            });
+                            lista += "</ul>";
 
-                        $("#cargando_participantes").hide();
-                        $("#participantes_sugeridos").show();
-                        let sugeridos = document.querySelector("#participantes_sugeridos");
-                        sugeridos.innerHTML = lista;
-                        $("#participantes_search").css("background", "#FFF");
+                            $("#cargando_participantes").hide();
+                            $("#participantes_sugeridos").show();
+                            let sugeridos = document.querySelector("#participantes_sugeridos");
+                            sugeridos.innerHTML = lista;
+                            $("#participantes_search").css("background", "#FFF");
+                        }
                     }
                 });
 
@@ -772,6 +772,192 @@
             });
             document.getElementById('participantes').value = arrParticipantes;
             console.log(arrParticipantes);
+        }
+    </script> --}}
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $(document).ready(function() {
+                window.tblActividades = $('#tblActividades').DataTable({
+                    buttons: []
+                });
+            });
+            $('.responsables_actividad').select2({
+                theme: 'bootstrap4',
+            });
+            document.getElementById('btnAgregar').addEventListener('click', function(e) {
+                e.preventDefault();
+                limpiarErrores();
+                agregarActividad();
+            })
+
+            // document.getElementById('btnVincularNombre').addEventListener('click', function(e) {
+            //     e.preventDefault();
+            //     let elementNombre = document.querySelector('[data-vincular-nombre="true"]').value;
+            //     if (elementNombre != "") {
+            //         if (document.getElementById('actividad').value == "") {
+            //             document.getElementById('actividad').value = elementNombre;
+            //         } else {
+            //             if (elementNombre == document.getElementById('actividad').value) {
+            //                 Swal.fire('El nombre ya ha sido vinculado', '', 'info');
+            //             } else {
+            //                 Swal.fire({
+            //                     title: 'Atención',
+            //                     text: "El campo de actividad actualmente contiene texto, ¿Desea sobreescribirlo?",
+            //                     icon: 'warning',
+            //                     showCancelButton: true,
+            //                     confirmButtonColor: '#3085d6',
+            //                     cancelButtonColor: '#d33',
+            //                     confirmButtonText: 'Si',
+            //                     cancelButtonText: 'No',
+            //                 }).then((result) => {
+            //                     if (result.isConfirmed) {
+            //                         document.getElementById('actividad').value = elementNombre;
+            //                     }
+            //                 })
+            //             }
+            //         }
+            //     } else {
+            //         Swal.fire('No se ha descrito el nombre, no se puede vincular', '', 'info');
+            //     }
+            // })
+        });
+
+        function limpiarErrores() {
+            document.querySelectorAll('.errores').forEach(element => {
+                element.innerHTML = "";
+            });
+        }
+
+        function limpiarCampos() {
+            document.getElementById('actividad').value = '';
+            document.getElementById('inicio').value = '';
+            document.getElementById('finalizacion').value = '';
+            document.getElementById('comentarios').value = '';
+            $('.responsables_actividad').val(null).trigger('change');
+        }
+
+        function limpiarCampoPorId(id) {
+            document.getElementById(id).value = '';
+        }
+
+        function agregarActividad() {
+            let actividad = document.getElementById('actividad').value;
+            let inicio = document.getElementById('inicio').value;
+            let finalizacion = document.getElementById('finalizacion').value;
+            let selectedValues = $('.responsables_actividad').select2('data');
+            let comentarios = document.getElementById('comentarios').value;
+            // let progreso = document.getElementById('progreso').value;
+            let esFechaAnterior = Math.round((new Date(finalizacion).getTime() - new Date(inicio).getTime()) / (1000 *
+                60 * 60 * 24)) < 0;
+            if (actividad == '') {
+                document.querySelector('.error_actividad').innerHTML = "El nombre de la actividad es requerido";
+                limpiarCampoPorId('actividad');
+            }
+            if (inicio == '') {
+                document.querySelector('.error_inicio').innerHTML = "El inicio de la actividad es requerido";
+                limpiarCampoPorId('inicio');
+            }
+            if (finalizacion == '') {
+                document.querySelector('.error_finalizacion').innerHTML = "La finalización de la actividad es requerido";
+                limpiarCampoPorId('finalizacion');
+            } else if (esFechaAnterior) {
+                document.querySelector('.error_finalizacion').innerHTML =
+                    "La finalización de la actividad no puede ser días antes del día de inicio";
+                limpiarCampoPorId('finalizacion');
+            }
+            if (selectedValues.length === 0) {
+                document.querySelector('.error_participantes').innerHTML =
+                    "La actividad debe de tener al menos un participante";
+                limpiarCampoPorId('responsables_actividad');
+            }
+
+            if (comentarios == '') {
+                document.querySelector('.error_comentarios').innerHTML =
+                    "El los comentarios de la actividad son requeridos";
+                limpiarCampoPorId('comentarios');
+            }
+            // if (progreso == '' || progreso < 0 || progreso > 100) {
+            //     document.querySelector('.error_progreso').innerHTML =
+            //         "El progreso de la actividad es requerido y debe estár en un rango de 0-100";
+            //     limpiarCampoPorId('progreso');
+            // }
+            // && progreso != '' && progreso >= 0 && progreso <= 100 // Validaciones de progreso
+            if (actividad != '' && inicio != '' && finalizacion != '' && !esFechaAnterior && comentarios != '' &&
+                selectedValues.length > 0) {
+                limpiarCampos();
+
+                let actividades = tblActividades.rows().data().toArray();
+                let arrActividades = [];
+                actividades.forEach(actividad => {
+                    arrActividades.push(actividad[1]);
+                });
+                let name = actividad;
+                // let start = new Date(inicio).getTime();
+                // let end = new Date(finalizacion).getTime();
+                let start = inicio;
+                let end = finalizacion;
+                let id = `tmp_${new Date().getTime()}_1`;
+                let resta = new Date(end).getTime() - new Date(start).getTime();
+                let duration = Math.round(resta / (1000 * 60 * 60 * 24));
+                let images = "";
+                let participantes_id = [];
+                selectedValues.forEach(selected => {
+                    console.log(selected);
+                    images += `
+                        <img class="rounded-circle" title="${selected.text.trim()}" src="{{ asset('storage/empleados/imagenes') }}/${selected.element.attributes.avatar.nodeValue}" id="res_${selected.id}" style="clip-path: circle(15px at 50% 50%);width: 45px;"/>
+                    `;
+                    participantes_id.push(selected.id);
+                });
+
+                // let progress = progreso;
+
+                if (!arrActividades.includes(actividad)) {
+                    tblActividades.row.add([
+                        // id,
+                        // 'STATUS_ACTIVE',
+                        name,
+                        start,
+                        end,
+                        // duration,
+                        images,
+                        // participantes_id,
+                        comentarios,
+                        // `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
+                    ]).draw();
+
+                    let additionalData = {
+                        id: id,
+                        status: 'STATUS_ACTIVE',
+                        duration: duration,
+                        participantes_id: participantes_id,
+                        // button: `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
+                    };
+                    tblActividades.rows().data()[tblActividades.rows().length - 1].push(additionalData);
+                } else {
+                    Swal.fire('Esta actividad ya ha sido agregada', '', 'info');
+                    limpiarCampos();
+                }
+            }
+        }
+        window.EliminarFila = function(element) {
+            tblActividades
+                .row($(element).parents('tr'))
+                .remove()
+                .draw();
+        }
+        // window.enviarActividades = function() {
+        //     let actividades = tblActividades.rows().data().toArray();
+        //     document.getElementById('actividades').value = JSON.stringify(actividades);
+        // }
+        window.enviarActividades = function() {
+            let actividades = tblActividades.rows().data().toArray();
+
+            // Filter out null or empty string values from each row
+            let filteredActividades = actividades.map(row =>
+                row.filter(value => value !== null && value !== '')
+            );
+
+            document.getElementById('actividades').value = JSON.stringify(filteredActividades);
         }
     </script> --}}
 @endsection
