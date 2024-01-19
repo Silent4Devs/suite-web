@@ -168,7 +168,6 @@ try:
 except Exception as e:
     print(f"Se ha producido una excepción: {e}")
 
-
         #NOMBRE COMERCIAL
 try:
 
@@ -180,8 +179,195 @@ try:
 except Exception as e:
     print(f"Se ha producido una excepción: {e}")
 
-#Guardar
-print("Guardando cambios")
-guardar = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, guardar_xpath)))
-guardar.click()
+#Registro Completo
+def activar_boton(driver):
+    try:
+        boton = driver.find_element(By.ID, 'btn_registro_completo')
+        confirmacion = input("¿Requiere el Registro Completo? (si/no): ")
+
+        if confirmacion.lower() == 'si':
+            boton.click()
+            print("Entrando al registro completo.")
+
+            #RFC
+        try:
+
+            rfc = input("Ingresa el RFC: ")
+            input_rfc = driver.find_element(By.NAME, 'rfc')
+            input_rfc.clear()
+            input_rfc.send_keys(rfc)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+
+        #Calle y número
+        try:
+
+            calle = input("Ingresa la calle: ")
+            input_calle = driver.find_element(By.NAME, 'calle')
+            input_calle.clear()
+            input_calle.send_keys(calle)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+            #Colonia
+
+        try:
+
+            colonia = input("Ingresa la colonia: ")
+            input_colonia = driver.find_element(By.NAME, 'colonia')
+            input_colonia.clear()
+            input_colonia.send_keys(colonia)
+
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+
+        #Ciudad o Municipio
+        try:
+
+            ciudad = input("Ingresa la ciudad/Municipio/Pais:  ")
+            input_ciudad = driver.find_element(By.NAME, 'ciudad')
+            input_ciudad.clear()
+            input_ciudad.send_keys(ciudad)
+
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+        #Código Postal
+        try:
+
+            cp = input("Ingresa el código postal: ")
+            input_cp = driver.find_element(By.NAME, 'codigo_postal')
+            input_cp.clear()
+            input_cp.send_keys(cp)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+
+        #Teléfono
+        try:
+
+            telefono = input("Ingrese el telefono: ")
+            input_telefono = driver.find_element(By.NAME, 'telefono')
+            input_telefono.clear()
+            input_telefono.send_keys(telefono)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+
+        #Página web
+        try:
+
+            pagina_web = input("Ingrese la pagina web: ")
+            input_pagina_web = driver.find_element(By.NAME, 'pagina_web')
+            input_pagina_web.clear()
+            input_pagina_web.send_keys(pagina_web)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+
+        #Nombre completo del contacto
+
+
+
+        try:
+            driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(By.NAME, 'nombre_contacto'))
+            nombre_completo= input("Ingrese el nombre completo del contacto: ")
+            input_nombre_completo = driver.find_element(By.NAME, 'nombre_contacto')
+            input_nombre_completo.clear()
+            input_nombre_completo.send_keys(nombre_completo)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+
+        #Puesto
+        try:
+
+            puesto= input("Ingrese el puesto del contacto: ")
+            input_puesto = driver.find_element(By.NAME, 'puesto_contacto')
+            input_puesto.clear()
+            input_puesto.send_keys(puesto)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+        #Correo electrónico
+
+        try:
+
+            correo= input("Ingrese el correo electrónico de contacto: ")
+            input_correo = driver.find_element(By.NAME, 'correo_contacto')
+            input_correo.clear()
+            input_correo.send_keys(correo)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+        #Celular
+        try:
+
+            celular= input("Ingrese el celular de contacto: ")
+            input_celular = driver.find_element(By.NAME, 'celular_contacto')
+            input_celular.clear()
+            input_celular.send_keys(celular)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+        #Objeto Social
+        try:
+
+            objeto_social= input("Ingrese descripcion de objeto social: ")
+            input_objeto_social = driver.find_element(By.NAME, 'objeto_descripcion')
+            input_objeto_social.clear()
+            input_objeto_social.send_keys(objeto_social)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+        #Cobertura
+        try:
+
+            cobertura= input("Ingrese descripcion de cobertura: ")
+            input_cobertura = driver.find_element(By.NAME, 'cobertura')
+            input_cobertura.clear()
+            input_cobertura.send_keys(cobertura)
+
+        except Exception as e:
+            print(f"Se ha producido una excepción: {e}")
+
+            #Guardar
+            print("Guardando cambios")
+            guardar = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, guardar_xpath)))
+            guardar.click()
+
+
+        else:
+        #Guardar
+            print("Guardando cambios")
+            guardar = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, guardar_xpath)))
+            guardar.click()
+
+    except Exception as e:
+        print(f"Se ha producido una excepción: {e}")
+
+activar_boton(driver)
+
+
+
+
+
+
+
+
+
 
