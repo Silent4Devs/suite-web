@@ -566,7 +566,7 @@
         </header> --}}
 
         <div class="c-body">
-            <main class="c-main">
+            <main class="c-main" style="zoom: 90%;">
                 <div class="container-fluid" id="app">
                     @if (session('message'))
                         <div class="mb-2 row">
