@@ -43,6 +43,7 @@
     "spatie/laravel-responsecache": "^7.4",
     "spatie/url": "^2.0",
     "tucker-eric/eloquentfilter": "^3.2",
+    "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.3",
     "yajra/laravel-datatables-oracle": "^10.0"
   },
   "require-dev": {
