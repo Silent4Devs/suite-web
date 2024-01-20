@@ -201,7 +201,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
                         $aprobadorDeclaracion = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $id)->orderBy('created_at')->first();
                         $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->empleado_id);
                         $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
-                        Mail::to(removeUnicodeCharacters($aprobador->email))->send(new NotificacionDeclaracionAplicabilidadAprobadores2022($aprobador, $responsable, $aplicabilidad));
+                        Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new NotificacionDeclaracionAplicabilidadAprobadores2022($aprobador, $responsable, $aplicabilidad));
                     }
 
                     return response()->json(['success' => true, 'id' => $id]);
@@ -217,7 +217,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
                         $aprobadorDeclaracion = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $id)->orderBy('created_at')->first();
                         $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->empleado_id);
                         $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
-                        Mail::to(removeUnicodeCharacters($aprobador->email))->send(new NotificacionDeclaracionAplicabilidadAprobadores2022($aprobador, $responsable, $aplicabilidad));
+                        Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new NotificacionDeclaracionAplicabilidadAprobadores2022($aprobador, $responsable, $aplicabilidad));
                     }
 
                     return response()->json(['success' => true, 'id' => $id]);
@@ -246,7 +246,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
                         $responsableDeclaracion = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $id)->orderBy('created_at')->first();
                         $responsable = Empleado::select('id', 'name', 'email')->find($responsableDeclaracion->empleado_id);
                         $aprobador = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
-                        Mail::to(removeUnicodeCharacters($responsable->email))->send(new NotificacionDeclaracionAplicabilidadResponsables2022($aprobador, $responsable, $aplicabilidad, $control));
+                        Mail::to(removeUnicodeCharacters($responsable->email))->queue(new NotificacionDeclaracionAplicabilidadResponsables2022($aprobador, $responsable, $aplicabilidad, $control));
                     }
 
                     return response()->json(['success' => true, 'id' => $id, 'value' => $request->value, 'fecha' => Carbon::parse($control->updated_at)->format('d-m-Y')]);
@@ -264,7 +264,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
                         $responsableDeclaracion = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $id)->orderBy('created_at')->first();
                         $responsable = Empleado::select('id', 'name', 'email')->find($responsableDeclaracion->empleado_id);
                         $aprobador = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
-                        Mail::to(removeUnicodeCharacters($responsable->email))->send(new NotificacionDeclaracionAplicabilidadResponsables2022($aprobador, $responsable, $aplicabilidad, $control));
+                        Mail::to(removeUnicodeCharacters($responsable->email))->queue(new NotificacionDeclaracionAplicabilidadResponsables2022($aprobador, $responsable, $aplicabilidad, $control));
                     }
 
                     return response()->json(['success' => true, 'id' => $id]);
@@ -431,7 +431,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         foreach ($destinatarios as $destinatario) {
             //TODO:FALTA ENVIAR CONTROLES A MailDeclaracionAplicabilidad
             $empleado = Empleado::select('id', 'name', 'email')->find(intval($destinatario));
-            Mail::to(removeUnicodeCharacters($empleado->email))->send(new MailDeclaracionAplicabilidadAprobadores($empleado->name, $tipo, []));
+            Mail::to(removeUnicodeCharacters($empleado->email))->queue(new MailDeclaracionAplicabilidadAprobadores($empleado->name, $tipo, []));
             $responsable = DeclaracionAplicabilidadAprobarIso::where('empleado_id', $destinatario)->each(function ($item) {
                 $item->notificado = true;
             });

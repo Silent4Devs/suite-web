@@ -191,12 +191,12 @@ class MinutasaltadireccionController extends Controller
                 'no_revision' => strval($numero_revision),
                 'minuta_id' => $minutasaltadireccion->id,
             ]);
-            Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+            Mail::to(removeUnicodeCharacters($participante->email))->queue(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
         }
 
         if (isset($minutasaltadireccion->externos)) {
             foreach ($minutasaltadireccion->externos as $externo) {
-                Mail::to(removeUnicodeCharacters($externo->emailEXT))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+                Mail::to(removeUnicodeCharacters($externo->emailEXT))->queue(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
             }
         }
     }
@@ -204,7 +204,7 @@ class MinutasaltadireccionController extends Controller
     public function initReviews($minutasaltadireccion)
     {
         // Almacenamiento de revisiones vinculado a participantes y minutas
-        Mail::to(removeUnicodeCharacters($minutasaltadireccion->responsable->email))->send(new MinutaConfirmacionSolicitud($minutasaltadireccion));
+        Mail::to(removeUnicodeCharacters($minutasaltadireccion->responsable->email))->queue(new MinutaConfirmacionSolicitud($minutasaltadireccion));
         $numero_revision = RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision') ? intval(RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision')) + 1 : 1;
         //Historial#
         $historialRevisionMinuta = HistoralRevisionMinuta::create([
@@ -221,7 +221,7 @@ class MinutasaltadireccionController extends Controller
         //         'no_revision' => strval($numero_revision),
         //         'minuta_id' => $minutasaltadireccion->id,
         //     ]);
-        // Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudDeAprobacion($minutasaltadireccion, $revisor, $historialRevisionMinuta));
+        // Mail::to(removeUnicodeCharacters($participante->email))->queue(new SolicitudDeAprobacion($minutasaltadireccion, $revisor, $historialRevisionMinuta));
         // }
 
         $this->enviarCorreosParticipantes($minutasaltadireccion, $numero_revision);
@@ -481,7 +481,7 @@ class MinutasaltadireccionController extends Controller
         $revisiones = RevisionMinuta::where('minuta_id', $minuta->id)->where('no_revision', $revision_actual)->get();
         foreach ($revisiones as $revision) {
             $mail = $revision->empleado->email;
-            Mail::to(removeUnicodeCharacters($mail))->send(new MinutaRechazoPorEdicion($minuta, $revision));
+            Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaRechazoPorEdicion($minuta, $revision));
         }
     }
 
@@ -557,11 +557,11 @@ class MinutasaltadireccionController extends Controller
         $emailresponsable = $minuta->responsable->email;
         $tema_minuta = $minuta->tema_reunion;
 
-        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaRechazadaResponsable($minuta->id, $tema_minuta, User::getCurrentUser()->empleado->name));
+        Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionMinutaRechazadaResponsable($minuta->id, $tema_minuta, User::getCurrentUser()->empleado->name));
 
         foreach ($minuta->participantes as $participante) {
 
-            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionMinutaRechazada($tema_minuta));
+            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionMinutaRechazada($tema_minuta));
         }
 
         return redirect(route('admin.minutasaltadireccions.index'));
@@ -583,7 +583,7 @@ class MinutasaltadireccionController extends Controller
             $emailresponsable = $minuta->responsable->email;
             $tema_minuta = $minuta->tema_reunion;
             // All records in $confirmacion have 'estatus' equal to 2
-            Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaAprobada($responsable, $tema_minuta));
+            Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionMinutaAprobada($responsable, $tema_minuta));
             $minuta->update([
                 'estatus' => Minutasaltadireccion::PUBLICADO,
             ]);

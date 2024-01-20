@@ -155,7 +155,7 @@ class PlanificacionControlController extends Controller
             'id_responsable_aprobar' => $request->id_responsable_aprobar,
         ]);
 
-        Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl)));
+        Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email)->queue(new SolicitudFirmasControlCambios($planificacionControl)));
 
         // dd($request->all());
         // $planificacionControl = PlanificacionControl::create($request->all());
@@ -236,7 +236,7 @@ class PlanificacionControlController extends Controller
         // dd($planificacionControl);
 
         if ($planificacionControl->es_aprobado == 'pendiente') {
-            Mail::to(removeUnicodeCharacters($planificacionControl->responsableAprobar->email))->cc([removeUnicodeCharacters($planificacionControl->empleado->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
+            Mail::to(removeUnicodeCharacters($planificacionControl->responsableAprobar->email))->cc([removeUnicodeCharacters($planificacionControl->empleado->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->queue(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
         }
 
         if ($request->participantes) {
@@ -314,11 +314,11 @@ class PlanificacionControlController extends Controller
             }
 
             if ($planificacionControl->firma_registro) {
-                Mail::to(removeUnicodeCharacters($planificacionControl->responsable->email))->cc(removeUnicodeCharacters($planificacionControl->empleado->email))->send(new SolicitudFirmasControlCambios($planificacionControl));
+                Mail::to(removeUnicodeCharacters($planificacionControl->responsable->email))->cc(removeUnicodeCharacters($planificacionControl->empleado->email))->queue(new SolicitudFirmasControlCambios($planificacionControl));
             }
 
             if ($planificacionControl->firma_registro && $planificacionControl->firma_responsable) {
-                Mail::to(removeUnicodeCharacters($planificacionControl->responsableAprobar->email))->cc([removeUnicodeCharacters($planificacionControl->empleado->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
+                Mail::to(removeUnicodeCharacters($planificacionControl->responsableAprobar->email))->cc([removeUnicodeCharacters($planificacionControl->empleado->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->queue(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
             }
         }
         // dd($request->aprobado);
@@ -327,7 +327,7 @@ class PlanificacionControlController extends Controller
                 'es_aprobado' => $request->aprobado == '1' ? 'aprobado' : 'rechazado',
                 'comentarios' => $request->comentarios,
             ]);
-            Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email))->cc([removeUnicodeCharacters($planificacionControl->responsableAprobar->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->send(new PlanificacionAceptadaRechazada($planificacionControl));
+            Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email))->cc([removeUnicodeCharacters($planificacionControl->responsableAprobar->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->queue(new PlanificacionAceptadaRechazada($planificacionControl));
         }
 
         return response()->json(['success' => true]);

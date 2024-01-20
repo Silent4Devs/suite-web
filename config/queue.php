@@ -73,10 +73,10 @@ return [
             'hosts' => [
                 [
                     'host' => env('RABBITMQ_HOST', 'chimpanzee.rmq.cloudamqp.com'),
-                    'port' => env('RABBITMQ_PORT', 1883),
-                    'user' => env('RABBITMQ_USER', 'dmdvtgmx:dmdvtgmx'),
+                    'port' => env('RABBITMQ_PORT', 5672),
+                    'user' => env('RABBITMQ_USER', 'dmdvtgmx'),
                     'password' => env('RABBITMQ_PASSWORD', 'SB6fp8mwwBNC4O6CPfNdnY-vCgpMdlq5'),
-                    'vhost' => env('RABBITMQ_VHOST', 'dmdvtgmx:dmdvtgmx'),
+                    'vhost' => env('RABBITMQ_VHOST', 'dmdvtgmx'),
                 ],
                 // ...
             ],

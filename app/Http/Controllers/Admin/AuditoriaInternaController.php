@@ -292,7 +292,7 @@ class AuditoriaInternaController extends Controller
 
         try {
             $email = new NotificacionReporteAuditoria($nombre_colaborador, $url);
-            Mail::to(removeUnicodeCharacters($reporte->lider->email))->send($email);
+            Mail::to(removeUnicodeCharacters($reporte->lider->email))->queue($email);
 
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
@@ -315,7 +315,7 @@ class AuditoriaInternaController extends Controller
 
         try {
             $email = new NotificacionRechazoReporteAuditoria($auditoria);
-            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->queue($email);
 
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
@@ -352,7 +352,7 @@ class AuditoriaInternaController extends Controller
 
         try {
             $email = new NotificacionAprobadoReporteAuditoria();
-            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->queue($email);
 
             return response()->json(['success' => true]);
         } catch (Throwable $e) {

@@ -5,7 +5,7 @@ namespace App\Mail\DeterminacionAlcance;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-
+use Illuminate\Contracts\Queue\ShouldQueue;
 class NotificacionAprobacionAlcance extends Mailable
 {
     use Queueable, SerializesModels;

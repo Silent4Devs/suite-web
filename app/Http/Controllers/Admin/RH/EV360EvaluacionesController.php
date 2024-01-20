@@ -1418,7 +1418,7 @@ class EV360EvaluacionesController extends Controller
 
     public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
     {
-        Mail::to(removeUnicodeCharacters($email))->send(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
+        Mail::to(removeUnicodeCharacters($email))->queue(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
     }
 
     public function enviarInvitacionDeEvaluacion(Request $request)
@@ -1450,7 +1450,7 @@ class EV360EvaluacionesController extends Controller
 
     public function enviarCorreoInvitacionAlEvaluado($email, $evaluacion, $evaluador, $evaluado, $enlace)
     {
-        Mail::to(removeUnicodeCharacters($email))->send(new CitaEvaluadorEvaluado($evaluacion, $evaluador, $evaluado, $enlace));
+        Mail::to(removeUnicodeCharacters($email))->queue(new CitaEvaluadorEvaluado($evaluacion, $evaluador, $evaluado, $enlace));
     }
 
     public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion)

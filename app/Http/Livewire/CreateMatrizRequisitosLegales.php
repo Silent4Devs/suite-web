@@ -173,7 +173,7 @@ class CreateMatrizRequisitosLegales extends Component
             try {
                 //code...
                 $emailAprobador = $part->participante->empleado->email;
-                Mail::to(removeUnicodeCharacters($emailAprobador))->send(new MatrizEmail($requisito->id));
+                Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new MatrizEmail($requisito->id));
                 $this->alert('success', 'Correo enviado', [
                     'position' => 'top-end',
                     'timer' => 3000,
