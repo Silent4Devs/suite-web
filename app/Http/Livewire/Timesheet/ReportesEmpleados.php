@@ -269,14 +269,13 @@ class ReportesEmpleados extends Component
                     $horas_total_time += floatval($hora->horas_sabado);
                     $horas_total_time += floatval($hora->horas_domingo);
 
-                    $horas_total_time += floatval($hora->horas_lunes);
-                    $horas_total_time += floatval($hora->horas_martes);
-                    $horas_total_time += floatval($hora->horas_miercoles);
-                    $horas_total_time += floatval($hora->horas_jueves);
-                    $horas_total_time += floatval($hora->horas_viernes);
-                    $horas_total_time += floatval($hora->horas_sabado);
-                    $horas_total_time += floatval($hora->horas_domingo);
-
+                    $horas_semana += floatval($hora->horas_lunes);
+                    $horas_semana += floatval($hora->horas_martes);
+                    $horas_semana += floatval($hora->horas_miercoles);
+                    $horas_semana += floatval($hora->horas_jueves);
+                    $horas_semana += floatval($hora->horas_viernes);
+                    $horas_semana += floatval($hora->horas_sabado);
+                    $horas_semana += floatval($hora->horas_domingo);
 
                     $times_empleado_calendario_array[] = [
                         'id' => $time->id,
