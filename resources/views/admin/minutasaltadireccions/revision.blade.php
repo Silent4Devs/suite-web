@@ -138,7 +138,7 @@
                                 <tbody>
                                     <tr>
                                         <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
-                                            <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;"> {{ htmlspecialchars_decode($minutas->tema_tratado) }}
+                                            <textarea id="myTextarea" style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;">
                                                         </textarea>
                                         </td>
                                     </tr>
@@ -234,6 +234,9 @@
     </form>
 @endsection
 
+<script>
+    document.getElementById('myTextarea').value = '{{ html_entity_decode(strip_tags($minutas->tema_tratado)) }}';
+</script>
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {

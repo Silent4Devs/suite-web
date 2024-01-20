@@ -11,7 +11,11 @@
         <div class="card-body">
             <div class="card mt-6" style="width:750px; display: flex; align-items: center;">
                 <div class="col-3" style="border-left: 25px solid #2395AA;">
-                    <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid" style="width: 100%; max-width: 100px; height: auto;">
+                    @if ($logo_actual)
+                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{asset($logo_actual)}}">
+                    @else
+                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                    @endif
                 </div>
                 <div class="col-4"  style="position: relative; top: -4rem; left: 9rem;">
                     <span class="" style="color:black; font-size: 11px;">
@@ -80,7 +84,7 @@
                     <tbody>
                         <tr>
                             <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
-                                <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;">{!! htmlspecialchars_decode($minutas->tema_tratado) !!}</textarea>
+                                <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;"> {{ htmlspecialchars(strip_tags($minutas->tema_tratado)) }}</textarea>
                             </td>
                         </tr>
                     </tbody>
