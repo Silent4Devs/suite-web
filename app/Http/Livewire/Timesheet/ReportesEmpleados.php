@@ -267,7 +267,6 @@ class ReportesEmpleados extends Component
                     $horas_total_time += floatval($hora->horas_sabado);
                     $horas_total_time += floatval($hora->horas_domingo);
 
-                    //fix
                     $horas_semana += floatval($hora->horas_lunes);
                     $horas_semana += floatval($hora->horas_martes);
                     $horas_semana += floatval($hora->horas_miercoles);
