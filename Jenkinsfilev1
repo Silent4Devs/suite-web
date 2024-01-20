@@ -1,8 +1,21 @@
-// Jenkinsfilev1
+pipeline {
+    agent any
 
-// Este Jenkinsfilev1 no contiene un bloque pipeline adicional
-sh 'cd Testing/Calendario'
-sh 'pip install pytest'
-sh 'pip install selenium'
-// sh 'pytest test_calendario'
-// Puedes agregar más pasos según sea necesario
+    environment {
+        SSH_USER = 'desarrollo'
+        SSH_PASSWORD = 'Tabantaj.int'
+        SERVER_IP = '192.168.9.111'
+    }
+
+    stages {
+        stage('Git Pull via SSH') {
+            steps {
+                script {
+                    sh '''
+                       sshpass -p $SSH_PASSWORD ssh -tt $SSH_USER@$SERVER_IP "cd /var/contenedores/tabantaj && git pull"
+                    '''
+                }
+            }
+        }
+    }
+}

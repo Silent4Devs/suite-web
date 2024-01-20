@@ -7,6 +7,7 @@ use App\Http\Controllers\UsuarioBloqueadoController;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\EmpleadoController;
 
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
@@ -127,7 +128,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
 
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
+        //Se puso aqui debido a problema de cross-origin
+        Route::get('ExportEmpleadosGeneral', 'EmpleadoController@exportExcel')->name('descarga-empleados-general');
+
         // Visitantes
+
         Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
         Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
         Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
