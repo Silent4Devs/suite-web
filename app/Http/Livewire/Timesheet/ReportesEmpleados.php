@@ -259,6 +259,8 @@ class ReportesEmpleados extends Component
             foreach ($times_empleado_aprobados_pendientes_list as $time) {
                 $horas_semana = 0;
                 foreach ($time->horas as $hora) {
+
+
                     $horas_total_time += floatval($hora->horas_lunes);
                     $horas_total_time += floatval($hora->horas_martes);
                     $horas_total_time += floatval($hora->horas_miercoles);
@@ -284,7 +286,7 @@ class ReportesEmpleados extends Component
             }
             $this->horas_totales_filtros_empleados += $horas_total_time;
 
-            // semanas faltantes
+            // semanas
             $entro_esta_semana = false;
             if (Carbon::parse($this->fecha_inicio)->lt(Carbon::parse($empleado_list->antiguedad))) {
                 if (Carbon::parse($empleado_list->antiguedad)->startOfWeek(Carbon::MONDAY) >= Carbon::now()->startOfWeek(Carbon::MONDAY)) {
