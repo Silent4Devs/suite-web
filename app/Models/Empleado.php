@@ -515,8 +515,12 @@ class Empleado extends Model implements Auditable
 
     public function childrenOrganigrama()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('childrenOrganigrama', 'supervisor', 'area')->vacanteActiva(); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'supervisor_id', 'id')
+            ->select('id', 'name', 'foto', 'puesto_id', 'genero') // Agrega los campos que deseas seleccionar
+            ->with('childrenOrganigrama', 'supervisor', 'area')
+            ->vacanteActiva();
     }
+
 
     public function scopeAlta($query)
     {

@@ -11,11 +11,8 @@
         <tbody>
             @foreach ($datas as $data)
                 <tr id="fila{{ $data->id }}">
-                    <th style="min-width: 100px; text-align:start;">
-                        <img class="img_empleado"
-                            style="border-radius: 50%;"
-                            src="{{ asset('storage/empleados/imagenes') }}/{{ $data->asignacion ? $data->asignacion->avatar : 'user.png' }}"
-                            title="">
+                    <th style="min-width: 100px;">
+                        {{ $data->asignacion->name }}
                     </th>
                     <th style="min-width:130px;">{{ $data->nombrerol }}</th>
                     <td style="min-width:100px;">{!!$data->responsabilidades!!}</td>
