@@ -9,7 +9,6 @@ use App\Models\DashboardIndicadorSG;
 use App\Models\Empleado;
 use App\Models\IndicadoresSgsi;
 use App\Models\Proceso;
-use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
@@ -24,8 +23,6 @@ class IndicadoresSgsiController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('indicadores_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-
 
         $usuario = User::getCurrentUser();
         $area_empleado = $usuario->empleado->area->id;
@@ -277,7 +274,7 @@ class IndicadoresSgsiController extends Controller
             $chars = ['$', '/', '*', '-', '+'];
             $onlyconsonants = $formula_r;
             foreach ($chars as $key => $char) {
-                $onlyconsonants = str_replace($char, '!' . $char, $onlyconsonants);
+                $onlyconsonants = str_replace($char, '!'.$char, $onlyconsonants);
             }
 
             $formula_array = explode('!', $onlyconsonants);

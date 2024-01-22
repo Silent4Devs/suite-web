@@ -17,6 +17,7 @@
     "intervention/image": "^2.5",
     "jantinnerezo/livewire-alert": "^2.2",
     "jenssegers/date": "^4.0",
+    "laragear/preload": "^1.1",
     "laravel/framework": "^10.0",
     "laravel/passport": "^11.0",
     "laravel/sanctum": "^3.3",

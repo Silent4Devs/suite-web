@@ -51,6 +51,11 @@ class GlobalSearchComponent extends Component
                     && ! preg_match('/admin\/audit-logs/', $uri) // Exclude specific route pattern
                     && ! preg_match('/admin\/visualizar-logs/', $uri) // Exclude specific route pattern
                     && ! preg_match('/global-search/', $uri) // Exclude specific route pattern
+                    && ! preg_match('/File-manager/', $uri) // Exclude specific route pattern
+                    && ! preg_match('/Sanctum/', $uri) // Exclude specific route pattern
+                    && ! preg_match('/Livewire/', $uri) // Exclude specific route pattern
+                    && ! preg_match('/Register/', $uri) // Exclude specific route pattern
+                    && ! preg_match('/Password/', $uri) // Exclude specific route pattern
                     && ! preg_match('/exportar/', $uri) // Exclude specific route pattern
                     && strpos($uri, '{') === false // Exclude routes with curly braces {}
                     && strpos($uri, 'get') === false // Exclude routes with curly braces {}
