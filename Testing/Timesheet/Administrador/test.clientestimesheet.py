@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import time
 import getpass
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
 
 tiempo_modulos = 4
@@ -19,6 +20,7 @@ configurar_timesheet_xpath = "//a[contains(.,'Configuración Timesheet')]"
 guardar_xpath = "//button[@class='btn btn-success' and contains(text(),'Guardar')]"
 clientes_xpath="//a[contains(.,'Clientes')]"
 registrar_timesheet_xpath="//a[contains(.,'Registrar TimeSheet')]"
+eliminar_icono_xpath="(//i[@class='fa-solid fa-trash-can'])[1]"
 
 # Pide al usuario que ingrese sus credenciales
 usuario = input("Ingresa tu nombre de usuario: ")
@@ -233,8 +235,7 @@ def activar_boton(driver):
             guardar.click()
 
         else:
-            # Si elige "no", hacer clic en el botón "guardar" automáticamente
-            print("Guardando cambios automáticamente")
+            print("Guardando registro")
             guardar = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, guardar_xpath)))
             guardar.click()
 
@@ -242,3 +243,10 @@ def activar_boton(driver):
         print(f"Se ha producido una excepción: {e}")
 
 activar_boton(driver)
+
+#Eliminar
+scroll_amount = -500  # Valor negativo para scroll hacia la izquierda
+ActionChains(driver).send_keys(Keys.ARROW_LEFT * 5).perform()
+
+eliminar = driver.find_element(By.XPATH, eliminar_icono_xpath)
+eliminar.click()
