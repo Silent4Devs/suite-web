@@ -152,8 +152,9 @@
             @if (!$editar)
                 <div class="p-1 col" style="margin-top:-28px;height: 38px;margin-left: -12px;">
                     <button id="btnAgregarMetrica" class="text-white btn btn-sm"
-                        style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#metricaObjetivoModal"
-                        title="Agregar unidad"><i class="fas fa-plus"></i></button>
+                        style="background:#3eb2ad;height: 32px;" data-toggle="modal"
+                        data-target="#metricaObjetivoModal" title="Agregar unidad"><i
+                            class="fas fa-plus"></i></button>
                     <a href="{{ route('admin.Metrica.index') }}" class="text-white btn btn-sm"
                         style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
@@ -219,7 +220,7 @@
         <button id="BtnAgregarObjetivo" class="btn btn-success" style="float: right" title="Agregar objetivo"><i
                 class="mr-2 fas fa-plus-circle"></i>Agregar</button>
     </div>
-    <div class="card-body datatable-fix">
+    <div class="card-body">
         <div class="mt-3">
             <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 OBJETIVOS ESTRATÉGICOS ASIGNADOS
@@ -229,38 +230,105 @@
             <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Importar
                 Objetivos</button>
         </div>
-        <table class="table table-bordered w-100 tblObjetivos">
-            <thead class="thead-dark">
-                <tr>
-                    <th style="vertical-align: top">
-                        Perspectiva
-                    </th>
-                    <th style="vertical-align: top">
-                        Objetivos Estratégicos
-                    </th>
-                    <th style="vertical-align: top">
-                        Evaluación Asignada
-                    </th>
-                    <th style="vertical-align: top">
-                        KPI
-                    </th>
-                    <th style="vertical-align: top">
-                        Meta
-                    </th>
-                    <th style="vertical-align: top">
-                        Estatus
-                    </th>
-                    <th style="vertical-align: top">
-                        Descripción
-                    </th>
-                    <th style="vertical-align: top">
-                        Opciones
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false" tabindex="-1"
-            aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
+        <div class="datatable-rds datatable-fix">
+            <table class="datatable w-100 tblObjetivos">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="vertical-align: top">
+                            Perspectiva
+                        </th>
+                        <th style="vertical-align: top">
+                            Objetivos Estratégicos
+                        </th>
+                        <th style="vertical-align: top">
+                            Evaluación Asignada
+                        </th>
+                        <th style="vertical-align: top">
+                            KPI
+                        </th>
+                        <th style="vertical-align: top">
+                            Meta
+                        </th>
+                        <th style="vertical-align: top">
+                            Estatus
+                        </th>
+                        <th style="vertical-align: top">
+                            Descripción
+                        </th>
+                        <th style="vertical-align: top">
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($objetivos as $obj)
+                        <tr>
+                            <td>{{ $obj->objetivo->tipo->nombre ?? '' }}</td>
+                            <td>{{ $obj->objetivo->nombre }}</td>
+                            <td>{{ $obj->objetivo->evaluacion_id ?? 'Sin asignar' }}
+                            </td>
+                            <td>{{ $obj->objetivo->KPI }}</td>
+                            <td>{{ $obj->objetivo->metrica->definicion }}</td>
+                            <td>
+                                @if ($obj->objetivo->esta_aprobado == 1)
+                                    <span class="badge badge-success">Aprobado</span>
+                                @elseif ($obj->objetivo->esta_aprobado == 2)
+                                    <span class="badge badge-danger">No Aprobado
+                                        <i class="fas fa-comment ml-1"
+                                            title="${row.objetivo.comentarios_aprobacion}"></i>
+                                    </span>
+                                @else
+                                    <span class="badge badge-warning">Pendiente</span>
+                                @endif
+                            </td>
+                            <td>{{ $obj->objetivo->descripcion_meta }}</td>
+                            <td>
+                                {{-- // let urlBtnEditar =
+                            //
+                            ``;
+                            // let urlBtnActualizar =
+                            // ``;
+                            // let urlBtnEliminar =
+                            // ``;
+                            // let urlShow =
+                            // `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/lista`;
+                            // let botones = ` --}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button class="btn btn-sm btn-editar" title="Editar"
+                                            onclick="Editar('/admin/recursos-humanos/evaluacion-360/{{ $obj->empleado_id }}/objetivos/{{ $obj->objetivo->id }}/editByEmpleado','/admin/recursos-humanos/evaluacion-360/objetivos/{{ $obj->objetivo->id }}/empleado')"><i
+                                                class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar"
+                                            onclick="Eliminar('/admin/recursos-humanos/evaluacion-360/objetivos/{{ $obj->id }}')"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                    </div>
+                                    {{-- // if (row.objetivo.esta_aprobado == 0) {
+                                // if (auth.id == supervisor.id) {
+                                // botones +=
+                                // `<div class="col-12">
+                                    // <button
+                                        onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},true);"
+                                        class="btn btn-small text-success"><i
+                                            class="fa-solid fa-thumbs-up"></i></button>
+                                    // <button
+                                        onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},false);"
+                                        class="btn btn-small text-danger"><i
+                                            class="fa-solid fa-thumbs-down"></i></button>
+                                    // </div>
+                                //
+                            </div> --}}
+                                </div>
+
+                            </td>
+                        </tr>
+                    @empty
+                        <h1>Vacio</h1>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false"
+            tabindex="-1" aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #345183;color: white;">

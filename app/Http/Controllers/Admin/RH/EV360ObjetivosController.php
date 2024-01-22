@@ -81,31 +81,43 @@ class EV360ObjetivosController extends Controller
     public function createByEmpleado(Request $request, $empleado)
     {
         abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($request->all(), $empleado);
         $objetivo = new Objetivo;
-        $empleado = Empleado::getAll()->find(intval($empleado));
+        // $empleado = Empleado::getAll()->find(intval($empleado));
+        $empleado = Empleado::find(intval($empleado));
+        // dd($empleado);
         $empleado->load(['objetivos' => function ($q) {
             $q->with(['objetivo' => function ($query) {
                 $query->with(['tipo', 'metrica']);
             }]);
         }]);
-        if ($request->ajax()) {
-            $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+        // dd($empleado);
+        // if ($request->ajax()) {
+        $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
 
-            return datatables()->of($objetivos)->toJson();
-        }
+        // return datatables()->of($objetivos)->toJson();
+        // }
         $tipo_seleccionado = null;
         $metrica_seleccionada = null;
-        if ($request->ajax()) {
-        }
+        // if ($request->ajax()) {
+        // }
 
-        $empleados = Empleado::getaltaAll();
-
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
+        $empleados = Empleado::getaltaAllWithAreaObjetivoPerfil();
+        // dd($empleados, $objetivo, $objetivos);
+        return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact(
+            'objetivos',
+            'objetivo',
+            'tipo_seleccionado',
+            'metrica_seleccionada',
+            'empleado',
+            'empleados'
+        ));
     }
 
     public function storeByEmpleado(Request $request, $empleado)
     {
         abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($empleado, $request->all());
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
@@ -117,6 +129,7 @@ class EV360ObjetivosController extends Controller
         $empleado = Empleado::with('supervisor')->find(intval($empleado));
 
         if ($request->ajax()) {
+            dd('Ajax');
             $usuario = User::getCurrentUser();
             if ($empleado->id == $usuario->empleado->id) {
                 //add esta_aprobado in $request
