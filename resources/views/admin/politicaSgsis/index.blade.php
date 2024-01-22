@@ -366,16 +366,16 @@
         <table class="datatable datatable-Comiteseguridad" id="datatable-PoliticaSgsi">
             <thead class="head-light">
                 <tr>
-                    <th style="min-width: 400px; max-width:400px;">
+                    <th style="min-width: 400px;">
                         Nombre
                     </th>
-                    <th style="min-width: 400px; max-width:400px;">
+                    <th style="min-width: 400px;">
                         Políticas
                     </th>
-                    <th style="min-width: 80px; max-width:80px;">
+                    <th style="min-width: 300px;">
                         Estatus
                     </th>
-                    <th style="min-width: 80px; max-width:80px;">
+                    <th style="min-width: 80px;">
                         Mostrar
                     </th>
                     <th>Opciones</th>

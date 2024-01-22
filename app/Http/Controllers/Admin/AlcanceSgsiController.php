@@ -246,8 +246,9 @@ class AlcanceSgsiController extends Controller
 
         $alcances = AlcanceSgsi::get();
         $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
 
-        $pdf = PDF::loadView('alcances', compact('alcances', 'organizacions'));
+        $pdf = PDF::loadView('alcances', compact('alcances', 'organizacions', 'logo_actual'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('alcances.pdf');
