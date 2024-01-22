@@ -1,11 +1,12 @@
 body {
     background-color: #EFF1F5;
     background-image: url('../img/fondo-rds.png');
-    background-position: center 200px;
-    background-size: 100%;
+    background-position: center;
+    background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
 /*
 body::after {
     content: "";
@@ -75,6 +76,15 @@ header {
     font-size: 16px;
 }
 
+.caja-list-search-global {
+    position: absolute;
+    overflow: auto;
+    max-height: 90vh;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0px 2px 3px 1px #ccc;
+}
+
 .caja-inicio-options-header input {
     width: 284px;
     height: 40px;
@@ -83,6 +93,11 @@ header {
     border-radius: 6px;
     padding-left: 40px;
     color: #fff;
+}
+
+.caja-inicio-options-header input::placeholder {
+    color: #fff;
+    /* Cambia este valor al color que desees */
 }
 
 .caja-inicio-options-header input:focus {
