@@ -11,9 +11,8 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Throwable;
+use Livewire\Component;
 
 class CreateMatrizRequisitosLegales extends Component
 {
@@ -126,7 +125,7 @@ class CreateMatrizRequisitosLegales extends Component
         }
         $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-        if (!$containsValue) {
+        if (! $containsValue) {
             // dd("Estoy en la lista");
             $this->envioCorreos($proceso, $requisito);
             // The collection contains the specific empleado_id value
@@ -158,7 +157,7 @@ class CreateMatrizRequisitosLegales extends Component
             }
             $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-            if (!$containsValue) {
+            if (! $containsValue) {
                 // dd("Estoy en la lista");
                 $this->envioCorreos($proceso, $requisito);
                 // The collection contains the specific empleado_id value
