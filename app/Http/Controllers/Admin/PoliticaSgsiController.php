@@ -284,8 +284,9 @@ class PoliticaSgsiController extends Controller
 
         $politicas = PoliticaSgsi::get();
         $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
 
-        $pdf = PDF::loadView('pdf', compact('politicas', 'organizacions'));
+        $pdf = PDF::loadView('pdf', compact('politicas', 'organizacions', 'logo_actual'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('politicas.pdf');

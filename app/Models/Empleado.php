@@ -269,7 +269,15 @@ class Empleado extends Model implements Auditable
     public static function getaltaAllWithAreaObjetivoPerfil()
     {
         return Cache::remember('Empleados:empleados_alta_all_area', 3600 * 6, function () {
-            return self::alta()->with(['objetivos', 'area', 'perfil'])->get();
+            return self::alta()->select(
+                'n_empleado',
+                'name',
+                'puesto_id',
+                'area_id',
+                'perfil_empleado_id',
+                'id',
+                'foto'
+            )->with(['objetivos', 'area', 'perfil', 'puestoRelacionado'])->get();
         });
     }
 
@@ -507,8 +515,12 @@ class Empleado extends Model implements Auditable
 
     public function childrenOrganigrama()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('childrenOrganigrama', 'supervisor', 'area')->vacanteActiva(); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'supervisor_id', 'id')
+            ->select('id', 'name', 'foto', 'puesto_id', 'genero') // Agrega los campos que deseas seleccionar
+            ->with('childrenOrganigrama', 'supervisor', 'area')
+            ->vacanteActiva();
     }
+
 
     public function scopeAlta($query)
     {
