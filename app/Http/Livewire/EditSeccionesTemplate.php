@@ -23,28 +23,43 @@ class EditSeccionesTemplate extends Component
     public $descripcion = '';
 
     public $estatus_1 = '';
+
     public $estatus_2 = '';
+
     public $estatus_3 = '';
+
     public $estatus_4 = '';
 
     public $valor_estatus_1 = '';
+
     public $valor_estatus_2 = '';
+
     public $valor_estatus_3 = '';
+
     public $valor_estatus_4 = '';
 
     public $descripcion_parametros_1 = '';
+
     public $descripcion_parametros_2 = '';
+
     public $descripcion_parametros_3 = '';
+
     public $descripcion_parametros_4 = '';
 
     public $color_estatus_1 = '';
+
     public $color_estatus_2 = '';
+
     public $color_estatus_3 = '';
+
     public $color_estatus_4 = '';
 
     public $porcentaje_seccion_1;
+
     public $porcentaje_seccion_2;
+
     public $porcentaje_seccion_3;
+
     public $porcentaje_seccion_4;
 
     public $descripcion_s1;
@@ -197,10 +212,10 @@ class EditSeccionesTemplate extends Component
             $posicion = $key + 1;
 
             // Construct the variable name by concatenating $posicion to $estatus_
-            $estatus_variable_name = 'estatus_' . $posicion;
-            $valor_estatus_name = 'valor_estatus_' . $posicion;
-            $descripcion_parametros_name = 'descripcion_parametros_' . $posicion;
-            $color_estatus_name = 'color_estatus_' . $posicion;
+            $estatus_variable_name = 'estatus_'.$posicion;
+            $valor_estatus_name = 'valor_estatus_'.$posicion;
+            $descripcion_parametros_name = 'descripcion_parametros_'.$posicion;
+            $color_estatus_name = 'color_estatus_'.$posicion;
 
             $this->$estatus_variable_name = $parametro->estatus;
             $this->$valor_estatus_name = $parametro->valor;
@@ -212,10 +227,10 @@ class EditSeccionesTemplate extends Component
         $secInput = $template->secciones;
         // dd($secInput);
         foreach ($secInput as $key => $sec) {
-            $descripcion_seccion_name = 'descripcion_s' . $sec->numero_seccion;
-            $porcentaje_seccion_name = 'porcentaje_seccion_' . $sec->numero_seccion;
-            $primera_pregunta_seccion_name = 'pregunta' . $sec->numero_seccion;
-            $preguntas_seccion_name = 'preguntas_s' . $sec->numero_seccion;
+            $descripcion_seccion_name = 'descripcion_s'.$sec->numero_seccion;
+            $porcentaje_seccion_name = 'porcentaje_seccion_'.$sec->numero_seccion;
+            $primera_pregunta_seccion_name = 'pregunta'.$sec->numero_seccion;
+            $preguntas_seccion_name = 'preguntas_s'.$sec->numero_seccion;
 
             $this->$descripcion_seccion_name = $sec->descripcion;
             $this->$porcentaje_seccion_name = $sec->porcentaje_seccion;
@@ -272,7 +287,7 @@ class EditSeccionesTemplate extends Component
 
             if ($this->secciones > 1 && $this->secciones <= 4) {
                 for ($i = 1; $i < $this->secciones; $i++) {
-                    $numeroSeccion = 's' . $i;
+                    $numeroSeccion = 's'.$i;
                     // dd($this->$numeroSeccion);
                     $this->$numeroSeccion['seccion']['porcentaje_seccion'];
                     $seccion = SeccionesTemplateAnalisisdeBrechas::create([
@@ -296,21 +311,21 @@ class EditSeccionesTemplate extends Component
                     }
                 }
 
-                $porcentaje += $data['porcentaje_seccion_' . $this->datos_seccion];
+                $porcentaje += $data['porcentaje_seccion_'.$this->datos_seccion];
 
                 if ($porcentaje == 100) {
 
                     $seccion = SeccionesTemplateAnalisisdeBrechas::create([
                         'template_id' => $template->id,
                         'numero_seccion' => $this->datos_seccion,
-                        'descripcion' => $data['descripcion_s' . $this->datos_seccion],
-                        'porcentaje_seccion' => $data['porcentaje_seccion_' . $this->datos_seccion],
+                        'descripcion' => $data['descripcion_s'.$this->datos_seccion],
+                        'porcentaje_seccion' => $data['porcentaje_seccion_'.$this->datos_seccion],
                     ]);
 
                     $numero = 1;
 
                     foreach ($data as $key => $value) {
-                        if (preg_match('/^pregunta' . $this->secciones . '/', $key, $matches) || preg_match('/^pregunta' . $this->secciones . '_(\d+)$/', $key, $matches)) {
+                        if (preg_match('/^pregunta'.$this->secciones.'/', $key, $matches) || preg_match('/^pregunta'.$this->secciones.'_(\d+)$/', $key, $matches)) {
 
                             $preguntas = PreguntasTemplateAnalisisdeBrechas::create([
                                 'seccion_id' => $seccion->id,
@@ -343,7 +358,7 @@ class EditSeccionesTemplate extends Component
                 $seccion = SeccionesTemplateAnalisisdeBrechas::create([
                     'template_id' => $template->id,
                     'numero_seccion' => $this->datos_seccion,
-                    'descripcion' => $data['descripcion_s' . $this->datos_seccion],
+                    'descripcion' => $data['descripcion_s'.$this->datos_seccion],
                     'porcentaje_seccion' => $porcentaje,
                 ]);
 
@@ -375,8 +390,8 @@ class EditSeccionesTemplate extends Component
 
                     $seccion = [
                         'numero_seccion' => $this->datos_seccion,
-                        'descripcion' => $data['descripcion_s' . $this->datos_seccion],
-                        'porcentaje_seccion' => $data['porcentaje_seccion_' . $this->datos_seccion],
+                        'descripcion' => $data['descripcion_s'.$this->datos_seccion],
+                        'porcentaje_seccion' => $data['porcentaje_seccion_'.$this->datos_seccion],
                     ];
 
                     $preguntas1 = $this->preguntas($data, 1);
@@ -396,8 +411,8 @@ class EditSeccionesTemplate extends Component
 
                     $seccion = [
                         'numero_seccion' => $this->datos_seccion,
-                        'descripcion' => $data['descripcion_s' . $this->datos_seccion],
-                        'porcentaje_seccion' => $data['porcentaje_seccion_' . $this->datos_seccion],
+                        'descripcion' => $data['descripcion_s'.$this->datos_seccion],
+                        'porcentaje_seccion' => $data['porcentaje_seccion_'.$this->datos_seccion],
                     ];
 
                     $preguntas2 = $this->preguntas($data, 2);
@@ -415,8 +430,8 @@ class EditSeccionesTemplate extends Component
 
                     $seccion = [
                         'numero_seccion' => $this->datos_seccion,
-                        'descripcion' => $data['descripcion_s' . $this->datos_seccion],
-                        'porcentaje_seccion' => $data['porcentaje_seccion_' . $this->datos_seccion],
+                        'descripcion' => $data['descripcion_s'.$this->datos_seccion],
+                        'porcentaje_seccion' => $data['porcentaje_seccion_'.$this->datos_seccion],
                     ];
 
                     $preguntas3 = $this->preguntas($data, 3);
@@ -463,7 +478,7 @@ class EditSeccionesTemplate extends Component
 
             if (
                 isset($values[$estatusKey]) && isset($values[$valorKey]) &&
-                !empty($values[$estatusKey]) && !empty($values[$valorKey])
+                ! empty($values[$estatusKey]) && ! empty($values[$valorKey])
             ) {
                 $groupedValues["group_{$i}"] = [
                     'estatus' => $values[$estatusKey],
@@ -482,7 +497,7 @@ class EditSeccionesTemplate extends Component
         $result = [];
         // $numero = 1;
         foreach ($data as $key => $value) {
-            if (preg_match('/^pregunta' . $seccion . '/', $key, $matches) || preg_match('/^pregunta' . $seccion . '_(\d+)$/', $key, $matches)) {
+            if (preg_match('/^pregunta'.$seccion.'/', $key, $matches) || preg_match('/^pregunta'.$seccion.'_(\d+)$/', $key, $matches)) {
 
                 // dd($value);
                 // $index = intval($matches[1]);

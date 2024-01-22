@@ -113,7 +113,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (!isset($modulo)) {
+        if (! isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -358,6 +358,7 @@ class AlcanceSgsiController extends Controller
                                 break;
                             } else {
                                 $acceso_restringido = 'turno';
+
                                 return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
                             }
                         }
@@ -372,9 +373,11 @@ class AlcanceSgsiController extends Controller
                 }
             }
             $acceso_restringido = 'denegado';
+
             return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
         } else {
             $acceso_restringido = 'aprobado';
+
             return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
         }
     }

@@ -27,6 +27,6 @@ class NotificacionMinutaAprobada extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.minutas.notificacion-minuta-aprobada')->subject('Minuta Aprobada: ' . $this->tema_minuta);
+        return $this->view('mails.minutas.notificacion-minuta-aprobada')->subject('Minuta Aprobada: '.$this->tema_minuta);
     }
 }

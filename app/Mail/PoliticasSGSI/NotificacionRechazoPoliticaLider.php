@@ -30,6 +30,6 @@ class NotificacionRechazoPoliticaLider extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.politicas.notificacion-politica-lider')->subject('Política del SGSI Rechazada: ' . $this->nombre_politica);
+        return $this->view('mails.politicas.notificacion-politica-lider')->subject('Política del SGSI Rechazada: '.$this->nombre_politica);
     }
 }
