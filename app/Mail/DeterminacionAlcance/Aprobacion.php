@@ -7,8 +7,6 @@ use App\Models\Timesheet;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
-
 
 class Aprobacion extends Mailable
 {

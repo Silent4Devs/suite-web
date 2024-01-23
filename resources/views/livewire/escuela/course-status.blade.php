@@ -52,21 +52,33 @@
                     <div class="row">
                         <div class="col-6">
                             @if ($this->previous)
-                                <a wire:click="changeLesson({{ $this->previous }})" class="cursor-pointer text-primary">
+                                <a wire:click="changeLesson({{ $this->previous }})" class=" text-primary"
+                                    style="cursor: pointer;">
                                     < Tema anterior </a>
                                     @else
                                         <a href="#" id="test" class="text-muted">
                                             < Tema anterior</a>
                             @endif
+                            <div wire:loading wire:target="changeLesson({{ $this->previous }})">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden"></span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
                             @if ($this->next)
-                                <a wire:click="changeLesson({{ $this->next }})" class="cursor-pointer text-primary">
+                                <a wire:click="changeLesson({{ $this->next }})" class="text-primary"
+                                    style="cursor: pointer;">
                                     Siguiente tema >
                                 </a>
                             @else
                                 <a href="#" id="test" class="text-muted"> Siguiente tema > </a>
                             @endif
+                            <div wire:loading wire:target="changeLesson({{ $this->next }})">
+                                <div class="spinner-border text-success" role="status">
+                                    <span class="visually-hidden"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -75,13 +87,15 @@
             </div> --}}
 
             <div>
-                <div class="mt-4 cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed">
+                <div class="mt-4 cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
+                    style="cursor: pointer;">
                     @if ($current->completed)
                         <h4 class="mr-2 text-primary">Lección terminada</h4>
-                        <i class="d-inline fas fa-toggle-on" style="font-size: 30px; color: blue;"></i>
+                        <i class="d-inline fas fa-toggle-on" style="font-size: 30px; color: blue; cursor: pointer;"></i>
                     @else
                         <h4 class="mr-2">Marcar esta lección como terminada</h4>
-                        <i class="text-2xl text-gray-600 fas fa-toggle-off" style="font-size: 30px;"></i>
+                        <i class="text-2xl text-gray-600 fas fa-toggle-off"
+                            style="font-size: 30px; cursor: pointer;"></i>
                     @endif
                 </div>
                 @if ($current->resource)

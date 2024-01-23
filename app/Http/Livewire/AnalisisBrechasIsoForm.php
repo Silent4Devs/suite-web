@@ -6,11 +6,11 @@ use App\Models\Empleado;
 use App\Models\EvaluacionAnalisisBrechas;
 use App\Models\Iso27\AnalisisBrechasIso;
 use App\Models\Norma;
-use App\Models\User;
 use App\Models\ParametrosEvaluacionAnalisisBrechas;
 use App\Models\PreguntasEvaluacionAnalisisBrechas;
 use App\Models\SeccionesEvaluacionAnalisisBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -83,7 +83,7 @@ class AnalisisBrechasIsoForm extends Component
             $this->emit('limpiarNameInput');
 
             return;
-        }else{
+        } else {
             $this->emit('selectedCardAlert');
         }
 
@@ -127,7 +127,7 @@ class AnalisisBrechasIsoForm extends Component
                 'id_elaboro' => $this->id_elaboro,
             ]);
             $this->resetInput();
-        }else{
+        } else {
             $this->emit('selectedCardAlert');
         }
 
