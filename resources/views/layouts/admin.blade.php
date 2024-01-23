@@ -106,6 +106,10 @@
         </div>
         <div class="menu-hedare-window">
             <div class="item-content-menu-header" style="background-color: #EEF6FF; min-width: 280px;">
+                <div class="logo-org-header">
+                    <img src="" alt="">
+                </div>
+
                 <span class="title-item-menu-header">MI PANEL</span>
 
                 <ul class="menu-list-panel-header">

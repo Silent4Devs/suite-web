@@ -1,6 +1,6 @@
 <div>
     @if ($lugar == 'header')
-        <div class="d-flex align-items-center mb-3">
+        <div class="d-flex align-items-center">
             <div class="caja-buscador-header" wire:loading.remove>
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="search" class="" placeholder="Buscar ..." wire:model="search">
