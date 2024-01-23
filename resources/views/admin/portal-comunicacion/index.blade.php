@@ -29,7 +29,7 @@
                 <div class="col-md-5 d-flex" style="flex-direction: column;">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="card card-body" style="padding: 20px;">
+                            <div class="card card-gadgets">
                                 <div class="d-flex justify-content-center align-items-center" style="gap: 13px;">
                                     <i class="material-symbols-outlined" style="font-size: 70px;">rainy</i>
                                     <span style="font-size: 26px;">26&nbsp;<font style="font-size: 16px;">°C</font></span>
@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="card card-body" style="padding: 20px;">
+                            <div class="card card-gadgets">
                                 <div class="d-flex justify-content-center align-items-center" style="gap: 13px;">
                                     <i class="material-symbols-outlined" style="font-size: 70px;">schedule</i>
                                     <span style="font-size: 26px;" id="hora-portal"> </span>
@@ -489,7 +489,12 @@
                                 <img src="{{ asset('img/example-remove/cumple_portal.png') }}" alt=""
                                     class="cumple-img-portal">
                             </div>
+
                         @endforeach
+                        @if ($cumpleaños)
+                            <img src="{{ asset('img/sincomunicados.png') }}" alt=""
+                                style="width: 100px; margin:0px auto; margin-top: 100px;">
+                        @endif
                     </div>
                     <button onclick="carruselPortal('advance');">
                         <i class="material-symbols-outlined">arrow_forward_ios</i>

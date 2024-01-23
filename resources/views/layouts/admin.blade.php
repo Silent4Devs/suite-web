@@ -107,7 +107,16 @@
         <div class="menu-hedare-window">
             <div class="item-content-menu-header" style="background-color: #EEF6FF; min-width: 280px;">
                 <div class="logo-org-header">
-                    <img src="" alt="">
+                    @php
+                        $organizacion = Organizacion::getLogo();
+                        if (!is_null($organizacion)) {
+                            $logotipo = $organizacion->logotipo;
+                        } else {
+                            $logotipo = 'img/logo_monocromatico.png';
+                        }
+                    @endphp
+
+                    <img src="{{ asset($logotipo) }}">
                 </div>
 
                 <span class="title-item-menu-header">MI PANEL</span>
@@ -161,13 +170,6 @@
                             </a>
                         </li>
                     @endcan
-                    <li class="mt-5">
-                        <a onclick="event.preventDefault(); document.getElementById('logoutform').submit();"
-                            style="cursor: pointer;">
-                            <i class="bi bi-box-arrow-right"></i>
-                            Cerrar sesión
-                        </a>
-                    </li>
                 </ul>
             </div>
             @if (

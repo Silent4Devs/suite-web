@@ -28,6 +28,14 @@
     font-size: 50px;
 }
 
+.card-gadgets{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 15px;
+}
+
 .item-app-mu {
     background-color: #FBF0FF;
     border: 1px solid #D8D1EF;
@@ -179,7 +187,6 @@
     object-fit: contain;
     width: 100%;
     height: 100%;
-    border-radius: 20px !important;
 }
 .menu-carrusel-vertical{
     width: 225px;

@@ -3,7 +3,7 @@
         .menu-slider {
             width: 900px;
             color: #306BA9;
-            margin: 30px auto;
+            margin: 0px auto;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -36,7 +36,7 @@
         .item-ms {
             scroll-snap-align: center;
             min-width: 68px;
-            height: 68px;
+            /* height: 68px; */
         }
 
         .item-ms a {
@@ -50,16 +50,10 @@
             padding-top: 6px;
         }
 
-        /* .item-ms:first-child {
-                                                                                                                                                                                                                            margin-left: 160px;
-                                                                                                                                                                                                                        }
-
-                                                                                                                                                                                                                        .item-ms:last-child {
-                                                                                                                                                                                                                            margin-right: 160px;
-                                                                                                                                                                                                                        } */
-
         .item-ms span {
             font-size: 10px;
+            text-align: center;
+            margin-top: 7px;
         }
 
         .item-ms i {
