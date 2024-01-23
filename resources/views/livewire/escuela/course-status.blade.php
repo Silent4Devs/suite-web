@@ -99,7 +99,8 @@
                     @endif
                 </div>
                 @if ($current->resource)
-                    <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download">
+                    <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download"
+                        style="cursor: pointer;">
                         <i class="text-lg fas fa-download d-inline"></i>
                         <p class="ml-2 text-sm d-inline">Descargar Recurso</p>
                     </div>
