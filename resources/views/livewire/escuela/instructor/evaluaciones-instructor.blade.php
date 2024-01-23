@@ -8,7 +8,7 @@
         <div class="card-body">
             <form action="" method="post">
                 @csrf
-                <div wire:ignore x-show="open">
+                <div>
                     <div class="form-group anima-focus">
                         <select wire:model.defer="section_id" id="section_id" name="section[is_active]"
                             value="{{ old('section.is_active') }}" class="form-control">
@@ -19,22 +19,22 @@
                             @endforeach
                         </select>
                         <label for="section[is_active]" >Sección a evaluar</label>
+                        @error('section_id')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
-                @error('section_id')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
 
                 <div class="form-group anima-focus " style="margin: 3rem 0px;">
                     @error('section.name')
                         <span class="content-end float-right text-xs text-red-700">{{ $message }}</span>
                     @enderror
                     <input class="form-control" type="text" value="" id="title" wire:model.defer="name" placeholder="">
+                    <label for="name">Nombre*</label>
                     @error('name')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
-                    <label for="name">Nombre*</label>
 
                 </div>
 
@@ -42,10 +42,10 @@
                     {{-- {!! Form::label('description', 'Descripción:', ['class' => 'text-primary mt-4']) !!} --}}
                     <textarea class="mb-2 form-control" type="text" value="" id="title" wire:model.defer="description"
                     placeholder=""></textarea>
+                    <label for="description">Descripción:</label>
                     @error('description')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
-                    <label for="description">Descripción:</label>
                 </div>
 
 

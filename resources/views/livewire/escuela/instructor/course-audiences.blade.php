@@ -36,12 +36,11 @@
                         {{-- {!! Form::label('title', 'Agregar el nombre del requisito*', [
                             'class' => 'pl-0',
                         ]) !!} --}}
-                        <input wire:model.debounce.800ms="name" class="form-control"
-                            placeholder="">
-                        @error('name')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <input wire:model.debounce.800ms="name" class="form-control" placeholder="">
                         <label for="name">Agregar el nombre del requisito*</label>
+                        @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-3 col-3 d-flex justify-content-end">
                         <button type="submit" class="btn btn-light text-primary">Agregar <i

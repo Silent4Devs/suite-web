@@ -33,8 +33,8 @@
                         {{-- {!! Form::label('title', 'Agregar el nombre de la meta*',[
                         'class' => 'pl-0']) !!} --}}
                         <input wire:model="name" class="form-control" placeholder="">
-                        @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                         <label for="name">Agregar el nombre de la meta*</label>
+                        @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-3 d-flex justify-content-end">
                         <button type="submit" class="btn btn-light text-primary">Agregar <i class="fa-solid fa-plus"></i></button>

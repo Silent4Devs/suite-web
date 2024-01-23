@@ -26,7 +26,11 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="d-flex align-items-center d-inline">
                                 <div class="circulo-kaans">
-                                    <img src="{{ $student->empleado->foto }}" alt="{{ $student->name }}">
+                                    @if (isset($student->empleado->avatar_ruta))
+                                    <img src="{{ $student->empleado->avatar_ruta  }}" alt="{{ $student->name }}">
+                                    @else
+                                    <img src="{{ asset('img/avatars/escuela-instructor.png') }}">
+                                    @endif
                                 </div>
                                 <div class="ml-4">
                                     {{ $student->name }}

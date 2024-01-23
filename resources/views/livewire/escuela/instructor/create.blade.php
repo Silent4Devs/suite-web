@@ -8,20 +8,18 @@
             </div>
             <div class="modal-body">
                 <div class="form-group anima-focus">
-                    <input class="form-control" type="text" value="" id="title" placeholder=""
-                        wire:model.defer="question">
+                    <input class="form-control" type="text" value="" id="title" placeholder="" wire:model.defer="question">
+                    <label>Pregunta*</label>
                     @error('question')
                         <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>
                     @enderror
-                    <label>Pregunta*</label>
                 </div>
                 <div class="form-group anima-focus">
-                    <input class="form-control" type="text" value="" id="title" placeholder=""
-                        wire:model.defer="explanation">
+                    <input class="form-control" type="text" value="" id="title" placeholder="" wire:model.defer="explanation">
+                    <label>Descripción</label>
                     @error('explanation')
                         <p class="text-xs text-red-700">El campo descripción es obligatorio.</p>
                     @enderror
-                    <label>Descripción</label>
                 </div>
                 <div class="mt-4">
                     @foreach ($answers as $key => $answer)
