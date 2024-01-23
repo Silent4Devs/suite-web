@@ -60,7 +60,6 @@
         a:hover {
             text-decoration: none !important;
         }
-
     </style>
     <style>
         .ventana_menu {
@@ -74,7 +73,6 @@
             height: calc(100% - 40px);
 
         }
-
     </style>
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
@@ -83,10 +81,11 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <nav >
+            <nav>
                 <div class="nav nav-tabs" id="tabsCapitalHumano" role="tablist">
-                    <a class="nav-link active" style="border-top: 2px solid #ffffff;" id="nav-empleados-tab" data-type="empleados" data-toggle="tab"
-                        href="#nav-empleados" role="tab" aria-controls="nav-empleados" aria-selected="true">
+                    <a class="nav-link active" style="border-top: 2px solid #ffffff;" id="nav-empleados-tab"
+                        data-type="empleados" data-toggle="tab" href="#nav-empleados" role="tab"
+                        aria-controls="nav-empleados" aria-selected="true">
                         <i class="bi bi-people" style="font-size:20px;" style="text-decoration:none;"></i>
                         Empleados
                     </a>
@@ -106,14 +105,14 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"
                     aria-labelledby="nav-empleados-tab">
-                        @include('admin.recursos-humanos.capital-humano.components.empleados')
+                    @include('admin.recursos-humanos.capital-humano.components.empleados')
                 </div>
                 <div class="tab-pane mb-4 fade" id="nav-calendario-comunicacion" role="tabpanel"
                     aria-labelledby="nav-calendario-comunicacion-tab">
-                        @include('admin.recursos-humanos.capital-humano.components.calendario-comunicacion')
+                    @include('admin.recursos-humanos.capital-humano.components.calendario-comunicacion')
                 </div>
                 <div class="tab-pane mb-4 fade" id="nav-ev360" role="tabpanel" aria-labelledby="nav-ev360-tab">
-                        @include('admin.recursos-humanos.capital-humano.components.ev360')
+                    @include('admin.recursos-humanos.capital-humano.components.ev360')
                 </div>
 
             </div>
