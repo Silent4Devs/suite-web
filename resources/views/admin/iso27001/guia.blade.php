@@ -209,7 +209,7 @@
                                         <h4 class="title-card-img-iso">Análisis de brechas</h4>
                                         {{-- <span>Completado</span> --}}
                                     </div>
-                                    <a href="{{ route('admin.analisisdebrechas-2022.create') }}" class="btn-entrar">
+                                    <a href="{{ route('admin.analisis-brechas-inicio') }}" class="btn-entrar">
                                         Entrar
                                         <i class="material-symbols-outlined"> arrow_right_alt</i>
                                     </a>
