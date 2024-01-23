@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PreguntasEvaluacionAnalisisBrechas extends Model
 {
     use HasFactory;
-
     public $table = 'preguntas_evaluacion_analisis_brechas';
 
     public $fillable = [
@@ -17,6 +16,7 @@ class PreguntasEvaluacionAnalisisBrechas extends Model
         'numero_pregunta',
     ];
 
+    //Relaciones
     public function respuesta()
     {
         return $this->hasOne(RespuestasEvaluacionAnalisisBrechas::class, 'pregunta_id', 'id');
