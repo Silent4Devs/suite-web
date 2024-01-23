@@ -30,7 +30,7 @@ return [
 
     'condition' => [
         'store' => null,
-        'hits' => 5000,
+        'hits' => 100,
         'key' => 'preload|request_count',
     ],
 
