@@ -61,7 +61,7 @@
                             @endif
                             <div wire:loading wire:target="changeLesson({{ $this->previous }})">
                                 <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+                                    <span class="visually-hidden"></span>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                             @endif
                             <div wire:loading wire:target="changeLesson({{ $this->next }})">
                                 <div class="spinner-border text-success" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+                                    <span class="visually-hidden"></span>
                                 </div>
                             </div>
                         </div>

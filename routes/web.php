@@ -3,8 +3,8 @@
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
-use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
