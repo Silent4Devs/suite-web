@@ -141,15 +141,6 @@ header.mostrar-menu {
     transform: translateY(-80px);
 }
 
-.menu-hedare-window .item-content-menu-header * {
-    opacity: 0;
-    transition: 0.5s;
-
-    transform: translateY(-100px);
-    transition: 0.5s;
-}
-
-
 .mostrar-menu .menu-hedare-window .item-content-menu-header * {
     opacity: 1;
     transition: 1s;
@@ -319,4 +310,61 @@ header.mostrar-menu {
     object-fit: cover;
     width: 100%;
     height: 100%;
+}
+
+
+
+/* btn menu ------- */
+.line-menu {
+    display: grid;
+    grid-template-areas: "menu";
+    transition: 0.3s;
+}
+
+.line-menu::before {
+    display: block;
+    content: "";
+    width: 25px;
+    height: 1px;
+    background-color: #fff;
+    grid-area: menu;
+    transform: translateY(-8px);
+    transition: 0.3s;
+}
+
+.line-menu hr {
+    width: 25px;
+    height: 1px;
+    background-color: #fff;
+    border: none;
+    margin: 0;
+    grid-area: menu;
+    transition: 0.3s;
+}
+
+.line-menu::after {
+    display: block;
+    content: "";
+    width: 25px;
+    height: 1px;
+    background-color: #fff;
+    grid-area: menu;
+    transform: translateY(8px);
+    transition: 0.3s;
+}
+
+.active .line-menu {
+    gap: 0px;
+}
+
+.active .line-menu::before {
+    transform: rotate(45deg) translateY(0px);
+}
+
+.active .line-menu hr {
+    transform: rotate(-45deg);
+}
+
+.active .line-menu::after {
+    opacity: 0;
 }
