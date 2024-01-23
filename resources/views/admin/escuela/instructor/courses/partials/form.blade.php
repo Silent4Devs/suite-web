@@ -6,40 +6,40 @@
                 'class' => 'form-control ' . ($errors->has('title') ? ' border-red-600' : ''),
                 'placeholder' => "",
             ]) !!}
+            <label for="title">Titulo del curso*:</label>
             @error('title')
                 <p class="text-danger">{{ $errors->first('title') }}</p>
             @enderror
-            <label for="title">Titulo del curso*:</label>
         </div>
         <div class="form-group col-6 anima-focus">
             {!! Form::text('slug', null, [
                 'class' => 'form-control' . ($errors->has('slug') ? ' border-red-600' : ''),
                 'placeholder' => ""
             ]) !!}
+            <label for="slug">Slug del curso*:</label>
             @error('slug')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label for="slug">Slug del curso*:</label>
         </div>
         <div class="form-group col-12 anima-focus">
             {!! Form::text('subtitle', null, [
                 'class' => 'form-control' . ($errors->has('subtitle') ? ' border-red-600' : ''),
                 'placeholder' => ""
             ]) !!}
+            <label class="required mt-3" for="subtitle">Subtítulo del curso:</label>
             @error('subtitle')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label class="required mt-3" for="subtitle">Subtítulo del curso:</label>
         </div>
         <div class="form-group col-12 anima-focus">
             {!! Form::textarea('description', null, [
                 'class' => 'form-control' . ($errors->has('description') ? ' border-red-600' : ''),
                 'placeholder' => ""
             ]) !!}
+            <label  for="description">Descripción del curso:</label>
             @error('description')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label  for="description">Descripción del curso:</label>
         </div>
     </div>
     {{-- <input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" id="title"
@@ -60,10 +60,10 @@
                 'class' => 'form-control',
                 'placeholder' => 'Seleccione una opción',
             ]) !!}
+            <label  for="category_id">Categoría*</label>
             @error('category_id')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label  for="category_id">Categoría*</label>
         </div>
         <div class="form-group col-6 anima-focus">
             {{-- {!! Form::label('level_id', 'Niveles') !!} --}}
@@ -71,10 +71,10 @@
                 'class' => 'form-control',
                 'placeholder' => 'Seleccione una opción',
             ]) !!}
+            <label  for="level_id">Niveles*</label>
             @error('level_id')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label  for="level_id">Niveles*</label>
         </div>
         {{-- <div>
             {!! Form::label('price_id', 'Precio') !!}

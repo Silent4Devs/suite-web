@@ -122,6 +122,9 @@
                             <div class="caja-img-mi-curso">
                                 <img src="{{ asset($cu->cursos->image->url) }}" alt="">
                             </div>
+                            <div class="caja-info-card-mc">
+                                <p style="font-size: 18px;"><strong>{{ $cu->cursos->title }}</strong></p>
+                            </div>
                         </a>
                     </div>
             @endforeach

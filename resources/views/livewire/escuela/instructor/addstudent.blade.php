@@ -7,10 +7,10 @@
             </div>
             <div class="modal-body">
                 {{-- <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left" style="min-width:500px;"> --}}
-                    <p lass="text-sm leading-5 text-gray-500" for="usuario">Usuario<span style="color:red">*</span></p>
-                    <div class="mt-2">
-                        <select class="form-control  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
-                            name="user_id" id="user_id" wire:model.defer="user_id">
+                    {{-- <p lass="text-sm leading-5 text-gray-500" for="usuario">Usuario<span style="color:red">*</span></p> --}}
+                    <div class="mt-2 form-group anima-focus">
+                        <select class="form-control  block w-full mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
+                            name="user_id" id="user_id" wire:model.defer="user_id" placeholder="">
                             <option value="" selected>
                                 Selecciona una opción
                             </option>
@@ -19,6 +19,7 @@
                                     {{ $usuario->name }}</option>
                             @endforeach
                         </select>
+                        <label for="user_id">Usuario*</label>
                         @error('user_id')
                             <small class="text-red-600">{{ $message }}</small>
                         @enderror
