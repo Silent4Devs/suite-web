@@ -160,7 +160,7 @@ class RecursosController extends Controller
                 ]);
                 foreach ($emails->json() as $email) {
                     $empleado = Empleado::getaltaAll()->where('email', $email['email'])->first();
-                    Mail::to(removeUnicodeCharacters($empleado->email))->send(new ElearningInscripcionMail($empleado));
+                    Mail::to(removeUnicodeCharacters($empleado->email))->queue(new ElearningInscripcionMail($empleado));
                 }
             }
         }
@@ -629,7 +629,7 @@ class RecursosController extends Controller
             ]);
             //Enviar correo avisando reprogramacion
             foreach ($recurso->empleados as $empleado) {
-                Mail::to(removeUnicodeCharacters($empleado->email))->send(new CapacitacionReprogramadaMail($recurso, $empleado));
+                Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CapacitacionReprogramadaMail($recurso, $empleado));
             }
 
             return response()->json(['estatus' => 200, 'mensaje' => 'Capacitación Reprogramada']);
@@ -646,7 +646,7 @@ class RecursosController extends Controller
             ]);
             //Enviar correo avisando reprogramacion
             foreach ($recurso->empleados as $empleado) {
-                Mail::to(removeUnicodeCharacters($empleado->email))->send(new CapacitacionCanceladaMail($recurso, $empleado));
+                Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CapacitacionCanceladaMail($recurso, $empleado));
             }
 
             // $extension = pathinfo($request->file('certificado')->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -663,7 +663,7 @@ class RecursosController extends Controller
     {
         if (Carbon::now()->isBefore(Carbon::parse($recurso->fecha_limite))) {
             foreach ($recurso->empleados as $empleado) {
-                Mail::to(removeUnicodeCharacters($empleado->email))->send(new InvitacionCapacitaciones($empleado, $recurso));
+                Mail::to(removeUnicodeCharacters($empleado->email))->queue(new InvitacionCapacitaciones($empleado, $recurso));
             }
 
             return response()->json(['estatus' => 200, 'mensaje' => 'Invitaciones enviadas']);

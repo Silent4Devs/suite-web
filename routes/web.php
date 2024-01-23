@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
+use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
@@ -17,6 +18,7 @@ Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'V
     Route::resource('/', 'RegistroVisitantesController');
 });
 
+Route::get('correotestqueue', [QueueCorreo::class, 'index']);
 Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
@@ -37,6 +39,7 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+
     Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
     Route::get('/', 'InicioUsuarioController@index');
     Route::get('/home', 'InicioUsuarioController@index')->name('home');

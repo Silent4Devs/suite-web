@@ -238,7 +238,7 @@ class PanelDeclaracionIsoController extends Controller
                 $controles_name->push($control->gapdos);
             }
 
-            Mail::to(removeUnicodeCharacters($empleado->email))->send(new DeclaracionAplicabilidadIso($empleado->name, $tipo, $controles_name));
+            Mail::to(removeUnicodeCharacters($empleado->email))->queue(new DeclaracionAplicabilidadIso($empleado->name, $tipo, $controles_name));
             $responsable = DeclaracionAplicabilidadResponsableIso::where('empleado_id', $destinatario)->first();
             $responsable->update(['esta_correo_enviado' => true]);
         }

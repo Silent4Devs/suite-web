@@ -261,7 +261,7 @@ class SolicitudVacacionesController extends Controller
 
         $solicitud = SolicitudVacaciones::create($request->all());
 
-        Mail::to(removeUnicodeCharacters($supervisor->email))->send(new MailSolicitudVacaciones($solicitante, $supervisor, $solicitud));
+        Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudVacaciones($solicitante, $supervisor, $solicitud));
 
         Alert::success('éxito', 'Información añadida con éxito');
 
@@ -308,7 +308,7 @@ class SolicitudVacacionesController extends Controller
 
         $solicitud->update($request->all());
 
-        Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->send(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));
+        Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->queue(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));
         Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.solicitud-vacaciones.aprobacion'));

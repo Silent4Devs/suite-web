@@ -250,7 +250,7 @@ class OrdenCompraController extends Controller
 
             $organizacion = Organizacion::getFirst();
 
-            Mail::to('ldelgadillo@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            Mail::to('ldelgadillo@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_comprador_orden') {
             $fecha = date('d-m-Y');
@@ -273,7 +273,7 @@ class OrdenCompraController extends Controller
             $userEmail = $requisicion->email;
         }
         $organizacion = Organizacion::getFirst();
-        Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($userEmail)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));
     }
@@ -299,7 +299,7 @@ class OrdenCompraController extends Controller
         $userEmail = User::getCurrentUser()->email;
         $organizacion = Organizacion::getFirst();
         $tipo_firma = 'rechazado';
-        Mail::to($requisicion->email)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($requisicion->email)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect('contract_manager/orden-compra');
     }
