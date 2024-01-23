@@ -206,7 +206,7 @@
                                 <span>Gestión Normativa</span>
                             </a>
                         @endcan
-                        @can('analisis_de_riesgo_integral_acceder')
+                        @can('matriz_de_riesgo_acceder')
                             <a href="{{ route('admin.analisis-riesgos.menu') }}">
                                 <div class="caja-icon-mod-header" style="background: #FCB4BC;">
                                     <i class="material-symbols-outlined">report</i>
