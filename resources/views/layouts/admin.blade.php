@@ -84,8 +84,11 @@
     <header>
         <div class="content-header-blue">
             <div class="caja-inicio-options-header">
-                <button onclick="document.querySelector('header').classList.toggle('mostrar-menu')">
-                    <i class="fa-solid fa-bars"></i>
+                <button class="btn-menu-header" style="height: 40px;"
+                    onclick="document.querySelector('header').classList.toggle('mostrar-menu'); document.querySelector('.btn-menu-header').classList.toggle('active');">
+                    <div class="line-menu">
+                        <hr>
+                    </div>
                 </button>
                 <a href="{{ url('/') }}"><img src="{{ asset('img/logo-ltr.png') }}" alt="Logo Tabantaj"
                         style="height: 40px;"></a>
@@ -154,7 +157,7 @@
                             </a>
                         </li>
                     @endcan
-                    <li>
+                    <li class="mt-5">
                         <a onclick="event.preventDefault(); document.getElementById('logoutform').submit();"
                             style="cursor: pointer;">
                             <i class="bi bi-box-arrow-right"></i>
