@@ -14,7 +14,7 @@ Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'V
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
     Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
     Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
-    Route::resource('/', 'RegistroVisitantesController');
+    Route::resource('/', RegistroVisitantesController::class);
 });
 
 Route::get('correotestqueue', [QueueCorreo::class, 'index']);
