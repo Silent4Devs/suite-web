@@ -277,22 +277,22 @@ class RevisionDocumentoController extends Controller
 
     public function sendMailApprove($mail, $documento, $revision)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoAprobadoMail($documento, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new DocumentoAprobadoMail($documento, $revision));
     }
 
     public function sendMailPublish($mail, $documento)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoPublicadoMail($documento));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new DocumentoPublicadoMail($documento));
     }
 
     public function sendMailNotPublish($mail, $documento)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoNoPublicadoMail($documento));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new DocumentoNoPublicadoMail($documento));
     }
 
     public function sendMailReject($mail, $documento, $revision)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoRechazadoMail($documento, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new DocumentoRechazadoMail($documento, $revision));
     }
 
     public function allLevelSendAnswer($documento_id, $documento)
@@ -351,7 +351,7 @@ class RevisionDocumentoController extends Controller
 
     public function sendEmailToNextLevel($email, Documento $documento, RevisionDocumento $revisor, HistorialRevisionDocumento $historialRevisionDocumento)
     {
-        Mail::to(removeUnicodeCharacters($email))->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
+        Mail::to(removeUnicodeCharacters($email))->queue(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
     }
 
     public function checkMaxLevel($documento_id)

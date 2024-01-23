@@ -190,6 +190,39 @@ services:
       #- REDIS_1_AUTH=silent11!
     networks:
       - tabantajnetwork
+
+  rabbitmq-tabantaj:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbit-tabantaj
+    environment:
+      - RABBITMQ_DEFAULT_USER=desarrollo
+      - RABBITMQ_DEFAULT_PASS=Password123.
+      - RABBITMQ_DEFAULT_VHOST=desarrollo # Add this line
+    ports:
+      - 5672:5672
+      - 15672:15672
+    restart: unless-stopped
+    tty: true
+    networks:
+      - tabantajnetwork
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  tabantaj-db:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  pgadmin-data:
+    driver: local
+  # elasticsearch:
+  #   driver: local
+  # elasticsearch-logs:
+  #   driver: local
+
+networks:
+  tabantajnetwork:
+    driver: bridge
   # dd-agent:
   #   image: gcr.io/datadoghq/agent:7
   #   container_name: dd-agent
@@ -371,16 +404,3 @@ services:
   #   networks:
   #     - tabantajnetwork
 
-volumes:
-  tabantaj-db:
-    driver: local
-  pgadmin-data:
-    driver: local
-  # elasticsearch:
-  #   driver: local
-  # elasticsearch-logs:
-  #   driver: local
-
-networks:
-  tabantajnetwork:
-    driver: bridge

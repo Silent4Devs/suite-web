@@ -299,7 +299,7 @@ class TimesheetController extends Controller
 
                 try {
                     // Enviar correo
-                    Mail::to(removeUnicodeCharacters($aprobador->email))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+                    Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
                 } catch (Throwable $e) {
                     report($e);
 
@@ -539,7 +539,7 @@ class TimesheetController extends Controller
 
             try {
                 // Enviar correo
-                Mail::to(removeUnicodeCharacters($aprobador->email))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
+                Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
             } catch (Throwable $e) {
                 report($e);
 
@@ -866,7 +866,7 @@ class TimesheetController extends Controller
 
         try {
             // Enviar correo
-            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
         } catch (Throwable $e) {
             report($e);
 
@@ -891,7 +891,7 @@ class TimesheetController extends Controller
 
         try {
             // Enviar correo
-            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
         } catch (Throwable $e) {
             report($e);
 
@@ -1170,7 +1170,7 @@ class TimesheetController extends Controller
                     try {
                         // Enviar correo
                         Mail::to(removeUnicodeCharacters('marco.luna@silent4business.com'))
-                            ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
+                            ->queue(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
                     } catch (Throwable $e) {
                         report($e);
 

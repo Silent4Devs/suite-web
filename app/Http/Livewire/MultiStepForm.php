@@ -718,7 +718,7 @@ class MultiStepForm extends Component
 
     public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
     {
-        Mail::to(removeUnicodeCharacters($email))->send(new NotificacionEvaluador($evaluacion, $evaluador, $evaluados));
+        Mail::to(removeUnicodeCharacters($email))->queue(new NotificacionEvaluador($evaluacion, $evaluador, $evaluados));
     }
 
     public function obtenerEvaluadosConEvaluadores($evaluados_objetivo)

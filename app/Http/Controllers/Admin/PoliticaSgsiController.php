@@ -330,7 +330,7 @@ class PoliticaSgsiController extends Controller
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
-                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->queue(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
                 // dd('primer usuario', $part->participante);
             }
         }
@@ -343,7 +343,7 @@ class PoliticaSgsiController extends Controller
 
                 if ($part->participante->numero_orden == 1) {
                     $emailAprobador = $part->participante->empleado->email;
-                    Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                    Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
                     break;
                 }
                 // }
@@ -493,7 +493,7 @@ class PoliticaSgsiController extends Controller
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
 
-            Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionAprobacionPolitica($politica->nombre_politica));
+            Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionAprobacionPolitica($politica->nombre_politica));
             // dd('primer usuario', $part->participante);
         }
     }
@@ -528,10 +528,10 @@ class PoliticaSgsiController extends Controller
         }
         $emailresponsable = $politica->reviso->email;
         // dd($emailresponsable);
-        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoPoliticaLider($politica->id, $politica->nombre_politica));
+        Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoPoliticaLider($politica->id, $politica->nombre_politica));
 
         foreach ($aprobacion->participantes as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoPolitica($politica->nombre_politica));
+            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionRechazoPolitica($politica->nombre_politica));
         }
 
         return redirect(route('admin.politica-sgsis.index'));
@@ -577,7 +577,7 @@ class PoliticaSgsiController extends Controller
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
-                            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                            Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
                             break;
                         }
                     }

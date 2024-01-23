@@ -424,7 +424,7 @@ class ReportesEmpleados extends Component
         }
 
         Mail::to(removeUnicodeCharacters($empleado->email))
-            ->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
+            ->queue(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
 
         $this->alert('success', 'Correo Enviado!');
 

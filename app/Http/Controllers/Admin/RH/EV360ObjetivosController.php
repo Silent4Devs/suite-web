@@ -128,7 +128,7 @@ class EV360ObjetivosController extends Controller
             //send email if who add is not supervisor
             // if ($empleado->id == $usuario->empleado->id) {
             //     if (!is_null($empleado->supervisor)) {
-            //         Mail::to(removeUnicodeCharacters($empleado->email))->send(new SolicitudAprobacionObjetivo($objetivo, $empleado));
+            //         Mail::to(removeUnicodeCharacters($empleado->email))->queue(new SolicitudAprobacionObjetivo($objetivo, $empleado));
             //     }
             // }
             if ($request->hasFile('foto')) {

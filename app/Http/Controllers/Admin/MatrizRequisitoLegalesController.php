@@ -193,7 +193,7 @@ class MatrizRequisitoLegalesController extends Controller
         foreach ($proceso->participantes as $part) {
             $emailAprobador = $part->participante->empleado->email;
 
-            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new MatrizEmail($id_matriz));
+            Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new MatrizEmail($id_matriz));
         }
         // dd("Se enviaron todos");
     }

@@ -51,6 +51,6 @@ class NuevoProyectoJob implements ShouldQueue
     {
         //
         Mail::to(removeUnicodeCharacters($this->email))
-            ->send(new NotificacionNuevoProyecto($this->proyecto, $this->identificador, $this->cliente, $this->empleado, $this->id));
+            ->queue(new NotificacionNuevoProyecto($this->proyecto, $this->identificador, $this->cliente, $this->empleado, $this->id));
     }
 }
