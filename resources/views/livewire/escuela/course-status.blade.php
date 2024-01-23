@@ -60,7 +60,9 @@
                                             < Tema anterior</a>
                             @endif
                             <div wire:loading wire:target="changeLesson({{ $this->previous }})">
-                                Processing Payment...
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
@@ -73,7 +75,9 @@
                                 <a href="#" id="test" class="text-muted"> Siguiente tema > </a>
                             @endif
                             <div wire:loading wire:target="changeLesson({{ $this->next }})">
-                                Processing Payment...
+                                <div class="spinner-border text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </div>
                         </div>
                     </div>
