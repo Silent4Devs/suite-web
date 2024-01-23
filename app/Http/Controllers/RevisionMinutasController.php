@@ -207,21 +207,21 @@ class RevisionMinutasController extends Controller
 
     public function sendMailApprove($mail, $modelo, $revision)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaConfirmacionAprobacion($modelo, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaConfirmacionAprobacion($modelo, $revision));
     }
 
     public function sendMailPublish($mail, $modelo)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaAprobada($modelo));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaAprobada($modelo));
     }
 
     public function sendMailNotPublish($mail, $modelo)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaRechazada($modelo));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaRechazada($modelo));
     }
 
     public function sendMailReject($mail, $modelo, $revision)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaConfirmacionRechazo($modelo, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaConfirmacionRechazo($modelo, $revision));
     }
 }

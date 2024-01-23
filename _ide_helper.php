@@ -20985,6 +20985,78 @@
      
 }
 
+    namespace Laragear\Preload\Facades { 
+            /**
+     * 
+     *
+     * @method static \Laragear\Preload\Preloader getFacadeRoot()
+     * @see \Laragear\Preload\Preloader
+     */ 
+        class Preload {
+                    /**
+         * Exclude files from the given paths.
+         *
+         * @param \Closure|string $exclude
+         * @return void 
+         * @static 
+         */ 
+        public static function exclude(...$exclude)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        $instance->exclude(...$exclude);
+        }
+                    /**
+         * Append files from the given paths.
+         *
+         * @param \Closure|string $append
+         * @return void 
+         * @static 
+         */ 
+        public static function append(...$append)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        $instance->append(...$append);
+        }
+                    /**
+         * Creates a new list.
+         *
+         * @return \Laragear\Preload\Listing 
+         * @static 
+         */ 
+        public static function list()
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        return $instance->list();
+        }
+                    /**
+         * Writes a listing to the filesystem.
+         *
+         * @param \Laragear\Preload\Listing|null $listing
+         * @return \Laragear\Preload\Listing 
+         * @static 
+         */ 
+        public static function generate($listing = null)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        return $instance->generate($listing);
+        }
+                    /**
+         * Return an array of the files from the Finder.
+         *
+         * @param \Closure $callback
+         * @return \Illuminate\Support\Collection<int, string> 
+         * @static 
+         */ 
+        public static function getFilesFromFinder($callback)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        return $instance->getFilesFromFinder($callback);
+        }
+         
+    }
+     
+}
+
     namespace Livewire { 
             /**
      * 
@@ -26802,6 +26874,7 @@ namespace  {
             class Alert extends \RealRashid\SweetAlert\Facades\Alert {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
+            class Preload extends \Laragear\Preload\Facades\Preload {}
             class Livewire extends \Livewire\Livewire {}
             class Sentry extends \Sentry\Laravel\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}

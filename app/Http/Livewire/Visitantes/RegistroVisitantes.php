@@ -295,7 +295,7 @@ class RegistroVisitantes extends Component
 
     public function enviarCorreoDeConfirmacion($correo, $visitante)
     {
-        Mail::to(removeUnicodeCharacters($correo))->send(new NotificarIngresoVisitante($visitante));
+        Mail::to(removeUnicodeCharacters($correo))->queue(new NotificarIngresoVisitante($visitante));
     }
 
     public function registrarDispositivos()

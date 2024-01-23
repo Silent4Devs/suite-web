@@ -30,6 +30,6 @@ class NotificacionMinutaRechazadaResponsable extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.minutas.notificacion-minuta-lider')->subject('Minuta Rechazada: ' . $this->tema_minuta);
+        return $this->view('mails.minutas.notificacion-minuta-lider')->subject('Minuta Rechazada: '.$this->tema_minuta);
     }
 }

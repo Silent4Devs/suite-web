@@ -596,7 +596,7 @@ class ReporteAprobador extends Component
         foreach ($times_empleado as $time) {
             $times_empleado_array[] = $time->semana_y;
         }
-        Mail::to(removeUnicodeCharacters($empleado->email))->send(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
+        Mail::to(removeUnicodeCharacters($empleado->email))->queue(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
 
         $this->alert('success', 'Correo Enviado!');
 
@@ -616,7 +616,7 @@ class ReporteAprobador extends Component
                 $times_empleado_array[] = $time->semana_y;
             }
 
-            $correo = Mail::to(removeUnicodeCharacters($empleado->email))->send(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
+            $correo = Mail::to(removeUnicodeCharacters($empleado->email))->queue(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
         }
 
         $this->alert('success', 'Correos Enviados!');

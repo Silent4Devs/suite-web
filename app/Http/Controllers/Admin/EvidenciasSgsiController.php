@@ -11,7 +11,6 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\EvidenciaSgsiPdf;
 use App\Models\EvidenciasSgsi;
-use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
@@ -33,7 +32,7 @@ class EvidenciasSgsiController extends Controller
             $query = EvidenciasSgsi::with([
                 'empleado' => function ($query) {
                     $query->select('id', 'name', 'foto');
-                }
+                },
             ])
                 ->select(sprintf('%s.*', (new EvidenciasSgsi)->table))
                 ->orderByDesc('id');

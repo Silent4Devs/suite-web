@@ -5,7 +5,7 @@ namespace App\Mail\DeterminacionAlcance;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-
+use Illuminate\Contracts\Queue\ShouldQueue;
 class NotificacionRechazoAlcanceLider extends Mailable
 {
     use Queueable, SerializesModels;
@@ -30,6 +30,6 @@ class NotificacionRechazoAlcanceLider extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.alcance-sgsi.notificacion-alcance-lider')->subject('Determinación de Alcance Rechazado: ' . $this->nombre);
+        return $this->view('mails.alcance-sgsi.notificacion-alcance-lider')->subject('Determinación de Alcance Rechazado: '.$this->nombre);
     }
 }

@@ -33,7 +33,7 @@ class RecursosObserver
         } elseif ($recurso->estatus == 'Enviado') {
             if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
                 foreach ($empleados as $empleado) {
-                    Mail::to(removeUnicodeCharacters($empleado->email))->send(new InvitacionCapacitacionMail($empleado, $recurso));
+                    Mail::to(removeUnicodeCharacters($empleado->email))->queue(new InvitacionCapacitacionMail($empleado, $recurso));
                 }
             }
         }
@@ -59,7 +59,7 @@ class RecursosObserver
         } elseif ($recurso->estatus == 'Enviado') {
             if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
                 foreach ($empleados as $empleado) {
-                    Mail::to(removeUnicodeCharacters($empleado->email))->send(new InvitacionCapacitacionMail($empleado, $recurso));
+                    Mail::to(removeUnicodeCharacters($empleado->email))->queue(new InvitacionCapacitacionMail($empleado, $recurso));
                 }
             }
         }
