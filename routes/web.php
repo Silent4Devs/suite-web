@@ -17,6 +17,7 @@ Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'V
     Route::resource('/', 'RegistroVisitantesController');
 });
 
+Route::get('correotestqueue', [QueueCorreo::class, 'index']);
 Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
@@ -37,7 +38,7 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
-    Route::get('correotestqueue', [QueueCorreo::class, 'index']);
+
     Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
     Route::get('/', 'InicioUsuarioController@index');
     Route::get('/home', 'InicioUsuarioController@index')->name('home');
