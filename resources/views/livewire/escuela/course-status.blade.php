@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="col-6">
                             @if ($this->previous)
-                                <a wire:click="changeLesson({{ $this->previous }})" class="cursor-pointer text-primary">
+                                <a wire:click="changeLesson({{ $this->previous }})" class=" text-primary" style="cursor: pointer;">
                                     < Tema anterior </a>
                                     @else
                                         <a href="#" id="test" class="text-muted">
@@ -61,7 +61,7 @@
                         </div>
                         <div class="col-6 d-flex justify-content-end">
                             @if ($this->next)
-                                <a wire:click="changeLesson({{ $this->next }})" class="cursor-pointer text-primary">
+                                <a wire:click="changeLesson({{ $this->next }})" class="text-primary" style="cursor: pointer;">
                                     Siguiente tema >
                                 </a>
                             @else
