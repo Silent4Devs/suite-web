@@ -63,7 +63,7 @@
     @livewireStyles
 </head>
 
-<body style="zoom: 95%">
+<body style="zoom: 100%">
     <div id="loading">
         <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
             alt="Loading...">
