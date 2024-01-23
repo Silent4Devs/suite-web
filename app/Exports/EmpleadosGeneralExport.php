@@ -3,15 +3,14 @@
 namespace App\Exports;
 
 use App\Models\Empleado;
-
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class EmpleadosGeneralExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting, ShouldAutoSize
+class EmpleadosGeneralExport implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithHeadings, WithMapping
 {
     public function collection()
     {
@@ -24,18 +23,17 @@ class EmpleadosGeneralExport implements FromCollection, WithHeadings, WithMappin
         $sede = 'Sin definir';
         $puesto = 'Indefinido';
 
-        if (!is_null($empleado->supervisor)) {
+        if (! is_null($empleado->supervisor)) {
             $supervisor = $empleado->supervisor->name;
         }
 
-        if (!is_null($empleado->sede)) {
+        if (! is_null($empleado->sede)) {
             $sede = $empleado->sede->sede;
         }
 
         if (isset($empleado->puestoRelacionado->puesto)) {
             $puesto = $empleado->puestoRelacionado->puesto;
         }
-
 
         // $antiguedad = '';
         // if (Carbon::parse($empleado->antiguedad)->diff()->y == 0) {
@@ -101,9 +99,6 @@ class EmpleadosGeneralExport implements FromCollection, WithHeadings, WithMappin
         ];
     }
 
-    /**
-     * @return array
-     */
     public function columnWidths(): array
     {
         return [

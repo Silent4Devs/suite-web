@@ -994,7 +994,7 @@ class DeskController extends Controller
         }
 
         if ($correo_cliente) {
-            Mail::to(removeUnicodeCharacters($quejasClientes->correo))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->send(new SeguimientoQuejaClienteEmail($quejasClientes));
+            Mail::to(removeUnicodeCharacters($quejasClientes->correo))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->queue(new SeguimientoQuejaClienteEmail($quejasClientes));
         }
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
@@ -1170,7 +1170,7 @@ class DeskController extends Controller
                         $quejasClientes->update([
                             'email_env_resolucion_rechazada' => true,
                         ]);
-                        Mail::to(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->send(new ResolucionQuejaRechazadaEmail($quejasClientes));
+                        Mail::to(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->queue(new ResolucionQuejaRechazadaEmail($quejasClientes));
                     }
                 }
             }
@@ -1183,7 +1183,7 @@ class DeskController extends Controller
                         $quejasClientes->update([
                             'email_env_resolucion_aprobada' => true,
                         ]);
-                        Mail::to(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->send(new CierreQuejaAceptadaEmail($quejasClientes));
+                        Mail::to(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->queue(new CierreQuejaAceptadaEmail($quejasClientes));
                     }
                 }
             }
@@ -1195,7 +1195,7 @@ class DeskController extends Controller
                     $quejasClientes->update([
                         'email_realizara_accion_inmediata' => true,
                     ]);
-                    Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->send(new AtencionQuejaAtendidaEmail($quejasClientes));
+                    Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->queue(new AtencionQuejaAtendidaEmail($quejasClientes));
                 }
             }
         }
@@ -1206,7 +1206,7 @@ class DeskController extends Controller
                     $quejasClientes->update([
                         'correo_enviado_registro' => true,
                     ]);
-                    Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->send(new NotificacionResponsableQuejaEmail($quejasClientes, $quejasClientes->responsableAtencion));
+                    Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->queue(new NotificacionResponsableQuejaEmail($quejasClientes, $quejasClientes->responsableAtencion));
                 }
             }
         }
@@ -1253,7 +1253,7 @@ class DeskController extends Controller
                 $quejasClientes->update([
                     'correoEnviado' => true,
                 ]);
-                Mail::to(removeUnicodeCharacters($quejasClientes->responsableSgi->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->send(new AceptacionAccionCorrectivaEmail($quejasClientes, $evidenciaArr));
+                Mail::to(removeUnicodeCharacters($quejasClientes->responsableSgi->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->queue(new AceptacionAccionCorrectivaEmail($quejasClientes, $evidenciaArr));
             }
         }
         if ($request->ajax()) {
@@ -1277,7 +1277,7 @@ class DeskController extends Controller
         $empleado_copia = User::getCurrentUser()->empleado;
 
         if ($quejasClientes->registro != null && $request->responsable_atencion_queja_id != null) {
-            Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($empleado_copia->email))->send(new NotificacionResponsableQuejaEmail($quejasClientes, $empleado_email));
+            Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($empleado_copia->email))->queue(new NotificacionResponsableQuejaEmail($quejasClientes, $empleado_email));
         }
 
         return response()->json(['success' => true, 'request' => $request->all(), 'message' => 'Enviado con éxito']);
@@ -1288,7 +1288,7 @@ class DeskController extends Controller
         $id_quejas = $request->id;
         $quejasClientes = QuejasCliente::find(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos', 'responsableAtencion');
 
-        Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->send(new SolicitarCierreQuejaEmail($quejasClientes));
+        Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->queue(new SolicitarCierreQuejaEmail($quejasClientes));
 
         return response()->json(['success' => true, 'request' => $request->all(), 'message' => 'Enviado con éxito']);
     }

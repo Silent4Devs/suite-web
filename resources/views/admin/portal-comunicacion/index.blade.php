@@ -26,7 +26,7 @@
 
         <div class="mt-5">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-5 d-flex" style="flex-direction: column;">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card card-body" style="padding: 20px;">
@@ -51,9 +51,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="flex-grow: 1; padding-bottom: 22px;">
                         <div class="col-12">
-                            <div class="div4 card card-body">
+                            <div class="div4 card card-body h-100">
                                 <h4 style="font-size: 30px;" id="fecha-completa">
                                     {{-- Fecha --}}
                                 </h4>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-7">
+                <div class="col-md-7" style="">
                     <div class="card carrusel-vertical-boletin" style="background-color: #F8E1E1;">
                         <div class="card-body">
                             <h4 class="title-card-portal-c">Boletín</h4>
@@ -239,8 +239,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="card card-body">
+                <div class="col-md-7 d-flex" style="flex-direction: column;">
+                    <div class="card card-body" style="flex-grow: 1;">
                         <h4 class="title-card-portal-c"> Comunicados</h4>
                         @forelse($comunicacionSgis as $comunicacionSgi)
                             @php

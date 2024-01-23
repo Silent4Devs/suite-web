@@ -17,17 +17,17 @@
         <form action="{{ asset('admin/timesheet/clientes/store') }}" method="POST" class="row">
             @csrf
             <div class="form-group col-md-2 anima-focus">
-                <input type="" name="identificador" placeholder="" class="form-control" required value="{{ old('identificador') }}">
+                <input type="" name="identificador" placeholder="" pattern="^[0-9]+$" type="number" class="form-control" required value="{{ old('identificador') }}">
                 {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
             </div>
 
             <div class="form-group col-md-5 anima-focus">
-                <input type="" name="razon_social" placeholder="" class="form-control" value="{{ old('razon_social') }}" required>
+                <input type="" name="razon_social" placeholder="" maxlength="255" class="form-control" value="{{ old('razon_social') }}" required>
                 {!! Form::label('razon_social', 'Razon Social*', ['class' => 'asterisco']) !!}
             </div>
 
             <div class="form-group col-md-5 anima-focus">
-                <input type="" name="nombre" placeholder="" class="form-control" required value="{{ old('nombre') }}">
+                <input type="" name="nombre" placeholder="" maxlength="255" class="form-control" required value="{{ old('nombre') }}">
                 {!! Form::label('nombre', 'Nombre Comercial del Cliente*', ['class' => 'asterisco']) !!}
             </div>
 
@@ -64,17 +64,17 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="calle" class="form-control" placeholder="" value="{{ old('calle') }}">
+                    <input type="" name="calle" class="form-control" maxlength="255" placeholder="" value="{{ old('calle') }}">
                     {!! Form::label('calle', 'Calle y Número*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4  anima-focus">
-                    <input type="" name="colonia" placeholder="" class="form-control" value="{{ old('colonia') }}">
+                    <input type="" name="colonia" placeholder="" maxlength="255" class="form-control" value="{{ old('colonia') }}">
                     {!! Form::label('colonia', 'Colonia*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="ciudad" placeholder="" class="form-control" value="{{ old('ciudad') }}">
+                    <input type="" name="ciudad" placeholder="" maxlength="255" class="form-control" value="{{ old('ciudad') }}">
                     {!! Form::label('ciudad', ' Ciudad o Municipio/
                     País*', ['class' => 'asterisco']) !!}
                 </div>
@@ -85,9 +85,9 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input id="phone" type="text" name="telefono" value="{{ old('telefono') }}" class="form-control"
-                        pattern="\x2b[0-9]+" size="20" placeholder="">
-                        {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
+                    <input id="phone" type="text" name="telefono" value="{{ old('telefono') }}" class="form-control" size="20" placeholder="">
+                    {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
+                    <div class="error-message"></div>
                 </div>
                 <div class="form-group col-md-4 anima-focus">
                     <input type="" name="pagina_web" placeholder="" class="form-control" value="{{ old('pagina_web') }}">
@@ -101,7 +101,7 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" name="nombre_contacto" placeholder="" class="form-control"
+                    <input type="" name="nombre_contacto" placeholder="" maxlength="255" class="form-control"
                         value="{{ old('nombre_contacto') }}">
                         {!! Form::label('nombre_contacto', 'Nombre Completo del
                         contacto*', ['class' => 'asterisco']) !!}
@@ -123,10 +123,11 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="tel" name="celular_contacto" pattern="[0-9]{10}" placeholder="" class="form-control"
-                        value="{{ old('celular_contacto') }}">
-                        {!! Form::label('correo_contacto', 'Celular*', ['class' => 'asterisco']) !!}
+                    <input type="tel" name="celular_contacto"  placeholder="" class="form-control" value="{{ old('celular_contacto') }}">
+                    {!! Form::label('celular_contacto', 'Celular*', ['class' => 'asterisco']) !!}
+                    <div class="error-message"></div>
                 </div>
+
 
                 <div class="col-md-12 col-sm-12 mt-4">
                     <div class="card vrd-agua" style="background-color:#345183;">
@@ -135,14 +136,14 @@
                 </div>
 
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control" name="objeto_descripcion" id="objeto_descripcion"
+                    <textarea class="form-control" name="objeto_descripcion" maxlength="255" id="objeto_descripcion"
                         value="{{ old('objeto_descripcion', '') }}"></textarea>
                         {!! Form::label('objeto_descripcion', 'Objeto social / Descripción
                         del servicio o producto*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control" name="cobertura" id="cobertura" value="{{ old('cobertura', '') }}"></textarea>
+                    <textarea class="form-control" name="cobertura" maxlength="255" id="cobertura" value="{{ old('cobertura', '') }}"></textarea>
                     {!! Form::label('cobertura', 'Cobertura, Rango geográfico
                     en el cual presta los servicios*', ['class' => 'asterisco']) !!}
                 </div>
@@ -156,6 +157,70 @@
     </div>
 @endsection
 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var telefonoInput = document.querySelector('input[name="telefono"]');
+        var errorMessage = document.querySelector('.error-message');
+
+        telefonoInput.addEventListener('input', function() {
+            var inputValue = telefonoInput.value;
+
+            // Usa una expresión regular para verificar si el valor contiene solo números y el símbolo '+'
+            var isValid = /^[0-9+]+$/.test(inputValue);
+
+            // Actualiza el mensaje de error y la apariencia del campo según la validación
+            if (!isValid) {
+                errorMessage.textContent = 'Ingrese solo números y el símbolo "+" en el campo de teléfono.';
+                telefonoInput.classList.add('invalid');
+            } else {
+                errorMessage.textContent = '';
+                telefonoInput.classList.remove('invalid');
+            }
+        });
+
+        // Agrega un evento de escucha para el evento keydown para bloquear caracteres no deseados
+        telefonoInput.addEventListener('keydown', function(event) {
+            var allowedKeys = [8, 9, 13, 27, 43, 46, 107]; // Permitir retroceso, tabulación, intro, escape, suma y punto
+
+            if (allowedKeys.indexOf(event.keyCode) === -1 && !/[0-9+]/.test(event.key)) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var telefonoInput = document.querySelector('input[name="celular_contacto"]');
+        var errorMessage = document.querySelector('.error-message');
+
+        telefonoInput.addEventListener('input', function() {
+            var inputValue = telefonoInput.value;
+
+            // Usa una expresión regular para verificar si el valor contiene solo números y el símbolo '+'
+            var isValid = /^[0-9+]+$/.test(inputValue);
+
+            // Actualiza el mensaje de error y la apariencia del campo según la validación
+            if (!isValid) {
+                // errorMessage.textContent = 'Ingrese solo números y el símbolo "+" en el campo de teléfono.';
+                // telefonoInput.classList.add('invalid');
+            } else {
+                errorMessage.textContent = '';
+                telefonoInput.classList.remove('invalid');
+            }
+        });
+
+        // Agrega un evento de escucha para el evento keydown para bloquear caracteres no deseados
+        telefonoInput.addEventListener('keydown', function(event) {
+            var allowedKeys = [8, 9, 13, 27, 43, 46, 107]; // Permitir retroceso, tabulación, intro, escape, suma y punto
+
+            if (allowedKeys.indexOf(event.keyCode) === -1 && !/[0-9+]/.test(event.key)) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 
 @section('scripts')
     @parent

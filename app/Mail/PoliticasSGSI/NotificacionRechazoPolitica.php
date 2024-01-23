@@ -19,6 +19,7 @@ class NotificacionRechazoPolitica extends Mailable
     {
         $this->nombre_politica = $nombre_politica;
     }
+
     /**
      * Build the message.
      *
@@ -26,6 +27,6 @@ class NotificacionRechazoPolitica extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.politicas.notificacion-politica-rechazada')->subject('Política del SGSI Rechazada: ' . $this->nombre_politica);
+        return $this->view('mails.politicas.notificacion-politica-rechazada')->subject('Política del SGSI Rechazada: '.$this->nombre_politica);
     }
 }

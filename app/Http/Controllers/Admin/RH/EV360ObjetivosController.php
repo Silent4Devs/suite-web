@@ -40,9 +40,10 @@ class EV360ObjetivosController extends Controller
         //     $empleados,
         //     $isAdmin
         // );
-        if ($usuario->empleado->children->count() > 0 && !$isAdmin) {
+        if ($usuario->empleado->children->count() > 0 && ! $isAdmin) {
             // dd('Caso 1');
             $empleados = $usuario->empleado->children;
+
             return view('admin.recursos-humanos.evaluacion-360.objetivos.index', compact('areas', 'puestos', 'perfiles', 'empleados'));
             // return datatables()->of($usuario->empleado->children)->toJson();
         } elseif ($isAdmin) {
@@ -127,14 +128,14 @@ class EV360ObjetivosController extends Controller
             //send email if who add is not supervisor
             // if ($empleado->id == $usuario->empleado->id) {
             //     if (!is_null($empleado->supervisor)) {
-            //         Mail::to(removeUnicodeCharacters($empleado->email))->send(new SolicitudAprobacionObjetivo($objetivo, $empleado));
+            //         Mail::to(removeUnicodeCharacters($empleado->email))->queue(new SolicitudAprobacionObjetivo($objetivo, $empleado));
             //     }
             // }
             if ($request->hasFile('foto')) {
                 Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $empleado->id . '.' . $extension;
-                $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+                $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$empleado->id.'.'.$extension;
+                $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('foto'));
                 $img_intervention->resize(720, null, function ($constraint) {
@@ -325,8 +326,8 @@ class EV360ObjetivosController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $objetivo->empleado_id . '.' . $extension;
-            $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+            $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$objetivo->empleado_id.'.'.$extension;
+            $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto'));
             $img_intervention->resize(720, null, function ($constraint) {
@@ -376,7 +377,7 @@ class EV360ObjetivosController extends Controller
             return response()->json([
                 'empleados' => $empleados,
                 'hasObjetivos' => true,
-                'objetivos' => $objetivos_empleado
+                'objetivos' => $objetivos_empleado,
             ]);
         } else {
             return response()->json(['hasObjetivos' => false]);

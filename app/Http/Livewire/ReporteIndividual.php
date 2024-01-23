@@ -63,7 +63,7 @@ class ReporteIndividual extends Component
 
         if ($this->reporte->exists()) {
             $this->reporte = $this->reporte->first();
-        // dd($this->reporte);
+            // dd($this->reporte);
         } else {
             // dd("Crea uno nuevo");
             $this->createReporte($audit);

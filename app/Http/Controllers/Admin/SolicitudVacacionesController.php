@@ -137,7 +137,7 @@ class SolicitudVacacionesController extends Controller
 
                 return redirect(route('admin.solicitud-vacaciones.index'));
             }
-        // Inician vacaciones a los 6 meses
+            // Inician vacaciones a los 6 meses
         } else {
             $tipo_conteo = null;
             $fecha_limite = Vacaciones::where('inicio_conteo', '=', $año)->pluck('fin_conteo')->first();
@@ -189,7 +189,7 @@ class SolicitudVacacionesController extends Controller
             } else {
                 $mostrar_reclamo = false;
             }
-        //    dd($mostrar_reclamo);
+            //    dd($mostrar_reclamo);
         } else {
             $mostrar_reclamo = false;
             $periodo_vencido = 0;
@@ -261,7 +261,7 @@ class SolicitudVacacionesController extends Controller
 
         $solicitud = SolicitudVacaciones::create($request->all());
 
-        Mail::to(removeUnicodeCharacters($supervisor->email))->send(new MailSolicitudVacaciones($solicitante, $supervisor, $solicitud));
+        Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudVacaciones($solicitante, $supervisor, $solicitud));
 
         Alert::success('éxito', 'Información añadida con éxito');
 
@@ -308,7 +308,7 @@ class SolicitudVacacionesController extends Controller
 
         $solicitud->update($request->all());
 
-        Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->send(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));
+        Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->queue(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));
         Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.solicitud-vacaciones.aprobacion'));
