@@ -102,7 +102,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('empleado/{empleado}/solicitud-baja', 'EmpleadoController@solicitudBaja')->name('empleado.solicitud-baja');
     Route::resource('empleados', 'EmpleadoController');
 
-
     // Organizacions
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
     Route::post('organizacions/media', 'OrganizacionController@storeMedia')->name('organizacions.storeMedia');
@@ -459,7 +458,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('plantTrabajoBase/bloqueo/quitar', 'LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
         Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
         Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
-
 
         Route::get('inicioUsuario/solicitud', 'InicioUsuarioController@solicitud')->name('solicitud');
 

@@ -216,7 +216,7 @@ class PanelDeclaracionController extends Controller
             $destinatarios = DeclaracionAplicabilidadResponsable::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } elseif ($request->enviarNoNotificados) {
             $destinatarios = DeclaracionAplicabilidadResponsable::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
-        // dd($destinatarios);
+            // dd($destinatarios);
         } else {
             $destinatarios = json_decode($request->responsables);
         }
