@@ -6,6 +6,7 @@ use App\Models\Empleado;
 use App\Models\EvaluacionAnalisisBrechas;
 use App\Models\Iso27\AnalisisBrechasIso;
 use App\Models\Norma;
+use App\Models\User;
 use App\Models\ParametrosEvaluacionAnalisisBrechas;
 use App\Models\PreguntasEvaluacionAnalisisBrechas;
 use App\Models\SeccionesEvaluacionAnalisisBrechas;
@@ -36,16 +37,17 @@ class AnalisisBrechasIsoForm extends Component
 
     public $imagenID;
 
-    public function mount()
-    {
-    }
+    public $user;
 
     public function render()
     {
         $this->fecha = Carbon::today()->format('d-m-Y');
         // dd($this->fecha);
         $empleados = Empleado::getaltaAll();
-        $analisis_brechas = AnalisisBrechasIso::get();
+        $user_actual = User::getCurrentUser();
+        $this->user = $user_actual->isAdmin;
+        // dd($user->isAdmin);
+        $analisis_brechas = AnalisisBrechasIso::where('id_elaboro', $user_actual->empleado->id)->get();
         $templates = TemplateAnalisisdeBrechas::where('top', true)->get();
         $normas = Norma::get();
         $this->imagenID = asset('img\alert_template_analisis_brechas_id.png');
@@ -58,10 +60,18 @@ class AnalisisBrechasIsoForm extends Component
         $this->name = null;
         $this->id_elaboro = '';
         $this->view = 'create';
+        $this->analisis_id = null;
+        $this->selectedCard = null;
     }
 
     public function save()
     {
+        $this->validate([
+            'name' => 'required|max:255',
+        ], [
+            'name.required' => 'El campo nombre es obligatorio',
+            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
+        ]);
         if ($this->selectedCard) {
             // $template_general = TemplateAnalisisdeBrechas::with('parametros')
             // ->with('secciones')
@@ -73,9 +83,10 @@ class AnalisisBrechasIsoForm extends Component
             $this->emit('limpiarNameInput');
 
             return;
+        }else{
+            $this->emit('selectedCardAlert');
         }
 
-        $this->emit('selectedCardAlert');
     }
 
     public function SelectCard($index)
@@ -100,14 +111,26 @@ class AnalisisBrechasIsoForm extends Component
 
     public function update()
     {
-        $this->fecha = Carbon::today()->format('Y-m-d');
-        $analisis_brechas = AnalisisBrechasIso::find($this->analisis_id);
-        $analisis_brechas->update([
-            'nombre' => $this->name,
-            'fecha' => $this->fecha,
-            'id_elaboro' => $this->id_elaboro,
+        $this->validate([
+            'name' => 'required|max:255',
+        ], [
+            'name.required' => 'El campo nombre es obligatorio',
+            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
         ]);
-        $this->resetInput();
+
+        if ($this->selectedCard) {
+            $this->fecha = Carbon::today()->format('Y-m-d');
+            $analisis_brechas = AnalisisBrechasIso::find($this->analisis_id);
+            $analisis_brechas->update([
+                'nombre' => $this->name,
+                'fecha' => $this->fecha,
+                'id_elaboro' => $this->id_elaboro,
+            ]);
+            $this->resetInput();
+        }else{
+            $this->emit('selectedCardAlert');
+        }
+
     }
 
     public function destroy($id)
@@ -179,7 +202,7 @@ class AnalisisBrechasIsoForm extends Component
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
+            // dd($th);
             DB::rollback();
         }
     }
