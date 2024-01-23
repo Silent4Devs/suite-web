@@ -51,12 +51,12 @@
         }
 
         /* .item-ms:first-child {
-                                                                                                                                                                                                    margin-left: 160px;
-                                                                                                                                                                                                }
+                                                                                                                                                                                                                            margin-left: 160px;
+                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                .item-ms:last-child {
-                                                                                                                                                                                                    margin-right: 160px;
-                                                                                                                                                                                                } */
+                                                                                                                                                                                                                        .item-ms:last-child {
+                                                                                                                                                                                                                            margin-right: 160px;
+                                                                                                                                                                                                                        } */
 
         .item-ms span {
             font-size: 10px;
@@ -84,7 +84,7 @@
         <i class="material-symbols-outlined">arrow_back_ios</i>
     </button>
     <div class="caja-items-menu-slider">
-        @can('control_documentar_acceder')
+        {{-- @can('control_documentar_acceder')
             <div class="item-ms">
                 <a href="{{ route('admin.documentos.index') }}">
                     <i class="material-symbols-outlined">description</i>
@@ -107,16 +107,8 @@
                     <span>Solicitudes</span>
                 </a>
             </div>
-        @endcan
-        @can('portal_de_comunicaccion_acceder')
-            <div class="item-ms active">
-                <a href="{{ route('admin.portal-comunicacion.index') }}">
-                    <i class="material-symbols-outlined">home</i>
-                    <span>Inicio</span>
-                </a>
-            </div>
-        @endcan
-        @can('mi_perfil_acceder')
+        @endcan --}}
+        {{-- @can('mi_perfil_acceder')
             <div class="item-ms">
                 <a href="{{ route('admin.inicio-Usuario.index') }}">
                     <i class="material-symbols-outlined">account_circle</i>
@@ -147,20 +139,12 @@
                     <span>Requisiciones </span>
                 </a>
             </div>
-        @endcan
+        @endcan --}}
         @can('mi_organizacion_acceder')
             <div class="item-ms">
                 <a href="{{ route('admin.organizacions.index') }}">
                     <i class="material-symbols-outlined">corporate_fare</i>
                     <span>Organización</span>
-                </a>
-            </div>
-        @endcan
-        @can('documentos_publicados_acceder')
-            <div class="item-ms">
-                <a href="{{ route('admin.documentos.publicados') }}">
-                    <i class="material-symbols-outlined">description</i>
-                    <span>Documentos Publicados</span>
                 </a>
             </div>
         @endcan
@@ -172,19 +156,35 @@
                 </a>
             </div>
         @endcan
-        @can('politica_sistema_gestion_acceder')
-            <div class="item-ms">
-                <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
-                    <i class="material-symbols-outlined">local_library</i>
-                    <span>Políticas</span>
-                </a>
-            </div>
-        @endcan
         @can('crear_area_acceder')
             <div class="item-ms">
                 <a href="{{ route('admin.areas.index') }}">
                     <i class="material-symbols-outlined">mitre</i>
                     <span>Áreas</span>
+                </a>
+            </div>
+        @endcan
+        @can('portal_de_comunicaccion_acceder')
+            <div class="item-ms active">
+                <a href="{{ route('admin.portal-comunicacion.index') }}">
+                    <i class="material-symbols-outlined">home</i>
+                    <span>Inicio</span>
+                </a>
+            </div>
+        @endcan
+        @can('documentos_publicados_acceder')
+            <div class="item-ms">
+                <a href="{{ route('admin.documentos.publicados') }}">
+                    <i class="material-symbols-outlined">description</i>
+                    <span>Documentos Publicados</span>
+                </a>
+            </div>
+        @endcan
+        @can('politica_sistema_gestion_acceder')
+            <div class="item-ms">
+                <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
+                    <i class="material-symbols-outlined">local_library</i>
+                    <span>Políticas</span>
                 </a>
             </div>
         @endcan

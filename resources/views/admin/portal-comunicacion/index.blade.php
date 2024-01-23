@@ -160,7 +160,7 @@
                                         <h4 class="title-card-portal-c"> Menú </h4>
 
                                         <div class="menu-portal">
-                                            @can('mi_organizacion_acceder')
+                                            {{-- @can('mi_organizacion_acceder')
                                                 <a href="{{ route('admin.organizacions.index') }}">
                                                     <div class="item-menu-portal">
                                                         <i class="material-symbols-outlined">corporate_fare</i>
@@ -216,14 +216,6 @@
                                                     </div>
                                                 </a>
                                             @endcan
-                                            @can('portal_comunicacion_mostrar_reportar')
-                                                <a href="{{ asset('admin/portal-comunicacion/reportes') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">flag</i>
-                                                        <span>Reportar</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
                                             @can('organigrama_acceder')
                                                 <a href="{{ route('admin.organigrama.index') }}">
                                                     <div class="item-menu-portal">
@@ -255,15 +247,7 @@
                                                         <span>Alcances</span>
                                                     </div>
                                                 </a>
-                                            @endcan
-                                            @can('control_documentar_acceder')
-                                                <a href="{{ route('admin.documentos.index') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">description</i>
-                                                        <span>Documentos</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
+                                            @endcan --}}
                                             @can('escuela_estudiante')
                                                 <a href="{{ asset('/admin/mis-cursos') }}">
                                                     <div class="item-menu-portal">
@@ -280,14 +264,14 @@
                                                     </div>
                                                 </a>
                                             @endcan
-                                            @can('portal_de_comunicaccion_acceder')
+                                            {{-- @can('portal_de_comunicaccion_acceder')
                                                 <a href="{{ route('admin.portal-comunicacion.index') }}">
                                                     <div class="item-menu-portal active">
                                                         <i class="material-symbols-outlined">home</i>
                                                         <span>Inicio</span>
                                                     </div>
                                                 </a>
-                                            @endcan
+                                            @endcan --}}
                                             @can('mi_perfil_acceder')
                                                 <a href="{{ route('admin.inicio-Usuario.index') }}">
                                                     <div class="item-menu-portal">
@@ -317,6 +301,22 @@
                                                     <div class="item-menu-portal">
                                                         <i class="material-symbols-outlined">contract</i>
                                                         <span>Requisiciones </span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('control_documentar_acceder')
+                                                <a href="{{ route('admin.documentos.index') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">description</i>
+                                                        <span>Documentos</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('portal_comunicacion_mostrar_reportar')
+                                                <a href="{{ asset('admin/portal-comunicacion/reportes') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">flag</i>
+                                                        <span>Reportar</span>
                                                     </div>
                                                 </a>
                                             @endcan
