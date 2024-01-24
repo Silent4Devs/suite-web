@@ -8,42 +8,34 @@
                 display: none !important;
             }
         }
+        .boton-transparentev2 {
+            top: 214px;
+            width: 135px;
+            height: 40px;
+            /* UI Properties */
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(--unnamed-color-057be2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #057BE2;
+            opacity: 1;
+        }
     </style>
 
     <div class="print-none">
         {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
     </div>
 
-    <h5 class="col-12 titulo_general_funcion">Determinación de Alcance </h5>
-    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
-        <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
-            <div>
-                <br>
-                <h4>¿Qué es? Determinación de Alcance</h4>
-                <p>
-                    Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
-                    límites del proyecto.
-                </p>
-                <p>
-                    Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
-                    que ayuda a evitar
-                    la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
-                    comprensión clara de lo que se espera.
-                </p>
-            </div>
-        </div>
-    </div>
-
     <div class="mt-4 row justify-content-center">
         <div class="card col-sm-12 col-md-10" style="border-radius: 16px; height:1556px;">
             <div class="card-body">
                 <div class="print-none" style="text-align:right;">
-                    <button class="btn btn-outline-primary mt-4" style="font-size:14px;width:150px;"
-                    onclick="javascript:window.print()">
-                    Imprimir
-                    <i class="fas fa-print"style="color:#057BE2;"></i>
-                    </button>
+                    <form method="POST" style="position: relative; left: 1rem; "
+                     action="{{ route('admin.alcance-sgsis-show.pdf', ['id' => $alcanceSgsi->id]) }}">
+                     @csrf
+                     <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                         IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+                     </button>
+                    </form>
                 </div>
                 @php
                     use App\Models\Organizacion;

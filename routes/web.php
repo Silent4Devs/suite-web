@@ -3,8 +3,8 @@
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
-use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +14,7 @@ Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'V
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
     Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
     Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
-    Route::resource('/', 'RegistroVisitantesController');
+    Route::resource('/', RegistroVisitantesController::class);
 });
 
 Route::get('correotestqueue', [QueueCorreo::class, 'index']);
@@ -157,7 +157,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
         //Modulo Capital Humano
-        Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
+        Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
         //Control de Ausencias
         Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
@@ -450,7 +450,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('portal-comunicacion/cumpleaños-dislike/{id}', 'PortalComunicacionController@felicitarCumpleañosDislike')->name('portal-comunicacion.cumples-dislike');
         Route::post('portal-comunicacion/cumpleaños_comentarios/{id}', 'PortalComunicacionController@felicitarCumplesComentarios')->name('portal-comunicacion.cumples-comentarios');
         Route::post('portal-comunicacion/cumpleaños_comentarios_update/{id}', 'PortalComunicacionController@felicitarCumplesComentariosUpdate')->name('portal-comunicacion.cumples-comentarios-update');
-        // Route::middleware('cacheResponse')->resource('portal-comunicacion', 'PortalComunicacionController');
+        // Route::resource('portal-comunicacion', 'PortalComunicacionController');
         Route::resource('portal-comunicacion', 'PortalComunicacionController');
 
         Route::get('plantTrabajoBase/{data}', 'PlanTrabajoBaseController@showTarea');
@@ -788,6 +788,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
         Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-actualizarDia');
         Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
+        Route::post('timesheet/pdf/{id}', 'TimesheetController@pdf')->name('timesheet.pdf');
 
         Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
         Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
@@ -905,6 +906,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('alcance-sgsis', 'AlcanceSgsiController');
         Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
         Route::post('alcance-sgsis/pdf', 'AlcanceSgsiController@pdf')->name('alcance-sgsis.pdf');
+        Route::post('alcance-sgsis/pdf/show/{id}', 'AlcanceSgsiController@pdfShow')->name('alcance-sgsis-show.pdf');
         Route::get('alcance-sgsis-revision/{id}', 'AlcanceSgsiController@revision')->name('alcance-sgsis.revision');
         Route::post('alcance-sgsis/{id}/aprobado', 'AlcanceSgsiController@aprobado')->name('alcance-sgsis.aprobado');
         Route::post('alcance-sgsis/{id}/rechazado', 'AlcanceSgsiController@rechazado')->name('alcance-sgsis.rechazado');

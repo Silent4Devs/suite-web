@@ -17,6 +17,7 @@ class PreguntasEvaluacionAnalisisBrechas extends Model
         'numero_pregunta',
     ];
 
+    //Relaciones
     public function respuesta()
     {
         return $this->hasOne(RespuestasEvaluacionAnalisisBrechas::class, 'pregunta_id', 'id');

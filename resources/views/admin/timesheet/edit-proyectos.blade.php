@@ -60,17 +60,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-4 anima-focus" wire:ignore id="caja_areas_seleccionadas_create">
+                <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;"  id="caja_areas_seleccionadas_create">
                     <select class="select2-multiple form-control" multiple="multiple"
                     id="areas_seleccionadas" name="areas_seleccionadas[]" required>
-                        @foreach ($proyecto->areas as $area)
-                            <option selected value="{{ $area->id }}">{{ $area->area ?? ''}}</option>
-                        @endforeach
-                        @foreach ($areas as $area)
-                            <option value="{{ $area->id }}">
-                                {{ $area->area }}
-                            </option>
-                        @endforeach
+                    @php
+                    // Crear un conjunto de IDs de áreas seleccionadas
+                    $areasSeleccionadas = $proyecto->areas->pluck('id')->toArray();
+                @endphp
+
+                @foreach ($areas as $area)
+                    <option value="{{ $area->id }}" {{ in_array($area->id, $areasSeleccionadas) ? 'selected' : '' }}>
+                        {{ $area->area }}
+                    </option>
+                @endforeach
                     </select>
                     {!! Form::label('areas_seleccionadas', ' Área(s) participante(s)*', ['class' => 'asterisco']) !!}
                     <div class="mt-1">
@@ -127,11 +129,6 @@
                     <input type="number" min="0" name="horas_proyecto" id="horas_asignadas" class="form-control"
                     value="{{ old( 'horas_proyecto', $proyecto->horas_proyecto, '') }}">
                     {!! Form::label('horas_proyecto', 'Horas Asignadas al proyecto', ['class' => 'asterisco']) !!}
-                    @if ($errors->has('horas_proyecto'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('horas_proyecto') }}
-                        </div>
-                    @endif
                 </div>
             </div>
             {{-- <div class="row">

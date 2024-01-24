@@ -100,9 +100,11 @@
                 <i class="material-icons-outlined">arrow_forward_ios</i>
             </div>
         </div>
+        @if ($user)
         <div class="d-flex justify-content-start" style="padding-left: 160px;">
             <a href="{{ route('admin.template-top') }}">Ver todos</a>
         </div>
+        @endif
         <div class="d-flex justify-content-end" style="padding-right: 110px;">
             <a class="btn btn-light text-primary border border-primary" href="{{ route('admin.templates.create') }}">
                 Crear template +
@@ -127,7 +129,7 @@
                             {{ $errors->first('fecha') }}
                         </div>
                     @endif
-                    <label for="fecha" style="background-color: transparent;">Fecha</label>
+                    <label for="Fecha">Fecha</label>
                 </div>
                 {{ Form::hidden('fecha', date('Y-m-d')) }}
             </div>
@@ -136,12 +138,8 @@
                     <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                         name="nombre" id="nombre" value="{{ old('nombre', '') }}" required wire:model.defer="name"
                         placeholder="">
-                    @if ($errors->has('nombre'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('nombre') }}
-                        </div>
-                    @endif
                     <label for="nombre">Nombre *</label>
+                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
                 {{-- <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
@@ -181,7 +179,7 @@
                     @endif --}}
                     <input class="form-control" type="text" id="norma" disabled wire:model.defer="norma">
 
-                    <label for="norma">norma</label>
+                    <label for="norma">Norma</label>
                 </div>
 
 
