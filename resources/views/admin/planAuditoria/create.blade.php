@@ -2,7 +2,22 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.plan-auditoria.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Plan de Auditoría</h5>
+    <h5 class="col-12 titulo_general_funcion">Plan de Auditoría</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Plan de Auditoría?</h4>
+                <p>
+                    Plan que establece los detalles de cómo se llevará a cabo una auditoría.
+                </p>
+                <p>
+                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es necesario.
+                </p>
+            </div>
+        </div>
+    </div>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" action="{{ route('admin.plan-auditoria.store') }}" enctype="multipart/form-data"

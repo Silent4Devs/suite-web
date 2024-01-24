@@ -77,7 +77,7 @@ class Area extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('areas_all', 3600 * 12, function () {
+        return Cache::remember('Areas:areas_all', 3600 * 12, function () {
             return self::orderByDesc('id')->get();
         });
     }
@@ -126,7 +126,9 @@ class Area extends Model implements Auditable
 
     public function children()
     {
-        return $this->hasMany(self::class, 'id_reporta', 'id')->with('children', 'supervisor', 'grupo', 'lider'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'id_reporta', 'id')
+            ->select('id', 'name', 'foto', 'puesto_id', 'genero')
+            ->with('children', 'supervisor', 'grupo', 'lider'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
     public function concientizacion_sgis()

@@ -103,6 +103,23 @@
     <div class="print-none">
         {{ Breadcrumbs::render('admin.auditoria-anuals.create') }}
     </div>
+    <h5 class="col-12 titulo_general_funcion">Programa Anual de Auditoría</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <br>
+                <h4>¿Qué es Programa Anual de Auditoria?   </h4>
+                <p>
+                    Plan para evaluar regularmente el sistema de seguridad de la información de la empresa.
+                </p>
+                <p>
+                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es necesario.
+                </p>
+            </div>
+        </div>
+    </div>
     <div>
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Timesheet;
 
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -55,20 +56,49 @@ class TablaTareasTimesheet extends Component
 
     public function render()
     {
-        if ($this->origen == 'tareas') {
-            $this->proyectos = TimesheetProyecto::getIdNameAll();
+        if ($this->origen === 'tareas') {
+            $this->proyectos = DB::table('timesheet_proyectos')
+                ->select('id', 'proyecto', 'identificador')
+                ->get();
 
             if ($this->proyecto_filtro) {
-                $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_filtro);
+                $this->tareas = DB::table('timesheet_tareas')
+                    ->join('timesheet_proyectos', 'timesheet_tareas.proyecto_id', '=', 'timesheet_proyectos.id')
+                    ->join('areas', 'timesheet_tareas.area_id', '=', 'areas.id')
+                    ->where('timesheet_tareas.proyecto_id', $this->proyecto_filtro)
+                    ->select(
+                        'timesheet_tareas.id',
+                        'timesheet_tareas.tarea',
+                        'timesheet_tareas.proyecto_id',
+                        'timesheet_tareas.area_id',
+                        'timesheet_tareas.todos',
+                        'timesheet_proyectos.proyecto as proyecto',
+                        'areas.id as id',
+                        'areas.area as area'
+                    )
+                    ->get();
             } else {
-                $this->tareas = TimesheetTarea::getAll();
+                $this->tareas = DB::table('timesheet_tareas')
+                    ->join('timesheet_proyectos', 'timesheet_tareas.proyecto_id', '=', 'timesheet_proyectos.id')
+                    ->join('areas', 'timesheet_tareas.area_id', '=', 'areas.id')
+                    ->select(
+                        'timesheet_tareas.id',
+                        'timesheet_tareas.tarea',
+                        'timesheet_tareas.proyecto_id',
+                        'timesheet_tareas.area_id',
+                        'timesheet_tareas.todos',
+                        'timesheet_proyectos.proyecto as proyecto',
+                        'areas.id as id',
+                        'areas.area as area'
+                    )
+                    ->get();
             }
         }
 
         if ($this->origen == 'tareas-proyectos') {
-            $this->proyecto_seleccionado = TimesheetProyecto::getIdNameAll()->find($this->proyecto_id);
-            $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_id);
-            $this->area_seleccionar = $this->proyecto_seleccionado->areas;
+            $this->proyecto_seleccionado = TimesheetProyecto::find($this->proyecto_id);
+            $this->tareas = TimesheetTarea::where('proyecto_id', $this->proyecto_id)->get();
+            $this->area_seleccionar = $this->proyecto_seleccionado->area;
         }
 
         return view('livewire.timesheet.tabla-tareas-timesheet');
@@ -103,7 +133,13 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarNameTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::getAll()->find($id);
+        $tarea_actualizada = TimesheetTarea::select(
+            'id',
+            'tarea',
+            'proyecto_id',
+            'area_id',
+            'todos'
+        )->find($id);
 
         $tarea_actualizada->update([
             'tarea' => $value,
@@ -114,7 +150,13 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarAreaTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::getAll()->find($id);
+        $tarea_actualizada = TimesheetTarea::select(
+            'id',
+            'tarea',
+            'proyecto_id',
+            'area_id',
+            'todos',
+        )->find($id);
 
         if ($value == 0) {
             $area_id = null;
@@ -135,7 +177,7 @@ class TablaTareasTimesheet extends Component
     public function llenarAreas($id)
     {
         if ($id) {
-            $this->proyecto_seleccionado = TimesheetProyecto::getIdNameAll()->find($id);
+            $this->proyecto_seleccionado = TimesheetProyecto::find($id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         } else {
             $this->area_seleccionar = [];

@@ -21,6 +21,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 use Yajra\DataTables\Facades\DataTables;
@@ -129,16 +130,26 @@ class AuditoriaInternaController extends Controller
         ]);
 
         $auditoriaInterna = AuditoriaInterna::create($request->all());
+        $auditoriaInterna->update([
+            'creador_auditoria_id' => User::getCurrentUser()->empleado->id,
+        ]);
         $auditoriaInterna->equipo()->sync($request->equipo);
         $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-        return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna]);
+        return redirect()->route('admin.auditoria-internas.index', ['auditoriaInterna' => $auditoriaInterna]);
+        // return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna->id]);
     }
 
-    public function edit(AuditoriaInterna $auditoriaInterna)
+    public function edit($IDauditoriaInterna)
     {
         abort_if(Gate::denies('auditoria_interna_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if (auth()->user()->empleado->id == $auditoriaInterna->lider_id) {
+
+        $auditoriaInterna = AuditoriaInterna::find($IDauditoriaInterna);
+        if (
+            User::getCurrentUser()->empleado->id == $auditoriaInterna->lider_id
+            || User::getCurrentUser()->empleado->id == $auditoriaInterna->creador_auditoria_id
+        ) {
+
             $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team');
 
             $clasificacionesauditorias = ClasificacionesAuditorias::all();
@@ -154,7 +165,10 @@ class AuditoriaInternaController extends Controller
                 ->with('clasificacionesauditorias', $clasificacionesauditorias)
                 ->with('clausulasauditorias', $clausulasauditorias);
         } else {
-            return redirect(route('admin.auditoria-internas.index'));
+
+            return redirect()->back()->with('edit', 'success');
+
+            // return redirect(route('admin.auditoria-internas.index'));
         }
     }
 
@@ -182,8 +196,8 @@ class AuditoriaInternaController extends Controller
     {
         abort_if(Gate::denies('auditoria_interna_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditoriaInterna->load('clausulas', 'auditorlider', 'equipo', 'team', 'auditoriaHallazgos');
-        // dd( $auditoriaInterna->hallazgos);
+        $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team', 'reportes.empleado', 'reportes.hallazgos');
+        // dd($auditoriaInterna->lider);
 
         return view('admin.auditoriaInternas.show', compact('auditoriaInterna'));
     }
@@ -194,7 +208,7 @@ class AuditoriaInternaController extends Controller
 
         $auditoriaInterna->delete();
 
-        return back();
+        return response()->json(['status' => 'success']);
     }
 
     public function massDestroy(MassDestroyAuditoriaInternaRequest $request)
@@ -232,10 +246,12 @@ class AuditoriaInternaController extends Controller
                     ->with('clasificaciones', $clasificaciones)
                     ->with('clausulas', $clausulas)
                     ->with('id', $id);
+            } else {
+                return redirect()->back()->with('reporte', 'success');
             }
         }
 
-        return redirect()->route('admin.auditoria-internas.index');
+        return redirect()->back()->with('reporte', 'success');
     }
 
     public function createReporte($id)
@@ -276,7 +292,7 @@ class AuditoriaInternaController extends Controller
 
         try {
             $email = new NotificacionReporteAuditoria($nombre_colaborador, $url);
-            Mail::to(removeUnicodeCharacters($reporte->lider->email))->send($email);
+            Mail::to(removeUnicodeCharacters($reporte->lider->email))->queue($email);
 
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
@@ -299,7 +315,7 @@ class AuditoriaInternaController extends Controller
 
         try {
             $email = new NotificacionRechazoReporteAuditoria($auditoria);
-            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->queue($email);
 
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
@@ -336,11 +352,22 @@ class AuditoriaInternaController extends Controller
 
         try {
             $email = new NotificacionAprobadoReporteAuditoria();
-            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->queue($email);
 
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
             return response()->json(['success' => false]);
         }
+    }
+
+    public function pdf($id)
+    {
+        $auditoriaInterna = AuditoriaInterna::find($id);
+        $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team', 'reportes.empleado', 'reportes.hallazgos');
+
+        $pdf = PDF::loadView('admin.auditoriaInternas.auditoria_interna_pdf', compact('auditoriaInterna'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('auditoria_Interna.pdf');
     }
 }

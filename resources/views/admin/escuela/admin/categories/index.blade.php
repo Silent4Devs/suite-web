@@ -6,94 +6,125 @@
 
 <h5 class="col-12 titulo_general_funcion">Categorías</h5>
 
-<div class="d-flex justify-content-end mb-3">
 
-    <a class="btn btn-primary btn-sm" href="{{ route('admin.categories.create') }}" style="background-color: #345183; width: 150px; white-space: nowrap;">NUEVA CATEGORÍA &nbsp; +</a>
-
-</div>
-
-<div class="card">
-
-    <div class="card-body">
-
-        <table class="table table-bordered w-100 datatable datatable-User" id="tblCategories">
-
-            <thead>
-
-                <tr >
-
-                    <th >ID</th>
-
-                    <th >Nombre</th>
-
-                    <th >Opciones</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                @foreach ($categories as $category)
-
-                <tr>
-
-                    <td>
-
-                        {{$category->id}}
-
-                    </td>
-
-                    <td>
-
-                        {{$category->name}}
-
-                    </td>
-
-                    <td class="d-flex justify-content-end mr-3">
-
-                        <a class="btn" href="{{route('admin.categories.edit', $category)}}"><i style="font-size:12pt; color:#000" class="fas fa-edit" title="Editar"></i></a>
-                        <form style="display:inline-block" action="{{route('admin.categories.destroy', $category)}}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button class="btn" type="submit"><i style="font-size:12pt;" class="fa-regular fa-trash-can"  data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button>
-
-                        </form>
-
-                    </td>
-
-                </tr>
-
-                @endforeach
-
-            </tbody>
-
-        </table>
-
+<div class="text-right">
+    <div class="d-flex justify-content-end">
+        <a href="{{ route('admin.categories.create') }}" type="button" class="btn btn-primary">Registrar Categoría</a>
     </div>
-
 </div>
+@include('partials.flashMessages')
+<div class="datatable-fix datatable-rds">
+    <h3 class="title-table-rds"> Categorías</h3>
+    <table class="datatable tblCategories" id="tblCategories">
+        <thead>
+
+            <tr >
+
+                <th style="min-width: 50%">ID</th>
+
+                <th style="min-width: 50%" >Nombre</th>
+
+                <th style="min-width: 50%" >Opciones</th>
+
+            </tr>
+
+        </thead>
+    </table>
+</div>
+
 
 @endsection
 
-
-
 @section('scripts')
-
     @parent
-
     <script>
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Comite Seguridad ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
 
-        $(document).ready(function() {
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Comite Seguridad ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
 
-            let tblCategories = $("#tblCategories").DataTable({
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
 
-                buttons: [],
+            ];
 
-            });
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                ajax: "{{ route('admin.categories.index') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id',
+                    },
+                    {
+                        data: 'name',
+                        name: 'name',
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlBtnEditar =
+                                `/admin/categories/${data}/edit`;
+                            let urlBtnEliminar =
+                                `/admin/categories/destroy/${data}`;
 
+                            let botones = `
+                                <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
+                                <form style="display:inline-block" action="${urlBtnEliminar}" method="GET">
+                                @csrf
+                                <button class="btn" type="submit"><i class="fas fa-trash-alt"></i></button></form>
+                            `;
+                            return botones;
+                        }
+                    }
+                ],
+                orderCellsTop: true,
+                order: [
+                    [0, 'desc']
+                ],
+            };
+
+            let table = $('.tblCategories').DataTable(dtOverrideGlobals);
         });
-
     </script>
-
 @endsection

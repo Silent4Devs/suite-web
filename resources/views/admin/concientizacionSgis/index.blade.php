@@ -110,7 +110,31 @@
 
     {{ Breadcrumbs::render('admin.concientizacion-sgis.index') }}
 
-        <h5 class="col-12 titulo_general_funcion">Concientización SGSI</h5>
+
+    <h5 class="col-12 titulo_general_funcion">Concientización SGSI</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Concientización SGSI?</h4>
+                <p>
+                    Proporcionar el conocimiento y la comprensión necesarios para ser parte activa en la seguridad de la información.
+                </p>
+                <p>
+                    Implica que todos los miembros de la organización, desde la alta dirección hasta los empleados de todos los niveles, estén conscientes de los riesgos asociados con la seguridad de la información.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.concientizacion-sgis.create') }}" type="button" class="btn btn-primary">Registrar Concientización</a>
+            </div>
+        </div>
+
         <div class="mt-5 card">
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Concientización SGSI</strong></h3>
@@ -305,19 +329,19 @@
 
             ];
 
-            @can('concientizacion_sgsi_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar objetivo de seguridad',
-                url: "{{ route('admin.concientizacion-sgis.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
+             @can('concientizacion_sgsi_agregar')
+            //     let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar objetivo de seguridad',
+            //     url: "{{ route('admin.concientizacion-sgis.create') }}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+            //     action: function(e, dt, node, config){
+            //     let {url} = config;
+            //     window.location.href = url;
+            //     }
+            //     };
+            //     dtButtons.push(btnAgregar);
+             @endcan
             @can('concientizacion_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {

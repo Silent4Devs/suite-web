@@ -8,38 +8,47 @@
         <div class="card-body">
             <form action="" method="post">
                 @csrf
-                <div wire:ignore x-show="open">
-                    <p class="text-primary mt-2">Sección a evaluar<span style="color:red">*</span></label></p>
-                    <select wire:model.defer="section_id" id="section_id" name="section[is_active]"
-                        value="{{ old('section.is_active') }}" class="form-control">
-                        <option value="" selected disabled>Seleccionar una o más secciones
-                        </option>
-                        @foreach ($sections as $section)
-                            <option value="{{ $section->id }}">{{ $section->name }}</option>
-                        @endforeach
-                    </select>
+                <div>
+                    <div class="form-group anima-focus">
+                        <select wire:model.defer="section_id" id="section_id" name="section[is_active]"
+                            value="{{ old('section.is_active') }}" class="form-control">
+                            <option value="" selected disabled>Seleccionar una o más secciones
+                            </option>
+                            @foreach ($sections as $section)
+                                <option value="{{ $section->id }}">{{ $section->name }}</option>
+                            @endforeach
+                        </select>
+                        <label for="section[is_active]" >Sección a evaluar</label>
+                        @error('section_id')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+
+                <div class="form-group anima-focus " style="margin: 3rem 0px;">
+                    @error('section.name')
+                        <span class="content-end float-right text-xs text-red-700">{{ $message }}</span>
+                    @enderror
+                    <input class="form-control" type="text" value="" id="title" wire:model.defer="name" placeholder="">
+                    <label for="name">Nombre*</label>
+                    @error('name')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
 
                 </div>
-                @error('section_id')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
+
+                <div class="form-group anima-focus ">
+                    {{-- {!! Form::label('description', 'Descripción:', ['class' => 'text-primary mt-4']) !!} --}}
+                    <textarea class="mb-2 form-control" type="text" value="" id="title" wire:model.defer="description"
+                    placeholder=""></textarea>
+                    <label for="description">Descripción:</label>
+                    @error('description')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                </div>
 
 
-                <p class="text-primary mt-4">Nombre<span style="color:red">*</span></label></p>
-                @error('section.name')
-                    <span class="content-end float-right text-xs text-red-700">{{ $message }}</span>
-                @enderror
-                <input class="form-control" type="text" value="" id="title" wire:model.defer="name">
-                @error('name')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-
-
-                {!! Form::label('description', 'Descripción:', ['class' => 'text-primary mt-4']) !!}
-                <textarea class="mb-2 form-control" type="text" value="" id="title" wire:model.defer="description"></textarea>
-                @error('description')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
 
                 <div class="d-flex justify-content-end" style="margin-top:30px">
                     @if (!$editar)
@@ -52,7 +61,6 @@
                             {{ __('ACTUALIZAR EVALUACIÓN') }}
                         </button>
                     @endif
-
 
                 </div>
 

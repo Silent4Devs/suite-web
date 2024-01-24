@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\TemplateAnalisisdeBrechas;
 
 class TopController extends Controller
 {
     public function index()
     {
-        return view('admin.analisisdebrecha2022nv.top.index');
+        $top_analisis = TemplateAnalisisdeBrechas::get();
+
+        // dd($top_analisis);
+        return view('admin.analisisdebrecha2022nv.top.index', compact('top_analisis'));
     }
 }

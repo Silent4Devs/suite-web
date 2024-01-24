@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.37.2.
+ * Generated for Laravel 10.42.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -4977,6 +4977,20 @@
                         return $instance->connection($name);
         }
                     /**
+         * Get a database connection instance from the given configuration.
+         *
+         * @param string $name
+         * @param array $config
+         * @param bool $force
+         * @return \Illuminate\Database\PostgresConnection 
+         * @static 
+         */ 
+        public static function connectUsing($name, $config, $force = false)
+        {
+                        /** @var \Illuminate\Database\DatabaseManager $instance */
+                        return $instance->connectUsing($name, $config, $force);
+        }
+                    /**
          * Register a custom Doctrine type.
          *
          * @param string $class
@@ -7366,9 +7380,9 @@
                         return $instance->after($callback);
         }
                     /**
-         * Determine if the given ability should be granted for the current user.
+         * Determine if all of the given abilities should be granted for the current user.
          *
-         * @param string $ability
+         * @param \Illuminate\Auth\Access\iterable|string $ability
          * @param array|mixed $arguments
          * @return bool 
          * @static 
@@ -7379,9 +7393,9 @@
                         return $instance->allows($ability, $arguments);
         }
                     /**
-         * Determine if the given ability should be denied for the current user.
+         * Determine if any of the given abilities should be denied for the current user.
          *
-         * @param string $ability
+         * @param \Illuminate\Auth\Access\iterable|string $ability
          * @param array|mixed $arguments
          * @return bool 
          * @static 
@@ -7787,7 +7801,7 @@
      * 
      *
      * @method static \Illuminate\Http\Client\PendingRequest baseUrl(string $url)
-     * @method static \Illuminate\Http\Client\PendingRequest withBody(string $content, string $contentType = 'application/json')
+     * @method static \Illuminate\Http\Client\PendingRequest withBody(\Psr\Http\Message\StreamInterface|string $content, string $contentType = 'application/json')
      * @method static \Illuminate\Http\Client\PendingRequest asJson()
      * @method static \Illuminate\Http\Client\PendingRequest asForm()
      * @method static \Illuminate\Http\Client\PendingRequest attach(string|array $name, string|resource $contents = '', string|null $filename = null, array $headers = [])
@@ -7886,6 +7900,18 @@
         {
                         /** @var \Illuminate\Http\Client\Factory $instance */
                         return $instance->globalResponseMiddleware($middleware);
+        }
+                    /**
+         * Set the options to apply to every request.
+         *
+         * @param array $options
+         * @return \Illuminate\Http\Client\Factory 
+         * @static 
+         */ 
+        public static function globalOptions($options)
+        {
+                        /** @var \Illuminate\Http\Client\Factory $instance */
+                        return $instance->globalOptions($options);
         }
                     /**
          * Create a new response instance for use during stubbing.
@@ -8203,7 +8229,7 @@
          * Get a translation according to an integer value.
          *
          * @param string $key
-         * @param \Countable|int|array $number
+         * @param \Countable|int|float|array $number
          * @param array $replace
          * @param string|null $locale
          * @return string 
@@ -8497,7 +8523,6 @@
      *
      * @method static void write(string $level, \Illuminate\Contracts\Support\Arrayable|\Illuminate\Contracts\Support\Jsonable|\Illuminate\Support\Stringable|array|string $message, array $context = [])
      * @method static \Illuminate\Log\Logger withContext(array $context = [])
-     * @method static \Illuminate\Log\Logger withoutContext()
      * @method static void listen(\Closure $callback)
      * @method static \Psr\Log\LoggerInterface getLogger()
      * @method static \Illuminate\Contracts\Events\Dispatcher getEventDispatcher()
@@ -8578,6 +8603,17 @@
         {
                         /** @var \Illuminate\Log\LogManager $instance */
                         return $instance->sharedContext();
+        }
+                    /**
+         * Flush the log context on all currently resolved channels.
+         *
+         * @return \Illuminate\Log\LogManager 
+         * @static 
+         */ 
+        public static function withoutContext()
+        {
+                        /** @var \Illuminate\Log\LogManager $instance */
+                        return $instance->withoutContext();
         }
                     /**
          * Flush the shared context.
@@ -9912,6 +9948,18 @@
                         $instance->assertNotPushed($job, $callback);
         }
                     /**
+         * Assert the total count of jobs that were pushed.
+         *
+         * @param int $expectedCount
+         * @return void 
+         * @static 
+         */ 
+        public static function assertCount($expectedCount)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+                        $instance->assertCount($expectedCount);
+        }
+                    /**
          * Assert that no jobs were pushed.
          *
          * @return void 
@@ -10201,6 +10249,18 @@
         {
                         /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getRedis();
+        }
+                    /**
+         * Get the maximum number of attempts for an object-based queue handler.
+         *
+         * @param mixed $job
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getJobTries($job)
+        {            //Method inherited from \Illuminate\Queue\Queue         
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getJobTries($job);
         }
                     /**
          * Get the backoff for an object-based queue handler.
@@ -14670,6 +14730,52 @@
                         /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
                         $instance->blueprintResolver($resolver);
         }
+                    /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        \Illuminate\Database\Schema\PostgresBuilder::macro($name, $macro);
+        }
+                    /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin, $replace = true)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        \Illuminate\Database\Schema\PostgresBuilder::mixin($mixin, $replace);
+        }
+                    /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        return \Illuminate\Database\Schema\PostgresBuilder::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        \Illuminate\Database\Schema\PostgresBuilder::flushMacros();
+        }
          
     }
             /**
@@ -14882,6 +14988,18 @@
         {
                         /** @var \Illuminate\Session\Store $instance */
                         return $instance->only($keys);
+        }
+                    /**
+         * Get all the session data except for a specified array of items.
+         *
+         * @param array $keys
+         * @return array 
+         * @static 
+         */ 
+        public static function except($keys)
+        {
+                        /** @var \Illuminate\Session\Store $instance */
+                        return $instance->except($keys);
         }
                     /**
          * Checks if a key exists.
@@ -18437,9 +18555,10 @@
                     /**
          * 
          *
+         * @param string|null $disk Fallback for usage with named properties
          * @param object $export
          * @param string $filePath
-         * @param string|null $disk
+         * @param string|null $diskName
          * @param string $writerType
          * @param mixed $diskOptions
          * @return bool 
@@ -18447,10 +18566,10 @@
          * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
          * @static 
          */ 
-        public static function store($export, $filePath, $diskName = null, $writerType = null, $diskOptions = [])
+        public static function store($export, $filePath, $diskName = null, $writerType = null, $diskOptions = [], $disk = null)
         {
                         /** @var \Maatwebsite\Excel\Excel $instance */
-                        return $instance->store($export, $filePath, $diskName, $writerType, $diskOptions);
+                        return $instance->store($export, $filePath, $diskName, $writerType, $diskOptions, $disk);
         }
                     /**
          * 
@@ -20889,6 +21008,78 @@
      
 }
 
+    namespace Laragear\Preload\Facades { 
+            /**
+     * 
+     *
+     * @method static \Laragear\Preload\Preloader getFacadeRoot()
+     * @see \Laragear\Preload\Preloader
+     */ 
+        class Preload {
+                    /**
+         * Exclude files from the given paths.
+         *
+         * @param \Closure|string $exclude
+         * @return void 
+         * @static 
+         */ 
+        public static function exclude(...$exclude)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        $instance->exclude(...$exclude);
+        }
+                    /**
+         * Append files from the given paths.
+         *
+         * @param \Closure|string $append
+         * @return void 
+         * @static 
+         */ 
+        public static function append(...$append)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        $instance->append(...$append);
+        }
+                    /**
+         * Creates a new list.
+         *
+         * @return \Laragear\Preload\Listing 
+         * @static 
+         */ 
+        public static function list()
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        return $instance->list();
+        }
+                    /**
+         * Writes a listing to the filesystem.
+         *
+         * @param \Laragear\Preload\Listing|null $listing
+         * @return \Laragear\Preload\Listing 
+         * @static 
+         */ 
+        public static function generate($listing = null)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        return $instance->generate($listing);
+        }
+                    /**
+         * Return an array of the files from the Finder.
+         *
+         * @param \Closure $callback
+         * @return \Illuminate\Support\Collection<int, string> 
+         * @static 
+         */ 
+        public static function getFilesFromFinder($callback)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        return $instance->getFilesFromFinder($callback);
+        }
+         
+    }
+     
+}
+
     namespace Livewire { 
             /**
      * 
@@ -21225,230 +21416,6 @@
         {
                         /** @var \Livewire\LivewireManager $instance */
                         return $instance->flushState();
-        }
-         
-    }
-     
-}
-
-    namespace Opcodes\LogViewer\Facades { 
-            /**
-     * 
-     *
-     * @see \Opcodes\LogViewer\LogViewerService
-     */ 
-        class LogViewer {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function basePathForLogs()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->basePathForLogs();
-        }
-                    /**
-         * 
-         *
-         * @return \Opcodes\LogViewer\LogFileCollection|\Opcodes\LogViewer\LogFile[] 
-         * @static 
-         */ 
-        public static function getFiles()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFiles();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getFilesGroupedByFolder()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFilesGroupedByFolder();
-        }
-                    /**
-         * Find the file with the given identifier or file name.
-         *
-         * @static 
-         */ 
-        public static function getFile($fileIdentifier)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFile($fileIdentifier);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getFolder($folderIdentifier)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getFolder($folderIdentifier);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function supportsHostsFeature()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->supportsHostsFeature();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function resolveHostsUsing($callback)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->resolveHostsUsing($callback);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getHosts()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getHosts();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getHost($hostIdentifier)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getHost($hostIdentifier);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function clearFileCache()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->clearFileCache();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getRouteDomain()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getRouteDomain();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getRoutePrefix()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getRoutePrefix();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getRouteMiddleware()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->getRouteMiddleware();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function auth($callback = null)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->auth($callback);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function lazyScanChunkSize()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->lazyScanChunkSize();
-        }
-                    /**
-         * Get the maximum number of bytes of the log that we should display.
-         *
-         * @static 
-         */ 
-        public static function maxLogSize()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->maxLogSize();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setMaxLogSize($bytes)
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->setMaxLogSize($bytes);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function laravelRegexPattern()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->laravelRegexPattern();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function logMatchPattern()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->logMatchPattern();
-        }
-                    /**
-         * Determine if Log Viewer's published assets are up-to-date.
-         *
-         * @throws \RuntimeException
-         * @static 
-         */ 
-        public static function assetsAreCurrent()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->assetsAreCurrent();
-        }
-                    /**
-         * Get the current version of the Log Viewer
-         *
-         * @static 
-         */ 
-        public static function version()
-        {
-                        /** @var \Opcodes\LogViewer\LogViewerService $instance */
-                        return $instance->version();
         }
          
     }
@@ -24582,6 +24549,17 @@ namespace  {
                 /**
              * 
              *
+             * @see \Essa\APIToolKit\MacroServiceProvider::boot()
+             * @static 
+             */ 
+            public static function dynamicPaginate()
+            {
+                                return \Illuminate\Database\Eloquent\Builder::dynamicPaginate();
+            }
+             
+                /**
+             * 
+             *
              * @see \Hammerstone\FastPaginate\FastPaginate::paginate()
              * @param mixed $perPage
              * @param mixed $columns
@@ -25326,7 +25304,7 @@ namespace  {
              * Add a "where date" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|null $operator
              * @param \DateTimeInterface|string|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
@@ -25342,7 +25320,7 @@ namespace  {
              * Add an "or where date" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|null $operator
              * @param \DateTimeInterface|string|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -25357,7 +25335,7 @@ namespace  {
              * Add a "where time" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|null $operator
              * @param \DateTimeInterface|string|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
@@ -25373,7 +25351,7 @@ namespace  {
              * Add an "or where time" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|null $operator
              * @param \DateTimeInterface|string|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -25388,7 +25366,7 @@ namespace  {
              * Add a "where day" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|int|null $operator
              * @param \DateTimeInterface|string|int|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
@@ -25404,7 +25382,7 @@ namespace  {
              * Add an "or where day" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|int|null $operator
              * @param \DateTimeInterface|string|int|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -25419,7 +25397,7 @@ namespace  {
              * Add a "where month" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|int|null $operator
              * @param \DateTimeInterface|string|int|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
@@ -25435,7 +25413,7 @@ namespace  {
              * Add an "or where month" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|int|null $operator
              * @param \DateTimeInterface|string|int|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -25450,7 +25428,7 @@ namespace  {
              * Add a "where year" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|int|null $operator
              * @param \DateTimeInterface|string|int|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
@@ -25466,7 +25444,7 @@ namespace  {
              * Add an "or where year" statement to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-             * @param string $operator
+             * @param \DateTimeInterface|string|int|null $operator
              * @param \DateTimeInterface|string|int|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -26919,8 +26897,8 @@ namespace  {
             class Alert extends \RealRashid\SweetAlert\Facades\Alert {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
+            class Preload extends \Laragear\Preload\Facades\Preload {}
             class Livewire extends \Livewire\Livewire {}
-            class LogViewer extends \Opcodes\LogViewer\Facades\LogViewer {}
             class Sentry extends \Sentry\Laravel\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class ResponseCache extends \Spatie\ResponseCache\Facades\ResponseCache {}

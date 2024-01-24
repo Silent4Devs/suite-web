@@ -19,13 +19,11 @@
             border: 1px solid #345183
         }
     </style>
-    <div class="mt-3">
-        {{ Breadcrumbs::render('EV360-Objetivos-Show', ['empleado' => $empleado]) }}
-    </div>
+
+    {{ Breadcrumbs::render('EV360-Objetivos-Show', ['empleado' => $empleado]) }}
+    <h5 class="col-12 titulo_general_funcion">Objetivos Estratégicos</h5>
+
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Objetivos Estratégicos</strong></h3>
-        </div>
         @include('partials.flashMessages')
         <div class="card-body">
             <div class="col-12">

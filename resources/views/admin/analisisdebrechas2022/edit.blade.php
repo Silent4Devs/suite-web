@@ -3,7 +3,7 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisisdebrechas-2022.index') !!}">Análisis de Riesgo 2022</a>
+            <a href="{{ route('admin.analisisdebrechas-2022.index') }}">Análisis de Riesgo 2022</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
@@ -43,8 +43,7 @@
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="fecha"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha</label>
                         <input required class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
-                            id="fecha" value="{{ date('d-m-Y') }}" min="1945-01-01"
-                            disabled>
+                            id="fecha" value="{{ date('d-m-Y') }}" min="1945-01-01" disabled>
                         @if ($errors->has('fecha'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha') }}
@@ -54,13 +53,15 @@
                     {{ Form::hidden('fecha', date('Y-m-d')) }}
 
                     <div class="form-group col-md-4 col-sm-4">
-                        <label class="required" for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                        <label class="required" for="estatus"><i
+                                class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                         <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
                             id="estatus" required>
                             <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
-                                <option value="{{ $key }}" {{ $key == $analisisBrecha->estatus ? 'selected' : '' }}>
+                                <option value="{{ $key }}"
+                                    {{ $key == $analisisBrecha->estatus ? 'selected' : '' }}>
                                     {{ $label }}
                                 </option>
                             @endforeach
@@ -113,7 +114,7 @@
                     <div class="form-group col-md-4 lg-4 col-sm-12">
                         <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
                             Implementacion</label>
-                            <div class="form-control" readonly>{{$cuentas}} %</div>
+                        <div class="form-control" readonly>{{ $cuentas }} %</div>
 
                     </div>
                 </div>
@@ -127,7 +128,6 @@
             </form>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -173,8 +173,7 @@
                 document.getElementById('id_area').innerHTML = recortarTexto(area);
             })
 
-            function recortarTexto(texto, length = 30)
-            {
+            function recortarTexto(texto, length = 30) {
                 let trimmedString = texto?.length > length ?
                     texto.substring(0, length - 3) + "..." :
                     texto;

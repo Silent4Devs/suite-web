@@ -29,10 +29,11 @@
         <div class="card-body">
             <form wire:submit.prevent="store" class="form-group">
                 <div class="mt-2 row justify-content-start">
-                    <div class="col-9 pl-0">
-                        {!! Form::label('title', 'Agregar el nombre de la meta*',[
-                        'class' => 'pl-0']) !!}
-                        <input wire:model="name" class="form-control" placeholder="Agregar el nombre de la meta">
+                    <div class="form-group col-9 pl-0 anima-focus">
+                        {{-- {!! Form::label('title', 'Agregar el nombre de la meta*',[
+                        'class' => 'pl-0']) !!} --}}
+                        <input wire:model="name" class="form-control" placeholder="">
+                        <label for="name">Agregar el nombre de la meta*</label>
                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-3 d-flex justify-content-end">

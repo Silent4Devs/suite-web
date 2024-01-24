@@ -2,16 +2,71 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\ColoresTemplateAnalisisdeBrechas;
 use App\Models\Norma;
+use App\Models\ParametrosTemplateAnalisisdeBrechas;
 use App\Models\PreguntasTemplateAnalisisdeBrechas;
 use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class SeccionesTemplate extends Component
 {
-    public $normas;
+    use LivewireAlert;
+
+    public $nombre_template = null;
+
+    public $norma;
+
+    public $descripcion = null;
+
+    public $color_estatus_1 = '#34B990';
+
+    public $color_estatus_2 = '#73A7D5';
+
+    public $color_estatus_3 = '#F59595';
+
+    public $color_estatus_4 = '#EEEEEE';
+
+    public $estatus_1;
+
+    public $estatus_2;
+
+    public $estatus_3;
+
+    public $estatus_4;
+
+    public $valor_estatus_1;
+
+    public $valor_estatus_2;
+
+    public $valor_estatus_3;
+
+    public $valor_estatus_4;
+
+    public $descripcion_parametros_1;
+
+    public $descripcion_parametros_2;
+
+    public $descripcion_parametros_3;
+
+    public $descripcion_parametros_4;
+
+    public $descripcion_s1;
+
+    public $descripcion_s2;
+
+    public $descripcion_s3;
+
+    public $descripcion_s4;
+
+    public $pregunta1;
+
+    public $pregunta2;
+
+    public $pregunta3;
+
+    public $pregunta4;
 
     public $preguntas_s1 = [];
 
@@ -21,6 +76,14 @@ class SeccionesTemplate extends Component
 
     public $preguntas_s4 = [];
 
+    public $porcentaje_seccion_1;
+
+    public $porcentaje_seccion_2;
+
+    public $porcentaje_seccion_3;
+
+    public $porcentaje_seccion_4;
+
     public $secciones = 1;
 
     public $posicion_seccion = 1;
@@ -28,6 +91,8 @@ class SeccionesTemplate extends Component
     public $datos_seccion = 1;
 
     public $template;
+
+    public $normas;
 
     public $seccion;
 
@@ -118,12 +183,13 @@ class SeccionesTemplate extends Component
 
     public function mount()
     {
-        $this->normas = Norma::get();
     }
 
     public function render()
     {
-        return view('livewire.secciones-template')->with('normas', $this->normas);
+        $this->normas = Norma::get();
+
+        return view('livewire.secciones-template');
     }
 
     public function submitForm($data)
@@ -146,7 +212,7 @@ class SeccionesTemplate extends Component
 
             foreach ($groupedValues as $estatus) {
                 // dd($estatus);
-                $colores = ColoresTemplateAnalisisdeBrechas::create([
+                $colores = ParametrosTemplateAnalisisdeBrechas::create([
                     'template_id' => $template->id,
                     'estatus' => $estatus['estatus'],
                     'valor' => $estatus['valor'],
@@ -214,7 +280,7 @@ class SeccionesTemplate extends Component
                     return null;
                 }
 
-                return redirect(route('admin.inicio-Usuario.index'));
+                return redirect(url('/admin/analisis-brechas-2022-inicio'));
             } else {
                 if ($this->secciones == 1) {
                     $porcentaje = 100;
@@ -247,7 +313,14 @@ class SeccionesTemplate extends Component
                 }
             }
 
-            return redirect(route('admin.inicio-Usuario.index'));
+            $this->alert('success', '¡El template ha sido creado con éxito!', [
+                'position' => 'center',
+                'timer' => 5000,
+                'toast' => true,
+                'text' => 'Se ha generado tu plantillas y tu cuestionario, lo puedes consultar y editar cuando lo necesites.',
+            ]);
+
+            return redirect(route('admin.analisisdebrechas-2022.create'));
         } else {
             switch ($this->datos_seccion) {
                 case '1':
@@ -335,6 +408,8 @@ class SeccionesTemplate extends Component
     public function groupValues($values)
     {
         $groupedValues = [];
+
+        // dd($values);
 
         for ($i = 1; $i <= 4; $i++) {
             $estatusKey = "estatus_{$i}";

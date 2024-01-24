@@ -42,35 +42,50 @@
             width: 410px;
         }
     </style>
-    <div class="titulo">Análisis de Brechas</div>
+    {{-- <div class="titulo">Análisis de Brechas</div>
     <div class="row">
         <div class="card card-body mt-3" style="width:1030px;">
             <div class="titulo-card">Templates generados
                 <hr>
             </div>
-            <table class="table table-striped datatable-AlcanceSgsi">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="max-width:300px !important;background-color:rgb(255, 255, 255); color:#414141;">ID</th>
-                        <th style="min-width:200px; background-color:rgb(255, 255, 255); color:#414141;">Nombre del template
-                        </th>
-                        <th style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">
-                            Fecha de creación</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">No de preguntas</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;">Top 8</th>
-                        <th style="background-color:rgb(255, 255, 255); color:#414141;"></th>
-                    </tr>
-                </thead>
-            </table>
+            <div class="datatable-rds datatable-fix">
+                <table id="datatable_analisisbrechas">
+                    <thead class="w-100">
+                        <tr>
+                            <th style="max-width:300px !important;background-color:rgb(255, 255, 255); color:#414141;">ID</th>
+                            <th style="min-width:200px; background-color:rgb(255, 255, 255); color:#414141;">Nombre del template
+                            </th>
+                            <th style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">
+                                Fecha de creación</th>
+                            <th style="background-color:rgb(255, 255, 255); color:#414141;">No de preguntas</th>
+                            <th style="background-color:rgb(255, 255, 255); color:#414141;">Top 8</th>
+                            <th style="background-color:rgb(255, 255, 255); color:#414141;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($top_analisis as $analisis )
+                            <tr>
+                                <td>
+                                    {{$analisis->id}}
+                                </td>
+                                <td>
+                                    {{$analisis->nombre_template}}
+                                </td>
+                                <td>
+                                    {{$analisis->created_at}}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
+                </table>
+            </div>
         </div>
         <div class="col-md-10">
 
         </div>
         <div class="col-md-2" style="padding-left:40px;">
-            <a href="{{ route('admin.formulario') }}">
-                <button type="button" class="btn btn-outline-primary"
-                    style="width: 136px;color:#2567AE;background-color: white;">Regresar</button>
-            </a>
         </div>
-    </div>
+    </div> --}}
+    @livewire('template-top')
 @endsection

@@ -36,67 +36,46 @@
         </div>
     </div>
 </div>
-<div class="datatable-fix" style="width:100%">
-    @can('mi_perfil_mis_reportes_realizar_reporte_de_denuncia')
-        <div class="mb-3 text-right">
-            <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}">Crear reporte</a>
-        </div>
-    @endcan
-    <table class="table tabla_denuncias">
-        <thead>
-            <tr>
-                <th colspan="6"></th>
-                <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denuncio</th>
-                <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denunciado</th>
-            </tr>
-            <tr>
-                <th style="min-width:200px;">Folio</th>
-                <th style="min-width:200px;">Anónimo</th>
-                <th style="min-width:200px;">Estatus</th>
-                <th style="min-width:200px;">Fecha de identificación</th>
-                <th style="min-width:200px;">Fecha de recepción</th>
-                <th style="min-width:200px;">Fecha de cierre</th>
-                <th style="min-width:200px;">Nombre</th>
-                <th style="min-width:200px;">Puesto</th>
-                <th style="min-width:200px;">Área</th>
-                <th style="min-width:200px;">Nombre</th>
-                <th style="min-width:200px;">Puesto</th>
-                <th style="min-width:200px;">Área</th>
-                <th style="min-width:200px;">Descripción</th>
-                <th style="min-width:200px;">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{-- @foreach ($denuncias as $denuncia)
-	   			<tr>
-	       			<td>{{ $denuncia->folio }}</td>
-	       			<td>{{ $denuncia->anonimo }}</td>
-                    <td>{{ $denuncia->estatus }}</td>
-                    <td>{{ $denuncia->fecha_creacion }}</td>
-                    <td>{{ $denuncia->fecha_reporte }}</td>
-                    <td>{{ $denuncia->fecha_de_cierre }}</td>
-                    @if ($denuncia->anonimo == 'no')
-                        <td>
-                            <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $denuncia->denuncio->avatar }}" title="{{ $denuncia->denuncio->name }}">
-                        </td>
-                        <td>{{ $denuncia->denuncio->puesto }}</td>
-                        <td>{{ $denuncia->denuncio->area->area }}</td>
-                    @else
-                        <td> -- </td>
-                        <td> -- </td>
-                        <td> -- </td>
-                    @endif
-                    <td>
-                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $denuncia->denunciado->avatar }}" title="{{ $denuncia->denunciado->name }}">
-                    </td>
-                    <td>{{ $denuncia->denunciado->area->area }}</td>
-                    <td>{{ $denuncia->denunciado->puesto }}</td>
-                    <td>{{ $denuncia->descripcion }}</td>
-	       			<td><a href="{{ route('admin.desk.denuncias-edit', $denuncia->id) }}"><i class="fas fa-edit"></i></a></td>
-	   			</tr>
-   			@endforeach --}}
-        </tbody>
-    </table>
+
+
+@can('mi_perfil_mis_reportes_realizar_reporte_de_denuncia')
+<div class="mb-3 text-right">
+    <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}">Crear reporte</a>
+</div>
+@endcan
+
+<div class="card card-body">
+  
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <table class="datatable tabla_denuncias">
+            <thead>
+                <tr>
+                    <th colspan="6"></th>
+                    <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denuncio</th>
+                    <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denunciado</th>
+                </tr>
+                <tr>
+                    <th style="min-width:200px;">Folio</th>
+                    <th style="min-width:200px;">Anónimo</th>
+                    <th style="min-width:200px;">Estatus</th>
+                    <th style="min-width:200px;">Fecha de identificación</th>
+                    <th style="min-width:200px;">Fecha de recepción</th>
+                    <th style="min-width:200px;">Fecha de cierre</th>
+                    <th style="min-width:200px;">Nombre</th>
+                    <th style="min-width:200px;">Puesto</th>
+                    <th style="min-width:200px;">Área</th>
+                    <th style="min-width:200px;">Nombre</th>
+                    <th style="min-width:200px;">Puesto</th>
+                    <th style="min-width:200px;">Área</th>
+                    <th style="min-width:200px;">Descripción</th>
+                    <th style="min-width:200px;">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

@@ -400,6 +400,8 @@ class EV360EvaluacionesController extends Controller
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_evaluacion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion->load('autor');
+
+        $lista_evaluados = [];
         //close evaluation if the end date is passed and if the evaluation is not closed
         if ($evaluacion->estatus == Evaluacion::ACTIVE) {
             if (Carbon::now()->diffInDays(Carbon::parse($evaluacion->fecha_fin), false) + 1 <= 0) {
@@ -407,39 +409,85 @@ class EV360EvaluacionesController extends Controller
             }
         }
 
-        $competencias = Competencia::select('id', 'nombre')->get();
-        $objetivos = Objetivo::select('id', 'nombre')->get();
-        $competencias_seleccionadas = EvaluacionCompetencia::where('evaluacion_id', $evaluacion->id)->pluck('competencia_id')->toArray();
-        $objetivos_seleccionados = EvaluacionObjetivo::where('evaluacion_id', $evaluacion->id)->pluck('objetivo_id')->toArray();
-        $competencias_seleccionadas_text = EvaluacionCompetencia::with(['competencia' => function ($q) {
-            $q->with(['tipo']);
-        }])->where('evaluacion_id', $evaluacion->id)->get();
-        $objetivos_seleccionados_text = EvaluacionObjetivo::with(['objetivo' => function ($q) {
-            $q->with(['tipo', 'metrica']);
-        }])->where('evaluacion_id', $evaluacion->id)->get();
+        $evaluados_evaluacion = Evaluacion::getEvaluados($evaluacion->id);
+        if ($evaluados_evaluacion->evaluados) {
+            $evaluados = $evaluados_evaluacion->evaluados;
+            foreach ($evaluados as $evaluado) {
+                $evaluadores = EvaluadoEvaluador::with('evaluador')->where('evaluado_id', $evaluado->id)->where('evaluacion_id', $evaluacion->id)->get();
+                $total_evaluaciones = count($evaluadores);
+                $contestadas = EvaluadoEvaluador::where('evaluado_id', $evaluado->id)
+                    ->where('evaluacion_id', $evaluacion->id)
+                    ->where('evaluado', true)->count();
+                $progreso = floatval(number_format((($contestadas / $total_evaluaciones) * 100), 2));
+                $lista_evaluados[] =
+                    [
+                        'id' => $evaluado->id,
+                        'name' => $evaluado->name,
+                        'area' => $evaluado->area->area,
+                        'evaluadores' => $evaluadores,
+                        'total_evaluaciones' => $total_evaluaciones,
+                        'contestadas' => $contestadas,
+                        'progreso' => $progreso,
+                        'evaluacion' => $evaluacion->id,
+                        'can_edit' => $evaluados_evaluacion->estatus == Evaluacion::DRAFT ? true : false,
+                    ];
+                // array_push($evaluados, [[
+                //     'id' => $evaluado->id,
+                //     'name' => $evaluado->name,
+                //     'area' => $evaluado->area->area,
+                //     'evaluadores' => $evaluadores,
+                //     'total_evaluaciones' => $total_evaluaciones,
+                //     'contestadas' => $contestadas,
+                //     'progreso' => $progreso,
+                //     'evaluacion' => $evaluacion->id,
+                //     'can_edit' => $evaluados_evaluacion->estatus == Evaluacion::DRAFT ? true : false,
+                // ]][0]);
+            }
+        } else {
+            $lista_evaluados = [];
+        }
+        // dd($lista_evaluados[0]['evaluadores'][0]->evaluador);
+        // dd($evaluacion, $evaluados_evaluacion, $evaluados, $lista_evaluados);
+        // $competencias = Competencia::select('id', 'nombre')->get();
+        // $objetivos = Objetivo::select('id', 'nombre')->get();
+        // $competencias_seleccionadas = EvaluacionCompetencia::where('evaluacion_id', $evaluacion->id)->pluck('competencia_id')->toArray();
+        // $objetivos_seleccionados = EvaluacionObjetivo::where('evaluacion_id', $evaluacion->id)->pluck('objetivo_id')->toArray();
+        // $competencias_seleccionadas_text = EvaluacionCompetencia::with(['competencia' => function ($q) {
+        //     $q->with(['tipo']);
+        // }])->where('evaluacion_id', $evaluacion->id)->get();
+        // $objetivos_seleccionados_text = EvaluacionObjetivo::with(['objetivo' => function ($q) {
+        //     $q->with(['tipo', 'metrica']);
+        // }])->where('evaluacion_id', $evaluacion->id)->get();
         $total_evaluaciones = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->count();
         $contestadas = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->where('evaluado', true)->count();
         $progreso = floatval(number_format((($contestadas / $total_evaluaciones) * 100), 2));
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.evaluacion', compact('evaluacion', 'competencias', 'competencias_seleccionadas', 'competencias_seleccionadas_text', 'total_evaluaciones', 'contestadas', 'progreso', 'objetivos', 'objetivos_seleccionados', 'objetivos_seleccionados_text'));
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.evaluacion', compact('evaluacion', 'total_evaluaciones', 'contestadas', 'progreso', 'lista_evaluados'));
+        // return view('admin.recursos-humanos.evaluacion-360.evaluaciones.evaluacion', compact('evaluacion', 'competencias', 'competencias_seleccionadas', 'competencias_seleccionadas_text', 'total_evaluaciones', 'contestadas', 'progreso', 'objetivos', 'objetivos_seleccionados', 'objetivos_seleccionados_text'));
     }
 
     public function getParticipantes(Request $request, $evaluacion)
     {
         if ($request->ajax()) {
+            // dd($evaluacion);
+            // dd(intval($evaluacion));
             $lista_evaluados = [];
-            $evaluados_evaluacion = Evaluacion::with(['evaluados' => function ($q) use ($evaluacion) {
-                return $q->with(['area', 'evaluadores' => function ($qry) use ($evaluacion) {
-                    $qry->where('evaluacion_id', $evaluacion);
-                }]);
-            }])->where('id', intval($evaluacion))->first();
+            // $evaluados_evaluacion = Evaluacion::with(['evaluados' => function ($q) use ($evaluacion) {
+            //     return $q->with(['area', 'evaluadores' => function ($qry) use ($evaluacion) {
+            //         $qry->where('evaluacion_id', $evaluacion);
+            //     }]);
+            // }])->where('id', intval($evaluacion))->first();
+            // dd($evaluacion, $evaluados_evaluacion);
+            $id_evaluacion = intval($evaluacion);
+            $evaluados_evaluacion = Evaluacion::getEvaluados($id_evaluacion);
+            // dd('1');
             if ($evaluados_evaluacion->evaluados) {
                 $evaluados = $evaluados_evaluacion->evaluados;
                 foreach ($evaluados as $evaluado) {
-                    $evaluadores = EvaluadoEvaluador::with('evaluador')->where('evaluado_id', $evaluado->id)->where('evaluacion_id', intval($evaluacion))->get();
+                    $evaluadores = EvaluadoEvaluador::with('evaluador')->where('evaluado_id', $evaluado->id)->where('evaluacion_id', $id_evaluacion)->get();
                     $total_evaluaciones = count($evaluadores);
                     $contestadas = EvaluadoEvaluador::where('evaluado_id', $evaluado->id)
-                        ->where('evaluacion_id', intval($evaluacion))
+                        ->where('evaluacion_id', $id_evaluacion)
                         ->where('evaluado', true)->count();
                     $progreso = floatval(number_format((($contestadas / $total_evaluaciones) * 100), 2));
                     array_push($lista_evaluados, [[
@@ -450,7 +498,7 @@ class EV360EvaluacionesController extends Controller
                         'total_evaluaciones' => $total_evaluaciones,
                         'contestadas' => $contestadas,
                         'progreso' => $progreso,
-                        'evaluacion' => intval($evaluacion),
+                        'evaluacion' => $id_evaluacion,
                         'can_edit' => $evaluados_evaluacion->estatus == Evaluacion::DRAFT ? true : false,
                     ]][0]);
                 }
@@ -1372,7 +1420,7 @@ class EV360EvaluacionesController extends Controller
 
     public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
     {
-        Mail::to(removeUnicodeCharacters($email))->send(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
+        Mail::to(removeUnicodeCharacters($email))->queue(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
     }
 
     public function enviarInvitacionDeEvaluacion(Request $request)
@@ -1404,7 +1452,7 @@ class EV360EvaluacionesController extends Controller
 
     public function enviarCorreoInvitacionAlEvaluado($email, $evaluacion, $evaluador, $evaluado, $enlace)
     {
-        Mail::to(removeUnicodeCharacters($email))->send(new CitaEvaluadorEvaluado($evaluacion, $evaluador, $evaluado, $enlace));
+        Mail::to(removeUnicodeCharacters($email))->queue(new CitaEvaluadorEvaluado($evaluacion, $evaluador, $evaluado, $enlace));
     }
 
     public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion)

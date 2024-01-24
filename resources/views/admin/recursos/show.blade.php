@@ -17,10 +17,24 @@
         }
 
     </style>
+  <h5 class="col-12 titulo_general_funcion">Transferencia de conocimiento</h5>
+  <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+      <div class="d-flex" style="gap: 25px;">
+          <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+          <div>
+              <br>
+              <br>
+              <h4> ¿Qué es Transferencia de conocimiento?  </h4>
+              <p>
+                  Garantizar que todos en la empresa tengan el conocimiento certificando que este se comparta y perdure.
+              </p>
+              <p>
+                  Esto asegura que todos los miembros del personal comprendan las prácticas y directrices establecidas por la organización.
+              </p>
+          </div>
+      </div>
+  </div>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Seguimiento de la </strong> Capacitación </h3>
-        </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
@@ -213,7 +227,7 @@
                     name: 'id',
                     render: function(data, type, row, meta) {
                         return `
-                            <input ${row.pivot.asistio?'checked':''} type="checkbox" name="asistio" data-empleado="${row.id}" data-recurso="${recurso.id}">                            
+                            <input ${row.pivot.asistio?'checked':''} type="checkbox" name="asistio" data-empleado="${row.id}" data-recurso="${recurso.id}">
                             `;
                     }
                 });
@@ -270,7 +284,7 @@
                                     <p class="m-0"><small class="text-muted"><i class="fas fa-file mr-2"></i>Máximo 5MB</small></p>
                                 </div>
                                 `;
-                    html += `                            
+                    html += `
                                 <small id="informacionArchivo" class="m-0 text-muted"></small>
                                 <input name="certificado" id="certificado" type="file" class="form-control d-none"
                                     accept="image/jpeg,image/png,application/pdf">

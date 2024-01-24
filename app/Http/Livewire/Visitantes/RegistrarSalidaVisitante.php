@@ -70,7 +70,7 @@ class RegistrarSalidaVisitante extends Component
         $this->visitantes = RegistrarVisitante::where('registro_salida', false)->get();
         $responsable_model = ResponsableVisitantes::with('empleado')->first();
         $responsable = $responsable_model->empleado;
-        Mail::to(removeUnicodeCharacters($responsable->email))->send(new SolicitudSalidaVisitante($registroVisitante, $responsable));
+        Mail::to(removeUnicodeCharacters($responsable->email))->queue(new SolicitudSalidaVisitante($registroVisitante, $responsable));
         $this->emitTo('visitantes.registrar-salida', 'salidaRegistrada', $this->visitante->id);
         if ($this->tipo == 'full') {
             $this->emit('salidaRegistradaSelf');

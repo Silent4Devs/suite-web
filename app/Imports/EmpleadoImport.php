@@ -110,7 +110,7 @@ class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
             User::findOrFail($user->id)->roles()->sync(4);
         }
         //Send email with generated password
-        Mail::to(removeUnicodeCharacters($empleado->email))->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
+        Mail::to(removeUnicodeCharacters($empleado->email))->queue(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
 
         return $user;
     }

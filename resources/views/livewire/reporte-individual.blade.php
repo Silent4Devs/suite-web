@@ -28,15 +28,17 @@
             <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-4">
                     <h6>Datos Generales*</h6>
-                    <label class="form-label select-label">Cláusulas</label>
-                    <select name="c_id" id="c_id"
-                        class="form-control select {{ $errors->has('c_id') ? 'is-invalid' : '' }}"
-                        wire:model.defer="c_id" style="background-color: rgba(243, 243, 243, 0.826)">
-                        <option value="">Seleccione una Cláusula</option>
-                        @foreach ($clausulas as $claus)
-                            <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}</option>
-                        @endforeach
-                    </select>
+                    <div class="anima-focus">
+                        <select name="c_id" id="c_id"
+                            class="form-control select {{ $errors->has('c_id') ? 'is-invalid' : '' }}"
+                            wire:model.defer="c_id" style="background-color: rgba(243, 243, 243, 0.826)">
+                            <option value="">Seleccione una Cláusula</option>
+                            @foreach ($clausulas as $claus)
+                                <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}</option>
+                            @endforeach
+                        </select>
+                        <label class="form-label select-label">Cláusulas</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,32 +68,36 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body ml-4 mr-4">
 
                             @if ($view == 'edit')
                                 <div class="row">
-                                    <div class="form-group col-sm-12">
-                                        <label class="form-label select-label">Cláusulas</label>
-                                        <select name="c_edit_id" id="c_edit_id"
-                                            class="form-control select {{ $errors->has('c_edit_id') ? 'is-invalid' : '' }}"
-                                            wire:model.defer="c_edit_id" required>
-                                            @foreach ($clausulas as $claus)
-                                                <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                    <div class="form-group mt-3 mb-3 col-sm-12">
+                                        <div class="anima-focus mt-3 mb-3">
+                                            <select name="c_edit_id" id="c_edit_id"
+                                                class="form-control select {{ $errors->has('c_edit_id') ? 'is-invalid' : '' }}"
+                                                wire:model.defer="c_edit_id" required>
+                                                @foreach ($clausulas as $claus)
+                                                    <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <label class="form-label select-label">Cláusulas</label>
+                                        </div>
                                     </div>
                                 </div>
                             @endif
 
                             <div class="row">
-                                <div class="form-group col-sm-12">
-                                    <label class="required" for="incumplimiento_requisito">
-                                        Requisito</label>
-                                    <input type="text"
-                                        class="form-control {{ $errors->has('incumplimiento_requisito') ? 'is-invalid' : '' }}"
-                                        name="incumplimiento_requisito" id="incumplimiento_requisito"
-                                        wire:model.defer="incumplimiento_requisito" required />
+                                <div class="form-group mt-3 mb-3 col-sm-12">
+                                    <div class="anima-focus mt-3 mb-3">
+                                        <input type="text"
+                                            class="form-control {{ $errors->has('incumplimiento_requisito') ? 'is-invalid' : '' }}"
+                                            name="incumplimiento_requisito" id="incumplimiento_requisito"
+                                            wire:model.defer="incumplimiento_requisito" required placeholder="" />
+                                        <label class="required" for="incumplimiento_requisito">
+                                            Requisito</label>
+                                    </div>
                                     @if ($errors->has('incumplimiento_requisito'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('incumplimiento_requisito') }}
@@ -101,11 +107,13 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-sm-12">
-                                    <label class="required" for="descripcion">
-                                        Descripción</label>
-                                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
-                                        id="descripcion" wire:model.defer="descripcion" required></textarea>
+                                <div class="form-group mt-3 mb-3 col-sm-12">
+                                    <div class="anima-focus mt-3 mb-3">
+                                        <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
+                                            id="descripcion" wire:model.defer="descripcion" required placeholder=""></textarea>
+                                        <label class="required" for="descripcion">
+                                            Descripción</label>
+                                    </div>
                                     @if ($errors->has('descripcion'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('descripcion') }}
@@ -117,24 +125,30 @@
                             <h5>Subtema</h5>
 
                             <div class="row">
-                                <div class="form-group col-sm-4">
-                                    <label class="required" for="no_tipo">
-                                        No.</label>
-                                    <input type="number" min="1" max="100000"
-                                        class="form-control {{ $errors->has('no_tipo') ? 'is-invalid' : '' }}"
-                                        name="no_tipo" id="no_tipo" wire:model.defer="no_tipo"></input>
+                                <div class="form-group mt-3 mb-3 col-sm-4">
+                                    <div class="anima-focus mt-3 mb-3">
+                                        <input type="number" min="1" max="100000"
+                                            class="form-control {{ $errors->has('no_tipo') ? 'is-invalid' : '' }}"
+                                            name="no_tipo" id="no_tipo" wire:model.defer="no_tipo"
+                                            placeholder=""></input>
+                                        <label class="required" for="no_tipo">
+                                            No.</label>
+                                    </div>
                                     @if ($errors->has('no_tipo'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('no_tipo') }}
                                         </div>
                                     @endif
                                 </div>
-                                <div class="form-group col-sm-8">
-                                    <label class="required" for="titulo">
-                                        Título</label>
-                                    <input type="text"
-                                        class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}"
-                                        name="titulo" id="titulo" wire:model.defer="titulo" />
+                                <div class="form-group mt-3 mb-3 col-sm-8">
+                                    <div class="anima-focus mt-3 mb-3">
+                                        <input type="text"
+                                            class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}"
+                                            name="titulo" id="titulo" wire:model.defer="titulo"
+                                            placeholder="" />
+                                        <label class="required" for="titulo">
+                                            Título</label>
+                                    </div>
                                     @if ($errors->has('titulo'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('titulo') }}
@@ -144,18 +158,21 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                    <label class="required" for="clasificacion_id">Clasificación del
-                                        Hallazgo</label>
-                                    <select name="clasificacion_id" id="clasificacion_id"
-                                        class="form-control select {{ $errors->has('clasificacion_id') ? 'is-invalid' : '' }}"
-                                        wire:model.defer="clasificacion_id">
-                                        <option value="">Seleccione una Clasificación</option>
-                                        @foreach ($clasificaciones as $clasif)
-                                            <option value="{{ $clasif->id }}">{{ $clasif->nombre_clasificaciones }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                <div class="form-group mt-3 mb-3 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="anima-focus mt-3 mb-3">
+                                        <select name="clasificacion_id" id="clasificacion_id"
+                                            class="form-control select {{ $errors->has('clasificacion_id') ? 'is-invalid' : '' }}"
+                                            wire:model.defer="clasificacion_id">
+                                            <option value="">Seleccione una Clasificación</option>
+                                            @foreach ($clasificaciones as $clasif)
+                                                <option value="{{ $clasif->id }}">
+                                                    {{ $clasif->nombre_clasificaciones }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label class="required" for="clasificacion_id">Clasificación del
+                                            Hallazgo</label>
+                                    </div>
                                     @if ($errors->has('clasificacion_id'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('clasificacion_id') }}
@@ -165,16 +182,18 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-sm-12">
-                                    <label for="proceso_id">Proceso</label>
-                                    <select class="form-control {{ $errors->has('proceso') ? 'is-invalid' : '' }}"
-                                        name="proceso_id" id="proceso_id" wire:model.defer="proceso">
-                                        <option value="">Seleccione un proceso</option>
-                                        @foreach ($procesos as $proceso)
-                                            <option value="{{ $proceso->id }}">
-                                                {{ $proceso->codigo }}/{{ $proceso->nombre }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="form-group mt-3 mb-3 col-sm-12">
+                                    <div class="anima-focus">
+                                        <select class="form-control {{ $errors->has('proceso') ? 'is-invalid' : '' }}"
+                                            name="proceso_id" id="proceso_id" wire:model.defer="proceso">
+                                            <option value="">Seleccione un proceso</option>
+                                            @foreach ($procesos as $proceso)
+                                                <option value="{{ $proceso->id }}">
+                                                    {{ $proceso->codigo }}/{{ $proceso->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="proceso_id">Proceso</label>
+                                    </div>
                                     @if ($errors->has('proceso'))
                                         <div class="text-danger">
                                             {{ $errors->first('proceso') }}
@@ -183,10 +202,12 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-sm-6 col-md-12 col-lg-12">
-                                    <label for="area">Área</label>
-                                    <input type="text" class="form-control"
-                                        value="{{ auth()->user()->empleado->area->area }}" disabled>
+                                <div class="form-group mt-3 mb-3 col-sm-6 col-md-12 col-lg-12">
+                                    <div class="anima-focus">
+                                        <input type="text" class="form-control"
+                                            value="{{ auth()->user()->empleado->area->area }}" disabled>
+                                        <label for="area">Área</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -202,16 +223,16 @@
         </div>
     </div>
     <div class="card card-body">
-        <div class="form-group col-md-12">
+        <div class="form-group mt-3 mb-3 col-md-12">
 
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="head-light">
+            <div class="datatable-rds w-100">
+                <table>
+                    <thead>
                         <tr>
-                            <th scope="col-6">Requisito</th>
-                            <th scope="col-6">Descripción</th>
-                            <th scope="col-6">Subtema</th>
-                            <th scope="col-6">Opciones</th>
+                            <th>Requisito</th>
+                            <th>Descripción</th>
+                            <th>Subtema</th>
+                            <th>Opciones</th>
 
                         </tr>
                     </thead>
@@ -222,13 +243,13 @@
                                 <td style="min-width:320px;">{{ $data->descripcion }}</td>
                                 <td style="min-width:300px;">
                                     <div class="row">
-                                        <div class="form-group col-sm-3">
+                                        <div class="form-group mt-3 mb-3 col-sm-3">
                                             <label for="no_tipo">
                                                 No.</label><br>
                                             <input class="form-control" type="number" value="{{ $data->no_tipo }}"
                                                 disabled>
                                         </div>
-                                        <div class="form-group col-sm-9">
+                                        <div class="form-group mt-3 mb-3 col-sm-9">
                                             <label for="titulo">
                                                 Título</label><br>
                                             <input class="form-control" type="text" value="{{ $data->titulo }}"
@@ -305,7 +326,7 @@
 
         </div>
         <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-            <button id="save" type="submit" class="btn btn-outline-primary"
+            <button id="save" type="button" class="btn btn-outline-primary"
                 data-reporte="{{ $this->reporte->id }}">Confirmar</button>
         </div>
     </div>

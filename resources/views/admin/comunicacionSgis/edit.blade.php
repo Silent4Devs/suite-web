@@ -2,7 +2,22 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.comunicacion-sgis.create') }}
-    <h5 class="col-12 titulo_general_funcion">Editar: Comunicado General </h5>
+    <h5 class="col-12 titulo_general_funcion">Comunicados Generales</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Comunicados Generales?</h4>
+                <p>
+                    Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar aspectos importantes.
+                </p>
+                <p>
+                    Son fundamentales ya que contribuye a la concientización y comprensión general.
+                </p>
+            </div>
+        </div>
+    </div>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" class="row"

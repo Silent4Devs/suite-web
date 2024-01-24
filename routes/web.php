@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\DocumentosController;
+use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\UsuarioBloqueadoController;
+use App\Http\Controllers\QueueCorreo;
+use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -13,11 +15,12 @@ Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'V
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
     Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
     Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
-    Route::resource('/', 'RegistroVisitantesController');
+    Route::resource('/', RegistroVisitantesController::class);
 });
 
+Route::get('correotestqueue', [QueueCorreo::class, 'index']);
 Route::get('/', [LoginController::class, 'showLoginForm']);
-Route::get('/usuario-bloqueado', [UsuarioBloqueadoController::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
+Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
 Route::post('/revisiones/approve', 'RevisionDocumentoController@approve')->name('revisiones.approve');
 Route::post('/revisiones/reject', 'RevisionDocumentoController@reject')->name('revisiones.reject');
@@ -36,11 +39,12 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+
     Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
     Route::get('/', 'InicioUsuarioController@index');
     Route::get('/home', 'InicioUsuarioController@index')->name('home');
     //log-viewer
-    Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
+    //Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
     Route::get('users/{id}/restablecer', 'UsersController@restablecerUsuario')->name('users.restablecer');
     Route::get('users/eliminados', 'UsersController@vistaEliminados')->name('users.eliminados');
@@ -157,7 +161,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
         //Modulo Capital Humano
-        Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
+        Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
         //Control de Ausencias
         Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
@@ -185,6 +189,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'update' => 'vacaciones.update',
             'destroy' => 'vacaciones.destroy',
         ]);
+
+        Route::get('lista-distribucion', 'ListaDistribucionController@index')->name('lista-distribucion.index');
+        Route::get('lista-distribucion/{id}/edit', 'ListaDistribucionController@edit')->name('lista-distribucion.edit');
+        Route::post('lista-distribucion/{lista}/update', 'ListaDistribucionController@update')->name('lista-distribucion.update');
+        Route::get('lista-distribucion/{id}/show', 'ListaDistribucionController@show')->name('lista-distribucion.edit');
 
         //Control de Ausencias- Day-Off
         Route::get('vista-global-dayoff', 'DayOffController@vistaGlobal')->name('vista-global-dayoff');
@@ -432,6 +441,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('Metrica', 'RH\ObjetivoUnidadMedidaController', ['except' => ['edit']]);
 
         Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
+        Route::view('iso27001/guia', 'admin.iso27001.guia')->name('iso27001.guia');
+        Route::view('iso27001/normas-guia', 'admin.iso27001.normas-guia')->name('iso27001.normas-guia');
+        Route::view('iso27001/inicio-guia', 'admin.iso27001.inicio-guia')->name('iso27001.inicio-guia');
         Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
         Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
         Route::view('contratos', 'admin.contratos.index')->name('contratos.index');
@@ -442,7 +454,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('portal-comunicacion/cumpleaños-dislike/{id}', 'PortalComunicacionController@felicitarCumpleañosDislike')->name('portal-comunicacion.cumples-dislike');
         Route::post('portal-comunicacion/cumpleaños_comentarios/{id}', 'PortalComunicacionController@felicitarCumplesComentarios')->name('portal-comunicacion.cumples-comentarios');
         Route::post('portal-comunicacion/cumpleaños_comentarios_update/{id}', 'PortalComunicacionController@felicitarCumplesComentariosUpdate')->name('portal-comunicacion.cumples-comentarios-update');
-        Route::middleware('cacheResponse')->resource('portal-comunicacion', 'PortalComunicacionController');
+        // Route::resource('portal-comunicacion', 'PortalComunicacionController');
+        Route::resource('portal-comunicacion', 'PortalComunicacionController');
 
         Route::get('plantTrabajoBase/{data}', 'PlanTrabajoBaseController@showTarea');
         Route::post('plantTrabajoBase/listaDataTables', 'PlanTrabajoBaseController@listaDataTables')->name('plantTrabajoBase.listaDataTables');
@@ -450,6 +463,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('plantTrabajoBase/bloqueo/quitar', 'LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
         Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
         Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
+
+        Route::get('inicioUsuario/solicitud', 'InicioUsuarioController@solicitud')->name('solicitud');
 
         Route::get('inicioUsuario/reportes/quejas', 'InicioUsuarioController@quejas')->name('reportes-quejas');
         Route::post('inicioUsuario/reportes/quejas', 'InicioUsuarioController@storeQuejas')->name('reportes-quejas-store');
@@ -612,8 +627,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('permissions', 'PermissionsController');
 
         //Template Analisis de Brechas
-        Route::get('templates', 'TemplateController@index')->name('templates');
-        Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+        Route::get('templates/create', 'TemplateController@create')->name('templates.create');
+        Route::get('templates/{id}/edit', 'TemplateController@edit')->name('templates.edit');
+        // Route::post('templates/store', 'TemplateController@store')->name('templates.store');
 
         //Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
@@ -624,29 +640,38 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::delete('analisisdebrechas/destroy', 'AnalisisBrechaController@massDestroy')->name('analisisdebrechas.massDestroy');
             Route::resource('analisisdebrechas', 'AnalisisBrechaController');
             Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
+        });
 
-            // Gap Unos
-            Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
-            Route::resource('gap-unos', 'GapUnoController');
+        Route::get('templates', 'TemplateController@index')->name('templates');
+        Route::get('evaluacion-analisis-brechas-2022/{id}', 'FormularioAnalisisBrechasController@index')->name('formulario');
 
-            // Gap Dos
-            //Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
-            Route::resource('gap-dos', 'GapDosController');
+        Route::group(['middleware' => ['version_iso_2022']], function () {
+            //Analisis brechas 2022
+            //Template Analisis de Brechas
+            Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+            Route::get('/top', 'TopController@index')->name('top');
+            Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
+            Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
+            Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
+            Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+            Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
+            Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
 
-            // Gap Tres
-            //Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
-            Route::resource('gap-tres', 'GapTresController');
+            // Gap Unos 2022
+            Route::delete('gap-uno-2022/destroy', 'iso27\GapUnoConcentradoIsoController@massDestroy')->name('gap-unos-2022.massDestroy');
+            Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
 
-            //Panel declaracion
-            Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
-            Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
-            Route::post('paneldeclaracion/responsables', 'PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
-            Route::post('paneldeclaracion/enviar-correo', 'PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
-            Route::post('paneldeclaracion/aprobadores-quitar', 'PanelDeclaracionController@quitarRelacionAprobador')->name('paneldeclaracion.aprobadores.quitar');
-            Route::post('paneldeclaracion/aprobadores', 'PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
-            Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
-            Route::resource('paneldeclaracion', 'PanelDeclaracionController');
+            // Gap Dos 2022
+            //Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
+            Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
 
+            // Gap Tres 2022
+            //Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
+            Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
+            // });
+        });
+
+        Route::group(['middleware' => ['version_iso_2013']], function () {
             // Declaracion de Aplicabilidad
             Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
             Route::get('declaracion-aplicabilidad/tabla', 'DeclaracionAplicabilidadController@tabla')->name('declaracion-aplicabilidad.tabla');
@@ -671,7 +696,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::post('declaracion-aplicabilidad-2022/enviar-correo', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@enviarCorreo')->name('declaracion-aplicabilidad-2022.enviarcorreo');
             Route::get('getEmployeeData', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@getEmployeeData')->name('getEmployeeData');
 
-            //Panel declaracion-2022
+            //Panel declaracione-2022
             Route::post('paneldeclaracion-2022/controles', 'PanelDeclaracionIsoController@controles')->name('paneldeclaracion-2022.controles');
             Route::post('paneldeclaracion-2022/responsables-quitar', 'PanelDeclaracionIsoController@quitarRelacionResponsable')->name('paneldeclaracion-2022.responsables.quitar');
             Route::post('paneldeclaracion-2022/responsables', 'PanelDeclaracionIsoController@relacionarResponsable')->name('paneldeclaracion-2022.responsables');
@@ -681,9 +706,31 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::delete('paneldeclaracion-2022/destroy', 'PanelDeclaracionIsoController@massDestroy')->name('paneldeclaracion-2022.massDestroy');
             Route::resource('paneldeclaracion-2022', 'PanelDeclaracionIsoController');
 
+            Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
+            Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
+            Route::post('paneldeclaracion/responsables', 'PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
+            Route::post('paneldeclaracion/enviar-correo', 'PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
+            Route::post('paneldeclaracion/aprobadores-quitar', 'PanelDeclaracionController@quitarRelacionAprobador')->name('paneldeclaracion.aprobadores.quitar');
+            Route::post('paneldeclaracion/aprobadores', 'PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
+            Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
+            Route::resource('paneldeclaracion', 'PanelDeclaracionController');
+
             //Analisis brechas 2022
             // Route::get('/top', 'TopController@index')->name('top');
-            // Route::get('/formulario', 'FormularioAnalisisBrechasController@index')->name('formulario');
+            Route::get('analisis/{id}/dashboard', 'FormularioAnalisisBrechasController@index')->name('formulario');
+            Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
+            Route::get('analisis-brechas-2022-inicio', 'AnalisisBrechaIsoController@inicioBrechas')->name('analisis-brechas-inicio');
+            Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
+            Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
+            Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+            Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
+            Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
+
+            // Route::group(['middleware' => ['version_iso_2022']], function () {
+            //Analisis brechas 2022
+            //Template Analisis de Brechas
+            Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+            Route::get('/template-brechas-2022-top', 'TopController@index')->name('template-top');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
             Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
             Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
@@ -702,6 +749,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             // Gap Tres 2022
             //Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
             Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
+            // });
         });
 
         //gantt
@@ -744,6 +792,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
         Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-actualizarDia');
         Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
+        Route::post('timesheet/pdf/{id}', 'TimesheetController@pdf')->name('timesheet.pdf');
 
         Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
         Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
@@ -825,8 +874,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
         Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
         Route::get('entendimiento-organizacions-foda-organizacions', 'EntendimientoOrganizacionController@cardFoda')->name('foda-organizacions');
+        route::get('entendimiento-organizacions-foda-edit/{id}', 'EntendimientoOrganizacionController@foda')->name('foda-organizacions.edit');
+        Route::get('entendimiento-organizacions-foda-general', 'EntendimientoOrganizacionController@cardFodaGeneral')->name('foda-general');
+        Route::get('entendimiento-organizacions-foda-revision/{id}', 'EntendimientoOrganizacionController@revision')->name('foda.revision');
+        Route::post('entendimiento-organizacions-foda-revision/{id}/aprobado', 'EntendimientoOrganizacionController@aprobado')->name('foda-organizacions.aprobado');
+        Route::post('entendimiento-organizacions-foda-revision/{id}/rechazado', 'EntendimientoOrganizacionController@rechazado')->name('foda-organizacions.rechazado');
+        Route::post('entendimiento-organizacions/{id}/solicitud-aprobacion', 'EntendimientoOrganizacionController@solicitudAprobacion')->name('foda-organizacions.solicitudAprobacion');
 
-        // Partes Interesadas
         Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
         Route::get('partes-interesadas/{id}/edit', 'PartesInteresadasController@edit')->name('partes-interesadas.edit');
         Route::post('partes-interesadas/{id}/update', 'PartesInteresadasController@update')->name('partes-interesadas.update');
@@ -851,14 +905,22 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('matriz-requisito-legales', 'MatrizRequisitoLegalesController');
 
         // Alcance Sgsis
+        Route::get('alcance-sgsis/visualizacion', 'AlcanceSgsiController@visualizacion')->name('alcance-sgsis/visualizacion');
         Route::delete('alcance-sgsis/destroy', 'AlcanceSgsiController@massDestroy')->name('alcance-sgsis.massDestroy');
         Route::resource('alcance-sgsis', 'AlcanceSgsiController');
         Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
+        Route::post('alcance-sgsis/pdf', 'AlcanceSgsiController@pdf')->name('alcance-sgsis.pdf');
+        Route::post('alcance-sgsis/pdf/show/{id}', 'AlcanceSgsiController@pdfShow')->name('alcance-sgsis-show.pdf');
+        Route::get('alcance-sgsis-revision/{id}', 'AlcanceSgsiController@revision')->name('alcance-sgsis.revision');
+        Route::post('alcance-sgsis/{id}/aprobado', 'AlcanceSgsiController@aprobado')->name('alcance-sgsis.aprobado');
+        Route::post('alcance-sgsis/{id}/rechazado', 'AlcanceSgsiController@rechazado')->name('alcance-sgsis.rechazado');
 
         // Comiteseguridads
         Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
         Route::get('comiteseguridads/visualizacion', 'ComiteseguridadController@visualizacion')->name('comiteseguridads.visualizacion');
         Route::get('comiteseguridads/{comiteseguridad}/edit', 'ComiteseguridadController@edit')->name('comiteseguridads.edit');
+        Route::post('comiteseguridads/saveMember/{id_comite}', 'ComiteseguridadController@saveMember')->name('comiteseguridads.saveMember');
+        Route::get('comiteseguridads/deleteMember/{id}', 'ComiteseguridadController@deleteMember')->name('comiteseguridads.deleteMember');
         Route::resource('comiteseguridads', 'ComiteseguridadController')->except('edit');
 
         // Minutasaltadireccions
@@ -866,12 +928,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('minutasaltadireccions/{minuta}/minuta-documento', 'MinutasaltadireccionController@renderViewDocument')->name('documentos.renderViewMinuta');
         Route::get('minutasaltadireccions/{minuta}/historial-revisiones', 'MinutasaltadireccionController@renderHistoryReview')->name('documentos.renderHistoryReviewMinuta');
         Route::get('minutasaltadireccions/planes-de-accion/create/{id}', 'MinutasaltadireccionController@createPlanAccion')->name('minutasaltadireccions.createPlanAccion');
+        Route::get('minutasaltadireccions/{id}/edit', 'MinutasaltadireccionController@edit')->name('minutasaltadireccions.edit');
         Route::patch('minutasaltadireccions/{minuta}/update-and-review', 'MinutasaltadireccionController@updateAndReview')->name('minutasaltadireccions.updateAndReview');
         Route::post('minutasaltadireccions/planes-de-accion/store/{id}', 'MinutasaltadireccionController@storePlanAccion')->name('minutasaltadireccions.storePlanAccion');
         Route::delete('minutasaltadireccions/destroy', 'MinutasaltadireccionController@massDestroy')->name('minutasaltadireccions.massDestroy');
         Route::post('minutasaltadireccions/media', 'MinutasaltadireccionController@storeMedia')->name('minutasaltadireccions.storeMedia');
         Route::post('minutasaltadireccions/ckmedia', 'MinutasaltadireccionController@storeCKEditorImages')->name('minutasaltadireccions.storeCKEditorImages');
+        Route::get('minutasaltadireccions/{id}/show', 'MinutasaltadireccionController@show')->name('minutasaltadireccions.show');
+        Route::get('minutasaltadireccions-revision/{id}', 'MinutasaltadireccionController@revision')->name('minutasaltadireccions.revision');
+        Route::post('minutasaltadireccions/{minuta}/aprobado', 'MinutasaltadireccionController@aprobado')->name('minutasaltadireccions.aprobado');
+        Route::post('minutasaltadireccions/{minuta}/rechazado', 'MinutasaltadireccionController@rechazado')->name('minutasaltadireccions.rechazado');
         Route::resource('minutasaltadireccions', 'MinutasaltadireccionController');
+        Route::post('minutasaltadireccions/pdf/{id}', 'MinutasaltadireccionController@pdf')->name('minutasaltadireccions.pdf');
 
         // Evidencias Sgsis
         Route::delete('evidencias-sgsis/destroy', 'EvidenciasSgsiController@massDestroy')->name('evidencias-sgsis.massDestroy');
@@ -883,12 +951,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('politica-sgsis/destroy', 'PoliticaSgsiController@massDestroy')->name('politica-sgsis.massDestroy');
 
         Route::get('politica-sgsis/visualizacion', 'PoliticaSgsiController@visualizacion')->name('politica-sgsis/visualizacion');
-
+        Route::post('politica-sgsis/cambioMostrar', 'PoliticaSgsiController@cambioMostrar')->name('politica-sgsis.cambio-mostrar');
+        Route::post('politica-sgsis/pdf', 'PoliticaSgsiController@pdf')->name('politica-sgsis.pdf');
+        Route::get('politica-sgsis-revision/{id}', 'PoliticaSgsiController@revision')->name('politica-sgsis.revision');
+        Route::post('politica-sgsis/{id}/aprobado', 'PoliticaSgsiController@aprobado')->name('politica-sgsis.aprobado');
+        Route::post('politica-sgsis/{id}/rechazado', 'PoliticaSgsiController@rechazado')->name('politica-sgsis.rechazado');
         Route::resource('politica-sgsis', 'PoliticaSgsiController');
-
-        // Roles Responsabilidades
-        Route::delete('roles-responsabilidades/destroy', 'RolesResponsabilidadesController@massDestroy')->name('roles-responsabilidades.massDestroy');
-        Route::resource('roles-responsabilidades', 'm');
 
         // Riesgosoportunidades
         Route::delete('riesgosoportunidades/destroy', 'RiesgosoportunidadesController@massDestroy')->name('riesgosoportunidades.massDestroy');
@@ -1039,6 +1107,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('auditoria-internas/{reporteid}/storeReporteIndividual', 'AuditoriaInternaController@storeReporte')->name('auditoria-internas.storeReporteIndividual');
         Route::post('auditoria-internas/reporte-rechazado/{reporteid}', 'AuditoriaInternaController@rechazoReporteIndividual')->name('auditoria-internas.rechazoReporteIndividual');
         Route::post('auditoria-internas/{reporteid}/storeFirmaReporteLider', 'AuditoriaInternaController@storeFirmaReporteLider')->name('auditoria-internas.storeFirmaReporteLider');
+        Route::post('auditoria-internas/{id}/pdf', 'AuditoriaInternaController@pdf')->name('auditoria-internas.pdf');
 
         Route::get('auditoria-reportes/cards', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
 
@@ -1396,6 +1465,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     });
 
     //Escuela cursos instructor
+    Route::get('capacitaciones-inicio', [CapacitacionesController::class, 'capacitacionesInicio']);
+
     Route::resource('courses', 'Escuela\Instructor\CourseController');
 
     Route::get('curso-estudiante/{course}', 'CursoEstudiante@cursoEstudiante')->name('curso-estudiante');
@@ -1410,7 +1481,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('courses/{course}/evaluacion/{evaluation}/quizdetail', 'CursoEstudiante@tableQuizDetails')->name('courses.quizdetails');
     //categorias para el administrador de escuela
     Route::resource('categories', 'Escuela\Admin\CategoryController');
+    Route::get('categories/destroy/{id}', 'Escuela\Admin\CategoryController@destroy');
     Route::resource('levels', 'Escuela\Admin\LevelController');
+    Route::get('levels/destroy/{id}', 'Escuela\Admin\LevelController@destroy');
     Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
 });
 

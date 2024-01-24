@@ -216,7 +216,7 @@ class PanelDeclaracionController extends Controller
             $destinatarios = DeclaracionAplicabilidadResponsable::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } elseif ($request->enviarNoNotificados) {
             $destinatarios = DeclaracionAplicabilidadResponsable::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
-        // dd($destinatarios);
+            // dd($destinatarios);
         } else {
             $destinatarios = json_decode($request->responsables);
         }
@@ -234,7 +234,7 @@ class PanelDeclaracionController extends Controller
             foreach ($responsable as $control) {
                 $controles->push($control->declaracion_aplicabilidad);
             }
-            Mail::to(removeUnicodeCharacters($empleado->email))->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
+            Mail::to(removeUnicodeCharacters($empleado->email))->queue(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
             $responsable = DeclaracionAplicabilidadResponsable::where('empleado_id', $destinatario)->first();
             $responsable->update(['esta_correo_enviado' => true]);
         }

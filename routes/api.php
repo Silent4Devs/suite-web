@@ -1,5 +1,15 @@
 <?php
 
+use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
+
+Route::post('api/v1/login', [AuthController::class, 'login']);
+
+Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
+});
+
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');

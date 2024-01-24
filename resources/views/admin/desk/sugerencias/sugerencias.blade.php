@@ -37,52 +37,38 @@
     </div>
 </div>
 
-<div class="datatable-fix" style="width: 100%;">
-    @can('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia')
-    <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/sugerencias')}}">Crear reporte</a>
+
+@can('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia')
+<div class="mb-3 text-right">
+    <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/sugerencias')}}">Crear reporte</a>
+</div>
+@endcan
+
+<div class="card card-body">
+
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <table class="datatable tabla_sugerencias">
+            <thead>
+                <tr>
+                    <th>Folio</th>
+                 <th>Estatus</th>
+                 <th style="min-width: 200px;">Fecha de recepción</th>
+                 <th style="min-width: 200px;">Fecha de cierre</th>
+                    <th style="min-width: 200px;">Nombre</th>
+                    <th style="min-width: 200px;">Correo</th>
+                    <th style="min-width: 200px;">Teléfono</th>
+                    <th style="min-width: 200px;">Sugerencia</th>
+                 <th style="min-width: 200px;">Área</th>
+                 <th style="min-width: 200px;">Proceso</th>
+                 <th style="min-width: 500px;">Descripción</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+    </table>
     </div>
-    @endcan
-   <table class="table tabla_sugerencias">
-   		<thead>
-   			<tr>
-       			<th>Folio</th>
-                <th>Estatus</th>
-                <th style="min-width: 200px;">Fecha de recepción</th>
-                <th style="min-width: 200px;">Fecha de cierre</th>
-       			<th style="min-width: 200px;">Nombre</th>
-       			<th style="min-width: 200px;">Correo</th>
-       			<th style="min-width: 200px;">Teléfono</th>
-       			<th style="min-width: 200px;">Sugerencia</th>
-                <th style="min-width: 200px;">Área</th>
-                <th style="min-width: 200px;">Proceso</th>
-                <th style="min-width: 500px;">Descripción</th>
-       			<th>Opciones</th>
-   			</tr>
-   		</thead>
-   		<tbody>
-   			{{-- @foreach($sugerencias as $sugerencia)
-	   			<tr>
-	       			<td>{{ $sugerencia->folio }}</td>
-                    <td>{{ $sugerencia->estatus }}</td>
-                    <td>{{ $sugerencia->fecha_reporte }}</td>
-                    <td>{{ $sugerencia->fecha_cierre }}</td>
-	       			<td>
-                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $sugerencia->sugirio->avatar }}" title="{{ $sugerencia->sugirio->name }}">
-                    </td>
-	       			<td>{{ $sugerencia->sugirio->email }}</td>
-	       			<td>{{ $sugerencia->sugirio->telefono }}</td>
-                    <td>{{ $sugerencia->titulo }}</td>
-                    <td>{{ $sugerencia->area_sugerencias }}</td>
-                    <td>{{ $sugerencia->proceso_sugerencias }}</td>
-	       			<td>{{ $sugerencia->descripcion }}</td>
-	       			<td>
-	       				<a href="{{ route('admin.desk.sugerencias-edit', $sugerencia->id) }}"><i class="fas fa-edit"></i></a>
-	       			</td>
-	   			</tr>
-   			@endforeach --}}
-   		</tbody>
-   </table>
 </div>
 
 

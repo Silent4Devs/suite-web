@@ -37,68 +37,48 @@
     </div>
 </div>
 
-<div class="datatable-fix" style="width: 100%;">
-    @can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
-    <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/mejoras')}}">Crear reporte</a>
-    </div>
-    @endcan
-    {{-- @foreach($mejoras as $mejora)
-        {{$mejora->mejoro}}
-    @endforeach --}}
-   <table class="table tabla_mejoras" id="tabla_mejoras">
-   		<thead>
-            <tr style="border: none !important;">
-                <th colspan="4" style="background-color: #F5F7FA;"></th>
-                <th colspan="7" style="border:1px solid #ccc; text-align:center;">Reporto</th>
 
-            </tr>
-   			<tr>
-       			<th>Folio</th>
-                <th style="min-width:200px;">Estatus</th>
-                <th style="min-width:200px;">Fecha de identificación</th>
-                <th style="min-width:200px;">Fecha de recepción</th>
-                <th style="min-width:200px;">Fecha de cierre</th>
-       			<th style="min-width:200px;">Nombre</th>
-                <th style="min-width:200px;">Área</th>
-                <th style="min-width:200px;">Puesto</th>
-       			<th style="min-width:200px;">Correo</th>
-       			<th style="min-width:200px;">Teléfono</th>
-                <th style="min-width: 500px;">Mejora</th>
-                <th style="min-width:200px;">Tipo de mejora</th>
-                <th style="min-width:200px;">Proceso</th>
-       			<th style="min-width: 500px;">Descripción</th>
-                <th style="min-width: 500px;">Beneficios</th>
-       			<th>Opciones</th>
-   			</tr>
-   		</thead>
-   		<tbody>
-   			{{-- @foreach($mejoras as $mejora)
-	   			<tr>
-	       			<td>{{ $mejora->folio }}</td>
-                    <td>{{ $mejora->estatus }}</td>
-                    <td>{{ $mejora->fecha_creacion }}</td>
-                    <td>{{ $mejora->fecha_reporte }}</td>
-                    <td>{{ $mejora->fecha_de_cierre }}</td>
-	       			<td>
-                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $mejora->mejoro->avatar }}" title="{{ $mejora->mejoro->name }}">
-                    </td>
-	       			<td>{{ $mejora->mejoro->email }}</td>
-	       			<td>{{ $mejora->mejoro->telefono }}</td>
-                    <td>{{ $mejora->titulo }}</td>
-                    <td>{{ $mejora->tipo }}</td>
-                    <td>{{ $mejora->area_mejora }}</td>
-                    <td>{{ $mejora->proceso_mejora }}</td>
-	       			<td>{{ $mejora->descripcion }}</td>
-                    <td>{{ $mejora->beneficios }}</td>
-	       			<td>
-	       				<a href="{{ route('admin.desk.mejoras-edit', $mejora->id) }}"><i class="fas fa-edit"></i></a>
-	       			</td>
-	   			</tr>
-   			@endforeach --}}
-   		</tbody>
-   </table>
+
+@can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
+<div class="mb-3 text-right">
+    <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/mejoras')}}">Crear reporte</a>
 </div>
+@endcan
+<div class="card card-body">
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <table class="datatable tabla_mejoras" id="tabla_mejoras">
+            <thead>
+             <tr style="border: none !important;">
+                 <th colspan="4" style="background-color: #F5F7FA;"></th>
+                 <th colspan="7" style="border:1px solid #ccc; text-align:center;">Reporto</th>
+
+             </tr>
+                <tr>
+                    <th>Folio</th>
+                 <th style="min-width:200px;">Estatus</th>
+                 <th style="min-width:200px;">Fecha de identificación</th>
+                 <th style="min-width:200px;">Fecha de recepción</th>
+                 <th style="min-width:200px;">Fecha de cierre</th>
+                    <th style="min-width:200px;">Nombre</th>
+                 <th style="min-width:200px;">Área</th>
+                 <th style="min-width:200px;">Puesto</th>
+                    <th style="min-width:200px;">Correo</th>
+                    <th style="min-width:200px;">Teléfono</th>
+                 <th style="min-width: 500px;">Mejora</th>
+                 <th style="min-width:200px;">Tipo de mejora</th>
+                 <th style="min-width:200px;">Proceso</th>
+                    <th style="min-width: 500px;">Descripción</th>
+                 <th style="min-width: 500px;">Beneficios</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+    </table>
+    </div>
+</div>
+
 
 
 @section('scripts')

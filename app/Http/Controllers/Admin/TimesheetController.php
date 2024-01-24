@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\MiExcepcionTimeshetClientes;
 use App\Http\Controllers\Controller;
 use App\Jobs\NuevoProyectoJob;
 use App\Mail\TimesheetHorasSobrepasadas;
@@ -29,8 +30,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
+use PDF;
 
 class TimesheetController extends Controller
 {
@@ -297,7 +300,7 @@ class TimesheetController extends Controller
 
                 try {
                     // Enviar correo
-                    Mail::to(removeUnicodeCharacters($aprobador->email))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+                    Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
                 } catch (Throwable $e) {
                     report($e);
 
@@ -537,7 +540,7 @@ class TimesheetController extends Controller
 
             try {
                 // Enviar correo
-                Mail::to(removeUnicodeCharacters($aprobador->email))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
+                Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
             } catch (Throwable $e) {
                 report($e);
 
@@ -864,7 +867,7 @@ class TimesheetController extends Controller
 
         try {
             // Enviar correo
-            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
         } catch (Throwable $e) {
             report($e);
 
@@ -889,7 +892,7 @@ class TimesheetController extends Controller
 
         try {
             // Enviar correo
-            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
         } catch (Throwable $e) {
             report($e);
 
@@ -919,10 +922,21 @@ class TimesheetController extends Controller
 
     public function clientesEdit($id)
     {
-        $cliente = TimesheetCliente::find($id);
-        // $personas = Fiscale::get();
+        try {
 
-        return view('admin.timesheet.clientes.edit', compact('cliente'));
+            $cliente = TimesheetCliente::find($id);
+
+            if (! $cliente) {
+                throw new MiExcepcionTimeshetClientes();
+            }
+
+            return view('admin.timesheet.clientes.edit', compact('cliente'));
+        } catch (MiExcepcionTimeshetClientes $excepcionPersonalizada) {
+
+            Log::error('Ocurrió una excepción personalizada: '.$excepcionPersonalizada->getMessage());
+
+            return response()->json(['error' => $excepcionPersonalizada->getMessage()], 400);
+        }
     }
 
     public function clientesStore(Request $request)
@@ -962,7 +976,7 @@ class TimesheetController extends Controller
     {
         $cliente_borrado = TimesheetCliente::find($id);
 
-        $cliente_borrado->delete();
+        $cliente_borrado->forceDelete();
 
         return redirect()->route('admin.timesheet-clientes')->with('success', 'Eliminado');
     }
@@ -1105,6 +1119,22 @@ class TimesheetController extends Controller
         return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes', 'tipos'));
     }
 
+    public function pdf($id)
+    {
+        $timesheet = Timesheet::with('horas.proyecto', 'horas.tarea')->where('id', $id)->first();
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('timesheet', compact('timesheet', 'organizacions', 'logo_actual'));
+
+        $pdf->setPaper('legal', 'landscape');
+
+        $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);
+
+
+        return $pdf->download('timesheet.pdf');
+    }
+
     public function notificacionhorassobrepasadas($id)
     {
         // dd("Si llega a la funcion");
@@ -1157,7 +1187,7 @@ class TimesheetController extends Controller
                     try {
                         // Enviar correo
                         Mail::to(removeUnicodeCharacters('marco.luna@silent4business.com'))
-                            ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
+                            ->queue(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
                     } catch (Throwable $e) {
                         report($e);
 

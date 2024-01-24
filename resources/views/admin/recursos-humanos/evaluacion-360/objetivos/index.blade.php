@@ -37,69 +37,111 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered w-100 tblObjetivos">
-                <div class="mb-2 row">
-                    <div class="col-4">
-                        <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
-                        <select class="form-control" id="lista_areas">
-                            <option value="" disabled selected>-- Selecciona un área --</option>
-                            @foreach ($areas as $area)
-                                <option value="{{ $area->area }}">{{ $area->area }}</option>
-                            @endforeach
-                            <option value="">Todas</option>
-                        </select>
-                    </div>
-                    {{-- {{$puestos}} --}}
-                    <div class="col-4" id="puesto">
-                        <label for=""><i class="fas fa-filter"></i> Filtrar por puesto</label>
-                        <select class="form-control" id="lista_puestos">
-                            <option value="" disabled selected>-- Selecciona un puesto --</option>
-                            @foreach ($puestos as $puesto)
-                                <option value="{{ $puesto->puesto }}">{{ $puesto->puesto }}</option>
-                            @endforeach
-                            <option value="">Todos</option>
-                        </select>
-                    </div>
-                    <div class="col-4">
-                        <label for=""><i class="fas fa-filter"></i> Filtrar por perfil</label>
-                        <select class="form-control" id="lista_perfiles">
-                            <option value="" disabled selected>-- Selecciona un perfil --</option>
-                            @foreach ($perfiles as $perfil)
-                                <option value="{{ $perfil->nombre }}">{{ $perfil->nombre }}</option>
-                            @endforeach
-                            <option value="">Todos</option>
-                        </select>
-                    </div>
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
+                    <select class="form-control" id="lista_areas">
+                        <option value="" disabled selected>-- Selecciona un área --</option>
+                        @foreach ($areas as $area)
+                            <option value="{{ $area->area }}">{{ $area->area }}</option>
+                        @endforeach
+                        <option value="">Todas</option>
+                    </select>
                 </div>
-                <thead class="thead-dark" id="max">
-                    <tr>
-                        <th style="vertical-align: top">
-                            N° Empleado
-                        </th>
-                        <th style="vertical-align: top">
-                            Nombre
-                        </th>
-                        <th style="vertical-align: top">
-                            Puesto
-                        </th>
-                        <th style="vertical-align: top">
-                            Área
-                        </th>
-                        <th style="vertical-align: top">
-                            Perfil
-                        </th>
-                        <th style="vertical-align: top">
-                            Objetivos
-                            Asignados
-                        </th>
-                        <th style="vertical-align: top">
-                            Opciones
-                        </th>
-                    </tr>
+                {{-- {{$puestos}} --}}
+                <div class="col-4" id="puesto">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por puesto</label>
+                    <select class="form-control" id="lista_puestos">
+                        <option value="" disabled selected>-- Selecciona un puesto --</option>
+                        @foreach ($puestos as $puesto)
+                            <option value="{{ $puesto->puesto }}">{{ $puesto->puesto }}</option>
+                        @endforeach
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por perfil</label>
+                    <select class="form-control" id="lista_perfiles">
+                        <option value="" disabled selected>-- Selecciona un perfil --</option>
+                        @foreach ($perfiles as $perfil)
+                            <option value="{{ $perfil->nombre }}">{{ $perfil->nombre }}</option>
+                        @endforeach
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+            </div>
 
-                </thead>
-                <tbody></tbody>
-            </table>
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <h3 class="title-table-rds">Objetivos Estratégicos</h3>
+                <table class="datatable tblObjetivos" id="tblObjetivos">
+                    <thead class="thead-dark" id="max">
+                        <tr>
+                            <th style="vertical-align: top">
+                                N° Empleado
+                            </th>
+                            <th style="vertical-align: top">
+                                Nombre
+                            </th>
+                            <th style="vertical-align: top">
+                                Puesto
+                            </th>
+                            <th style="vertical-align: top">
+                                Área
+                            </th>
+                            <th style="vertical-align: top">
+                                Perfil
+                            </th>
+                            <th style="vertical-align: top">
+                                Objetivos
+                                Asignados
+                            </th>
+                            <th style="vertical-align: top">
+                                Opciones
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach ($empleados as $empleado)
+                            <tr>
+                                <td>{{ $empleado->n_empleado ?? 'Sin Asignar' }}</td>
+                                <td>{{ $empleado->name }}</td>
+                                <td>{{ $empleado->puestoRelacionado->puesto }}</td>
+                                <td>{{ $empleado->area->area }}</td>
+                                <td>{{ $empleado->perfil->nombre ?? 'Sin Definir' }}</td>
+                                <td>{{ count($empleado->objetivos) . ' objetivos asignados' ?? 'Sin objetivos asignados' }}
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        @can('objetivos_estrategicos_agregar')
+                                            <a href="{{ url('/admin/recursos-humanos/evaluacion-360/' . $empleado->id . '/objetivos') }}"
+                                                title="Editar" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-user-tag"></i> Agregar
+                                            </a>
+                                        @endcan
+                                        @can('objetivos_estrategicos_copiar')
+                                            <button
+                                                onclick="CopiarObjetivos('/admin/recursos-humanos/evaluacion-360/objetivos/{{ $empleado->id }}/copiar', '{{ $empleado->name }}', '{{ $empleado->id }}')"
+                                                title="Copiar Objetivos" class="ml-2 text-white btn btn-sm"
+                                                style="background:#11bb55">
+                                                <i class="fas fa-copy"></i>Copiar
+                                            </button>
+                                        @endcan
+                                        @can('objetivos_estrategicos_ver')
+                                            <a href="{{ url('/admin/recursos-humanos/evaluacion-360/' . $empleado->id . '/objetivos/lista') }}"
+                                                title="Visualizar" class="ml-2 text-white btn btn-sm"
+                                                style="background:#1da79f">
+                                                <i class="fas fa-eye"></i> Ver
+                                            </a>
+                                        @endcan
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -251,95 +293,102 @@
 
             ];
 
+            // let dtOverrideGlobals = {
+            //     buttons: dtButtons,
+            //     processing: true,
+            //     serverSide: true,
+            //     retrieve: true,
+            //     aaSorting: [],
+            //     // ajax: "{{ route('admin.ev360-objetivos.index') }}",
+            //     // columns: [{
+            //     //         data: 'n_empleado'
+            //     //     }, {
+            //     //         data: 'name',
+            //     //         width: '25%',
+            //     //         render: function(data, type, row, meta) {
+            //     //             let html = `<img src="{{ asset('storage/empleados/imagenes') }}/${row.avatar}" style="clip-path:circle(20px at 50% 50%);height:40px;">
+        // //             <span>${data}</span>`;
+            //     //             return html;
+            //     //         }
+            //     //     }, {
+            //     //         data: 'puesto',
+            //     //         width: '18%'
+            //     //     }, {
+            //     //         data: 'area.area',
+            //     //     }, {
+            //     //         data: 'perfil.nombre',
+            //     //         render: function(data, type, row, meta) {
+            //     //             if (data) {
+            //     //                 return data;
+            //     //             }
+            //     //             return "Sin perfil vinculado";
+            //     //         },
+            //     //         width: '10%'
+            //     //     },
+            //     //     {
+            //     //         data: 'objetivos',
+            //     //         render: function(data, type, row, meta) {
+            //     //             if (data) {
+            //     //                 if (data.length == 1) {
+            //     //                     return `<span class="badge badge-success">${data.length} objetivo asignado</span>`;
+            //     //                 } else {
+            //     //                     return `<span class="badge badge-success">${data.length} objetivos asignados</span>`;
+            //     //                 }
+            //     //             } else {
+            //     //                 return `<span class="badge badge-dark">Sin asignar objetivos</span>`;
+            //     //             }
+            //     //         },
+            //     //         width: '10%'
+            //     //     },
+            //     //     {
+            //     //         data: 'id',
+            //     //         render: function(data, type, row, meta) {
+            //     //             let urlAsignar =
+            //     //                 `/admin/recursos-humanos/evaluacion-360/${data}/objetivos`;
+            //     //             let urlShow =
+            //     //                 `/admin/recursos-humanos/evaluacion-360/${data}/objetivos/lista`;
+            //     //             let urlCopiarObjetivos =
+            //     //                 `/admin/recursos-humanos/evaluacion-360/objetivos/copiar`;
+            //     //             let urlVistaCopiarObjetivos =
+            //     //                 `/admin/recursos-humanos/evaluacion-360/objetivos/${data}/copiar`;
+            //     //             let html = `
+        // //             <div class="d-flex">
+        // //             @can('objetivos_estrategicos_agregar')
+        // //                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm btn-primary">
+        // //                     <i class="fas fa-user-tag"></i> Agregar
+        // //                 </a>
+        // //             @endcan
+        // //             @can('objetivos_estrategicos_copiar')
+        // //                 <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos"
+        // //                     class="ml-2 text-white btn btn-sm" style="background:#11bb55">
+        // //                     <i class="fas fa-copy"></i>Copiar</button>
+        // //             @endcan
+        // //             @can('objetivos_estrategicos_ver')
+        // //                 <a href="${urlShow}" title="Visualizar" class="ml-2 text-white btn btn-sm" style="background:#1da79f">
+        // //                     <i class="fas fa-eye"></i> Ver
+        // //                 </a>
+        // //             @endcan
+        // //             </div>
+        // //             `;
+            //     //             return html;
+            //     //         },
+            //     //         width: '12%'
+            //     //     }
+            //     // ],
+            //     orderCellsTop: true,
+            //     order: [
+            //         [1, 'desc']
+            //     ],
+            //     dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
+            //         "<'row'<'col-sm-12'tr>>" +
+            //         "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
+            // };
+            // let table = $('.tblObjetivos').DataTable(dtOverrideGlobals);
             let dtOverrideGlobals = {
+                pageLength: 5,
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
                 retrieve: true,
-                aaSorting: [],
-                ajax: "{{ route('admin.ev360-objetivos.index') }}",
-                columns: [{
-                        data: 'n_empleado'
-                    }, {
-                        data: 'name',
-                        width: '25%',
-                        render: function(data, type, row, meta) {
-                            let html = `<img src="{{ asset('storage/empleados/imagenes') }}/${row.avatar}" style="clip-path:circle(20px at 50% 50%);height:40px;">
-                            <span>${data}</span>`;
-                            return html;
-                        }
-                    }, {
-                        data: 'puesto',
-                        width: '18%'
-                    }, {
-                        data: 'area.area',
-                    }, {
-                        data: 'perfil.nombre',
-                        render: function(data, type, row, meta) {
-                            if (data) {
-                                return data;
-                            }
-                            return "Sin perfil vinculado";
-                        },
-                        width: '10%'
-                    },
-                    {
-                        data: 'objetivos',
-                        render: function(data, type, row, meta) {
-                            if (data) {
-                                if (data.length == 1) {
-                                    return `<span class="badge badge-success">${data.length} objetivo asignado</span>`;
-                                } else {
-                                    return `<span class="badge badge-success">${data.length} objetivos asignados</span>`;
-                                }
-                            } else {
-                                return `<span class="badge badge-dark">Sin asignar objetivos</span>`;
-                            }
-                        },
-                        width: '10%'
-                    },
-                    {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
-                            let urlAsignar =
-                                `/admin/recursos-humanos/evaluacion-360/${data}/objetivos`;
-                            let urlShow =
-                                `/admin/recursos-humanos/evaluacion-360/${data}/objetivos/lista`;
-                            let urlCopiarObjetivos =
-                                `/admin/recursos-humanos/evaluacion-360/objetivos/copiar`;
-                            let urlVistaCopiarObjetivos =
-                                `/admin/recursos-humanos/evaluacion-360/objetivos/${data}/copiar`;
-                            let html = `
-                            <div class="d-flex">
-                            @can('objetivos_estrategicos_agregar')
-                                <a href="${urlAsignar}" title="Editar" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-user-tag"></i> Agregar
-                                </a>
-                            @endcan
-                            @can('objetivos_estrategicos_copiar')
-                                <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos"
-                                    class="ml-2 text-white btn btn-sm" style="background:#11bb55">
-                                    <i class="fas fa-copy"></i>Copiar</button>
-                            @endcan
-                            @can('objetivos_estrategicos_ver')
-                                <a href="${urlShow}" title="Visualizar" class="ml-2 text-white btn btn-sm" style="background:#1da79f">
-                                    <i class="fas fa-eye"></i> Ver
-                                </a>
-                            @endcan
-                            </div>
-                            `;
-                            return html;
-                        },
-                        width: '12%'
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ],
-                dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             let table = $('.tblObjetivos').DataTable(dtOverrideGlobals);
             $('#lista_areas').on('change', function() {
@@ -426,7 +475,7 @@
                                     <select class="empleados-select" name="empleado_destino">
                                         <option value="">-- Selecciona un empleado --</option>
                                         ${empleados.map(empleado => {
-                                            return `<option data-avatar="${empleado.avatar_ruta}" value="${empleado.id}">${empleado.name}</option>`;
+                                            return `<option data-avatar="${empleado.foto}" value="${empleado.id}">${empleado.name}</option>`;
                                         }).join(',')}
                                     </select>
                                 </div>

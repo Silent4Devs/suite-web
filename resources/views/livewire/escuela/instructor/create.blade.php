@@ -7,18 +7,16 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <div>
-                    <label>Pregunta<span style="color:red">*</span></label>
-                    <input class="form-control" type="text" value="" id="title"
-                        wire:model.defer="question">
+                <div class="form-group anima-focus">
+                    <input class="form-control" type="text" value="" id="title" placeholder="" wire:model.defer="question">
+                    <label>Pregunta*</label>
                     @error('question')
                         <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>
                     @enderror
                 </div>
-                <div>
+                <div class="form-group anima-focus">
+                    <input class="form-control" type="text" value="" id="title" placeholder="" wire:model.defer="explanation">
                     <label>Descripción</label>
-                    <input class="form-control" type="text" value="" id="title"
-                        wire:model.defer="explanation">
                     @error('explanation')
                         <p class="text-xs text-red-700">El campo descripción es obligatorio.</p>
                     @enderror

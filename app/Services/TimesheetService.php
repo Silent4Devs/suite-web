@@ -72,7 +72,7 @@ class TimesheetService
     public function totalRegisterByAreas(): array
     {
         $array = [];
-        $areas = $this->areaRepo->find();
+        $areas = $this->areaRepo->find(['id', 'area']);
         $participacion_total = 0;
         $hoy = $this->carbon->now();
         $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
@@ -172,7 +172,7 @@ class TimesheetService
     public function getRegistersByProyects(): array
     {
         // Obtenemos la lista de los proyectos
-        $proyectos = $this->timesheetProyectoRepo->find();
+        $proyectos = $this->timesheetProyectoRepo->find(['id', 'proyecto', 'estatus']);
         $proyectos_array = [];
         $cancelados = 0;
         $terminados = 0;

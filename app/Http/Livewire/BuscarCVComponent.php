@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Empleado;
 use App\Models\ListaDocumentoEmpleado;
-use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -123,43 +122,74 @@ class BuscarCVComponent extends Component
             $this->empleados = Empleado::getAltaEmpleados();
         }
 
-        $cacheKey = 'empleadosCV_data_'.Auth::user()->id;
+        // $empleadosCV = Empleado::alta()
+        //     ->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
+        //     ->when($this->empleado_id, function ($q3) {
+        //         $q3->where('id', $this->empleado_id);
+        //     })
+        //     ->when($this->area_id, function ($q4) {
+        //         $q4->where('area_id', $this->area_id);
+        //     })
+        //     ->when($this->certificacion, function ($q) {
+        //         $q->whereHas('empleado_certificaciones', function ($query) {
+        //             $certificaciones = explode(',', $this->certificacion);
+        //             $query->where(function ($queryArr) use ($certificaciones) {
+        //                 foreach ($certificaciones as $busqueda) {
+        //                     $queryArr->orWhere('nombre', 'ILIKE', "%{$busqueda}%");
+        //                 }
+        //             });
+        //         });
+        //     })
+        //     ->when($this->curso, function ($qCurso) {
+        //         $qCurso->whereHas('empleado_cursos', function ($queryCurso) {
+        //             $queryCurso->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
+        //         });
+        //     })
+        //     ->when($this->general, function ($qGeneral) {
+        //         $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
+        //     })
+        //     ->fastPaginate(18);
+        // $this->empleado_id = null;
+
+        // $this->lista_docs = ListaDocumentoEmpleado::getAll();
+
+        // return view('livewire.buscar-c-v-component', [
+        //     'empleadosCV' => $empleadosCV,
+        // ]);
 
         $empleadosCV = Empleado::alta()
             ->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
-            ->when($this->empleado_id, function ($q3) {
-                $q3->where('id', $this->empleado_id);
+            ->when($this->empleado_id, function ($query) {
+                $query->where('id', $this->empleado_id);
             })
-            ->when($this->area_id, function ($q4) {
-                $q4->where('area_id', $this->area_id);
+            ->when($this->area_id, function ($query) {
+                $query->where('area_id', $this->area_id);
             })
-            ->when($this->certificacion, function ($q) {
-                $q->whereHas('empleado_certificaciones', function ($query) {
-                    $certificaciones = explode(',', $this->certificacion);
-                    $query->where(function ($queryArr) use ($certificaciones) {
+            ->when($this->certificacion, function ($query) {
+                $certificaciones = explode(',', $this->certificacion);
+                $query->whereHas('empleado_certificaciones', function ($subQuery) use ($certificaciones) {
+                    $subQuery->where(function ($queryArr) use ($certificaciones) {
                         foreach ($certificaciones as $busqueda) {
                             $queryArr->orWhere('nombre', 'ILIKE', "%{$busqueda}%");
                         }
                     });
                 });
             })
-            ->when($this->curso, function ($qCurso) {
-                $qCurso->whereHas('empleado_cursos', function ($queryCurso) {
-                    $queryCurso->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
+            ->when($this->curso, function ($query) {
+                $query->whereHas('empleado_cursos', function ($subQuery) {
+                    $subQuery->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
                 });
             })
-            ->when($this->general, function ($qGeneral) {
-                $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
+            ->when($this->general, function ($query) {
+                $query->where('name', 'ILIKE', "%{$this->general}%");
             })
-            ->fastPaginate(21);
-
-        $this->empleado_id = null;
-
-        $this->lista_docs = ListaDocumentoEmpleado::getAll();
+            ->fastPaginate(18);
 
         return view('livewire.buscar-c-v-component', [
             'empleadosCV' => $empleadosCV,
+            'lista_docs' => ListaDocumentoEmpleado::getAll(),
         ]);
+
     }
 
     public function mostrarCurriculum($empleadoID)

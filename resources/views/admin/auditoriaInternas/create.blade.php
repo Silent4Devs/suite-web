@@ -14,11 +14,12 @@
 
     {{ Breadcrumbs::render('admin.auditoria-internas.create') }}
 
-    <h5 class="col-12 titulo_general_funcion">Crear Informe de Auditoria</h5>
-    <div class="card card-body" style="background-color: #7587D0; color: #fff;">
+    <h5 class="col-12 titulo_general_funcion">Informe de Auditoría  </h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
             <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
             <div>
+                <br>
                 <h4>¿Qué es Informe de auditoría?</h4>
                 <p>
                     Es un documento que describe los resultados de una auditoría.
@@ -31,144 +32,178 @@
             </div>
         </div>
     </div>
-    <div class="card mt-4">
-        <div class="card-body">
-            <form method="POST" action="{{ route('admin.auditoria-internas.store') }}" enctype="multipart/form-data"
-                class="row">
+    <form method="POST" action="{{ route('admin.auditoria-internas.store') }}" enctype="multipart/form-data">
+        <div class="card mt-4">
+            <div class="card-body">
+
                 @csrf
-                <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                    <label class="required">ID</label>
-                    <input class="form-control {{ $errors->has('id_auditoria') ? 'is-invalid' : '' }}" type="text"
-                        name="id_auditoria" id="id_auditoria" maxlength="255" value="{{ old('id_auditoria', '') }}"
-                        required>
-                    @if ($errors->has('id_auditoria'))
-                        <div class="text-danger">
-                            {{ $errors->first('id_auditoria') }}
+                <div class="form-row">
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <div class="anima-focus">
+                            <input class="form-control {{ $errors->has('id_auditoria') ? 'is-invalid' : '' }}"
+                                type="text" name="id_auditoria" id="id_auditoria" maxlength="255"
+                                value="{{ old('id_auditoria', '') }}" required placeholder="">
+                            <label class="required">ID</label>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
+                        @if ($errors->has('id_auditoria'))
+                            <div class="text-danger">
+                                {{ $errors->first('id_auditoria') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
+                    </div>
+                    <div class="form-group col-sm-8 col-md-8 col-lg-8">
+                        <div class="anima-focus">
+                            <input class="form-control {{ $errors->has('nombre_auditoria') ? 'is-invalid' : '' }}"
+                                type="text" name="nombre_auditoria" id="nombre_auditoria" maxlength="220"
+                                value="{{ old('nombre_auditoria', '') }}" required placeholder="">
+                            <label class="required">Nombre de auditoría</label>
+                        </div>
+                        @if ($errors->has('nombre_auditoria'))
+                            <div class="text-danger">
+                                {{ $errors->first('nombre_auditoria') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
+                    </div>
                 </div>
-                <div class="form-group col-sm-12 col-md-8 col-lg-8">
-                    <label class="required">Nombre de auditoría</label>
-                    <input class="form-control {{ $errors->has('nombre_auditoria') ? 'is-invalid' : '' }}" type="text"
-                        name="nombre_auditoria" id="nombre_auditoria" maxlength="220"
-                        value="{{ old('nombre_auditoria', '') }}" required>
-                    @if ($errors->has('nombre_auditoria'))
-                        <div class="text-danger">
-                            {{ $errors->first('nombre_auditoria') }}
+                <div class="form-row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <div class="anima-focus">
+                            <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" type="text" name="objetivo"
+                                id="objetivo" required placeholder="">{{ old('objetivo', '') }}</textarea>
+                            <label class="required">Objetivo de la auditoría</label>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
+                        @if ($errors->has('objetivo'))
+                            <div class="text-danger">
+                                {{ $errors->first('objetivo') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
+                    </div>
                 </div>
-                <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label class="required">Objetivo de la auditoría</label>
-                    <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" type="text" name="objetivo"
-                        id="objetivo" required>{{ old('objetivo', '') }}</textarea>
-                    @if ($errors->has('objetivo'))
-                        <div class="text-danger">
-                            {{ $errors->first('objetivo') }}
+                <div class="form-row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <div class="anima-focus">
+                            <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" type="text" name="alcance"
+                                id="alcance" required placeholder="">{{ old('alcance', '') }}</textarea>
+                            <label class="required" for="alcance">Alcance</label>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
-                </div>
-                <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label class="required" for="alcance">Alcance</label>
-                    <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" type="text" name="alcance"
-                        id="alcance" required>{{ old('alcance', '') }}</textarea>
-                    @if ($errors->has('alcance'))
-                        <div class="text-danger">
-                            {{ $errors->first('alcance') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
+                        @if ($errors->has('alcance'))
+                            <div class="text-danger">
+                                {{ $errors->first('alcance') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
+                    </div>
                 </div>
 
-                <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label class="required">Criteríos de auditoría</label>
-                    <textarea class="form-control {{ $errors->has('criterios_auditoria') ? 'is-invalid' : '' }}" type="text"
-                        name="criterios_auditoria" id="criterios_auditoria" required>{{ old('criterios_auditoria', '') }}</textarea>
-                    @if ($errors->has('criterios_auditoria'))
-                        <div class="text-danger">
-                            {{ $errors->first('criterios_auditoria') }}
+                <div class="form-row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <div class="anima-focus">
+                            <textarea class="form-control {{ $errors->has('criterios_auditoria') ? 'is-invalid' : '' }}" type="text"
+                                name="criterios_auditoria" id="criterios_auditoria" required placeholder="">{{ old('criterios_auditoria', '') }}</textarea>
+                            <label class="required">Criteríos de auditoría</label>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
+                        @if ($errors->has('criterios_auditoria'))
+                            <div class="text-danger">
+                                {{ $errors->first('criterios_auditoria') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
+                    </div>
                 </div>
 
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="fecha_inicio"> Fecha
-                        del reporte de auditoría</label>
-                    <input class="form-control mt-2" type="date" id="fecha_inicio" name="fecha_inicio" min="1945-01-01"
-                        value="{{ old('fecha_inicio') }}">
-                    @if ($errors->has('fecha_inicio'))
-                        <div class="text-danger">
-                            {{ $errors->first('fecha_inicio') }}
+                <div class="form-row">
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4 mt-4">
+                        <div class="anima-focus">
+                            <input class="form-control mt-2" type="date" id="fecha_inicio" name="fecha_inicio"
+                                min="1945-01-01" value="{{ old('fecha_inicio') }}">
+                            <label for="fecha_inicio"> Fecha
+                                del reporte de auditoría</label>
                         </div>
-                    @endif
-                </div>
+                        @if ($errors->has('fecha_inicio'))
+                            <div class="text-danger">
+                                {{ $errors->first('fecha_inicio') }}
+                            </div>
+                        @endif
+                    </div>
 
-                <div class="form-group col-md-6">
-                    <label for="auditorlider_id">Auditor líder</label>
-                    <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}"
-                        name="lider_id" id="auditorlider_id">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        @foreach ($auditorliders as $auditorlider)
-                            <option {{ old('lider_id') == $auditorlider->id ? ' selected="selected"' : '' }}
-                                data-puesto="{{ $auditorlider->puesto }}" value="{{ $auditorlider->id }}"
-                                data-area="{{ $auditorlider->area->area }}">
-                                {{ Str::limit($auditorlider->name, 30, '...') }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('auditorlider'))
-                        <div class="text-danger">
-                            {{ $errors->first('auditorlider') }}
+                    <div class="form-group col-sm-8 col-md-8 col-lg-8">
+                        <div class="anima-focus">
+                            <select multiple
+                                class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}"
+                                name="equipo[]" id="equipoauditoria_id">
+                                @foreach ($equipoauditorias as $equipoauditoria)
+                                    <option
+                                        {{ old('equipoauditoria_id') == $equipoauditoria->id ? ' selected="selected"' : '' }}
+                                        value="{{ $equipoauditoria->id }}">
+                                        {{ $equipoauditoria->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="equipoauditoria_id">Equipo auditoría</label>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.auditorlider_helper') }}</span>
+                        @if ($errors->has('equipoauditoria'))
+                            <div class="text-danger">
+                                {{ $errors->first('equipoauditoria') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.equipoauditoria_helper') }}</span>
+                    </div>
                 </div>
 
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="auditor_externo">Auditor externo</label>
-                    <input class="form-control mt-2" id="auditor_externo" name="auditor_externo" maxlength="220"
-                        value="{{ old('auditor_externo') }}">
-                    @if ($errors->has('auditor_externo'))
-                        <div class="text-danger">
-                            {{ $errors->first('auditor_externo') }}
+                <div class="form-row">
+                    <div class="form-group col-md-6 mt-2">
+                        <div class="anima-focus">
+                            <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}"
+                                name="lider_id" id="auditorlider_id">
+                                <option value="" disabled selected>Seleccione una opción</option>
+                                @foreach ($auditorliders as $auditorlider)
+                                    <option {{ old('lider_id') == $auditorlider->id ? ' selected="selected"' : '' }}
+                                        data-puesto="{{ $auditorlider->puesto }}" value="{{ $auditorlider->id }}"
+                                        data-area="{{ $auditorlider->area->area }}">
+                                        {{ Str::limit($auditorlider->name, 30, '...') }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="auditorlider_id">Auditor líder</label>
                         </div>
-                    @endif
-                </div>
+                        @if ($errors->has('auditorlider'))
+                            <div class="text-danger">
+                                {{ $errors->first('auditorlider') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.auditorlider_helper') }}</span>
+                    </div>
 
-
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="equipoauditoria_id">Equipo auditoría</label>
-                    <select multiple class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}"
-                        name="equipo[]" id="equipoauditoria_id">
-                        @foreach ($equipoauditorias as $equipoauditoria)
-                            <option {{ old('equipoauditoria_id') == $equipoauditoria->id ? ' selected="selected"' : '' }}
-                                value="{{ $equipoauditoria->id }}">
-                                {{ $equipoauditoria->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('equipoauditoria'))
-                        <div class="text-danger">
-                            {{ $errors->first('equipoauditoria') }}
+                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                        <div class="anima-focus">
+                            <input class="form-control mt-2" id="auditor_externo" name="auditor_externo" maxlength="220"
+                                value="{{ old('auditor_externo') }}">
+                            <label for="auditor_externo">Auditor externo</label>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.equipoauditoria_helper') }}</span>
+                        @if ($errors->has('auditor_externo'))
+                            <div class="text-danger">
+                                {{ $errors->first('auditor_externo') }}
+                            </div>
+                        @endif
+                    </div>
                 </div>
 
 
-                <div class="form-group col-12 text-right">
-                    <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
-            </form>
+
+
+            </div>
         </div>
-    </div>
+
+        <div class="form-group col-12 text-right">
+            <a href="{{ route('admin.auditoria-internas.index') }}" class="btn btn-outline-primary btn-lg">Cancelar</a>
+            <button class="btn btn-primary btn-lg" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+    </form>
 @endsection
 
 @section('scripts')

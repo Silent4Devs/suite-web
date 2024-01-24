@@ -18,10 +18,15 @@ use Illuminate\Http\Request;
 
 class TemplateController extends Controller
 {
-    public function index()
+    public function create()
     {
 
-        return view('admin.analisisdebrecha2022nv.templatess.index');
+        return view('admin.analisisdebrecha2022nv.templatess.create');
+    }
+
+    public function edit($id_template)
+    {
+        return view('admin.analisisdebrecha2022nv.templatess.edit', compact('id_template'));
     }
 
     public function store(Request $request)
