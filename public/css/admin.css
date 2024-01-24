@@ -1256,3 +1256,6 @@ a:hover {
 a{
     color: unset;
 }
+.table .thead-dark th{
+    background-color: #fff !important;
+}
