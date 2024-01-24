@@ -20,14 +20,8 @@ class QueueCorreo extends Controller
             //Benchmark::dd(fn () => Mail::to('luis.vargas@silent4business.com')->queue(new TestMail()));
             Mail::to('luis.vargas@silent4business.com')->queue(new TestMail());
         }
-        // Get all keys in the Redis table
-        $keys = Redis::keys('Auth_user');
-
-        // Get values associated with those keys
-        $data = Redis::mget($keys);
-
         // Now, $data contains all the values from the Redis table
-        dd($data);
+        dd("al ready sent");
     }
 
     /**
