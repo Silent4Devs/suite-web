@@ -27,7 +27,7 @@
             <tr>
                 <td class="td-img-doc">
                     @if ($logo_actual)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{asset($logo_actual)}}">
+                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{public_path($logo_actual)}}">
                     @else
                         <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif

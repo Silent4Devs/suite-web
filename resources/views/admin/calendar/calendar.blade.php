@@ -121,8 +121,7 @@
     <div class="card">
 
 
-        <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
-            style="margin-top:0px !important; ">
+        <div class="py-2 col-md-10 col-sm-9 card-body bg-primary align-self-center " style="margin-top:0px !important; ">
 
         </div>
         <div class="card-body" style="height: 700px;">
