@@ -520,8 +520,6 @@
 
         document.getElementById('hora-portal').innerHTML = hora;
         document.getElementById('med-portal>').innerHTML = med;
-        console.log(hora);
-        console.log(med);
 
         const fechaActual = new Date();
 
@@ -536,11 +534,9 @@
         const fechaHumana = fechaActual.toLocaleDateString('es-ES', opcionesFecha).replace(' de ', ' ');
 
         // Mostrar la fecha en la consola
-        console.log(fechaHumana); // Ejemplo: "martes, 21 de diciembre de 2023"
         document.getElementById('fecha-completa').innerHTML = fechaHumana;
 
         function boletin(id) {
-            console.log(id);
             $('.caja-img-carrusel-vertical .item-main-carrusel').addClass('d-none');
             $('#' + id).removeClass('d-none');
         }
@@ -554,5 +550,33 @@
                 document.querySelector('.carrusel-portal:hover .caja-items-carrusel-portal').scrollLeft -= 400;
             }
         }
+
+        $(document).ready(function() {
+            // Reemplaza '82a605d0' y '010461c49fd2f4a8f1968e0236b802fa' con tus credenciales de WeatherUnlocked
+            const appId = '82a605d0';
+            const apiKey = '010461c49fd2f4a8f1968e0236b802fa';
+
+            // Coordenadas para una ubicación específica (51.50, -0.12 es Londres, puedes cambiarlo)
+            const latitude = 51.50;
+            const longitude = -0.12;
+
+            // URL de la API de WeatherUnlocked para obtener datos del tiempo en una ubicación específica
+            const apiUrl =
+                `http://api.weatherunlocked.com/api/current/${latitude},${longitude}?app_id=${appId}&app_key=${apiKey}`;
+
+            // Realiza la solicitud a la API utilizando jQuery AJAX
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Muestra la información del tiempo en el elemento con id 'weather-info'
+                    console.log(data);
+                },
+                error: function(error) {
+                    console.error('Error al obtener datos del tiempo:', error);
+                }
+            });
+        });
     </script>
 @endsection

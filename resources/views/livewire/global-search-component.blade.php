@@ -25,7 +25,8 @@
         </div>
     @endif
     @if ($lugar == 'portal')
-        <input type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off" wire:model="search">
+        <input type="text" placeholder="Ejem: Cargar mis horas en Timesheet h-100" autocomplete="off"
+            wire:model="search">
 
         <div class="caja-list-search-global scroll_estilo">
             <ul class="list-group">
