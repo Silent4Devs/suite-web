@@ -89,8 +89,8 @@
                         <hr>
                     </div>
                 </button>
-                <a href="{{ url('/') }}"><img src="{{ asset('img/logo-ltr.png') }}" alt="Logo Tabantaj"
-                        style="height: 40px;"></a>
+                <a href="{{ url('/admin/portal-comunicacion') }}"><img src="{{ asset('img/logo-ltr.png') }}"
+                        alt="Logo Tabantaj" style="height: 40px;"></a>
                 @livewire('global-search-component', ['lugar' => 'header'])
             </div>
             @if ($usuario->empleado)

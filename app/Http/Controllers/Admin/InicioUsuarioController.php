@@ -215,10 +215,10 @@ class InicioUsuarioController extends Controller
             if ($usuario->empleado->children->count()) {
                 $esLider = true;
                 $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
-                $equipo_a_cargo = Empleado::getAll()->find($equipo_a_cargo);
+                $equipo_a_cargo = Empleado::getaltaAll()->find($equipo_a_cargo);
             } else {
                 $equipo_trabajo = $usuario->empleado->empleados_misma_area;
-                $equipo_trabajo = Empleado::getAll()->find($equipo_trabajo);
+                $equipo_trabajo = Empleado::getaltaAll()->find($equipo_trabajo);
             }
             $supervisor = $usuario->empleado->supervisor;
         }
