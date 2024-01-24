@@ -19,8 +19,13 @@
                 <div class="col-12 d-flex justify-content-between mb-4">
                     <div class=""><strong>Fecha: </strong>
                         {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format('d/m/Y') }}</div>
-                    <button class="btn btn-secundario" onclick="imprimirElemento('content_times_show_print');"><i
-                            class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
+
+                        <form method="POST" action="{{ route('admin.timesheet.pdf', ['id' => $timesheet->id]) }}">
+                        @csrf
+                        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+                        </button>
+                       </form>
                 </div>
                 <div id="content_times_show_print" class="w-100">
                     @php
@@ -34,6 +39,17 @@
                     <style type="text/css">
                         @page {
                             size: landscape;
+                        }
+                        .boton-transparentev2 {
+                            top: 214px;
+                            width: 135px;
+                            height: 40px;
+                            /* UI Properties */
+                            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                            border: 1px solid var(--unnamed-color-057be2);
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #057BE2;
+                            opacity: 1;
                         }
 
                         .encabezado-print {
