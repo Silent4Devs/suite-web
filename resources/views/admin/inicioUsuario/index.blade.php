@@ -71,7 +71,6 @@
                             <div>
                                 <span>Cumpleaños</span><br>
                                 {{ $usuario->empleado->actual_birdthday }}
-
                             </div>
                         </div>
                     </div>
