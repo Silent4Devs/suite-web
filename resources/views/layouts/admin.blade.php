@@ -228,6 +228,12 @@
                             </a>
                         </li>
                     @endcan
+                    <li>
+                        <a href="{{ route('admin.timesheet-inicio') }}">
+                            <i class="bi bi-calendar-plus"></i>
+                            Timesheet
+                        </a>
+                    </li>
                 </ul>
             </div>
             @if (
