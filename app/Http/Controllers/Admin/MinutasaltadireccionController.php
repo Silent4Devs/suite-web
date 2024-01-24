@@ -143,7 +143,7 @@ class MinutasaltadireccionController extends Controller
         //     return intval($valor);
         // }, $arrstrParticipantes);
 
-        $participantes = json_decode($request->input('participantes'));
+        /*$participantes = json_decode($request->input('participantes'));
         // dd($participantes);
         if (is_array($participantes)) {
             foreach ($participantes as $participante) {
@@ -154,6 +154,16 @@ class MinutasaltadireccionController extends Controller
                 $arrpart[] = [
                     'empleado_id' => $empleadoId,
                     'asistencia' => $asistencia,
+                ];
+            }
+        }*/
+        $participantes = json_decode($request->input('participantes'), true);
+
+        if (is_array($participantes)) {
+            foreach ($participantes as $participante) {
+                $arrpart[] = [
+                    'empleado_id' => $participante['empleado_id'] ?? null,
+                    'asistencia' => $participante['asistencia'] ?? null,
                 ];
             }
         }
