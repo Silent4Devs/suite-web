@@ -103,7 +103,7 @@ abstract class RepoBase
     /**
      * Set the value of paramOrder.
      *
-     * @return  self
+     * @return self
      */
     public function setParamOrder($paramOrder)
     {
@@ -123,7 +123,7 @@ abstract class RepoBase
     /**
      * Set the value of order.
      *
-     * @return  self
+     * @return self
      */
     public function setOrder($order)
     {
