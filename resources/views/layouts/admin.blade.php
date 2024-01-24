@@ -57,8 +57,8 @@
     <link href="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.css" rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/rds.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=1.2">
+    <link rel="stylesheet" href="{{ asset('css/rds.css') }}?v=1.2">
     @yield('styles')
     @livewireStyles
 </head>
