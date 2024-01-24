@@ -638,10 +638,10 @@ class Empleado extends Model implements Auditable
         return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluado_evaluador', 'evaluador_id', 'id');
     }
 
-    // public function getJefeInmediatoAttribute()
-    // {
-    //     return $this->supervisor ? $this->supervisor->id : $this->id;
-    // }
+    public function getJefeInmediatoAttribute()
+    {
+        return $this->supervisor ? $this->supervisor->name : $this->id;
+    }
 
     public function getEmpleadosMismaAreaAttribute()
     {
