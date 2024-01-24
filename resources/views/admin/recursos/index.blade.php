@@ -85,7 +85,6 @@
                 <table class="datatable datatable-Recurso" id="datatable-Recurso">
                     <thead class="thead-dark">
                         <tr>
-                            <th></th>
                             <th>
                                 {{ trans('cruds.recurso.fields.id') }}
                             </th>
@@ -274,9 +273,6 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.recursos.index') }}",
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                    }, {
                         data: 'id',
                         name: 'id',
                         visible: false
