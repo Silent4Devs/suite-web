@@ -335,19 +335,14 @@ class PoliticaSgsiController extends Controller
         }
 
         //Aprobadores normales
-        // for ($i = 1; $i <= $no_niveles; $i++) {
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 1) {
-                // for ($j = 1; $j <= 5; $j++) {
-
                 if ($part->participante->numero_orden == 1) {
                     $emailAprobador = $part->participante->empleado->email;
                     Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
                     break;
                 }
-                // }
             }
-            // }
         }
     }
 
