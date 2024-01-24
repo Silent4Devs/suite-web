@@ -124,7 +124,7 @@ return [
         ],
         'snapshots' => [
             'driver' => 'local',
-            'root' => '/var/tabantaj_dumps',
+            'root' => storage_path('snapshots'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
