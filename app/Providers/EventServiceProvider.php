@@ -60,6 +60,7 @@ use App\Models\RH\MetricasObjetivo;
 use App\Models\RH\TipoCompetencia;
 use App\Models\RH\TipoObjetivo;
 use App\Models\RiesgoIdentificado;
+use App\Models\Role;
 use App\Models\Sede;
 use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
@@ -118,6 +119,7 @@ use App\Observers\RecursosObserver;
 use App\Observers\RegistroMejoraObserver;
 use App\Observers\RevisionDocumentoObserver;
 use App\Observers\RiesgoIdentificadoObserver;
+use App\Observers\RolesObserver;
 use App\Observers\SectionObserver;
 use App\Observers\SedesObserver;
 use App\Observers\SolicitudDayOffObserver;
@@ -244,5 +246,6 @@ class EventServiceProvider extends ServiceProvider
         SolicitudPermisoGoceSueldo::observe(SolicitudPermisoGoceSueldoObserver::class);
         PermisosGoceSueldo::observe(PermisosGoceSueldoObserver::class);
         Minutasaltadireccion::observe(MinutasAltaDireccionObserver::class);
+        Role::observe(RolesObserver::class);
     }
 }

@@ -126,19 +126,19 @@ class IncidentesDayOffController extends Controller
             return redirect()->back()->withErrors($errors)->withInput();
         }
 
-        if (!empty($empleados)) {
+        if (! empty($empleados)) {
             $empleados = array_map(function ($value) {
                 return intval($value);
             }, $request->empleados);
         }
 
-        if (!empty($puestos)) {
+        if (! empty($puestos)) {
             $puestos = array_map(function ($value) {
                 return intval($value);
             }, $request->puestos);
         }
 
-        if (!empty($areas)) {
+        if (! empty($areas)) {
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
@@ -220,19 +220,19 @@ class IncidentesDayOffController extends Controller
         $vacacion = IncidentesDayoff::find($id);
 
         $vacacion->update($request->all());
-        if (!empty($empleados)) {
+        if (! empty($empleados)) {
             $empleados = array_map(function ($value) {
                 return intval($value);
             }, $request->empleados);
         }
 
-        if (!empty($puestos)) {
+        if (! empty($puestos)) {
             $puestos = array_map(function ($value) {
                 return intval($value);
             }, $request->puestos);
         }
 
-        if (!empty($areas)) {
+        if (! empty($areas)) {
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);

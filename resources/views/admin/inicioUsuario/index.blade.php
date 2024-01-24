@@ -32,9 +32,11 @@
                                 alt="">
                         </div>
                         <div class="mt-4">
-                            <a href="{{route('admin.miCurriculum', $usuario->empleado->id)}}">Ver perfil profesional</a> <br>
-                            <a href="{{route('admin.inicio-Usuario.perfil-puesto')}}">Ver perfil de puesto</a> <br>
-                            <a href="{{route('admin.inicio-Usuario.expediente', auth()->user()->empleado->id) }}">Mi expediente</a>
+                            <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}">Ver perfil profesional</a>
+                            <br>
+                            <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}">Ver perfil de puesto</a> <br>
+                            <a href="{{ route('admin.inicio-Usuario.expediente', auth()->user()->empleado->id) }}">Mi
+                                expediente</a>
                         </div>
                         <div class="mt-4">
                             <strong>Email</strong><br>
@@ -69,7 +71,6 @@
                             <div>
                                 <span>Cumpleaños</span><br>
                                 {{ $usuario->empleado->actual_birdthday }}
-
                             </div>
                         </div>
                     </div>
@@ -241,7 +242,7 @@
                 </div>
             </a>
 
-            <a href="">
+            {{-- <a href="">
                 <div class="item-ob-ev" style="background-color: #19A877;">
                     <div class="img-ob-ev">
                         <img src="{{ asset('img/inicio_usuario/ev360.png') }}" alt="">
@@ -251,7 +252,7 @@
                         <p><small>Ver mi evaluación 360</small></p>
                     </div>
                 </div>
-            </a>
+            </a> --}}
 
         </div>
     </div>

@@ -267,6 +267,7 @@ class ReportesEmpleados extends Component
                     $horas_total_time += floatval($hora->horas_sabado);
                     $horas_total_time += floatval($hora->horas_domingo);
 
+                    //fix
                     $horas_semana += floatval($hora->horas_lunes);
                     $horas_semana += floatval($hora->horas_martes);
                     $horas_semana += floatval($hora->horas_miercoles);
@@ -423,7 +424,7 @@ class ReportesEmpleados extends Component
         }
 
         Mail::to(removeUnicodeCharacters($empleado->email))
-            ->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
+            ->queue(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
 
         $this->alert('success', 'Correo Enviado!');
 

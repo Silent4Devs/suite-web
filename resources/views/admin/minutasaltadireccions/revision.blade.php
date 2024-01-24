@@ -233,6 +233,9 @@
     </form>
 @endsection
 
+<script>
+    document.getElementById('myTextarea').value = '{{ html_entity_decode(strip_tags($minutas->tema_tratado)) }}';
+</script>
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {

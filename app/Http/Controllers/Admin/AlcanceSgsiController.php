@@ -246,12 +246,27 @@ class AlcanceSgsiController extends Controller
 
         $alcances = AlcanceSgsi::get();
         $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
 
-        $pdf = PDF::loadView('alcances', compact('alcances', 'organizacions'));
+        $pdf = PDF::loadView('alcances', compact('alcances', 'organizacions', 'logo_actual'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('alcances.pdf');
     }
+
+
+    public function pdfShow($id)
+    {
+        $alcances = AlcanceSgsi::find($id);
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('alcances_show', compact('alcances', 'organizacions', 'logo_actual'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('alcances.pdf');
+    }
+
 
     public function solicitudAprobacion($id_alcance)
     {
@@ -290,7 +305,7 @@ class AlcanceSgsiController extends Controller
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
-                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
+                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->queue(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
                 // dd('primer usuario', $part->participante);
             }
         }
@@ -303,7 +318,7 @@ class AlcanceSgsiController extends Controller
 
                 if ($part->participante->numero_orden == 1) {
                     $emailAprobador = $part->participante->empleado->email;
-                    Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
+                    Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
                     break;
                 }
                 // }
@@ -357,6 +372,7 @@ class AlcanceSgsiController extends Controller
                                 break;
                             } else {
                                 $acceso_restringido = 'turno';
+
                                 return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
                             }
                         }
@@ -371,9 +387,11 @@ class AlcanceSgsiController extends Controller
                 }
             }
             $acceso_restringido = 'denegado';
+
             return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
         } else {
             $acceso_restringido = 'aprobado';
+
             return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
         }
     }
@@ -453,7 +471,7 @@ class AlcanceSgsiController extends Controller
         $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso);
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
-            Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionAprobacionAlcance($alcance->nombre));
+            Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionAprobacionAlcance($alcance->nombre));
             // dd('primer usuario', $part->participante);
         }
     }
@@ -488,10 +506,10 @@ class AlcanceSgsiController extends Controller
         $emailresponsable = $alcance->empleado->email;
         $alcance_nombre = $alcance->nombre;
         // dd($emailresponsable, $alcance_nombre);
-        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoAlcanceLider($alcance->id, $alcance_nombre));
+        Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoAlcanceLider($alcance->id, $alcance_nombre));
 
         foreach ($aprobacion->participantes as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoAlcance($alcance_nombre));
+            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionRechazoAlcance($alcance_nombre));
         }
 
         return redirect(route('admin.alcance-sgsis.index'));
@@ -545,7 +563,7 @@ class AlcanceSgsiController extends Controller
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
-                            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
+                            Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
                             break;
                         }
                     }

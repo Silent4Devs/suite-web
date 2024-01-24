@@ -86,7 +86,7 @@ class Course extends Model
 
     public function sections()
     {
-        return $this->hasMany('App\Models\Escuela\Section');
+        return $this->hasMany('App\Models\Escuela\Section')->orderBy('created_at', 'asc');
     }
 
     //Relacion uno a muchos inversa

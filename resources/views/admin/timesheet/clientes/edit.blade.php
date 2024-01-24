@@ -17,19 +17,19 @@
         <form action="{{ asset('admin/timesheet/clientes/update') }}/{{ $cliente->id }}" method="POST" class="row">
             @csrf
             <div class="form-group col-md-2 anima-focus">
-                <input type="" required name="identificador" placeholder=""  class="form-control" required
+                <input type="" required name="identificador" placeholder="" pattern="^[0-9]+$" type="number" class="form-control" required
                     value="{{ $cliente->identificador }}">
                     {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
             </div>
 
             <div class="form-group col-md-5 anima-focus">
-                <input type="" placeholder="" required name="razon_social" class="form-control" value="{{ $cliente->razon_social }}"
+                <input type="" placeholder="" required name="razon_social" maxlength="255" class="form-control" value="{{ $cliente->razon_social }}"
                     required>
                     {!! Form::label('razon_social', 'Razon Social*', ['class' => 'asterisco']) !!}
             </div>
 
             <div class="form-group col-md-5 anima-focus">
-                <input type="" required name="nombre" placeholder="" class="form-control" required value="{{ $cliente->nombre }}">
+                <input type="" required name="nombre" placeholder="" maxlength="255" class="form-control" required value="{{ $cliente->nombre }}">
                 {!! Form::label('nombre', 'Nombre Comercial del Cliente*', ['class' => 'asterisco']) !!}
             </div>
 
@@ -50,12 +50,12 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" placeholder="" name="calle" class="form-control" value="{{ $cliente->calle }}">
+                    <input type="" placeholder="" name="calle" maxlength="255" class="form-control" value="{{ $cliente->calle }}">
                     {!! Form::label('calle', 'Calle y Número*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="colonia" placeholder="" class="form-control" value="{{ $cliente->colonia }}">
+                    <input type="" name="colonia" placeholder="" maxlength="255" class="form-control" value="{{ $cliente->colonia }}">
                     {!! Form::label('colonia', 'Colonia*', ['class' => 'asterisco']) !!}
                 </div>
 
@@ -101,7 +101,7 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="email" id="foo" placeholder="" class="form-control" value="{{ $cliente->correo_contacto }}"
+                    <input type="email" id="foo" placeholder="" maxlength="255" class="form-control" value="{{ $cliente->correo_contacto }}"
                         placeholder="" name="correo_contacto">
                         {!! Form::label('correo_contacto', 'Correo Electronico*', ['class' => 'asterisco']) !!}
 
@@ -121,13 +121,13 @@
                 </div>
 
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control" name="objeto_descripcion" id="objeto_descripcion">{{ old('objeto_descripcion', $cliente->objeto_descripcion) }}</textarea>
+                    <textarea class="form-control" name="objeto_descripcion" maxlength="255" id="objeto_descripcion">{{ old('objeto_descripcion', $cliente->objeto_descripcion) }}</textarea>
                     {!! Form::label('objeto_descripcion', 'Objeto social / Descripción
                         del servicio o producto*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control" name="cobertura" id="cobertura">{{ old('objeto_descripcion', $cliente->cobertura) }}</textarea>
+                    <textarea class="form-control" name="cobertura" maxlength="255" id="cobertura">{{ old('objeto_descripcion', $cliente->cobertura) }}</textarea>
                     {!! Form::label('cobertura', 'Cobertura, Rango geográfico
                     en el cual presta los servicios*', ['class' => 'asterisco']) !!}
                 </div>

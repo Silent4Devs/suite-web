@@ -30,6 +30,6 @@ class NotificacionRechazoAlcanceLider extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.alcance-sgsi.notificacion-alcance-lider')->subject('Determinación de Alcance Rechazado: ' . $this->nombre);
+        return $this->view('mails.alcance-sgsi.notificacion-alcance-lider')->subject('Determinación de Alcance Rechazado: '.$this->nombre);
     }
 }

@@ -2,11 +2,11 @@
 
     @forelse ($section->lessons as $item)
 
-        <div class="card shadow-none " x-data="{ isOpen: false }" id="card{{$item->id}}" style="border: 1px solid #D8D8D8; border-radius:16px;">
+        <div class="card shadow-none " x-data="{ openElementId: @entangle('openElementId') }" id="card{{$item->id}}" style="border: 1px solid #D8D8D8; border-radius:16px;" @close-collapse.window="openElementId = null">
             <div class="card-header " style="border: none;">
                 <div class="row">
                     <div class="col-11 d-flex align-items-baseline" style="padding: 0px;">
-                        <button @click="isOpen = !isOpen" wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF; border: none; background:none;" id="link{{$item->id}}" class="mr-1">
+                        <button @click="openElementId === {{ $item->id }} ? openElementId = null : openElementId = {{ $item->id }}" wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF; border: none; background:none;" id="link{{$item->id}}" class="mr-1">
                             <i style="font-size:14px; cursor: pointer;"
                                 class="d-inline fas fa-play-circle openCollapse" id="toggleButton{{$item->id}}" ></i>
                         </button>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div>
-                        <button @click="isOpen = !isOpen" wire:click="edit({{ $item }})"
+                        <button @click="openElementId === {{ $item->id }} ? openElementId = null : openElementId = {{ $item->id }}" wire:click="edit({{ $item }})"
                             style="cursor: pointer; color:#3086AF; border: none; background:none;"
                             id="2link{{ $item->id }}">
                             <i style="font-size: 20px; cursor: pointer;" class="d-inline bi bi-caret-down-fill openCollapse"
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body collapsible-content" x-show="isOpen" style="border-top: 1px solid #D8D8D8;"
+            <div class="card-body collapsible-content" x-show="openElementId === {{ $item->id }}" style="border-top: 1px solid #D8D8D8;"
                 id="collapse{{ $item->id }}" wire:ignore>
                 <div wire:loading>
                     <div class="spinner-border text-primary" role="status">
@@ -40,18 +40,18 @@
                     <form wire:submit.prevent="update" class="px-3 py-2 ">
                         <div class="row">
                             <div class="form-group col-8 anima-focus">
-                                <input wire:model.defer="lesson.name" id="edit-lesson-name-{{ $section->id }}"
+                                <input wire:model.defer="lesson.name" id="edit-lesson-name-{{ $section->id }}-{{$item->id}}"
                                     type="text" placeholder=""
                                     class=" form-control @if ($errors->has('lesson.name')) invalid @endif">
                                 @error('lesson.name')
                                     <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
                                 @enderror
-                                <label for="edit-lesson-name-{{ $section->id }}">Nombre*</label>
+                                <label for="edit-lesson-name-{{ $section->id }}-{{$item->id}}">Nombre*</label>
 
                             </div>
                             <div class="form-group col-4 anima-focus">
                                 <select wire:model.defer="lesson.platform_id"
-                                    id="edit-lesson-platform-{{ $section->id }}" type="text"
+                                    id="edit-lesson-platform-{{ $section->id }}-{{$item->id}}" type="text"
                                     class="w-full form-control @if ($errors->has('lesson.platform')) invalid @endif">
                                     @foreach ($platforms as $platform)
                                         <option value="{{ $platform->id }}">{{ $platform->name }}</option>
@@ -64,7 +64,7 @@
 
                             </div>
                             <div class="form-group col-12 anima-focus">
-                                <input wire:model.defer="lesson.url" id="edit-lesson-url-{{ $section->id }}"
+                                <input wire:model.defer="lesson.url" id="edit-lesson-url-{{ $section->id }}-{{$item->id}}"
                                     type="text" placeholder=""
                                     class="form-control w-full @if ($errors->has('lesson.url')) invalid @endif">
                                 @error('lesson.url')
@@ -105,6 +105,13 @@
                     collapse.classList.toggle('collapse');
 
                 }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('closeCollapse', function () {
+                window.dispatchEvent(new Event('close-collapse'));
             });
         });
     </script>

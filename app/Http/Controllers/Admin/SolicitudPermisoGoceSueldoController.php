@@ -105,7 +105,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
         $supervisor = $empleados->find($request->autoriza);
         $solicitante = $empleados->find($request->empleado_id);
         $solicitud = SolicitudPermisoGoceSueldo::create($request->all());
-        Mail::to(removeUnicodeCharacters($supervisor->email))->send(new MailSolicitudPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
+        Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
 
         Alert::success('éxito', 'Información añadida con éxito');
 
@@ -155,7 +155,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
         $solicitante = $empleados->find($request->empleado_id);
         $solicitud->update($request->all());
 
-        Mail::to(removeUnicodeCharacters($solicitante->email))->send(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
+        Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
         Alert::success('éxito', 'Información actualizada con éxito');
 
         return redirect(route('admin.solicitud-permiso-goce-sueldo.aprobacion'));

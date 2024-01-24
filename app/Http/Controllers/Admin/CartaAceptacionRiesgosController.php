@@ -227,7 +227,7 @@ class CartaAceptacionRiesgosController extends Controller
             'nivel' => 1,
         ]);
         $dueno = Empleado::select('id', 'name', 'email', 'genero', 'foto')->find($request->responsable_id);
-        Mail::to(removeUnicodeCharacters($dueno->email))->send(new CartaAceptacionEmail($dueno, $cartaAceptacion));
+        Mail::to(removeUnicodeCharacters($dueno->email))->queue(new CartaAceptacionEmail($dueno, $cartaAceptacion));
 
         CartaAceptacionAprobacione::create([
             'autoridad' => 'Director Responsable del Riesgo',
@@ -323,7 +323,7 @@ class CartaAceptacionRiesgosController extends Controller
                 if ($siguienteCarta) {
                     $empleado = Empleado::select('id', 'name', 'email', 'genero', 'foto')->find($siguienteCarta->aprobador_id);
                     $carta = CartaAceptacion::find($cartaAceptacion->carta_id);
-                    Mail::to(removeUnicodeCharacters($empleado->email))->send(new CartaAceptacionEmail($empleado, $carta));
+                    Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CartaAceptacionEmail($empleado, $carta));
                 } else {
                     $cartaAceptacionModel->update([
                         'aceptado' => true,

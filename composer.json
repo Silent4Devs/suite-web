@@ -17,6 +17,7 @@
     "intervention/image": "^2.5",
     "jantinnerezo/livewire-alert": "^2.2",
     "jenssegers/date": "^4.0",
+    "laragear/preload": "^1.1",
     "laravel/framework": "^10.0",
     "laravel/passport": "^11.0",
     "laravel/sanctum": "^3.3",
@@ -43,6 +44,7 @@
     "spatie/laravel-responsecache": "^7.4",
     "spatie/url": "^2.0",
     "tucker-eric/eloquentfilter": "^3.2",
+    "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.3",
     "yajra/laravel-datatables-oracle": "^10.0"
   },
   "require-dev": {

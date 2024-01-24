@@ -31,6 +31,10 @@ class CoursesLesson extends Component
 
     public $file;
 
+    public $openElementId;
+
+    protected $listeners = ['closeCollapse'];
+
     protected $rules = [
         'lesson.name' => 'required',
         'lesson.platform_id' => 'required',
@@ -148,5 +152,10 @@ class CoursesLesson extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
+    }
+
+    public function closeCollapse()
+    {
+        $this->openElementId = null;
     }
 }

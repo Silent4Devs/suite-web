@@ -179,7 +179,7 @@ class TratamientoRiesgosController extends Controller
         if ($tratamientoRiesgo->es_aprobado == 'pendiente') {
             $empleado_email = Empleado::select('name', 'email')->find($request->id_dueno);
             $empleado_copia = $usuario->empleado;
-            Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($tratamientoRiesgo->registro->email))->send(new SolicitudAceptacionTratamientoRiesgo($tratamientoRiesgo, $empleado_email));
+            Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($tratamientoRiesgo->registro->email))->queue(new SolicitudAceptacionTratamientoRiesgo($tratamientoRiesgo, $empleado_email));
         }
 
         if ($tratamientoRiesgo->es_aprobado == 'rechazado') {
@@ -189,7 +189,7 @@ class TratamientoRiesgosController extends Controller
             ]);
             $empleado_email = Empleado::select('name', 'email')->find($request->id_dueno);
             $empleado_copia = $usuario->empleado;
-            Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($tratamientoRiesgo->registro->email))->send(new SolicitudAceptacionTratamientoRiesgo($tratamientoRiesgo, $empleado_email));
+            Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($tratamientoRiesgo->registro->email))->queue(new SolicitudAceptacionTratamientoRiesgo($tratamientoRiesgo, $empleado_email));
         }
 
         if ($request->participantes) {
@@ -264,7 +264,7 @@ class TratamientoRiesgosController extends Controller
         }
 
         // dd($tratamientoRiesgo);
-        Mail::to(removeUnicodeCharacters($tratamientoRiesgo->responsable->email))->send(new RiesgoAceptadoRechazado($tratamientoRiesgo));
+        Mail::to(removeUnicodeCharacters($tratamientoRiesgo->responsable->email))->queue(new RiesgoAceptadoRechazado($tratamientoRiesgo));
 
         return response()->json(['success' => true]);
     }

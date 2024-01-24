@@ -120,4 +120,17 @@ class Evaluacion extends Model implements Auditable
     {
         return $this->belongsTo('App\Models\Empleado', 'autor_id', 'id');
     }
+
+    public static function getEvaluados($id_evaluacion)
+    {
+        return Cache::remember('Evaluacion:evaluacion_all_'.$id_evaluacion, 3600 * 8, function () use ($id_evaluacion) {
+            $query = self::with(['evaluados' => function ($q) use ($id_evaluacion) {
+                return $q->with(['area', 'evaluadores' => function ($qry) use ($id_evaluacion) {
+                    $qry->where('evaluacion_id', $id_evaluacion);
+                }]);
+            }])->find($id_evaluacion);
+
+            return $query;
+        });
+    }
 }

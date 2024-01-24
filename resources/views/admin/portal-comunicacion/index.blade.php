@@ -18,18 +18,18 @@
                         </strong> </span>
                     <span> ¿Qué&nbsp;quieres&nbsp;hacer&nbsp;hoy? </span>
                     <span> | </span>
-                    <input type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off">
-                    <i class="material-symbols-outlined icon-mic">mic</i>
+                    @livewire('global-search-component', ['lugar' => 'portal'])
+                    <i class="material-symbols-outlined icon-mic">search</i>
                 </div>
             </div>
         @endif
 
         <div class="mt-5">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-5 d-flex" style="flex-direction: column;">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="card card-body" style="padding: 20px;">
+                            <div class="card card-gadgets">
                                 <div class="d-flex justify-content-center align-items-center" style="gap: 13px;">
                                     <i class="material-symbols-outlined" style="font-size: 70px;">rainy</i>
                                     <span style="font-size: 26px;">26&nbsp;<font style="font-size: 16px;">°C</font></span>
@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="card card-body" style="padding: 20px;">
+                            <div class="card card-gadgets">
                                 <div class="d-flex justify-content-center align-items-center" style="gap: 13px;">
                                     <i class="material-symbols-outlined" style="font-size: 70px;">schedule</i>
                                     <span style="font-size: 26px;" id="hora-portal"> </span>
@@ -51,9 +51,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="flex-grow: 1; padding-bottom: 22px;">
                         <div class="col-12">
-                            <div class="div4 card card-body">
+                            <div class="div4 card card-body h-100">
                                 <h4 style="font-size: 30px;" id="fecha-completa">
                                     {{-- Fecha --}}
                                 </h4>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-7">
+                <div class="col-md-7" style="">
                     <div class="card carrusel-vertical-boletin" style="background-color: #F8E1E1;">
                         <div class="card-body">
                             <h4 class="title-card-portal-c">Boletín</h4>
@@ -160,78 +160,166 @@
                                         <h4 class="title-card-portal-c"> Menú </h4>
 
                                         <div class="menu-portal">
-                                            <a href="{{ route('admin.organizacions.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">corporate_fare</i>
-                                                    <span>Organización</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.documentos.publicados') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">description</i>
-                                                    <span>Documentos</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.sedes.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">home_pin</i>
-                                                    <span>Sedes</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">local_library</i>
-                                                    <span>Políticas</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.areas.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">mitre</i>
-                                                    <span>Áreas</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.comiteseguridads.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">partner_exchange</i>
-                                                    <span>Comités</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.procesos.mapa') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">flowsheet</i>
-                                                    <span>Mapa de procesos</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ asset('admin/portal-comunicacion/reportes') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">flag</i>
-                                                    <span>Reportar</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.organigrama.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">schema</i>
-                                                    <span>Organigrama</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.foda-organizacions') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">border_all</i>
-                                                    <span>FODA</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.directorio.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">person_book</i>
-                                                    <span>Directorio</span>
-                                                </div>
-                                            </a>
-                                            <a href="{{ route('admin.alcance-sgsis/visualizacion') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">table_chart_view</i>
-                                                    <span>Alcances</span>
-                                                </div>
-                                            </a>
+                                            {{-- @can('mi_organizacion_acceder')
+                                                <a href="{{ route('admin.organizacions.index') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">corporate_fare</i>
+                                                        <span>Organización</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('documentos_publicados_acceder')
+                                                <a href="{{ route('admin.documentos.publicados') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">description</i>
+                                                        <span>Documentos Publicados</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('sedes_acceder')
+                                                <a href="{{ route('admin.sedes.index') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">home_pin</i>
+                                                        <span>Sedes</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('politica_sistema_gestion_acceder')
+                                                <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">local_library</i>
+                                                        <span>Políticas</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('crear_area_acceder')
+                                                <a href="{{ route('admin.areas.index') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">mitre</i>
+                                                        <span>Áreas</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('comformacion_comite_seguridad_acceder')
+                                                <a href="{{ route('admin.comiteseguridads.index') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">partner_exchange</i>
+                                                        <span>Comités</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('portal_comunicacion_mostrar_mapa_de_procesos')
+                                                <a href="{{ route('admin.procesos.mapa') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">flowsheet</i>
+                                                        <span>Mapa de procesos</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('organigrama_acceder')
+                                                <a href="{{ route('admin.organigrama.index') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">schema</i>
+                                                        <span>Organigrama</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('analisis_foda_acceder')
+                                                <a href="{{ route('admin.foda-organizacions') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">border_all</i>
+                                                        <span>FODA</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('portal_comunicacion_mostrar_directorio')
+                                                <a href="{{ route('admin.directorio.index') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">person_book</i>
+                                                        <span>Directorio</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('determinacion_alcance_acceder')
+                                                <a href="{{ route('admin.alcance-sgsis/visualizacion') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">table_chart_view</i>
+                                                        <span>Alcances</span>
+                                                    </div>
+                                                </a>
+                                            @endcan --}}
+                                            @can('escuela_estudiante')
+                                                <a href="{{ asset('/admin/mis-cursos') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">school</i>
+                                                        <span>Capacitaciones</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('mi_perfil_acceder')
+                                                <a href="{{ route('admin.solicitud') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">assignment_turned_in</i>
+                                                        <span>Solicitudes</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            {{-- @can('portal_de_comunicaccion_acceder')
+                                                <a href="{{ route('admin.portal-comunicacion.index') }}">
+                                                    <div class="item-menu-portal active">
+                                                        <i class="material-symbols-outlined">home</i>
+                                                        <span>Inicio</span>
+                                                    </div>
+                                                </a>
+                                            @endcan --}}
+                                            @can('mi_perfil_acceder')
+                                                <a href="{{ route('admin.inicio-Usuario.index') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">account_circle</i>
+                                                        <span>Perfil</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('timesheet_acceder')
+                                                <a href="{{ route('admin.timesheet-inicio') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">date_range</i>
+                                                        <span>Timesheet</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('calendario_organizacional_acceder')
+                                                <a href="{{ route('admin.systemCalendar') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">calendar_today</i>
+                                                        <span>Calendario</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('katbol_requisiciones_acceso')
+                                                <a href="{{ asset('contract_manager/requisiciones') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">contract</i>
+                                                        <span>Requisiciones </span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('control_documentar_acceder')
+                                                <a href="{{ route('admin.documentos.index') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">description</i>
+                                                        <span>Documentos</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
+                                            @can('portal_comunicacion_mostrar_reportar')
+                                                <a href="{{ asset('admin/portal-comunicacion/reportes') }}">
+                                                    <div class="item-menu-portal">
+                                                        <i class="material-symbols-outlined">flag</i>
+                                                        <span>Reportar</span>
+                                                    </div>
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
                                 </div>
@@ -239,8 +327,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="card card-body">
+                <div class="col-md-7 d-flex" style="flex-direction: column;">
+                    <div class="card card-body" style="flex-grow: 1;">
                         <h4 class="title-card-portal-c"> Comunicados</h4>
                         @forelse($comunicacionSgis as $comunicacionSgi)
                             @php
@@ -273,7 +361,11 @@
                                 </div>
                             </div>
                             <hr class="my-4">
-                        @endforeach
+
+                        @empty
+                            <img src="{{ asset('img/sincomunicados.png') }}" alt=""
+                                style="width: 300px; margin:0px auto;">
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -401,6 +493,7 @@
                                 <img src="{{ asset('img/example-remove/cumple_portal.png') }}" alt=""
                                     class="cumple-img-portal">
                             </div>
+
                         @endforeach
                     </div>
                     <button onclick="carruselPortal('advance');">

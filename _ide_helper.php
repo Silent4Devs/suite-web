@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.40.0.
+ * Generated for Laravel 10.42.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -7382,28 +7382,28 @@
                     /**
          * Determine if all of the given abilities should be granted for the current user.
          *
-         * @param \Illuminate\Auth\Access\iterable|string $abilities
+         * @param \Illuminate\Auth\Access\iterable|string $ability
          * @param array|mixed $arguments
          * @return bool 
          * @static 
          */ 
-        public static function allows($abilities, $arguments = [])
+        public static function allows($ability, $arguments = [])
         {
                         /** @var \Illuminate\Auth\Access\Gate $instance */
-                        return $instance->allows($abilities, $arguments);
+                        return $instance->allows($ability, $arguments);
         }
                     /**
          * Determine if any of the given abilities should be denied for the current user.
          *
-         * @param \Illuminate\Auth\Access\iterable|string $abilities
+         * @param \Illuminate\Auth\Access\iterable|string $ability
          * @param array|mixed $arguments
          * @return bool 
          * @static 
          */ 
-        public static function denies($abilities, $arguments = [])
+        public static function denies($ability, $arguments = [])
         {
                         /** @var \Illuminate\Auth\Access\Gate $instance */
-                        return $instance->denies($abilities, $arguments);
+                        return $instance->denies($ability, $arguments);
         }
                     /**
          * Determine if all of the given abilities should be granted for the current user.
@@ -7801,7 +7801,7 @@
      * 
      *
      * @method static \Illuminate\Http\Client\PendingRequest baseUrl(string $url)
-     * @method static \Illuminate\Http\Client\PendingRequest withBody(string $content, string $contentType = 'application/json')
+     * @method static \Illuminate\Http\Client\PendingRequest withBody(\Psr\Http\Message\StreamInterface|string $content, string $contentType = 'application/json')
      * @method static \Illuminate\Http\Client\PendingRequest asJson()
      * @method static \Illuminate\Http\Client\PendingRequest asForm()
      * @method static \Illuminate\Http\Client\PendingRequest attach(string|array $name, string|resource $contents = '', string|null $filename = null, array $headers = [])
@@ -7900,6 +7900,18 @@
         {
                         /** @var \Illuminate\Http\Client\Factory $instance */
                         return $instance->globalResponseMiddleware($middleware);
+        }
+                    /**
+         * Set the options to apply to every request.
+         *
+         * @param array $options
+         * @return \Illuminate\Http\Client\Factory 
+         * @static 
+         */ 
+        public static function globalOptions($options)
+        {
+                        /** @var \Illuminate\Http\Client\Factory $instance */
+                        return $instance->globalOptions($options);
         }
                     /**
          * Create a new response instance for use during stubbing.
@@ -8217,7 +8229,7 @@
          * Get a translation according to an integer value.
          *
          * @param string $key
-         * @param \Countable|int|array $number
+         * @param \Countable|int|float|array $number
          * @param array $replace
          * @param string|null $locale
          * @return string 
@@ -8511,7 +8523,6 @@
      *
      * @method static void write(string $level, \Illuminate\Contracts\Support\Arrayable|\Illuminate\Contracts\Support\Jsonable|\Illuminate\Support\Stringable|array|string $message, array $context = [])
      * @method static \Illuminate\Log\Logger withContext(array $context = [])
-     * @method static \Illuminate\Log\Logger withoutContext()
      * @method static void listen(\Closure $callback)
      * @method static \Psr\Log\LoggerInterface getLogger()
      * @method static \Illuminate\Contracts\Events\Dispatcher getEventDispatcher()
@@ -8592,6 +8603,17 @@
         {
                         /** @var \Illuminate\Log\LogManager $instance */
                         return $instance->sharedContext();
+        }
+                    /**
+         * Flush the log context on all currently resolved channels.
+         *
+         * @return \Illuminate\Log\LogManager 
+         * @static 
+         */ 
+        public static function withoutContext()
+        {
+                        /** @var \Illuminate\Log\LogManager $instance */
+                        return $instance->withoutContext();
         }
                     /**
          * Flush the shared context.
@@ -18533,9 +18555,10 @@
                     /**
          * 
          *
+         * @param string|null $disk Fallback for usage with named properties
          * @param object $export
          * @param string $filePath
-         * @param string|null $disk
+         * @param string|null $diskName
          * @param string $writerType
          * @param mixed $diskOptions
          * @return bool 
@@ -18543,10 +18566,10 @@
          * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
          * @static 
          */ 
-        public static function store($export, $filePath, $diskName = null, $writerType = null, $diskOptions = [])
+        public static function store($export, $filePath, $diskName = null, $writerType = null, $diskOptions = [], $disk = null)
         {
                         /** @var \Maatwebsite\Excel\Excel $instance */
-                        return $instance->store($export, $filePath, $diskName, $writerType, $diskOptions);
+                        return $instance->store($export, $filePath, $diskName, $writerType, $diskOptions, $disk);
         }
                     /**
          * 
@@ -20979,6 +21002,78 @@
         public static function flushMacros()
         {
                         \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager::flushMacros();
+        }
+         
+    }
+     
+}
+
+    namespace Laragear\Preload\Facades { 
+            /**
+     * 
+     *
+     * @method static \Laragear\Preload\Preloader getFacadeRoot()
+     * @see \Laragear\Preload\Preloader
+     */ 
+        class Preload {
+                    /**
+         * Exclude files from the given paths.
+         *
+         * @param \Closure|string $exclude
+         * @return void 
+         * @static 
+         */ 
+        public static function exclude(...$exclude)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        $instance->exclude(...$exclude);
+        }
+                    /**
+         * Append files from the given paths.
+         *
+         * @param \Closure|string $append
+         * @return void 
+         * @static 
+         */ 
+        public static function append(...$append)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        $instance->append(...$append);
+        }
+                    /**
+         * Creates a new list.
+         *
+         * @return \Laragear\Preload\Listing 
+         * @static 
+         */ 
+        public static function list()
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        return $instance->list();
+        }
+                    /**
+         * Writes a listing to the filesystem.
+         *
+         * @param \Laragear\Preload\Listing|null $listing
+         * @return \Laragear\Preload\Listing 
+         * @static 
+         */ 
+        public static function generate($listing = null)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        return $instance->generate($listing);
+        }
+                    /**
+         * Return an array of the files from the Finder.
+         *
+         * @param \Closure $callback
+         * @return \Illuminate\Support\Collection<int, string> 
+         * @static 
+         */ 
+        public static function getFilesFromFinder($callback)
+        {
+                        /** @var \Laragear\Preload\Preloader $instance */
+                        return $instance->getFilesFromFinder($callback);
         }
          
     }
@@ -26802,6 +26897,7 @@ namespace  {
             class Alert extends \RealRashid\SweetAlert\Facades\Alert {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
+            class Preload extends \Laragear\Preload\Facades\Preload {}
             class Livewire extends \Livewire\Livewire {}
             class Sentry extends \Sentry\Laravel\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}

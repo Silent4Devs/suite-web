@@ -361,9 +361,9 @@
         <table class="datatable datatable-AlcanceSgsi">
             <thead class="thead-dark">
                 <tr>
-                    <th style="max-width:450px">Nombre</th>
+                    <th style="min-width:450px">Nombre</th>
                     <th style="min-width:450px;">Alcance</th>
-                    <th style="max-width:85px;">
+                    <th style="min-width:300px;">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estatus</th>
                     <th style="">Opciones</th>
                 </tr>
