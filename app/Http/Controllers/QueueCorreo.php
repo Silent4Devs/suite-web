@@ -18,7 +18,7 @@ class QueueCorreo extends Controller
         // Send welcome email
         for ($i = 0; $i < 1; $i++) {
             //Benchmark::dd(fn () => Mail::to('luis.vargas@silent4business.com')->queue(new TestMail()));
-            Mail::to('luis.vargas@silent4business.com')->queue(new TestMail()));
+            Mail::to('luis.vargas@silent4business.com')->queue(new TestMail());
         }
         // Get all keys in the Redis table
         $keys = Redis::keys('Auth_user');
