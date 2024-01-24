@@ -32,8 +32,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Throwable;
 use PDF;
+use Throwable;
 
 class TimesheetController extends Controller
 {
@@ -1130,7 +1130,6 @@ class TimesheetController extends Controller
         $pdf->setPaper('legal', 'landscape');
 
         $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);
-
 
         return $pdf->download('timesheet.pdf');
     }
