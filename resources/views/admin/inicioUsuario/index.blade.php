@@ -17,11 +17,13 @@
                     </div>
                     <div style="text-align: center;">
                         <span>Estatus</span> <br>
-                        <span class="estatus-user" style="background-color: #D2FDB8; color: #04B716;">Alta</span>
+                        <span class="estatus-user"
+                            style="background-color: #D2FDB8; color: #04B716;">{{ strtoupper($usuario->empleado->estatus) }}
+                        </span>
                     </div>
                 </div>
                 <div>
-                    Nº de empelado <span>{{ $usuario->empleado->n_registro }}</span>
+                    Nº de empleado: <span>{{ $usuario->empleado->n_empleado }}</span>
                 </div>
             </div>
             <div class="card overflow-hidden">
@@ -48,12 +50,12 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3 class="title-user-card">Innovación y Desarrollo</h3>
-                        <span>Desarrollador Full Stack</span>
+                        <h3 class="title-user-card">{{ $usuario->empleado->area->area }}</h3>
+                        <span> {{ $usuario->empleado->puesto }}</span>
                         <hr class="my-4">
                         <div class=" caja-info-user-main">
                             <div>
-                                <span>Genero</span><br>
+                                <span>Género</span><br>
                                 {{ $usuario->empleado->genero }}
                             </div>
                             <div>
@@ -61,7 +63,7 @@
                                 {{ $usuario->empleado->puesto }}
                             </div>
                             <div>
-                                <span>fecha de ingreso</span><br>
+                                <span>Fecha de ingreso</span><br>
                                 {{ $usuario->empleado->fecha_ingreso }}
                             </div>
                             <div>
