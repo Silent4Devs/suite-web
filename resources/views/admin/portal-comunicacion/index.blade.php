@@ -18,8 +18,8 @@
                         </strong> </span>
                     <span> ¿Qué&nbsp;quieres&nbsp;hacer&nbsp;hoy? </span>
                     <span> | </span>
-                    <input type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off">
-                    <i class="material-symbols-outlined icon-mic">mic</i>
+                    @livewire('global-search-component', ['lugar' => 'portal'])
+                    <i class="material-symbols-outlined icon-mic">search</i>
                 </div>
             </div>
         @endif

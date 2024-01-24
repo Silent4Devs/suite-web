@@ -37,6 +37,11 @@
             scroll-snap-align: center;
             min-width: 68px;
             /* height: 68px; */
+            transition: 0.1s;
+        }
+
+        .item-ms:hover {
+            transform: scale(1.1);
         }
 
         .item-ms a {

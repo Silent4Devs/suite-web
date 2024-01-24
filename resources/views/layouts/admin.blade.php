@@ -84,8 +84,7 @@
     <header>
         <div class="content-header-blue">
             <div class="caja-inicio-options-header">
-                <button class="btn-menu-header" style="height: 40px;"
-                    onclick="document.querySelector('header').classList.toggle('mostrar-menu'); document.querySelector('.btn-menu-header').classList.toggle('active');">
+                <button class="btn-menu-header" style="height: 40px;" onclick="menuHeader();">
                     <div class="line-menu">
                         <hr>
                     </div>
@@ -95,13 +94,72 @@
                 @livewire('global-search-component', ['lugar' => 'header'])
             </div>
             @if ($usuario->empleado)
-                <div class="caja-user-header">
-                    {{ $usuario->empleado ? explode(' ', $usuario->empleado->name)[0] : '' }}
-                    <div class="caja-img-user-header">
-                        <img src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
-                            alt="{{ $usuario->empleado->name }}">
-                    </div>
-                </div>
+                <ul class="ml-auto c-header-nav">
+                    <li class="c-header-nav-item dropdown show">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            <div style="width:100%; display: flex; align-items: center;">
+                                @if ($usuario->empleado)
+                                    <div style="width: 40px; overflow:hidden;" class="mr-2">
+                                        <img class="img_empleado" style=""
+                                            src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
+                                            alt="{{ $usuario->empleado->name }}">
+                                    </div>
+                                    <div class="d-mobile-none">
+                                        <span class="mr-2" style="font-weight: bold;">
+                                            {{ $usuario->empleado ? explode(' ', $usuario->empleado->name)[0] : '' }}
+                                        </span>
+                                        {{-- <p class="m-0" style="font-size: 8px">
+                                            {{ $usuario->empleado ? Str::limit($usuario->empleado->puesto, 30, '...') : '' }}
+                                        </p> --}}
+                                    </div>
+                                @else
+                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                @endif
+                            </div>
+                        </a>
+
+                        @if ($usuario->empleado === null)
+                            <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                                style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                                <div class="px-3 mt-1 d-flex justify-content-center">
+                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                        <i class="bi bi-box-arrow-right"></i> Salir
+                                    </a>
+                                </div>
+                            </div>
+                        @else
+                            <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                                style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                                <div class="p-2">
+                                    <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
+                                        <strong>{{ $usuario->empleado->name }}</strong>
+                                    </p>
+                                </div>
+                                <div class="px-3 mt-1 d-flex justify-content-center">
+                                    @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                                        @can('profile_password_edit')
+                                            <a style="all: unset; color: #747474; cursor: pointer;"
+                                                class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                                href="{{ route('profile.password.edit') }}">
+                                                <i class="bi bi-gear"></i>
+                                                Configurar Perfil
+                                            </a>
+                                        @endcan
+                                    @endif
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <font style="color: #747474;">|</font>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                        <i class="bi bi-box-arrow-right"></i> Salir
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                    </li>
+                </ul>
             @endif
         </div>
         <div class="menu-hedare-window">
@@ -194,16 +252,14 @@
                                 <span>Capacitaciones</span>
                             </a>
                         @endcan
-                        @if (
-                            $usuario->can('sistema_gestion_contratos_acceder') ||
-                                $usuario->can('administracion_sistema_gestion_contratos_acceder'))
+                        {{-- @if ($usuario->can('sistema_gestion_contratos_acceder') || $usuario->can('administracion_sistema_gestion_contratos_acceder'))
                             <a href="{{ asset('contract_manager/katbol') }}  ">
                                 <div class="caja-icon-mod-header" style="background: #BFFFE9;">
                                     <i class="material-symbols-outlined">request_quote</i>
                                 </div>
                                 <span>Finanzas</span>
                             </a>
-                        @endif
+                        @endif --}}
                         @can('sistema_de_gestion_acceder')
                             <a href="{{ route('admin.iso27001.inicio-guia') }}">
                                 <div class="caja-icon-mod-header" style="background: #F1F1F1;">
@@ -448,6 +504,7 @@
                 <img src="{{ asset('img/escritorio-header.webp') }}" alt="" class="img-escritorio-header">
             </div>
         </div>
+        <div class="bg-black-header-menu" onclick="menuHeader();"></div>
     </header>
 
     {{-- @include('partials.menu') --}}
@@ -1248,6 +1305,14 @@
                 $(e.target).addClass("input-content-animated");
             }
         });
+    </script>
+
+    <script>
+        function menuHeader() {
+            document.querySelector('header').classList.toggle('mostrar-menu');
+            document.querySelector('.btn-menu-header').classList.toggle('active');
+            document.querySelector('.bg-black-header-menu').classList.toggle('active');
+        }
     </script>
 
 </body>
