@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
+use App\Http\Controllers\Admin\InicioUsuarioController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\UsuarioBloqueado;
@@ -39,9 +41,9 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
 
-    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
-    Route::get('/', 'InicioUsuarioController@index');
-    Route::get('/home', 'InicioUsuarioController@index')->name('home');
+    Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
+    Route::get('/', [InicioUsuarioController::class, 'index']);
+    Route::get('/home', [InicioUsuarioController::class, 'index'])->name('home');
     //log-viewer
     //Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
@@ -460,48 +462,48 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
         Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 
-        Route::get('inicioUsuario/solicitud', 'InicioUsuarioController@solicitud')->name('solicitud');
+        Route::get('inicioUsuario/solicitud', [InicioUsuarioController::class, 'solicitud'])->name('solicitud');
 
-        Route::get('inicioUsuario/reportes/quejas', 'InicioUsuarioController@quejas')->name('reportes-quejas');
-        Route::post('inicioUsuario/reportes/quejas', 'InicioUsuarioController@storeQuejas')->name('reportes-quejas-store');
+        Route::get('inicioUsuario/reportes/quejas', [InicioUsuarioController::class, 'quejas'])->name('reportes-quejas');
+        Route::post('inicioUsuario/reportes/quejas', [InicioUsuarioController::class, 'storeQuejas'])->name('reportes-quejas-store');
 
-        Route::get('inicioUsuario/reportes/denuncias', 'InicioUsuarioController@denuncias')->name('reportes-denuncias');
-        Route::post('inicioUsuario/reportes/denuncias', 'InicioUsuarioController@storeDenuncias')->name('reportes-denuncias-store');
+        Route::get('inicioUsuario/reportes/denuncias', [InicioUsuarioController::class, 'denuncias'])->name('reportes-denuncias');
+        Route::post('inicioUsuario/reportes/denuncias', [InicioUsuarioController::class, 'storeDenuncias'])->name('reportes-denuncias-store');
 
-        Route::get('inicioUsuario/reportes/mejoras', 'InicioUsuarioController@mejoras')->name('reportes-mejoras');
-        Route::post('inicioUsuario/reportes/mejoras', 'InicioUsuarioController@storeMejoras')->name('reportes-mejoras-store');
+        Route::get('inicioUsuario/reportes/mejoras', [InicioUsuarioController::class, 'mejoras'])->name('reportes-mejoras');
+        Route::post('inicioUsuario/reportes/mejoras', [InicioUsuarioController::class, 'storeMejoras'])->name('reportes-mejoras-store');
 
-        Route::get('inicioUsuario/reportes/sugerencias', 'InicioUsuarioController@sugerencias')->name('reportes-sugerencias');
-        Route::post('inicioUsuario/reportes/sugerencias', 'InicioUsuarioController@storeSugerencias')->name('reportes-sugerencias-store');
+        Route::get('inicioUsuario/reportes/sugerencias', [InicioUsuarioController::class, 'sugerencias'])->name('reportes-sugerencias');
+        Route::post('inicioUsuario/reportes/sugerencias', [InicioUsuarioController::class, 'storeSugerencias'])->name('reportes-sugerencias-store');
 
-        Route::get('inicioUsuario/reportes/seguridad', 'InicioUsuarioController@seguridad')->name('reportes-seguridad');
-        Route::post('inicioUsuario/reportes/seguridad/media', 'InicioUsuarioController@storeMedia')->name('reportes-seguridad.storeMedia');
-        Route::post('inicioUsuario/reportes/seguridad', 'InicioUsuarioController@storeSeguridad')->name('reportes-seguridad-store');
+        Route::get('inicioUsuario/reportes/seguridad', [InicioUsuarioController::class, 'seguridad'])->name('reportes-seguridad');
+        Route::post('inicioUsuario/reportes/seguridad/media', [InicioUsuarioController::class, 'storeMedia'])->name('reportes-seguridad.storeMedia');
+        Route::post('inicioUsuario/reportes/seguridad', [InicioUsuarioController::class, 'storeSeguridad'])->name('reportes-seguridad-store');
 
-        Route::get('inicioUsuario/reportes/riesgos', 'InicioUsuarioController@riesgos')->name('reportes-riesgos');
-        Route::post('inicioUsuario/reportes/riesgos', 'InicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
+        Route::get('inicioUsuario/reportes/riesgos', [InicioUsuarioController::class, 'riesgos'])->name('reportes-riesgos');
+        Route::post('inicioUsuario/reportes/riesgos', [InicioUsuarioController::class, 'storeRiesgos'])->name('reportes-riesgos-store');
 
-        Route::post('inicioUsuario/capacitaciones/archivar/{id}', 'InicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
-        Route::post('inicioUsuario/capacitaciones/recuperar/{id}', 'InicioUsuarioController@recuperarCapacitacion')->name('inicio-Usuario.capacitaciones.recuperar');
-        Route::get('inicioUsuario/capacitaciones/archivo', 'InicioUsuarioController@archivoCapacitacion')->name('inicio-Usuario.capacitaciones.archivo');
+        Route::post('inicioUsuario/capacitaciones/archivar/{id}', [InicioUsuarioController::class, 'archivarCapacitacion'])->name('inicio-Usuario.capacitaciones.archivar');
+        Route::post('inicioUsuario/capacitaciones/recuperar/{id}', [InicioUsuarioController::class, 'recuperarCapacitacion'])->name('inicio-Usuario.capacitaciones.recuperar');
+        Route::get('inicioUsuario/capacitaciones/archivo', [InicioUsuarioController::class, 'archivoCapacitacion'])->name('inicio-Usuario.capacitaciones.archivo');
 
-        Route::post('inicioUsuario/aprobacion/archivar/{id}', 'InicioUsuarioController@archivarAprobacion')->name('inicio-Usuario.aprobacion.archivar');
-        Route::post('inicioUsuario/aprobacion/recuperar/{id}', 'InicioUsuarioController@recuperarAprobacion')->name('inicio-Usuario.aprobacion.recuperar');
-        Route::get('inicioUsuario/aprobacion/archivo', 'InicioUsuarioController@archivoAprobacion')->name('inicio-Usuario.aprobacion.archivo');
+        Route::post('inicioUsuario/aprobacion/archivar/{id}', [InicioUsuarioController::class, 'archivarAprobacion'])->name('inicio-Usuario.aprobacion.archivar');
+        Route::post('inicioUsuario/aprobacion/recuperar/{id}', [InicioUsuarioController::class, 'recuperarAprobacion'])->name('inicio-Usuario.aprobacion.recuperar');
+        Route::get('inicioUsuario/aprobacion/archivo', [InicioUsuarioController::class, 'archivoAprobacion'])->name('inicio-Usuario.aprobacion.archivo');
 
-        Route::post('inicioUsuario/actividades/archivar', 'InicioUsuarioController@archivarActividades')->name('inicio-Usuario.actividades.archivar');
-        Route::post('inicioUsuario/actividades/cambiar-estatus', 'InicioUsuarioController@cambiarEstatusActividad')->name('inicio-Usuario.actividades.cambiarEstatusActividad');
-        Route::post('inicioUsuario/actividades/recuperar', 'InicioUsuarioController@recuperarActividades')->name('inicio-Usuario.actividades.recuperar');
-        Route::get('inicioUsuario/actividades/archivo', 'InicioUsuarioController@archivoActividades')->name('inicio-Usuario.acctividades.archivo');
+        Route::post('inicioUsuario/actividades/archivar', [InicioUsuarioController::class, 'archivarActividades'])->name('inicio-Usuario.actividades.archivar');
+        Route::post('inicioUsuario/actividades/cambiar-estatus', [InicioUsuarioController::class, 'cambiarEstatusActividad'])->name('inicio-Usuario.actividades.cambiarEstatusActividad');
+        Route::post('inicioUsuario/actividades/recuperar', [InicioUsuarioController::class, 'recuperarActividades'])->name('inicio-Usuario.actividades.recuperar');
+        Route::get('inicioUsuario/actividades/archivo', [InicioUsuarioController::class, 'archivoActividades'])->name('inicio-Usuario.acctividades.archivo');
 
-        Route::get('inicioUsuario/perfil-puesto', 'InicioUsuarioController@perfilPuesto')->name('inicio-Usuario.perfil-puesto');
+        Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
 
-        Route::get('inicioUsuario/expediente/{id_empleado}', 'InicioUsuarioController@expediente')->name('inicio-Usuario.expediente');
+        Route::get('inicioUsuario/expediente/{id_empleado}', [InicioUsuarioController::class, 'expediente'])->name('inicio-Usuario.expediente');
 
-        Route::post('inicioUsuario/expediente/update', 'InicioUsuarioController@expedienteUpdate')->name('inicio-Usuario.expediente-update');
+        Route::post('inicioUsuario/expediente/update', [InicioUsuarioController::class, 'expedienteUpdate'])->name('inicio-Usuario.expediente-update');
         Route::post('inicioUsuario/expediente/{id_empleado}/getListaDocumentos', 'EmpleadoController@getListaDocumentos')->name('inicio-Usuario.expediente-getListaDocumentos');
 
-        Route::post('inicioUsuario/versioniso', 'InicioUsuarioController@updateVersionIso')->name('inicio-Usuario.updateVersionIso');
+        Route::post('inicioUsuario/versioniso', [InicioUsuarioController::class, 'updateVersionIso'])->name('inicio-Usuario.updateVersionIso');
 
         Route::get('desk', 'DeskController@index')->name('desk.index');
 
