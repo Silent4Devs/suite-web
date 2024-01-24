@@ -6,6 +6,7 @@ use App\Mail\TestMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Benchmark;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redis;
 
 class QueueCorreo extends Controller
 {
@@ -16,9 +17,17 @@ class QueueCorreo extends Controller
     {
         // Send welcome email
         for ($i = 0; $i < 1; $i++) {
-            Benchmark::dd(fn () => Mail::to('luis.vargas@silent4business.com')->queue(new TestMail()));
+            //Benchmark::dd(fn () => Mail::to('luis.vargas@silent4business.com')->queue(new TestMail()));
+            Mail::to('luis.vargas@silent4business.com')->queue(new TestMail()));
         }
-        dd('Hola');
+        // Get all keys in the Redis table
+        $keys = Redis::keys('Auth_user');
+
+        // Get values associated with those keys
+        $data = Redis::mget($keys);
+
+        // Now, $data contains all the values from the Redis table
+        dd($data);
     }
 
     /**
