@@ -58,6 +58,8 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                <br>
                 <div class="row" style="border-right: 16px solid white">
                     <div class="col-md-11" style="padding-right:0px; padding-left:14px;">
                         <div class="card mb-1" style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
