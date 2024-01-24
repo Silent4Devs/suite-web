@@ -331,7 +331,6 @@ class PoliticaSgsiController extends Controller
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
                 Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
-                // dd('primer usuario', $part->participante);
             }
         }
 
