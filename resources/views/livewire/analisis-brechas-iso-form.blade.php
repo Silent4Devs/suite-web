@@ -100,11 +100,11 @@
                 <i class="material-icons-outlined">arrow_forward_ios</i>
             </div>
         </div>
-        @if ($user)
+        {{-- @if ($user) --}}
         <div class="d-flex justify-content-start" style="padding-left: 160px;">
             <a href="{{ route('admin.template-top') }}">Ver todos</a>
         </div>
-        @endif
+        {{-- @endif --}}
         <div class="d-flex justify-content-end" style="padding-right: 110px;">
             <a class="btn btn-light text-primary border border-primary" href="{{ route('admin.templates.create') }}">
                 Crear template +
