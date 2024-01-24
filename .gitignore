@@ -62,3 +62,4 @@ public/js/app.js
 /resources/views/layouts/navs
 storage/app/katbol-contratos-tmp/
 dump.sql
+preload.php
