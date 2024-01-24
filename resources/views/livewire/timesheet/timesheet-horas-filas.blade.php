@@ -347,6 +347,7 @@
                     contentType: false,
                     success: function(response) {
                         document.getElementById('loaderComponent').style.display = 'none';
+                        console.log(response.status);
                         if (response.status == 200) {
                             Swal.fire(
                                 'Buen trabajo',
@@ -366,7 +367,7 @@
                                         '{{ route('admin.timesheet-inicio') }}';
                                 });
                             } else {
-                                toastr.error('Error al enviar');
+                                toastr.error('!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!');
                             }
                         }
                     },
