@@ -6,7 +6,6 @@ use App\Mail\TestMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Benchmark;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redis;
 
 class QueueCorreo extends Controller
 {
@@ -21,7 +20,7 @@ class QueueCorreo extends Controller
             Mail::to('luis.vargas@silent4business.com')->queue(new TestMail());
         }
         // Now, $data contains all the values from the Redis table
-        dd("al ready sent");
+        dd('al ready sent');
     }
 
     /**
