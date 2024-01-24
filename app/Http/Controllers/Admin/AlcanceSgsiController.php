@@ -113,7 +113,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -253,6 +253,20 @@ class AlcanceSgsiController extends Controller
 
         return $pdf->download('alcances.pdf');
     }
+
+
+    public function pdfShow($id)
+    {
+        $alcances = AlcanceSgsi::find($id);
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('alcances_show', compact('alcances', 'organizacions', 'logo_actual'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('alcances.pdf');
+    }
+
 
     public function solicitudAprobacion($id_alcance)
     {

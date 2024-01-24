@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
+use PDF;
 
 class TimesheetController extends Controller
 {
@@ -1116,6 +1117,22 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes', 'tipos'));
+    }
+
+    public function pdf($id)
+    {
+        $timesheet = Timesheet::with('horas.proyecto', 'horas.tarea')->where('id', $id)->first();
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('timesheet', compact('timesheet', 'organizacions', 'logo_actual'));
+
+        $pdf->setPaper('legal', 'landscape');
+
+        $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);
+
+
+        return $pdf->download('timesheet.pdf');
     }
 
     public function notificacionhorassobrepasadas($id)

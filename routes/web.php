@@ -785,6 +785,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
         Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-actualizarDia');
         Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
+        Route::post('timesheet/pdf/{id}', 'TimesheetController@pdf')->name('timesheet.pdf');
 
         Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
         Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
@@ -902,6 +903,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('alcance-sgsis', 'AlcanceSgsiController');
         Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
         Route::post('alcance-sgsis/pdf', 'AlcanceSgsiController@pdf')->name('alcance-sgsis.pdf');
+        Route::post('alcance-sgsis/pdf/show/{id}', 'AlcanceSgsiController@pdfShow')->name('alcance-sgsis-show.pdf');
         Route::get('alcance-sgsis-revision/{id}', 'AlcanceSgsiController@revision')->name('alcance-sgsis.revision');
         Route::post('alcance-sgsis/{id}/aprobado', 'AlcanceSgsiController@aprobado')->name('alcance-sgsis.aprobado');
         Route::post('alcance-sgsis/{id}/rechazado', 'AlcanceSgsiController@rechazado')->name('alcance-sgsis.rechazado');
