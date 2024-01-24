@@ -44,10 +44,11 @@ class AnalisisBrechasIsoForm extends Component
         $this->fecha = Carbon::today()->format('d-m-Y');
         // dd($this->fecha);
         $empleados = Empleado::getaltaAll();
-        $user_actual = User::getCurrentUser();
-        $this->user = $user_actual->isAdmin;
+        // $user_actual = User::getCurrentUser();
+        // $this->user = $user_actual->isAdmin;
         // dd($user->isAdmin);
-        $analisis_brechas = AnalisisBrechasIso::where('id_elaboro', $user_actual->empleado->id)->get();
+        // $analisis_brechas = AnalisisBrechasIso::where('id_elaboro', $user_actual->empleado->id)->get();
+        $analisis_brechas = AnalisisBrechasIso::get();
         $templates = TemplateAnalisisdeBrechas::where('top', true)->get();
         $normas = Norma::get();
         $this->imagenID = asset('img\alert_template_analisis_brechas_id.png');
@@ -83,10 +84,9 @@ class AnalisisBrechasIsoForm extends Component
             $this->emit('limpiarNameInput');
 
             return;
-        }else{
+        } else {
             $this->emit('selectedCardAlert');
         }
-
     }
 
     public function SelectCard($index)
@@ -127,10 +127,9 @@ class AnalisisBrechasIsoForm extends Component
                 'id_elaboro' => $this->id_elaboro,
             ]);
             $this->resetInput();
-        }else{
+        } else {
             $this->emit('selectedCardAlert');
         }
-
     }
 
     public function destroy($id)
