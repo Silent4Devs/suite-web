@@ -361,7 +361,11 @@
                                 </div>
                             </div>
                             <hr class="my-4">
-                        @endforeach
+
+                        @empty
+                            <img src="{{ asset('img/sincomunicados.png') }}" alt=""
+                                style="width: 300px; margin:0px auto;">
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -491,10 +495,6 @@
                             </div>
 
                         @endforeach
-                        @if ($cumpleaños)
-                            <img src="{{ asset('img/sincomunicados.png') }}" alt=""
-                                style="width: 100px; margin:0px auto; margin-top: 100px;">
-                        @endif
                     </div>
                     <button onclick="carruselPortal('advance');">
                         <i class="material-symbols-outlined">arrow_forward_ios</i>
