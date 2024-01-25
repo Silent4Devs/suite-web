@@ -11,7 +11,6 @@ use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
 
 class PanelDeclaracionIsoController extends Controller
 {
@@ -62,11 +61,10 @@ class PanelDeclaracionIsoController extends Controller
                 },
                 'aprobadores2022.aprobador_declaracion' => function ($q) {
                     $q->select('empleados.id', 'empleados.name', 'empleados.foto');
-                }
+                },
             ])
             ->orderBy('id')
             ->get();
-
 
         return datatables()->of($query)->toJson();
     }
@@ -134,9 +132,9 @@ class PanelDeclaracionIsoController extends Controller
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado como aprobador'], 200);
         } else {
-            if (!$existResponsable) {
+            if (! $existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
-                if (!$exists) {
+                if (! $exists) {
                     DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)
                         ->update([
                             'declaracion_id' => $declaracion,
@@ -189,7 +187,7 @@ class PanelDeclaracionIsoController extends Controller
         } else {
             if ($existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
-                if (!$exists) {
+                if (! $exists) {
                     DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)
                         ->update(
                             [
