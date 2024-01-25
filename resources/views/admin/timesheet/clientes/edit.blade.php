@@ -71,8 +71,7 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input id="phone" type="text" name="telefono" value="{{ $cliente->telefono }}"
-                        class="form-control" pattern="\x2b[0-9]+" size="20" placeholder="">
+                    <input id="phone" type="text" name="telefono" value="{{ $cliente->telefono }}" class="form-control" size="20" placeholder="">
                         {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
                 </div>
 
