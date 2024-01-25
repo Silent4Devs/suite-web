@@ -31,7 +31,6 @@
     "phpoffice/phpword": "^1.0",
     "predis/predis": "^2.2",
     "pusher/pusher-php-server": "^7.0",
-    "rap2hpoutre/fast-excel": "^5.3",
     "realrashid/sweet-alert": "^7.1",
     "renatomarinho/laravel-page-speed": "dev-master",
     "sentry/sentry-laravel": "^3.8",
