@@ -99,7 +99,7 @@
                 </div>
                 <div class="form-group col-12 anima-focus">
                     <input class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form"
-                        type="text" name="nombrerequisito" id="nombrerequisito" placeholder=""
+                        type="text" maxlength="255" name="nombrerequisito" id="nombrerequisito" placeholder=""
                         value="{{ old('nombrerequisito', $matrizRequisitoLegale->nombrerequisito) }}" required>
                     @if ($errors->has('nombrerequisito'))
                         <div class="invalid-feedback">
@@ -109,6 +109,7 @@
                     {!! Form::label('nombrerequisito', 'Nombre del requisito legal, regulatorio, contractual o estatutario*', [
                         'class' => 'asterisco',
                     ]) !!}
+                    <span id="alertaGenerica" style="color: red; display: none;"></span>
                 </div>
                 <br>
                 <br>
@@ -126,8 +127,8 @@
                     {!! Form::label(
                         'formacumple',
                         'Cláusula, sección o
-                                            apartado
-                                            aplicable*',
+                                                                                    apartado
+                                                                                    aplicable*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -296,6 +297,23 @@
 
         Livewire.on('select2', () => {
             initSelect2();
+        });
+    </script>
+    <script>
+        var alerta = document.getElementById('alertaGenerica');
+        var inputs = document.querySelectorAll('input[type="text"]');
+        alerta.textContent = '¡Estas a punto de llegar a los 255 caracteres!'
+        // Agregar un event listener a cada elemento input
+        inputs.forEach(function(input) {
+            input.addEventListener('input', function() {
+                // Acciones a realizar cuando se ingresa texto en un input
+                console.log('Se ingresó texto en el input con ID:', input.id);
+                if (input.value.length > 250) {
+                    alerta.style.display = 'block';
+                } else {
+                    alerta.style.display = 'none';
+                }
+            });
         });
     </script>
 @endsection

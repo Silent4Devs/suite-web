@@ -809,7 +809,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script> --}}
 
-
+    <!-- js para validaciones globales sadas werwer-->
+    <!--<script src="{{ asset('js/validations.js') }}"></script>-->
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('js')
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
