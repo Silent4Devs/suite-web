@@ -39,8 +39,7 @@
                         </div>
                     @endif
                     @if ($origen === 'tareas')
-                        <select  id="proyectos_select" class="mr-4 form-control" wire:model.defer="proyecto_id"
-                            required>
+                        <select id="proyectos_select" class="mr-4 form-control" wire:model.defer="proyecto_id" required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
@@ -105,13 +104,19 @@
                                 style="min-height: 40px !important; height:40px !important;">{{ $tarea->tarea }}</textarea>
                         </td>
 
-                        <td> {{ $tarea->proyecto_id ? $tarea->proyecto : '' }} </td>
+                        <td>
+                            {{ $tarea->proyecto_id ? $tarea->proyecto : '' }}
+                        </td>
+
                         <td style="display:flex; align-items: center;">
                             <select class="form-control select_area" style="width:300px;" data-type="changeArea"
                                 data-id="{{ $tarea->id }}">
-                                <option value="0" {{ $tarea->todos ? 'selected' : '' }}>Todas</option>
-                                    <option value="{{ $tarea->area_id }}">{{  $tarea->area }}
-                                    </option>
+                                @if ($tarea->area_id == 0)
+                                    <option value="0" selected>Todas</option>
+                                @else
+                                    <option value="0" selected>Todas</option>
+                                    <option value="{{ $tarea->area_id }}">{{ $tarea->area }}</option>
+                                @endif
                             </select>
                             @if ($tarea->todos)
                                 <i class="fa-solid fa-eye ml-2 modal-hover-caja"

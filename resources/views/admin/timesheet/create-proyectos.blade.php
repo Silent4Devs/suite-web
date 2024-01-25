@@ -16,7 +16,7 @@
             @csrf
             <div class="row">
                 <div class="form-group col-md-2 anima-focus">
-                    <input type="text" id="identificador_proyect" placeholder="" name="identificador" class="form-control" maxlength="250" required>
+                    <input type="text" id="identificador_proyect" placeholder="" name="identificador" class="form-control" maxlength="254" required>
                     {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('identificador'))
                         <div class="invalid-feedback">
@@ -28,8 +28,9 @@
                     @enderror
                 </div>
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="text" id="name_proyect" placeholder="" name="proyecto_name" class="form-control" maxlength="250" required>
+                    <input type="text" id="name_proyect" placeholder="" name="proyecto_name" class="form-control" maxlength="254" required>
                     {!! Form::label('name_proyect', 'Nombre del proyecto*', ['class' => 'asterisco']) !!}
+                    <span id="alertaGenerica" style="color: red; display: none;"></span>
                 </div>
                 <div class="form-group col-md-4 anima-focus">
                     <select name="cliente_id" id="cliente_id" class="form-control" required>
@@ -154,5 +155,30 @@
 
         });
 </script>
+<script>
+    var alerta = document.getElementById('alertaGenerica');
+    var inputs = document.querySelectorAll('input[type="text"]');
+    alerta.textContent = '¡Estas a punto de llegar a los 255 caracteres!'
+    // Agregar un event listener a cada elemento input
+    inputs.forEach(function(input) {
+        input.addEventListener('input', function() {
+            // Acciones a realizar cuando se ingresa texto en un input
+            if (input.value.length > 250) {
+                alerta.style.display = 'block';
+            } else {
+                alerta.style.display = 'none';
+            }
+        });
+    });
+</script>
+<script>
+    //valida que no sean numeros negativos
+    var input = document.getElementById('identificador_proyect');
 
+    input.addEventListener('input', function() {
+        var valor = input.value;
+        var nuevoValor = valor.replace(/[^0-9]/g, '');
+        input.value = nuevoValor;
+     });
+</script>
 @endsection
