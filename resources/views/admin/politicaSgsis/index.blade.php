@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
     <style>
@@ -168,19 +168,8 @@
         }
 
         .modal-content {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            color: var(--bs-modal-color);
-            pointer-events: auto;
-            background-color: var(--bs-modal-bg);
-            background-clip: padding-box;
-            border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
-            border-radius: 16px;
-            outline: 0;
-            margin-top: 0px;
-            margin-bottom: 100px;
+
+            width: 65rem;
         }
 
         .boton-sin-borde {
@@ -279,8 +268,8 @@
                     style="color: #ffffff;"></i>
             </button>
             <div class="modal-dialog" style="margin-top: 0px;">
-                <div class="modal-content" style="width:1000px;">
-                    <div class="modal-body" style="border-radius: 0px;">
+                <div class="modal-content">
+                    <div class="modal-body">
                         <div class="print-none">
                         </div>
                         <div class="card col-sm-12 col-md-10"
