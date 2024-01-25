@@ -7,6 +7,7 @@
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
     </h5>
 
+    @include('admin.timesheet.complementos.cards')
 
     <x-loading-indicator />
     @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
@@ -32,7 +33,6 @@
                 const z = n => ('0' + n).slice(-2);
                 return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
             }
-
 
             $("#fecha_dia").flatpickr({
                 "minDate": "{{ auth()->user()->empleado->fecha_min_timesheet }}",

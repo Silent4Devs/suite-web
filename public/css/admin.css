@@ -1260,3 +1260,8 @@ a{
     background-color: #fff !important;
     color: #414141 !important;
 }
+
+.btn:focus, .btn.focus{
+    outline: none !important;
+    box-shadow: none !important;
+}
