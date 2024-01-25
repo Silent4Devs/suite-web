@@ -177,7 +177,7 @@
 
     input.addEventListener('input', function() {
         var valor = input.value;
-        var nuevoValor = valor.replace(/[^0-9]/g, '');
+        var nuevoValor = valor.replace(/[^a-zA-Z0-9]/g, '');
         input.value = nuevoValor;
      });
 </script>
