@@ -117,6 +117,23 @@ services:
     networks:
       - tabantajnetwork
 
+  rabbitmq-tabantaj:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbit-tabantaj
+    environment:
+      - RABBITMQ_DEFAULT_USER=desarrollo
+      - RABBITMQ_DEFAULT_PASS=Password123.
+      - RABBITMQ_DEFAULT_VHOST=desarrollo # Add this line
+    ports:
+      - 5672:5672
+      - 15672:15672
+    restart: unless-stopped
+    tty: true
+    networks:
+      - tabantajnetwork
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
   # prometheus-tabantaj:
   #   image: prom/prometheus
   #   container_name: prometheus-tabantaj
@@ -276,6 +293,8 @@ services:
 
 volumes:
   tabantaj-db:
+    driver: local
+  rabbitmq_data:
     driver: local
   pgadmin-data:
     driver: local
