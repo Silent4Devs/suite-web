@@ -100,11 +100,12 @@
                 <i class="material-icons-outlined">arrow_forward_ios</i>
             </div>
         </div>
-        {{-- @if ($user) --}}
+        @can('admin_template_analisis_brechas_iso')
         <div class="d-flex justify-content-start" style="padding-left: 160px;">
             <a href="{{ route('admin.template-top') }}">Ver todos</a>
         </div>
-        {{-- @endif --}}
+        @endcan
+
         <div class="d-flex justify-content-end" style="padding-right: 110px;">
             <a class="btn btn-light text-primary border border-primary" href="{{ route('admin.templates.create') }}">
                 Crear template +
