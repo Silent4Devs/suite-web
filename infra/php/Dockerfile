@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -36,8 +36,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
-    #imagick-stable \
-    gmagick-stable \
+    imagick-stable \
     #xdebug-stable \
     bcmath \
     calendar \
