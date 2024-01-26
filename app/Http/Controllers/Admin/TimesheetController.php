@@ -660,11 +660,11 @@ class TimesheetController extends Controller
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
+        $sedes = TimesheetProyecto::getAll('sedes_' . $id)->where('timesheet_proyectos.id', $id)
             ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
             ->get('sedes.sede');
 
-        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
+        $clientes = TimesheetProyecto::getAll('clientes_' . $id)->where('timesheet_proyectos.id', $id)
             ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
             ->get('timesheet_clientes.nombre');
 
@@ -738,7 +738,7 @@ class TimesheetController extends Controller
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto = TimesheetProyecto::getAll('tareas_'.$proyecto_id)->find($proyecto_id);
+        $proyecto = TimesheetProyecto::getAll('tareas_' . $proyecto_id)->find($proyecto_id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -926,14 +926,14 @@ class TimesheetController extends Controller
 
             $cliente = TimesheetCliente::find($id);
 
-            if (! $cliente) {
-                throw new MiExcepcionTimeshetClientes();
+            if (!$cliente) {
+                return redirect()->route('admin.timesheet-clientes')->with('error', 'El registro fue eliminado ');
             }
 
             return view('admin.timesheet.clientes.edit', compact('cliente'));
         } catch (MiExcepcionTimeshetClientes $excepcionPersonalizada) {
 
-            Log::error('Ocurrió una excepción personalizada: '.$excepcionPersonalizada->getMessage());
+            Log::error('Ocurrió una excepción personalizada: ' . $excepcionPersonalizada->getMessage());
 
             return response()->json(['error' => $excepcionPersonalizada->getMessage()], 400);
         }
@@ -1083,7 +1083,7 @@ class TimesheetController extends Controller
 
     public function proyectosEmpleados($id)
     {
-        $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1094,7 +1094,7 @@ class TimesheetController extends Controller
 
     public function proyectosExternos($id)
     {
-        $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('externos_' . $id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;

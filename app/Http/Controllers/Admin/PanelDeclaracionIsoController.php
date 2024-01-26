@@ -19,14 +19,14 @@ class PanelDeclaracionIsoController extends Controller
 
     public function index(Request $request)
     {
-        $empleados = Empleado::getaltaAll();
+        $empleados = Empleado::select('id', 'name', 'foto', 'genero')->get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         $asignados = DeclaracionAplicabilidadConcentradoIso::select(
             'id',
-            'id_gap_dos_catalogo',
+            'id_gap_dos_catalogo'
         )->with('gapdos')
             ->with('gapdos.clasificacion')
             ->with(['responsables2022.responsable_declaracion' => function ($q) {
@@ -44,18 +44,27 @@ class PanelDeclaracionIsoController extends Controller
 
     public function controles()
     {
+
         $query = DeclaracionAplicabilidadConcentradoIso::select(
             'id',
-            'id_gap_dos_catalogo',
-        )->with('gapdos')
-            ->with('gapdos.clasificacion')
-            ->with(['responsables2022.responsable_declaracion' => function ($q) {
-                $q->select('empleados.id', 'empleados.name', 'foto');
-            }])
-            ->with(['aprobadores2022.aprobador_declaracion' => function ($q) {
-                $q->select('empleados.id', 'empleados.name', 'foto');
-            }])
-            ->orderBy('id')->get();
+            'id_gap_dos_catalogo'
+        )
+            ->with([
+                'gapdos' => function ($q) {
+                    $q->select('id', 'id_clasificacion', 'anexo_politica', 'control_iso');
+                },
+                'gapdos.clasificacion' => function ($q) {
+                    $q->select('id', 'nombre');
+                },
+                'responsables2022.responsable_declaracion' => function ($q) {
+                    $q->select('empleados.id', 'empleados.name', 'empleados.foto');
+                },
+                'aprobadores2022.aprobador_declaracion' => function ($q) {
+                    $q->select('empleados.id', 'empleados.name', 'empleados.foto');
+                },
+            ])
+            ->orderBy('id')
+            ->get();
 
         return datatables()->of($query)->toJson();
     }
