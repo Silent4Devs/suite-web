@@ -168,7 +168,6 @@
         }
 
         .modal-content {
-
             width: 65rem;
         }
 
