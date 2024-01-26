@@ -517,6 +517,6 @@ table.dataTable tbody tr.selected td {
     border: none;
     color: #057BE2;
 }
-#form_timesheet .select2-dropdown{
-    transform: translateX(90%);
+.select2-dropdown{
+    transform: translateX(90%) !important;
 }
