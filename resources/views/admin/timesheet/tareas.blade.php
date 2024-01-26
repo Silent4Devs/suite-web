@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
     {{ Breadcrumbs::render('timesheet-tareas') }}
-
+    @include('admin.timesheet.complementos.cards')
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font>
     </h5>
 

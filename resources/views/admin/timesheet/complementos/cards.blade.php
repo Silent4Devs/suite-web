@@ -92,7 +92,7 @@
 </div>
 
 <div class="option-fixed-admin">
-    <button class="btn">
+    <button class="btn" onclick="document.querySelector('.modal-aprobador').classList.remove('d-none');">
         <img src="{{ asset('img/calendar-icon-time-person.svg') }}" alt="">
     </button>
     <button class="btn">
@@ -101,6 +101,10 @@
 </div>
 
 <div class="modal-aprobador">
+    <button class="btn" style="position: absolute; left: 10px; top: 10px;">
+        <i class="bi bi-x-lg text-white" style="font-size: 40px;"></i>
+    </button>
+
     <h3 class="text-white text-center" style="font-size:20px;">Aprobador</h3>
 
     <div class="d-flex justify-content-center w-100 px-5 mt-5" style="gap: 20px;">
