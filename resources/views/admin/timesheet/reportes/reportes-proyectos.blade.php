@@ -1,14 +1,13 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}?v=1.1">
 
-{{-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
 </script> --}}
 
-@livewire('timesheet.reportes-proyectos')
-
+    @livewire('timesheet.reportes-proyectos')
 @endsection
 @section('scripts')
     @parent

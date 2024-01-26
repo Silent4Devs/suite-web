@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}?v=1.1">
     @php
         use App\Models\Organizacion;
     @endphp
@@ -20,12 +20,12 @@
                     <div class=""><strong>Fecha: </strong>
                         {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format('d/m/Y') }}</div>
 
-                        <form method="POST" action="{{ route('admin.timesheet.pdf', ['id' => $timesheet->id]) }}">
+                    <form method="POST" action="{{ route('admin.timesheet.pdf', ['id' => $timesheet->id]) }}">
                         @csrf
                         <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
                             IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                         </button>
-                       </form>
+                    </form>
                 </div>
                 <div id="content_times_show_print" class="w-100">
                     @php
@@ -40,6 +40,7 @@
                         @page {
                             size: landscape;
                         }
+
                         .boton-transparentev2 {
                             top: 214px;
                             width: 135px;
@@ -105,7 +106,8 @@
                             @foreach ($horas as $index => $hora)
                                 <tr>
                                     <td>
-                                        <div class="form-control" style="height:unset;">{{ $hora->proyecto->identificador }}
+                                        <div class="form-control" style="height:unset;">
+                                            {{ $hora->proyecto->identificador }}
                                             -
                                             {{ $hora->proyecto->proyecto }}
                                         </div>

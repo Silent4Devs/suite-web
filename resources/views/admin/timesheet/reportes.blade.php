@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}?v=1.1">
 
     <style type="text/css">
         .caja_botones_menu {
@@ -77,7 +77,6 @@
             transition-delay: 0.5s;
             width: 100%;
         }
-
     </style>
     <style type="text/css">
         div.nav .nav-link {
@@ -156,7 +155,6 @@
         .tabs {
             outline: none;
         }
-
     </style>
     <style>
         .ventana_menu {
@@ -219,55 +217,55 @@
     {{ Breadcrumbs::render('timesheet-reportes') }}
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reportes</font>
     </h5>
-<div class="mt-5 card card-body">
-    <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
-        aria-labelledby="nav-contexto-tab">
-        <ul class="mt-4">
+    <div class="mt-5 card card-body">
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
+                aria-labelledby="nav-contexto-tab">
+                <ul class="mt-4">
 
-                <li>
-                    <a href="{{ route('admin.timesheet-reportes-registros') }}">
-                        <div>
-                        <i class="bi bi-file-earmark-text"></i><br>
-                            Registros Timesheet
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.timesheet-reportes-empleados') }}">
-                        <div>
-                        <i class="bi bi-file-earmark-text"></i><br>
-                            Registros por Área
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.timesheet-reportes-proyectos') }}">
-                        <div>
-                        <i class="bi bi-file-earmark-text"></i><br>
-                            Proyectos
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.timesheet-reportes-proyemp') }}">
-                        <div>
-                        <i class="bi bi-file-earmark-text"></i><br>
-                            Registros Colaboradores-Tareas
-                        </div>
-                    </a>
-                </li>
-        </ul>
-    </div>
-</div>
-    {{-- <div class="mt-5 card card-body"> --}}
+                    <li>
+                        <a href="{{ route('admin.timesheet-reportes-registros') }}">
+                            <div>
+                                <i class="bi bi-file-earmark-text"></i><br>
+                                Registros Timesheet
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.timesheet-reportes-empleados') }}">
+                            <div>
+                                <i class="bi bi-file-earmark-text"></i><br>
+                                Registros por Área
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.timesheet-reportes-proyectos') }}">
+                            <div>
+                                <i class="bi bi-file-earmark-text"></i><br>
+                                Proyectos
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.timesheet-reportes-proyemp') }}">
+                            <div>
+                                <i class="bi bi-file-earmark-text"></i><br>
+                                Registros Colaboradores-Tareas
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {{-- <div class="mt-5 card card-body"> --}}
         {{-- <nav class="mt-4"> --}}
-            {{-- <div class="nav nav-tabs" id="tabsIso27001" role="tablist">
+        {{-- <div class="nav nav-tabs" id="tabsIso27001" role="tablist">
                 <a class="nav-link active" id="nav-registros-tab" data-type="registros" data-toggle="tab"
                     href="#nav-registros" role="tab" aria-controls="nav-registros" aria-selected="true">
                     Registros Timesheet
                 </a> --}}
-                {{-- <a class="nav-link" id="nav-empleados-tab" data-type="empleados" data-toggle="tab" href="#nav-empleados"
+        {{-- <a class="nav-link" id="nav-empleados-tab" data-type="empleados" data-toggle="tab" href="#nav-empleados"
                     role="tab" aria-controls="nav-empleados" aria-selected="false" style="position: relative;">
                     Registros por Área
                 </a>
@@ -275,7 +273,7 @@
                     role="tab" aria-controls="nav-proyectos" aria-selected="false">
                     Proyectos
                 </a> --}}
-                {{-- <a class="nav-link" id="nav-proyemp-tab" data-type="proyemp" data-toggle="tab" href="#nav-proyemp"
+        {{-- <a class="nav-link" id="nav-proyemp-tab" data-type="proyemp" data-toggle="tab" href="#nav-proyemp"
                     role="tab" aria-controls="nav-proyemp" aria-selected="false">
                     Registros Colaboradores-Tareas
                 </a>
@@ -283,17 +281,17 @@
         {{-- </nav> --}}
 
         {{-- <div class="tab-content" id="nav-tabContent"> --}}
-            {{-- <div class="tab-pane mb-4 fade p-4 show active" id="nav-registros" role="tabpanel"
+        {{-- <div class="tab-pane mb-4 fade p-4 show active" id="nav-registros" role="tabpanel"
                 aria-labelledby="nav-registros-tab">
                 @livewire('timesheet.reportes-registros')
             </div> --}}
-            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-empleados" role="tabpanel" aria-labelledby="nav-empleados-tab">
+        {{-- <div class="tab-pane mb-4 fade p-4" id="nav-empleados" role="tabpanel" aria-labelledby="nav-empleados-tab">
                 @livewire('timesheet.reportes-empleados')
             </div>
             <div class="tab-pane mb-4 fade p-4" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
                 @livewire('timesheet.reportes-proyectos')
             </div> --}}
-            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-proyemp" role="tabpanel" aria-labelledby="nav-proyemp-tab">
+        {{-- <div class="tab-pane mb-4 fade p-4" id="nav-proyemp" role="tabpanel" aria-labelledby="nav-proyemp-tab">
                 @livewire('timesheet.reportes-proyemp')
             </div> --}}
         {{-- </div> --}}

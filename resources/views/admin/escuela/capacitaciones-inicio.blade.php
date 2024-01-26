@@ -2,7 +2,7 @@
 @section('content')
     {{-- menus horizontales --}}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}?v=1.1">
 
     <style type="text/css">
         .caja_botones_menu {
@@ -197,48 +197,41 @@
     <div class="mt-5">
         <div class="card-body">
             @include('partials.flashMessages')
-            @if (
-                Auth::user()->can('mis_cursos_acceder'))
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
-                    aria-labelledby="nav-contexto-tab">
-                    <ul class="mt-4">
+            @if (Auth::user()->can('mis_cursos_acceder'))
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
+                        aria-labelledby="nav-contexto-tab">
+                        <ul class="mt-4">
 
-                        @can('escuela_estudiante')
-                            <li>
-                                <a href="{{ route('admin.mis-cursos') }}">
-                                    <div>
-                                    <i class="material-symbols-outlined">
-                                        book_3
-                                    </i><br>
-                                        Mis Cursos
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mis_cursos_instructor')
-                            <li>
-                                <a href="{{ route('admin.courses.index') }}">
-                                    <div>
-                                    <i class="material-symbols-outlined">
-                                            badge
-                                    </i><br>
-                                        Instructor
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        
-                    </ul>
+                            @can('escuela_estudiante')
+                                <li>
+                                    <a href="{{ route('admin.mis-cursos') }}">
+                                        <div>
+                                            <i class="material-symbols-outlined">
+                                                book_3
+                                            </i><br>
+                                            Mis Cursos
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('mis_cursos_instructor')
+                                <li>
+                                    <a href="{{ route('admin.courses.index') }}">
+                                        <div>
+                                            <i class="material-symbols-outlined">
+                                                badge
+                                            </i><br>
+                                            Instructor
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+
+                        </ul>
+                    </div>
                 </div>
-            </div>
             @endif
         </div>
     </div>
-    
-
-
-    
 @endsection
-
-

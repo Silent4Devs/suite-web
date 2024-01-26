@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}?v=1.1">
 
 <style type="text/css">
     .caja_botones_menu {
@@ -214,44 +214,44 @@
     <div class="mt-5">
         <div class="card-body">
             @include('partials.flashMessages')
-            @if (
-                Auth::user()->can('mis_cursos_acceder'))
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
-                    aria-labelledby="nav-contexto-tab">
-                    <ul class="mt-4">
+            @if (Auth::user()->can('mis_cursos_acceder'))
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
+                        aria-labelledby="nav-contexto-tab">
+                        <ul class="mt-4">
 
-                        @can('mi_perfil_modulo_solicitud_ausencia')
-                            <li>
-                                <a href="{{ asset('admin/solicitud-vacaciones') }}" class="btn_reporte">
-                                    <div>
-                                    <i class="bi bi-sun"></i><span>Vacaciones</span>
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mi_perfil_modulo_solicitud_ausencia')
-                            <li>
-                                <a href="{{ asset('admin/solicitud-dayoff') }}" class="btn_reporte">
-                                    <i class="bi bi-bicycle"></i> <br><br><span style="position: relative; right: 1.2rem;">Day Off´s</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mi_perfil_modulo_solicitud_ausencia')
-                            <li>
-                                <a href="{{ asset('admin/solicitud-permiso-goce-sueldo') }}" class="btn_reporte">
-                                    <i class="bi bi-coin"></i><span>Permisos</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mi_perfil_modulo_solicitud_ausencia')
-                            <li>
-                                <a href="{{ asset('admin/envio-documentos') }}" class="btn_reporte">
-                                    <i class="bi bi-send"></i><span>Mensajería</span>
-                                  </a>
-                            </li>
-                        @endcan
-                        {{-- @php
+                            @can('mi_perfil_modulo_solicitud_ausencia')
+                                <li>
+                                    <a href="{{ asset('admin/solicitud-vacaciones') }}" class="btn_reporte">
+                                        <div>
+                                            <i class="bi bi-sun"></i><span>Vacaciones</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('mi_perfil_modulo_solicitud_ausencia')
+                                <li>
+                                    <a href="{{ asset('admin/solicitud-dayoff') }}" class="btn_reporte">
+                                        <i class="bi bi-bicycle"></i> <br><br><span
+                                            style="position: relative; right: 1.2rem;">Day Off´s</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('mi_perfil_modulo_solicitud_ausencia')
+                                <li>
+                                    <a href="{{ asset('admin/solicitud-permiso-goce-sueldo') }}" class="btn_reporte">
+                                        <i class="bi bi-coin"></i><span>Permisos</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('mi_perfil_modulo_solicitud_ausencia')
+                                <li>
+                                    <a href="{{ asset('admin/envio-documentos') }}" class="btn_reporte">
+                                        <i class="bi bi-send"></i><span>Mensajería</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            {{-- @php
                         if ($solicitudes_pendientes == 0) {
                             $mostrar_solicitudes = false;
                         } else {
@@ -271,10 +271,10 @@
                             </a>
                         @endcan --}}
 
-                        
-                    </ul>
+
+                        </ul>
+                    </div>
                 </div>
-            </div>
             @endif
         </div>
     </div>

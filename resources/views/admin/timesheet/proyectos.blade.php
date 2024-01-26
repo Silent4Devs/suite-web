@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}?v=1.1">
     {{ Breadcrumbs::render('timesheet-proyectos') }}
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Proyectos</font>
     </h5>
@@ -51,7 +51,7 @@
 
                             var now = new Date();
                             var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
-                            .getFullYear();
+                                .getFullYear();
                             $(doc.document.body).prepend(`
                                 <div class="row">
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
