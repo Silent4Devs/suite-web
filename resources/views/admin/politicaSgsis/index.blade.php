@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
     <style>
@@ -168,19 +168,7 @@
         }
 
         .modal-content {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            color: var(--bs-modal-color);
-            pointer-events: auto;
-            background-color: var(--bs-modal-bg);
-            background-clip: padding-box;
-            border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
-            border-radius: 16px;
-            outline: 0;
-            margin-top: 0px;
-            margin-bottom: 100px;
+            width: 65rem;
         }
 
         .boton-sin-borde {
@@ -274,10 +262,10 @@
         <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
-                style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
-                    style="color: #ffffff;"></i>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            style="margin:50px 0px 50px 1230px; background:none; border: none;">
+        <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+       </button>
             <div class="modal-dialog" style="margin-top: 0px;">
                 <div class="modal-content" style="width:1000px;">
                     <div class="modal-body" style="border-radius: 0px;">

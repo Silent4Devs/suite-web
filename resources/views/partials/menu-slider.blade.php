@@ -149,7 +149,7 @@
         @endcan
         @can('sedes_acceder')
             <div class="item-ms">
-                <a href="{{ route('admin.sedes.index') }}">
+                <a href="{{ route('admin.sedes.obtenerListaSedes') }}">
                     <i class="material-symbols-outlined">home_pin</i>
                     <span>Sedes</span>
                 </a>
@@ -157,7 +157,7 @@
         @endcan
         @can('crear_area_acceder')
             <div class="item-ms">
-                <a href="{{ route('admin.areas.index') }}">
+                <a href="{{ route('admin.areas.renderJerarquia') }}">
                     <i class="material-symbols-outlined">mitre</i>
                     <span>Áreas</span>
                 </a>
