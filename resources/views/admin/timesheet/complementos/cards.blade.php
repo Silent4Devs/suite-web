@@ -28,17 +28,46 @@
         gap: 10px;
     }
 
-    .modal-aprobador {
+    .modal-admin-time {
         position: fixed;
         width: 100%;
         height: 100%;
         z-index: 999;
-        background-color: #40475f;
+        background-color: #40475fe1;
         top: 0px;
         left: 0px;
     }
 
-    .card-option-aprob {}
+    .card-time-admin {
+        width: 250px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .img-card-time-admin {
+        width: 100%;
+        height: 150px;
+    }
+
+    .img-card-time-admin img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .info-card-time-admin {
+        width: 100%;
+        height: 150px;
+        background-color: #fff;
+        text-align: center;
+        display: grid;
+        place-items: center;
+    }
+
+    .info-card-time-admin h5 {
+        width: 80%;
+        margin: auto;
+    }
 </style>
 <div class="d-flex justify-content-between " style="gap: 25px;">
     <a href="">
@@ -100,16 +129,22 @@
     </button>
 </div>
 
-<div class="modal-aprobador">
-    <button class="btn" style="position: absolute; left: 10px; top: 10px;">
+<div class="modal-admin-time modal-aprobador d-none">
+    <button class="btn" style="position: absolute; right: 10px; top: 10px;"
+        onclick="document.querySelector('.modal-aprobador').classList.add('d-none');">
         <i class="bi bi-x-lg text-white" style="font-size: 40px;"></i>
     </button>
 
-    <h3 class="text-white text-center" style="font-size:20px;">Aprobador</h3>
+    <h3 class="text-white text-center" style="font-size:30px; margin-top: 200px;">Aprobador</h3>
 
     <div class="d-flex justify-content-center w-100 px-5 mt-5" style="gap: 20px;">
-        <div class="card-option-aprob">
-
+        <div class="card-time-admin">
+            <div class="img-card-time-admin">
+                <img src="{{ asset('img/iso/iso14.webp') }}" alt="">
+            </div>
+            <div class="info-card-time-admin">
+                <h5>Pendientes de aprobar</h5>
+            </div>
         </div>
     </div>
 </div>
