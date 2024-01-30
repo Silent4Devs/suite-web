@@ -334,14 +334,19 @@ class TimesheetController extends Controller
      */
     public function show($id)
     {
-        $timesheet = Timesheet::find($id);
-        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
-        $horas_count = $horas->count();
+        try {
+            $timesheet = Timesheet::find($id);
 
-        $hoy = Carbon::now();
-        $hoy_format = $hoy->format('d/m/Y');
+            $horas = TimesheetHoras::where('timesheet_id', $id)->get();
+            $horas_count = $horas->count();
 
-        return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
+            $hoy = Carbon::now();
+            $hoy_format = $hoy->format('d/m/Y');
+
+            return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.timesheet')->with('error', 'No se localizo  ningun id  en la ruta');
+        }
     }
 
     /**
