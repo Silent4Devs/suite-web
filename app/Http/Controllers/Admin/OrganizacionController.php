@@ -118,7 +118,7 @@ class OrganizacionController extends Controller
             ]);
 
             $file = $request->file('logotipo');
-            $fileName = 'UID_' . $organizacions->id . '_' . $file->getClientOriginalName();
+            $fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
 
             // Compress and save the image
             $image = Image::make($file)->encode('png', 70); // Adjust quality as needed
@@ -131,7 +131,6 @@ class OrganizacionController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $organizacions->id]);
         }
-
 
         return redirect()->route('admin.organizacions.index')->with('success', 'Guardado con éxito');
     }
@@ -172,7 +171,7 @@ class OrganizacionController extends Controller
             ]);
 
             $file = $request->file('logotipo');
-            $fileName = 'UID_' . $organizacion->id . '_' . $file->getClientOriginalName();
+            $fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
 
             // Compress and save the image
             $image = Image::make($file)->encode('png', 70); // Adjust quality as needed

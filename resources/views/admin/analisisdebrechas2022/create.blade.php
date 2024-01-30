@@ -112,7 +112,6 @@
         </div>
     </div> --}}
     @livewire('analisis-brechas-iso-form')
-
 @endsection
 
 @section('scripts')
@@ -157,8 +156,7 @@
                 document.getElementById('id_area').innerHTML = recortarTexto(area);
             })
 
-            function recortarTexto(texto, length = 30)
-            {
+            function recortarTexto(texto, length = 30) {
                 let trimmedString = texto?.length > length ?
                     texto.substring(0, length - 3) + "..." :
                     texto;
@@ -168,8 +166,7 @@
     </script>
     <script>
         $(function() {
-            let dtButtons = [
-                {
+            let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -213,22 +210,22 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
+                url: "{{ asset('admin/inicioUsuario/reportes/quejas') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
 
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ]
+                order: [
+                    [0, 'desc']
+                ]
             };
             let table = $('#datatable_analisisbrechas').DataTable(dtOverrideGlobals);
         });

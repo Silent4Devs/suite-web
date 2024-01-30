@@ -41,7 +41,7 @@ analisis brecha
 <body>
 
     <div class="caja-general-doc">
-        <table class="encabezado">
+        {{-- <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
                     @if ($logo_actual)
@@ -63,10 +63,10 @@ analisis brecha
                   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;  <span class="textopdf"> <strong> Reporte Timesheet</strong></span>
                 </td>
             </tr>
-        </table>
+        </table> --}}
         <br>
         <br>
-        <h2>Tabla de Horarios</h2>
+        <h2>TimeSheet</h2>
 
         <table>
             <thead>

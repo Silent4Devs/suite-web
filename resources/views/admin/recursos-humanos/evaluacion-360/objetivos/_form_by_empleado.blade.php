@@ -152,8 +152,9 @@
             @if (!$editar)
                 <div class="p-1 col" style="margin-top:-28px;height: 38px;margin-left: -12px;">
                     <button id="btnAgregarMetrica" class="text-white btn btn-sm"
-                        style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#metricaObjetivoModal"
-                        title="Agregar unidad"><i class="fas fa-plus"></i></button>
+                        style="background:#3eb2ad;height: 32px;" data-toggle="modal"
+                        data-target="#metricaObjetivoModal" title="Agregar unidad"><i
+                            class="fas fa-plus"></i></button>
                     <a href="{{ route('admin.Metrica.index') }}" class="text-white btn btn-sm"
                         style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
@@ -238,9 +239,9 @@
                     <th style="vertical-align: top">
                         Objetivos Estratégicos
                     </th>
-                    <th style="vertical-align: top">
+                    {{-- <th style="vertical-align: top">
                         Evaluación Asignada
-                    </th>
+                    </th> --}}
                     <th style="vertical-align: top">
                         KPI
                     </th>
@@ -259,8 +260,8 @@
                 </tr>
             </thead>
         </table>
-        <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false" tabindex="-1"
-            aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
+        <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false"
+            tabindex="-1" aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #345183;color: white;">
