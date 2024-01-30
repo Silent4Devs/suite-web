@@ -661,6 +661,10 @@ class TimesheetController extends Controller
     public function showProyectos($id)
     {
         $proyecto = TimesheetProyecto::getAll($id)->find($id);
+
+        if (!$proyecto) {
+            return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
+        }
         $areas = TimesheetProyectoArea::where('proyecto_id', $id)
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
@@ -1111,6 +1115,9 @@ class TimesheetController extends Controller
     public function editProyectos($id)
     {
         $proyecto = TimesheetProyecto::getAll()->find($id);
+        if (!$proyecto) {
+            return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
+        }
         $clientes = TimesheetCliente::getAll();
         $areas = Area::getIdNameAll();
         $sedes = Sede::getAll();
