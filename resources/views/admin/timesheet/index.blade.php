@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-    @include('admin.timesheet.complementos.cards')
     <style type="text/css">
         .btn_op {
             opacity: 1 !important;
@@ -22,6 +21,9 @@
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Mis Registros</font>
     </h5>
 
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.blue-card-header')
     <div class="card card-body">
         @livewire('timesheet.tabla-mis-registros')
     </div>

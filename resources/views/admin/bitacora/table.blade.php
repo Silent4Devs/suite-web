@@ -669,7 +669,7 @@
                         del Supervisor 1<font class="asterisco">*
                         </font></label>
                     <div>
-                        {!! Form::text('pmp_asignado', null, ['class' => 'form-control', 'required']) !!}
+                        {!! Form::text('pmp_asignado', null, ['class' => 'form-control', 'required', 'maxlength' => '250']) !!}
                         @if ($errors->has('pmp_asignado'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('pmp_asignado') }}
@@ -700,7 +700,7 @@
                     <label class="txt-tamaño">&nbsp;Nombre
                         del Supervisor 2</label>
                     <div>
-                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control','maxlength' => '250']) !!}
                         @if ($errors->has('administrador_contrato'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('administrador_contrato') }}

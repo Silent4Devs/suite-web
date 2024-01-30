@@ -4,7 +4,7 @@
 
     {{ Breadcrumbs::render('timesheet-create') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
+    <h5 class="titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
     </h5>
 
     @include('admin.timesheet.complementos.cards')

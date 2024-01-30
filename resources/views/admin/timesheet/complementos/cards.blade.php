@@ -37,6 +37,11 @@
         top: 0px;
         left: 0px;
         overflow: auto;
+        transition: 1s;
+    }
+
+    .modal-admin-time.d-none {
+        transition: display 1s;
     }
 
     .card-time-admin {
@@ -80,8 +85,8 @@
         text-wrap: balance;
     }
 </style>
-<div class="d-flex justify-content-between " style="gap: 25px;">
-    <a href="">
+<div class="d-flex justify-content-between" style="gap: 25px; width: 95%; margin:auto;">
+    <a href="{{ route('admin.timesheet') }}">
         <div class="card card-complement">
             <div class="bg-objet" style="background-color: #D0DFA7;"></div>
             <div class="d-flex align-items-center justify-content-between px-3 w-100">
@@ -93,7 +98,7 @@
             </div>
         </div>
     </a>
-    <a href="">
+    <a href="{{ route('admin.timesheet') }}">
         <div class="card card-complement">
             <div class="bg-objet" style="background-color: #FFD7A4;"></div>
             <div class="d-flex align-items-center justify-content-between px-3 w-100">
@@ -105,7 +110,7 @@
             </div>
         </div>
     </a>
-    <a href="">
+    <a href="{{ route('admin.timesheet') }}">
         <div class="card card-complement">
             <div class="bg-objet" style="background-color: #B8D6EE;"></div>
             <div class="d-flex align-items-center justify-content-between px-3 w-100">
@@ -117,7 +122,7 @@
             </div>
         </div>
     </a>
-    <a href="">
+    <a href="{{ route('admin.timesheet') }}">
         <div class="card card-complement">
             <div class="bg-objet" style="background-color: #DEDEDE;"></div>
             <div class="d-flex align-items-center justify-content-between px-3 w-100">
@@ -149,7 +154,7 @@
     <h3 class="text-white text-center" style="font-size:30px; margin-top: 200px;">Aprobador</h3>
 
     <div class="d-flex justify-content-center w-100 px-5" style="gap: 50px; margin-top: 100px;">
-        <a href="">
+        <a href="{{ route('admin.timesheet-aprobaciones') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso7.webp') }}" alt="">
@@ -159,7 +164,7 @@
                 </div>
             </div>
         </a>
-        <a href="">
+        <a href="{{ route('admin.timesheet-aprobados') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso15.webp') }}" alt="">
@@ -169,7 +174,7 @@
                 </div>
             </div>
         </a>
-        <a href="">
+        <a href="{{ route('admin.timesheet-rechazos') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso21.webp') }}" alt="">
@@ -179,7 +184,7 @@
                 </div>
             </div>
         </a>
-        <a href="">
+        <a href="#">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso25.webp') }}" alt="">
@@ -201,7 +206,7 @@
     <h3 class="text-white text-center" style="font-size:30px; margin-top: 200px;">Administrador</h3>
 
     <div class="d-flex justify-content-center w-100 px-5 flex-wrap" style="gap: 50px; margin-top: 100px;">
-        <a href="">
+        <a href="{{ route('admin.timesheet-aprobaciones') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso12.webp') }}" alt="">
@@ -211,7 +216,7 @@
                 </div>
             </div>
         </a>
-        <a href="">
+        <a href="{{ route('admin.timesheet-clientes') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso10.webp') }}" alt="">
@@ -221,7 +226,7 @@
                 </div>
             </div>
         </a>
-        <a href="">
+        <a href="{{ route('admin.timesheet-proyectos') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso14.webp') }}" alt="">
@@ -231,7 +236,7 @@
                 </div>
             </div>
         </a>
-        <a href="">
+        <a href="{{ route('admin.timesheet-tareas') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso2.webp') }}" alt="">
@@ -241,7 +246,7 @@
                 </div>
             </div>
         </a>
-        <a href="">
+        <a href="{{ route('admin.timesheet-reportes') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso27.webp') }}" alt="">
@@ -251,7 +256,7 @@
                 </div>
             </div>
         </a>
-        <a href="">
+        <a href="{{ route('admin.timesheet-dashboard') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
                     <img src="{{ asset('img/iso/iso16.webp') }}" alt="">

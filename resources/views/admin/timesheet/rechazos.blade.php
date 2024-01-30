@@ -1,12 +1,15 @@
 @extends('layouts.admin')
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-    @include('admin.timesheet.complementos.cards')
+
     {{ Breadcrumbs::render('timesheet-rechazos') }}
 
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Rechazos</font>
     </h5>
 
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.blue-card-header')
     <div class="card card-body">
         <div class="row">
             <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">

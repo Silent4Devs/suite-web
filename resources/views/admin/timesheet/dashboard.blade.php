@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
     {{ Breadcrumbs::render('timesheet-dashboard') }}
-    @include('admin.timesheet.complementos.cards')
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
@@ -12,6 +12,10 @@
     <h5 class="col-12 titulo_general_funcion">
         TimeSheet: <font style="font-weight:lighter;">Dashboard</font>
     </h5>
+
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.blue-card-header')
     <div class="mt-5">
         <nav class="mt-4 d-flex justify-content-between">
             <div class="nav nav-tabs" id="tabsIso27001" role="tablist">

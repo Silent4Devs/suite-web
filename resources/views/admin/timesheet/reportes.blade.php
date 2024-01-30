@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-    @include('admin.timesheet.complementos.cards')
     <style type="text/css">
         .caja_botones_menu {
             display: flex;
@@ -217,7 +216,11 @@
     {{ Breadcrumbs::render('timesheet-reportes') }}
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reportes</font>
     </h5>
-    <div class="mt-5 card card-body">
+
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.blue-card-header')
+    <div class="card card-body">
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
                 aria-labelledby="nav-contexto-tab">

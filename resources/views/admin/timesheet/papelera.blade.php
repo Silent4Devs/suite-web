@@ -2,12 +2,14 @@
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
-    @include('admin.timesheet.complementos.cards')
     {{ Breadcrumbs::render('timesheet-papelera') }}
 
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Borrador</font>
     </h5>
 
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.blue-card-header')
     <div class="card card-body">
         <div class="row">
 
