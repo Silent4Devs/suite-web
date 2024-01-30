@@ -1267,3 +1267,9 @@ a{
     outline: none !important;
     box-shadow: none !important;
 }
+
+.c-wrapper{
+    width: 100%;
+    max-width: 1750px;
+    margin: auto;
+}

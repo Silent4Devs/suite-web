@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     @include('partials.menu-slider')
-    <div style="max-width: 1900px;">
+    <div>
 
         @if ($user->empleado)
             <div class="d-flex justify-content-center align-items-center" style="gap: 25px;">

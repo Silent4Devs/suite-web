@@ -36,23 +36,31 @@
         background-color: #40475fe1;
         top: 0px;
         left: 0px;
+        overflow: auto;
     }
 
     .card-time-admin {
         width: 250px;
         border-radius: 12px;
-        overflow: hidden;
     }
 
     .img-card-time-admin {
         width: 100%;
         height: 150px;
+        overflow: hidden;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        position: relative;
+        z-index: 1;
+        margin-bottom: -15px;
+        background-color: #000;
     }
 
     .img-card-time-admin img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        opacity: 0.9;
     }
 
     .info-card-time-admin {
@@ -62,11 +70,14 @@
         text-align: center;
         display: grid;
         place-items: center;
+        border-radius: 20px;
+        box-shadow: 0px 0px 0px 15px #77c7ac;
     }
 
     .info-card-time-admin h5 {
         width: 80%;
         margin: auto;
+        text-wrap: balance;
     }
 </style>
 <div class="d-flex justify-content-between " style="gap: 25px;">
@@ -124,7 +135,7 @@
     <button class="btn" onclick="document.querySelector('.modal-aprobador').classList.remove('d-none');">
         <img src="{{ asset('img/calendar-icon-time-person.svg') }}" alt="">
     </button>
-    <button class="btn">
+    <button class="btn" onclick="document.querySelector('.modal-config').classList.remove('d-none');">
         <img src="{{ asset('img/calendar-icon-time-config.svg') }}" alt="">
     </button>
 </div>
@@ -137,14 +148,118 @@
 
     <h3 class="text-white text-center" style="font-size:30px; margin-top: 200px;">Aprobador</h3>
 
-    <div class="d-flex justify-content-center w-100 px-5 mt-5" style="gap: 20px;">
-        <div class="card-time-admin">
-            <div class="img-card-time-admin">
-                <img src="{{ asset('img/iso/iso14.webp') }}" alt="">
+    <div class="d-flex justify-content-center w-100 px-5" style="gap: 50px; margin-top: 100px;">
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso7.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Pendientes de aprobar</h5>
+                </div>
             </div>
-            <div class="info-card-time-admin">
-                <h5>Pendientes de aprobar</h5>
+        </a>
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso15.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Aprobados</h5>
+                </div>
             </div>
-        </div>
+        </a>
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso21.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Rechazados</h5>
+                </div>
+            </div>
+        </a>
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso25.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Reportes</h5>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="modal-admin-time modal-config d-none">
+    <button class="btn" style="position: absolute; right: 10px; top: 10px;"
+        onclick="document.querySelector('.modal-config').classList.add('d-none');">
+        <i class="bi bi-x-lg text-white" style="font-size: 40px;"></i>
+    </button>
+
+    <h3 class="text-white text-center" style="font-size:30px; margin-top: 200px;">Administrador</h3>
+
+    <div class="d-flex justify-content-center w-100 px-5 flex-wrap" style="gap: 50px; margin-top: 100px;">
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso12.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Pendientes de aprobar</h5>
+                </div>
+            </div>
+        </a>
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso10.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Clientes</h5>
+                </div>
+            </div>
+        </a>
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso14.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Proyectos</h5>
+                </div>
+            </div>
+        </a>
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso2.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Tareas</h5>
+                </div>
+            </div>
+        </a>
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso27.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Reportes</h5>
+                </div>
+            </div>
+        </a>
+        <a href="">
+            <div class="card-time-admin">
+                <div class="img-card-time-admin">
+                    <img src="{{ asset('img/iso/iso16.webp') }}" alt="">
+                </div>
+                <div class="info-card-time-admin">
+                    <h5>Dashboard</h5>
+                </div>
+            </div>
+        </a>
     </div>
 </div>

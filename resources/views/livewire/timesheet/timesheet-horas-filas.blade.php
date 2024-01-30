@@ -1,25 +1,29 @@
 <div>
     <form id="form_timesheet" action="{{ route('admin.timesheet.store') }}" method="POST">
-        <div class="d-flex align-items-center justify-content-between card-mobile caja-calendar-semana" wire:ignore
-            style="position: relative">
-            <div class="form-group anima-focus">
+        <div>
+            @section('first-blue-card-header')
+                <div class="d-flex align-items-center" style="gap: 30px;">
+                    <div class="form-group anima-focus" wire:ignore>
 
-                <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" placeholder="">
-                <label>
-                    <i class="fa-regular fa-calendar"></i>
-                    Semana laboral
-                </label>
-                <small class="fecha_dia errores text-danger" style="margin-left: 15px;"></small>
-            </div>
+                        <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" placeholder="">
+                        <label>
+                            <i class="fa-regular fa-calendar"></i>
+                            Semana laboral
+                        </label>
+                        <small class="fecha_dia errores text-danger" style="margin-left: 15px;"></small>
+                    </div>
 
-            <div class="semanas-tras-time-text">
-                <small>
-                    <i class="fa-solid fa-circle mr-2" style="color: #D2FDB8;"></i>
-                    Tiene permitido registrar
-                    <strong>{{ auth()->user()->empleado->semanas_min_timesheet }} </strong>
-                    semanas atras
-                </small>
-            </div>
+                    <div class="semanas-tras-time-text">
+                        <small>
+                            <i class="fa-solid fa-circle mr-2" style="color: #D2FDB8;"></i>
+                            Tiene permitido registrar
+                            <strong>{{ auth()->user()->empleado->semanas_min_timesheet }} </strong>
+                            semanas atras
+                        </small>
+                    </div>
+                </div>
+            @endsection
+            @include('admin.timesheet.complementos.blue-card-header')
         </div>
         <div class="card card-body not-card-mobile time-responsivo">
             <x-loading-indicator />
@@ -57,7 +61,8 @@
                                     </div>
                                     <font class="d-mobile" style="font-weight: bold;">Proyecto: </font>
                                     <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}"
-                                        data-type="parent" name="timesheet[{{ $i }}][proyecto]" style="border-radius: 15px; padding: 5px;">
+                                        data-type="parent" name="timesheet[{{ $i }}][proyecto]"
+                                        style="border-radius: 15px; padding: 5px;">
                                         <option selected disabled>Seleccione proyecto</option>
                                         @foreach ($proyectos as $proyecto)
                                             <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
@@ -69,8 +74,8 @@
                                 <td>
                                     <font class="d-mobile mt-1" style="font-weight: bold;">Tarea: </font>
                                     <select id="select_tareas{{ $i }}" data-contador="{{ $i }}"
-                                        name="timesheet[{{ $i }}][tarea]" class="select_tareas" style="border-radius: 15px; padding: 5px;"
-                                        disabled>
+                                        name="timesheet[{{ $i }}][tarea]" class="select_tareas"
+                                        style="border-radius: 15px; padding: 5px;" disabled>
                                         <option selected disabled>Seleccione tarea</option>
                                     </select>
                                     <small class="timesheet_{{ $i }}_tarea errores text-danger"></small>
@@ -366,7 +371,9 @@
                                         '{{ route('admin.timesheet-inicio') }}';
                                 });
                             } else {
-                                toastr.error('!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!');
+                                toastr.error(
+                                    '!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!'
+                                );
                             }
                         }
                     },
