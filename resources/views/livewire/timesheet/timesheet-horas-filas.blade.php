@@ -57,7 +57,7 @@
                                     </div>
                                     <font class="d-mobile" style="font-weight: bold;">Proyecto: </font>
                                     <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}"
-                                        data-type="parent" name="timesheet[{{ $i }}][proyecto]" style="border-radius: 15px; padding: 5px;">
+                                        data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
                                         <option selected disabled>Seleccione proyecto</option>
                                         @foreach ($proyectos as $proyecto)
                                             <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
@@ -69,7 +69,7 @@
                                 <td>
                                     <font class="d-mobile mt-1" style="font-weight: bold;">Tarea: </font>
                                     <select id="select_tareas{{ $i }}" data-contador="{{ $i }}"
-                                        name="timesheet[{{ $i }}][tarea]" class="select_tareas" style="border-radius: 15px; padding: 5px;"
+                                        name="timesheet[{{ $i }}][tarea]" class="select_tareas" class="select2"
                                         disabled>
                                         <option selected disabled>Seleccione tarea</option>
                                     </select>

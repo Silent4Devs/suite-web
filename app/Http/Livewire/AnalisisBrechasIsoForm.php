@@ -104,6 +104,7 @@ class AnalisisBrechasIsoForm extends Component
         $this->id_elaboro = $analisis_brechas->empleado->id;
         $this->view = 'edit';
         $this->analisis_id = $id;
+        $this->emit('edit');
     }
 
     public function update()
