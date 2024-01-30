@@ -27,7 +27,7 @@
     <div class="mt-4 card card-body">
         <h5>Creación de lineamientos</h5>
 
-        @include('admin.dayOff.fields')
+        @include('admin.dayOff.fields-create')
 
     </div>
     <!-- Submit Field -->
