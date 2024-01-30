@@ -27,7 +27,7 @@
     <div class="mt-4 card card-body">
         <span class="sub-title-vac">Creación de lineamientos</span>
         <hr>
-        @include('admin.vacaciones.fields')
+        @include('admin.vacaciones.fields-create')
     </div>
 
     <div class="text-right form-group col-12">

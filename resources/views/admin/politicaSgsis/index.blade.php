@@ -267,8 +267,8 @@
         <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
        </button>
             <div class="modal-dialog" style="margin-top: 0px;">
-                <div class="modal-content" style="width:1000px;">
-                    <div class="modal-body" style="border-radius: 0px;">
+                <div class="modal-content">
+                    <div class="modal-body">
                         <div class="print-none">
                         </div>
                         <div class="card col-sm-12 col-md-10"

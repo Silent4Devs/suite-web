@@ -100,11 +100,12 @@
                 <i class="material-icons-outlined">arrow_forward_ios</i>
             </div>
         </div>
-        {{-- @if ($user) --}}
-        <div class="d-flex justify-content-start" style="padding-left: 160px;">
-            <a href="{{ route('admin.template-top') }}">Ver todos</a>
-        </div>
-        {{-- @endif --}}
+        @can('admin_template_analisis_brechas_iso')
+            <div class="d-flex justify-content-start" style="padding-left: 160px;">
+                <a href="{{ route('admin.template-top') }}">Ver todos</a>
+            </div>
+        @endcan
+
         <div class="d-flex justify-content-end" style="padding-right: 110px;">
             <a class="btn btn-light text-primary border border-primary" href="{{ route('admin.templates.create') }}">
                 Crear template +
@@ -139,7 +140,9 @@
                         name="nombre" id="nombre" value="{{ old('nombre', '') }}" required wire:model.defer="name"
                         placeholder="">
                     <label for="nombre">Nombre *</label>
-                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 {{-- <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
@@ -312,6 +315,30 @@
                 // Limpiar el campo de entrada de "name" utilizando JavaScript
                 document.getElementById('id_area').textContent = "";
                 document.getElementById('id_puesto').textContent = "";
+
+            });
+
+            Livewire.on('edit', function() {
+                let elaboro = document.querySelector('#id_elaboro');
+                let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
+                let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
+
+                document.getElementById('id_puesto').innerHTML = recortarTexto(puesto_init);
+                document.getElementById('id_area').innerHTML = recortarTexto(area_init);
+                elaboro.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    let area = this.options[this.selectedIndex].getAttribute('data-area');
+                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('id_puesto').innerHTML = recortarTexto(puesto);
+                    document.getElementById('id_area').innerHTML = recortarTexto(area);
+                })
+
+                function recortarTexto(texto, length = 30) {
+                    let trimmedString = texto?.length > length ?
+                        texto.substring(0, length - 3) + "..." :
+                        texto;
+                    return trimmedString;
+                }
 
             });
         });

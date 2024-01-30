@@ -58,7 +58,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=1.3">
-    <link rel="stylesheet" href="{{ asset('css/rds.css') }}?v=1.2">
+    <link rel="stylesheet" href="{{ asset('css/rds.css') }}?v=1.2.1">
     @yield('styles')
     @livewireStyles
 </head>
@@ -809,7 +809,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script> --}}
 
-
+    <!-- js para validaciones globales sadas werwer-->
+    <!--<script src="{{ asset('js/validations.js') }}"></script>-->
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('js')
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>

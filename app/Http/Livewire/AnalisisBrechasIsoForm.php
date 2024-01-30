@@ -37,17 +37,14 @@ class AnalisisBrechasIsoForm extends Component
 
     public $imagenID;
 
-    public $user;
+
 
     public function render()
     {
         $this->fecha = Carbon::today()->format('d-m-Y');
-        // dd($this->fecha);
+
         $empleados = Empleado::getaltaAll();
-        // $user_actual = User::getCurrentUser();
-        // $this->user = $user_actual->isAdmin;
-        // dd($user->isAdmin);
-        // $analisis_brechas = AnalisisBrechasIso::where('id_elaboro', $user_actual->empleado->id)->get();
+
         $analisis_brechas = AnalisisBrechasIso::get();
         $templates = TemplateAnalisisdeBrechas::where('top', true)->get();
         $normas = Norma::get();
@@ -107,6 +104,7 @@ class AnalisisBrechasIsoForm extends Component
         $this->id_elaboro = $analisis_brechas->empleado->id;
         $this->view = 'edit';
         $this->analisis_id = $id;
+        $this->emit('edit');
     }
 
     public function update()
