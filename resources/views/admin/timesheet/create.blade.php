@@ -122,6 +122,9 @@
 
                 let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
 
+                // Eliminar la fila del DOM
+                $(tr_seleccionado).remove();
+
                 // limpiar datos de tr
                 var inputs_clear = document.querySelectorAll(tr_seleccionado + ' input');
                 for (var i = 0; i < inputs_clear.length; i++) {
@@ -130,8 +133,9 @@
                 document.querySelector(tr_seleccionado + ' .total_filas').textContent = '';
                 $(tr_seleccionado + ' .select2').val(null).trigger('change');
 
-                console.log('filas removs');
+                console.log('fila removida');
                 Livewire.emit('removerFila');
+
             }
             if (element.classList.contains('btn_clear_tr')) {
 

@@ -293,13 +293,8 @@
                                 </table>
                             </div>
                         </div>
-                        <style>
-                        #contenedor-principal, #contenedor-principal canvas {
-                            width: 100% !important;
-                        }
-                        </style>
                         <div class="col-6" style="display: flex; align-items:center;">
-                            <div id="contenedor-principal">
+                            <div id="contenedor-principal" style="height: 300px;">
                                 <canvas id="graf-parametros"></canvas>
                             </div>
 
@@ -367,6 +362,7 @@
                                                 wire:change="saveDataParametros('{{ $pregunta->id }}', $event.target.value)"
                                                 name="respuesta_pregunta_{{ $pregunta->id }}"
                                                 id="respuesta_pregunta_{{ $pregunta->id }}">
+                                               <option value="" selected >Seleciona una opción </option>
                                                 @foreach ($template->parametros as $parametro)
                                                     <option value="{{ $parametro->id }}">{{ $parametro->estatus }}
                                                     </option>
@@ -478,8 +474,8 @@
                     </div>
                     <div class="col-6 align-items-center">
                         <!-- HTML structure to contain the bar chart -->
-                        <div id="contenedor-principal">
-                            <canvas id="graf-parametros" style="width:400px; height:300px;"></canvas>
+                        <div id="contenedor-principal" style="height: 300px">
+                            <canvas id="graf-parametros"></canvas>
                         </div>
 
                     </div>
@@ -490,9 +486,10 @@
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <button type="button" class="btn-close print-none" data-bs-dismiss="modal" aria-label="Close"
-                    style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
+                    style="margin:50px 0px 50px 1230px; background:none; border: none;"><i class="fa-solid fa-x fa-2xl"
                         style="color: #ffffff;"></i>
                 </button>
+
                 <div class="modal-dialog" style="margin-top: 0px;">
                     <div class="modal-content" >
                         <div class="modal-body" >
@@ -514,7 +511,7 @@
                                             <figure>
                                                 <img src="{{$logo_actual}}"  style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
                                             </figure>
-                                                    
+
                                             </div>
                                             <div class="col-5 p-2 mt-3">
                                                 <br>
@@ -591,7 +588,7 @@
                                                     </div>
                                                     <div class="col-6 align-items-center" style="display: flex; align-items:center;">
                                                         <!-- HTML structure to contain the bar chart -->
-                                                        <div id="contenedor-principal">
+                                                        <div id="contenedor-principal" style="height: 300px">
                                                             <canvas id="graf-modal-5" ></canvas>
                                                         </div>
 
@@ -655,7 +652,7 @@
                                                         }
                                                         </style>
                                                         <div class="col-6" style="display: flex; align-items:center;">
-                                                            <div id="contenedor-principal">
+                                                            <div id="contenedor-principal" style="height: 300px">
                                                                 <canvas id="graf-modal-{{$key}}"></canvas>
                                                             </div>
 
@@ -681,16 +678,20 @@
 
     @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        {{-- grafica de total cuando cambia de seccion --}}
+
         <script>
             document.addEventListener('livewire:load', function() {
-                console.log('hola');
+                console.log('cambio de seccion');
                 Livewire.on('renderAreas', (grafica_cuentas, grafica_colores) => {
                     // console.log(cuentas);
                     // console.log(colores);
-                    document.getElementById('graf-parametros').remove();
 
+                    document.getElementById('graf-parametros').remove();
                     let canvas = document.createElement("canvas");
                     canvas.id = "graf-parametros";
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
                     document.getElementById("contenedor-principal").appendChild(canvas);
 
                     let grafica_proyectos = new Chart(document.getElementById('graf-parametros'), {
@@ -704,59 +705,19 @@
                                 fill: true,
                                 options: {
                                     indexAxis: 'y',
+
                                 }
                             }, ]
                         },
                     });
-    
-                });
-            });
-        </script>
-        {{-- script para graficas del modal --}}
-        <script>
-             document.addEventListener('livewire:load', function() {
-                Livewire.on('renderGraficsModal', (data,resultskeys) => {
-                    console.log(resultskeys);
-                    const colores = @json($grafica_colores2);
-                    const values = Object.values(data);
-                    const valuesColors = Object.values(colores);
 
-                    var ctxGlobal = document.getElementById('graf-modal-5').getContext('2d');
-                    var barChartGlobal = new Chart(ctxGlobal, {
-                        type: 'bar',
-                        data: {
-                            labels: Object.keys(data),
-                            datasets: [{
-                                label: 'Preguntas que cumplen esta valoración',
-                                data: values,
-                                backgroundColor: valuesColors,
-                                borderWidth: 1,
-                            }],
-                        },
-                    });
-                    
-                    resultskeys.forEach(function(objeto, index) {
-                    console.log(Object.values(objeto),index);
-                    var ctx = document.getElementById(`graf-modal-${index}`).getContext('2d');
-                    var barChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: Object.keys(data),
-                            datasets: [{
-                                label: 'Preguntas que cumplen esta valoración',
-                                data: Object.values(objeto),
-                                backgroundColor: valuesColors,
-                                borderWidth: 1,
-                            }],
-                        },
-                    });
-                    });
                 });
             });
         </script>
 
-
+        {{-- script para graficas total y del modal cuando se carga la primera vez --}}
         <script>
+            console.log("cargando");
             document.addEventListener('livewire:load', function () {
 
             const data = @json($grafica_cuentas2);
@@ -808,11 +769,53 @@
                             }],
                         },
                     });
-                    });
+                });
 
             });
         </script>
 
+        {{-- script para graficas del modal cuando se cambia de seccion --}}
+        <script>
+             document.addEventListener('livewire:load', function() {
+                Livewire.on('renderGraficsModal', (data,resultskeys) => {
+                    console.log(resultskeys);
+                    const colores = @json($grafica_colores2);
+                    const values = Object.values(data);
+                    const valuesColors = Object.values(colores);
+
+                    var ctxGlobal = document.getElementById('graf-modal-5').getContext('2d');
+                    var barChartGlobal = new Chart(ctxGlobal, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(data),
+                            datasets: [{
+                                label: 'Preguntas que cumplen esta valoración',
+                                data: values,
+                                backgroundColor: valuesColors,
+                                borderWidth: 1,
+                            }],
+                        },
+                    });
+
+                    resultskeys.forEach(function(objeto, index) {
+                    console.log(Object.values(objeto),index);
+                    var ctx = document.getElementById(`graf-modal-${index}`).getContext('2d');
+                    var barChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(data),
+                            datasets: [{
+                                label: 'Preguntas que cumplen esta valoración',
+                                data: Object.values(objeto),
+                                backgroundColor: valuesColors,
+                                borderWidth: 1,
+                            }],
+                        },
+                    });
+                    });
+                });
+            });
+        </script>
 
     @endsection
 </div>

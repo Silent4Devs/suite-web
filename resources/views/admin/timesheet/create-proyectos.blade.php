@@ -155,20 +155,5 @@
 
         });
 </script>
-<script>
-    var alerta = document.getElementById('alertaGenerica');
-    var inputs = document.querySelectorAll('input[type="text"]');
-    alerta.textContent = '¡Estas a punto de llegar a los 255 caracteres!'
-    // Agregar un event listener a cada elemento input
-    inputs.forEach(function(input) {
-        input.addEventListener('input', function() {
-            // Acciones a realizar cuando se ingresa texto en un input
-            if (input.value.length > 250) {
-                alerta.style.display = 'block';
-            } else {
-                alerta.style.display = 'none';
-            }
-        });
-    });
-</script>
+
 @endsection
