@@ -22545,8 +22545,8 @@ html:not([dir="rtl"]) .list-inline {
     .c-main>.container-lg,
     .c-main>.container-xl,
     .c-main>.container-xxl {
-        padding-right: 30px;
-        padding-left: 30px;
+        padding-right: 65px;
+        padding-left: 65px;
     }
 }
 

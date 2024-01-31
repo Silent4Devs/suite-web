@@ -2,13 +2,19 @@
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
-{{-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
 </script> --}}
 
-@livewire('timesheet.reportes-proyectos')
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reporte de Proyectos</font>
+    </h5>
 
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.blue-card-header')
+
+    @livewire('timesheet.reportes-proyectos')
 @endsection
 @section('scripts')
     @parent

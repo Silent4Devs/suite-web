@@ -1,5 +1,5 @@
 <div>
-    <div class="mt-5 card card-body">
+    <div class="card card-body">
         <x-loading-indicator />
         <div class="row">
             <div class="col-md-4 form-group" style="padding-left:0px !important;">
@@ -13,7 +13,8 @@
             </div>
             <div class="col-md-4 form-group">
                 <label class="form-label">Fecha de inicio</label>
-                <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model.lazy="fecha_inicio">
+                <input class="form-control date_librery" type="date" name="fecha_inicio"
+                    wire:model.lazy="fecha_inicio">
             </div>
             <div class="col-md-4 form-group">
                 <label class="form-label">Fecha de fin</label>
@@ -54,10 +55,11 @@
                         Borrador
                     </button> --}}
                     <button class="btn btn-primary"
-                        style="background-color: #F48C16; border:none !important; position: relative;" id="btn_pendiente"
-                        wire:click="pendientes">
+                        style="background-color: #F48C16; border:none !important; position: relative;"
+                        id="btn_pendiente" wire:click="pendientes">
                         @if ($pendientes_contador > 0)
-                            <span class="indicador_numero" style="filter: contrast(200%);">{{ $pendientes_contador }}</span>
+                            <span class="indicador_numero"
+                                style="filter: contrast(200%);">{{ $pendientes_contador }}</span>
                         @endif
                         Pendientes
                     </button>
@@ -65,15 +67,17 @@
                         style="background-color: #61CB5C; border:none !important; position: relative;" id="btn_aprobado"
                         wire:click="aprobados">
                         @if ($aprobados_contador > 0)
-                            <span class="indicador_numero" style="filter: contrast(200%);">{{ $aprobados_contador }}</span>
+                            <span class="indicador_numero"
+                                style="filter: contrast(200%);">{{ $aprobados_contador }}</span>
                         @endif
                         Aprobados
                     </button>
                     <button class="btn btn-primary"
-                        style="background-color: #EA7777; border:none !important; position: relative;" id="btn_rechazado"
-                        wire:click="rechazos">
+                        style="background-color: #EA7777; border:none !important; position: relative;"
+                        id="btn_rechazado" wire:click="rechazos">
                         @if ($rechazos_contador > 0)
-                            <span class="indicador_numero" style="filter: contrast(200%);">{{ $rechazos_contador }}</span>
+                            <span class="indicador_numero"
+                                style="filter: contrast(200%);">{{ $rechazos_contador }}</span>
                         @endif
                         Rechazados
                     </button>
@@ -155,7 +159,7 @@
                                 </td>
                                 <td>
                                     @if ($time->aprobador)
-                                        {{   $time->aprobador->name }}
+                                        {{ $time->aprobador->name }}
                                     @endif
                                 </td>
                                 <td>
@@ -181,8 +185,8 @@
                                     {{ $time->total_horas }}
                                 </td>
                                 <td>
-                                    <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar"
-                                        class="btn"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}"
+                                        title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -219,7 +223,7 @@
                                     </td>
                                     <td>
                                         @if ($timeEx->aprobador)
-                                            {{   $timeEx->aprobador->name }}
+                                            {{ $timeEx->aprobador->name }}
                                         @endif
                                     </td>
                                     <td>
@@ -245,8 +249,8 @@
                                         {{ $timeEx->total_horas }}
                                     </td>
                                     <td>
-                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $timeEx->id }}" title="Visualizar"
-                                            class="btn"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $timeEx->id }}"
+                                            title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -269,7 +273,7 @@
             </div>
 
         </div>
-        <button  class="d-none" wire:click='dropDuplicate()'>Eliminar Duplicados</button>
+        <button class="d-none" wire:click='dropDuplicate()'>Eliminar Duplicados</button>
     </div>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
@@ -285,7 +289,8 @@
 
     <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
 
     <script>
@@ -300,7 +305,9 @@
             });
             let datos = tableExport.getExportData();
             let preferenciasDocumento = datos.reportes.xlsx;
-            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType,
+                preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento
+                .merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
 
         });
     </script>

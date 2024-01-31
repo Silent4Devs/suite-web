@@ -1,6 +1,6 @@
 <div>
     <x-loading-indicator />
-    <div class="mt-5 card card-body">
+    <div class=" card card-body">
         <div class="row">
             <div class="col-md-4 form-group" style="padding-left:0px !important;">
                 <label class="form-label">Colaborador</label>
@@ -13,7 +13,8 @@
             </div>
             <div class="col-md-4 form-group">
                 <label class="form-label">Fecha de inicio</label>
-                <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model.defer="fecha_inicio">
+                <input class="form-control date_librery" type="date" name="fecha_inicio"
+                    wire:model.defer="fecha_inicio">
             </div>
             <div class="col-md-4 form-group">
                 <label class="form-label">Fecha de fin</label>
@@ -46,7 +47,8 @@
                                     <p class="m-0">Mostrando</p>
                                 </div>
                                 <div class="col-4 p-0">
-                                    <select name="" id="" class="form-control" wire:model.lazy="perPage">
+                                    <select name="" id="" class="form-control"
+                                        wire:model.lazy="perPage">
                                         <option value="5">5</option>
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -67,10 +69,10 @@
                                 Exportar Excel
                             </button>
                             <button id="" class="btn-sm rounded pr-2"
-                            style="background-color:#b9eeb9; border: #fff" wire:click="refreshComponent">
-                            <i class="fas fa-search" style="font-size: 1.1rem;"></i>
-                            &nbsp;&nbsp; Buscar
-                        </button>
+                                style="background-color:#b9eeb9; border: #fff" wire:click="refreshComponent">
+                                <i class="fas fa-search" style="font-size: 1.1rem;"></i>
+                                &nbsp;&nbsp; Buscar
+                            </button>
                         </div>
                     </div>
                 </div>
