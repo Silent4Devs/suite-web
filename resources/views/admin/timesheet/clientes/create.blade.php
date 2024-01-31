@@ -17,7 +17,7 @@
         <form action="{{ asset('admin/timesheet/clientes/store') }}" method="POST" class="row">
             @csrf
             <div class="form-group col-md-2 anima-focus">
-                <input type="" name="identificador" placeholder="" pattern="^[0-9]+$" type="number" class="form-control" required value="{{ old('identificador') }}">
+                <input name="identificador" placeholder=""  type="text" maxlength="255" class="form-control" required value="{{ old('identificador') }}">
                 {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
             </div>
 
@@ -85,12 +85,12 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input id="phone" type="text" name="telefono" value="{{ old('telefono') }}" class="form-control" size="20" placeholder="">
+                    <input id="phone" type="text" pattern="[0-9]+" title="Por favor, introduce solo números" name="telefono" value="{{ old('telefono') }}" class="form-control" size="20" placeholder="">
                     {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
                     <div class="error-message"></div>
                 </div>
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="pagina_web" placeholder="" class="form-control" value="{{ old('pagina_web') }}">
+                    <input type="" name="pagina_web" placeholder=""  maxlength="255"  class="form-control" value="{{ old('pagina_web') }}">
                     {!! Form::label('pagina_web', 'Página Web*', ['class' => 'asterisco']) !!}
                 </div>
 
@@ -109,13 +109,13 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" placeholder="" name="puesto_contacto" class="form-control"
+                    <input type="" placeholder="" name="puesto_contacto"  maxlength="255"  class="form-control"
                         value="{{ old('puesto_contacto') }}">
                         {!! Form::label('puesto_contacto', 'Puesto*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="email" id="foo" class="form-control" value="{{ old('correo_contacto') }}"
+                    <input type="email" id="foo" class="form-control"  maxlength="255"  value="{{ old('correo_contacto') }}"
                         placeholder="" name="correo_contacto">
                         {!! Form::label('correo_contacto', 'Correo Electronico*', ['class' => 'asterisco']) !!}
 
@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="tel" name="celular_contacto"  placeholder="" class="form-control" value="{{ old('celular_contacto') }}">
+                    <input type="tel" pattern="[0-9]+" title="Por favor, introduce solo números" name="celular_contacto"  placeholder="" class="form-control" value="{{ old('celular_contacto') }}">
                     {!! Form::label('celular_contacto', 'Celular*', ['class' => 'asterisco']) !!}
                     <div class="error-message"></div>
                 </div>
@@ -136,14 +136,14 @@
                 </div>
 
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control" name="objeto_descripcion" maxlength="255" id="objeto_descripcion"
+                    <textarea class="form-control" name="objeto_descripcion" maxlength="550" id="objeto_descripcion"
                         value="{{ old('objeto_descripcion', '') }}"></textarea>
                         {!! Form::label('objeto_descripcion', 'Objeto social / Descripción
                         del servicio o producto*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control" name="cobertura" maxlength="255" id="cobertura" value="{{ old('cobertura', '') }}"></textarea>
+                    <textarea class="form-control" name="cobertura" maxlength="550" id="cobertura" value="{{ old('cobertura', '') }}"></textarea>
                     {!! Form::label('cobertura', 'Cobertura, Rango geográfico
                     en el cual presta los servicios*', ['class' => 'asterisco']) !!}
                 </div>
@@ -157,70 +157,6 @@
     </div>
 @endsection
 
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var telefonoInput = document.querySelector('input[name="telefono"]');
-        var errorMessage = document.querySelector('.error-message');
-
-        telefonoInput.addEventListener('input', function() {
-            var inputValue = telefonoInput.value;
-
-            // Usa una expresión regular para verificar si el valor contiene solo números y el símbolo '+'
-            var isValid = /^[0-9+]+$/.test(inputValue);
-
-            // Actualiza el mensaje de error y la apariencia del campo según la validación
-            if (!isValid) {
-                errorMessage.textContent = 'Ingrese solo números y el símbolo "+" en el campo de teléfono.';
-                telefonoInput.classList.add('invalid');
-            } else {
-                errorMessage.textContent = '';
-                telefonoInput.classList.remove('invalid');
-            }
-        });
-
-        // Agrega un evento de escucha para el evento keydown para bloquear caracteres no deseados
-        telefonoInput.addEventListener('keydown', function(event) {
-            var allowedKeys = [8, 9, 13, 27, 43, 46, 107]; // Permitir retroceso, tabulación, intro, escape, suma y punto
-
-            if (allowedKeys.indexOf(event.keyCode) === -1 && !/[0-9+]/.test(event.key)) {
-                event.preventDefault();
-            }
-        });
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var telefonoInput = document.querySelector('input[name="celular_contacto"]');
-        var errorMessage = document.querySelector('.error-message');
-
-        telefonoInput.addEventListener('input', function() {
-            var inputValue = telefonoInput.value;
-
-            // Usa una expresión regular para verificar si el valor contiene solo números y el símbolo '+'
-            var isValid = /^[0-9+]+$/.test(inputValue);
-
-            // Actualiza el mensaje de error y la apariencia del campo según la validación
-            if (!isValid) {
-                // errorMessage.textContent = 'Ingrese solo números y el símbolo "+" en el campo de teléfono.';
-                // telefonoInput.classList.add('invalid');
-            } else {
-                errorMessage.textContent = '';
-                telefonoInput.classList.remove('invalid');
-            }
-        });
-
-        // Agrega un evento de escucha para el evento keydown para bloquear caracteres no deseados
-        telefonoInput.addEventListener('keydown', function(event) {
-            var allowedKeys = [8, 9, 13, 27, 43, 46, 107]; // Permitir retroceso, tabulación, intro, escape, suma y punto
-
-            if (allowedKeys.indexOf(event.keyCode) === -1 && !/[0-9+]/.test(event.key)) {
-                event.preventDefault();
-            }
-        });
-    });
-</script>
 
 @section('scripts')
     @parent

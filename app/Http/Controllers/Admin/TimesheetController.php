@@ -1146,6 +1146,21 @@ class TimesheetController extends Controller
         return $pdf->download('timesheet.pdf');
     }
 
+
+    public function pdfClientes()
+    {
+
+        $timesheetCliente = TimesheetCliente::get();
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('timesheetCliente', compact('timesheetCliente', 'organizacions', 'logo_actual'));
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->download('clientes.pdf');
+    }
+
     public function notificacionhorassobrepasadas($id)
     {
         // dd("Si llega a la funcion");
