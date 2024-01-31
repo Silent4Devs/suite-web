@@ -21,12 +21,7 @@
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Mis Registros</font>
     </h5>
 
-    @include('admin.timesheet.complementos.cards')
-
-    @include('admin.timesheet.complementos.blue-card-header')
-    <div class="card card-body">
-        @livewire('timesheet.tabla-mis-registros')
-    </div>
+    @livewire('timesheet.tabla-mis-registros', ['estatus' => $estatus])
 @endsection
 
 

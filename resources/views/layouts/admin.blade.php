@@ -229,7 +229,7 @@
                         </li>
                     @endcan
                     <li>
-                        <a href="{{ route('admin.timesheet-inicio') }}">
+                        <a href="{{ route('admin.timesheet-create') }}">
                             <i class="bi bi-calendar-plus"></i>
                             Timesheet
                         </a>

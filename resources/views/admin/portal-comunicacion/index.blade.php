@@ -376,36 +376,37 @@
                 <div class="card card-body" style="background-color: #E6E0E9;">
                     <h4 class="title-card-portal-c"> Últimos Documentos</h4>
                     <div class="caja-documentos">
-
                         @forelse($documentos_publicados as $documento)
-                            <div class="doc-item-portal">
-                                <img src="{{ asset('img/desk_portal_docs.png') }}" alt="">
-                                <div class="doc-info">
-                                    <span
-                                        class="title-doc-portal">{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}</span>
-                                    <span style="font-size: 12px;">
-                                        Publicado: {{ Carbon\Carbon::parse($documento->fecha)->format('d/m/Y') }}
-                                    </span>
-                                    <div class="caja-doc-etiquetas mt-2">
+                            <a href="{{ asset('admin/documentos/' . $documento->id . '/view-document') }}">
+                                <div class="doc-item-portal">
+                                    <img src="{{ asset('img/desk_portal_docs.png') }}" alt="">
+                                    <div class="doc-info">
+                                        <span
+                                            class="title-doc-portal">{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}</span>
+                                        <span style="font-size: 12px;">
+                                            Publicado: {{ Carbon\Carbon::parse($documento->fecha)->format('d/m/Y') }}
+                                        </span>
+                                        <div class="caja-doc-etiquetas mt-2">
 
-                                        <span>{{ $documento->tipo }}</span>
-                                        @if ($documento->macroproceso_id)
-                                            <span>{{ $documento->macroproceso->nombre }}</span>
-                                        @endif
-                                        @if ($documento->proceso_id)
-                                            <span>{{ $documento->proceso->nombre }}</span>
-                                        @endif
+                                            <span>{{ $documento->tipo }}</span>
+                                            @if ($documento->macroproceso_id)
+                                                <span>{{ $documento->macroproceso->nombre }}</span>
+                                            @endif
+                                            @if ($documento->proceso_id)
+                                                <span>{{ $documento->proceso->nombre }}</span>
+                                            @endif
 
+                                        </div>
+                                    </div>
+                                    <div class="doc-responsable">
+                                        <span style="font-size: 10px;">Responsable</span>
+                                        <div class="img-person" style="width:50px; height:50px;">
+                                            <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $documento->responsable ? $documento->responsable->avatar : 'user.png' }}"
+                                                alt="">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="doc-responsable">
-                                    <span style="font-size: 10px;">Responsable</span>
-                                    <div class="img-person" style="width:50px; height:50px;">
-                                        <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $documento->responsable ? $documento->responsable->avatar : 'user.png' }}"
-                                            alt="">
-                                    </div>
-                                </div>
-                            </div>
+                            </a>
                         @empty
                         @endforelse
 

@@ -10,7 +10,7 @@ body {
 
 body::after {
     content: "";
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -176,7 +176,8 @@ header.mostrar-menu {
     text-decoration: none;
     transition: 0.1s;
 }
-.menu-list-panel-header a:hover{
+
+.menu-list-panel-header a:hover {
     color: #2c69aa;
 }
 
@@ -208,6 +209,7 @@ header.mostrar-menu {
 .menu-blocks-mod-header a i {
     transition: 0.1s;
 }
+
 .menu-blocks-mod-header a:hover i {
     transform: scale(1.2);
 }
@@ -249,12 +251,13 @@ header.mostrar-menu {
     background-color: #dbdbdb;
 }
 
-.logo-org-header{
+.logo-org-header {
     width: 80%;
     height: 60px;
     margin-top: 10px;
 }
-.logo-org-header img{
+
+.logo-org-header img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -387,7 +390,7 @@ header.mostrar-menu {
     opacity: 0;
 }
 
-.bg-black-header-menu{
+.bg-black-header-menu {
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
@@ -397,7 +400,8 @@ header.mostrar-menu {
     opacity: 0;
     transition: opacity 0.4s;
 }
-.bg-black-header-menu.active{
+
+.bg-black-header-menu.active {
     display: block;
     visibility: visible;
     opacity: 1;

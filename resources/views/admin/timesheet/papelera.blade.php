@@ -12,6 +12,12 @@
     @include('admin.timesheet.complementos.blue-card-header')
     <div class="card card-body">
         <div class="row">
+            <div class="col-12">
+                <h3 style="font-size: 18px; color: #606060; font-weight: normal;">REGISTROS EN BORRADOR</h3>
+                <hr class="my-4">
+            </div>
+        </div>
+        <div class="row">
 
             <div class="datatable-fix w-100">
                 <table id="datatable_timesheet" class="table w-100">

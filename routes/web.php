@@ -779,7 +779,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('macroprocesos', 'MacroprocesoController');
 
         // Timesheet
-        Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
+        Route::get('timesheet/', 'TimesheetController@index')->name('timesheet');
+        Route::get('timesheet/mis-registros/{estatus?}', 'TimesheetController@misRegistros')->name('timesheet-mis-registros');
         Route::get('timesheet/show/{id}', 'TimesheetController@show')->name('timesheet-show');
         Route::get('timesheet/create-copia/{id}', 'TimesheetController@createCopia')->name('timesheet-create-copia');
         Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');

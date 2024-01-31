@@ -19,8 +19,13 @@ class TablaMisRegistros extends Component
 
     public $times;
 
-    public function mount()
+    public $estatus;
+
+    public $estatusText;
+
+    public function mount($estatus)
     {
+        $this->estatus = $estatus;
         $this->times = Timesheet::getPersonalTimesheet();
     }
 
@@ -31,6 +36,38 @@ class TablaMisRegistros extends Component
         $this->pendientes_contador = $this->times->where('estatus', 'pendiente')->count();
         $this->aprobados_contador = $this->times->where('estatus', 'aprobado')->count();
         $this->rechazos_contador = $this->times->where('estatus', 'rechazado')->count();
+
+        switch ($this->estatus) {
+            case 'todos':
+                $this->todos();
+                $this->estatusText = 'Todos los Registros';
+                break;
+
+            case 'papelera':
+                $this->papelera();
+                $this->estatusText = 'Registros en Borrador';
+                break;
+
+            case 'pendientes':
+                $this->pendientes();
+                $this->estatusText = 'Registros Pendientes';
+                break;
+
+            case 'aprobados':
+                $this->aprobados();
+                $this->estatusText = 'Registros Aprobados';
+                break;
+
+            case 'rechazos':
+                $this->rechazos();
+                $this->estatusText = 'Registros Rechazados';
+                break;
+
+            default:
+                $this->todos();
+                $this->estatusText = 'Todos los registros';
+                break;
+        }
 
         return view('livewire.timesheet.tabla-mis-registros');
     }

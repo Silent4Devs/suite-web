@@ -51,7 +51,12 @@ class TimesheetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
+    {
+    }
+
+    public function misRegistros($estatus = 'todos')
     {
         $times = Timesheet::getPersonalTimesheet();
 
@@ -65,7 +70,7 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual'));
+        return view('admin.timesheet.mis-registros', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual', 'estatus'));
     }
 
     public function timesheetInicio()
