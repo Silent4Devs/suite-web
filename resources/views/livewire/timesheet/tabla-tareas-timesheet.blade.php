@@ -105,7 +105,7 @@
                         </td>
 
                         <td>
-                            {{  $tarea->proyecto }}
+                            {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }}
                         </td>
 
                         <td style="display:flex; align-items: center;">
@@ -115,7 +115,7 @@
                                     <option value="0" selected>Todas</option>
                                 @else
                                     <option value="0" selected>Todas</option>
-                                    <option value="{{ $tarea->area_id }}">{{ $tarea->area }}</option>
+                                    <option value="{{ $tarea->area_id }}">{{ $tarea->area->area }}</option>
                                 @endif
                             </select>
                             @if ($tarea->todos)
