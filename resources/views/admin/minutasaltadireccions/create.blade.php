@@ -135,14 +135,15 @@
                                     {{ $errors->first('tema_reunion') }}
                                 </span>
                             @endif
-                            <span id="alertaGenerica" style="color: red; display: none;"></span>
+                            <!--<span id="alertaGenerica" style="color: red; display: none;"></span>-->
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group anima-focus">
-                            <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion" placeholder="" style="height: 150px !important">{{ old('objetivoreunion') }}</textarea>
+                            <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion" placeholder=""
+                                style="height: 150px !important">{{ old('objetivoreunion') }}</textarea>
                             <label
                                 for="objetivoreunion">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}<span
                                     class="text-danger">*</span></label>
@@ -439,22 +440,7 @@
         });
     </script>
 
-<script>
-    var alerta = document.getElementById('alertaGenerica');
-    var inputs = document.querySelectorAll('input[type="text"]');
-    alerta.textContent = '¡Estas a punto de llegar a los 255 caracteres!'
-    // Agregar un event listener a cada elemento input
-    inputs.forEach(function(input) {
-        input.addEventListener('input', function() {
-            // Acciones a realizar cuando se ingresa texto en un input
-            if (input.value.length > 250) {
-                alerta.style.display = 'block';
-            } else {
-                alerta.style.display = 'none';
-            }
-        });
-    });
-</script>
+    
 
 
     <script type="text/javascript">
