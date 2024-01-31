@@ -102,16 +102,19 @@ class DatabaseSeeder extends Seeder
                 // ProveedorRequisicionsTableSeeder::class,
                 // PermisosKatbol::class,
                 // DashboardGestionContratosSeeder::class,
+
                 // ListaDistribucionSeeder::class,
                 // ClasificacionesAuditoriasSeeder::class,
                 // ClausulasAuditoriasSeeder::class,
                 // TemplateSeeder::class,
+                // PermisosCatalogosSG::class,
+
                 //kaans
                 // PermisosEscuelaInstructorSeeder::class,
                 // PlatformSeeder::class,
                 // PermisosEscuelaAdminSeeder::class,
                 // PermisosEscuelaEstudianteSeeder::class
-                AdminTemplateAnalisisBrechasIso::class
+                AdminTemplateAnalisisBrechasIso::class,
             ]
         );
     }

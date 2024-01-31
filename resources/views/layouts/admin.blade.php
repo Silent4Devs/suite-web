@@ -1130,6 +1130,7 @@
                     },
                     success: function(data) {
                         if (data.length == undefined) {
+                            console.log(data);
                             let filtro = "<ul class='list-group'>";
                             for (const [key, value] of Object.entries(data)) {
                                 filtro += `
@@ -1180,6 +1181,7 @@
                         };
                     },
                     results: function(data) {
+                        console.log(data);
                         return {
                             data
                         };
@@ -1229,6 +1231,7 @@
 
             function formatItemSelection(item) {
                 if (!item.model) {
+                    console.log(item.model);
                     return '{{ trans('global.search') }}...';
                 }
                 return item.model;

@@ -20,10 +20,10 @@
         <div class="row d-flex align-items-center justify-content-center">
             <!-- Modal -->
 
-            <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
-                style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
-                    style="color: #ffffff;"></i>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            style="margin:50px 0px 50px 1230px; background:none; border: none;">
+        <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+       </button>
             <div class="print-none">
             </div>
             <div class="card col-sm-12 col-md-10"

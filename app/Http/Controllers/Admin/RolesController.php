@@ -50,7 +50,7 @@ class RolesController extends Controller
                 $labels = [];
 
                 foreach ($row->permissions as $permission) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $permission->name . ',');
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $permission->name.',');
                 }
 
                 return implode(' ', $labels);
@@ -101,6 +101,7 @@ class RolesController extends Controller
 
                 return response()->json(['success' => true]);
             }
+
             return redirect()->route('admin.roles.index');
         } catch (\Exception $e) {
             return redirect()->route('admin.roles.index')->with('error', $e->getMessage());
