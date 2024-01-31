@@ -365,7 +365,7 @@ class EvaluacionAnalisisBrechasLivewire extends Component
         // $this->selectedValues["pregunta_id"] = $preguntaID;
 
         // dd($this->selectedValues);
-        if($parametroID){
+        if ($parametroID) {
             RespuestasEvaluacionAnalisisBrechas::updateOrCreate(
                 ['pregunta_id' => $preguntaID, 'ev_analisis_template_id' => $this->itemId], // Search criteria
                 ['parametro_id' => $parametroID], // Values to update or create
