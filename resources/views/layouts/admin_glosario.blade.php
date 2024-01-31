@@ -1455,6 +1455,7 @@
                     },
                     success: function(data) {
                         if (data.length == undefined) {
+                            console.log(data);
                             let filtro = "<ul class='list-group'>";
                             for (const [key, value] of Object.entries(data)) {
                                 filtro += `
