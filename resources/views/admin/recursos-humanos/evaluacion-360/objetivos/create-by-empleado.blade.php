@@ -256,15 +256,16 @@
             window.tblObjetivos = $('.tblObjetivos').DataTable(dtOverrideGlobals);
 
             window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
+                console.log(objetivo, empleado, estaAprobado);
                 let textoAprobacion = estaAprobado ? 'Aprobar' : 'Rechazar';
                 let textoAprobado = estaAprobado ? 'Aprobado' : 'Rechazado';
-                let ruta_aux =
+                // let ruta_aux =
+                //     '{{ route('admin.ev360-objetivos-empleado.aprobarRechazarObjetivo', ['empleado' => ':idEmpleado', 'objetivo' => ':idObjetivo']) }}';
+                let urlAprobacion =
                     '{{ route('admin.ev360-objetivos-empleado.aprobarRechazarObjetivo', ['empleado' => ':idEmpleado', 'objetivo' => ':idObjetivo']) }}';
-                let urlAprobacion = JSON.parse(ruta_aux.replace(':idEmpleado', empleado).replace(':idObjetivo',
-                    objetivo));
 
-                // urlAprobacion = urlAprobacion.replace(':idEmpleado', empleado);
-                // urlAprobacion = urlAprobacion.replace(':idObjetivo', objetivo);
+                urlAprobacion = urlAprobacion.replace(':idEmpleado', empleado);
+                urlAprobacion = urlAprobacion.replace(':idObjetivo', objetivo);
                 console.log(urlAprobacion);
                 Swal.fire({
                     title: `¿Está seguro de ${textoAprobacion.toLowerCase()} este objetivo estratégico?`,

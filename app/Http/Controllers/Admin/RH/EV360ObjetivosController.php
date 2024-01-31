@@ -215,6 +215,7 @@ class EV360ObjetivosController extends Controller
 
     public function aprobarRechazarObjetivo(Request $request, $empleado, $objetivo)
     {
+        // dd($request->all(), $empleado, $objetivo);
         $aprobacion = $request->esta_aprobado ? Objetivo::APROBADO : Objetivo::RECHAZADO;
         $objetivo = Objetivo::find(intval($objetivo));
         $objetivo->update([
@@ -277,21 +278,38 @@ class EV360ObjetivosController extends Controller
     public function destroyByEmpleado(Request $request, ObjetivoEmpleado $objetivo)
     {
         //Buscar en objetivo calificaciones y se borra
-        $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
-            ->where('evaluado_id', $objetivo->empleado_id)
-            ->where('evaluacion_id', $objetivo->evaluacion_id);
+        $ev = $this->evaluacionActiva();
 
-        //Borrar si existe
-        if ($objres != null) {
-            $objres->delete();
+        if (isset($ev->id)) {
+            $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
+                ->where('evaluado_id', $objetivo->empleado_id)
+                ->where('evaluacion_id', '=', $ev->id)->first();
+            // $objres->evaluacionActiva(1, 2);
+            // dd($ev->id, $objres, $objetivo->objetivo_id);
+            //Borrar si existe
+            if ($objres != null) {
+                // dd('Entra a borrar');
+                $objres->delete();
+            }
+            // dd('no borra', $objres, $objetivo, $ev);
         }
-
+        // dd('no entra');
         // $objetivo = ObjetivoEmpleado::find($request->all());
         $objetivo->delete(); //Se borra de objetivo empleado
 
         return response()->json(['success' => 'deleted successfully!', $request->all()]);
         // $objetivo->delete();
         // return response()->json(['success'=> 'Eliminado exitosamente']);
+    }
+
+    public function evaluacionActiva()
+    {
+        $evaluacion = Evaluacion::select('id')->where('estatus', 2)
+            ->where('include_objetivos', true)
+            ->latest() // Order by created_at in descending order
+            ->first(); // Retrieve the first result
+
+        return $evaluacion;
     }
 
     public function edit($objetivo)
@@ -325,6 +343,7 @@ class EV360ObjetivosController extends Controller
             'descripcion_meta' => $request->descripcion,
             'tipo_id' => $request->tipo_id,
             'metrica_id' => $request->metrica_id,
+            'esta_aprobado' => Objetivo::SIN_DEFINIR,
         ]);
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
