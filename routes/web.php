@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
 use App\Http\Controllers\Admin\DocumentosController;
+use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
@@ -11,7 +12,6 @@ use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\EmpleadoController;
 
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');

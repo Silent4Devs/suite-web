@@ -10,7 +10,6 @@ use App\Models\ParametrosEvaluacionAnalisisBrechas;
 use App\Models\PreguntasEvaluacionAnalisisBrechas;
 use App\Models\SeccionesEvaluacionAnalisisBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -36,8 +35,6 @@ class AnalisisBrechasIsoForm extends Component
     protected $listeners = ['destroy'];
 
     public $imagenID;
-
-
 
     public function render()
     {
