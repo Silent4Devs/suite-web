@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    {{-- @include('admin.listadistribucion.estilos') --}}
+    @include('admin.listadistribucion.estilos')
     <style>
         .boton-transparente {
             background-color: transparent;
