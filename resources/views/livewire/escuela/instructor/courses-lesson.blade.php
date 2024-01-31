@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="form-group col-8 anima-focus">
                                 <input wire:model.defer="lesson.name" id="edit-lesson-name-{{ $section->id }}-{{$item->id}}"
-                                    type="text" placeholder=""
+                                    type="text" placeholder="" maxlength="250"
                                     class=" form-control @if ($errors->has('lesson.name')) invalid @endif">
                                 @error('lesson.name')
                                     <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
