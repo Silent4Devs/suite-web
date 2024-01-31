@@ -96,7 +96,7 @@
             }
         }
     </style>
-    <div class="mt-5 card card-body">
+    <div class="card card-body">
         <div class="w-100">
             <x-loading-indicator />
             <div class="row">

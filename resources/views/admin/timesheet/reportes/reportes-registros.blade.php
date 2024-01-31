@@ -1,13 +1,17 @@
 @extends('layouts.admin')
 @section('content')
-
-{{-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
 </script> --}}
 
-@livewire('timesheet.reportes-registros')
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reporte de Registros</font>
+    </h5>
 
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.blue-card-header')
+    @livewire('timesheet.reportes-registros')
 @endsection
 @section('scripts')
     @parent
@@ -304,4 +308,3 @@
         });
     </script>
 @endsection
-
