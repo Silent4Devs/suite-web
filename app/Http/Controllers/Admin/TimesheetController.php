@@ -334,14 +334,19 @@ class TimesheetController extends Controller
      */
     public function show($id)
     {
-        $timesheet = Timesheet::find($id);
-        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
-        $horas_count = $horas->count();
+        try {
+            $timesheet = Timesheet::find($id);
 
-        $hoy = Carbon::now();
-        $hoy_format = $hoy->format('d/m/Y');
+            $horas = TimesheetHoras::where('timesheet_id', $id)->get();
+            $horas_count = $horas->count();
 
-        return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
+            $hoy = Carbon::now();
+            $hoy_format = $hoy->format('d/m/Y');
+
+            return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.timesheet')->with('error', 'No se localizo  ningun id  en la ruta');
+        }
     }
 
     /**
@@ -656,6 +661,10 @@ class TimesheetController extends Controller
     public function showProyectos($id)
     {
         $proyecto = TimesheetProyecto::getAll($id)->find($id);
+
+        if (!$proyecto) {
+            return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
+        }
         $areas = TimesheetProyectoArea::where('proyecto_id', $id)
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
@@ -1106,6 +1115,9 @@ class TimesheetController extends Controller
     public function editProyectos($id)
     {
         $proyecto = TimesheetProyecto::getAll()->find($id);
+        if (!$proyecto) {
+            return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
+        }
         $clientes = TimesheetCliente::getAll();
         $areas = Area::getIdNameAll();
         $sedes = Sede::getAll();
@@ -1132,6 +1144,21 @@ class TimesheetController extends Controller
         $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);
 
         return $pdf->download('timesheet.pdf');
+    }
+
+
+    public function pdfClientes()
+    {
+
+        $timesheetCliente = TimesheetCliente::get();
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('timesheetCliente', compact('timesheetCliente', 'organizacions', 'logo_actual'));
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->download('clientes.pdf');
     }
 
     public function notificacionhorassobrepasadas($id)

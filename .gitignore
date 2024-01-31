@@ -5,7 +5,6 @@
 /storage/app/public/BIA/signatures/
 /storage/app/public/tratamiento/firmas/
 /storage/app/public/FilesRevisionDireccion
-
 /vendor
 .idea
 # /public/css/app.css
@@ -51,10 +50,9 @@ storage/app/public/documentos_material_sgsi/
 /storage/app/public/Documentos\ en\ aprobacion/procesos/P-SGI-018\ Gesti\303\263n\ de\ incidentes\ de\ seguridad\ V.2.pdf
 /storage/app/public/Documentos\*
 *.stat
-rr
-.rr.yaml
 /storage/app/backups/*
 /storage/app/Tabantaj/
+/storage/snapshots/*
 /storage/*.key
 package.json
 public/mix-manifest.json

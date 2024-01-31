@@ -62,6 +62,11 @@
         }
     </style>
 
+    @php
+    use App\Models\User;
+
+    $usuario = User::getCurrentUser();
+    @endphp
     <div class="mt-4 card card-body shadow-sm" style="border-radius:16px;">
         <div class="content-limit caja-carrusel">
             <div class="arrow-carrusel-izq" style="margin-right: 10px;">

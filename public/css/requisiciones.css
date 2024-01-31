@@ -1,3 +1,6 @@
+body, .c-main{
+    zoom: 100% !important;
+}
 hr {
     border: none;
     border-bottom: 1px solid #eaeaea;
