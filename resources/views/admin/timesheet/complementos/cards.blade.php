@@ -37,12 +37,23 @@
         top: 0px;
         left: 0px;
         overflow: auto;
-        transition: 1s;
+
+        transition: 0.6s;
+        clip-path: circle(150.4% at 0 54%);
     }
 
-    .modal-admin-time.d-none {
-        transition: display 1s;
+    .modal-admin-time.invisible {
+        clip-path: circle(0% at 0 50%);
     }
+
+    /* .modal-admin-time>div {
+        transform: translateY(0%);
+        transition: 0.35s
+    }
+
+    .modal-admin-time.invisible>div {
+        transform: translateY(-50%);
+    } */
 
     .card-time-admin {
         width: 250px;
@@ -66,6 +77,12 @@
         height: 100%;
         object-fit: cover;
         opacity: 0.9;
+        transform: scale(1.1);
+        transition: 0.2s;
+    }
+
+    .card-time-admin:hover .img-card-time-admin img {
+        transform: scale(1);
     }
 
     .info-card-time-admin {
@@ -137,23 +154,23 @@
 </div>
 
 <div class="option-fixed-admin">
-    <button class="btn" onclick="document.querySelector('.modal-aprobador').classList.remove('d-none');">
+    <button class="btn" onclick="document.querySelector('.modal-aprobador').classList.remove('invisible');">
         <img src="{{ asset('img/calendar-icon-time-person.svg') }}" alt="">
     </button>
-    <button class="btn" onclick="document.querySelector('.modal-config').classList.remove('d-none');">
+    <button class="btn" onclick="document.querySelector('.modal-config').classList.remove('invisible');">
         <img src="{{ asset('img/calendar-icon-time-config.svg') }}" alt="">
     </button>
 </div>
 
-<div class="modal-admin-time modal-aprobador d-none">
+<div class="modal-admin-time modal-aprobador invisible">
     <button class="btn" style="position: absolute; right: 10px; top: 10px;"
-        onclick="document.querySelector('.modal-aprobador').classList.add('d-none');">
+        onclick="document.querySelector('.modal-aprobador').classList.add('invisible');">
         <i class="bi bi-x-lg text-white" style="font-size: 40px;"></i>
     </button>
 
     <h3 class="text-white text-center" style="font-size:30px; margin-top: 200px;">Aprobador</h3>
 
-    <div class="d-flex justify-content-center w-100 px-5" style="gap: 50px; margin-top: 100px;">
+    <div class="d-flex justify-content-center w-100 px-5" style="gap: 60px; margin-top: 100px;">
         <a href="{{ route('admin.timesheet-aprobaciones') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
@@ -197,15 +214,15 @@
     </div>
 </div>
 
-<div class="modal-admin-time modal-config d-none">
+<div class="modal-admin-time modal-config invisible">
     <button class="btn" style="position: absolute; right: 10px; top: 10px;"
-        onclick="document.querySelector('.modal-config').classList.add('d-none');">
+        onclick="document.querySelector('.modal-config').classList.add('invisible');">
         <i class="bi bi-x-lg text-white" style="font-size: 40px;"></i>
     </button>
 
     <h3 class="text-white text-center" style="font-size:30px; margin-top: 200px;">Administrador</h3>
 
-    <div class="d-flex justify-content-center w-100 px-5 flex-wrap" style="gap: 50px; margin-top: 100px;">
+    <div class="d-flex justify-content-center w-100 px-5 flex-wrap" style="gap: 60px; margin-top: 100px;">
         <a href="{{ route('admin.timesheet-aprobaciones') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
