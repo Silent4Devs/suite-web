@@ -12,7 +12,7 @@
 
                 <div class="form-group col-sm-12 col-lg-12 col-md-12 anima-focus">
                     <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"  placeholder="" name="nombre"
-                        id="nombre" value="{{ old('nombre', $categoriaCapacitacion->nombre) }}" required>
+                        id="nombre" value="{{ old('nombre', $categoriaCapacitacion->nombre) }}" required maxlength="250">
                         {!! Form::label('nombre', 'Nombre de la Categoría*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('nombre'))
                         <div class="invalid-feedback">
