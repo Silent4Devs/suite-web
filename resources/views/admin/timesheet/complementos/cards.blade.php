@@ -1,37 +1,95 @@
 <style>
     .card-complement {
         flex-direction: row;
-        width: 250px;
+        width: 220px;
+        height: 60px;
         overflow: hidden;
         border-radius: 6px !important;
+        position: relative;
     }
 
     .bg-objet {
         width: 40px;
         height: 80px;
         transition: 0.2s;
+        position: absolute;
+        z-index: 0;
     }
 
     .card-complement:hover .bg-objet {
-        filter: brightness(0.96);
+        filter: brightness(0.8);
+        width: 100%;
+    }
+
+    .card-comple-info {
+        padding-left: 50px !important;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+        color: #818181;
+        transition: 0.2s;
+    }
+
+    .card-complement:hover .card-comple-info {
+        color: #fff;
     }
 
     .option-fixed-admin {
-        width: 50px;
+        width: 90px;
         height: 150px;
         position: fixed;
         top: 50%;
         left: 0;
-        transform: translateY(-50%);
+        margin-top: -80px;
         z-index: 10;
         background-color: #fff;
-        border: 1px solid #25ACC1;
+        border: 1px solid #bdbdbd;
         border-top-right-radius: 18px;
         border-bottom-right-radius: 18px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         gap: 10px;
+        transition: 0.3s;
+        transform: translateX(calc(-100% + 25px));
+    }
+
+    .option-fixed-admin:hover {
+        transform: translateX(0px);
+        border: 1px solid #25ACC1;
+    }
+
+    .option-fixed-admin img {
+        width: 30px;
+    }
+
+    .option-fixed-admin button {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #6c6c6c !important;
+        font-size: 10px;
+
+        transition: 0.1s;
+        opacity: 0;
+    }
+
+    .option-fixed-admin:hover button {
+        transition: 0.3s;
+        opacity: 1;
+    }
+
+    .option-fixed-admin img:hover {
+        transition: 0.05s;
+    }
+
+    .option-fixed-admin i {
+        font-size: 20px;
+    }
+
+    .option-fixed-admin:hover i {
+        opacity: 0;
     }
 
     .modal-admin-time {
@@ -60,6 +118,13 @@
     .modal-admin-time.invisible>div {
         transform: translateY(-50%);
     } */
+    .caja-cards-time-admin {
+        width: fit-content;
+        margin: auto;
+        padding: 30px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 
     .card-time-admin {
         width: 200px;
@@ -157,12 +222,12 @@
     $aprobados_contador = $times->where('estatus', 'aprobado')->count();
     $rechazos_contador = $times->where('estatus', 'rechazado')->count();
 @endphp
-<div class="d-flex justify-content-between" style="gap: 25px; width: 95%; margin:auto;">
+<div class="d-flex justify-content-between" style="gap: 10px; width: 95%; margin:auto;">
     <a href="{{ route('admin.timesheet-mis-registros', 'todos') }}#">
         <div class="card card-complement">
             <div class="bg-objet" style="background-color: #DFF7FF;"></div>
-            <div class="d-flex align-items-center justify-content-between px-3 w-100">
-                <strong style="font-size: 16px; color:#818181;">Todos</strong>
+            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <strong style="font-size: 16px;">Todos</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $totales }} </strong>
                     <small> Sem </small>
@@ -173,8 +238,8 @@
     <a href="{{ route('admin.timesheet-mis-registros', 'papelera') }}#">
         <div class="card card-complement">
             <div class="bg-objet" style="background-color: #DEDEDE;"></div>
-            <div class="d-flex align-items-center justify-content-between px-3 w-100">
-                <strong style="font-size: 16px; color:#818181;">Borradores</strong>
+            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <strong style="font-size: 16px;">Borradores</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $borrador_contador }} </strong>
                     <small> Sem </small>
@@ -185,8 +250,8 @@
     <a href="{{ route('admin.timesheet-mis-registros', 'pendientes') }}#">
         <div class="card card-complement">
             <div class="bg-objet" style="background-color: #FFD7A4;"></div>
-            <div class="d-flex align-items-center justify-content-between px-3 w-100">
-                <strong style="font-size: 16px; color:#818181;"> Pendientes</strong>
+            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <strong style="font-size: 16px;"> Pendientes</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $pendientes_contador }} </strong>
                     <small> Sem </small>
@@ -197,8 +262,8 @@
     <a href="{{ route('admin.timesheet-mis-registros', 'aprobados') }}#">
         <div class="card card-complement">
             <div class="bg-objet" style="background-color: #E2F6E1;"></div>
-            <div class="d-flex align-items-center justify-content-between px-3 w-100">
-                <strong style="font-size: 16px; color:#818181;"> Aprobados</strong>
+            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <strong style="font-size: 16px;"> Aprobados</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $aprobados_contador }} </strong>
                     <small> Sem </small>
@@ -209,8 +274,8 @@
     <a href="{{ route('admin.timesheet-mis-registros', 'rechazos') }}#">
         <div class="card card-complement">
             <div class="bg-objet" style="background-color: #F2ADAD;"></div>
-            <div class="d-flex align-items-center justify-content-between px-3 w-100">
-                <strong style="font-size: 16px; color:#818181;"> Rechazados</strong>
+            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <strong style="font-size: 16px;"> Rechazados</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $rechazos_contador }} </strong>
                     <small> Sem </small>
@@ -223,10 +288,14 @@
 <div class="option-fixed-admin">
     <button class="btn" onclick="document.querySelector('.modal-aprobador').classList.remove('invisible');">
         <img src="{{ asset('img/calendar-icon-time-person.svg') }}" alt="">
+        Aprobador
     </button>
     <button class="btn" onclick="document.querySelector('.modal-config').classList.remove('invisible');">
         <img src="{{ asset('img/calendar-icon-time-config.svg') }}" alt="">
+        Administrador
     </button>
+    <i class="bi bi-chevron-compact-right"
+        style="position: absolute; top: 50%; transform: translateY(-50%); right: 3px;"></i>
 </div>
 
 <div class="modal-admin-time modal-aprobador invisible">
@@ -237,7 +306,7 @@
 
     <h3 class="text-white text-center" style="font-size:30px; margin-top: 100px;">Aprobador</h3>
 
-    <div class="d-flex justify-content-center w-100 px-5" style="gap: 60px; margin-top: 100px;">
+    <div class="caja-cards-time-admin" style="gap: 60px; margin-top: 100px;">
         <a href="{{ route('admin.timesheet-aprobaciones') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
@@ -298,8 +367,7 @@
     <h3 class="text-white text-center title-report-time-config d-none" style="font-size:30px; margin-top: 100px;">
         Reportes</h3>
 
-    <div class="d-flex justify-content-center w-100 px-5 flex-wrap cards-config-config active"
-        style="gap: 60px; margin-top: 100px;">
+    <div class="caja-cards-time-admin cards-config-config active" style="gap: 60px; margin-top: 100px;">
         <a href="{{ route('admin.timesheet-inicio') }}">
             <div class="card-time-admin">
                 <div class="img-card-time-admin">
