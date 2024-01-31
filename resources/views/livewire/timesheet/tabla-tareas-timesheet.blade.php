@@ -75,8 +75,8 @@
         @if ($origen == 'tareas')
             <div class="col-6 form-group">
                 <label>Filtrar por proyecto</label>
-                <select id="proyecto_filtro" class="form-control">
-                    <option value=""></option>
+                <select id="proyecto_filtro" class="form-control" data-minimum-results-for-search="Infinity">
+                    <option selected value="">- -</option>
                     @foreach ($proyectos as $proyecto)
                         <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
                             {{ $proyecto->proyecto }}</option>
@@ -105,7 +105,7 @@
                         </td>
 
                         <td>
-                            {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto: '' }}
+                            {{  $tarea->proyecto }}
                         </td>
 
                         <td style="display:flex; align-items: center;">
@@ -115,7 +115,7 @@
                                     <option value="0" selected>Todas</option>
                                 @else
                                     <option value="0" selected>Todas</option>
-                                    <option value="{{ $tarea->area_id }}">{{ $tarea->area->area }}</option>
+                                    <option value="{{ $tarea->area_id }}">{{ $tarea->area }}</option>
                                 @endif
                             </select>
                             @if ($tarea->todos)
@@ -188,9 +188,6 @@
     <script type="text/javascript">
         function initSelect2() {
             $('#proyectos_select').select2({
-                theme: 'bootstrap4'
-            });
-            $('#proyecto_filtro').select2({
                 theme: 'bootstrap4'
             });
         }

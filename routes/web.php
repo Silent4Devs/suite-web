@@ -819,6 +819,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('timesheet/clientes/store', 'TimesheetController@clientesStore')->name('timesheet-clientes-store');
         Route::post('timesheet/clientes/update/{id}', 'TimesheetController@clientesUpdate')->name('timesheet-clientes-update');
         Route::post('timesheet/clientes/delete/{id}', 'TimesheetController@clientesDelete')->name('timesheet-cliente-delete');
+        Route::post('timesheet/clientes/pdf', 'TimesheetController@pdfClientes')->name('timesheet-cliente.pdf');
 
         Route::get('timesheet/reportes', 'TimesheetController@reportes')->name('timesheet-reportes');
         Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
@@ -1015,6 +1016,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('competencias/{empleado}/certificacion-carga', 'CompetenciasController@cargarCertificacion')->name('cargarCertificacion');
         Route::get('competencias/{empleado}/edit', 'CompetenciasController@editarCompetencias')->name('editarCompetencias');
         Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
+        Route::post('competencias/pdf', 'CompetenciasController@pdf')->name('competencias.pdf');
 
         // Adquirirveintidostrecientosunos
         Route::resource('adquirirveintidostrecientosunos', 'AdquirirveintidostrecientosunoController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
