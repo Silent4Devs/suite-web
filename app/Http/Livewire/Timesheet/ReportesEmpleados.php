@@ -260,7 +260,6 @@ class ReportesEmpleados extends Component
                 $horas_semana = 0;
                 foreach ($time->horas as $hora) {
 
-
                     $horas_total_time += floatval($hora->horas_lunes);
                     $horas_total_time += floatval($hora->horas_martes);
                     $horas_total_time += floatval($hora->horas_miercoles);

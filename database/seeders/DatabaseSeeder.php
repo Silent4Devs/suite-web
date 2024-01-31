@@ -103,7 +103,6 @@ class DatabaseSeeder extends Seeder
                 // PermisosKatbol::class,
                 // DashboardGestionContratosSeeder::class,
 
-
                 // ListaDistribucionSeeder::class,
                 // ClasificacionesAuditoriasSeeder::class,
                 // ClausulasAuditoriasSeeder::class,
@@ -115,7 +114,7 @@ class DatabaseSeeder extends Seeder
                 // PlatformSeeder::class,
                 // PermisosEscuelaAdminSeeder::class,
                 // PermisosEscuelaEstudianteSeeder::class
-                AdminTemplateAnalisisBrechasIso::class
+                AdminTemplateAnalisisBrechasIso::class,
             ]
         );
     }

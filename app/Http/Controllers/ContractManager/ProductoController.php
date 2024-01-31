@@ -73,7 +73,7 @@ class ProductoController extends Controller
         } catch (QueryException $e) {
             DB::rollback();
 
-            return 'Error al insertar el producto: ' . $e->getMessage();
+            return 'Error al insertar el producto: '.$e->getMessage();
         }
     }
 
