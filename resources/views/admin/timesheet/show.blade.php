@@ -19,7 +19,6 @@
                 <div class="col-12 d-flex justify-content-between mb-4">
                     <div class=""><strong>Fecha: </strong>
                         {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format('d/m/Y') }}</div>
-
                         <form method="POST" action="{{ route('admin.timesheet.pdf', ['id' => $timesheet->id]) }}">
                         @csrf
                         <button class="boton-transparentev2" type="submit" style="color: #306BA9;">

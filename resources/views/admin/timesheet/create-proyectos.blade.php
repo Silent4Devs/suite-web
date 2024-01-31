@@ -171,14 +171,4 @@
         });
     });
 </script>
-<script>
-    //valida que no sean numeros negativos
-    var input = document.getElementById('identificador_proyect');
-
-    input.addEventListener('input', function() {
-        var valor = input.value;
-        var nuevoValor = valor.replace(/[^a-zA-Z0-9]/g, '');
-        input.value = nuevoValor;
-     });
-</script>
 @endsection

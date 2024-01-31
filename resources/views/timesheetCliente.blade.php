@@ -6,7 +6,7 @@ analisis brecha
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Timesheet</title>
+    <title>TimeSheet Clientes</title>
 
     <link rel="stylesheet" href="css/requisiciones_pdf.css">
     <style>
@@ -56,7 +56,7 @@ analisis brecha
                         <p style="font-size: 15px;">
                             {{$organizacions->empresa}} <br>
                             RFC:{{$organizacions->rfc}} <br>
-                            {{$organizacions->direccion}} <br></p>
+                            Av. Insurgentes Sur 2453 piso 4,<br> Colonia Tizapán San Ángel, Álvaro Obregón, C.P. 01090, CDMX <br></p>
                     </div>
                 </td>
                 <td class="td-blue-header">
@@ -67,41 +67,25 @@ analisis brecha
         </table>
         <br>
         <br>
-        <h2>TimeSheet</h2>
+        <h2>TimeSheet Clientes</h2>
 
         <table>
             <thead>
                 <tr>
-                    <th style="width: 30px;">Proyecto</th>
-                    <th>Tarea</th>
-                    <th>Facturable</th>
-                    <th>Lunes</th>
-                    <th>Martes</th>
-                    <th>Miércoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
-                    <th>Sábado</th>
-                    <th>Domingo</th>
-                    <th>Descripción</th>
-                    <th>Total</th>
+                    <th>Identificador</th>
+                    <th>Razon Social</th>
+                    <th>Nombre</th>
+                    <th>RFC</th>
                 </tr>
             </thead>
             <tbody>
 
-                @foreach ($timesheet->horas as  $timesh)
+                @foreach ($timesheetCliente as  $timesheetCl)
                     <tr>
-                        <td>{{$timesh->proyecto->proyecto}}</td>
-                        <td>{{$timesh->tarea->tarea}}</td>
-                        <td>{{$timesh->facturable}}</td>
-                        <td>{{$timesh->horas_lunes}}</td>
-                        <td>{{$timesh->horas_martes}}</td>
-                        <td>{{$timesh->horas_miercoles}}</td>
-                        <td>{{$timesh->horas_jueves}}</td>
-                        <td>{{$timesh->horas_viernes}}</td>
-                        <td>{{$timesh->horas_sabado}}</td>
-                        <td>{{$timesh->horas_domingo}}</td>
-                        <td>{{$timesh->descripcion}}</td>
-                        <td>{{$timesh->horas_totales_tarea}}</td>
+                        <td>{{$timesheetCl->identificador}}</td>
+                        <td>{{$timesheetCl->razon_social}}</td>
+                        <td>{{$timesheetCl->nombre}}</td>
+                        <td>{{$timesheetCl->rfc}}</td>
                     </tr>
                 @endforeach
             </tbody>

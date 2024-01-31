@@ -83,7 +83,8 @@ class EV360ObjetivosController extends Controller
     {
         abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
-        $empleado = Empleado::getAll()->find(intval($empleado));
+        // dd(intval($empleado));
+        $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
             $q->with(['objetivo' => function ($query) {
                 $query->with(['tipo', 'metrica']);
@@ -96,10 +97,10 @@ class EV360ObjetivosController extends Controller
         }
         $tipo_seleccionado = null;
         $metrica_seleccionada = null;
-        if ($request->ajax()) {
-        }
+        // if ($request->ajax()) {
+        // }
 
-        $empleados = Empleado::getaltaAll();
+        $empleados = Empleado::getAltaDataColumns();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
     }
@@ -214,6 +215,7 @@ class EV360ObjetivosController extends Controller
 
     public function aprobarRechazarObjetivo(Request $request, $empleado, $objetivo)
     {
+        // dd($request->all(), $empleado, $objetivo);
         $aprobacion = $request->esta_aprobado ? Objetivo::APROBADO : Objetivo::RECHAZADO;
         $objetivo = Objetivo::find(intval($objetivo));
         $objetivo->update([
@@ -276,21 +278,38 @@ class EV360ObjetivosController extends Controller
     public function destroyByEmpleado(Request $request, ObjetivoEmpleado $objetivo)
     {
         //Buscar en objetivo calificaciones y se borra
-        $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
-            ->where('evaluado_id', $objetivo->empleado_id)
-            ->where('evaluacion_id', $objetivo->evaluacion_id);
+        $ev = $this->evaluacionActiva();
 
-        //Borrar si existe
-        if ($objres != null) {
-            $objres->delete();
+        if (isset($ev->id)) {
+            $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
+                ->where('evaluado_id', $objetivo->empleado_id)
+                ->where('evaluacion_id', '=', $ev->id)->first();
+            // $objres->evaluacionActiva(1, 2);
+            // dd($ev->id, $objres, $objetivo->objetivo_id);
+            //Borrar si existe
+            if ($objres != null) {
+                // dd('Entra a borrar');
+                $objres->delete();
+            }
+            // dd('no borra', $objres, $objetivo, $ev);
         }
-
+        // dd('no entra');
         // $objetivo = ObjetivoEmpleado::find($request->all());
         $objetivo->delete(); //Se borra de objetivo empleado
 
         return response()->json(['success' => 'deleted successfully!', $request->all()]);
         // $objetivo->delete();
         // return response()->json(['success'=> 'Eliminado exitosamente']);
+    }
+
+    public function evaluacionActiva()
+    {
+        $evaluacion = Evaluacion::select('id')->where('estatus', 2)
+            ->where('include_objetivos', true)
+            ->latest() // Order by created_at in descending order
+            ->first(); // Retrieve the first result
+
+        return $evaluacion;
     }
 
     public function edit($objetivo)
@@ -314,6 +333,8 @@ class EV360ObjetivosController extends Controller
             'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
         ]);
 
+        // dd($request->all());
+
         $objetivo = Objetivo::find($objetivo);
         $u_objetivo = $objetivo->update([
             'nombre' => $request->nombre,
@@ -322,6 +343,7 @@ class EV360ObjetivosController extends Controller
             'descripcion_meta' => $request->descripcion,
             'tipo_id' => $request->tipo_id,
             'metrica_id' => $request->metrica_id,
+            'esta_aprobado' => Objetivo::SIN_DEFINIR,
         ]);
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
@@ -338,9 +360,9 @@ class EV360ObjetivosController extends Controller
             ]);
         }
         if ($u_objetivo) {
-            return redirect()->route('admin.ev360-objetivos.index')->with('success', 'Objetivo editado con éxito');
+            return ['success', 'Objetivo editado con éxito'];
         } else {
-            return redirect()->route('admin.ev360-objetivos.index')->with('error', 'Ocurrió un error al editar el objetivo, intente de nuevo...');
+            return ['error', 'Ocurrió un error al editar el objetivo, intente de nuevo...'];
         }
     }
 

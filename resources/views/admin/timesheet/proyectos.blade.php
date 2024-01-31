@@ -142,15 +142,5 @@
                 $("#caja_areas_seleccionadas_create .select2").trigger("change");
             }
         });
-
-        // $("#chkallEdit").click(function(){
-        //     if($("#caja_areas_select_edit #chkallEdit").is(':checked')){
-        //         $("#caja_areas_select_edit .select2 > option").prop("selected", "selected");
-        //         $("#caja_areas_select_edit .select2").trigger("change");
-        //     } else {
-        //         $("#caja_areas_select_edit .select2 option").prop("selected", "");
-        //         $("#caja_areas_select_edit .select2").trigger("change");
-        //     }
-        // });
     </script>
 @endsection
