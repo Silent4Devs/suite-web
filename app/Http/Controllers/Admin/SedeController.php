@@ -112,7 +112,6 @@ class SedeController extends Controller
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
-
             $route = storage_path('/app/public/sedes/imagenes/' . $new_name_image);
 
             $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
