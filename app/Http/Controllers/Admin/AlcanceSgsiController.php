@@ -113,7 +113,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -466,7 +466,7 @@ class AlcanceSgsiController extends Controller
 
     public function correosAprobacion($proceso, $alcance)
     {
-        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso);
+        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
             Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionAprobacionAlcance($alcance->nombre));

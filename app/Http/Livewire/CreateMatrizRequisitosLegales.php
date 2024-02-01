@@ -125,7 +125,7 @@ class CreateMatrizRequisitosLegales extends Component
         }
         $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-        if (! $containsValue) {
+        if (!$containsValue) {
             // dd("Estoy en la lista");
             $this->envioCorreos($proceso, $requisito);
             // The collection contains the specific empleado_id value
@@ -157,7 +157,7 @@ class CreateMatrizRequisitosLegales extends Component
             }
             $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-            if (! $containsValue) {
+            if (!$containsValue) {
                 // dd("Estoy en la lista");
                 $this->envioCorreos($proceso, $requisito);
                 // The collection contains the specific empleado_id value
