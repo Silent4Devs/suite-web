@@ -116,7 +116,7 @@ class SedeController extends Controller
 
             $route = storage_path('/app/public/sedes/imagenes/' . $new_name_image);
 
-            $image = Image::make($file)->encode('png', 70)->resize(300, null, function ($constraint) {
+            $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
 
@@ -166,7 +166,7 @@ class SedeController extends Controller
             // Use Intervention Image to resize and save the image
             Image::make($file)
                 ->encode('png', 70)
-                ->resize(300, null, function ($constraint) {
+                ->resize(256, null, function ($constraint) {
                     $constraint->aspectRatio();
                 })
                 ->save($route);
