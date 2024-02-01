@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Queue;
+use App\Jobs\ProcessImageCompressor;
 
 class SedeController extends Controller
 {
@@ -109,19 +111,19 @@ class SedeController extends Controller
 
         if ($request->hasFile('foto_sedes')) {
             $file = $request->file('foto_sedes');
-
+            $filePath = $file->getRealPath(); // or use $file->path() if available
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
 
             $route = storage_path('/app/public/sedes/imagenes/' . $new_name_image);
 
-            $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            // Enqueue the image processing job, passing the file, route and the desired width
+            Queue::push(new ProcessImageCompressor($filePath, $route, 256));
 
-            $image->save($route);
         }
+
+        dd($new_name_image);
 
         $sede->update([
             'foto_sedes' => $new_name_image,
@@ -163,13 +165,8 @@ class SedeController extends Controller
             $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
             $route = storage_path('/app/public/sedes/imagenes/' . $new_name_image);
 
-            // Use Intervention Image to resize and save the image
-            Image::make($file)
-                ->encode('png', 70)
-                ->resize(256, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })
-                ->save($route);
+            // Enqueue the image processing job, passing the file, route and the desired width
+            Queue::push(new ProcessImageCompressor($file, $route, 256));
         }
 
         $sede->update([
