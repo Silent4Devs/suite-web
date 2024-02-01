@@ -107,23 +107,21 @@ class SedeController extends Controller
         $request['longitud'] = $result['lng'];
         $sede = Sede::create($request->all());
 
-        $image = null;
-
         if ($request->hasFile('foto_sedes')) {
             $file = $request->file('foto_sedes');
-            $filePath = $file->getRealPath(); // or use $file->path() if available
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
 
             $route = storage_path('/app/public/sedes/imagenes/' . $new_name_image);
 
-            // Enqueue the image processing job, passing the file, route and the desired width
-            Queue::push(new ProcessImageCompressor($filePath, $route, 256));
+            $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+            $image->save($route);
 
         }
-
-        dd($new_name_image);
 
         $sede->update([
             'foto_sedes' => $new_name_image,
