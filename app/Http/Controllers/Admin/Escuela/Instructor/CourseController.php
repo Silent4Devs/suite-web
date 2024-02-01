@@ -9,7 +9,7 @@ use App\Models\Escuela\Level;
 use App\Models\Escuela\Price;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+
 // use RealRashid\SweetAlert\Facades\Alert;
 
 class CourseController extends Controller
@@ -74,15 +74,8 @@ class CourseController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             // Storage::putFileAs('public/cursos', $image);
-            //Storage::put('public/cursos', $image);
-
+            Storage::put('public/cursos', $image);
             $url = '/storage/cursos/'.$image->hashName();
-
-            $image = Image::make($image)->encode('png', 70)->resize(688, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-
-            $image->save($url);
 
             $course->image()->create([
                 'url' => $url,
@@ -152,14 +145,8 @@ class CourseController extends Controller
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
-            //Storage::put('public/cursos', $image);
+            Storage::put('public/cursos', $image);
             $url = '/storage/cursos/'.$image->hashName();
-            $image = Image::make($image)->encode('png', 70)->resize(688, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-
-            $image->save($url);
-
 
             if ($course->image) {
                 Storage::delete($course->image->url);
