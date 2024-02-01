@@ -34,12 +34,13 @@
             <div class="d-flex justify-content-center w-100">
                 <div class="form-group w-100 mr-4 ">
                     <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>
-                    @if ($origen === 'tareas-proyectos')
+                    @if ($origen == 'tareas-proyectos')
                         <div class="form-control" style="background-color: #eee">{{ $proyecto_seleccionado->proyecto }}
                         </div>
                     @endif
-                    @if ($origen === 'tareas')
-                        <select id="proyectos_select" class="mr-4 form-control" wire:model.defer="proyecto_id" required>
+                    @if ($origen == 'tareas')
+                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id"
+                            required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
@@ -75,8 +76,8 @@
         @if ($origen == 'tareas')
             <div class="col-6 form-group">
                 <label>Filtrar por proyecto</label>
-                <select id="proyecto_filtro" class="form-control" data-minimum-results-for-search="Infinity">
-                    <option selected value="">- -</option>
+                <select wire:ignore id="proyecto_filtro" class="form-control">
+                    <option value=""></option>
                     @foreach ($proyectos as $proyecto)
                         <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
                             {{ $proyecto->proyecto }}</option>
@@ -99,7 +100,7 @@
             <tbody style="position:relative;">
                 @foreach ($tareas as $tarea)
                     <tr>
-                        <td>
+                        <td wire:ignore>
                             <textarea class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea"
                                 style="min-height: 40px !important; height:40px !important;">{{ $tarea->tarea }}</textarea>
                         </td>
@@ -204,6 +205,9 @@
     <script type="text/javascript">
         function initSelect2() {
             $('#proyectos_select').select2({
+                theme: 'bootstrap4'
+            });
+            $('#proyecto_filtro').select2({
                 theme: 'bootstrap4'
             });
         }

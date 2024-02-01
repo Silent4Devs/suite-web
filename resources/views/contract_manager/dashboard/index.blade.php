@@ -262,7 +262,7 @@
     <div class="row">
         <div class="col-12 col-md-6">
             <div class="card border-0">
-                <div class="card-body" style="height: 500px;">
+                <div class="card-body">
                     <h4 class="card-title graficas_titulos graficas_titulo1">Tipo de contrato</h4>
                     <!--<div id="bar-chart" class="center"></div>-->
                     <figure class="highcharts-figure" width="600">
@@ -276,7 +276,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <h4 class="card-title graficas_titulos graficas_titulo2">Contratos por fase</h4>
+                            <h4 class="card-title graficas_titulos graficas_titulo2">Contratos por fase </h4>
                         </div>
                         <div class="col-12">
                             <div id="pie-chart-sample" class="center graficas" style="margin-top: 0;"></div>

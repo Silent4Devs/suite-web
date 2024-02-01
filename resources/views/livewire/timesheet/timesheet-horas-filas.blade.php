@@ -149,7 +149,7 @@
                                         {{--  <div class="btn btn_clear_tr" data-tr="tr_time_{{ $i }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i> <small class="text-eliminar-actividad-mobile" style="margin-left: 10px;">Eliminar actividad</small></div> --}}
                                     @endif
                                     @if ($i > 1)
-                                        <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}"
+                                        <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}" wire:click="removerFila"
                                             style="color:#006DDB; font-size:20px;" title="Eliminar fila">
                                             <i class="fa-regular fa-trash-can"></i> <small
                                                 class="text-eliminar-actividad-mobile"
