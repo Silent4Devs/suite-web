@@ -4,6 +4,10 @@
     {{ Breadcrumbs::render('timesheet-proyectos') }}
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Proyectos</font>
     </h5>
+
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.blue-card-header')
     <div class="card card-body">
         @livewire('timesheet.tabla-proyectos-timesheet')
     </div>
@@ -51,7 +55,7 @@
 
                             var now = new Date();
                             var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
-                            .getFullYear();
+                                .getFullYear();
                             $(doc.document.body).prepend(`
                                 <div class="row">
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">

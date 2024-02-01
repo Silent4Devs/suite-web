@@ -365,18 +365,30 @@ header {
     color: #0463b6 !important;
 }
 
-ol.breadcrumb {
-    background-color: rgba(0, 0, 0, 0);
-    top: 50px;
-    margin-left: -20px;
-    margin-top: -40px;
-    margin-bottom: 40px;
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 4px 14px;
+    margin-bottom: 0;
+    list-style: none;
+    background-color: #fff;
+    border-radius: 14px;
     border: none;
-    opacity: 0.6;
-}
+    font-size: 11px;
 
-ol.breadcrumb:hover {
-    opacity: 1;
+    position: absolute;
+    top: 80px;
+    right: 20px;
+}
+.breadcrumb a{
+    color: #818181;
+}
+.breadcrumb li.active{
+    color: #006DDB;
+}
+.breadcrumb-item+.breadcrumb-item::before{
+    content: ':';
+    font-weight: bolder;
 }
 
 .c-header.c-header-fixed {
@@ -426,7 +438,6 @@ img.rounded-circle {
 }
 
 .form-control:focus {
-    border-color: #0d6efd;
     box-shadow: none;
 }
 
@@ -924,8 +935,12 @@ table.dataTable tr th {
 }
 
 .titulo_general_funcion {
-    color: #818181;
+    color: #3086AF;
     margin-bottom: 40px;
+}
+.titulo_general_funcion.col-12{
+    padding-left: 0px !important;
+    margin-left: 0px !important;
 }
 
 .form-group label {
@@ -1136,7 +1151,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 
 .anima-focus .form-control:focus+label,
 .anima-focus .form-control:not(:placeholder-shown)+label {
-    transform: translateY(-20px) !important;
+    transform: translateY(-80%) !important;
     z-index: 2;
 }
 
@@ -1260,4 +1275,16 @@ a{
 }
 .table .thead-dark th{
     background-color: #fff !important;
+    color: #414141 !important;
+}
+
+.btn:focus, .btn.focus{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.c-wrapper{
+    width: 100%;
+    max-width: 1750px;
+    margin: auto;
 }

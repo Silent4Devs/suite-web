@@ -30,38 +30,7 @@ table {
     display: table !important;
 }
 
-.caja-calendar-semana {
-    background-color: #487fba;
-    padding: 0px 20px;
-    padding-top: 5px;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    width: 95%;
-    margin: auto;
-}
 
-.semanas-tras-time-text {
-    color: #fff;
-}
-
-.caja-calendar-semana label,
-.caja-calendar-semana label i {
-    color: #fff;
-}
-
-.caja-calendar-semana .anima-focus label {
-    background-color: #487fba;
-    color: #fff;
-}
-
-.caja-calendar-semana .anima-focus input {
-    color: #fff !important;
-    height: 30px !important;
-}
-
-.caja-calendar-semana * {
-    font-size: 12px;
-}
 
 /*llenar horas -------------------------------*/
 .tabla-llenar-horas th,
@@ -77,6 +46,25 @@ table {
     -moz-appearance: textfield !important;
 }
 
+.semanas-tras-time-text {
+    color: #fff;
+}
+
+.caja-calendar-semana label,
+.caja-calendar-semana label i {
+    color: #fff;
+}
+
+.caja-calendar-semana .anima-focus label {
+    background-color: #6F8FB8;
+    color: #fff;
+    font-size: 18px;
+}
+
+.caja-calendar-semana .anima-focus input {
+    color: #fff !important;
+    font-size: 18px;
+}
 .tabla-llenar-horas input,
 .tabla-llenar-horas div.form-control {
     margin-top: 7px;

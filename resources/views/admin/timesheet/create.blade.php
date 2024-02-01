@@ -4,9 +4,10 @@
 
     {{ Breadcrumbs::render('timesheet-create') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
+    <h5 class="titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
     </h5>
 
+    @include('admin.timesheet.complementos.cards')
 
     <x-loading-indicator />
     @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
@@ -32,7 +33,6 @@
                 const z = n => ('0' + n).slice(-2);
                 return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
             }
-
 
             $("#fecha_dia").flatpickr({
                 "minDate": "{{ auth()->user()->empleado->fecha_min_timesheet }}",
@@ -122,6 +122,9 @@
 
                 let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
 
+                // Eliminar la fila del DOM
+                $(tr_seleccionado).remove();
+
                 // limpiar datos de tr
                 var inputs_clear = document.querySelectorAll(tr_seleccionado + ' input');
                 for (var i = 0; i < inputs_clear.length; i++) {
@@ -130,8 +133,9 @@
                 document.querySelector(tr_seleccionado + ' .total_filas').textContent = '';
                 $(tr_seleccionado + ' .select2').val(null).trigger('change');
 
-                console.log('filas removs');
+                console.log('fila removida');
                 Livewire.emit('removerFila');
+
             }
             if (element.classList.contains('btn_clear_tr')) {
 

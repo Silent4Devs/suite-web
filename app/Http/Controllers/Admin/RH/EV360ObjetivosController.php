@@ -84,7 +84,8 @@ class EV360ObjetivosController extends Controller
         abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
         // dd(intval($empleado));
-        $empleado = Empleado::find(intval($empleado));
+        $empleado = Empleado::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')->find(intval($empleado));
+        // dd($empleado);
         $empleado->load(['objetivos' => function ($q) {
             $q->with(['objetivo' => function ($query) {
                 $query->with(['tipo', 'metrica']);

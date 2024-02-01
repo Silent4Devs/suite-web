@@ -229,7 +229,7 @@
                         </li>
                     @endcan
                     <li>
-                        <a href="{{ route('admin.timesheet-inicio') }}">
+                        <a href="{{ route('admin.timesheet-create') }}">
                             <i class="bi bi-calendar-plus"></i>
                             Timesheet
                         </a>
@@ -1322,6 +1322,42 @@
             document.querySelector('header').classList.toggle('mostrar-menu');
             document.querySelector('.btn-menu-header').classList.toggle('active');
             document.querySelector('.bg-black-header-menu').classList.toggle('active');
+        }
+    </script>
+
+    <script>
+        var inputs = document.querySelectorAll('input[type="text"]');
+        var inputTextarea = document.querySelectorAll('textarea');
+        // Agregar un event listener a cada elemento input
+        inputs.forEach(function(input) {
+            validate(input, 250);
+        });
+        inputTextarea.forEach(function(input) {
+            validate(input, 490);
+        });
+
+        function validate(input, caracteres) {
+            var nuevoSpan = document.createElement('span');
+            nuevoSpan.textContent = '¡Estas a punto de llegar a los ' + caracteres + ' caracteres!';
+            nuevoSpan.style.color = 'red';
+            input.addEventListener('input', function() {
+                // Acciones a realizar cuando se ingresa texto en un input
+                console.log('Se ingresó texto en el input con ID:', input.id);
+                if (input.value.length > caracteres) {
+                    nuevoSpan.style.display = 'block';
+                    if (input.nextSibling) {
+                        console.log('si hay un elemento despues', input.nextElementSibling);
+                        var elemento = input.nextElementSibling;
+                        elemento.parentNode.insertBefore(nuevoSpan, elemento.nextSibling);
+                    } else {
+                        console.log('no hay elemento');
+                        input.parentNode.insertBefore(nuevoSpan, input.nextSibling);
+                    }
+
+                } else {
+                    nuevoSpan.style.display = 'none';
+                }
+            });
         }
     </script>
 

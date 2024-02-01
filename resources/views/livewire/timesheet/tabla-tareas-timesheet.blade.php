@@ -114,7 +114,7 @@
                                         {{ $area['id'] == $tarea->area_id ? 'selected' : '' }}>{{ $area['area'] }}
                                     </option>
                                 @endforeach
-                            </select>
+
                             @if ($tarea->todos)
                                 <i class="fa-solid fa-eye ml-2 modal-hover-caja"
                                     style="font-size:15pt; cursor: pointer;">

@@ -42,11 +42,16 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.timesheet-clientes-create') }}" type="button" class="btn btn-primary">Registrar TimeSheet</a> &nbsp;
+            <a href="{{ route('admin.timesheet-clientes-create') }}" type="button" class="btn btn-primary">Registrar
+                TimeSheet</a> &nbsp;
         </div>
     </div>
-<br>
-<br>
+    <br>
+    <br>
+
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.blue-card-header')
 
     <div class="card card-body">
         <div class="row">
