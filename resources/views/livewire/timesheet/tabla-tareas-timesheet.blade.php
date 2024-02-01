@@ -104,17 +104,37 @@
                             <textarea class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea"
                                 style="min-height: 40px !important; height:40px !important;">{{ $tarea->tarea }}</textarea>
                         </td>
-                        <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
+
+                        <td>
+                            @if ($origen === 'tareas-proyectos')
+                                {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }}
+                            @endif
+                            @if ($origen == 'tareas')
+                                {{ $tarea->proyecto_id ? $tarea->proyecto : '' }}
+                            @endif
+                        </td>
+
                         <td style="display:flex; align-items: center;">
                             <select class="form-control select_area" style="width:300px;" data-type="changeArea"
                                 data-id="{{ $tarea->id }}">
-                                <option value="0" {{ $tarea->todos ? 'selected' : '' }}>Todas</option>
-                                @foreach ($tarea->proyecto->areas as $area)
-                                    <option value="{{ $area['id'] }}"
-                                        {{ $area['id'] == $tarea->area_id ? 'selected' : '' }}>{{ $area['area'] }}
-                                    </option>
-                                @endforeach
+                                @if ($origen === 'tareas-proyectos')
+                                    @if ($tarea->area_id == 0)
+                                        <option value="0" selected>Todas</option>
+                                    @else
+                                        <option value="0" selected>Todas</option>
+                                        <option value="{{ $tarea->area_id }}">{{ $tarea->area->area }}</option>
+                                    @endif
+                                @endif
+                                @if ($origen == 'tareas')
+                                    @if ($tarea->area_id == 0)
+                                        <option value="0" selected>Todas</option>
+                                    @else
+                                        <option value="0" selected>Todas</option>
+                                        <option value="{{ $tarea->area_id }}">{{ $tarea->area }}</option>
+                                    @endif
+                                @endif
 
+                            </select>
                             @if ($tarea->todos)
                                 <i class="fa-solid fa-eye ml-2 modal-hover-caja"
                                     style="font-size:15pt; cursor: pointer;">
