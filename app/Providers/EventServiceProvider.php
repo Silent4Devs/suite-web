@@ -57,6 +57,7 @@ use App\Models\RevisionDocumento;
 use App\Models\RH\Competencia;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\MetricasObjetivo;
+use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\TipoCompetencia;
 use App\Models\RH\TipoObjetivo;
 use App\Models\RiesgoIdentificado;
@@ -105,6 +106,7 @@ use App\Observers\MejorasObserver;
 use App\Observers\MetricasObjetivoObserver;
 use App\Observers\MinutasAltaDireccionObserver;
 use App\Observers\ModelosObserver;
+use App\Observers\ObjetivoEmpleadoObserver;
 use App\Observers\OrganizacionObserver;
 use App\Observers\PerfilEmpleadoObserver;
 use App\Observers\PermisosGoceSueldoObserver;
@@ -247,5 +249,6 @@ class EventServiceProvider extends ServiceProvider
         PermisosGoceSueldo::observe(PermisosGoceSueldoObserver::class);
         Minutasaltadireccion::observe(MinutasAltaDireccionObserver::class);
         Role::observe(RolesObserver::class);
+        ObjetivoEmpleado::observe(ObjetivoEmpleadoObserver::class);
     }
 }
