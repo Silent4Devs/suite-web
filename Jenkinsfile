@@ -10,6 +10,7 @@ pipeline {
        stage('Install') {
             steps {
                 git branch: 'develop', url: 'https://github.com/Silent4Devs/suite-web.git'
+                git branch: 'stagging', url: 'https://github.com/Silent4Devs/suite-web.git'
             }
         }
 
@@ -32,15 +33,24 @@ pipeline {
         }
 
 
-        stage('Deploy via SSH') {
+        stage('Merge') {
             steps {
-                script {
-                    sshagent(['/root/.ssh/id_rsa.pub']) {
-                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
-                    }
-                }
+                sh 'git checkout stagging'
+                sh 'git merge develop'
+                sh 'git push origin stagging'
             }
         }
+
+
+        // stage('Deploy via SSH') {
+        //     steps {
+        //         script {
+        //             sshagent(['/root/.ssh/id_rsa.pub']) {
+        //                 sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
+        //             }
+        //         }
+        //     }
+        // }
 
     }
 }
