@@ -1,38 +1,17 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+@endsection
 @section('content')
-    <style type="text/css">
-        .aprobada {
-            padding: 3px;
-            background-color: #61CB5C;
-            color: #fff;
-            border-radius: 4px;
-        }
-
-        .rechazada {
-            padding: 3px;
-            background-color: #EA7777;
-            color: #fff;
-            border-radius: 4px;
-        }
-
-        .pendiente {
-            padding: 3px;
-            background-color: #F48C16;
-            color: #fff;
-            border-radius: 4px;
-        }
-    </style>
-
-
     {{ Breadcrumbs::render('timesheet-aprobaciones') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobaciones</font>
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Aprobaciones</font>
     </h5>
 
     <x-loading-indicator />
 
     @include('admin.timesheet.complementos.cards')
-
+    @include('admin.timesheet.complementos.admin-aprob')
     @include('admin.timesheet.complementos.blue-card-header')
     <div class="card card-body">
         <div class="row">

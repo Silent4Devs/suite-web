@@ -6,17 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroySedeRequest;
 use App\Http\Requests\StoreSedeRequest;
+use App\Jobs\ProcessImageCompressor;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Queue;
-use App\Jobs\ProcessImageCompressor;
 
 class SedeController extends Controller
 {
@@ -111,8 +111,8 @@ class SedeController extends Controller
             $file = $request->file('foto_sedes');
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path('/app/public/sedes/imagenes/' . $new_name_image);
+            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path('/app/public/sedes/imagenes/'.$new_name_image);
 
             $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -149,7 +149,7 @@ class SedeController extends Controller
 
         if ($request->hasFile('foto_sedes')) {
             // Check and delete the existing image if it exists
-            $existingImagePath = 'sedes/imagenes/' . $sede->foto_sedes;
+            $existingImagePath = 'sedes/imagenes/'.$sede->foto_sedes;
 
             if ($sede->foto_sedes && Storage::disk('public')->exists($existingImagePath)) {
                 Storage::disk('public')->delete($existingImagePath);
@@ -159,8 +159,8 @@ class SedeController extends Controller
             $file = $request->file('foto_sedes');
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path('/app/public/sedes/imagenes/' . $new_name_image);
+            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path('/app/public/sedes/imagenes/'.$new_name_image);
 
             // Enqueue the image processing job, passing the file, route and the desired width
             Queue::push(new ProcessImageCompressor($file, $route, 256));

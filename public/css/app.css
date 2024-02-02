@@ -9532,7 +9532,7 @@ html:not([dir="rtl"]) .breadcrumb-menu {
 .breadcrumb-menu .btn:hover,
 .breadcrumb-menu .btn.active,
 .breadcrumb-menu .show .btn {
-    color: #3c4b64;
+    /* color: #3c4b64; */
     background: transparent;
 }
 
@@ -9773,8 +9773,8 @@ html:not([dir="rtl"]) .dropleft .dropdown-toggle-split::before {
 @media (hover: hover),
 (-ms-high-contrast: none) {
     .btn:hover {
-        color: #3c4b64;
-        text-decoration: none;
+        /* color: #3c4b64;
+        text-decoration: none; */
     }
 }
 
@@ -32432,7 +32432,7 @@ pre code {
 
 .table-striped tbody tr:nth-of-type(odd),
 table.table tbody tr:nth-child(even) {
-    background-color: #EEEEEE;
+    background-color: #fff;
 }
 
 .table-hover tbody tr:hover {
@@ -33262,8 +33262,8 @@ textarea.form-control.is-invalid {
 }
 
 .btn:hover {
-    color: #212529;
-    text-decoration: none;
+    /* color: #212529; */
+    /* text-decoration: none; */
 }
 
 .btn:focus,

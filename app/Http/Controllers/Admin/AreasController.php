@@ -123,8 +123,8 @@ class AreasController extends Controller
             $file = $request->file('foto_area');
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path('/app/public/areas/' . $new_name_image);
+            $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path('/app/public/areas/'.$new_name_image);
 
             $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -181,7 +181,7 @@ class AreasController extends Controller
             //Si existe la imagen entonces se elimina al editarla
             $file = $request->file('foto_area');
 
-            $filePath = '/app/public/areas/' . $area->foto_area;
+            $filePath = '/app/public/areas/'.$area->foto_area;
 
             if (Storage::disk('public')->exists($filePath)) {
                 Storage::disk('public')->delete($filePath);
@@ -189,8 +189,8 @@ class AreasController extends Controller
 
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path('/app/public/areas/' . $new_name_image);
+            $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path('/app/public/areas/'.$new_name_image);
             $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
             });

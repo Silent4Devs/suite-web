@@ -1,7 +1,8 @@
 @extends('layouts.admin')
-@section('content')
+@section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-
+@endsection
+@section('content')
     {{ Breadcrumbs::render('timesheet-dashboard') }}
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -14,7 +15,7 @@
     </h5>
 
     @include('admin.timesheet.complementos.cards')
-
+    @include('admin.timesheet.complementos.admin-aprob')
     @include('admin.timesheet.complementos.blue-card-header')
     <div class="mt-5">
         <nav class="mt-4 d-flex justify-content-between">

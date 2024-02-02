@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+@endsection
 @section('content')
     <style type="text/css">
         #lista_proyectos_tareas li {
@@ -23,12 +26,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
     </script>
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reporte Registros Colaboradores
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Reporte Registros Colaboradores
             Tareas</font>
     </h5>
 
     @include('admin.timesheet.complementos.cards')
-
+    @include('admin.timesheet.complementos.admin-aprob')
     @include('admin.timesheet.complementos.blue-card-header')
 
     @livewire('timesheet.reportes-proyemp')
