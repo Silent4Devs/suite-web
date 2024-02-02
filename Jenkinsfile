@@ -7,12 +7,11 @@ pipeline {
             }
         }
 
-       stage('Install') {
+        stage('Install') {
             steps {
                 git branch: 'develop', url: 'https://github.com/Silent4Devs/suite-web.git'
             }
         }
-
 
         stage('Build') {
             steps {
@@ -31,26 +30,24 @@ pipeline {
             }
         }
 
-
         stage('Deploy via SSH') {
             steps {
                 script {
-                    sshagent(['/root/.ssh/id_rsa.pub']) {
+                    sshagent(['YOUR_PRIVATE_KEY']) {
                         sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
                     }
                 }
             }
         }
+    }
 
-        // post {
-        //         always {
-        //             emailext (
-        //                 subject: "Despliegue exitoso",
-        //                 body: "El despliegue de la aplicación fue exitoso.",
-        //                 to: "saul.ramirez@silent4business.com",
-        //             )
-        //         }
-        //     }
-
+    post {
+        always {
+            emailext (
+                subject: "Despliegue exitoso",
+                body: "El despliegue de la aplicación fue exitoso.",
+                to: "saul.ramirez@silent4business.com",
+            )
+        }
     }
 }
