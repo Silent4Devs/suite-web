@@ -1,7 +1,8 @@
 @extends('layouts.admin')
-@section('content')
+@section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-
+@endsection
+@section('content')
     <style type="text/css">
         .cde-nombre.ver {
             position: sticky;
@@ -169,7 +170,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
     </script>
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">
             Reportes por Área
     </h5>
 

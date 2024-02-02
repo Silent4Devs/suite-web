@@ -1,6 +1,8 @@
 @extends('layouts.admin')
-@section('content')
+@section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+@endsection
+@section('content')
     <style type="text/css">
         .btn_op {
             opacity: 1 !important;
@@ -15,10 +17,9 @@
         }
     </style>
 
-
     {{ Breadcrumbs::render('timesheet-index') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Mis Registros</font>
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Mis Registros</font>
     </h5>
 
     @livewire('timesheet.tabla-mis-registros', ['estatus' => $estatus])

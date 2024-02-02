@@ -4,7 +4,7 @@
 
     {{ Breadcrumbs::render('timesheet-edit') }}
     @include('admin.timesheet.complementos.cards')
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">
             {!! $timesheet->semana !!} | <font style="font-weight:lighter;">{{ $timesheet->empleado->name }}</font>
     </h5>
 
