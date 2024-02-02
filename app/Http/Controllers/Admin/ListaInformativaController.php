@@ -118,17 +118,12 @@ class ListaInformativaController extends Controller
 
         $participantes_seleccionados = [];
 
-        for ($i = 1; $i <= $lista->niveles; $i++) {
+        foreach ($lista->participantes as $participante) {
 
-            foreach ($lista->participantes as $participante) {
-                if ($participante->nivel == $i) {
-
-                    $participantes_seleccionados['nivel' . $i][] =
-                        [
-                            'empleado_id' => $participante->empleado_id,
-                        ];
-                }
-            }
+            $participantes_seleccionados[] =
+                [
+                    'empleado_id' => $participante->empleado_id,
+                ];
         }
 
         $empleados = Empleado::getAltaDataColumns();

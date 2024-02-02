@@ -23,6 +23,8 @@ class SolicitudDayOffController extends Controller
 {
     use ObtenerOrganizacion;
 
+    public $modelo = 'SolicitudDayOff';
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');

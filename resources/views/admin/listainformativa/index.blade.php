@@ -106,7 +106,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.lista-distribucion.index') }}",
+                ajax: "{{ route('admin.lista-informativa.index') }}",
                 columns: [{
                         data: 'modulo',
                         name: 'modulo',
@@ -178,10 +178,10 @@
                                         <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><a href="/admin/lista-distribucion/${data}/edit"
+                                            <li><a href="/admin/lista-informativa/${data}/edit"
                                                     class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i>&nbsp;
                                                     Editar</a></li>
-                                            <li><a href="/admin/lista-distribucion/${data}/show" class="btn btn-sm"
+                                            <li><a href="/admin/lista-informativa/${data}/show" class="btn btn-sm"
                                                     title="Visualizar"><i class="fa fa-eye"></i>&nbsp;Ver</a></li>
                                     </ul>
                                 </div>`;
@@ -193,7 +193,7 @@
                     [0, 'desc']
                 ],
             };
-            let table = $('.datatable-lista-distribucion').DataTable(dtOverrideGlobals);
+            let table = $('.datatable-lista-informativa').DataTable(dtOverrideGlobals);
             // $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
             //     let titulo_tabla = `
         //     <h5>
@@ -202,7 +202,7 @@
         //         </strong>
         //     </h5>
         // `;
-            //     imprimirTabla('datatable-lista-distribucion', titulo_tabla);
+            //     imprimirTabla('datatable-lista-informativa', titulo_tabla);
             // });
 
         });

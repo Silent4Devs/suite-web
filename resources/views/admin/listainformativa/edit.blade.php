@@ -74,29 +74,6 @@
                 <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
                 <hr>
                 <div class="row g-0">
-                    <div class="col-5">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <p style="text-align:justify">Esta sección permite que las personas <br> seleccionadas puedan autorizar el flujo en <br> cualquier
-                            momento, sin requerir la aprobación <br> de los niveles seleccionados.
-                        </p>
-
-                        <div class="col-8">
-                            <div class="anima-focus">
-                                <select id="superaprobadores"  name="superaprobadores[]" class="form-control"
-                                    multiple="multiple" placeholder="">
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
-                                            {{ $empleado->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label for="superaprobadores" style="color:#057BE2;">Super Aprobadores</label>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-6">
                         <p>Seleccione cuantos niveles de aprobación tendra tu lista, para poder asignar por cada nivel el
                             numero
@@ -147,48 +124,13 @@
         </div>
         <div class="col-12">
             <div  style="position: relative; text-align:end;">
-                <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+                <a href="{{ route('admin.lista-informativa.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                 <button type="submit" class="btn btn-primary" style="width: 8rem;">Editar</button>
             </div>
         </div>
     </form>
 @endsection
     @section('scripts') <script>
-        var superaprobadoresSeleccionados = {!! json_encode($superaprobadores_seleccionados) !!};
-
-        $(document).ready(function() {
-            var superaprobadoresSelect = $('#superaprobadores');
-
-            var options = $('option', superaprobadoresSelect);
-
-            // Sort the options based on the numero_orden property
-            options.detach().sort(function(a, b) {
-                var aOrder = superaprobadoresSeleccionados.find(item => item.empleado_id === $(a).val())
-                    ?.numero_orden || 0;
-                var bOrder = superaprobadoresSeleccionados.find(item => item.empleado_id === $(b).val())
-                    ?.numero_orden || 0;
-                return aOrder - bOrder;
-            });
-
-            // Append the sorted options back to the select element
-            superaprobadoresSelect.append(options);
-
-            // Set the 'selected' attribute for options that match the superaprobadores_seleccionados data
-            options.each(function() {
-                var empleadoId = $(this).val();
-                var isSelected = superaprobadoresSeleccionados.some(function(item) {
-                    return item.empleado_id == empleadoId;
-                });
-
-                if (isSelected) {
-                    $(this).attr('selected', 'selected');
-                }
-            });
-        });
-    </script>
-
-
-    <script>
         var participantesSeleccionados = {!! json_encode($participantes_seleccionados) !!};
 
         function populateSelects() {
@@ -277,67 +219,6 @@
                         }
                     },
                 }); // Initialize select2 for the preselected select(s)
-            }
-        });
-    </script>
-
-    <script>
-        var selectedOptions = []; // Array to store selected options in order
-
-        $('#superaprobadores').select2({
-            templateResult: formatAvatar, // Format avatar in options
-            templateSelection: formatAvatar, // Format avatar in selected options
-            maximumSelectionLength: 5,
-            language: {
-                maximumSelected: function(maximumSelect) {
-                    return 'Solo pueden seleccionarse un maximo de 5 superaprobadores.';
-                    // Customize the message according to your preference
-                }
-            },
-            formatSelectionTooBig: function(maximum) {
-                return '';
-                // Customize the message according to your preference
-            },
-            escapeMarkup: function(m) {
-                return m;
-            }
-        });
-
-        function formatAvatar(option) {
-            if (!option.id) {
-                return option.text;
-            }
-
-            var avatar = $(option.element).data('avatar');
-            var avatarHtml = `<img src="{{ asset('storage/empleados/imagenes') }}/${avatar}" class="img_empleado" />`;
-            var avatarText = option.text;
-
-            var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
-            return formattedResult;
-        }
-
-        $('#superaprobadores').on('select2:select', function(e) {
-            var selectedOptionId = e.params.data.id;
-
-            if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-                $('#superaprobadores').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-                selectedOptions.shift();
-            }
-
-            if (!selectedOptions.includes(selectedOptionId)) {
-                selectedOptions.push(selectedOptionId);
-            }
-
-            $('#superaprobadores').find('option').sort(function(a, b) {
-                return selectedOptions.indexOf(a.value) - selectedOptions.indexOf(b.value);
-            }).appendTo('#superaprobadores');
-        });
-
-        $('#superaprobadores').on('select2:unselect', function(e) {
-            var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions.indexOf(unselectedOptionId);
-            if (index !== -1) {
-                selectedOptions.splice(index, 1);
             }
         });
     </script>

@@ -27,6 +27,8 @@ class SolicitudVacacionesController extends Controller
 {
     use ObtenerOrganizacion;
 
+    public $modelo = 'SolicitudVacaciones';
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');

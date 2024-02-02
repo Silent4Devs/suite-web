@@ -16,24 +16,19 @@ class ListaInformativaSeeder extends Seeder
         //
         $modulos = [
             [
-                'modulo' => 'Entendimiento de Organización',
-                'submodulo' => 'Analisis FODA',
-                'modelo' => 'EntendimientoOrganizacion',
+                'modulo' => 'Solicitudes',
+                'submodulo' => 'Solicitar Vacaciones',
+                'modelo' => 'SolicitudVacaciones',
             ],
             [
-                'modulo' => 'Contexto SGSI',
-                'submodulo' => 'Determinación de Alcance',
-                'modelo' => 'AlcanceSgsi',
+                'modulo' => 'Solicitudes',
+                'submodulo' => 'Solicitar Day-Off',
+                'modelo' => 'SolicitudDayOff',
             ],
             [
-                'modulo' => 'Contexto SGSI',
-                'submodulo' => 'Politicas de SGSI',
-                'modelo' => 'PoliticaSgsi',
-            ],
-            [
-                'modulo' => 'Contexto SGSI',
-                'submodulo' => 'Matriz de Requisitos Legales y Regulatorios',
-                'modelo' => 'MatrizRequisitoLegale',
+                'modulo' => 'Timesheet',
+                'submodulo' => 'Proyectos',
+                'modelo' => 'TimesheetProyecto',
             ],
         ];
 

@@ -1,4 +1,4 @@
-<table class="datatable datatable-lista-distribucion" id="datatable-lista-distribucion">
+<table class="datatable datatable-lista-informativa" id="datatable-lista-informativa">
     <thead>
         <tr>
             <th>
@@ -54,10 +54,10 @@
                             <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a href="/admin/lista-distribucion/{{ $modulo->id }}/edit" class="btn btn-sm"
+                            <li><a href="/admin/lista-informativa/{{ $modulo->id }}/edit" class="btn btn-sm"
                                     title="Editar"><i class="fa fa-edit"></i>&nbsp;
                                     Editar</a></li>
-                            <li><a href="/admin/lista-distribucion/{{ $modulo->id }}/show" class="btn btn-sm"
+                            <li><a href="/admin/lista-informativa/{{ $modulo->id }}/show" class="btn btn-sm"
                                     title="Visualizar"><i class="fa fa-eye"></i>&nbsp;Ver</a></li>
                         </ul>
                     </div>
