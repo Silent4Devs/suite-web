@@ -11,8 +11,10 @@
     <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Reporte de Registros</font>
     </h5>
 
-    @include('admin.timesheet.complementos.cards')
-    @include('admin.timesheet.complementos.blue-card-header')
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
+
     @livewire('timesheet.reportes-registros')
 @endsection
 @section('scripts')

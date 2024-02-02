@@ -769,3 +769,30 @@ table.dataTable tbody tr.selected td {
     font-weight: normal;
 }
 
+/* forms time ------------------------- */
+div .form-control:not(#form_timesheet .form-control) {
+    border-radius: 3px !important;
+    background-color: #F8FAFC !important;
+}
+
+.tabla-llenar-horas .select2:not(#form_timesheet .tabla-llenar-horas .select2),
+.select2-container .select2-selection--single:not(#form_timesheet .select2-selection--single) {
+    border-radius: 4px !important;
+    background-color: #F8FAFC !important;
+}
+
+.form-group label:not(#form_timesheet label) {
+    color: #818181 !important;
+}
+
+.btn-secondary.btn {
+    border-radius: 4px !important;
+    color: #818181 !important;
+    background-color: #E8E8E8;
+    border: none !important;
+    padding: 8px 25px !important
+}
+
+.btn-secondary:hover {
+    background-color: #E8E8E8;
+}
