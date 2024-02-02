@@ -17,6 +17,6 @@ class ListaInformativa extends Model
 
     public function participantes()
     {
-        return $this->hasMany(ParticipantesListaDistribucion::class, 'modulo_id', 'id');
+        return $this->hasMany(ParticipantesListaInformativa::class, 'modulo_id', 'id');
     }
 }

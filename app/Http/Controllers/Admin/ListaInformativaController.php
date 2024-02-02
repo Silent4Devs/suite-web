@@ -18,48 +18,6 @@ class ListaInformativaController extends Controller
         $query = ListaInformativa::with('participantes.empleado')->orderByDesc('id')->get();
         // dd($query);
 
-        // if ($request->ajax()) {
-
-        //     $query = ListaInformativa::with('participantes.empleado')->orderByDesc('id')->get();
-        //     $table = datatables()::of($query);
-
-        //     $table->addColumn('placeholder', '&nbsp;');
-        //     $table->addColumn('actions', '&nbsp;');
-
-        //     $table->editColumn('actions', function ($row) {
-        //         $viewGate = 'incidentes_vacaciones_crear';
-        //         $editGate = 'incidentes_vacaciones_editar';
-        //         $deleteGate = 'incidentes_vacaciones_eliminar';
-        //         $crudRoutePart = 'incidentes-vacaciones';
-
-        //         return view('partials.datatablesActions', compact(
-        //             'viewGate',
-        //             'editGate',
-        //             'deleteGate',
-        //             'crudRoutePart',
-        //             'row'
-        //         ));
-        //     });
-
-        //     $table->editColumn('modulo', function ($row) {
-        //         return $row->modulo ? $row->modulo : '';
-        //     });
-        //     $table->editColumn('submodulo', function ($row) {
-        //         return $row->submodulo ? $row->submodulo : '';
-        //     });
-        //     $table->editColumn('participantes', function ($row) {
-        //         return $row->participantes ? $row->participantes : '';
-        //     });
-
-        //     $table->editColumn('id', function ($row) {
-        //         return $row->id ? $row->id : '';
-        //     });
-
-        //     $table->rawColumns(['actions', 'placeholder']);
-
-        //     return $table->make(true);
-        // }
-
         $participantes = ListaInformativa::with('participantes.empleado')->get();
 
         return view('admin.listainformativa.index', compact('query', 'participantes'));
@@ -91,17 +49,12 @@ class ListaInformativaController extends Controller
 
         $participantes_seleccionados = [];
 
-        for ($i = 1; $i <= $lista->niveles; $i++) {
+        foreach ($lista->participantes as $participante) {
 
-            foreach ($lista->participantes as $participante) {
-                if ($participante->nivel == $i) {
-
-                    $participantes_seleccionados['nivel' . $i][] =
-                        [
-                            'empleado_id' => $participante->empleado_id,
-                        ];
-                }
-            }
+            $participantes_seleccionados[] =
+                [
+                    'empleado_id' => $participante->empleado_id,
+                ];
         }
 
         $empleados = Empleado::getAltaDataColumns();
@@ -137,60 +90,25 @@ class ListaInformativaController extends Controller
     public function update(Request $request, $id)
     {
         //
-        // dd($id);
-        // dd($request->niveles, $request->all());
         $lista = ListaInformativa::select('id')->find($id);
-        // dd($lista_id);
-        // dd($request->all());
-        $val_niv = $request->niveles;
-        $nom_niv = 'nivel' . $val_niv;
+        // dd($id, $request->all());
 
-        if (isset($request->$nom_niv)) {
+        if (isset($request->nivel1[0])) {
             $participantes = ParticipantesListaInformativa::where('modulo_id', '=', $lista->id)->delete();
 
-            $data = [];
-            for ($i = 1; $i <= $request->niveles; $i++) {
-                $nivelArrayName = 'nivel' . $i;
-                if (isset($nivelArrayName)) {
-                    $data[$i] = $request->$nivelArrayName;
-                    // $data[$nivelArrayName] = $nivelArrayName;
-                }
-            }
+            $data = $request->nivel1;
 
-            if (isset($request->superaprobadores)) {
-                $superi = 1;
-                foreach ($request->superaprobadores as $superaprobador) {
-                    // dd("superaprobador", $superaprobador);
-                    $super = ParticipantesListaInformativa::create(
-                        [
-                            'modulo_id' => $lista->id,
-                            'nivel' => 0,
-                            'numero_orden' => $superi,
-                            'empleado_id' => $superaprobador,
-                        ],
-                    );
-                    $i++;
-                }
-            }
-
-            foreach ($data as $key => $nivel) {
-                $i = 1;
-                foreach ($nivel as $participante) {
-
-                    $participantes = ParticipantesListaInformativa::create(
-                        [
-                            'modulo_id' => $lista->id,
-                            'nivel' => $key,
-                            'numero_orden' => $i,
-                            'empleado_id' => $participante,
-                        ],
-                    );
-                    $i++;
-                }
+            foreach ($data as $participante) {
+                $participantes = ParticipantesListaInformativa::create(
+                    [
+                        'modulo_id' => $lista->id,
+                        'empleado_id' => $participante,
+                    ],
+                );
             }
         } else {
             // dd('No existe', $nom_niv);
-            $errorMessage = 'No puede haber niveles sin colaboradores asignados';
+            $errorMessage = 'La lista informativa debe contener al menos un colaborador.';
 
             // Manually add error message to $errors bag
             $errors = new \Illuminate\Support\MessageBag();

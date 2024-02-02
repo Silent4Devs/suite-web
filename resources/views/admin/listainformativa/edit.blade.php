@@ -37,14 +37,15 @@
                 </div>
                 <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
-                        <p>En esta sección puedes generar las listas de distribucion de correos, agruparlas ydarles el nivel
-                            de prioridad para ser administradas conforme a su nivel asignado</p>
+                        <p>En esta sección puedes generar las listas informativas de correos, 
+                            en las cuales se informaran a los colaboradores 
+                            sobre los procesos en estos submodulos.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <form method="POST" action="{{ route('admin.lista-distribucion.update', [$lista->id]) }}">
+    <form method="POST" action="{{ route('admin.lista-informativa.update', [$lista->id]) }}">
         @csrf
         <div class="card">
             <div class="card-body">
@@ -74,49 +75,30 @@
                 <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
                 <hr>
                 <div class="row g-0">
-                    <div class="col-6">
-                        <p>Seleccione cuantos niveles de aprobación tendra tu lista, para poder asignar por cada nivel el
-                            numero
-                            de colaboradores que se requiera.</p>
-                            <br>
-                            <br>
-
-                        <div class="row mb-4">
-                            <div class="anima-focus">
-                                <select id="niveles" name="niveles" class="form-control" placholder="">
-                                    <option value={{ $lista->niveles }} selected>{{ $lista->niveles }}</option>
-                                    @for ($i = 1; $i < 6; $i++)
-                                        <option value={{ $i }}>{{ $i }}</option>
-                                    @endfor
-                                </select>
-                                <label for="niveles" style="color:#057BE2;">Seleccione los niveles</label>
-                            </div>
-                        </div>
+                    <div class="col-12">
                         <div>
                             @error('nivel_null')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            @for ($i = 1; $i < 6; $i++)
-                                <div class="form-row nivel{{ $i }}Div" style="display: none;">
+                                <div class="form-row nivel1Div"">
                                     <div class="mt-4 mb-1">
-                                        <i class="fas fa-circle" style="color: #007bff;"></i>  Nivel {{ $i }} <br>
-                                       &nbsp; &nbsp; Asigna a los colaboradores que deben aprobar para pasar al siguiente nivel.
+                                        <i class="fas fa-circle" style="color: #007bff;"></i> Informados <br>
+                                       &nbsp; &nbsp; Asigna a los colaboradores que seran informados de los procesos en el modulo.
                                     </div>
                                     <div class="anima-focus" style="width: 100rem;">
-                                        <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
+                                        <select id="nivel1" name="nivel1[]"
                                             class="form-control" multiple="multiple">
                                             @foreach ($empleados as $empleado)
                                                 <option value="{{ $empleado->id }}"
                                                     data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
-                                                    {{ in_array($empleado->id, $nivelData[$i - 1] ?? []) ? 'selected' : '' }}>
+                                                    {{ in_array($empleado->id, $nivelData1 ?? []) ? 'selected' : '' }}>
                                                     {{ $empleado->name }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel{{ $i }}" style="color:#057BE2;">Colaboradores</label>
+                                        <label for="nivel1" style="color:#057BE2;">Colaboradores</label>
                                     </div>
                                 </div>
-                            @endfor
                         </div>
                     </div>
                 </div>
@@ -185,54 +167,16 @@
         });
     </script>
 
-
     <script>
         $(document).ready(function() {
-            $('#niveles').change(function() {
-                var selectedNivel = $(this).val();
-                $('.form-row').hide(); // Hide all select boxes initially
-                for (var i = 1; i <= selectedNivel; i++) {
-                    $('.nivel' + i + 'Div')
-                        .show(); // Show the selected nivel and preceding nivel's select boxes
-                    $('.nivel' + i + 'Div select').select2({
-                        maximumSelectionLength: 5,
-                        language: {
-                            maximumSelected: function(maximumSelect) {
-                                return 'Solo pueden seleccionarse un maximo de 5 aprobadores por nivel.';
-                                // Customize the message according to your preference
-                            }
-                        },
-                    }); // Initialize select2 for the chosen select(s)
-                }
-            });
-
-            var initialNivel = $('#niveles').val();
-            $('.form-row').hide(); // Hide all select boxes initially
-            for (var i = 1; i <= initialNivel; i++) {
-                $('.nivel' + i + 'Div').show(); // Show the preselected nivel and preceding nivel's select boxes
-                $('.nivel' + i + 'Div select').select2({
-                    maximumSelectionLength: 5,
-                    language: {
-                        maximumSelected: function(maximumSelect) {
-                            return 'Solo pueden seleccionarse un maximo de 5 aprobadores por nivel.';
-                            // Customize the message according to your preference
-                        }
-                    },
-                }); // Initialize select2 for the preselected select(s)
-            }
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            for (let i = 1; i < 6; i++) {
+            for (let i = 1; i < 11; i++) {
                 $('#nivel' + i).select2({
                     templateResult: formatAvatar,
                     templateSelection: formatAvatar,
-                    maximumSelectionLength: 5,
+                    maximumSelectionLength: 10,
                     language: {
                         maximumSelected: function(maximumSelect) {
-                            return 'Solo pueden seleccionarse un maximo de 5 aprobadores por nivel.';
+                            return 'Solo pueden seleccionarse un maximo de 10 informadores por modulo.';
                             // Customize the message according to your preference
                         }
                     },
@@ -281,129 +225,6 @@
         });
 
         $('#nivel1').on('select2:unselect', function(e) {
-            var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions.indexOf(unselectedOptionId);
-            if (index !== -1) {
-                selectedOptions.splice(index, 1);
-            }
-        });
-    </script>
-
-    <script>
-        var selectedOptions = []; // Array to store selected options in order
-
-        $('#nivel2').on('select2:select', function(e) {
-            var selectedOptionId = e.params.data.id;
-
-            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-            //     $('#nivel2').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-            //     selectedOptions.shift();
-            // }
-
-            if (!selectedOptions.includes(selectedOptionId)) {
-                selectedOptions.push(selectedOptionId);
-            }
-
-            $('#nivel2').find('option').sort(function(a, b) {
-                return selectedOptions.indexOf(a.value) - selectedOptions.indexOf(b.value);
-            }).appendTo('#nivel2');
-        });
-
-        $('#nivel2').on('select2:unselect', function(e) {
-            var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions.indexOf(unselectedOptionId);
-            if (index !== -1) {
-                selectedOptions.splice(index, 1);
-            }
-        });
-    </script>
-
-    <script>
-        var selectedOptions = []; // Array to store selected options in order
-
-        $('#nivel3').on('select2:select', function(e) {
-            var selectedOptionId = e.params.data.id;
-
-            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-            //     $('#nivel3').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-            //     selectedOptions.shift();
-            // }
-
-            if (!selectedOptions.includes(selectedOptionId)) {
-                selectedOptions.push(selectedOptionId);
-            }
-
-            $('#nivel3').find('option').sort(function(a, b) {
-                return selectedOptions.indexOf(a.value) - selectedOptions.indexOf(b.value);
-            }).appendTo('#nivel3');
-        });
-
-        $('#nivel3').on('select2:unselect', function(e) {
-            var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions.indexOf(unselectedOptionId);
-            if (index !== -1) {
-                selectedOptions.splice(index, 1);
-            }
-        });
-    </script>
-
-    <script>
-        var selectedOptions = []; // Array to store selected options in order
-
-        $('#nivel4').on('select2:select', function(e) {
-            var selectedOptionId = e.params.data.id;
-
-            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-            //     $('#nivel4').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-            //     selectedOptions.shift();
-            // }
-
-            if (!selectedOptions.includes(selectedOptionId)) {
-                selectedOptions.push(selectedOptionId);
-            }
-
-            $('#nivel4').find('option').sort(function(a, b) {
-                return selectedOptions.indexOf(a.value) - selectedOptions.indexOf(b.value);
-            }).appendTo('#nivel4');
-        });
-
-        $('#nivel4').on('select2:unselect', function(e) {
-            var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions.indexOf(unselectedOptionId);
-            if (index !== -1) {
-                selectedOptions.splice(index, 1);
-            }
-        });
-    </script>
-
-    <script>
-        var selectedOptions = []; // Array to store selected options in order
-        $('#nivel5').on('select2:select', function(e) {
-            var selectedOptionId = e.params.data.id;
-
-            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-            //     $('#nivel5').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-            //     selectedOptions.shift();
-            // }
-
-            if (!selectedOptions.includes(selectedOptionId)) {
-                selectedOptions.push(selectedOptionId);
-            }
-
-            $('#nivel5').find('option').sort(function(a, b) {
-                return selectedOptions.indexOf(a.value) - selectedOptions.indexOf(b.value);
-            }).appendTo('#nivel5');
-        });
-
-        $('#nivel5').on('select2:unselect', function(e) {
             var unselectedOptionId = e.params.data.id;
             var index = selectedOptions.indexOf(unselectedOptionId);
             if (index !== -1) {
