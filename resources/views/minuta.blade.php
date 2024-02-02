@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="card mt-6" style="width:750px; display: flex; align-items: center;">
                 <div class="col-3" style="border-left: 25px solid #2395AA;">
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset('silent.png')}}">
+                    <img style="width:100%; max-width:100px; position: relative; left:1rem;" src="{{ asset('silent.png')}}">
                     {{-- @if ($logo_actual)
                      <img style="width: 100%; max-width: 100px; height: auto;" src="{{public_path($logo_actual)}}">
                     @else
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div style="margin: 4%" style="position: relative; top: -7rem; right: 1rem;">
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="6"><center>Minuta reunión</center></th>
@@ -56,7 +56,7 @@
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="4"><center>Participantes</center></th>
@@ -76,7 +76,7 @@
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="2"><center style="color: white;">Temas tratados</center></th>
@@ -84,17 +84,17 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
-                                <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;"> {{ htmlspecialchars(strip_tags($minutas->tema_tratado)) }}</textarea>
+                            <td style="border: 1px solid #dddddd; padding: 26px;" colspan="2">
+                                <textarea style="width: 100%; height: 26rem; border: none; outline: none; resize: none; background-color: transparent;"> {!! strip_tags($minutas->tema_tratado) !!}</textarea>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
                     <thead>
                         <tr>
-                            <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="5"><center>Acuerdos y Compromisos</center></th>
+                            <th style="background-color: #306BA9; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="5"><center>Acuerdos y Compromisos</center></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -115,9 +115,7 @@
                     </tbody>
                 </table>
                 <br>
-                <br>
-                <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 6px;">
                     <thead>
                         <tr>
                             <th style="background-color: white; padding: 8px; color: black;  border-top-right-radius: 10px;" colspan="6"><center>Anexo</center></th>
@@ -125,7 +123,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="border: 1px solid #dddddd; font-size: 12px;" colspan="2">Se adjunta la respuesta que Habiza dio en la reunión que tuvo con los representantes y que motivó se convocara a la reunión de hoy 10/03/2021, ya que mencionaron que para el mes de abril de este año ya no serán ellos los que administren el clúster. 1.- BARDA COLINDANTE: La barda colindante que comprende el tren número 2 que corresponde de la casa 9 a la 24, no se va a hacer porque los cimientos que se hicieron para la misma no soportan más peso inclusive ni siquiera 20 centímetros de malla ya que los vientos la derribarían 2.- PLANOS DE CONSTRUCIÓN Los planos nos los entregarían la próxima semana, pero solo van a ser los planos de cada prototipo pues las casas están hechas en serie y todos tienen las mismas características en cuanto al tema eléctrico e hidráulico, se va a entregar por correo y físico solo uno. 3.- GASTOS DE ADMINISTRACIÓN El informe nos lo entregan a más tardar el día 29 de marzo de 2021, y ellos se comprometen a compartir proveedores de insumos, vigilancia y jardineros. Por este punto se sugiere ir planeando u organizando la administración, no hay prorroga. 4.- CISTERNA DE RIEGO Nos comentan que la cisterna ya está para su funcionamiento y que a nosotros nos corresponde hacer el contrato de toma de agua para áreas verdes y alberca, inclusive nos entregaron la solicitud y esta tendrá un costo de $7,041.11. 5.-CANAL PLUVIAL</td>
+                            <td style="border: 1px solid #dddddd;"  colspan="2">Se adjunta la respuesta que Habiza dio en la reunión que tuvo con los representantes y que motivó se convocara a la reunión de hoy 10/03/2021, ya que mencionaron que para el mes de abril de este año ya no serán ellos los que administren el clúster. 1.- BARDA COLINDANTE: La barda colindante que comprende el tren número 2 que corresponde de la casa 9 a la 24, no se va a hacer porque los cimientos que se hicieron para la misma no soportan más peso inclusive ni siquiera 20 centímetros de malla ya que los vientos la derribarían 2.- PLANOS DE CONSTRUCIÓN Los planos nos los entregarían la próxima semana, pero solo van a ser los planos de cada prototipo pues las casas están hechas en serie y todos tienen las mismas características en cuanto al tema eléctrico e hidráulico, se va a entregar por correo y físico solo uno. 3.- GASTOS DE ADMINISTRACIÓN El informe nos lo entregan a más tardar el día 29 de marzo de 2021, y ellos se comprometen a compartir proveedores de insumos, vigilancia y jardineros. Por este punto se sugiere ir planeando u organizando la administración, no hay prorroga. 4.- CISTERNA DE RIEGO Nos comentan que la cisterna ya está para su funcionamiento y que a nosotros nos corresponde hacer el contrato de toma de agua para áreas verdes y alberca, inclusive nos entregaron la solicitud y esta tendrá un costo de $7,041.11. 5.-CANAL PLUVIAL</td>
                         </tr>
                     </tbody>
                 </table>

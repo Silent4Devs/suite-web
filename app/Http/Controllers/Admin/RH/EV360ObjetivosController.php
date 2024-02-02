@@ -40,7 +40,7 @@ class EV360ObjetivosController extends Controller
         //     $empleados,
         //     $isAdmin
         // );
-        if ($usuario->empleado->children->count() > 0 && !$isAdmin) {
+        if ($usuario->empleado->children->count() > 0 && ! $isAdmin) {
             // dd('Caso 1');
             $empleados = $usuario->empleado->children;
 
@@ -112,7 +112,7 @@ class EV360ObjetivosController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
-            'meta' => 'required|integer|min:1',
+            'meta' => 'required|integer|min:0',
             'descripcion_meta' => 'nullable|string|max:1500',
             'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
             'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
@@ -136,8 +136,8 @@ class EV360ObjetivosController extends Controller
             if ($request->hasFile('foto')) {
                 Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $empleado->id . '.' . $extension;
-                $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+                $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$empleado->id.'.'.$extension;
+                $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('foto'));
                 $img_intervention->resize(720, null, function ($constraint) {
@@ -152,36 +152,32 @@ class EV360ObjetivosController extends Controller
                 'empleado_id' => $empleado->id,
             ]);
 
-            $reciente = Evaluacion::latest()->first();
+            $ev = $this->evaluacionActiva();
 
-            $evaluacion = EvaluacionesEvaluados::where('evaluacion_id', '=', $reciente->id)->get();
+            if (isset($ev->id)) {
+                $evaluacion = EvaluacionesEvaluados::where('evaluacion_id', '=', $ev->id)->get();
 
-            foreach ($evaluacion as $evalu) {
-                $evaluado = ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
-                    ->where('empleado_id', '=', $evalu->evaluado_id)
-                    ->where('en_curso', '=', true)->get();
+                foreach ($evaluacion as $evalu) {
+                    $evaluado = ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
+                        ->where('empleado_id', '=', $evalu->evaluado_id)
+                        ->where('en_curso', '=', true)->get();
 
-                foreach ($evaluado as $eva) {
-                    $evaluador = EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
-                        ->where('evaluacion_id', '=', $reciente->id)
-                        ->whereIn('tipo', ['0', '1'])->get();
+                    foreach ($evaluado as $eva) {
+                        $evaluador = EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
+                            ->where('evaluacion_id', '=', $ev->id)
+                            ->whereIn('tipo', ['0', '1'])->get();
 
-                    foreach ($evaluador as $evldr) {
-                        ObjetivoRespuesta::create([
-                            'meta_alcanzada' => 'Sin evaluar',
-                            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                            'calificacion' => 0,
-                            'objetivo_id' => $objetivo->id,
-                            'evaluado_id' => $eva->empleado_id,
-                            'evaluador_id' => $evldr->evaluador_id,
-                            'evaluacion_id' => $reciente->id,
-                        ]);
-                        ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
-                            ->where('en_curso', '=', true)
-                            ->where('empleado_id', '=', $eva->empleado_id)
-                            ->update([
-                                'evaluacion_id' => $reciente->id,
+                        foreach ($evaluador as $evldr) {
+                            ObjetivoRespuesta::create([
+                                'meta_alcanzada' => 'Sin evaluar',
+                                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+                                'calificacion' => 0,
+                                'objetivo_id' => $objetivo->id,
+                                'evaluado_id' => $eva->empleado_id,
+                                'evaluador_id' => $evldr->evaluador_id,
+                                'evaluacion_id' => $ev->id,
                             ]);
+                        }
                     }
                 }
             }
@@ -224,10 +220,10 @@ class EV360ObjetivosController extends Controller
             'comentarios_aprobacion' => $request->comentarios_aprobacion,
         ]);
         //Creacion de objetivos
-        $reciente = Evaluacion::latest()->first();
+        $ev = $this->evaluacionActiva();
 
-        if ($objetivo->esta_aprobado == '1') {
-            $evaluacion = EvaluacionesEvaluados::where('evaluacion_id', '=', $reciente->id)->get();
+        if ($objetivo->esta_aprobado == '1' && isset($ev->id)) {
+            $evaluacion = EvaluacionesEvaluados::where('evaluacion_id', '=', $ev->id)->get();
 
             foreach ($evaluacion as $evalu) {
                 $evaluado = ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
@@ -236,7 +232,7 @@ class EV360ObjetivosController extends Controller
 
                 foreach ($evaluado as $eva) {
                     $evaluador = EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
-                        ->where('evaluacion_id', '=', $reciente->id)
+                        ->where('evaluacion_id', '=', $ev->id)
                         ->whereIn('tipo', ['0', '1'])->get();
 
                     foreach ($evaluador as $evldr) {
@@ -247,14 +243,8 @@ class EV360ObjetivosController extends Controller
                             'objetivo_id' => $objetivo->id,
                             'evaluado_id' => $eva->empleado_id,
                             'evaluador_id' => $evldr->evaluador_id,
-                            'evaluacion_id' => $reciente->id,
+                            'evaluacion_id' => $ev->id,
                         ]);
-                        ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
-                            ->where('en_curso', '=', true)
-                            ->where('empleado_id', '=', $eva->empleado_id)
-                            ->update([
-                                'evaluacion_id' => $reciente->id,
-                            ]);
                     }
                 }
             }
@@ -328,7 +318,7 @@ class EV360ObjetivosController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
-            'meta' => 'required|integer',
+            'meta' => 'required|integer|min:0',
             'descripcion_meta' => 'nullable|string|max:1500',
             'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
             'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
@@ -349,8 +339,8 @@ class EV360ObjetivosController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $objetivo->empleado_id . '.' . $extension;
-            $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+            $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$objetivo->empleado_id.'.'.$extension;
+            $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto'));
             $img_intervention->resize(720, null, function ($constraint) {

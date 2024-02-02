@@ -176,10 +176,12 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
+
+                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($route);
+                    });
+
+                    $img_intervention->save($route);
                 }
             }
         } elseif ($request->snap_foto && ! $request->file('foto')) {
@@ -191,10 +193,12 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
+
+                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($route);
+                    });
+
+                    $img_intervention->save($route);
                 }
             }
         } else {
@@ -205,10 +209,12 @@ class EmpleadoController extends Controller
                 $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('foto'));
-                $img_intervention->resize(480, null, function ($constraint) {
+
+                $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($route);
+                });
+
+                $img_intervention->save($route);
             }
         }
 
@@ -1101,10 +1107,11 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
+                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($route);
+                    });
+
+                    $img_intervention->save($route);
                 }
             }
         } elseif (
@@ -1118,10 +1125,11 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
+                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($route);
+                    });
+
+                    $img_intervention->save($route);
                 }
             }
         } else {
@@ -1132,10 +1140,11 @@ class EmpleadoController extends Controller
                 $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('foto'));
-                $img_intervention->resize(480, null, function ($constraint) {
+                $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($route);
+                });
+
+                $img_intervention->save($route);
             }
         }
 
@@ -1370,10 +1379,12 @@ class EmpleadoController extends Controller
             $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
 
             $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-            $img_intervention = Image::make($request->image);
-            $img_intervention->resize(1280, null, function ($constraint) {
+
+            $img_intervention = Image::make($request->image)->encode('png', 70)->resize(1280, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($route);
+            });
+
+            $img_intervention->save($route);
             $empleado->update([
                 'foto' => $new_name_image,
             ]);

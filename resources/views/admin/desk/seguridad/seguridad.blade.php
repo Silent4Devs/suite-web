@@ -86,7 +86,6 @@
     <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
 </div>
 
-<div class="card card-body">
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
         <table class="datatable tabla_incidentes_seguridad">
@@ -116,7 +115,6 @@
             </tbody>
         </table>
     </div>
-</div>
 
 @section('scripts')
     @parent

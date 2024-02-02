@@ -35,8 +35,16 @@
                     <img src="{{ asset($c->image->url) }}" alt="">
                 </div>
                 <div class="caja-info-card-mc">
+                    @php
+                        $instructor = App\Models\User::find($c->empleado_id);
+                    @endphp
                     <p style="font-size: 18px;"><strong>{{ $c->title }}</strong></p>
-                    <p style="margin-top: 0px;">Profesor: {{ $c->teacher->name }} </p>
+                    <p style="margin-top: 0px;">Creado: {{ $c->teacher->name }} </p>
+                    @if($instructor)
+                        <p style="margin-top: 0px;">Instructor: {{ $instructor->name }}</p>
+                    @else
+                        <p style="margin-top: 0px;">Instructor no asignado</p>
+                    @endif
                     <div class="mt-3 d-flex justify-content-between">
                         <div style="color: #E3A008; font-size: 18px;">
 

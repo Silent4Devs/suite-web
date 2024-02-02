@@ -45,7 +45,7 @@
 
             .impre-header th {
                 background: #EBEBEB !important;
-                
+
             }
 
             .impre-footer {
@@ -62,7 +62,7 @@
 @section('content')
     @include('admin.analisisdebrecha2022nv.estilos')
     <!-- Include Chart.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     @include('partials.flashMessages')
 
