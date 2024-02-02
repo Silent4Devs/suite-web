@@ -33,14 +33,13 @@
         <form wire:submit.prevent="create()" class="form-group w-100">
             <div class="d-flex justify-content-center w-100">
                 <div class="form-group w-100 mr-4 ">
-                    <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>
+                    <label> Proyecto</label>
                     @if ($origen == 'tareas-proyectos')
                         <div class="form-control" style="background-color: #eee">{{ $proyecto_seleccionado->proyecto }}
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id"
-                            required>
+                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id" required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
@@ -62,17 +61,18 @@
                     </select>
                 </div>
                 <div class="form-group w-100 mr-4">
-                    <label><i class="fas fa-list-alt iconos-crear"></i> Tarea Nueva</label>
+                    <label> Tarea Nueva</label>
                     <input class="form-control w-100 mr-4" placeholder="Nombre de la tarea" id="tarea_name" required>
                 </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
-                    <button class="btn btn-success" style="position: absolute; bottom: 0;"><i class="fas fa-plus"></i>
+                    <button class="btn btn-secondary" style="position: absolute; bottom: 0;">
                         Agregar</button>
                 </div>
             </div>
         </form>
+        <hr class="my-4">
     @endcan
-    <div class="row mt-5">
+    <div class="row">
         @if ($origen == 'tareas')
             <div class="col-6 form-group">
                 <label>Filtrar por proyecto</label>

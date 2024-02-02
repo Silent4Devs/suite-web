@@ -44,7 +44,6 @@
     <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/mejoras')}}">Crear reporte</a>
 </div>
 @endcan
-<div class="card card-body">
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
         <table class="datatable tabla_mejoras" id="tabla_mejoras">
@@ -76,7 +75,6 @@
             <tbody>
             </tbody>
     </table>
-    </div>
 </div>
 
 
