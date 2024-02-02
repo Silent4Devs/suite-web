@@ -33,13 +33,14 @@
         <form wire:submit.prevent="create()" class="form-group w-100">
             <div class="d-flex justify-content-center w-100">
                 <div class="form-group w-100 mr-4 ">
-                    <label> Proyecto</label>
+                    <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>
                     @if ($origen == 'tareas-proyectos')
                         <div class="form-control" style="background-color: #eee">{{ $proyecto_seleccionado->proyecto }}
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id" required>
+                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id"
+                            required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
@@ -104,36 +105,16 @@
                             <textarea class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea"
                                 style="min-height: 40px !important; height:40px !important;">{{ $tarea->tarea }}</textarea>
                         </td>
-
-                        <td>
-                            @if ($origen === 'tareas-proyectos')
-                                {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }}
-                            @endif
-                            @if ($origen == 'tareas')
-                                {{ $tarea->proyecto_id ? $tarea->proyecto : '' }}
-                            @endif
-                        </td>
-
+                        <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
                         <td style="display:flex; align-items: center;">
                             <select class="form-control select_area" style="width:300px;" data-type="changeArea"
                                 data-id="{{ $tarea->id }}">
-                                @if ($origen === 'tareas-proyectos')
-                                    @if ($tarea->area_id == 0)
-                                        <option value="0" selected>Todas</option>
-                                    @else
-                                        <option value="0" selected>Todas</option>
-                                        <option value="{{ $tarea->area_id }}">{{ $tarea->area->area }}</option>
-                                    @endif
-                                @endif
-                                @if ($origen == 'tareas')
-                                    @if ($tarea->area_id == 0)
-                                        <option value="0" selected>Todas</option>
-                                    @else
-                                        <option value="0" selected>Todas</option>
-                                        <option value="{{ $tarea->area_id }}">{{ $tarea->area }}</option>
-                                    @endif
-                                @endif
-
+                                <option value="0" {{ $tarea->todos ? 'selected' : '' }}>Todas</option>
+                                @foreach ($tarea->proyecto->areas as $area)
+                                    <option value="{{ $area['id'] }}"
+                                        {{ $area['id'] == $tarea->area_id ? 'selected' : '' }}>{{ $area['area'] }}
+                                    </option>
+                                @endforeach
                             </select>
                             @if ($tarea->todos)
                                 <i class="fa-solid fa-eye ml-2 modal-hover-caja"
