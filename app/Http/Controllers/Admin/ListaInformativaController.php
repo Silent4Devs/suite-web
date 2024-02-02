@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
-use App\Models\ListaDistribucion;
-use App\Models\ParticipantesListaDistribucion;
+use App\Models\ListaInformativa;
+use App\Models\ParticipantesListaInformativa;
 use Illuminate\Http\Request;
 
-class ListaDistribucionController extends Controller
+class ListaInformativaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
+        $query = ListaInformativa::with('participantes.empleado')->orderByDesc('id')->get();
         // dd($query);
 
         // if ($request->ajax()) {
 
-        //     $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
+        //     $query = ListaInformativa::with('participantes.empleado')->orderByDesc('id')->get();
         //     $table = datatables()::of($query);
 
         //     $table->addColumn('placeholder', '&nbsp;');
@@ -60,9 +60,9 @@ class ListaDistribucionController extends Controller
         //     return $table->make(true);
         // }
 
-        $participantes = ListaDistribucion::with('participantes.empleado')->get();
+        $participantes = ListaInformativa::with('participantes.empleado')->get();
 
-        return view('admin.listadistribucion.index', compact('query', 'participantes'));
+        return view('admin.listainformativa.index', compact('query', 'participantes'));
     }
 
     /**
@@ -87,20 +87,7 @@ class ListaDistribucionController extends Controller
      */
     public function show($id)
     {
-        $lista = ListaDistribucion::with('participantes.empleado')->find($id);
-
-        $superaprobadores_seleccionados = [];
-
-        foreach ($lista->participantes as $participante) {
-            if ($participante->nivel == 0) {
-                // dd('entra');
-                $superaprobadores_seleccionados[] =
-                    [
-                        'empleado_id' => $participante->empleado_id,
-                        'numero_orden' => $participante->numero_orden,
-                    ];
-            }
-        }
+        $lista = ListaInformativa::with('participantes.empleado')->find($id);
 
         $participantes_seleccionados = [];
 
@@ -112,7 +99,6 @@ class ListaDistribucionController extends Controller
                     $participantes_seleccionados['nivel' . $i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
-                            'numero_orden' => $participante->numero_orden,
                         ];
                 }
             }
@@ -120,7 +106,7 @@ class ListaDistribucionController extends Controller
 
         $empleados = Empleado::getAltaDataColumns();
 
-        return view('admin.listadistribucion.show', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados'));
+        return view('admin.listainformativa.show', compact('lista', 'participantes_seleccionados', 'empleados'));
     }
 
     /**
@@ -128,20 +114,7 @@ class ListaDistribucionController extends Controller
      */
     public function edit($id)
     {
-        $lista = ListaDistribucion::with('participantes.empleado')->find($id);
-
-        $superaprobadores_seleccionados = [];
-
-        foreach ($lista->participantes as $participante) {
-            if ($participante->nivel == 0) {
-                // dd('entra');
-                $superaprobadores_seleccionados[] =
-                    [
-                        'empleado_id' => $participante->empleado_id,
-                        'numero_orden' => $participante->numero_orden,
-                    ];
-            }
-        }
+        $lista = ListaInformativa::with('participantes.empleado')->find($id);
 
         $participantes_seleccionados = [];
 
@@ -153,7 +126,6 @@ class ListaDistribucionController extends Controller
                     $participantes_seleccionados['nivel' . $i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
-                            'numero_orden' => $participante->numero_orden,
                         ];
                 }
             }
@@ -161,7 +133,7 @@ class ListaDistribucionController extends Controller
 
         $empleados = Empleado::getAltaDataColumns();
 
-        return view('admin.listadistribucion.edit', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados'));
+        return view('admin.listainformativa.edit', compact('lista', 'participantes_seleccionados', 'empleados'));
     }
 
     /**
@@ -172,17 +144,14 @@ class ListaDistribucionController extends Controller
         //
         // dd($id);
         // dd($request->niveles, $request->all());
-        $lista = ListaDistribucion::select('id')->find($id);
+        $lista = ListaInformativa::select('id')->find($id);
         // dd($lista_id);
         // dd($request->all());
         $val_niv = $request->niveles;
         $nom_niv = 'nivel' . $val_niv;
 
         if (isset($request->$nom_niv)) {
-            $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->delete();
-            $lista->update([
-                'niveles' => $request->niveles,
-            ]);
+            $participantes = ParticipantesListaInformativa::where('modulo_id', '=', $lista->id)->delete();
 
             $data = [];
             for ($i = 1; $i <= $request->niveles; $i++) {
@@ -197,7 +166,7 @@ class ListaDistribucionController extends Controller
                 $superi = 1;
                 foreach ($request->superaprobadores as $superaprobador) {
                     // dd("superaprobador", $superaprobador);
-                    $super = ParticipantesListaDistribucion::create(
+                    $super = ParticipantesListaInformativa::create(
                         [
                             'modulo_id' => $lista->id,
                             'nivel' => 0,
@@ -213,7 +182,7 @@ class ListaDistribucionController extends Controller
                 $i = 1;
                 foreach ($nivel as $participante) {
 
-                    $participantes = ParticipantesListaDistribucion::create(
+                    $participantes = ParticipantesListaInformativa::create(
                         [
                             'modulo_id' => $lista->id,
                             'nivel' => $key,
@@ -242,7 +211,7 @@ class ListaDistribucionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ListaDistribucion $listaDistribucion)
+    public function destroy(ListaInformativa $listainformativa)
     {
         //
     }
