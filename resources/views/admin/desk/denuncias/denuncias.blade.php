@@ -44,8 +44,6 @@
 </div>
 @endcan
 
-<div class="card card-body">
-  
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
         <table class="datatable tabla_denuncias">
@@ -76,7 +74,6 @@
             </tbody>
         </table>
     </div>
-</div>
 
 
 @section('scripts')
