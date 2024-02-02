@@ -42,15 +42,15 @@ pipeline {
             }
         }
 
-        post {
-                always {
-                    emailext (
-                        subject: "Despliegue exitoso",
-                        body: "El despliegue de la aplicación fue exitoso.",
-                        to: "saul.ramirez@silent4business.com",
-                    )
-                }
-            }
+        // post {
+        //         always {
+        //             emailext (
+        //                 subject: "Despliegue exitoso",
+        //                 body: "El despliegue de la aplicación fue exitoso.",
+        //                 to: "saul.ramirez@silent4business.com",
+        //             )
+        //         }
+        //     }
 
     }
 }
