@@ -12,6 +12,7 @@ use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
 use App\Models\ContractManager\Fiscale;
 use App\Models\Empleado;
+use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Timesheet;
@@ -649,16 +650,25 @@ class TimesheetController extends Controller
             ]);
         }
 
-        dispatch(
-            new NuevoProyectoJob(
-                'marco.luna@silent4business.com',
-                $nuevo_proyecto->proyecto,
-                $nuevo_proyecto->identificador,
-                $nuevo_proyecto->cliente->nombre,
-                User::getCurrentUser()->empleado->name,
-                $nuevo_proyecto->id
-            )
-        );
+        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo_proyectos)->first();
+
+        if (isset($informados->participantes[0])) {
+            foreach ($informados->participantes as $participante) {
+                $correos[] = $participante->empleado->email;
+            }
+
+            dispatch(
+                new NuevoProyectoJob(
+                    $correos,
+                    $nuevo_proyecto->proyecto,
+                    $nuevo_proyecto->identificador,
+                    $nuevo_proyecto->cliente->nombre,
+                    User::getCurrentUser()->empleado->name,
+                    $nuevo_proyecto->id
+                )
+            );
+        }
+
 
         // return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
         return redirect('admin/timesheet/proyectos');

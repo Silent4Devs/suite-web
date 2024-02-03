@@ -30,6 +30,11 @@ class ListaInformativaSeeder extends Seeder
                 'submodulo' => 'Proyectos',
                 'modelo' => 'TimesheetProyecto',
             ],
+            [
+                'modulo' => 'Solicitudes',
+                'submodulo' => 'Permisos',
+                'modelo' => 'SolicitudPermisoGoceSueldo',
+            ],
         ];
 
         ListaInformativa::insert($modulos);

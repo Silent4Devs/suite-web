@@ -73,7 +73,7 @@ class ListaInformativaController extends Controller
 
         foreach ($lista->participantes as $participante) {
 
-            $participantes_seleccionados[] =
+            $participantes_seleccionados['nivel1'][] =
                 [
                     'empleado_id' => $participante->empleado_id,
                 ];
@@ -118,7 +118,7 @@ class ListaInformativaController extends Controller
             return redirect()->back()->withErrors($errors)->withInput();
         }
 
-        return redirect(route('admin.lista-distribucion.index'));
+        return redirect(route('admin.lista-informativa.index'));
     }
 
     /**
