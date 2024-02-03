@@ -6,13 +6,13 @@ use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
+use App\Http\Controllers\Admin\PortalComunicacionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\PortalComunicacionController;
 
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
