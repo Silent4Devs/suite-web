@@ -249,7 +249,7 @@ class ReportesEmpleados extends Component
             $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)
                 ->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)
                 ->where('empleado_id', $empleado_list->id)
-                // ->where('estatus', '!=', 'rechazado')
+                ->where('estatus', '!=', 'rechazado')
                 ->where('estatus', '!=', 'papelera')
                 ->get();
 
