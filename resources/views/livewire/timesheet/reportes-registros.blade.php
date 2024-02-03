@@ -1,8 +1,109 @@
 <div>
+    <div class="d-flex justify-content-between mb-4" style="gap: 10px; width: 95%; margin:auto;">
+        <a href="{{ route('admin.timesheet-mis-registros', 'todos') }}#">
+            <div class="card-complement">
+                <div class="bg-objet" style="background-color: #DFF7FF;"></div>
+                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <strong style="font-size: 16px;">Todos</strong>
+                    <span class="d-flex align-items-center" style="gap: 5px;">
+                        <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
+                        <small> Sem </small>
+                    </span>
+                </div>
+            </div>
+        </a>
+        <a href="{{ route('admin.timesheet-mis-registros', 'papelera') }}#">
+            <div class="card-complement">
+                <div class="bg-objet" style="background-color: #DEDEDE;"></div>
+                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <strong style="font-size: 16px;">Borradores</strong>
+                    <span class="d-flex align-items-center" style="gap: 5px;">
+                        <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
+                        <small> Sem </small>
+                    </span>
+                </div>
+            </div>
+        </a>
+        <a href="{{ route('admin.timesheet-mis-registros', 'pendientes') }}#">
+            <div class="card-complement">
+                <div class="bg-objet" style="background-color: #FFD7A4;"></div>
+                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <strong style="font-size: 16px;"> Pendientes</strong>
+                    <span class="d-flex align-items-center" style="gap: 5px;">
+                        <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
+                        <small> Sem </small>
+                    </span>
+                </div>
+            </div>
+        </a>
+        <a href="{{ route('admin.timesheet-mis-registros', 'aprobados') }}#">
+            <div class="card-complement">
+                <div class="bg-objet" style="background-color: #E2F6E1;"></div>
+                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <strong style="font-size: 16px;"> Aprobados</strong>
+                    <span class="d-flex align-items-center" style="gap: 5px;">
+                        <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
+                        <small> Sem </small>
+                    </span>
+                </div>
+            </div>
+        </a>
+        <a href="{{ route('admin.timesheet-mis-registros', 'rechazos') }}#">
+            <div class="card-complement">
+                <div class="bg-objet" style="background-color: #F2ADAD;"></div>
+                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <strong style="font-size: 16px;"> Rechazados</strong>
+                    <span class="d-flex align-items-center" style="gap: 5px;">
+                        <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
+                        <small> Sem </small>
+                    </span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="btn_estatus_caja">
+        <button class="btn btn-primary" style="background-color: #5AC3E5; border:none !important; position: relative;"
+            id="btn_todos" wire:click="todos">
+            @if ($todos_contador > 0)
+                <span class="indicador_numero" style="filter: contrast(200%);">{{ $todos_contador }}</span>
+            @endif
+            Todos
+        </button>
+        {{-- <button class="btn btn-primary"
+                style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera"
+                wire:click="papelera">
+                @if ($borrador_contador > 0)
+                    <span class="indicador_numero" style="filter: contrast(200%);">{{ $borrador_contador }}</span>
+                @endif
+                Borrador
+            </button> --}}
+        <button class="btn btn-primary" style="background-color: #F48C16; border:none !important; position: relative;"
+            id="btn_pendiente" wire:click="pendientes">
+            @if ($pendientes_contador > 0)
+                <span class="indicador_numero" style="filter: contrast(200%);">{{ $pendientes_contador }}</span>
+            @endif
+            Pendientes
+        </button>
+        <button class="btn btn-primary" style="background-color: #61CB5C; border:none !important; position: relative;"
+            id="btn_aprobado" wire:click="aprobados">
+            @if ($aprobados_contador > 0)
+                <span class="indicador_numero" style="filter: contrast(200%);">{{ $aprobados_contador }}</span>
+            @endif
+            Aprobados
+        </button>
+        <button class="btn btn-primary" style="background-color: #EA7777; border:none !important; position: relative;"
+            id="btn_rechazado" wire:click="rechazos">
+            @if ($rechazos_contador > 0)
+                <span class="indicador_numero" style="filter: contrast(200%);">{{ $rechazos_contador }}</span>
+            @endif
+            Rechazados
+        </button>
+    </div>
+
     <div class="card card-body">
-        <x-loading-indicator />
         <div class="row">
-            <div class="col-md-4 form-group" style="padding-left:0px !important;">
+            <div class="col-md-3 form-group">
                 <label class="form-label">Área</label>
                 <select class="form-control" wire:model.lazy="area_id">
                     <option selected value="0">Todas</option>
@@ -11,18 +112,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-4 form-group">
-                <label class="form-label">Fecha de inicio</label>
-                <input class="form-control date_librery" type="date" name="fecha_inicio"
-                    wire:model.lazy="fecha_inicio">
-            </div>
-            <div class="col-md-4 form-group">
-                <label class="form-label">Fecha de fin</label>
-                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.lazy="fecha_fin">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 form-group" style="padding-left:0px !important;">
+            <div class="col-md-3 form-group">
                 <label class="form-label">Colaborador</label>
                 <select class="form-control" wire:model.lazy="emp_id">
                     <option selected value="0">Todos</option>
@@ -31,99 +121,50 @@
                     @endforeach
                 </select>
             </div>
+            <div class="col-md-3 form-group">
+                <label class="form-label">Fecha de inicio</label>
+                <input class="form-control date_librery" type="date" name="fecha_inicio"
+                    wire:model.lazy="fecha_inicio">
+            </div>
+            <div class="col-md-3 form-group">
+                <label class="form-label">Fecha de fin</label>
+                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.lazy="fecha_fin">
+            </div>
         </div>
-        <div class="row mt-5">
-            @include('partials.flashMessages')
-            <div class="col-12 d-flex justify-content-between"
-                style="padding-left: 0 !important; padding-right: 0 !important;">
-                <h5 id="titulo_estatus">Registros Timesheet</h5>
-                <div class="btn_estatus_caja">
-                    <button class="btn btn-primary"
-                        style="background-color: #5AC3E5; border:none !important; position: relative;" id="btn_todos"
-                        wire:click="todos">
-                        @if ($todos_contador > 0)
-                            <span class="indicador_numero" style="filter: contrast(200%);">{{ $todos_contador }}</span>
-                        @endif
-                        Todos
-                    </button>
-                    {{-- <button class="btn btn-primary"
-                        style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera"
-                        wire:click="papelera">
-                        @if ($borrador_contador > 0)
-                            <span class="indicador_numero" style="filter: contrast(200%);">{{ $borrador_contador }}</span>
-                        @endif
-                        Borrador
-                    </button> --}}
-                    <button class="btn btn-primary"
-                        style="background-color: #F48C16; border:none !important; position: relative;"
-                        id="btn_pendiente" wire:click="pendientes">
-                        @if ($pendientes_contador > 0)
-                            <span class="indicador_numero"
-                                style="filter: contrast(200%);">{{ $pendientes_contador }}</span>
-                        @endif
-                        Pendientes
-                    </button>
-                    <button class="btn btn-primary"
-                        style="background-color: #61CB5C; border:none !important; position: relative;" id="btn_aprobado"
-                        wire:click="aprobados">
-                        @if ($aprobados_contador > 0)
-                            <span class="indicador_numero"
-                                style="filter: contrast(200%);">{{ $aprobados_contador }}</span>
-                        @endif
-                        Aprobados
-                    </button>
-                    <button class="btn btn-primary"
-                        style="background-color: #EA7777; border:none !important; position: relative;"
-                        id="btn_rechazado" wire:click="rechazos">
-                        @if ($rechazos_contador > 0)
-                            <span class="indicador_numero"
-                                style="filter: contrast(200%);">{{ $rechazos_contador }}</span>
-                        @endif
-                        Rechazados
-                    </button>
+    </div>
+
+    <div class="card card-body">
+        <x-loading-indicator />
+        <div class="row">
+            <div class="col-12">
+                <h5 id="titulo_estatus" class="title-card-time">Registros Timesheet</h5>
+                <hr class="my-4">
+            </div>
+        </div>
+        @include('partials.flashMessages')
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <span>Mostrando</span>
+                        <select name="" id="" class="form-control ml-2" wire:model="perPage">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <button id="" class="btn px-5 ml-4" style="background-color:#D5FFE7; border: #fff"
+                            wire:click="exportExcel()">
+                            Excel
+                        </button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Buscar..." wire:model="search"
+                        style="max-width: 150px;">
                 </div>
             </div>
-            <div class="row w-100 mt-4" style="align-items: end">
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="row" style="justify-content: center">
-                                <div class="col-4 p-0" style="font-size: 11px;align-self: center">
-                                    <p class="m-0">Mostrando</p>
-                                </div>
-                                <div class="col-4 p-0">
-                                    <select name="" id="" class="form-control" wire:model="perPage">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                </div>
-                                <div class="col-4 p-0" style="font-size: 11px;align-self: center;text-align: end">
-                                    <p class="m-0">por página</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <button id="" class="btn-sm rounded pr-2"
-                                style="background-color:#b9eeb9; border: #fff" wire:click="exportExcel()">
-                                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
-                                    title="Exportar Excel"></i>
-                                Exportar Excel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 p-0" style="text-align: end">
-                    <div class="row">
-                        <div class="col-6 p-0"></div>
-                        <div class="col-6 p-0">
-                            <input type="text" class="form-control" placeholder="Buscar..." wire:model="search">
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div class="row">
             <div class="datatable-fix w-100 mt-2">
                 <table class="table w-100 datatable_timesheet_registros_reportes">
                     {{-- id="datatable_timesheet" --}}

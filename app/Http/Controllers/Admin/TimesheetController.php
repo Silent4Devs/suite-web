@@ -500,9 +500,9 @@ class TimesheetController extends Controller
         $timesheet_edit = Timesheet::find($id);
         $usuario = User::getCurrentUser();
         $timesheet_edit->update([
-            'empleado_id' => $usuario->empleado->id,
-            'aprobador_id' => $usuario->empleado->supervisor_id,
-            'estatus' => $request->estatus,
+            'empleado_id' => $usuario->empleado->id ?? null,
+            'aprobador_id' => $usuario->empleado->supervisor_id ?? null,
+            'estatus' => $request->estatus ?? null,
         ]);
 
         foreach ($request->timesheet as $index => $hora) {
