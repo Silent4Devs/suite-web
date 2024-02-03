@@ -16,11 +16,14 @@ class RespuestaDayOff extends Mailable
 
     public $solicitud;
 
-    public function __construct($solicitante, $supervisor, $solicitud)
+    public $copias;
+
+    public function __construct($solicitante, $supervisor, $solicitud, $copias = [])
     {
         $this->solicitante = $solicitante;
         $this->supervisor = $supervisor;
         $this->solicitud = $solicitud;
+        $this->copias = $copias;
     }
 
     /**
@@ -30,6 +33,6 @@ class RespuestaDayOff extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.Dayoff.aprobacion')->subject('Respuesta de tu solicitud de Day-Off')->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.Dayoff.aprobacion')->subject('Respuesta de tu solicitud de Day-Off')->cc($this->copias);
     }
 }

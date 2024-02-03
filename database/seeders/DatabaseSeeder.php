@@ -114,7 +114,10 @@ class DatabaseSeeder extends Seeder
                 // PlatformSeeder::class,
                 // PermisosEscuelaAdminSeeder::class,
                 // PermisosEscuelaEstudianteSeeder::class
-                AdminTemplateAnalisisBrechasIso::class,
+                // AdminTemplateAnalisisBrechasIso::class,
+
+                //Lista Informativa
+                ListaInformativaSeeder::class,
             ]
         );
     }
