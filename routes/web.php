@@ -451,7 +451,22 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
         Route::view('iso27001/guia', 'admin.iso27001.guia')->name('iso27001.guia');
         Route::view('iso27001/normas-guia', 'admin.iso27001.normas-guia')->name('iso27001.normas-guia');
-        Route::view('iso27001/inicio-guia', 'admin.iso27001.inicio-guia')->name('iso27001.inicio-guia');
+
+        // Definición de la ruta
+        Route::get('iso27001/inicio-guia', function () {
+            // Verifica si la sesión 'visited_first_link' está definida
+            if (session()->has('visited_first_link')) {
+                // Si ya se ha visitado el primer enlace, redirige a la tercera ruta
+                return redirect()->route('admin.iso27001.guia');
+            } else {
+                // Si es la primera vez que se accede, establece la sesión 'visited_first_link'
+                session(['visited_first_link' => true]);
+                // Retorna la vista del primer enlace
+                return view('admin.iso27001.inicio-guia');
+            }
+        })->name('iso27001.inicio-guia');
+
+
         Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
         Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
         Route::view('contratos', 'admin.contratos.index')->name('contratos.index');
