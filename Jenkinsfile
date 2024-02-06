@@ -25,7 +25,7 @@ pipeline {
                         sh 'docker-compose exec php php artisan optimize:clear'
                     } catch (Exception e) {
                         echo 'Exception occurred: ' + e.toString()
-                        currentBuild.result = 'FAILURE' // Si ocurre una excepción, establece el resultado del build como fallido
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }
