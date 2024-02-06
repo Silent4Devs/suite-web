@@ -1,7 +1,16 @@
 @php
     use App\Models\User;
+    use App\Models\Timesheet;
 
     $usuario = User::getCurrentUser();
+
+    if (Timesheet::count() > 0) {
+        $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
+        $time_exist = true;
+    } else {
+        $time_viejo = null;
+        $time_exist = false;
+    }
 @endphp
 
 @if ($usuario->empleado)
