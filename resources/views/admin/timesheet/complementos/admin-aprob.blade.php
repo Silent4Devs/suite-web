@@ -1,8 +1,11 @@
 @php
     use App\Models\User;
     use App\Models\Timesheet;
+    use App\Models\Organizacion;
 
     $usuario = User::getCurrentUser();
+
+    $organizacion = Organizacion::first();
 
     if (Timesheet::count() > 0) {
         $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
