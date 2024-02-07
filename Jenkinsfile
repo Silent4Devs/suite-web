@@ -7,12 +7,11 @@ pipeline {
             }
         }
 
-       stage('Install') {
+        stage('Install') {
             steps {
                 git branch: 'develop', url: 'https://github.com/Silent4Devs/suite-web.git'
             }
         }
-
 
         stage('Build') {
             steps {
@@ -31,7 +30,6 @@ pipeline {
             }
         }
 
-
         stage('Deploy via SSH') {
             steps {
                 script {
@@ -41,6 +39,14 @@ pipeline {
                 }
             }
         }
+    }
 
+    post {
+        success {
+            // Notificación de éxito por correo electrónico
+            mail to: 'tudirecciondecorreo@example.com',
+                 subject: 'Despliegue satisfactorio',
+                 body: 'El despliegue se realizó satisfactoriamente.'
+        }
     }
 }
