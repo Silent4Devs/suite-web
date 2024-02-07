@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.42.0.
+ * Generated for Laravel 10.43.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -5583,6 +5583,18 @@
                         $instance->reconnectIfMissingConnection();
         }
                     /**
+         * Register a hook to be run just before a database transaction is started.
+         *
+         * @param \Closure $callback
+         * @return \Illuminate\Database\PostgresConnection 
+         * @static 
+         */ 
+        public static function beforeStartingTransaction($callback)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        return $instance->beforeStartingTransaction($callback);
+        }
+                    /**
          * Register a hook to be run just before a database query is executed.
          *
          * @param \Closure $callback
@@ -8688,7 +8700,7 @@
                     /**
          * System is unusable.
          *
-         * @param string $message
+         * @param string|\Stringable $message
          * @param array $context
          * @return void 
          * @static 
@@ -8704,7 +8716,7 @@
          * Example: Entire website down, database unavailable, etc. This should
          * trigger the SMS alerts and wake you up.
          *
-         * @param string $message
+         * @param string|\Stringable $message
          * @param array $context
          * @return void 
          * @static 
@@ -8719,7 +8731,7 @@
          * 
          * Example: Application component unavailable, unexpected exception.
          *
-         * @param string $message
+         * @param string|\Stringable $message
          * @param array $context
          * @return void 
          * @static 
@@ -8733,7 +8745,7 @@
          * Runtime errors that do not require immediate action but should typically
          * be logged and monitored.
          *
-         * @param string $message
+         * @param string|\Stringable $message
          * @param array $context
          * @return void 
          * @static 
@@ -8749,7 +8761,7 @@
          * Example: Use of deprecated APIs, poor use of an API, undesirable things
          * that are not necessarily wrong.
          *
-         * @param string $message
+         * @param string|\Stringable $message
          * @param array $context
          * @return void 
          * @static 
@@ -8762,7 +8774,7 @@
                     /**
          * Normal but significant events.
          *
-         * @param string $message
+         * @param string|\Stringable $message
          * @param array $context
          * @return void 
          * @static 
@@ -8777,7 +8789,7 @@
          * 
          * Example: User logs in, SQL logs.
          *
-         * @param string $message
+         * @param string|\Stringable $message
          * @param array $context
          * @return void 
          * @static 
@@ -8790,7 +8802,7 @@
                     /**
          * Detailed debug information.
          *
-         * @param string $message
+         * @param string|\Stringable $message
          * @param array $context
          * @return void 
          * @static 
@@ -8804,7 +8816,7 @@
          * Logs with an arbitrary level.
          *
          * @param mixed $level
-         * @param string $message
+         * @param string|\Stringable $message
          * @param array $context
          * @return void 
          * @static 
@@ -10164,197 +10176,91 @@
                         return $instance->setConnectionName($name);
         }
                     /**
-         * 
+         * Migrate the delayed jobs that are ready to the regular queue.
          *
-         * @throws AMQPProtocolChannelException
+         * @param string $from
+         * @param string $to
+         * @param int $limit
+         * @return array 
          * @static 
          */ 
-        public static function laterRaw($delay, $payload, $queue = null, $attempts = 0)
+        public static function migrateExpiredJobs($from, $to)
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->laterRaw($delay, $payload, $queue, $attempts);
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->migrateExpiredJobs($from, $to);
         }
                     /**
-         * 
+         * Delete a reserved job from the queue.
          *
-         * @throws AMQPProtocolChannelException
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @return void 
          * @static 
          */ 
-        public static function bulkRaw($payload, $queue = null, $options = [])
+        public static function deleteReserved($queue, $job)
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->bulkRaw($payload, $queue, $options);
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteReserved($queue, $job);
         }
                     /**
-         * 
+         * Delete a reserved job from the reserved queue and release it.
          *
-         * @throws RuntimeException
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @param int $delay
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteAndRelease($queue, $job, $delay)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteAndRelease($queue, $job, $delay);
+        }
+                    /**
+         * Delete all of the jobs from the queue.
+         *
+         * @param string $queue
+         * @return int 
+         * @static 
+         */ 
+        public static function clear($queue)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->clear($queue);
+        }
+                    /**
+         * Get the queue or return the default.
+         *
+         * @param string|null $queue
+         * @return string 
+         * @static 
+         */ 
+        public static function getQueue($queue)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getQueue($queue);
+        }
+                    /**
+         * Get the connection for the queue.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
          * @static 
          */ 
         public static function getConnection()
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getConnection();
         }
                     /**
-         * 
+         * Get the underlying Redis instance.
          *
+         * @return \Illuminate\Contracts\Redis\Factory 
          * @static 
          */ 
-        public static function setConnection($connection)
+        public static function getRedis()
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->setConnection($connection);
-        }
-                    /**
-         * Job class to use.
-         *
-         * @throws Throwable
-         * @static 
-         */ 
-        public static function getJobClass()
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->getJobClass();
-        }
-                    /**
-         * Gets a queue/destination, by default the queue option set on the connection.
-         *
-         * @static 
-         */ 
-        public static function getQueue($queue = null)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->getQueue($queue);
-        }
-                    /**
-         * Checks if the given exchange already present/defined in RabbitMQ.
-         * 
-         * Returns false when the exchange is missing.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */ 
-        public static function isExchangeExists($exchange)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->isExchangeExists($exchange);
-        }
-                    /**
-         * Declare an exchange in rabbitMQ, when not already declared.
-         *
-         * @static 
-         */ 
-        public static function declareExchange($name, $type = 'direct', $durable = true, $autoDelete = false, $arguments = [])
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->declareExchange($name, $type, $durable, $autoDelete, $arguments);
-        }
-                    /**
-         * Delete an exchange from rabbitMQ, only when present in RabbitMQ.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */ 
-        public static function deleteExchange($name, $unused = false)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->deleteExchange($name, $unused);
-        }
-                    /**
-         * Checks if the given queue already present/defined in RabbitMQ.
-         * 
-         * Returns false when the queue is missing.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */ 
-        public static function isQueueExists($name = null)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->isQueueExists($name);
-        }
-                    /**
-         * Declare a queue in rabbitMQ, when not already declared.
-         *
-         * @static 
-         */ 
-        public static function declareQueue($name, $durable = true, $autoDelete = false, $arguments = [])
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->declareQueue($name, $durable, $autoDelete, $arguments);
-        }
-                    /**
-         * Delete a queue from rabbitMQ, only when present in RabbitMQ.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */ 
-        public static function deleteQueue($name, $if_unused = false, $if_empty = false)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->deleteQueue($name, $if_unused, $if_empty);
-        }
-                    /**
-         * Bind a queue to an exchange.
-         *
-         * @static 
-         */ 
-        public static function bindQueue($queue, $exchange, $routingKey = '')
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->bindQueue($queue, $exchange, $routingKey);
-        }
-                    /**
-         * Purge the queue of messages.
-         *
-         * @static 
-         */ 
-        public static function purge($queue = null)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->purge($queue);
-        }
-                    /**
-         * Acknowledge the message.
-         *
-         * @static 
-         */ 
-        public static function ack($job)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->ack($job);
-        }
-                    /**
-         * Reject the message.
-         *
-         * @static 
-         */ 
-        public static function reject($job, $requeue = false)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->reject($job, $requeue);
-        }
-                    /**
-         * Close the connection to RabbitMQ.
-         *
-         * @throws Exception
-         * @static 
-         */ 
-        public static function close()
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->close();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getChannel($forceNew = false)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->getChannel($forceNew);
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getRedis();
         }
                     /**
          * Get the maximum number of attempts for an object-based queue handler.
@@ -10365,7 +10271,7 @@
          */ 
         public static function getJobTries($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobTries($job);
         }
                     /**
@@ -10377,7 +10283,7 @@
          */ 
         public static function getJobBackoff($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobBackoff($job);
         }
                     /**
@@ -10389,7 +10295,7 @@
          */ 
         public static function getJobExpiration($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobExpiration($job);
         }
                     /**
@@ -10401,7 +10307,7 @@
          */ 
         public static function createPayloadUsing($callback)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue::createPayloadUsing($callback);
+                        \Illuminate\Queue\RedisQueue::createPayloadUsing($callback);
         }
                     /**
          * Get the container instance being used by the connection.
@@ -10411,7 +10317,7 @@
          */ 
         public static function getContainer()
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getContainer();
         }
                     /**
@@ -10423,7 +10329,7 @@
          */ 
         public static function setContainer($container)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         $instance->setContainer($container);
         }
          
@@ -13168,6 +13074,21 @@
                         return $instance->stream($callback, $status, $headers);
         }
                     /**
+         * Create a new streamed response instance.
+         *
+         * @param array $data
+         * @param int $status
+         * @param array $headers
+         * @param int $encodingOptions
+         * @return \Symfony\Component\HttpFoundation\StreamedJsonResponse 
+         * @static 
+         */ 
+        public static function streamJson($data, $status = 200, $headers = [], $encodingOptions = 15)
+        {
+                        /** @var \Illuminate\Routing\ResponseFactory $instance */
+                        return $instance->streamJson($data, $status, $headers, $encodingOptions);
+        }
+                    /**
          * Create a new streamed response instance as a file download.
          *
          * @param callable $callback
@@ -14601,6 +14522,17 @@
                         return $instance->getTables();
         }
                     /**
+         * Get the names of the tables that belong to the database.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getTableListing()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getTableListing();
+        }
+                    /**
          * Get the views that belong to the database.
          *
          * @return array 
@@ -14690,6 +14622,32 @@
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
                         /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
                         return $instance->getColumnListing($table);
+        }
+                    /**
+         * Get the names of the indexes for a given table.
+         *
+         * @param string $table
+         * @return array 
+         * @static 
+         */ 
+        public static function getIndexListing($table)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getIndexListing($table);
+        }
+                    /**
+         * Determine if the given table has a given index.
+         *
+         * @param string $table
+         * @param string|array $index
+         * @param string|null $type
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasIndex($table, $index, $type = null)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->hasIndex($table, $index, $type);
         }
                     /**
          * Modify a table on the schema.
@@ -18193,7 +18151,7 @@
                     /**
          * 
          *
-         * @see \Maatwebsite\Excel\Mixins\DownloadCollection::downloadExcel()
+         * @see \Maatwebsite\Excel\Mixins\DownloadCollectionMixin::downloadExcel()
          * @param string $fileName
          * @param string|null $writerType
          * @param mixed $withHeadings
@@ -18207,7 +18165,7 @@
                     /**
          * 
          *
-         * @see \Maatwebsite\Excel\Mixins\StoreCollection::storeExcel()
+         * @see \Maatwebsite\Excel\Mixins\StoreCollectionMixin::storeExcel()
          * @param string $filePath
          * @param string|null $disk
          * @param string|null $writerType
@@ -24546,7 +24504,7 @@ namespace  {
              * Add subselect queries to include an aggregate value for a relationship.
              *
              * @param mixed $relations
-             * @param string $column
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $column
              * @param string $function
              * @return \Illuminate\Database\Eloquent\Builder|static 
              * @static 
@@ -24574,7 +24532,7 @@ namespace  {
              * Add subselect queries to include the max of the relation's column.
              *
              * @param string|array $relation
-             * @param string $column
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $column
              * @return \Illuminate\Database\Eloquent\Builder|static 
              * @static 
              */ 
@@ -24588,7 +24546,7 @@ namespace  {
              * Add subselect queries to include the min of the relation's column.
              *
              * @param string|array $relation
-             * @param string $column
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $column
              * @return \Illuminate\Database\Eloquent\Builder|static 
              * @static 
              */ 
@@ -24602,7 +24560,7 @@ namespace  {
              * Add subselect queries to include the sum of the relation's column.
              *
              * @param string|array $relation
-             * @param string $column
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $column
              * @return \Illuminate\Database\Eloquent\Builder|static 
              * @static 
              */ 
@@ -24616,7 +24574,7 @@ namespace  {
              * Add subselect queries to include the average of the relation's column.
              *
              * @param string|array $relation
-             * @param string $column
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $column
              * @return \Illuminate\Database\Eloquent\Builder|static 
              * @static 
              */ 
@@ -24650,6 +24608,64 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->mergeConstraintsFrom($from);
+            }
+             
+                /**
+             * 
+             *
+             * @see \Maatwebsite\Excel\Mixins\DownloadQueryMacro::__invoke()
+             * @param string $fileName
+             * @param string|null $writerType
+             * @param mixed $withHeadings
+             * @static 
+             */ 
+            public static function downloadExcel($fileName, $writerType = null, $withHeadings = false)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::downloadExcel($fileName, $writerType, $withHeadings);
+            }
+             
+                /**
+             * 
+             *
+             * @see \Maatwebsite\Excel\Mixins\StoreQueryMacro::__invoke()
+             * @param string $filePath
+             * @param string|null $disk
+             * @param string|null $writerType
+             * @param mixed $withHeadings
+             * @static 
+             */ 
+            public static function storeExcel($filePath, $disk = null, $writerType = null, $withHeadings = false)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::storeExcel($filePath, $disk, $writerType, $withHeadings);
+            }
+             
+                /**
+             * 
+             *
+             * @see \Maatwebsite\Excel\Mixins\ImportMacro::__invoke()
+             * @param string $filename
+             * @param string|null $disk
+             * @param string|null $readerType
+             * @static 
+             */ 
+            public static function import($filename, $disk = null, $readerType = null)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::import($filename, $disk, $readerType);
+            }
+             
+                /**
+             * 
+             *
+             * @see \Maatwebsite\Excel\Mixins\ImportAsMacro::__invoke()
+             * @param string $filename
+             * @param callable $mapping
+             * @param string|null $disk
+             * @param string|null $readerType
+             * @static 
+             */ 
+            public static function importAs($filename, $mapping, $disk = null, $readerType = null)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::importAs($filename, $mapping, $disk, $readerType);
             }
              
                 /**
@@ -26605,6 +26621,20 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->insertUsing($columns, $query);
+            }
+             
+                /**
+             * Insert new records into the table using a subquery while ignoring errors.
+             *
+             * @param array $columns
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
+             * @return int 
+             * @static 
+             */ 
+            public static function insertOrIgnoreUsing($columns, $query)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->insertOrIgnoreUsing($columns, $query);
             }
              
                 /**
