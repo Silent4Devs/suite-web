@@ -359,7 +359,7 @@
                                 'Timesheet Registrado',
                                 'success'
                             ).then(() => {
-                                window.location.href = '{{ route('admin.timesheet-inicio') }}';
+                                window.location.href = '{{ route('admin.timesheet-create') }}';
                             });
                         } else {
                             if (response.status == 520) {
@@ -369,7 +369,7 @@
                                     'success'
                                 ).then(() => {
                                     window.location.href =
-                                        '{{ route('admin.timesheet-inicio') }}';
+                                        '{{ route('admin.timesheet-create') }}';
                                 });
                             } else {
                                 toastr.error(

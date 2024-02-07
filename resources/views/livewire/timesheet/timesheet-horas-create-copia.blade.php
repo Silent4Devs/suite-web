@@ -78,7 +78,8 @@
                                             ->get();
                                     @endphp
                                     <select id="select_tareas{{ $i_hora }}" data-contador="{{ $i_hora }}"
-                                        name="timesheet[{{ $i_hora }}][tarea]" style="border-radius: 15px; padding: 5px;">
+                                        name="timesheet[{{ $i_hora }}][tarea]"
+                                        style="border-radius: 15px; padding: 5px;">
                                         <option selected value="{{ $hora->tarea->id }}">{{ $hora->tarea->tarea }}
                                         </option>
                                         @foreach ($tareas as $tarea)
@@ -188,8 +189,8 @@
                             </td>
                             <td>
                                 <select id="select_tareas{{ $i }}" data-contador="{{ $i }}"
-                                    name="timesheet[{{ $i }}][tarea]" class="select_tareas" style="border-radius: 15px; padding: 5px;"
-                                    disabled>
+                                    name="timesheet[{{ $i }}][tarea]" class="select_tareas"
+                                    style="border-radius: 15px; padding: 5px;" disabled>
                                     <option selected disabled>Seleccione tarea</option>
                                 </select>
                                 <small class="timesheet_{{ $i }}_tarea errores text-danger"></small>
@@ -480,10 +481,12 @@
                                 'success'
                             ).then(() => {
                                 window.location.href =
-                                    '{{ route('admin.timesheet-inicio') }}';
+                                    '{{ route('admin.timesheet-create') }}';
                             });
                         } else {
-                            toastr.error('!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!');
+                            toastr.error(
+                                '!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!'
+                                );
                         }
                     },
                     error: function(request, status, error) {
