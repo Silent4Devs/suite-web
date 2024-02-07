@@ -383,6 +383,7 @@ class TimesheetController extends Controller
                 }
             }
         }
+
         $proyectos = $proyectos_array->unique();
 
         $tareas = TimesheetTarea::getAll();
