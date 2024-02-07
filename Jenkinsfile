@@ -44,7 +44,7 @@ pipeline {
     post {
         success {
             // Notificación de éxito por correo electrónico
-            mail to: 'tudirecciondecorreo@example.com',
+            mail to: 'saul.ramirez@silent4business.com',
                  subject: 'Despliegue satisfactorio',
                  body: 'El despliegue se realizó satisfactoriamente.'
         }
