@@ -34,33 +34,11 @@ pipeline {
         stage('Deploy via SSH') {
             steps {
                 script {
-                    try {
                         sshagent(['/root/.ssh/id_rsa.pub']) {
                             sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
                         }
-                    } catch (Exception e) {
-                        echo 'Exception occurred during deployment: ' + e.toString()
-                        currentBuild.result = 'FAILURE' // Si falla el despliegue, establece el resultado del build como fallido
-                    }
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            emailext (
-                subject: "Despliegue exitoso",
-                body: "El despliegue de la aplicación fue exitoso.",
-                to: "saul.ramirez@silent4business.com",
-            )
-        }
-        failure {
-            emailext (
-                subject: "Despliegue fallido",
-                body: "El despliegue de la aplicación falló. Por favor, revisa los registros para obtener más detalles.",
-                to: "saul.ramirez@silent4business.com",
-            )
         }
     }
 }
