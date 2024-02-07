@@ -11,8 +11,8 @@
         <div class="card-body">
             <div class="card mt-6" style="width:750px; display: flex; align-items: center;">
                 <div class="col-3" style="border-left: 25px solid #2395AA;">
-                    <img src="{{ public_path('silent.png') }}" class="mt-2 img-fluid"
-                                    style=" width:70%; position: relative; left: -.1rem; top: 1.4rem;">
+                    <img src="silent.png" class="mt-2 img-fluid"
+                                    style="position: relative; left: -.1rem;">
                     {{-- @if ($logo_actual)
                      <img style="width: 100%; max-width: 100px; height: auto;" src="{{public_path($logo_actual)}}">
                     @else
