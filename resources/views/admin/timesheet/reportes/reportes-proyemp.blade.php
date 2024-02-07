@@ -30,9 +30,9 @@
             Tareas</font>
     </h5>
 
-    @include('admin.timesheet.complementos.cards')
+    {{-- @include('admin.timesheet.complementos.cards') --}}
     @include('admin.timesheet.complementos.admin-aprob')
-    @include('admin.timesheet.complementos.blue-card-header')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     @livewire('timesheet.reportes-proyemp')
 @endsection
