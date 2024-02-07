@@ -54,7 +54,7 @@
         @endcan
         @can('timesheet_acceder')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.timesheet-inicio') }}"
+                <a href="{{ route('admin.timesheet-create') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'active' : '' }}">
                     <i class="bi bi-calendar3-range letra_blanca iconos_menu"></i>
                     <font class="letra_blanca"> Timesheet </font>

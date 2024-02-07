@@ -326,7 +326,7 @@
 
         function showInactiveMessage() {
             alert("Demasiado tiempo de inactividad al registrar horas");
-            window.location.href = "{{ route('admin.timesheet-inicio') }}";
+            window.location.href = "{{ route('admin.timesheet-create') }}";
         }
 
         function resetInactivityTimeout() {
