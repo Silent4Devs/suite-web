@@ -418,6 +418,8 @@
                                         @can('inventario_activos_acceder')
                                             <li><a href="{{ route('admin.activos.index') }}">Inventario de Activos</a></li>
                                         @endcan
+                                        <li><a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
+                                        </li>
                                         @can('glosario_acceder')
                                             <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                         @endcan
