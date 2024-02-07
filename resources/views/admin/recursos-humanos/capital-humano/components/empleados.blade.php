@@ -149,15 +149,15 @@
             </a></li>
     @endcan
     @can('capacitaciones_categorias_acceder')
-    <li>
-        <a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
-            <div>
-                <i class="bi bi-person-video3"></i>
-                <br>
-                Capacitaciones
-            </div>
-        </a>
-    </li>
+        <li>
+            <a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
+                <div>
+                    <i class="bi bi-person-video3"></i>
+                    <br>
+                    Capacitaciones
+                </div>
+            </a>
+        </li>
 
         <div class="ventana_menu" id="capacitaciones" style="color:#345183 !important">
             <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitaciones"
@@ -174,41 +174,42 @@
                         </a></li>
                 @endcan
 
-                    <li><a href="{{ route('admin.recursos.index') }}">
-                            <div>
-                                <i class="fas fa-graduation-cap"></i>
-                                <br>
-                                Capacitaciones
-                            </div>
-                        </a>
-                    </li>
+                <li><a href="{{ route('admin.recursos.index') }}">
+                        <div>
+                            <i class="fas fa-graduation-cap"></i>
+                            <br>
+                            Capacitaciones
+                        </div>
+                    </a>
+                </li>
 
-                    <li><a href="{{ route('admin.categories.index') }}">
-                            <div>
-                                <i class="fas fa-layer-group"></i>
-                                <br>
-                                Categorias Escuela
-                            </div>
-                        </a>
-                    </li>
+                <li><a href="{{ route('admin.categories.index') }}">
+                        <div>
+                            <i class="fas fa-layer-group"></i>
+                            <br>
+                            Categorias Escuela
+                        </div>
+                    </a>
+                </li>
 
-                    <li><a href="{{ route('admin.levels.index') }}">
-                            <div>
-                                <img src="{{ asset('assets/levels.svg') }}" width="60" height="70" style="margin-top: -10px;">
-                                <br>
-                                Niveles Escuela
-                            </div>
-                        </a>
-                    </li>
+                <li><a href="{{ route('admin.levels.index') }}">
+                        <div>
+                            <img src="{{ asset('assets/levels.svg') }}" width="60" height="70"
+                                style="margin-top: -10px;">
+                            <br>
+                            Niveles Escuela
+                        </div>
+                    </a>
+                </li>
 
-                    <li><a href="{{ route('admin.dashboardescuela.index') }}">
-                            <div>
-                                <i class="fa-solid fa-chart-pie"></i>
-                                <br>
-                                Dashboard
-                            </div>
-                        </a>
-                    </li>
+                <li><a href="{{ route('admin.dashboardescuela.index') }}">
+                        <div>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <br>
+                            Dashboard
+                        </div>
+                    </a>
+                </li>
 
             </ul>
         </div>
@@ -225,24 +226,24 @@
     </li>
 
     @can('beneficios_acceder')
-    <li>
-        <a href="#">
-            <div>
-                <i class="bi bi-tag"></i>
-                <br>
-                Beneficios
-            </div>
-        </a>
-    </li>
+        <li>
+            <a href="#">
+                <div>
+                    <i class="bi bi-tag"></i>
+                    <br>
+                    Beneficios
+                </div>
+            </a>
+        </li>
     @endcan
     @can('timesheet_acceder')
-    <li>
-        <a href="{{ route('admin.timesheet-inicio') }}">
-            <div>
-                <i class="bi bi-file-spreadsheet"></i><br>
-                TimeSheet
-            </div>
-        </a>
-    </li>
+        <li>
+            <a href="{{ route('admin.timesheet-create') }}">
+                <div>
+                    <i class="bi bi-file-spreadsheet"></i><br>
+                    Timesheet
+                </div>
+            </a>
+        </li>
     @endcan
 </ul>
