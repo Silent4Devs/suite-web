@@ -4,6 +4,27 @@
 @endsection
 @section('content')
     <style type="text/css">
+        .tabla-calendar-time table {
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .tabla-calendar-time td {
+            border-bottom: 1px solid #bbb !important;
+        }
+
+        .datatable_timesheet_empleados_reportes thead tr:nth-child(1) th {
+            background-color: #BBDDFF !important;
+        }
+
+        .datatable_timesheet_empleados_reportes thead tr:nth-child(2) th {
+            background-color: #D8EBFF !important;
+        }
+
+        .datatable_timesheet_empleados_reportes thead tr:nth-child(3) th {
+            background-color: #EEF6FF !important;
+        }
+
         .cde-nombre.ver {
             position: sticky;
             left: 64px !important;
@@ -174,9 +195,9 @@
             Reportes por Área
     </h5>
 
-    @include('admin.timesheet.complementos.cards')
-
-    @include('admin.timesheet.complementos.blue-card-header')
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     @livewire('timesheet.reportes-empleados')
 @endsection

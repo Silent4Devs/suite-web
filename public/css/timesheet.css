@@ -319,7 +319,7 @@ table th i {
     background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-.th-año {
+/* .th-año {
     background-color: rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -341,7 +341,7 @@ table th i {
 
 .th-semana:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.35) !important;
-}
+} */
 
 .tabla-fixed th {
     background-color: #788BAC !important;
@@ -351,10 +351,10 @@ table th i {
 .tabla-fixed tr td {
     background-color: #fff !important;
 }
-
+/*
 .tabla-fixed tr:nth-child(even) td {
     background-color: #eee !important;
-}
+} */
 
 .cde-totalh {
     position: relative;

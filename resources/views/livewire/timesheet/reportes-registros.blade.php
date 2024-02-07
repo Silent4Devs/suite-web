@@ -1,104 +1,49 @@
 <div>
     <div class="d-flex justify-content-between mb-4" style="gap: 10px; width: 95%; margin:auto;">
-        <a href="{{ route('admin.timesheet-mis-registros', 'todos') }}#">
+        <a href="#" id="btn_todos" wire:click="todos">
             <div class="card-complement">
-                <div class="bg-objet" style="background-color: #DFF7FF;"></div>
+                <div class="bg-objet" style="background-color: #83BCFE;"></div>
                 <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
                     <strong style="font-size: 16px;">Todos</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
                         <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
-                        <small> Sem </small>
                     </span>
                 </div>
             </div>
         </a>
-        <a href="{{ route('admin.timesheet-mis-registros', 'papelera') }}#">
+        <a href="#" id="btn_aprobado" wire:click="aprobados">
             <div class="card-complement">
-                <div class="bg-objet" style="background-color: #DEDEDE;"></div>
+                <div class="bg-objet" style="background-color: #B8EFA8;"></div>
                 <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
-                    <strong style="font-size: 16px;">Borradores</strong>
+                    <strong style="font-size: 16px;">Aprobados</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
-                        <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
-                        <small> Sem </small>
+                        <strong style="font-size: 22px"> {{ $aprobados_contador }} </strong>
                     </span>
                 </div>
             </div>
         </a>
-        <a href="{{ route('admin.timesheet-mis-registros', 'pendientes') }}#">
+        <a href="#" id="btn_pendiente" wire:click="pendientes">
             <div class="card-complement">
-                <div class="bg-objet" style="background-color: #FFD7A4;"></div>
+                <div class="bg-objet" style="background-color: #FFDBA4;"></div>
                 <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
                     <strong style="font-size: 16px;"> Pendientes</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
-                        <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
-                        <small> Sem </small>
+                        <strong style="font-size: 22px"> {{ $pendientes_contador }} </strong>
                     </span>
                 </div>
             </div>
         </a>
-        <a href="{{ route('admin.timesheet-mis-registros', 'aprobados') }}#">
+        <a href="#" id="btn_rechazado" wire:click="rechazos">
             <div class="card-complement">
-                <div class="bg-objet" style="background-color: #E2F6E1;"></div>
-                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
-                    <strong style="font-size: 16px;"> Aprobados</strong>
-                    <span class="d-flex align-items-center" style="gap: 5px;">
-                        <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
-                        <small> Sem </small>
-                    </span>
-                </div>
-            </div>
-        </a>
-        <a href="{{ route('admin.timesheet-mis-registros', 'rechazos') }}#">
-            <div class="card-complement">
-                <div class="bg-objet" style="background-color: #F2ADAD;"></div>
+                <div class="bg-objet" style="background-color: #FFA4A4;"></div>
                 <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
                     <strong style="font-size: 16px;"> Rechazados</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
-                        <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
-                        <small> Sem </small>
+                        <strong style="font-size: 22px"> {{ $rechazos_contador }} </strong>
                     </span>
                 </div>
             </div>
         </a>
-    </div>
-
-    <div class="btn_estatus_caja">
-        <button class="btn btn-primary" style="background-color: #5AC3E5; border:none !important; position: relative;"
-            id="btn_todos" wire:click="todos">
-            @if ($todos_contador > 0)
-                <span class="indicador_numero" style="filter: contrast(200%);">{{ $todos_contador }}</span>
-            @endif
-            Todos
-        </button>
-        {{-- <button class="btn btn-primary"
-                style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera"
-                wire:click="papelera">
-                @if ($borrador_contador > 0)
-                    <span class="indicador_numero" style="filter: contrast(200%);">{{ $borrador_contador }}</span>
-                @endif
-                Borrador
-            </button> --}}
-        <button class="btn btn-primary" style="background-color: #F48C16; border:none !important; position: relative;"
-            id="btn_pendiente" wire:click="pendientes">
-            @if ($pendientes_contador > 0)
-                <span class="indicador_numero" style="filter: contrast(200%);">{{ $pendientes_contador }}</span>
-            @endif
-            Pendientes
-        </button>
-        <button class="btn btn-primary" style="background-color: #61CB5C; border:none !important; position: relative;"
-            id="btn_aprobado" wire:click="aprobados">
-            @if ($aprobados_contador > 0)
-                <span class="indicador_numero" style="filter: contrast(200%);">{{ $aprobados_contador }}</span>
-            @endif
-            Aprobados
-        </button>
-        <button class="btn btn-primary" style="background-color: #EA7777; border:none !important; position: relative;"
-            id="btn_rechazado" wire:click="rechazos">
-            @if ($rechazos_contador > 0)
-                <span class="indicador_numero" style="filter: contrast(200%);">{{ $rechazos_contador }}</span>
-            @endif
-            Rechazados
-        </button>
     </div>
 
     <div class="card card-body">
