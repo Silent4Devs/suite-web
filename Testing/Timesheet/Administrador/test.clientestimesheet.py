@@ -12,8 +12,6 @@ from selenium.webdriver.support.ui import Select
 tiempo_modulos = 4
 tiempo_carga = 10
 tiempo_espera = 2.5
-menu_xpath = "//i[contains(@class,'fa-solid fa-bars')]"
-planes_de_accion_xpath = "//a[contains(.,'Planes de acción')]"
 timesheet_xpath = "//i[@class='material-symbols-outlined' and text()='date_range']"
 administrador_xpath = "//a[contains(.,'Administrador')]"
 configurar_timesheet_xpath = "//a[contains(.,'Configuración Timesheet')]"
@@ -21,6 +19,7 @@ guardar_xpath = "//button[@class='btn btn-success' and contains(text(),'Guardar'
 clientes_xpath="//a[contains(.,'Clientes')]"
 registrar_timesheet_xpath="//a[contains(.,'Registrar TimeSheet')]"
 eliminar_icono_xpath="(//i[@class='fa-solid fa-trash-can'])[1]"
+confirmar_eliminar_xpath="(//button[contains(.,'Eliminar Cliente')])[1]"
 
 # Pide al usuario que ingrese sus credenciales
 usuario = input("Ingresa tu nombre de usuario: ")
@@ -247,6 +246,7 @@ activar_boton(driver)
 #Eliminar
 scroll_amount = -500  # Valor negativo para scroll hacia la izquierda
 ActionChains(driver).send_keys(Keys.ARROW_LEFT * 5).perform()
-
 eliminar = driver.find_element(By.XPATH, eliminar_icono_xpath)
 eliminar.click()
+confirmar_eliminar=driver.find_element(By.XPATH,confirmar_eliminar_xpath)
+confirmar_eliminar.click()
