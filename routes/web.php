@@ -461,11 +461,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             } else {
                 // Si es la primera vez que se accede, establece la sesión 'visited_first_link'
                 session(['visited_first_link' => true]);
+
                 // Retorna la vista del primer enlace
                 return view('admin.iso27001.inicio-guia');
             }
         })->name('iso27001.inicio-guia');
-
 
         Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
         Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
