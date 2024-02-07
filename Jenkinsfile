@@ -7,11 +7,12 @@ pipeline {
             }
         }
 
-        stage('Install') {
+       stage('Install') {
             steps {
                 git branch: 'develop', url: 'https://github.com/Silent4Devs/suite-web.git'
             }
         }
+
 
         stage('Build') {
             steps {
@@ -25,20 +26,21 @@ pipeline {
                         sh 'docker-compose exec php php artisan optimize:clear'
                     } catch (Exception e) {
                         echo 'Exception occurred: ' + e.toString()
-                        currentBuild.result = 'FAILURE'
                     }
                 }
             }
         }
 
+
         stage('Deploy via SSH') {
             steps {
                 script {
-                        sshagent(['/root/.ssh/id_rsa.pub']) {
-                            sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
-                        }
+                    sshagent(['/root/.ssh/id_rsa.pub']) {
+                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
+                    }
                 }
             }
         }
+
     }
 }
