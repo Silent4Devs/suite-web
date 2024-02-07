@@ -114,7 +114,7 @@ class TimesheetController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.timesheet-create')->with('success', 'Guardado con éxito');
     }
 
     /**
@@ -330,7 +330,7 @@ class TimesheetController extends Controller
             return response()->json(['status' => 400]);
         }
 
-        // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
+        // return redirect()->route('admin.timesheet-mis-registros')->with('success', 'Registro Enviado');
     }
 
     /**
@@ -352,7 +352,7 @@ class TimesheetController extends Controller
 
             return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.timesheet')->with('error', 'No se localizo  ningun id  en la ruta');
+            return redirect()->route('admin.timesheet-mis-registros')->with('error', 'No se localizo  ningun id  en la ruta');
         }
     }
 
@@ -383,6 +383,7 @@ class TimesheetController extends Controller
                 }
             }
         }
+
         $proyectos = $proyectos_array->unique();
 
         $tareas = TimesheetTarea::getAll();

@@ -717,7 +717,7 @@
             <i class="bi bi-file-person"></i>
             <p>Perfil</p>
         </a>
-        <a href="{{ route('admin.timesheet-inicio') }}" class="btn-barra-bottom-mobile"
+        <a href="{{ route('admin.timesheet-create') }}" class="btn-barra-bottom-mobile"
             {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-calendar3-range"></i>
             <p>Timesheet</p>
