@@ -61,7 +61,7 @@
                             @endcan
                             @can('analisis_foda_editar')
                                 <a class="dropdown-item"
-                                    href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}/edit">
+                                    href="{{ asset('admin/entendimiento-organizacions-foda-edit') }}/{{ $foda->id }}">
                                     <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
                             @endcan
                             @can('analisis_foda_eliminar')
