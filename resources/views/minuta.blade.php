@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="card mt-6" style="width:750px; display: flex; align-items: center;">
                 <div class="col-3" style="border-left: 25px solid #2395AA;">
-                    <img style="max-width:100px;" src="{{ public_path('img/Silent4Business-Logo-Color.png')}}">
+                    <img style="max-width:100px;" src="{{ asset('silent.png')}}">
                     {{-- @if ($logo_actual)
                      <img style="width: 100%; max-width: 100px; height: auto;" src="{{public_path($logo_actual)}}">
                     @else
