@@ -11,12 +11,17 @@
         <div class="card-body">
             <div class="card mt-6" style="width:750px; display: flex; align-items: center;">
                 <div class="col-3" style="border-left: 25px solid #2395AA;">
-                    <img src="silent.png" style="width: 90%; max-width: 90px; position: relative; left: -.1rem;">
-                    {{-- @if ($logo_actual)
-                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{public_path($logo_actual)}}">
+                    @php
+                    use App\Models\Organizacion;
+                    $organizacion = Organizacion::first();
+                    $logotipo = $organizacion->logotipo;
+                    $empresa = $organizacion->empresa;
+                    @endphp
+                    @if ($logotipo)
+                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{ asset($logotipo) }}">
                     @else
-                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
-                    @endif --}}
+                        <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                    @endif
                 </div>
                 <div class="col-4"  style="position: relative; top: -4rem; left: 9rem;">
                     <span class="" style="color:black; font-size: 11px;">
