@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/foda.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/foda.css') }}{{config('app.cssVersion')}}">
     <style>
         .aprobar {
             background-color: #00B212;

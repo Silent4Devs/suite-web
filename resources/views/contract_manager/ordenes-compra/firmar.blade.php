@@ -2,7 +2,7 @@
 
 @section('content')
 @section('titulo', 'Firmar Orden de Compra')
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}{{config('app.cssVersion')}}">
 <style>
     .row {
         padding-left: 30px;

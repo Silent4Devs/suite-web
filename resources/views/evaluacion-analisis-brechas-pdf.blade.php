@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reporte Analisis de brechas</title>
-    <link rel="stylesheet" href="css/analisis_brechas_pdf.css">
+    <link rel="stylesheet" href="css/analisis_brechas_pdf.css{{config('app.cssVersion')}}">
 </head>
 <body>
 
