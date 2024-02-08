@@ -51,9 +51,9 @@ analisis brecha
                     $empresa = $organizacion->empresa;
                     @endphp
                     @if ($logotipo)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{public_path($logotipo)}}">
+                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset($logotipo) }}">
                     @else
-                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                        <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </td>
                 <td class="info-header">
