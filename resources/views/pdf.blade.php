@@ -26,8 +26,6 @@
                     $logotipo = $organizacion->logotipo;
                     $empresa = $organizacion->empresa;
                     @endphp
-
-                    @dd($logotipo);
                    
                     <img style="width:100%; max-width:100px;" src="{{ asset( $logotipo )}}">
         
