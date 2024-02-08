@@ -66,7 +66,7 @@
                     <input class="form-control w-100 mr-4" placeholder="Nombre de la tarea" id="tarea_name" required>
                 </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
-                    <button class="btn btn-secondary" style="position: absolute; bottom: 0;">
+                    <button class="btn btn-primary" style="position: absolute; bottom: 0;">
                         Agregar</button>
                 </div>
             </div>
