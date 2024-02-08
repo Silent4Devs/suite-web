@@ -34,7 +34,7 @@
                     @endphp
 
                     @if ($logotipo)
-                    <img style="width:100%; max-width:100px; position: relative; left:1.5rem;" src="{{ public_path($logotipo)}}">
+                    <img style="width:100%; max-width:100px; position: relative; left:1.5rem;" src="{{ asset($logotipo)}}">
                     @else
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
