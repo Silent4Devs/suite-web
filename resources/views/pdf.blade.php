@@ -27,7 +27,7 @@
                     $empresa = $organizacion->empresa;
                     @endphp
                    
-                    <img style="width:100%; max-width:100px;" src="{{ public_path( $logotipo )}}">
+                    <img style="width:100%; max-width:100px;" src="{{ asset( $logotipo )}}">
         
                 </td>
                 <td class="info-header">
