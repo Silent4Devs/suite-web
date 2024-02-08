@@ -105,7 +105,6 @@ class AlcanceSgsiController extends Controller
         $empleados = Empleado::getAltaEmpleadosWithArea();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
-        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;

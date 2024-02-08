@@ -20,18 +20,21 @@
         <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
-                    <img style="width:100%; max-width:100px; position: relative;" src="{{ asset('silent.png')}}">
-                    {{-- @if ($logo_actual)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ public_path( $logo_actual )}}">
-                    @else
-                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
-                    @endif --}}
+                    @php
+                    use App\Models\Organizacion;
+                    $organizacion = Organizacion::first();
+                    $logotipo = $organizacion->logotipo;
+                    $empresa = $organizacion->empresa;
+                    @endphp
+                   
+                    <img style="width:100%; max-width:100px;" src="{{ asset( $logotipo )}}">
+        
                 </td>
                 <td class="info-header">
                     <div style="position: relative; right: 5rem; text-align: justify;">
-                        {{$organizacions->empresa}} <br>
-                       RFC:{{$organizacions->rfc}} <br>
-                        {{$organizacions->direccion}} <br>
+                        {{$organizacion->empresa}} <br>
+                       RFC:{{$organizacion->rfc}} <br>
+                        {{$organizacion->direccion}} <br>
                     </div>
                 </td>
                 <td class="td-blue-header">

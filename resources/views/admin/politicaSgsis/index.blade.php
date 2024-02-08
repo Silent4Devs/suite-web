@@ -287,17 +287,19 @@
                                     <div class="row col-12 ml-0"
                                         style="border-radius;
                                         padding-left: 0px;padding-right: 0px;">
-                                        {{-- @if ($logo_actual != null) --}}
-                                            <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                <img style="width:100%; max-width:100px; position: relative; top: 1.8rem;" src="{{ asset('silent.png')}}">
-                                            </div>
-                                        {{-- @else
-                                            <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                <img src="{{ asset('img/tabantaj_fondo_blanco.webp') }}"
-                                                    class="mt-2 img-fluid"
-                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
-                                            </div>
-                                        @endif --}}
+                                          @php
+                                          use App\Models\Organizacion;
+                                          $organizacion = Organizacion::first();
+                                          $logotipo = $organizacion->logotipo;
+                                          $empresa = $organizacion->empresa;
+                                          @endphp
+                                          
+                                    
+                                        <div class="col-3" style="border-left: 25px solid #2395AA">
+                                            <img src="{{ asset($logotipo) }}" style="width:100%; max-width:100px; position: relative; top: 1rem;">
+
+                                        </div>
+                                    
                                         <div class="col-5 p-2 mt-3">
                                             <br>
                                             <span class=""

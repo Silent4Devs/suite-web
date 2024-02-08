@@ -282,8 +282,8 @@
                                             style="border-radius;
                                         padding-left: 0px;padding-right: 0px;">
                                             <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
-                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                                <img src="{{ asset($logo_actual) }}" class="mt-2 img-fluid"
+                                                    style=" width:60%; position: relative; left: 1rem; top: 1rem;">
                                             </div>
                                             <div class="col-5 p-2 mt-3">
                                                 <br>
