@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}?v=1.2">
+    <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     @include('partials.menu-slider')

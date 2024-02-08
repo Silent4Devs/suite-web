@@ -8,7 +8,7 @@ analisis brecha
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Timesheet</title>
 
-    <link rel="stylesheet" href="css/requisiciones_pdf.css">
+    <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
     <style>
         table {
             width: 100%;
@@ -44,12 +44,17 @@ analisis brecha
         <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset('silent.png')}}">
-                    {{-- @if ($logo_actual)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{public_path($logo_actual)}}">
+                    @php
+                    use App\Models\Organizacion;
+                    $organizacion = Organizacion::first();
+                    $logotipo = $organizacion->logotipo;
+                    $empresa = $organizacion->empresa;
+                    @endphp
+                    @if ($logotipo)
+                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset($logotipo) }}">
                     @else
-                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
-                    @endif --}}
+                        <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                    @endif
                 </td>
                 <td class="info-header">
                     <div style="position: relative; left: 3rem; text-align: justify;">

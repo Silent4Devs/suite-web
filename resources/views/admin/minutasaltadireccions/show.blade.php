@@ -28,7 +28,13 @@
                                     style="border-radius;
                                     padding-left: 0px;padding-right: 0px;">
                                     <div class="col-3" style="border-left: 25px solid #2395AA">
-                                        <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
+                                        @php
+                                        use App\Models\Organizacion;
+                                        $organizacion = Organizacion::first();
+                                        $logotipo = $organizacion->logotipo;
+                                        $empresa = $organizacion->empresa;
+                                        @endphp
+                                        <img src="{{ asset($logotipo) }}" class="mt-2 img-fluid"
                                             style=" width:70%; position: relative; left: -.1rem; top: 1.4rem;">
                                     </div>
                                     <div class="col-5 p-2 mt-3">

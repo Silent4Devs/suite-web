@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     {{ Breadcrumbs::render('Reglas-Vacaciones') }}

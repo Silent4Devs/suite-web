@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/foda.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/foda.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     <style>

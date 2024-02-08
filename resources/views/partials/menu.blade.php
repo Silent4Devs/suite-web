@@ -1,5 +1,5 @@
 {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">  --}}
-<link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}{{config('app.cssVersion')}}">
 
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style=" border: none;">
     <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">

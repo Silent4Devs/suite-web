@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Competencias</title>
 
-    <link rel="stylesheet" href="css/requisiciones_pdf.css">
+    <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
     <style>
         .quitar{
             font-weight: normal;
@@ -21,9 +21,9 @@
             <tr>
                 <td class="td-img-doc">
                     @if ($logo_actual)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ public_path( $logo_actual )}}">
+                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset( $logo_actual )}}">
                     @else
-                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                        <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </td>
                 <td class="info-header">

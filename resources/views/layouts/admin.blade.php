@@ -7,8 +7,8 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}{{config('app.cssVersion')}}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}{{config('app.cssVersion')}}" rel="stylesheet">
 
 
     <title>{{ trans('panel.site_title') }}</title>
@@ -25,7 +25,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/custom.css') }}{{config('app.cssVersion')}}" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
@@ -57,8 +57,8 @@
     <link href="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.css" rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=1.3">
-    <link rel="stylesheet" href="{{ asset('css/rds.css') }}?v=1.2.1">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{config('app.cssVersion')}}">
     @yield('styles')
     @livewireStyles
 </head>

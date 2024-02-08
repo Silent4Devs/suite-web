@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}{{config('app.cssVersion')}}">
     <h5 class="col-12 titulo_general_funcion">Registrar: Categoría</h5>
     <div class="mt-4 card">
         <div class="card-body">

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}{{config('app.cssVersion')}}">
     @include('admin.listainformativa.estilos')
 @endsection
 @section('content')

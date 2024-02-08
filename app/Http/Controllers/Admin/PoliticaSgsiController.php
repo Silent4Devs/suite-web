@@ -95,7 +95,7 @@ class PoliticaSgsiController extends Controller
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         $listavacia = 'cumple';
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -284,7 +284,7 @@ class PoliticaSgsiController extends Controller
         try {
             $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
             foreach ($politicaSgsis as $polsgsis) {
-                if (! isset($polsgsis->reviso)) {
+                if (!isset($polsgsis->reviso)) {
                     $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                     $polsgsis->estemp = 'baja';
                 } else {
@@ -303,10 +303,7 @@ class PoliticaSgsiController extends Controller
     {
 
         $politicas = PoliticaSgsi::get();
-        $organizacions = Organizacion::getFirst();
-        $logo_actual = $organizacions->logo;
-
-        $pdf = PDF::loadView('pdf', compact('politicas', 'organizacions', 'logo_actual'));
+        $pdf = PDF::loadView('pdf', compact('politicas'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('politicas.pdf');

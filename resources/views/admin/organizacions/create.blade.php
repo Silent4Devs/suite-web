@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}{{config('app.cssVersion')}}">
     <script src="https://cdn.ckeditor.com/4.17.1/full-all/ckeditor.js"></script>
 
     <style>
