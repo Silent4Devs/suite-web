@@ -400,7 +400,8 @@
                                         @can('crear_area_acceder')
                                             <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
                                         @endcan
-                                        <li><a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
+                                        <li>
+                                            <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
                                         </li>
                                         @can('macroprocesos_acceder')
                                             <li><a href="{{ route('admin.macroprocesos.index') }}">Macroprocesos</a></li>
