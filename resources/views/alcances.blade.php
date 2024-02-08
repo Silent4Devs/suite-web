@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Alcance  SGSIS</title>
 
-    <link rel="stylesheet" href="css/requisiciones_pdf.css">
+    <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
     <style>
         .quitar{
             font-weight: normal;

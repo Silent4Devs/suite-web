@@ -8,7 +8,7 @@ analisis brecha
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TimeSheet Clientes</title>
 
-    <link rel="stylesheet" href="css/requisiciones_pdf.css">
+    <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
     <style>
         table {
             width: 100%;
