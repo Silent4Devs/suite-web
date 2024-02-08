@@ -364,10 +364,15 @@ class PoliticaSgsiController extends Controller
 
     public function revision($id)
     {
+
         abort_if(Gate::denies('politica_sistema_gestion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $politicaSgsi = PoliticaSgsi::find($id);
-        // dd($politicaSgsi);
+
+        if (!$politicaSgsi) {
+            return redirect()->route('admin.politica-sgsis.index')->with('error', 'Registro no encontrado');
+        }
+
         $politicaSgsi->load('team');
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
