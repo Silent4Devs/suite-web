@@ -18,7 +18,7 @@ class RespuestaPermisoGoceSueldo extends Mailable
 
     public $copias;
 
-    public function __construct($solicitante, $supervisor, $solicitud, $copias)
+    public function __construct($solicitante, $supervisor, $solicitud, $copias = [])
     {
         $this->solicitante = $solicitante;
         $this->supervisor = $supervisor;
