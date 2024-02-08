@@ -12,6 +12,7 @@ use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
 use App\Models\ContractManager\Fiscale;
 use App\Models\Empleado;
+use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Timesheet;
@@ -39,6 +40,8 @@ class TimesheetController extends Controller
 {
     use ObtenerOrganizacion;
 
+    public $modelo_proyectos = 'TimesheetProyecto';
+
     private $timesheetService;
 
     public function __construct(TimesheetService $timesheetService)
@@ -53,6 +56,10 @@ class TimesheetController extends Controller
      */
     public function index()
     {
+    }
+
+    public function misRegistros($estatus = 'todos')
+    {
         $times = Timesheet::getPersonalTimesheet();
 
         $todos_contador = $times->count();
@@ -65,7 +72,7 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual'));
+        return view('admin.timesheet.mis-registros', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual', 'estatus'));
     }
 
     public function timesheetInicio()
@@ -107,7 +114,7 @@ class TimesheetController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.timesheet-create')->with('success', 'Guardado con éxito');
     }
 
     /**
@@ -323,7 +330,7 @@ class TimesheetController extends Controller
             return response()->json(['status' => 400]);
         }
 
-        // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
+        // return redirect()->route('admin.timesheet-mis-registros')->with('success', 'Registro Enviado');
     }
 
     /**
@@ -345,7 +352,7 @@ class TimesheetController extends Controller
 
             return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.timesheet')->with('error', 'No se localizo  ningun id  en la ruta');
+            return redirect()->route('admin.timesheet-mis-registros')->with('error', 'No se localizo  ningun id  en la ruta');
         }
     }
 
@@ -376,6 +383,7 @@ class TimesheetController extends Controller
                 }
             }
         }
+
         $proyectos = $proyectos_array->unique();
 
         $tareas = TimesheetTarea::getAll();
@@ -493,9 +501,9 @@ class TimesheetController extends Controller
         $timesheet_edit = Timesheet::find($id);
         $usuario = User::getCurrentUser();
         $timesheet_edit->update([
-            'empleado_id' => $usuario->empleado->id,
-            'aprobador_id' => $usuario->empleado->supervisor_id,
-            'estatus' => $request->estatus,
+            'empleado_id' => $usuario->empleado->id ?? null,
+            'aprobador_id' => $usuario->empleado->supervisor_id ?? null,
+            'estatus' => $request->estatus ?? null,
         ]);
 
         foreach ($request->timesheet as $index => $hora) {
@@ -643,16 +651,24 @@ class TimesheetController extends Controller
             ]);
         }
 
-        dispatch(
-            new NuevoProyectoJob(
-                'marco.luna@silent4business.com',
-                $nuevo_proyecto->proyecto,
-                $nuevo_proyecto->identificador,
-                $nuevo_proyecto->cliente->nombre,
-                User::getCurrentUser()->empleado->name,
-                $nuevo_proyecto->id
-            )
-        );
+        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo_proyectos)->first();
+
+        if (isset($informados->participantes[0])) {
+            foreach ($informados->participantes as $participante) {
+                $correos[] = $participante->empleado->email;
+            }
+
+            dispatch(
+                new NuevoProyectoJob(
+                    $correos,
+                    $nuevo_proyecto->proyecto,
+                    $nuevo_proyecto->identificador,
+                    $nuevo_proyecto->cliente->nombre,
+                    User::getCurrentUser()->empleado->name,
+                    $nuevo_proyecto->id
+                )
+            );
+        }
 
         // return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
         return redirect('admin/timesheet/proyectos');

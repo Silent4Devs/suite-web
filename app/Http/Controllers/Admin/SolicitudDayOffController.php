@@ -8,6 +8,7 @@ use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
 use App\Models\DayOff;
 use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
+use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\SolicitudDayOff;
 use App\Models\User;
@@ -22,6 +23,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 class SolicitudDayOffController extends Controller
 {
     use ObtenerOrganizacion;
+
+    public $modelo = 'SolicitudDayOff';
 
     public function index(Request $request)
     {
@@ -148,8 +151,17 @@ class SolicitudDayOffController extends Controller
         $supervisor = $empleado->find($request->autoriza);
         $solicitante = $empleado->find($request->empleado_id);
         $solicitud = SolicitudDayOff::create($request->all());
-        Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud));
 
+        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+
+        if (isset($informados->participantes[0])) {
+            foreach ($informados->participantes as $participante) {
+                $correos[] = $participante->empleado->email;
+            }
+            Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud, $correos));
+        } else {
+            Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud));
+        }
         Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.solicitud-dayoff.index');
@@ -197,8 +209,17 @@ class SolicitudDayOffController extends Controller
         $solicitante = $empleados->find($request->empleado_id);
 
         $solicitud->update($request->all());
-        Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
 
+        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+
+        if (isset($informados->participantes[0])) {
+            foreach ($informados->participantes as $participante) {
+                $correos[] = $participante->empleado->email;
+            }
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud, $correos));
+        } else {
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
+        }
         Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.solicitud-dayoff.aprobacion'));
