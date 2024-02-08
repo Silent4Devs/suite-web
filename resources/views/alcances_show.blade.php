@@ -28,7 +28,7 @@
                 <td class="td-img-doc">
                     @php
                     use App\Models\Organizacion;
-                    $organizacion = Organizacion::first();
+                    $organizacion = Organizacion::getFirst();
                     $logotipo = $organizacion->logotipo;
                     $empresa = $organizacion->empresa;
                     @endphp

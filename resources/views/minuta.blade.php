@@ -13,7 +13,7 @@
                 <div class="col-3" style="border-left: 25px solid #2395AA;">
                     @php
                     use App\Models\Organizacion;
-                    $organizacion = Organizacion::first();
+                    $organizacion = Organizacion::getFirst();
                     $logotipo = $organizacion->logotipo;
                     $empresa = $organizacion->empresa;
                     @endphp
