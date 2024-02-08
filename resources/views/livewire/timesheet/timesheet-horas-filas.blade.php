@@ -1,25 +1,29 @@
 <div>
     <form id="form_timesheet" action="{{ route('admin.timesheet.store') }}" method="POST">
-        <div class="d-flex align-items-center justify-content-between card-mobile caja-calendar-semana" wire:ignore
-            style="position: relative">
-            <div class="form-group anima-focus">
+        <div>
+            @section('first-blue-card-header')
+                <div class="d-flex align-items-center" style="gap: 30px;">
+                    <div class="form-group anima-focus" wire:ignore>
 
-                <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" placeholder="">
-                <label>
-                    <i class="fa-regular fa-calendar"></i>
-                    Semana laboral
-                </label>
-                <small class="fecha_dia errores text-danger" style="margin-left: 15px;"></small>
-            </div>
+                        <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" placeholder="">
+                        <label>
+                            <i class="fa-regular fa-calendar"></i>
+                            Semana laboral
+                        </label>
+                        <small class="fecha_dia errores text-danger" style="margin-left: 15px;"></small>
+                    </div>
 
-            <div class="semanas-tras-time-text">
-                <small>
-                    <i class="fa-solid fa-circle mr-2" style="color: #D2FDB8;"></i>
-                    Tiene permitido registrar
-                    <strong>{{ auth()->user()->empleado->semanas_min_timesheet }} </strong>
-                    semanas atras
-                </small>
-            </div>
+                    <div class="semanas-tras-time-text">
+                        <small>
+                            <i class="fa-solid fa-circle mr-2" style="color: #D2FDB8;"></i>
+                            Tiene permitido registrar
+                            <strong>{{ auth()->user()->empleado->semanas_min_timesheet }} </strong>
+                            semanas atras
+                        </small>
+                    </div>
+                </div>
+            @endsection
+            @include('admin.timesheet.complementos.blue-card-header')
         </div>
         <div class="card card-body not-card-mobile time-responsivo">
             <x-loading-indicator />
@@ -57,7 +61,8 @@
                                     </div>
                                     <font class="d-mobile" style="font-weight: bold;">Proyecto: </font>
                                     <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}"
-                                        data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
+                                        data-type="parent" name="timesheet[{{ $i }}][proyecto]"
+                                        class="select2">
                                         <option selected disabled>Seleccione proyecto</option>
                                         @foreach ($proyectos as $proyecto)
                                             <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
@@ -69,7 +74,7 @@
                                 <td>
                                     <font class="d-mobile mt-1" style="font-weight: bold;">Tarea: </font>
                                     <select id="select_tareas{{ $i }}" data-contador="{{ $i }}"
-                                        name="timesheet[{{ $i }}][tarea]" class="select_tareas" class="select2"
+                                        name="timesheet[{{ $i }}][tarea]" class="select_tareas select2"
                                         disabled>
                                         <option selected disabled>Seleccione tarea</option>
                                     </select>
@@ -145,7 +150,8 @@
                                     @endif
                                     @if ($i > 1)
                                         <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}"
-                                            style="color:#006DDB; font-size:20px;" title="Eliminar fila">
+                                            wire:click="removerFila" style="color:#006DDB; font-size:20px;"
+                                            title="Eliminar fila">
                                             <i class="fa-regular fa-trash-can"></i> <small
                                                 class="text-eliminar-actividad-mobile"
                                                 style="margin-left: 10px;">Eliminar
@@ -353,7 +359,7 @@
                                 'Timesheet Registrado',
                                 'success'
                             ).then(() => {
-                                window.location.href = '{{ route('admin.timesheet-inicio') }}';
+                                window.location.href = '{{ route('admin.timesheet-create') }}';
                             });
                         } else {
                             if (response.status == 520) {
@@ -363,10 +369,12 @@
                                     'success'
                                 ).then(() => {
                                     window.location.href =
-                                        '{{ route('admin.timesheet-inicio') }}';
+                                        '{{ route('admin.timesheet-create') }}';
                                 });
                             } else {
-                                toastr.error('!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!');
+                                toastr.error(
+                                    '!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!'
+                                );
                             }
                         }
                     },

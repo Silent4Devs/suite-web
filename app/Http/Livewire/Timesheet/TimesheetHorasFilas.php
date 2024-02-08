@@ -166,8 +166,8 @@ class TimesheetHorasFilas extends Component
 
     public function removerFila()
     {
-        // $this->contador = $this->contador - 1;
-        $this->emit('calcularSumatoriasFacturables');
+        $this->contador = $this->contador - 1;
+        // $this->emit('calcularSumatoriasFacturables');
     }
 
     public function updatedContador($value)

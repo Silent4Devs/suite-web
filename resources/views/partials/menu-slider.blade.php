@@ -117,7 +117,7 @@
         @endcan
         @can('timesheet_acceder')
             <div class="item-ms">
-                <a href="{{ route('admin.timesheet-inicio') }}">
+                <a href="{{ route('admin.timesheet-create') }}">
                     <i class="material-symbols-outlined">date_range</i>
                     <span>Timesheet</span>
                 </a>

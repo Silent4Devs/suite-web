@@ -353,7 +353,7 @@
         <table class="datatable datatable-Comiteseguridad" id="datatable-PoliticaSgsi">
             <thead class="head-light">
                 <tr>
-                    <th style="min-width: 400px;">
+                    <th style="min-width: 350px;">
                         Nombre
                     </th>
                     <th style="min-width: 400px;">

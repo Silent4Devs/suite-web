@@ -32,6 +32,20 @@
             @enderror
         </div>
         <div class="form-group col-12 anima-focus">
+            <select name="empleado_id" class="form-control{{ $errors->has('empleado_id') ? ' border-red-600' : '' }}">
+                <option value="" disabled></option>
+                @foreach($empleados as $empleado)
+                <option value="{{ $empleado->id }}" {{ isset($course) && $empleado->id == $course->empleado_id ? 'selected' : '' }}>
+                    {{ $empleado->name }}
+                </option>
+                @endforeach
+            </select>
+            <label class="required mt-3" for="empleado_id">Instructor del curso:</label>
+            @error('empleado_id')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="form-group col-12 anima-focus">
             {!! Form::textarea('description', null, [
                 'class' => 'form-control' . ($errors->has('description') ? ' border-red-600' : ''),
                 'placeholder' => ""

@@ -113,7 +113,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -146,8 +146,8 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'nombre' => 'required|string',
-            'alcancesgsi' => 'required|string',
+            'nombre' => 'required|string|max:255',
+            'alcancesgsi' => 'required|string|max:255',
             'fecha_publicacion' => 'required|date',
             'fecha_revision' => 'required|date',
         ]);
@@ -196,8 +196,8 @@ class AlcanceSgsiController extends Controller
     {
         abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
-            'alcancesgsi' => 'required|string',
+            'nombre' => 'required|string|max:255',
+            'alcancesgsi' => 'required|string|max:255',
             'fecha_publicacion' => 'required|date',
             'fecha_revision' => 'required|date',
         ]);
@@ -466,7 +466,7 @@ class AlcanceSgsiController extends Controller
 
     public function correosAprobacion($proceso, $alcance)
     {
-        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso);
+        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
             Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionAprobacionAlcance($alcance->nombre));

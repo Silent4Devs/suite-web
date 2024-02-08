@@ -1,4 +1,4 @@
-<div class="w-100">
+<div class="w-100 h-100">
     @if ($lugar == 'header')
         <div class="d-flex align-items-center">
             <div class="caja-buscador-header" wire:loading.remove>
@@ -25,7 +25,8 @@
         </div>
     @endif
     @if ($lugar == 'portal')
-        <input type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off" wire:model="search">
+        <input class="h-100" type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off"
+            wire:model="search">
 
         <div class="caja-list-search-global scroll_estilo">
             <ul class="list-group">

@@ -1,11 +1,16 @@
 @extends('layouts.admin')
-@section('content')
+@section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-
+@endsection
+@section('content')
     {{ Breadcrumbs::render('timesheet-rechazos') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobados</font>
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Aprobados</font>
     </h5>
+
+    @include('admin.timesheet.complementos.cards')
+    @include('admin.timesheet.complementos.admin-aprob')
+    @include('admin.timesheet.complementos.blue-card-header')
 
     <div class="card card-body">
         <div class="row">
@@ -50,8 +55,8 @@
                                 </td>
                                 <td class="">
                                     @can('timesheet_administrador_aprobar_horas')
-                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobado->id }}"
-                                            title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobado->id }}" title="Visualizar"
+                                            class="btn"><i class="fa-solid fa-eye"></i></a>
 
                                         @if ($aprobado->estatus == 'aprobado')
                                             @if ($aprobado->aprobador_id == auth()->user()->empleado->id)

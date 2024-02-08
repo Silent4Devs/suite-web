@@ -496,7 +496,8 @@ class PoliticaSgsiController extends Controller
 
     public function correosAprobacion($proceso, $politica)
     {
-        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso);
+        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
+
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
 

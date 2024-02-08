@@ -1,12 +1,16 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+@endsection
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}?v=1.1">
-
     {{ Breadcrumbs::render('timesheet-create') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
+    <h5 class="titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
     </h5>
 
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.admin-aprob')
 
     <x-loading-indicator />
     @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
@@ -15,13 +19,11 @@
 
 @section('scripts')
     @parent
-
     <script type="text/javascript">
         $('.select2').select2({
             'theme': 'bootstrap4',
         });
     </script>
-
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             let fechasRegistradas = @json($fechasRegistradas);
@@ -32,7 +34,6 @@
                 const z = n => ('0' + n).slice(-2);
                 return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
             }
-
 
             $("#fecha_dia").flatpickr({
                 "minDate": "{{ auth()->user()->empleado->fecha_min_timesheet }}",
@@ -303,7 +304,6 @@
             document.getElementById('total_horas_filas').innerText = total_horas_filas + ' h';
         }
     </script>
-
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -317,7 +317,6 @@
             });
         });
     </script>
-
     <script>
         // Definimos una variable para almacenar el tiempo de inactividad
         let inactivityTimeout;
@@ -327,7 +326,7 @@
 
         function showInactiveMessage() {
             alert("Demasiado tiempo de inactividad al registrar horas");
-            window.location.href = "{{ route('admin.timesheet-inicio') }}";
+            window.location.href = "{{ route('admin.timesheet-create') }}";
         }
 
         function resetInactivityTimeout() {

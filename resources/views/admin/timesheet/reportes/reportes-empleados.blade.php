@@ -1,114 +1,98 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+@endsection
 @section('content')
+    <style type="text/css">
+        .tabla-calendar-time table {
+            border-radius: 20px;
+            overflow: hidden;
+        }
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+        .tabla-calendar-time td {
+            border-bottom: 1px solid #bbb !important;
+        }
 
-<style type="text/css">
+        .datatable_timesheet_empleados_reportes thead tr:nth-child(1) th {
+            background-color: #BBDDFF !important;
+        }
 
-    .cde-nombre.ver {
-        position: sticky;
-        left: 64px !important;
-    }
+        .datatable_timesheet_empleados_reportes thead tr:nth-child(2) th {
+            background-color: #D8EBFF !important;
+        }
 
-    .cde-puesto.ver {
-        position: sticky;
-        left: 140px !important;
-    }
+        .datatable_timesheet_empleados_reportes thead tr:nth-child(3) th {
+            background-color: #EEF6FF !important;
+        }
 
-    .cde-area.ver {
-        position: sticky;
-        left: 202px !important;
-    }
+        .cde-nombre.ver {
+            position: sticky;
+            left: 64px !important;
+        }
 
-    .cde-totalh.ver {}
+        .cde-puesto.ver {
+            position: sticky;
+            left: 140px !important;
+        }
 
-    .cde-semenasf.ver {}
+        .cde-area.ver {
+            position: sticky;
+            left: 202px !important;
+        }
 
-    .ver {
-        z-index: 2;
-    }
+        .cde-totalh.ver {}
 
-    .cde-foto {
-        position: sticky !important;
-        left: 0px;
-        z-index: 6;
-    }
+        .cde-semenasf.ver {}
 
-    .cde-nombre {
-        position: sticky !important;
-        left: -50px;
-        z-index: 5;
-    }
+        .ver {
+            z-index: 2;
+        }
 
-    .cde-puesto {
-        position: sticky !important;
-        left: 10px;
-        z-index: 4;
-    }
+        .cde-foto {
+            position: sticky !important;
+            left: 0px;
+            z-index: 6;
+        }
 
-    .cde-area {
-        position: sticky !important;
-        left: 60px;
-        z-index: 3;
-    }
+        .cde-nombre {
+            position: sticky !important;
+            left: -50px;
+            z-index: 5;
+        }
 
-    .cde-estatus {
-        position: sticky !important;
-        left: 245px;
-        z-index: 2;
-    }
+        .cde-puesto {
+            position: sticky !important;
+            left: 10px;
+            z-index: 4;
+        }
 
-    .cde-fecha {
-        position: sticky !important;
-        left: 300px;
-        z-index: 1;
-    }
+        .cde-area {
+            position: sticky !important;
+            left: 60px;
+            z-index: 3;
+        }
 
-    .cde-totalh {}
+        .cde-estatus {
+            position: sticky !important;
+            left: 245px;
+            z-index: 2;
+        }
 
-    .cde-semenasf {}
+        .cde-fecha {
+            position: sticky !important;
+            left: 300px;
+            z-index: 1;
+        }
 
-    .cde-op {
-        position: sticky !important;
-        right: 0px;
-        z-index: 6;
-    }
+        .cde-totalh {}
 
-    .cde-nombre,
-    .cde-puesto,
-    .cde-area,
-    .cde-estatus,
-    .cde-fecha,
-    .cde-totalh,
-    .cde-semenasf {
-        transition: 0.3s;
-    }
+        .cde-semenasf {}
 
-    .cde-foto::before,
-    .cde-nombre::before,
-    .cde-puesto::before,
-    .cde-area::before,
-    .cde-estatus::before,
-    .cde-fecha::before {
-        content: "";
-        position: absolute;
-        width: 1px;
-        height: 100%;
-        top: 0 !important;
-        right: 0;
-        background-color: grey;
-    }
-
-    tfoot .cde-nombre::before,
-    tfoot .cde-puesto::before,
-    tfoot .cde-area::before,
-    tfoot .cde-estatus::before,
-    tfoot .cde-fecha::before {
-        content: "";
-        opacity: 0 !important;
-    }
-
-    @media(max-width: 1200px) {
+        .cde-op {
+            position: sticky !important;
+            right: 0px;
+            z-index: 6;
+        }
 
         .cde-nombre,
         .cde-puesto,
@@ -117,65 +101,105 @@
         .cde-fecha,
         .cde-totalh,
         .cde-semenasf {
-            position: unset !important;
-            color: #747474;
-        }
-    }
-
-    .dataTables_scrollHead {
-        position: sticky !important;
-        top: 50px;
-        z-index: 7;
-    }
-
-    .cargando_fondo {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.2);
-        text-align: center;
-        z-index: 10;
-    }
-    #lista_proyectos_tareas li {
-        padding-top: 13px;
-    }
-
-    @media print {
-
-        #sidebar,
-        header,
-        .nav-tabs,
-        .titulo_general_funcion,
-        .breadcrumb {
-            display: none !important;
+            transition: 0.3s;
         }
 
-        #reporte_empleado {
-            width: 100% !important;
+        .cde-foto::before,
+        .cde-nombre::before,
+        .cde-puesto::before,
+        .cde-area::before,
+        .cde-estatus::before,
+        .cde-fecha::before {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            top: 0 !important;
+            right: 0;
+            background-color: grey;
+        }
+
+        tfoot .cde-nombre::before,
+        tfoot .cde-puesto::before,
+        tfoot .cde-area::before,
+        tfoot .cde-estatus::before,
+        tfoot .cde-fecha::before {
+            content: "";
+            opacity: 0 !important;
+        }
+
+        @media(max-width: 1200px) {
+
+            .cde-nombre,
+            .cde-puesto,
+            .cde-area,
+            .cde-estatus,
+            .cde-fecha,
+            .cde-totalh,
+            .cde-semenasf {
+                position: unset !important;
+                color: #747474;
+            }
+        }
+
+        .dataTables_scrollHead {
+            position: sticky !important;
+            top: 50px;
+            z-index: 7;
+        }
+
+        .cargando_fondo {
             position: absolute;
             top: 0;
-            margin: 0 !important;
-            margin-top: -150px !important;
-            padding: 0 !important;
-            background-color: #fff !important;
-            border: 1px solid #fff !important;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            text-align: center;
+            z-index: 10;
         }
-    }
-</style>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
-</script>
+        #lista_proyectos_tareas li {
+            padding-top: 13px;
+        }
 
-<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">
-    Reportes por Área
-</h5>
+        @media print {
 
-@livewire('timesheet.reportes-empleados')
+            #sidebar,
+            header,
+            .nav-tabs,
+            .titulo_general_funcion,
+            .breadcrumb {
+                display: none !important;
+            }
 
+            #reporte_empleado {
+                width: 100% !important;
+                position: absolute;
+                top: 0;
+                margin: 0 !important;
+                margin-top: -150px !important;
+                padding: 0 !important;
+                background-color: #fff !important;
+                border: 1px solid #fff !important;
+            }
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
+    </script>
+
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">
+            Reportes por Área
+    </h5>
+
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
+
+    @livewire('timesheet.reportes-empleados')
 @endsection
 @section('scripts')
     @parent

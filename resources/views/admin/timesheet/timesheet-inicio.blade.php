@@ -1,201 +1,117 @@
 @extends('layouts.admin')
-@section('content')
-    {{-- menus horizontales --}}
-
+@section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-
-    <style type="text/css">
-        .caja_botones_menu {
-            display: flex;
-        }
-
-        .caja_botones_menu a {
-            width: 33.33%;
-            text-decoration: none;
-            display: inline-block;
-            color: #345183;
-            padding: 5px 0px;
-            border-top: 1px solid #ccc !important;
-            border-right: 1px solid #ccc;
-            background-color: #f9f9f9;
-            margin: 0;
-            text-align: center;
-            align-items: center;
-        }
-
-        .caja_botones_menu a:first-child {
-            border-left: 1px solid #ccc;
-        }
-
-        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {
-            border-bottom: 1px solid #ccc;
-        }
-
-        .caja_botones_menu a i {
-            margin-right: 7px;
-            font-size: 15pt;
-        }
-
-        .caja_botones_menu a.btn_activo,
-        .caja_botones_menu a.btn_activo:hover {
-            background-color: #fff;
-        }
-
-        .caja_botones_menu a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .caja_caja_secciones {
-            width: 100%;
-        }
-
-        .caja_secciones {
-            width: 100%;
-            display: flex;
-        }
-
-        .caja_secciones section {
-            width: 0px;
-            overflow: hidden;
-            transition: 0.4s;
-            opacity: 0;
-        }
-
-        .caja_tab_reveldada {
-            width: 100% !important;
-            overflow: none;
-            opacity: 1 !important;
-        }
-
-
-
-        .seccion_div {
-            overflow: hidden;
-            width: 990px;
-        }
-
-        .caja_tab_reveldada .seccion_div {
-            overflow: hidden;
-            transition-delay: 0.5s;
-            width: 100%;
-        }
-    </style>
-    <style type="text/css">
-        .nav.nav-tabs .nav-link.active {
-            background-color: rgba(0, 0, 0, 0.0) !important;
-            color: #345183 !important;
-        }
-
-        div.nav .nav-link {
-            color: #345183;
-        }
-
-        .nav-tabs .nav-link.active,
-        .nav-tabs .nav-link:hover {
-            border-color: rgba(0, 0, 0, 0.0);
-        }
-
-        .nav-link:first-child {
-            border-radius: 0px !important;
-            border-right: 2px solid #ccc !important;
-        }
-
-        div.tab-pane ul {
-            padding: 0;
-            margin: 0;
-            text-align: center;
-        }
-
-        div.tab-pane li {
-            list-style: none;
-            width: 150px;
-            height: 150px;
-            box-sizing: border-box;
-            position: relative;
-            margin: 10px;
-            display: inline-block;
-        }
-
-        div.tab-pane li i {
-            font-size: 30pt;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        div.tab-pane a {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #fff;
-            color: #345183;
-            box-shadow: 0px 1px 4px #00000024;
-            border-radius: 14px;
-            transition: 0.1s;
-            padding: 7px;
-        }
-
-        div.tab-pane a:hover {
-            text-decoration: none !important;
-            color: #345183;
-            border: 1px solid #345183;
-            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
-            transform: scale(1.05);
-        }
-
-        a:hover {
-            text-decoration: none !important;
-        }
-
-
-
-        @media(max-width: 648px) {
-            .caja_secciones {
-                min-height: 1000px;
-            }
-        }
-
-        @media(max-width: 474px) {
-            .caja_secciones {
-                min-height: 2000px;
-            }
-        }
-
-        .tabs {
-            outline: none;
-        }
-    </style>
-    <style>
-        .ventana_menu {
-            width: calc(100% - 40px);
-            background-color: #fff;
-            position: absolute;
-            margin: auto;
-            display: none;
-            top: 35px;
-            z-index: 3;
-            height: calc(100% - 40px);
-
-        }
-
-
-        .btn_modal_video {
-            width: 160px !important;
-            transform: scale(0.7);
-            position: absolute;
-            right: 0;
-            margin-top: -35px;
-        }
-    </style>
-
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/menu-hori-time.css') }}">
+@endsection
+@section('content')
     {{-- {{ Breadcrumbs::render('admin.iso27001.index') }} --}}
-    <h5 class="titulo_general_funcion">Timesheet</h5>
-    <div class="mt-5">
+
+    <h5 class="titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Configuración</font>
+    </h5>
+
+    @include('admin.timesheet.complementos.cards')
+    @include('admin.timesheet.complementos.admin-aprob')
+    @include('admin.timesheet.complementos.blue-card-header')
+
+    <div class="card card-body">
+        <h5>Establecer Jornada Laboral</h5>
+        <hr>
+        <form method="POST" action="{{ route('admin.timesheet-actualizarDia') }}" class="row">
+            @csrf
+            <div class="col-md-6 form-group">
+                <label>Selecciones fecha de inicio del timesheet</label>
+                <input id="" class="form-control" type="date" name="fecha_registro_timesheet"
+                    value="{{ $organizacion->fecha_registro_timesheet }}" max="{{ $time_viejo ? $time_viejo : '' }}">
+            </div>
+            <div class="col-md-6 form-group">
+                <label>Establecer limite de semanas para registros atrasados de timesheet</label>
+                <input id="semanas_min_timesheet" class="form-control" type="number" name="semanas_min_timesheet"
+                    value="{{ $organizacion->semanas_min_timesheet }}" min="0">
+                <small class="w-100 d-flex justify-content-between">Esta acción resetea el valor para toda la
+                    organización <a href="{{ asset('admin/empleados') }}">Limite por empleado</a></small>
+            </div>
+            <div class="col-md-6 form-group">
+                <label>Establecer limite de semanas que el colaborador puede adelantar</label>
+                <input id="semanas_adicionales" class="form-control" type="number" name="semanas_adicionales"
+                    value="{{ $organizacion->semanas_adicionales }}" min="0" max="12">
+            </div>
+            <div class="form-group col-md-6">
+                <label>Seleccione el día de inicio de la jornada laboral</label>
+                <select class="form-control" name="inicio_timesheet">
+                    <option value="Lunes"
+                        {{ $organizacion->inicio_timesheet == 'Lunes' ? 'selected style="background-color: #eee;"' : '' }}>
+                        {{ $organizacion->inicio_timesheet == 'Lunes' ? 'Actual: ' : '' }}
+                        Lunes
+                    </option>
+                    <option value="Martes" {{ $organizacion->inicio_timesheet == 'Martes' ? 'selected' : '' }}>
+                        {{ $organizacion->inicio_timesheet == 'Martes' ? 'Actual: ' : '' }}
+                        Martes
+                    </option>
+                    <option value="Miércoles" {{ $organizacion->inicio_timesheet == 'Miércoles' ? 'selected' : '' }}>
+                        {{ $organizacion->inicio_timesheet == 'Miércoles' ? 'Actual: ' : '' }}
+                        Miércoles
+                    </option>
+                    <option value="Jueves" {{ $organizacion->inicio_timesheet == 'Jueves' ? 'selected' : '' }}>
+                        {{ $organizacion->inicio_timesheet == 'Jueves' ? 'Actual: ' : '' }}
+                        Jueves
+                    </option>
+                    <option value="Viernes" {{ $organizacion->inicio_timesheet == 'Viernes' ? 'selected' : '' }}>
+                        {{ $organizacion->inicio_timesheet == 'Viernes' ? 'Actual: ' : '' }}
+                        Viernes
+                    </option>
+                    <option value="Sábado" {{ $organizacion->inicio_timesheet == 'Sábado' ? 'selected' : '' }}>
+                        {{ $organizacion->inicio_timesheet == 'Sábado' ? 'Actual: ' : '' }}
+                        Sábado
+                    </option>
+                    <option value="Domingo" {{ $organizacion->inicio_timesheet == 'Domingo' ? 'selected' : '' }}>
+                        {{ $organizacion->inicio_timesheet == 'Domingo' ? 'Actual: ' : '' }}
+                        Domingo
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Seleccione el día de fin de la jornada laboral</label>
+                <select class="form-control" name="dia_timesheet">
+                    <option value="Lunes"
+                        {{ $organizacion->dia_timesheet == 'Lunes' ? 'selected style="background-color: #eee;"' : '' }}>
+                        {{ $organizacion->dia_timesheet == 'Lunes' ? 'Actual: ' : '' }}
+                        Lunes
+                    </option>
+                    <option value="Martes" {{ $organizacion->dia_timesheet == 'Martes' ? 'selected' : '' }}>
+                        {{ $organizacion->dia_timesheet == 'Martes' ? 'Actual: ' : '' }}
+                        Martes
+                    </option>
+                    <option value="Miércoles" {{ $organizacion->dia_timesheet == 'Miércoles' ? 'selected' : '' }}>
+                        {{ $organizacion->dia_timesheet == 'Miércoles' ? 'Actual: ' : '' }}
+                        Miércoles
+                    </option>
+                    <option value="Jueves" {{ $organizacion->dia_timesheet == 'Jueves' ? 'selected' : '' }}>
+                        {{ $organizacion->dia_timesheet == 'Jueves' ? 'Actual: ' : '' }}
+                        Jueves
+                    </option>
+                    <option value="Viernes" {{ $organizacion->dia_timesheet == 'Viernes' ? 'selected' : '' }}>
+                        {{ $organizacion->dia_timesheet == 'Viernes' ? 'Actual: ' : '' }}
+                        Viernes
+                    </option>
+                    <option value="Sábado" {{ $organizacion->dia_timesheet == 'Sábado' ? 'selected' : '' }}>
+                        {{ $organizacion->dia_timesheet == 'Sábado' ? 'Actual: ' : '' }}
+                        Sábado
+                    </option>
+                    <option value="Domingo" {{ $organizacion->dia_timesheet == 'Domingo' ? 'selected' : '' }}>
+                        {{ $organizacion->dia_timesheet == 'Domingo' ? 'Actual: ' : '' }}
+                        Domingo
+                    </option>
+                </select>
+            </div>
+            <div class="col-12 text-right">
+                <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
+                <button class="btn btn-success">Guardar</button>
+            </div>
+        </form>
+    </div>
+
+
+    {{-- <div class="">
         <div class="card-body">
             @include('partials.flashMessages')
             <nav>
@@ -220,10 +136,7 @@
                         @endif
                     @endif
 
-                    @if (Auth::user()->can('timesheet_administrador_proyectos_access') ||
-                            Auth::user()->can('timesheet_administrador_tareas_proyectos_access') ||
-                            Auth::user()->can('timesheet_administrador_clientes_access') ||
-                            Auth::user()->can('timesheet_administrador_dashboard_access'))
+                    @if (Auth::user()->can('timesheet_administrador_proyectos_access') || Auth::user()->can('timesheet_administrador_tareas_proyectos_access') || Auth::user()->can('timesheet_administrador_clientes_access') || Auth::user()->can('timesheet_administrador_dashboard_access'))
                         <a class="nav-link" id="nav-liderazgo-tab" data-type="liderazgo" data-toggle="tab"
                             href="#nav-liderazgo" role="tab" aria-controls="nav-liderazgo" aria-selected="false">
                             <i class="bi bi-person-lines-fill"></i>
@@ -259,7 +172,7 @@
                         @endcan
                         @can('mi_timesheet_horas_aceptadas_show')
                             <li>
-                                <a href="{{ route('admin.timesheet') }}">
+                                <a href="{{ route('admin.timesheet-mis-registros', 'todos') }}">
                                     <div>
                                         <i class="bi bi-calendar4"></i><br>
                                         Mis Registros
@@ -277,7 +190,8 @@
                 </div>
                 @if (auth()->user()->empleado)
                     @if (auth()->user()->empleado->es_supervisor)
-                        <div class="tab-pane mb-4 fade" id="nav-gerente" role="tabpanel" aria-labelledby="nav-gerente-tab">
+                        <div class="tab-pane mb-4 fade" id="nav-gerente" role="tabpanel"
+                            aria-labelledby="nav-gerente-tab">
                             <ul class="mt-4">
                                 @can('timesheet_administrador_aprobar_rechazar_horas_access')
                                     <li>
@@ -343,11 +257,9 @@
                     @endif
                 @endif
 
-                @if (Auth::user()->can('timesheet_administrador_proyectos_access') ||
-                        Auth::user()->can('timesheet_administrador_tareas_proyectos_access') ||
-                        Auth::user()->can('timesheet_administrador_clientes_access') ||
-                        Auth::user()->can('timesheet_administrador_dashboard_access'))
-                    <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
+                @if (Auth::user()->can('timesheet_administrador_proyectos_access') || Auth::user()->can('timesheet_administrador_tareas_proyectos_access') || Auth::user()->can('timesheet_administrador_clientes_access') || Auth::user()->can('timesheet_administrador_dashboard_access'))
+                    <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel"
+                        aria-labelledby="nav-liderazgo-tab">
                         <ul class="mt-4">
                             @can('timesheet_administrador_configuracion_access')
                                 <li>
@@ -553,7 +465,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 
