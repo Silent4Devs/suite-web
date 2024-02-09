@@ -152,11 +152,20 @@ class SolicitudDayOffController extends Controller
         $solicitante = $empleado->find($request->empleado_id);
         $solicitud = SolicitudDayOff::create($request->all());
 
-        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
-        if (isset($informados->participantes[0])) {
-            foreach ($informados->participantes as $participante) {
-                $correos[] = $participante->empleado->email;
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
+            }
+
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
             }
             Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud, $correos));
         } else {
@@ -210,11 +219,20 @@ class SolicitudDayOffController extends Controller
 
         $solicitud->update($request->all());
 
-        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
-        if (isset($informados->participantes[0])) {
-            foreach ($informados->participantes as $participante) {
-                $correos[] = $participante->empleado->email;
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
+            }
+
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
             }
             Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud, $correos));
         } else {
