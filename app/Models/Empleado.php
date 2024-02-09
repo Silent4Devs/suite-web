@@ -517,7 +517,7 @@ class Empleado extends Model implements Auditable
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')
             ->select('id', 'name', 'foto', 'puesto_id', 'genero', 'supervisor_id')
-            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero', 'supervisor:id,name,foto,puesto_id,genero', 'area')
+            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero', 'supervisor', 'area')
             ->vacanteActiva();
     }
 
