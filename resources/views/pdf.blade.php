@@ -20,6 +20,7 @@
         <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
+                    
                     @php
                     use App\Models\Organizacion;
                     $organizacion = Organizacion::getFirst();
@@ -27,7 +28,7 @@
                     $empresa = $organizacion->empresa;
                     @endphp
                    
-                    <img style="width:100%; max-width:100px;" src="{{ asset( $logotipo )}}">
+                    <img style="width:100%; max-width:100px;" src="{{ asset( $logotipo ) }}">
         
                 </td>
                 <td class="info-header">
