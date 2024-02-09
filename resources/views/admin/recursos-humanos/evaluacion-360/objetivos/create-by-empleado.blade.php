@@ -83,7 +83,7 @@
         <div class="d-flex align-items-center">
             <div class="d-flex aling-items-center justify-content-between">
                 <div class="img-person">
-                    <img src="{{$empleado->avatar_ruta}}" alt="">
+                    <img src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}" alt="">
                 </div>
                 <div>
                     <span>Director Sr. Innovación y Nuevos Productos </span>
