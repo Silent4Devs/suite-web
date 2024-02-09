@@ -32,11 +32,13 @@
         
                 </td>
                 <td class="info-header">
+
                     <div style="position: relative; right: 5rem; text-align: justify;">
                         {{$organizacion->empresa}} <br>
                        RFC:{{$organizacion->rfc}} <br>
                         {{$organizacion->direccion}} <br>
                     </div>
+                    
                 </td>
                 <td class="td-blue-header">
                     <h5 style="font: normal normal medium 20px/20px Roboto;
