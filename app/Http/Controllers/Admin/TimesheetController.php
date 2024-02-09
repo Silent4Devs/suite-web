@@ -56,6 +56,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
+        return redirect()->route('admin.timesheet-create');
     }
 
     public function misRegistros($estatus = 'todos')
