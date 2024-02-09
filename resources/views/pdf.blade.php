@@ -20,6 +20,7 @@
         <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
+                    
                     @php
                     use App\Models\Organizacion;
                     $organizacion = Organizacion::getFirst();
