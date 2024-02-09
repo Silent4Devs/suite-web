@@ -127,11 +127,11 @@ class Area extends Model implements Auditable
     public function children()
     {
         return $this->hasMany(self::class, 'id_reporta', 'id')
-            ->select('id', 'name', 'foto', 'puesto_id', 'genero', 'supervisor_id')
+            // ->select('id', 'name', 'foto', 'puesto_id', 'genero', 'supervisor_id')
             ->with([
-                'children:id,name,foto,puesto_id,genero',
+                'children',
                 'supervisor',
-                'lider:id,name,foto,puesto_id,genero'
+                'lider'
             ])
             ->with('grupo');
     }
