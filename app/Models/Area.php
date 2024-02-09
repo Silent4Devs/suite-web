@@ -130,7 +130,7 @@ class Area extends Model implements Auditable
             ->select('id', 'name', 'foto', 'puesto_id', 'genero', 'supervisor_id')
             ->with([
                 'children:id,name,foto,puesto_id,genero',
-                'supervisor:id,name,foto,puesto_id,genero',
+                'supervisor',
                 'lider:id,name,foto,puesto_id,genero'
             ])
             ->with('grupo');
