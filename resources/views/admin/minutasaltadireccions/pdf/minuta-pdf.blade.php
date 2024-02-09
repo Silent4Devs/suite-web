@@ -322,7 +322,7 @@
         <tbody>
             <tr>
                 <td>
-                    {!! htmlspecialchars_decode($minutas->tema_tratado) !!}
+                    {!! htmlspecialchars_decode($minutasaltadireccion->tema_tratado) !!}
                 </td>
             </tr>
         </tbody>
