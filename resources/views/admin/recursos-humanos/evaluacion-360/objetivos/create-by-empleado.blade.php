@@ -1,5 +1,15 @@
 @extends('layouts.admin')
 @section('content')
+    @php
+        use App\Models\Organizacion;
+        $organizacion = Organizacion::getLogo();
+        if (!is_null($organizacion)) {
+            $logotipo = $organizacion->logotipo;
+        } else {
+            $logotipo = 'logotipo-tabantaj.png';
+        }
+    @endphp
+
     <style>
         .lds-facebook {
             display: inline-block;
@@ -66,8 +76,29 @@
         }
     </style>
     {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
+
     <h5 class="col-12 titulo_general_funcion">Asignar Objetivos Estratégicos</h5>
-    <div class="mt-4 card">
+
+    <div class="card card-body">
+        <div class="d-flex align-items-center">
+            <div class="d-flex aling-items-center justify-content-between">
+                <div class="img-person">
+                    <img src="{{$empleado->avatar_ruta}}" alt="">
+                </div>
+                <div>
+                    <span>Director Sr. Innovación y Nuevos Productos </span>
+                    <br>
+                    <br>
+                    <span>Dirección General</span>
+                </div>
+            </div>
+            <div class="">
+                <img src="{{$logotipo}}" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
         <div class="card-body">
             <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
                 enctype="multipart/form-data" class="mt-3 row">

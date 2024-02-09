@@ -11,33 +11,6 @@
 </style>
 
 @if (!$editar)
-    <div class="col-12">
-        <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
-            <div class="row w-100">
-                <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                    <div class="w-100">
-                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
-                    </div>
-                </div>
-                <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
-                    </p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
-                        @if (auth()->user()->empleado->id == $empleado->id)
-                            Define tus objetivos, <strong>los objetivos que sean creados deberan ser aprobados por tú
-                                Jefe Inmediato
-                                ({{ $empleado->supervisor ? $empleado->supervisor->name : 'No definido' }})</strong>
-                        @else
-                            Define los objetivos estratégicos esperados para: <strong>{{ $empleado->name }}</strong>
-                        @endif
-
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
-@if (!$editar)
     <div class="mt-3 col-12">
         <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             CREACIÓN DE OBJETIVOS ESTRATÉGICOS
