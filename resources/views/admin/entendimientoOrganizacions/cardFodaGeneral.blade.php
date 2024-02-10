@@ -126,16 +126,15 @@
 
                     <div class="row">
                         @foreach ($modulo->participantes->take(3) as $index => $participante)
-                            <div class="col-2">
+                            <div class="col-3">
                                 <img src="{{ asset('storage/empleados/imagenes/usuario_no_cargado.png') }}"
                                     class="img_empleado" title="{{ $participante->empleado->name }}">
                             </div>
                         @endforeach
-
                         @if ($participantCount > 3)
                             <div class="col-2">
                                 <button type="button" class="btn btn-round ml-2 rounded-circle"
-                                    style="width: 25px; height: 25px; background-color: #fff8dc; padding: 0; position: relative; right: 2rem; border: 1px solid black; border-radius: 50%;"
+                                    style="width: 35px; height: 35px; background-color: #fff8dc; padding: 0; position: relative; right: 1rem; border: 1px solid black; border-radius: 50%;"
                                     data-bs-toggle="modal" data-bs-target="#exampleModal{{ $modulo->id }}">
                                     <span
                                         style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $modulo->participantes->count() - 3 }}</span>
