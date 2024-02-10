@@ -49,7 +49,7 @@
     <div class="caja-cards mt-5">
         @foreach ($query as $foda)
             {{-- <a href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}"> --}}
-            <div class="card card-foda" style="min-height: 275px !important;">
+            <div class="card card-foda" style="min-height: 260px !important;">
                 <div class="card-header">
                     <strong> {{ Carbon\Carbon::parse($foda->fecha)->format('d/m/Y') }}</strong>
                     <div class="dropdown btn-options-foda-card">
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body" style="margin-top: 45px;">
+                <div class="card-body" style="margin-top: 5px;">
                     <h3>
                         {{ $foda->analisis }}
                     </h3>
