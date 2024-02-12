@@ -56,7 +56,21 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        return redirect()->route('admin.timesheet-create');
+        $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
+
+        $times = Timesheet::getPersonalTimesheet();
+
+        $todos_contador = $times->count();
+        $borrador_contador = $times->where('estatus', 'papelera')->count();
+        $pendientes_contador = $times->where('estatus', 'pendiente')->count();
+        $aprobados_contador = $times->where('estatus', 'aprobado')->count();
+        $rechazos_contador = $times->where('estatus', 'rechazado')->count();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual'));
     }
 
     public function misRegistros($estatus = 'todos')
