@@ -49,23 +49,33 @@
         }
 
     #btn_cancelar{
-    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    border: 1px solid var(--unnamed-color-057be2);
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border: 1px solid #057BE2;
-    opacity: 1;
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        border: 1px solid var(--unnamed-color-057be2);
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #057BE2;
+        opacity: 1;
+        color: #057BE2;
     }
+
 </style>
 @section('content')
     {{ Breadcrumbs::render('admin.comiteseguridads.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Conformación del Comité</h5>
-    <div class="mt-4 card" id="card">
-        <img src="{{ url('comite.png') }}" class="imgdoc" alt="">
-        <div class="small">
-          <h2 class="h2doc">¿Qué es? Conformación del Comité</h2>
-          <p class="pdoc">Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para abordar un tema o llevar a cabo una tarea específica en una organización o proyecto. <br> <br> Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de problemas, la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre otros.</p>
+    <h5 class="col-12 titulo_general_funcion">Conformación del Comité</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Conformación del Comité?</h4>
+                <p>
+                    Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para abordar un tema o llevar a cabo una tarea específica en una organización o proyecto.
+                </p>
+                <p>
+                    Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de problemas  la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre otros.
+                </p>
+            </div>
         </div>
-       </div>
+    </div>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" action="{{ route('admin.comiteseguridads.store') }}" enctype="multipart/form-data"
@@ -86,11 +96,14 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2; width:6rem; height: 3rem;">Cancelar</a>
-                    <button class="btn btn-primary" type="submit">
+                    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
+                    <button class="btn btn-primary"  type="submit" style="width: 13%;">
                         {{ trans('global.save') }}
                     </button>
                 </div>
+
+
+
             </form>
         </div>
     </div>

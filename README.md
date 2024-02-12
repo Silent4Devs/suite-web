@@ -28,30 +28,31 @@ Para usarlo debes tener instalado Docker previamente.
 
 Corriendo el proyecto:
 
-1. docker-compose build
+1. docker compose build
 
 ## Levantamiento en Producción
 
-2. docker-compose up -d
+2. docker compose up -d
 
 ## Levantamiento en Staging
 
-3. docker-compose -f docker-compose.staging.yml up -d
+3. docker compose -f docker-compose.staging.yml up -d
 
 Instalación:
 
-1. docker-compose exec php composer install --no-dev
-2. docker-compose exec php cp .env.example .env
-3. docker-compose exec php php artisan key:generate
-4. docker-compose exec php php artisan migrate
-5. docker-compose exec php chmod 777 -R storage
-6. docker-compose exec php php artisan optimize:clear
+1. docker compose exec php composer install --no-dev
+2. docker compose exec php cp .env.example .env
+3. docker compose exec php php artisan key:generate
+4. docker compose exec php php artisan migrate
+5. docker compose exec php chmod 777 -R storage
+6. docker compose exec php php artisan preload:placeholder
+7. docker compose exec php php artisan optimize:clear
 
 Ojo: si te sale algún error es porque no tienes permisos root en las carpetas de tu proyecto o que no existen las carpetas de caché, para esto tengo 2 comandos para ti.
 
 # para obtener permisos dentro del servicio php
 
-docker-compose exec php chown -R www-data: /var/www/html
+docker compose exec php chown -R www-data: /var/www/html
 
 # para crear las carpetas del proyecto de php desde la carpeta src
 
@@ -62,7 +63,7 @@ mkdir storage/framework/{views, testing, sessions, cache/data}
 # mysql
 
 #Enter to the running container
-docker-compose exec postgres-tabantaj /bin/bash
+docker compose exec postgres-tabantaj /bin/bash
 
 #Backup
 sudo docker exec -i fa63d8e7e87b bash -c "PGPASSWORD='secret' pg_dump -U homestead -h localhost -d homestead" > dump.sql

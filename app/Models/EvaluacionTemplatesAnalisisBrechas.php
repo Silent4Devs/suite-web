@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Iso27\AnalisisBrechasIso;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,5 +20,15 @@ class EvaluacionTemplatesAnalisisBrechas extends Model
     public function respuestas()
     {
         return $this->hasMany(RespuestasEvaluacionAnalisisBrechas::class, 'ev_analisis_template_id', 'id');
+    }
+
+    public function templateAnalisisBrechas()
+    {
+        return $this->belongsTo(TemplateAnalisisdeBrechas::class, 'template_id', 'id');
+    }
+
+    public function analisisBrechasIsos()
+    {
+        return $this->belongsTo(AnalisisBrechasIso::class, 'analisis_brechas_id', 'id');
     }
 }

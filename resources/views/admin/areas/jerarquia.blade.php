@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}">
-    <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.13/tailwind.min.css"
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}{{config('app.cssVersion')}}">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.13/tailwind.min.css"
         integrity="sha512-0mXZvQboEKApqdohlHGMJ/OZ09yeQa6UgZRkgG+b3t3JlcyIqvDnUMgpUm5CvlHT9HNtRm9xbRAJPlKaFCXzdQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <style>
         #chart-container {
             position: relative;

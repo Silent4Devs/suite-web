@@ -72,14 +72,8 @@ jobs:
           path: vendor
           key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
 
-      - name: List Files
-        run: ls -la
-
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
-
-      - name: List Files
-        run: ls -la
 
       - name: Update Dependencies with latest stable
         if: matrix.dependency-stability == 'prefer-stable'

@@ -3,6 +3,7 @@
 namespace App\Models\Iso27;
 
 use App\Models\Empleado;
+use App\Models\EvaluacionAnalisisBrechas;
 use App\Models\EvaluacionTemplatesAnalisisBrechas;
 use App\Models\Norma;
 use App\Traits\ClearsResponseCache;
@@ -35,6 +36,17 @@ class AnalisisBrechasIso extends Model implements Auditable
     {
         return $this->belongsTo(Norma::class, 'norma_id');
     }
+
+    public function evaluacionTemplateAnalisisBrechas()
+    {
+        return $this->hasOne(EvaluacionTemplatesAnalisisBrechas::class, 'analisis_brechas_id', 'id');
+    }
+
+    public function evaluacionAnalisisBrechas()
+    {
+        return $this->hasOne(EvaluacionAnalisisBrechas::class, 'analisis_brechas_id', 'id');
+    }
+
     // public function evaluacion(){
     //     return $this->hasOne(EvaluacionTemplatesAnalisisBrechas::class, );
     // }

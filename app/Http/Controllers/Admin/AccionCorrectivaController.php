@@ -160,7 +160,7 @@ class AccionCorrectivaController extends Controller
         // dd($accionCorrectiva->quejasCliente);
 
         $quejasClientes = QuejasCliente::find($request->id_queja_cliente)->load('responsableSgi', 'registro', 'accionCorrectiva');
-        Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc($quejasClientes->responsableSgi->email)->send(new AprobacionAccionCorrectivaEmail($quejasClientes));
+        Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc($quejasClientes->responsableSgi->email)->queue(new AprobacionAccionCorrectivaEmail($quejasClientes));
 
         if ($esAprobada) {
             return response()->json(['success' => true, 'message' => 'Acción Correctiva Generada', 'aprobado' => true]);

@@ -99,7 +99,7 @@ class RequisicionesCreateComponent extends Component
         $this->sucursales = KatbolSucursal::where('archivo', false)->get();
         $this->proveedores = KatbolProveedorOC::where('estado', false)->get();
         $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
-        $this->contratos = KatbolContrato::getAll();
+        $this->contratos = KatbolContrato::get();
         $this->productos = KatbolProducto::where('archivo', false)->get();
         $this->organizacion = Organizacion::getFirst();
 
@@ -313,7 +313,7 @@ class RequisicionesCreateComponent extends Component
 
             $supervisor = User::find($this->nueva_requisicion->id_user)->empleado->supervisor->email;
 
-            Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
+            Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 
             return redirect(route('contract_manager.requisiciones'));
         }

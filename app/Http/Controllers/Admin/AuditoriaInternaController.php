@@ -21,10 +21,10 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 use Yajra\DataTables\Facades\DataTables;
-use PDF;
 
 class AuditoriaInternaController extends Controller
 {
@@ -136,7 +136,8 @@ class AuditoriaInternaController extends Controller
         $auditoriaInterna->equipo()->sync($request->equipo);
         $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-        return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna->id]);
+        return redirect()->route('admin.auditoria-internas.index', ['auditoriaInterna' => $auditoriaInterna]);
+        // return redirect()->route('admin.auditoria-internas.edit', ['auditoriaInterna' => $auditoriaInterna->id]);
     }
 
     public function edit($IDauditoriaInterna)
@@ -196,7 +197,7 @@ class AuditoriaInternaController extends Controller
         abort_if(Gate::denies('auditoria_interna_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team', 'reportes.empleado', 'reportes.hallazgos');
-        // dd($auditoriaInterna->reportes);
+        // dd($auditoriaInterna->lider);
 
         return view('admin.auditoriaInternas.show', compact('auditoriaInterna'));
     }
@@ -209,7 +210,6 @@ class AuditoriaInternaController extends Controller
 
         return response()->json(['status' => 'success']);
     }
-
 
     public function massDestroy(MassDestroyAuditoriaInternaRequest $request)
     {
@@ -269,13 +269,13 @@ class AuditoriaInternaController extends Controller
 
         $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
 
-        if (!Storage::exists('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte')) {
-            Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $reporte->id . '/' . $nombre_colaborador, 0755, true);
+        if (! Storage::exists('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte')) {
+            Storage::makeDirectory('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$reporte->id.'/'.$nombre_colaborador, 0755, true);
         }
 
-        $filename = '/audit' . $reporte->id_auditoria . 'firmaempleado' . $nombre_colaborador . '.png';
+        $filename = '/audit'.$reporte->id_auditoria.'firmaempleado'.$nombre_colaborador.'.png';
 
-        Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $reporte->id . '/' . $nombre_colaborador . $filename, $image);
+        Storage::put('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$reporte->id.'/'.$nombre_colaborador.$filename, $image);
 
         $reporte = AuditoriaInternasReportes::where('id_auditoria', '=', $reporte->id_auditoria)
             ->where('empleado_id', '=', auth()->user()->empleado->id)
@@ -292,7 +292,7 @@ class AuditoriaInternaController extends Controller
 
         try {
             $email = new NotificacionReporteAuditoria($nombre_colaborador, $url);
-            Mail::to(removeUnicodeCharacters($reporte->lider->email))->send($email);
+            Mail::to(removeUnicodeCharacters($reporte->lider->email))->queue($email);
 
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
@@ -315,7 +315,7 @@ class AuditoriaInternaController extends Controller
 
         try {
             $email = new NotificacionRechazoReporteAuditoria($auditoria);
-            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->queue($email);
 
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
@@ -333,13 +333,13 @@ class AuditoriaInternaController extends Controller
 
         $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
 
-        if (!Storage::exists('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte')) {
-            Storage::makeDirectory('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $nombre_lider, 0755, true);
+        if (! Storage::exists('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte')) {
+            Storage::makeDirectory('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$nombre_lider, 0755, true);
         }
 
-        $filename = '/audit' . $reporte->id_auditoria . 'firmalider' . $nombre_lider . '.png';
+        $filename = '/audit'.$reporte->id_auditoria.'firmalider'.$nombre_lider.'.png';
 
-        Storage::put('public/auditorias-internas/auditoria/' . $reporte->id_auditoria . '/reporte' . '/' . $reporte->id . '/' . $nombre_lider . $filename, $image);
+        Storage::put('public/auditorias-internas/auditoria/'.$reporte->id_auditoria.'/reporte'.'/'.$reporte->id.'/'.$nombre_lider.$filename, $image);
 
         $reporte = AuditoriaInternasReportes::where('id_auditoria', '=', $reporte->id_auditoria)
             ->where('lider_id', '=', $reporte->lider->id)->first();
@@ -352,7 +352,7 @@ class AuditoriaInternaController extends Controller
 
         try {
             $email = new NotificacionAprobadoReporteAuditoria();
-            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->send($email);
+            Mail::to(removeUnicodeCharacters($reporte->empleado->email))->queue($email);
 
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
@@ -365,7 +365,7 @@ class AuditoriaInternaController extends Controller
         $auditoriaInterna = AuditoriaInterna::find($id);
         $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team', 'reportes.empleado', 'reportes.hallazgos');
 
-        $pdf = PDF::loadView('admin\auditoriaInternas\auditoria_interna_pdf', compact('auditoriaInterna'));
+        $pdf = PDF::loadView('admin.auditoriaInternas.auditoria_interna_pdf', compact('auditoriaInterna'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('auditoria_Interna.pdf');

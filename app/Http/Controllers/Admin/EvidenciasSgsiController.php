@@ -11,7 +11,6 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\EvidenciaSgsiPdf;
 use App\Models\EvidenciasSgsi;
-use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
@@ -30,7 +29,14 @@ class EvidenciasSgsiController extends Controller
         abort_if(Gate::denies('evidencia_asignacion_recursos_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = EvidenciasSgsi::with(['responsable', 'team', 'empleado', 'area', 'evidencia_sgsi'])->select(sprintf('%s.*', (new EvidenciasSgsi)->table))->orderByDesc('id');
+            $query = EvidenciasSgsi::with([
+                'empleado' => function ($query) {
+                    $query->select('id', 'name', 'foto');
+                },
+            ])
+                ->select(sprintf('%s.*', (new EvidenciasSgsi)->table))
+                ->orderByDesc('id');
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -76,18 +82,16 @@ class EvidenciasSgsiController extends Controller
                 return $row->evidencia_sgsi ? $row->evidencia_sgsi : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'responsable', 'archivopdf']);
+            $table->rawColumns(['actions', 'placeholder', 'archivopdf']);
 
             return $table->make(true);
         }
 
-        $users = User::getAll();
-        $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.evidenciasSgsis.index', compact('users', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.evidenciasSgsis.index', compact('logo_actual', 'empresa_actual'));
     }
 
     public function create()

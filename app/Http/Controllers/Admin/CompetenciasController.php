@@ -15,6 +15,8 @@ use App\Models\Empleado;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
+use App\Models\Organizacion;
+use App\Models\RH\Competencia;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
@@ -22,6 +24,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use PDF;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -311,6 +314,19 @@ class CompetenciasController extends Controller
         } else {
             return response()->json(['status' => 'error', 'message' => 'Ocurrió un error']);
         }
+    }
+
+    public function pdf()
+    {
+
+        $competencias = Competencia::with('tipo')->get();
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('competencias', compact('competencias', 'organizacions', 'logo_actual'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('competencias.pdf');
     }
 
     public function cargarCertificacion(Request $request, Empleado $empleado)

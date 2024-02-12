@@ -87,57 +87,71 @@ class RolesController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('roles_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('roles_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,NULL,id,deleted_at,NULL',
-        ]);
-        if ($request->ajax()) {
-            // $this->validateRol($request);
-            $nombre_rol = $request->nombre_rol;
-            $permissions = $request->permissions;
-            $role = Role::create(['title' => $nombre_rol]);
-            $role->permissions()->sync($permissions);
+            $request->validate([
+                'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,NULL,id,deleted_at,NULL',
+            ]);
+            if ($request->ajax()) {
+                $nombre_rol = $request->nombre_rol;
+                $permissions = $request->permissions;
+                $role = Role::create(['title' => $nombre_rol]);
+                $role->permissions()->sync($permissions);
 
-            return response()->json(['success' => true]);
+                return response()->json(['success' => true]);
+            }
+
+            return redirect()->route('admin.roles.index');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.roles.index')->with('error', $e->getMessage());
         }
-
-        // $role = Role::create($request->all());
-        // $role->permissions()->sync($request->input('permissions', []));
-        return redirect()->route('admin.roles.index');
     }
 
     public function edit(Role $role)
     {
-        abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $permissions = Permission::getAll();
-        $role->load('permissions');
 
-        return view('admin.roles.edit', compact('permissions', 'role'));
+        try {
+            abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $permissions = Permission::getAll();
+            $role->load('permissions');
+
+            return view('admin.roles.edit', compact('permissions', 'role'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.roles.index')->with('error', $e->getMessage());
+        }
     }
 
     public function update(Request $request, Role $role)
     {
-        abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre_rol' => "required|string|min:3|max:255|unique:roles,title,{$role->id},id,deleted_at,NULL",
-        ]);
-        if ($request->ajax()) {
-            $nombre_rol = $request->nombre_rol;
-            $permissions = $request->permissions;
-            $role->update(['title' => $nombre_rol]);
-            $role->permissions()->sync($permissions);
+        try {
+            abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $request->validate([
+                'nombre_rol' => "required|string|min:3|max:255|unique:roles,title,{$role->id},id,deleted_at,NULL",
+            ]);
+            if ($request->ajax()) {
+                $nombre_rol = $request->nombre_rol;
+                $permissions = $request->permissions;
+                $role->update(['title' => $nombre_rol]);
+                $role->permissions()->sync($permissions);
 
-            return response()->json(['success' => true]);
+                return response()->json(['success' => true]);
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('admin.roles.index')->with('error', $e->getMessage());
         }
     }
 
     public function show(Role $role)
     {
-        abort_if(Gate::denies('roles_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $role->load('permissions');
+        try {
+            abort_if(Gate::denies('roles_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $role->load('permissions');
 
-        return view('admin.roles.show', compact('role'));
+            return view('admin.roles.show', compact('role'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.roles.index')->with('error', $e->getMessage());
+        }
     }
 
     public function destroy(Role $role)

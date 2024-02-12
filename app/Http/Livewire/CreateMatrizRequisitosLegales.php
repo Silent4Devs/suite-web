@@ -11,10 +11,13 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class CreateMatrizRequisitosLegales extends Component
 {
+    use LivewireAlert;
+
     public $modelo = 'MatrizRequisitoLegale';
 
     public collection $alcance_s1;
@@ -166,8 +169,25 @@ class CreateMatrizRequisitosLegales extends Component
     public function envioCorreos($proceso, $requisito)
     {
         foreach ($proceso->participantes as $part) {
-            $emailAprobador = $part->participante->empleado->email;
-            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new MatrizEmail($requisito->id));
+            try {
+                //code...
+                $emailAprobador = $part->participante->empleado->email;
+                Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new MatrizEmail($requisito->id));
+                $this->alert('success', 'Correo enviado', [
+                    'position' => 'top-end',
+                    'timer' => 3000,
+                    'toast' => true,
+                    'text' => 'Se ha notificado a los miembros encargados, la creacion de la Matriz.',
+                ]);
+            } catch (\Throwable $th) {
+                //throw $th;
+                $this->alert('error', 'Error al enviar correo', [
+                    'position' => 'top-end',
+                    'timer' => 3000,
+                    'toast' => true,
+                    'text' => 'Ha habido un error al intentar enviar el correo',
+                ]);
+            }
         }
         // dd("Se enviaron todos");
     }

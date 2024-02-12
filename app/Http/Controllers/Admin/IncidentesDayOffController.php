@@ -29,9 +29,9 @@ class IncidentesDayOffController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'amenazas_ver';
-                $editGate = 'amenazas_editar';
-                $deleteGate = 'amenazas_eliminar';
+                $viewGate = 'incidentes_dayoff_acceder';
+                $editGate = 'incidentes_dayoff_editar';
+                $deleteGate = 'incidentes_dayoff_acceder';
                 $crudRoutePart = 'incidentes-dayoff';
 
                 return view('partials.datatablesActions', compact(

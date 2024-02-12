@@ -105,22 +105,22 @@
             <table id="tblActividades" class=" w-100">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Estatus</th>
+                        {{-- <th scope="col">ID</th> --}}
+                        {{-- <th scope="col">Estatus</th> --}}
                         <th scope="col">Actividad</th>
                         <th scope="col">Inicio</th>
                         <th scope="col">Finalización</th>
-                        <th scope="col">Duración</th>
+                        {{-- <th scope="col">Duración</th> --}}
                         <th scope="col">Responsable(s)</th>
-                        <th scope="col">Responsable(s)_id</th>
+                        {{-- <th scope="col">Responsable(s)_id</th> --}}
                         <th scope="col">Comentarios</th>
-                        <th scope="col">Opciones</th>
+                        {{-- <th scope="col">Opciones</th> --}}
                     </tr>
                 </thead>
                 <tbody>
                     @if (isset($actividades))
                         @foreach ($actividades as $actividad)
-                            @php
+                            {{-- @php
                                 $estatus = 'Completado';
                                 $color = 'rgb(0,200,117)';
                                 $textColor = 'white';
@@ -154,8 +154,26 @@
                                         $estatus = 'Indefinido';
                                         break;
                                 }
-                            @endphp
+                            @endphp --}}
                             <tr>
+                                <td>{{ $actividad->name }}</td>
+                                <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->start) / 1000)->toDateTimeString())->format('Y-m-d') }}
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->end) / 1000)->toDateTimeString())->format('Y-m-d') }}
+                                </td>
+                                <td>
+                                    @foreach ($actividad->assigs as $assig)
+                                        @php
+                                            $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
+                                        @endphp
+                                        <img src="{{ $empleado->avatar_ruta }}" id="res_{{ $empleado->id }}"
+                                            alt="{{ $empleado->name }}" title="{{ $empleado->name }}"
+                                            style="clip-path: circle(15px at 50% 50%);width: 45px;" />
+                                    @endforeach
+                                </td>
+                                <td>{{ $actividad->description }}</td>
+                            </tr>
+                            {{-- <tr>
                                 <td>{{ $actividad->id }}</td>
                                 <td style="background: {{ $color }}; color:{{ $textColor }}">
                                     {{ $estatus }}
@@ -192,7 +210,7 @@
                                         onclick="event.preventDefault(); EliminarFila(this)"><i
                                             class="fa fa-trash-alt"></i></button>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         @endforeach
                     @endif
                 </tbody>
@@ -339,18 +357,26 @@
 
             if (!arrActividades.includes(actividad)) {
                 tblActividades.row.add([
-                    id,
-                    'STATUS_ACTIVE',
+                    // id,
+                    // 'STATUS_ACTIVE',
                     name,
                     start,
                     end,
-                    duration,
+                    // duration,
                     images,
-                    participantes_id,
+                    // participantes_id,
                     comentarios,
-                    `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
+                    // `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
                 ]).draw();
 
+                let additionalData = {
+                    id: id,
+                    status: 'STATUS_ACTIVE',
+                    duration: duration,
+                    participantes_id: participantes_id,
+                    // button: `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
+                };
+                tblActividades.rows().data()[tblActividades.rows().length - 1].push(additionalData);
             } else {
                 Swal.fire('Esta actividad ya ha sido agregada', '', 'info');
                 limpiarCampos();
@@ -363,8 +389,18 @@
             .remove()
             .draw();
     }
+    // window.enviarActividades = function() {
+    //     let actividades = tblActividades.rows().data().toArray();
+    //     document.getElementById('actividades').value = JSON.stringify(actividades);
+    // }
     window.enviarActividades = function() {
         let actividades = tblActividades.rows().data().toArray();
-        document.getElementById('actividades').value = JSON.stringify(actividades);
+
+        // Filter out null or empty string values from each row
+        let filteredActividades = actividades.map(row =>
+            row.filter(value => value !== null && value !== '')
+        );
+
+        document.getElementById('actividades').value = JSON.stringify(filteredActividades);
     }
 </script>

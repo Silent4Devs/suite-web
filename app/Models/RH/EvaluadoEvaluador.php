@@ -54,7 +54,9 @@ class EvaluadoEvaluador extends Model implements Auditable
 
     public function evaluador()
     {
-        return $this->belongsTo('App\Models\Empleado', 'evaluador_id', 'id');
+        return $this->belongsTo('App\Models\Empleado', 'evaluador_id', 'id')
+            ->select('id', 'name', 'area_id', 'puesto_id', 'foto')
+            ->with('area', 'puestoRelacionado');
     }
 
     public function evaluacion()

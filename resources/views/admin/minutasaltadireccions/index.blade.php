@@ -2,7 +2,7 @@
 @section('content')
     @include('admin.listadistribucion.estilos')
     <style>
-            .boton-transparente {
+        .boton-transparente {
             background-color: transparent;
             border: none;
             /* Elimina el borde del botón si lo deseas */
@@ -42,9 +42,30 @@
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
 
+
+    <h5 class="col-12 titulo_general_funcion">Minutas de Sesiones de Alta Dirección</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Minutas de Sesiones de Alta Dirección?</h4>
+                <p>
+                    Proceso fundamental en el contexto de los sistemas de gestión.
+                </p>
+                <p>
+                    Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
+                    desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar
+                    que
+                    el
+                    sistema de gestión esté funcionando de manera eficaz y que se estén cumpliendo los objetivos y metas
+                    establecidos. Como evidencia de este punto se propone la generación de una minuta.
+                </p>
+            </div>
+        </div>
+    </div>
+
     @can('revision_por_direccion_agregar')
-        <h5 class="col-12 titulo_general_funcion">
-            Revisión por dirección</h5>
         <div style="margin-bottom: 10px; text-align:end;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-primary" href="{{ route('admin.minutasaltadireccions.create') }}">
@@ -54,68 +75,72 @@
         </div>
     @endcan
 
-    <div class="card card-body">
+    {{-- <div class="card card-body">
         <div class="card-header">
             <h5 class="title-table-rds">Minutas Revisión por Dirección</h5>
-        </div>
-        @include('partials.flashMessages')
-        <div>
-            <table class="datatable-rds" id="datatable-Minutasaltadireccion" style="width: 100%">
-                <thead class="thead-dark">
+        </div> --}}
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <h3 class="title-table-rds">Minutas Revisión por Dirección</h3>
+        <table class="datatable-Minutasaltadireccion" id="datatable-Minutasaltadireccion" style="width: 100%">
+            <thead class="thead-dark">
+                <tr>
+                    {{-- <th>
+                        {{ trans('cruds.minutasaltadireccion.fields.id') }}
+                    </th> --}}
+                    <th>
+                        Tema de la reunión
+                    </th>
+                    <th>
+                        Fecha
+                    </th>
+                    <th style="width: 8rem; text-align: start;">
+                        Elaboró
+                    </th>
+                    <th>
+                        Participantes
+                    </th>
+                    <th>
+                        Estatus
+                    </th>
+                    <th>
+                        Opciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($query as $q)
                     <tr>
-                        {{-- <th>
-                            {{ trans('cruds.minutasaltadireccion.fields.id') }}
-                        </th> --}}
-                        <th>
-                            Tema de la reunión
-                        </th>
-                        <th>
-                            Fecha
-                        </th>
-                        <th style="width: 8rem; text-align: start;">
-                            Elaboró
-                        </th>
-                        <th>
-                            Participantes
-                        </th>
-                        <th>
-                            Estatus
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($query as $q)
-                        <tr>
-                            {{-- <td>{{ $q->id }}</td> --}}
-                            <td>{{ $q->tema_reunion }}</td>
-                            <td>{{ $q->fechareunion }}</td>
-                            <td>
-                                <img src="{{ asset('storage/empleados/imagenes') }}/{{ $q->responsable->avatar ?? '' }}"
-                                    title="{{ $q->responsable->name ?? '' }}" class="btn btn-round ml-2 rounded-circle"
-                                    style="width: 50px; height:50px; background-color: #fff8dc;" />
-                            </td>
-                            <td>
-                                @foreach ($q->participantes as $index => $participante)
-                                    @if ($index < 3)
-                                        <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
-                                            class="btn btn-round ml-2 rounded-circle" alt="{{ $participante->name }}"
-                                            title="{{ $participante->name }}"
-                                            style="width: 50px; height:50px; background-color: #fff8dc;">
-                                    @endif
-                                @endforeach
-                                @if ($q->participantes->count() > 3)
-                                <button type="button" class="btn btn-round ml-2 rounded-circle" style="width: 25px; height: 25px; background-color: #fff8dc; padding: 0; position: relative; border: 1px solid black; border-radius: 50%;" data-bs-toggle="modal" data-bs-target="#participantsModal{{ $q->id }}">
-                                    <span style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $q->participantes->count() - 3 }}</span>
-                                </button>
+                        {{-- <td>{{ $q->id }}</td> --}}
+                        <td>{{ $q->tema_reunion }}</td>
+                        <td>{{ $q->fechareunion }}</td>
+                        <td>
+                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $q->responsable->avatar ?? '' }}"
+                                title="{{ $q->responsable->name ?? '' }}" class="btn btn-round ml-2 rounded-circle"
+                                style="width: 50px; height:50px; background-color: #fff8dc;" />
+                        </td>
+                        <td>
+                            @foreach ($q->participantes as $index => $participante)
+                                @if ($index < 3)
+                                    <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
+                                        class="btn btn-round ml-2 rounded-circle" alt="{{ $participante->name }}"
+                                        title="{{ $participante->name }}"
+                                        style="width: 50px; height:50px; background-color: #fff8dc;">
                                 @endif
+                            @endforeach
+                            @if ($q->participantes->count() > 3)
+                                <button type="button" class="btn btn-round ml-2 rounded-circle"
+                                    style="width: 25px; height: 25px; background-color: #fff8dc; padding: 0; position: relative; border: 1px solid black; border-radius: 50%;"
+                                    data-bs-toggle="modal" data-bs-target="#participantsModal{{ $q->id }}">
+                                    <span
+                                        style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $q->participantes->count() - 3 }}</span>
+                                </button>
+                            @endif
 
-                            </td>
+                        </td>
 
-                            <td>
-                                @php
+                        <td>
+                            @php
                                 $badgeColor = '';
                                 $backgroundColor = '';
                                 $fontWeight = '300'; // Puedes ajustar este valor según tus preferencias
@@ -141,266 +166,93 @@
                                         $badgeColor = 'blue';
                                         $backgroundColor = 'rgba(0, 0, 255, 0.1)';
                                 }
-                                @endphp
+                            @endphp
 
-                                <span class="badge" style="color: {{ $badgeColor }}; background-color: {{ $backgroundColor }}; border-radius: 7px; padding: 5px; font-weight: {{ $fontWeight }};">{{ $q->estatus_formateado }}</span>
+                            <span class="badge"
+                                style="color: {{ $badgeColor }}; background-color: {{ $backgroundColor }}; border-radius: 7px; padding: 5px; font-weight: {{ $fontWeight }};">{{ $q->estatus_formateado }}</span>
 
 
-                            </td>
-                            <td>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        @can('revision_por_direccion_editar')
-                                            <li><a href="/admin/minutasaltadireccions/{{ $q->id }}/edit"
-                                                    class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i>
-                                                    </a>Editar</li>
-                                        @endcan
-                                        @can('revision_por_direccion_ver')
-                                            <li><a href="#" class="btn btn-sm" title="Visualizar" data-toggle="modal" data-target="#exampleModal">
-                                                <i class="fa fa-eye"></i> Ver
-                                            </a></li>
-                                        @endcan
-                                        @foreach ($q->planes as $plan)
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    {{-- @can('revision_por_direccion_editar')
+                                            <li><a onclick="openEdit('{{ $q->id }}')" class="btn btn-sm"
+                                                    title="Editar"><i class="fa fa-edit"></i>
+                                                </a>&nbsp;Editar</li>
+                                        @endcan --}}
+                                    @can('revision_por_direccion_editar')
+                                        <li><a href="{{ route('admin.minutasaltadireccions.edit', $q->id) }}"
+                                                class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i>
+                                            </a>&nbsp;Editar</li>
+                                    @endcan
+                                    @can('revision_por_direccion_ver')
+                                        <li>
+                                            <a href="javascript:void(0)" class="btn btn-sm abrir-modal" title="Visualizar"
+                                                onclick="openModal('{{ $q->id }}')">
+                                                <i class="fa fa-eye"></i> &nbsp; Ver
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    {{-- @foreach ($q->planes as $plan)
                                             @can('revision_por_direccion_plan_accion')
                                                 <li><a href="/admin/planes-de-accion/{{ $plan->id }}" class="btn btn-sm"
                                                         title="Plan de Acción"><i class="fa fa-stream"></i></a>Plan de
-                                                        Accion
+                                                    Accion
                                                 </li>
                                             @endcan
                                         @endforeach
 
-                                        @can('revision_por_direccion_visualizar_revisiones')
-                                            <li><a class="btn btn-sm " title="Visualizar revisiones"
-                                                    href="/admin/minutasaltadireccions/{{ $q->id }}/historial-revisiones">
-                                                    <svg xmlns="http:www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z" />
-                                                        <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
-                                                        <path
-                                                            d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
-                                                    </svg>
-                                                </a>Versiones</li>
-                                        @endcan
-                                        @can('revision_por_direccion_eliminar')
-                                            <li><button class="btn btn-sm text-danger" title="Eliminar"
-                                                    onclick="Eliminar('/admin/minutasaltadireccions/{{ $q->id }}','{{ $q->tema_reunion }}')"><i
-                                                        class="fa fa-trash-alt"></i></button>Eliminar</li>
-                                        @endcan
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
-        <div class="row d-flex align-items-center justify-content-center">
-                <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
-                <!-- Modal -->
-                <div class="modal modal2 fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
-                        style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
-                            style="color: #ffffff;"></i>
-                    </button>
-                    <div class="modal-dialog" style="margin-top: 0px; max-width: 1000px;">
-                        <div class="modal-content" style="width:1000px;">
-                            <div class="modal-body" style="border-radius: 0px;">
-                                <div class="print-none">
-                                </div>
-                                <div class="card col-sm-12 col-md-10"
-                                    style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
-                                    <div class="card-body" style=" position: relative; left:4.5rem; width:800px;">
-                                        <div class="print-none" style="text-align:right;">
-                                            <form method="POST"
-                                                action="{{ route('admin.politica-sgsis.pdf') }}">
-                                                @csrf
-                                                <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-                                                    IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="card mt-6" style="width:750px; position: relative; right: -.8rem;">
-                                            <div class="row col-12 ml-0"
-                                                style="border-radius;
-                                                padding-left: 0px;padding-right: 0px;">
-                                                <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                    <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
-                                                        style=" width:70%; position: relative; left: -.1rem; top: 1.4rem;">
-                                                </div>
-                                                <div class="col-5 p-2 mt-3">
-                                                    <br>
-                                                    <span class=""
-                                                        style="color:black; position: relative; top: -1.5rem; right: 3rem;  font-size: 12px;">
-                                                        {{ $empresa_actual }} <br>
-                                                        RFC: {{ $rfc }} <br>
-                                                        {{ $direccion }} <br>
-                                                    </span>
-
-                                                </div>
-                                                <div class="col-4 pt-6 pl-6" style="background:#EEFCFF;">
-                                                    <br>
-                                                    <br>
-                                                    <br>
-                                                    <span class="textopdf"> <strong> Minuta Revisión por Dirección</strong></span>
-                                                </div>
-                                                <br>
-                                            </div>
-                                                <div style="margin: 4%">
-                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="6"><center>Minuta reunión</center></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd;">Fecha:</td>
-                                                                <td style="border: 1px solid #dddddd;">dd/mm/aa</td>
-                                                                <td style="border: 1px solid #dddddd;">Hora Inicio</td>
-                                                                <td style="border: 1px solid #dddddd;">00:00</td>
-                                                                <td style="border: 1px solid #dddddd;">Hora fin</td>
-                                                                <td style="border: 1px solid #dddddd;">00:00</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd;">Tema:</td>
-                                                                <td style="border: 1px solid #dddddd;"></td>
-                                                                <td style="border: 1px solid #dddddd;">Objetivo;</td>
-                                                                <td style="border: 1px solid #dddddd;"></td>
-                                                                <td style="border: 1px solid #dddddd;"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <br>
-                                                    <br>
-                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="4"><center>Participantes</center></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd;">Nombre/Apellidos</td>
-                                                                <td style="border: 1px solid #dddddd;">Puesto/Area</td>
-                                                                <td style="border: 1px solid #dddddd;">Asistencia</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd;">.</td>
-                                                                <td style="border: 1px solid #dddddd;">.</td>
-                                                                <td style="border: 1px solid #dddddd;">.</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <br>
-                                                    <br>
-                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="2"><center style="color: white;">Temas tratados</center></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
-                                                                    <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;"></textarea>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <br>
-                                                    <br>
-                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="5"><center>Acuerdos y Compromisos</center></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd;">Actividades</td>
-                                                                <td style="border: 1px solid #dddddd;">Responsable</td>
-                                                                <td style="border: 1px solid #dddddd;">Fecha compromiso</td>
-                                                                <td style="border: 1px solid #dddddd;">Estatus</td>
-                                                                <td style="border: 1px solid #dddddd;">Comentarios</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd;">.</td>
-                                                                <td style="border: 1px solid #dddddd;">.</td>
-                                                                <td style="border: 1px solid #dddddd;">.</td>
-                                                                <td style="border: 1px solid #dddddd;">.</td>
-                                                                <td style="border: 1px solid #dddddd;">.</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <br>
-                                                    <br>
-                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="6"><center>Próxima reunión</center></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd;">Fecha:</td>
-                                                                <td style="border: 1px solid #dddddd;"></td>
-                                                                <td style="border: 1px solid #dddddd;">Hora</td>
-                                                                <td style="border: 1px solid #dddddd;"></td>
-                                                                <td style="border: 1px solid #dddddd;">Lugar</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd;" colspan="5">Proposito:</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <br>
-                                                    <br>
-                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="background-color: #FFFFFF; padding: 8px; color: black; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="2"><center style="color: black;">Anexo</center></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
-                                                                    <textarea style="width: 100%; border: none; outline: none; resize: none; background-color: transparent;">Se adjunta la respuesta que Habiza dio en la reunión que tuvo con los representantes y que motivó se convocara a la reunión de hoy 10/03/2021, ya que mencionaron que para el mes de abril de este año ya no serán ellos los que administren el clúster. 1.- BARDA COLINDANTE: La barda colindante que comprende el tren número 2 que corresponde de la casa 9 a la 24, no se va a hacer porque los cimientos que se hicieron para la misma no soportan más peso inclusive ni siquiera 20 centímetros de malla ya que los vientos la derribarían 2.- PLANOS DE CONSTRUCIÓN Los planos nos los entregarían la próxima semana, pero solo van a ser los planos de cada prototipo pues las casas están hechas en serie y todos tienen las mismas características en cuanto al tema eléctrico e hidráulico, se va a entregar por correo y físico solo uno. 3.- GASTOS DE ADMINISTRACIÓN El informe nos lo entregan a más tardar el día 29 de marzo de 2021, y ellos se comprometen a compartir proveedores de insumos, vigilancia y jardineros. Por este punto se sugiere ir planeando u organizando la administración, no hay prorroga. 4.- CISTERNA DE RIEGO Nos comentan que la cisterna ya está para su funcionamiento y que a nosotros nos corresponde hacer el contrato de toma de agua para áreas verdes y alberca, inclusive nos entregaron la solicitud y esta tendrá un costo de $7,041.11. 5.-CANAL PLUVIAL</textarea>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <hr>
-                                        </div>
-                                    </div>
-                                </div>
+                                    @can('revision_por_direccion_visualizar_revisiones')
+                                        <li><a class="btn btn-sm " title="Visualizar revisiones"
+                                                href="/admin/minutasaltadireccions/{{ $q->id }}/historial-revisiones">
+                                                <svg xmlns="http:www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z" />
+                                                    <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
+                                                    <path
+                                                        d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
+                                                </svg>
+                                            </a>Versiones</li>
+                                    @endcan --}}
+                                    @can('revision_por_direccion_eliminar')
+                                        <li><button class="btn btn-sm text-danger" title="Eliminar"
+                                                onclick="Eliminar('/admin/minutasaltadireccions/{{ $q->id }}','{{ $q->tema_reunion }}')"><i
+                                                    class="fa fa-trash-alt"></i></button>Eliminar</li>
+                                    @endcan
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-        </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    {{-- </div> --}}
+
+    <div id="modalContainer"></div>
 
     <!-- Modal -->
     @foreach ($query as $q)
         <div class="modal fade" id="participantsModal{{ $q->id }}" tabindex="-1"
             aria-labelledby="participantsModalLabel" aria-hidden="true">
-            <button type="button"  style="position: relative; top: 7rem; right: 15rem;"  class="close" data-dismiss="modal" aria-label="Close" >
-                <i class="fa-solid fa-x fa-2xl"
-                style="color: #ffffff;"></i>
+            <button type="button" style="position: relative; top: 7rem; right: 15rem;" class="close" data-dismiss="modal"
+                aria-label="Close">
+                <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
             </button>
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content" style="text-align: center;">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="participantsModalLabel"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Participantes</h5>
+                        <h5 class="modal-title" id="participantsModalLabel">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Participantes</h5>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="display: flex; justify-content: center; align-items: center;">
                         @foreach ($q->participantes as $index => $participante)
                             <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $participante->avatar }}"
                                 class="rounded-circle" alt="{{ $participante->name }}" title="{{ $participante->name }}"
@@ -415,202 +267,59 @@
 
 @section('scripts')
     @parent
+
+    <script>
+        function openModal(minutaId) {
+            // Construir la URL con el ID correcto
+            var modalUrl = '{{ route('admin.minutasaltadireccions.show', ['minutasaltadireccion' => ':minutaId']) }}';
+            modalUrl = modalUrl.replace(':minutaId', minutaId);
+
+            // Cargar el contenido del modal desde la URL utilizando AJAX
+            $.ajax({
+                url: modalUrl,
+                type: 'GET',
+                success: function(response) {
+                    // Insertar el contenido del modal en el modal de la vista actual
+                    $('#modalContainer').html(response);
+
+                    // Mostrar el modal
+                    $('#exampleModal').modal('show');
+                },
+                error: function(error) {
+                    console.error('Error al cargar el contenido del modal', error);
+                }
+            });
+        }
+
+
+        function openEdit(minutaId) {
+            // Construir la URL con el ID correcto
+            var modalUrl = '{{ route('admin.minutasaltadireccions.edit', ['minutasaltadireccion' => ':minutaId']) }}';
+            modalUrl = modalUrl.replace(':minutaId', minutaId);
+
+            // Cargar el contenido del modal desde la URL utilizando AJAX
+            $.ajax({
+                url: modalUrl,
+                type: 'GET',
+                success: function(response) {
+                    console.log('test');
+                },
+                error: function(error) {
+                    console.error('Error al cargar el contenido del modal', error);
+                }
+            });
+        }
+    </script>
+
     <script>
         $(function() {
             let dtButtons = [];
-            @can('revision_por_direccion_eliminar')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                    text: deleteButtonTrans,
-                    url: "{{ route('admin.minutasaltadireccions.massDestroy') }}",
-                    className: 'btn-danger',
-                    action: function(e, dt, node, config) {
-                        var ids = $.map(dt.rows({
-                            selected: true
-                        }).data(), function(entry) {
-                            return entry.id
-                        });
 
-                        if (ids.length === 0) {
-                            alert('{{ trans('global.datatables.zero_selected') }}')
-
-                            return
-                        }
-
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'DELETE'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
-                    }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
-            @can('revision_por_direccion_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar nueva minuta de Sesión con alta Dirección',
-                    url: "{{ route('admin.minutasaltadireccions.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                let btnExport = {
-                    text: '<i  class="fas fa-download"></i>',
-                    titleAttr: 'Descargar plantilla',
-                    className: "btn btn_cargar",
-                    url: "{{ route('descarga-alta_direccion') }}",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                let btnImport = {
-                    text: '<i class="fas fa-file-upload"></i>',
-                    titleAttr: 'Importar datos',
-                    className: "btn btn_cargar",
-                    action: function(e, dt, node, config) {
-                        $('#xlsxImportModal').modal('show');
-                    }
-                };
-
-                dtButtons.push(btnAgregar);
-                dtButtons.push(btnExport);
-                dtButtons.push(btnImport);
-            @endcan
             let dtOverrideGlobals = {
                 pageLength: 5,
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
                 retrieve: true,
-                aaSorting: [],
-                // ajax: "{{ route('admin.minutasaltadireccions.index') }}",
-                // columns: [{
-                //         data: 'id',
-                //         name: 'id'
-                //     },
-                //     {
-                //         data: 'tema_reunion',
-                //         name: 'tema_reunion'
-                //     },
-                //     {
-                //         data: 'fechareunion',
-                //         name: 'fechareunion'
-                //     },
-                //     {
-                //         data: 'responsable',
-                //         name: 'responsable',
-                //         render: function(data, type, row, meta) {
-                //             if (type === "empleadoText") {
-                //                 return data.name;
-                //             }
-                //             let responsablereunion = "";
-                //             if (data) {
-                //                 responsablereunion += `
-            //             <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-            //             `;
-                //             }
-                //             return responsablereunion;
-                //         }
-                //     },
-                //     {
-                //         data: 'participantes',
-                //         name: 'participantes',
-                //         render: function(data, type, row, meta) {
-                //             let participantes = data;
-                //             if (type === "empleadoText") {
-                //                 let participantesTexto = "";
-                //                 participantes.forEach(participante => {
-                //                     participantesTexto += `
-            //             ${participante.name},
-            //             `;
-                //                 });
-                //                 return participantesTexto.trim();
-                //             }
-                //             let html = '';
-                //             participantes.forEach(participante => {
-                //                 html += `
-            //             <img src="{{ asset('storage/empleados/imagenes/') }}/${participante.avatar}"
-            //                         class="rounded-circle" alt="${participante.name}"
-            //                         title="${participante.name}" style="clip-path: circle(15px at 50% 50%);height: 30px;">
-            //             `
-                //             });
-                //             return html;
-                //         }
-
-                //     },
-                //     {
-                //         data: 'estatus_formateado',
-                //         name: 'estatus_formateado',
-                //         render: function(data, type, row, meta) {
-                //             let estatus = `
-            //                 <span class="badge" style="color:${row.color_estatus}">${data}</span>
-            //             `;
-                //             return estatus;
-                //         }
-                //     },
-                //     {
-                //         data: 'id',
-                //         render: function(data, type, row, meta) {
-                //             let urlBotonEditar = `/admin/minutasaltadireccions/${data}/edit`;
-                //             let urlBotonMostrar = `/admin/minutasaltadireccions/${data}`;
-                //             let urlBotonEliminar = `/admin/minutasaltadireccions/${data}`;
-
-                //             let htmlButtons = `
-            //             @can('revision_por_direccion_editar')
-            //                 <a href="${urlBotonEditar}" class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
-            //             @endcan
-            //             @can('revision_por_direccion_ver')
-            //                 <a href="${urlBotonMostrar}" class="btn btn-sm" title="Visualizar"><i class="fa fa-eye"></i></a>
-            //             @endcan
-            //             @can('revision_por_direccion_plan_accion')
-            //                 ${row.planes.map(plan=>{
-            //                     return `<a href="/admin/planes-de-accion/${plan.id}" class="btn btn-sm" title="Plan de Acción"><i class="fa fa-stream"></i></a>`;
-            //                 })}
-            //             @endcan
-            //             @can('revision_por_direccion_visualizar_revisiones')
-            //                 <a class="btn btn-sm " title="Visualizar revisiones"
-            //                     href="/admin/minutasaltadireccions/${data}/historial-revisiones">
-            //                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            //                         class="bi bi-clock-history" viewBox="0 0 16 16">
-            //                         <path
-            //                             d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z" />
-            //                         <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
-            //                         <path
-            //                             d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
-            //                     </svg>
-            //                 </a>
-            //             @endcan
-            //             @can('revision_por_direccion_eliminar')
-            //                 <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlBotonEliminar}','${row.tema_reunion}')"><i class="fa fa-trash-alt"></i></button>
-            //             @endcan
-            //             `;
-                //             return htmlButtons;
-                //         }
-                //     }
-                // ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
             };
             let table = $('.datatable-Minutasaltadireccion').DataTable(dtOverrideGlobals);
 
@@ -628,7 +337,9 @@
                         $.ajax({
                             type: "DELETE",
                             headers: {
-                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
+                                'x-csrf-token': $(
+                                    'meta[name="csrf-token"]'
+                                ).attr('content')
                             },
                             url: url,
                             beforeSend: function() {
@@ -640,7 +351,7 @@
                                 Swal.fire(
                                     'Eliminado!',
                                 )
-                                table.ajax.reload();
+                                location.reload();
                             },
                             error: function(error) {
                                 console.log(error);
@@ -656,4 +367,4 @@
             }
         });
     </script>
-@endsection --}}
+@endsection

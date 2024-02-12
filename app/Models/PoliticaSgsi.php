@@ -45,6 +45,7 @@ class PoliticaSgsi extends Model implements Auditable
         'updated_at',
         'deleted_at',
         'team_id',
+        'mostrar',
     ];
 
     public static function getAll()

@@ -322,7 +322,7 @@
         <div class="form-group col-md-12">
             <label for="objetivo" class="txt-tamaño">
                 Objetivo del servicio<font class="asterisco">*</font></label>
-            <textarea style="text-align:justify" id="textarea1" class="form-control" value="{{ $contrato->objetivo }}"
+            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control" value="{{ $contrato->objetivo }}"
                 name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback red-text">
@@ -771,6 +771,7 @@
             </font></label>
         <div>
             {!! Form::text('pmp_asignado', $contratos->pmp_asignado, [
+                'maxlength' => '250',
                 'class' => 'form-control',
                 $show_contrato ? 'readonly' : '',
                 'required',
@@ -790,6 +791,7 @@
     <div class="distancia form-group col-md-4">
         <label class="txt-tamaño">Área</label>
         {!! Form::text('area', $contratos->area, [
+            'maxlength' => '250',
             'class' => 'form-control',
             'maxlength' => '250',
             $show_contrato ? 'readonly' : '',
@@ -806,6 +808,7 @@
         <label class="txt-tamaño">Nombre del
             Supervisor 2</label>
         {!! Form::text('administrador_contrato', $contratos->administrador_contrato, [
+            'maxlength' => '250',
             'class' => 'form-control',
             $show_contrato ? 'readonly' : '',
         ]) !!}

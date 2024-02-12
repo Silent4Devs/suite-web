@@ -1,10 +1,22 @@
 body {
     background-color: #EFF1F5;
     background-image: url('../img/fondo-rds.png');
-    background-position: center 200px;
-    background-size: 90%;
+    background-position: center;
+    background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+}
+
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 71 159 / 4%);
+    z-index: -1;
 }
 
 header {
@@ -13,13 +25,13 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 9999999999999999;
+    z-index: 100;
 }
 
 .content-header-blue {
     width: 100%;
-    height: 80px;
-    background-color: #306BA9;
+    height: 60px;
+    background-color: #2c69aa;
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
     display: flex;
@@ -30,6 +42,7 @@ header {
     color: #fff;
     position: relative;
     z-index: 9;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
 }
 
 .caja-inicio-options-header {
@@ -43,7 +56,7 @@ header {
     background-color: #00000000;
     border: none;
     color: #fff;
-    font-size: 20px;
+    font-size: 22px;
     cursor: pointer;
 }
 
@@ -63,6 +76,16 @@ header {
     font-size: 16px;
 }
 
+.caja-list-search-global {
+    position: absolute;
+    overflow: auto;
+    max-height: 600px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0px 2px 3px 1px #ccc;
+    z-index: 4;
+}
+
 .caja-inicio-options-header input {
     width: 284px;
     height: 40px;
@@ -71,6 +94,11 @@ header {
     border-radius: 6px;
     padding-left: 40px;
     color: #fff;
+}
+
+.caja-inicio-options-header input::placeholder {
+    color: #fff;
+    /* Cambia este valor al color que desees */
 }
 
 .caja-inicio-options-header input:focus {
@@ -100,7 +128,7 @@ header .caja-img-user-header img {
     width: 100%;
     position: relative;
     z-index: 8;
-    transition: 0.5s;
+    transition: 0.2s;
     transform: translateY(-105%);
     display: flex;
     box-shadow: 0px 2px 4px #0000001A;
@@ -111,34 +139,21 @@ header.mostrar-menu {
 }
 
 .mostrar-menu .menu-hedare-window {
+    transition: 0.5s !important;
     transform: translateY(-80px);
-}
-
-.menu-hedare-window .item-content-menu-header * {
-    opacity: 0;
-    transition: 0.5s;
-
-    transform: translateY(-100px);
-    transition: 0.5s;
-}
-
-
-.mostrar-menu .menu-hedare-window .item-content-menu-header * {
-    opacity: 1;
-    transition: 1s;
-    transform: translateY(0px);
-    transition: 0.7s;
 }
 
 .item-content-menu-header {
     width: 100%;
     box-sizing: border-box;
     padding: 0 50px;
-    padding-top: 140px;
+    padding-top: 100px;
     padding-bottom: 50px;
 }
 
 .title-item-menu-header {
+    display: block;
+    margin-top: 30px;
     color: #306BA9;
     font-size: 18px;
 }
@@ -146,7 +161,7 @@ header.mostrar-menu {
 .menu-list-panel-header {
     display: block;
     margin: 0px;
-    margin-top: 40px;
+    margin-top: 20px;
     padding: 0px;
     list-style: none;
 }
@@ -159,6 +174,11 @@ header.mostrar-menu {
     font-size: 14px;
     color: #2E2E2E;
     text-decoration: none;
+    transition: 0.1s;
+}
+
+.menu-list-panel-header a:hover {
+    color: #2c69aa;
 }
 
 .menu-list-panel-header i {
@@ -179,25 +199,31 @@ header.mostrar-menu {
     align-items: center;
     width: 230px;
     height: 60px;
-    border: 1px solid #707070;
+    border: 1px solid #8c8c8c;
     border-radius: 14px;
     text-decoration: none;
     font-size: 16px;
-    color: #2E2E2E;
+    color: #424242;
 }
 
-.menu-blocks-mod-header a i {}
+.menu-blocks-mod-header a i {
+    transition: 0.1s;
+}
+
+.menu-blocks-mod-header a:hover i {
+    transform: scale(1.2);
+}
 
 .caja-icon-mod-header {
     width: 60px;
     height: 60px;
     font-size: 30px;
-    border: 1px solid #707070;
+    border: .5px solid #8c8c8c;
     border-radius: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #2E2E2E;
+    color: #424242;
     transform: scale(1.05) !important;
 }
 
@@ -225,13 +251,26 @@ header.mostrar-menu {
     background-color: #dbdbdb;
 }
 
+.logo-org-header {
+    width: 80%;
+    height: 60px;
+    margin-top: 10px;
+}
+
+.logo-org-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left;
+}
+
 .caja-menu-admin-header {}
 
 .menu-list-admin-header {
     width: calc(100% - 30px);
     display: block;
     margin: 0px;
-    margin-top: 40px;
+    margin-top: 20px;
     padding: 0px;
     list-style: none;
 }
@@ -292,4 +331,79 @@ header.mostrar-menu {
     object-fit: cover;
     width: 100%;
     height: 100%;
+}
+
+
+
+/* btn menu ------- */
+.line-menu {
+    display: grid;
+    grid-template-areas: "menu";
+    transition: 0.3s;
+}
+
+.line-menu::before {
+    display: block;
+    content: "";
+    width: 25px;
+    height: 1px;
+    background-color: #fff;
+    grid-area: menu;
+    transform: translateY(-8px);
+    transition: 0.3s;
+}
+
+.line-menu hr {
+    width: 25px;
+    height: 1px;
+    background-color: #fff;
+    border: none;
+    margin: 0;
+    grid-area: menu;
+    transition: 0.3s;
+}
+
+.line-menu::after {
+    display: block;
+    content: "";
+    width: 25px;
+    height: 1px;
+    background-color: #fff;
+    grid-area: menu;
+    transform: translateY(8px);
+    transition: 0.3s;
+}
+
+.active .line-menu {
+    gap: 0px;
+}
+
+.active .line-menu::before {
+    transform: rotate(45deg) translateY(0px);
+}
+
+.active .line-menu hr {
+    transform: rotate(-45deg);
+}
+
+.active .line-menu::after {
+    opacity: 0;
+}
+
+.bg-black-header-menu {
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 80px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.bg-black-header-menu.active {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0.1s;
 }

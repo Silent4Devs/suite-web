@@ -44,8 +44,8 @@ return [
             'timeout' => null,
             'auth_mode' => null,
             'from' => [
-                'address' => 'tucorreo@example.com',
-                'name' => 'Tu Nombre',
+                'address' => env('MAIL_FROM_ADDRESS'),
+                'name' => env('MAIL_FROM_NAME'),
             ],
             // 'stream' => [
             //     'ssl' => [

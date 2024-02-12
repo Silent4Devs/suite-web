@@ -37,74 +37,46 @@
     </div>
 </div>
 
-<div class="datatable-fix" style="width: 100%;">
-    @can('mi_perfil_mis_reportes_realizar_reporte_de_queja')
-    <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/quejas')}}">Crear reporte</a>
-    </div>
-    @endcan
-   <table class="table tabla_quejas">
-   		<thead>
-            <tr style="border: none !important">
-                <th colspan="6"></th>
-                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
-                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th>
-            </tr>
-            <tr>
-       			<th>Folio</th>
-                <th style="min-width:200px;">Anónimo</th>
-                <th style="min-width:200px;">Estatus</th>
-                <th style="min-width:200px;">Fecha de identificación</th>
-                <th style="min-width:200px;">Fecha de recepción</th>
-                <th style="min-width:200px;">Fecha de cierre</th>
-       			<th style="min-width:200px;">Nombre</th>
-                <th style="min-width:200px;">Puesto</th>
-                <th style="min-width:200px;">Área</th>
-                <th style="min-width:200px;">Nombre</th>
-                <th style="min-width:200px;">Área</th>
-                <th style="min-width:200px;">Proceso</th>
-                <th style="min-width:200px;">Sede</th>
-                <th style="min-width:200px;">Ubicación</th>
-                <th style="min-width:200px;">Externos</th>
-       			<th style="min-width: 500px;">Descripción</th>
-       			<th>Opciones</th>
-            </tr>
-   		</thead>
-   		<tbody>
-   			{{-- @foreach($quejas as $queja)
-	   			<tr>
-	       			<td>{{ $queja->folio }}</td>
-	       			<td>{{ $queja->anonimo }}</td>
-                    <td>{{ $queja->estatus }}</td>
-                    <td>{{ $queja->fecha_creacion }}</td>
-                    <td>{{ $queja->fecha_reporte }}</td>
-                    <td>{{ $queja->fecha_de_cierre }}</td>
-                    @if($queja->anonimo == 'no')
-                        <td>
-                            <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $queja->quejo->avatar }}" title="{{ $queja->quejo->name }}">
-                        </td>
-                        <td>{{ $queja->quejo->puesto }}</td>
-                        <td>{{ $queja->quejo->area->area }}</td>
-                    @else
-                        <td> -- </td>
-                        <td> -- </td>
-                        <td> -- </td>
-                    @endif
-                    <td>{{ $queja->quejado }}</td>
-                    <td>{{ $queja->area_quejado }}</td>
-                    <td>{{ $queja->proceso_quejado }}</td>
-                    <td>{{ $queja->sede }}</td>
-                    <td>{{ $queja->ubicacion }}</td>
-                    <td>{{ $queja->externo_quejado }}</td>
-	       			<td>{{ $queja->descripcion }}</td>
-	       			<td>
-	       				<a href="{{ route('admin.desk.quejas-edit', $queja->id) }}"><i class="fas fa-edit"></i></a>
-	       			</td>
-	   			</tr>
-   			@endforeach --}}
-   		</tbody>
-   </table>
+@can('mi_perfil_mis_reportes_realizar_reporte_de_queja')
+<div class="mb-3 text-right">
+    <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/quejas')}}">Crear reporte</a>
 </div>
+@endcan
+
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <table class="datatable tabla_quejas">
+            <thead>
+             <tr style="border: none !important">
+                 <th colspan="6"></th>
+                 <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
+                 <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th>
+             </tr>
+             <tr>
+                    <th>Folio</th>
+                 <th style="min-width:200px;">Anónimo</th>
+                 <th style="min-width:200px;">Estatus</th>
+                 <th style="min-width:200px;">Fecha de identificación</th>
+                 <th style="min-width:200px;">Fecha de recepción</th>
+                 <th style="min-width:200px;">Fecha de cierre</th>
+                 <th style="min-width:200px;">Nombre</th>
+                 <th style="min-width:200px;">Puesto</th>
+                 <th style="min-width:200px;">Área</th>
+                 <th style="min-width:200px;">Nombre</th>
+                 <th style="min-width:200px;">Área</th>
+                 <th style="min-width:200px;">Proceso</th>
+                 <th style="min-width:200px;">Sede</th>
+                 <th style="min-width:200px;">Ubicación</th>
+                 <th style="min-width:200px;">Externos</th>
+                    <th style="min-width: 500px;">Descripción</th>
+                    <th>Opciones</th>
+             </tr>
+            </thead>
+            <tbody>
+            </tbody>
+    </table>
+</div>
+
 
 
 @section('scripts')

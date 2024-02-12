@@ -7,7 +7,7 @@
                 <div class="col-md-6">
                     <div class="anima-focus mb-3 ">
                         <input type="text" class="form-control" placeholder="" id="nombre_template"
-                            name="nombre_template" wire:model.defer="nombre_template" required>
+                            name="nombre_template" wire:model.defer="nombre_template" maxlength="200" required>
                         <label for="nombre_template">Nombre del Template <sup>*</sup></label>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="col-md-12">
                     <div class="anima-focus mb-3">
                         <textarea class="form-control" id="descripcion" name="descripcion" wire:model.defer="descripcion" placeholder=""
-                            style="height: 100px"></textarea>
+                            style="height: 150px !important;"></textarea>
                         <label for="">Descripción</label>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_1" name="estatus_1" wire:model.defer="estatus_1"
-                                class="form-control" placeholder="" required>
+                                class="form-control" placeholder="" maxlength="200" required>
                             <label for="estatus_1">Estatus<sup>*</sup></label>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_2" name="estatus_2" wire:model.defer="estatus_2"
-                                class="form-control" placeholder="" required>
+                                class="form-control" placeholder="" maxlength="200" required>
                             <label for="estatus_2">Estatus <sup>*</sup></label>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_3" name="estatus_3" wire:model.defer="estatus_3"
-                                class="form-control" placeholder="">
+                                class="form-control" placeholder="" maxlength="200">
                             <label for="estatus_3">Estatus</label>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_4" name="estatus_4" wire:model.defer="estatus_4"
-                                class="form-control" placeholder="">
+                                class="form-control" placeholder="" maxlength="200">
                             <label for="estatus_4">Estatus</label>
                         </div>
                     </div>
@@ -242,20 +242,13 @@
                             </div> --}}
                         </div>
                     @endif
-                    <div class="row" style="justify-content: right;">
-                        <div class="col-3">
-                            <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion1">
-                                Añadir Pregunta
-                                <i class="bi bi-plus-circle"></i>
-                            </button>
-                        </div>
-                    </div>
+
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
                                 <textarea class="form-control" id="descripcion_s1" name="descripcion_s1" wire:model.defer="descripcion_s1"
-                                    placeholder="" style="height: 150px"></textarea>
+                                    placeholder="" style="height: 150px !important"></textarea>
                                 <label for="descripcion_s1">Descripción <sup>*</sup></label>
                             </div>
                         </div>
@@ -263,9 +256,17 @@
                 </div>
             </div>
             <div class="card card-body mt-5">
-                <div style="color:#306BA9; font-size:16px;">Formulario
-                    <hr style="">
+                <div class="row">
+                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    </div>
+                    <div class="col-3" style="justify-content: right;">
+                        <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion1">
+                            Añadir Pregunta
+                            <i class="bi bi-plus-circle"></i>
+                        </button>
+                    </div>
                 </div>
+                <hr style="">
             </div>
 
             {{-- Libreria para realizar el drag and drop establece el espacio donde se podran mover --}}
@@ -357,19 +358,12 @@
                             100% entre las secciones
                         </div> --}}
                     </div>
-                    <div class="row" style="justify-content: right;">
-                        <div class="col-3">
-                            <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion2">
-                                Añadir Pregunta
-                                <i class="bi bi-plus-circle"></i>
-                            </button>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
                                 <textarea class="form-control" id="descripcion_s2" name="descripcion_s2" wire:model.defer="descripcion_s2"
-                                    placeholder="" style="height: 150px"></textarea>
+                                    placeholder="" style="height: 150px !important"></textarea>
                                 <label for="descripcion_s2">Descripción<sup>*</sup></label>
                             </div>
                         </div>
@@ -377,9 +371,17 @@
                 </div>
             </div>
             <div class="card card-body mt-5">
-                <div style="color:#306BA9; font-size:16px;">Formulario
-                    <hr style="">
+                <div class="row">
+                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    </div>
+                    <div class="col-3" style="justify-content: right;">
+                        <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion2">
+                            Añadir Pregunta
+                            <i class="bi bi-plus-circle"></i>
+                        </button>
+                    </div>
                 </div>
+                <hr style="">
             </div>
 
             <div id="sortable-container">
@@ -467,19 +469,12 @@
                             100% entre las secciones
                         </div> --}}
                     </div>
-                    <div class="row" style="justify-content: right;">
-                        <div class="col-3">
-                            <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion3">
-                                Añadir Pregunta
-                                <i class="bi bi-plus-circle"></i>
-                            </button>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
                                 <textarea class="form-control" id="descripcion_s3" name="descripcion_s3" wire:model.defer="descripcion_s3"
-                                    placeholder="" style="height: 150px"></textarea>
+                                    placeholder="" style="height: 150px !important"></textarea>
                                 <label for="descripcion_s3">Descripción<sup>*</sup></label>
                             </div>
                         </div>
@@ -488,9 +483,17 @@
             </div>
 
             <div class="card card-body mt-5">
-                <div style="color:#306BA9; font-size:16px;">Formulario
-                    <hr style="">
+                <div class="row">
+                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    </div>
+                    <div class="col-3" style="justify-content: right;">
+                        <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion3">
+                            Añadir Pregunta
+                            <i class="bi bi-plus-circle"></i>
+                        </button>
+                    </div>
                 </div>
+                <hr style="">
             </div>
             <div id="sortable-container">
 
@@ -577,19 +580,12 @@
                             100% entre las secciones
                         </div> --}}
                     </div>
-                    <div class="row" style="justify-content: right;">
-                        <div class="col-3">
-                            <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion4">
-                                Añadir Pregunta
-                                <i class="bi bi-plus-circle"></i>
-                            </button>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
                                 <textarea class="form-control" id="descripcion_s4" name="descripcion_s4" wire:model.defer="descripcion_s4"
-                                    placeholder="" style="height: 150px"></textarea>
+                                    placeholder="" style="height: 150px !important"></textarea>
                                 <label for="descripcion_s4">Descripción<sup>*</sup></label>
                             </div>
                         </div>
@@ -598,9 +594,17 @@
             </div>
 
             <div class="card card-body mt-5">
-                <div style="color:#306BA9; font-size:16px;">Formulario
-                    <hr style="">
+                <div class="row">
+                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    </div>
+                    <div class="col-3" style="justify-content: right;">
+                        <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion4">
+                            Añadir Pregunta
+                            <i class="bi bi-plus-circle"></i>
+                        </button>
+                    </div>
                 </div>
+                <hr style="">
             </div>
 
             <div id="sortable-container">
@@ -666,7 +670,8 @@
                 <div class="col-6">
                 </div>
                 <div class="col-3">
-                    <button class="btn btn-outline-primary btn-block">Cancelar</button>
+                    <a href="{{ route('admin.analisisdebrechas-2022.create') }}"
+                        class="btn btn-outline-primary btn-block">Cancelar</a>
                 </div>
                 <div class="col-3">
                     <button class="btn btn-primary btn-block" type="submit">Generar Template</button>

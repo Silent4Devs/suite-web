@@ -230,7 +230,7 @@ class RequisicionesController extends Controller
 
             $organizacion = Organizacion::getFirst();
 
-            Mail::to('ldelgadillo@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            Mail::to('ldelgadillo@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_finanzas') {
             $fecha = date('d-m-Y');
@@ -251,7 +251,7 @@ class RequisicionesController extends Controller
             ]);
         }
         $organizacion = Organizacion::getFirst();
-        Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($userEmail)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.requisiciones'));
     }
@@ -381,7 +381,7 @@ class RequisicionesController extends Controller
         $organizacion = Organizacion::getFirst();
         $tipo_firma = 'rechazado_requisicion';
 
-        Mail::to(trim($userEmail->email))->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to(trim($userEmail->email))->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.requisiciones'));
     }

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .radius {
@@ -74,27 +74,23 @@
     </style>
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
-    <h5 class="col-12 titulo_general_funcion"> Registrar: Determinación de Alcance</h5>
-    <div class="card radius" style="background-color: #5397D5;">
-        <div class="row">
-            <div class="col-md-2">
-                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:140px; height:117px;"
-                    class="mt-2 mb-2 ml-2 img-fluid">
-            </div>
-            <div class="col-md-10 mt-2">
-                <div style="font:20px Segoe UI;color:white;" class="mr-2">
-                    ¿Qué es? Determinación de Alcance
-                </div>
-                <div style="font: 14px Segoe UI;color:white;"class="mt-3 mr-2">
+    <h5 class="col-12 titulo_general_funcion">Determinación de Alcance </h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es? Determinación de Alcance</h4>
+                <p>
                     Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
                     límites del proyecto.
-                </div>
-                <div style="font: 12px Segoe UI;color:white;"class="mr-5 mt-3 mb-3">
+                </p>
+                <p>
                     Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
                     que ayuda a evitar
                     la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
                     comprensión clara de lo que se espera.
-                </div>
+                </p>
             </div>
         </div>
     </div>
@@ -104,31 +100,28 @@
         <div class="card-body">
             <h5 class="titulo-card">Alcance</h5>
             <hr>
-            <form method="POST" id="formularioAprobacion" action="{{ route('admin.alcance-sgsis.store') }}" enctype="multipart/form-data">
+            <form method="POST" id="formularioAprobacion" action="{{ route('admin.alcance-sgsis.store') }}"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="form-group anima-focus">
-                    <input
-                    class="form-control form"
-                    placeholder=""
-                    id="nombre"
-                    name="nombre"
-                    value="{{ old('nombre') }}"
-                    required
-                    maxlength="255"
-                    pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"
-                    title="Por favor, introduce un nombre válido con un máximo de 255 caracteres y caracteres de varios idiomas." >
+                    <input class="form-control form" placeholder="" id="nombre" name="nombre"
+                        value="{{ old('nombre') }}" required maxlength="255"
+                        pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"
+                        title="Por favor, introduce un nombre válido con un máximo de 255 caracteres y caracteres de varios idiomas.">
 
-                        @if ($errors->has('nombre'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('nombre') }}
-                            </div>
-                        @endif
-                        {!! Form::label('nombre', 'Nombre del alcance*', ['class' => 'asterisco']) !!}
+                    @if ($errors->has('nombre'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('nombre') }}
+                        </div>
+                    @endif
+                    {!! Form::label('nombre', 'Nombre del alcance*', ['class' => 'asterisco']) !!}
                 </div>
                 <div class="form-group anima-focus">
-                    <input required  maxlength="255"  pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"  class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form"
-                        name="alcancesgsi" id="alcancesgsi" value="{{ old('alcancesgsi') }}"placeholder="">
-                        {!! Form::label('alcancesgsi', 'Alcance*', ['class' => 'asterisco']) !!}
+                    <input required maxlength="255"
+                        pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"
+                        class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form" name="alcancesgsi"
+                        id="alcancesgsi" value="{{ old('alcancesgsi') }}"placeholder="">
+                    {!! Form::label('alcancesgsi', 'Alcance*', ['class' => 'asterisco']) !!}
                 </div>
         </div>
 

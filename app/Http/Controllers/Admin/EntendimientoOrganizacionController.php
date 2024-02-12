@@ -127,7 +127,10 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (! is_null($request->participantes)) {
+        $foda->update([
+            'estatus' => 'Borrador',
+        ]);
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
@@ -185,7 +188,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -321,11 +324,13 @@ class EntendimientoOrganizacionController extends Controller
     public function index()
     {
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
-        if (! isset($modulo)) {
+        $listavacia = 'cumple';
+
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -334,16 +339,15 @@ class EntendimientoOrganizacionController extends Controller
                 if ($participante->empleado->estatus != 'alta') {
                     $listavacia = 'baja';
 
-                    return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia'));
+                    return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia', 'modulo'));
                 }
             }
-            $listavacia = 'cumple';
         }
 
-        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia'));
+        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia', 'modulo'));
     }
 
-    public function adminShow($entendimientoOrganizacion)
+    public function revision($entendimientoOrganizacion)
     {
         abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -358,6 +362,14 @@ class EntendimientoOrganizacionController extends Controller
 
         $no_niveles = $modulo->niveles;
 
+        $empleados = Empleado::getaltaAll();
+        $foda_actual = $entendimientoOrganizacion;
+        $obtener_FODA = EntendimientoOrganizacion::where('id', $entendimientoOrganizacion)->first();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        $acceso_restringido = 'correcto';
         // dd($proceso, $foda);
         if ($proceso->estatus == 'Pendiente') {
             for ($i = 1; $i <= $no_niveles; $i++) {
@@ -372,37 +384,31 @@ class EntendimientoOrganizacionController extends Controller
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
 
-                                $empleados = Empleado::getaltaAll();
-                                $foda_actual = $entendimientoOrganizacion;
-                                $obtener_FODA = EntendimientoOrganizacion::where('id', $entendimientoOrganizacion)->first();
-                                $organizacion_actual = $this->obtenerOrganizacion();
-                                $logo_actual = $organizacion_actual->logo;
-                                $empresa_actual = $organizacion_actual->empresa;
-
-                                return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+                                return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'acceso_restringido'));
                                 break;
                             } else {
-                                return redirect(route('admin.entendimiento-organizacions.index'));
+                                $acceso_restringido = 'turno';
+
+                                return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'acceso_restringido'));
                             }
                         }
                     } elseif (
                         $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
-                        $empleados = Empleado::getaltaAll();
-                        $foda_actual = $entendimientoOrganizacion;
-                        $obtener_FODA = EntendimientoOrganizacion::where('id', $entendimientoOrganizacion)->first();
-                        $organizacion_actual = $this->obtenerOrganizacion();
-                        $logo_actual = $organizacion_actual->logo;
-                        $empresa_actual = $organizacion_actual->empresa;
-
-                        return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+                        return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'acceso_restringido'));
                         break;
                     }
                 }
             }
+            $acceso_restringido = 'denegado';
+
+            return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'acceso_restringido'));
+            // dd('aqui');
         } else {
-            return redirect(route('admin.entendimiento-organizacions.index'));
+            $acceso_restringido = 'aprobado';
+
+            return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'acceso_restringido'));
         }
     }
 
@@ -443,7 +449,7 @@ class EntendimientoOrganizacionController extends Controller
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
-                //Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->queue(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
                 // dd('primer usuario', $part->participante);
             }
         }
@@ -455,13 +461,16 @@ class EntendimientoOrganizacionController extends Controller
                 // for ($j = 1; $j <= 5; $j++) {
                 if ($part->participante->numero_orden == 1) {
                     $emailAprobador = $part->participante->empleado->email;
-                    //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                    Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
                     break;
                 }
                 // }
             }
             // }
         }
+        $foda->update([
+            'estatus' => 'Pendiente',
+        ]);
 
         // $control_participantes = ControlListaDistribucion::where('proceso_id', '=', $proceso->id)->get();
         // dd($proceso, $control_participantes);
@@ -521,6 +530,10 @@ class EntendimientoOrganizacionController extends Controller
                 ]);
             }
 
+            $foda->update([
+                'estatus' => 'Aprobado',
+            ]);
+
             $this->correosAprobacion($proceso, $foda);
         } else {
             // dd($participante_control);
@@ -539,7 +552,7 @@ class EntendimientoOrganizacionController extends Controller
         // dd($procesoAprobado);
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
-            //Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->analisis));
+            Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionSolicitudAprobacionAnalisisFODA($foda->analisis));
             // dd('primer usuario', $part->participante);
         }
     }
@@ -557,6 +570,10 @@ class EntendimientoOrganizacionController extends Controller
             'proceso_id' => $aprobacion->id,
         ]);
 
+        $foda->update([
+            'estatus' => 'Rechazado',
+        ]);
+
         $aprobacion->update([
             'estatus' => 'Rechazado',
         ]);
@@ -570,10 +587,10 @@ class EntendimientoOrganizacionController extends Controller
         $emailresponsable = $foda->empleado->email;
         $analisis_foda = $foda->analisis;
 
-        //Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoAnalisisFODALider($foda->id, $analisis_foda));
+        Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoAnalisisFODALider($foda->id, $analisis_foda));
 
         foreach ($aprobacion->participantes as $participante) {
-            //Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoAnalisisFODA($analisis_foda));
+            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionRechazoAnalisisFODA($foda->id, $analisis_foda));
         }
 
         return redirect(route('admin.entendimiento-organizacions.index'));
@@ -581,21 +598,28 @@ class EntendimientoOrganizacionController extends Controller
 
     public function confirmacionAprobacion($proceso, $foda)
     {
-        $confirmacion = ControlListaDistribucion::where('proceso_id', '=', $proceso->id)
-            ->get();
+        $confirmacion = ControlListaDistribucion::with('proceso')->where('proceso_id', '=', $proceso->id)
+            ->withwhereHas('participante', function ($query) {
+                return $query->where('nivel', '>', 0);
+            })->get();
 
         $isSameEstatus = $confirmacion->every(function ($record) {
             return $record->estatus == 'Aprobado'; // Assuming 'estatus' is the column name
         });
         // dd($confirmacion, $isSameEstatus);
         if ($isSameEstatus) {
+            $proceso->update([
+                'estatus' => 'Aprobado',
+            ]);
+
+            $foda->update([
+                'estatus' => 'Aprobado',
+            ]);
+
             $this->correosAprobacion($proceso->id, $foda);
         } else {
             $this->siguienteCorreo($proceso, $foda);
         }
-        // else {
-        //     // There are records with different 'estatus' values
-        // }
     }
 
     public function siguienteCorreo($proceso, $foda)
@@ -613,7 +637,7 @@ class EntendimientoOrganizacionController extends Controller
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
-                            //Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                            Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
                             break;
                         }
                     }

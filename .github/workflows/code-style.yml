@@ -16,13 +16,33 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
-          # tools: laravel/pint
+          tools: laravel/pint
+
+      - name: Get Composer Cache Directory 2
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v3
+        id: actions-cache
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Cache PHP dependencies
+        uses: actions/cache@v3
+        id: vendor-cache
+        with:
+          path: vendor
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
 
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      # - name: Code style fixer using laravel/pint
-      #   run: pint
+      - name: Code style fixer using laravel/pint
+        run: pint
 
       # - uses: stefanzweifel/git-auto-commit-action@v5.0.0
       #   with:

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     <h5 class="titulo_general_funcion">Registrar: Linemientos Vacaciones</h5>
@@ -27,7 +27,7 @@
     <div class="mt-4 card card-body">
         <span class="sub-title-vac">Creación de lineamientos</span>
         <hr>
-        @include('admin.vacaciones.fields')
+        @include('admin.vacaciones.fields-create')
     </div>
 
     <div class="text-right form-group col-12">

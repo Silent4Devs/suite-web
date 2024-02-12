@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
     <style type="text/css">
         .td-cj-1 {
@@ -20,15 +23,45 @@
         @page {
             size: landscape;
         }
+
+        #form_id {
+            display: none;
+        }
     </style>
 
 
     {{ Breadcrumbs::render('timesheet-clientes') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Clientes</font>
+    <h5 class="titulo_general_funcion">
+        Timesheet: <font style="font-weight:lighter;">Clientes</font>
     </h5>
 
+    <form method="POST" id="form_id" style="position: relative; left: 10rem; "
+        action="{{ route('admin.timesheet-cliente.pdf') }}">
+        @csrf
+        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+        </button>
+    </form>
+
+
+    <div class="text-right mb-3">
+        <a href="{{ route('admin.timesheet-clientes-create') }}" type="button" class="btn btn-outline-primary">
+            Agregar Cliente
+        </a>
+    </div>
+
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
+
     <div class="card card-body">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="title-card-time">Clientes</h3>
+                <hr class="my-4">
+            </div>
+        </div>
         <div class="row">
             @include('partials.flashMessages')
             <div class="datatable-fix w-100">
@@ -161,63 +194,23 @@
                     }
                 },
                 {
-                    extend: 'print',
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    // set custom header when print
-                    customize: function(doc) {
-
-                        var css =
-                            '@page { size: landscape; } @media print {.header-print {display: table-header-group;}}',
-                            head = doc.document.head || doc.document.getElementsByTagName('head')[0],
-                            style = doc.document.createElement('style');
-                        style.type = 'text/css';
-                        style.media = 'print';
-                        if (style.styleSheet) {
-                            style.styleSheet.cssText = css;
-                        } else {
-                            style.appendChild(doc.document.createTextNode(css));
-                        }
-                        head.appendChild(style);
-                        $(doc.document.body).find('thead').prepend('<tr class="header-print">' + $(
-                            '#dt-header').html() + '</tr>');
-
-                        let logo_actual = @json($logo_actual);
-                        let empresa_actual = @json($empresa_actual);
-                        let empleado = @json(auth()->user()->empleado->name);
-
-                        var now = new Date();
-                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
-                        $(doc.document.body).prepend(`
-                            <div class="row">
-                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
-                                    <img class="img-fluid" style="max-width:80px" src="${logo_actual}"/>
-                                </div>
-                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
-                                    <p>${empresa_actual}</p>
-                                    <strong style="color:#345183">Timsheet: Clientes</strong>
-                                </div>
-                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
-                                    Fecha: ${jsDate}
-                                </div>
-                            </div>
-                        `);
-
-                        $(doc.document.body).find('table')
-                            .css('font-size', '12px')
-                            .css('margin-top', '15px')
-                        // .css('margin-bottom', '60px')
-                        $(doc.document.body).find('th').each(function(index) {
-                            $(this).css('font-size', '12px');
-                            $(this).css('color', '#fff');
-                            $(this).css('background-color', 'blue');
-                        });
-                    },
-                    title: '',
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'landscape',
                     exportOptions: {
-                        columns: ['th:not(.th_opciones):visible']
+                        columns: ['th:not(:last-child):visible']
                     },
+                    action: function(e, dt, button, config) {
+                        // Aquí ejecutas la acción del formulario al presionar el botón
+                        var form = document.getElementById('form_id');
+                        form.submit();
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [5, 20, 5, 20];
+                        // doc.styles.tableHeader.fontSize = 6.5;
+                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
+                    }
                 },
                 {
                     extend: 'colvis',
@@ -240,18 +233,18 @@
                 }
             ];
             let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar sede',
-                url: "{{ route('admin.timesheet-clientes-create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar sede',
+                // url: "{{ route('admin.timesheet-clientes-create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config) {
+                //     let {
+                //         url
+                //     } = config;
+                //     window.location.href = url;
+                // }
             };
-            dtButtons.push(btnAgregar);
+            // dtButtons.push(btnAgregar);
 
 
 

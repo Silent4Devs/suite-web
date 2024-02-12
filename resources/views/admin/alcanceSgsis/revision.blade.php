@@ -1,12 +1,19 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
 
     <style>
         @media print {
             .print-none {
                 display: none !important;
             }
+        }
+
+        .btn-verde {
+            background-color: #00B212 !important;
+            border-radius: 4px;
+            opacity: 1;
+            color: #fff;
         }
     </style>
 
@@ -144,7 +151,7 @@
 
             <div class="row">
                 <div class="text-center form-group col-12">
-                    <button class="btn aprobar" id="aprobado" type="submit">
+                    <button class="btn btn-verde" id="aprobado" type="submit">
                         Aprobar Solicitud
                     </button>
                 </div>
@@ -158,6 +165,117 @@
             </div>
         </div>
     </form>
+    @switch($acceso_restringido)
+        @case('correcto')
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        // title: 'No es posible acceder a esta vista.',
+                        imageUrl: `{{ asset('img/errors/palomita_correcta.svg') }}`, // Replace with the path to your image
+                        imageWidth: 100, // Set the width of the image as needed
+                        imageHeight: 100,
+                        html: `<h4 style="color:red;">Es tu turno para aceptar el flujo en la lista de aprobación</h4>`,
+                        // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK',
+                    });
+                });
+            </script>
+        @break;
+        @case('turno')
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">Aun no es tu turno de revisar el Alcance</h4>
+        <br><p>No es tu turno de revisar el flujo del Alcance en la lista de aprobación.</p><br>`,
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.alcance-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
+                });
+            </script>
+        @break
+
+        @case('aprobado')
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/circulo_denegado.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">Se ha aprobado/rechazado el registro al que se intenta acceder</h4>
+    <br><p>Ya no es necesario volverlo a revisar.</p><br>`,
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.alcance-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
+                });
+            </script>
+        @break
+
+        @case('denegado')
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/ojo_denegado.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">No tienes permiso para acceder a esta vista</h4>`,
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.alcance-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
+                });
+            </script>
+        @break
+
+        @default
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/ojo_denegado.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">No tienes permiso para acceder a esta vista</h4>`,
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.alcance-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
+                });
+            </script>
+    @endswitch
 @endsection
 
 
@@ -190,7 +308,7 @@
                 if (comentario_if == '' || comentario_if == null) {
                     e.preventDefault();
                     Swal.fire(
-                        'Debe escribir comentarios de retroalimentacion al rechazar el Analisis',
+                        'Debe escribir comentarios de retroalimentacion al rechazar el Alcance del SGI.',
                         '',
                         'info');
                 } else {

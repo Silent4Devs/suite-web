@@ -102,6 +102,23 @@
     </style>
     {{ Breadcrumbs::render('admin.plan-auditoria.create') }}
 
+    <h5 class="col-12 titulo_general_funcion">Plan de Auditoría</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <div>
+                <br>
+                <br>
+                <h4>¿Qué es Plan de auditoria?    </h4>
+                <p>
+                    Plan que establece los detalles de cómo se llevará a cabo una auditoría.
+                </p>
+                <p>
+                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es necesario.
+                </p>
+            </div>
+        </div>
+    </div>
     <div>
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">

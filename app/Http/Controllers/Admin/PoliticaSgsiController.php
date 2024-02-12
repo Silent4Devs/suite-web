@@ -36,9 +36,8 @@ class PoliticaSgsiController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('politica_sistema_gestion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         if ($request->ajax()) {
-            $query = PoliticaSgsi::with(['team', 'reviso'])->select(sprintf('%s.*', (new PoliticaSgsi)->table))->orderByDesc('id');
+            $query = PoliticaSgsi::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -67,25 +66,13 @@ class PoliticaSgsiController extends Controller
             });
             $table->editColumn('politicasgsi', function ($row) {
                 return $row->politicasgsi ? html_entity_decode(strip_tags($row->politicasgsi), ENT_QUOTES, 'UTF-8') : '';
-                // return $row->politicasgsi ? strip_tags($row->politicasgsi) : '';
             });
-            $table->editColumn('fecha_publicacion', function ($row) {
-                return $row->fecha_publicacion ? $row->fecha_publicacion : '';
+            $table->editColumn('estatus', function ($row) {
+                return $row->estatus ? $row->estatus : '';
             });
-            $table->editColumn('fecha_entrada', function ($row) {
-                return $row->fecha_entrada ? $row->fecha_entrada : '';
-            });
-            $table->addColumn('reviso_politica', function ($row) {
-                return $row->reviso ? $row->reviso->empleado->name : '';
-            });
-            $table->editColumn('puesto_reviso', function ($row) {
-                return $row->reviso ? $row->reviso->puesto : '';
-            });
-            $table->editColumn('area_reviso', function ($row) {
-                return $row->reviso ? $row->reviso->area->area : '';
-            });
-            $table->editColumn('fecha_revision', function ($row) {
-                return $row->fecha_revision ? $row->fecha_revision : '';
+
+            $table->editColumn('mostrar', function ($row) {
+                return $row->mostrar ? $row->mostrar : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -105,9 +92,10 @@ class PoliticaSgsiController extends Controller
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
 
-        $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        $listavacia = 'cumple';
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -129,7 +117,6 @@ class PoliticaSgsiController extends Controller
                     ));
                 }
             }
-            $listavacia = 'cumple';
         }
 
         return view('admin.politicaSgsis.index', compact(
@@ -156,84 +143,103 @@ class PoliticaSgsiController extends Controller
 
     public function store(StorePoliticaSgsiRequest $request)
     {
-        abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'nombre_politica' => 'required',
-            'politicasgsi' => 'required',
-            'fecha_publicacion' => 'required|date',
-            'fecha_revision' => 'required|date',
-        ]);
+            $request->validate([
+                'nombre_politica' => 'required',
+                'politicasgsi' => 'required',
+                'fecha_publicacion' => 'required|date',
+                'fecha_revision' => 'required|date',
+            ]);
 
-        $politicaSgsi = PoliticaSgsi::create([
-            'nombre_politica' => $request->input('nombre_politica'),
-            'politicasgsi' => $request->input('politicasgsi'),
-            'fecha_publicacion' => $request->input('fecha_publicacion'),
-            'fecha_revision' => $request->input('fecha_revision'),
-            'estatus' => 'pendiente',
-            'id_reviso_politica' => User::getCurrentUser()->empleado->id,
-        ]);
+            $politicaSgsi = PoliticaSgsi::create([
+                'nombre_politica' => $request->input('nombre_politica'),
+                'politicasgsi' => $request->input('politicasgsi'),
+                'fecha_publicacion' => $request->input('fecha_publicacion'),
+                'fecha_revision' => $request->input('fecha_revision'),
+                'estatus' => 'Pendiente',
+                'id_reviso_politica' => User::getCurrentUser()->empleado->id,
+            ]);
 
-        //envio de corrreo
-        $this->solicitudAprobacion($politicaSgsi->id);
+            //envio de corrreo
+            $this->solicitudAprobacion($politicaSgsi->id);
 
-        $politicaSgsi->estatus = 'pendiente';
+            $politicaSgsi->estatus = 'Pendiente';
 
-        return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
+            return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.politica-sgsis.index')->with('error', $e->getMessage());
+        }
     }
 
     public function edit(PoliticaSgsi $politicaSgsi)
     {
-        abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $politicaSgsi->load('team');
+            $politicaSgsi->load('team');
 
-        $empleados = Empleado::getAltaEmpleadosWithArea();
+            $empleados = Empleado::getAltaEmpleadosWithArea();
 
-        $fecha_publicacion = \Carbon\Carbon::parse($politicaSgsi->fecha_publicacion)->format('Y-m-d');
-        $fecha_revision = \Carbon\Carbon::parse($politicaSgsi->fecha_revision)->format('Y-m-d');
+            $fecha_publicacion = \Carbon\Carbon::parse($politicaSgsi->fecha_publicacion)->format('Y-m-d');
+            $fecha_revision = \Carbon\Carbon::parse($politicaSgsi->fecha_revision)->format('Y-m-d');
 
-        $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
-        $proceso = ProcesosListaDistribucion::with('comentarios')->where('modulo_id', '=', $lista->id)->where('proceso_id', '=', $politicaSgsi->id)->first();
-        $comentarios = $proceso->comentarios;
-        // dd($politicaSgsi);
+            $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
+            $proceso = ProcesosListaDistribucion::with('comentarios')->where('modulo_id', '=', $lista->id)->where('proceso_id', '=', $politicaSgsi->id)->first();
+            if (isset($proceso->comentarios)) {
+                $comentarios = $proceso->comentarios;
+            } else {
+                $comentarios = [];
+            }
 
-        return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados', 'fecha_publicacion', 'fecha_revision', 'comentarios'));
+            return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados', 'fecha_publicacion', 'fecha_revision', 'comentarios'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.politica-sgsis.index')->with('error', $e->getMessage());
+        }
     }
 
     public function update(UpdatePoliticaSgsiRequest $request, PoliticaSgsi $politicaSgsi)
     {
-        abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'nombre_politica' => 'required',
-            'politicasgsi' => 'required',
-            // 'id_reviso_politica' => 'required',
-            'fecha_publicacion' => 'required',
-            'fecha_revision' => 'required',
-        ]);
+            $request->validate([
+                'nombre_politica' => 'required',
+                'politicasgsi' => 'required',
+                // 'id_reviso_politica' => 'required',
+                'fecha_publicacion' => 'required',
+                'fecha_revision' => 'required',
+            ]);
 
-        $politicaSgsi->update([
-            'nombre_politica' => $request->input('nombre_politica'),
-            'politicasgsi' => $request->input('politicasgsi'),
-            'fecha_publicacion' => $request->input('fecha_publicacion'),
-            'fecha_revision' => $request->input('fecha_revision'),
-            'estatus' => 'pendiente',
-            'id_reviso_politica' => User::getCurrentUser()->empleado->id,
-        ]);
+            $politicaSgsi->update([
+                'nombre_politica' => $request->input('nombre_politica'),
+                'politicasgsi' => $request->input('politicasgsi'),
+                'fecha_publicacion' => $request->input('fecha_publicacion'),
+                'fecha_revision' => $request->input('fecha_revision'),
+                'estatus' => 'Pendiente',
+                'id_reviso_politica' => User::getCurrentUser()->empleado->id,
+            ]);
 
-        $this->solicitudAprobacion($politicaSgsi->id);
+            $this->solicitudAprobacion($politicaSgsi->id);
 
-        return redirect()->route('admin.politica-sgsis.index')->with('success', 'Editado con éxito');
+            return redirect()->route('admin.politica-sgsis.index')->with('success', 'Editado con éxito');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.politica-sgsis.index')->with('error', $e->getMessage());
+        }
     }
 
     public function show(PoliticaSgsi $politicaSgsi)
     {
-        abort_if(Gate::denies('politica_sistema_gestion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('politica_sistema_gestion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $politicaSgsi->load('team');
+            $politicaSgsi->load('team');
 
-        return view('admin.politicaSgsis.show', compact('politicaSgsi'));
+            return view('admin.politicaSgsis.show', compact('politicaSgsi'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.politica-sgsis.index')->with('error', $e->getMessage());
+        }
     }
 
     public function destroy(PoliticaSgsi $politicaSgsi)
@@ -252,29 +258,52 @@ class PoliticaSgsiController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
+    public function cambioMostrar(Request $request)
+    {
+        $id = $request->input('valorCheckbox');
+
+        // Your logic here
+        $politica = PoliticaSgsi::find($id);
+
+        if ($politica->mostrar == false) {
+            $politica->update([
+                'mostrar' => true,
+            ]);
+        } elseif ($politica->mostrar == true) {
+            $politica->update([
+                'mostrar' => false,
+            ]);
+        }
+
+        // Return a response if needed
+        return response()->json(['message' => 'Success', 'valorCheckbox' => $id]);
+    }
+
     public function visualizacion()
     {
-        $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
-        foreach ($politicaSgsis as $polsgsis) {
-            if (! isset($polsgsis->reviso)) {
-                $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
-                $polsgsis->estemp = 'baja';
-            } else {
-                $polsgsis->estemp = 'alta';
+        try {
+            $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
+            foreach ($politicaSgsis as $polsgsis) {
+                if (!isset($polsgsis->reviso)) {
+                    $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
+                    $polsgsis->estemp = 'baja';
+                } else {
+                    $polsgsis->estemp = 'alta';
+                }
             }
-        }
-        $organizacions = Organizacion::getFirst();
+            $organizacions = Organizacion::getFirst();
 
-        return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis', 'organizacions'));
+            return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis', 'organizacions'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.politica-sgsis.index')->with('error', $e->getMessage());
+        }
     }
 
     public function pdf()
     {
 
         $politicas = PoliticaSgsi::get();
-        $organizacions = Organizacion::getFirst();
-
-        $pdf = PDF::loadView('pdf', compact('politicas', 'organizacions'));
+        $pdf = PDF::loadView('pdf', compact('politicas'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('politicas.pdf');
@@ -282,13 +311,9 @@ class PoliticaSgsiController extends Controller
 
     public function solicitudAprobacion($id_politica)
     {
-        // $modelo = 'PoliticaSgsi';
         $politica = PoliticaSgsi::find($id_politica);
-        // dd($politica);
-        $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        // $no_niveles = $lista->niveles;
-        // dd($lista, $no_niveles);
+        $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         $proceso = ProcesosListaDistribucion::updateOrCreate(
             [
@@ -299,7 +324,6 @@ class PoliticaSgsiController extends Controller
                 'estatus' => 'Pendiente',
             ]
         );
-        // dd($lista, $id_politica, $this->modelo, $proceso);
 
         foreach ($lista->participantes as $participante) {
             $participantes = ControlListaDistribucion::updateOrCreate(
@@ -317,8 +341,7 @@ class PoliticaSgsiController extends Controller
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
-                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
-                // dd('primer usuario', $part->participante);
+                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->queue(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
             }
         }
 
@@ -330,7 +353,7 @@ class PoliticaSgsiController extends Controller
 
                 if ($part->participante->numero_orden == 1) {
                     $emailAprobador = $part->participante->empleado->email;
-                    Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                    Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
                     break;
                 }
                 // }
@@ -341,11 +364,16 @@ class PoliticaSgsiController extends Controller
 
     public function revision($id)
     {
-        abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd('Llega', $politicaSgsi);
+
+        abort_if(Gate::denies('politica_sistema_gestion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $politicaSgsi = PoliticaSgsi::find($id);
-        // dd($politicaSgsi);
+
+        if (!$politicaSgsi) {
+            return redirect()->route('admin.politica-sgsis.index')->with('error', 'Registro no encontrado');
+        }
+
+        $politicaSgsi->load('team');
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
         $proceso = ProcesosListaDistribucion::with('participantes')
@@ -354,11 +382,12 @@ class PoliticaSgsiController extends Controller
             ->first();
 
         $no_niveles = $modulo->niveles;
-        // dd($proceso);
+
+        $acceso_restringido = 'correcto';
+
         if ($proceso->estatus == 'Pendiente') {
-            for ($i = 1; $i <= $no_niveles; $i++) {
+            for ($i = 0; $i <= $no_niveles; $i++) {
                 foreach ($proceso->participantes as $part) {
-                    // dd($part, $part->participante, $part->participante->control($proceso->id), $part->estatus);
                     if (
                         $part->participante->nivel == $i && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
@@ -369,37 +398,38 @@ class PoliticaSgsiController extends Controller
                                 $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
-                                // dd($proceso);
-                                // dd($politicaSgsi, $part);
-                                $politicaSgsi->load('team');
 
-                                // dd($politicaSgsi);
-                                return view('admin.politicaSgsis.revision', compact('politicaSgsi'));
+                                return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                                 break;
                             } else {
-                                return redirect(route('admin.politica-sgsis.index'));
+                                $acceso_restringido = 'turno';
+
+                                return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                             }
                         }
                     } elseif (
                         $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
-                        $politicaSgsi->load('team');
 
                         // dd($politicaSgsi);
-                        return view('admin.politicaSgsis.revision', compact('politicaSgsi'));
+                        return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                         break;
                     }
                 }
             }
+            $acceso_restringido = 'denegado';
+
+            return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
         } else {
-            return redirect(route('admin.politica-sgsis.index'));
+            $acceso_restringido = 'aprobado';
+
+            return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
         }
     }
 
     public function aprobado($id, Request $request)
     {
-        // dd($id, $request->all());
         $aprobador = User::getCurrentUser()->empleado->id;
 
         $politica = PoliticaSgsi::find($id);
@@ -433,11 +463,10 @@ class PoliticaSgsiController extends Controller
             'comentario' => $request->comentario,
             'proceso_id' => $proceso->id,
         ]);
-        // dd($proceso);
+
         $participante_control = $proceso->participantes[0];
         $participante = $proceso->participantes[0]->participante;
 
-        // dd($id, $request->all(), $aprobador, $proceso, $participante);
         //SuperAprobador
         if ($participante->nivel == 0) {
             // dd("superaprobador");
@@ -450,6 +479,10 @@ class PoliticaSgsiController extends Controller
                     'estatus' => 'Aprobado',
                 ]);
             }
+
+            $politica->update([
+                'estatus' => 'Aprobado',
+            ]);
 
             $this->correosAprobacion($proceso, $politica);
         } else {
@@ -465,22 +498,20 @@ class PoliticaSgsiController extends Controller
 
     public function correosAprobacion($proceso, $politica)
     {
-        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso);
+        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
+
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
 
-            Mail::to(removeUnicodeCharacters($emailAprobado))->send(new NotificacionAprobacionPolitica($politica->nombre_politica));
-            // dd('primer usuario', $part->participante);
+            Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionAprobacionPolitica($politica->nombre_politica));
         }
     }
 
     public function rechazado($id, Request $request)
     {
-        // dd($id, $request->all());
         $politica = PoliticaSgsi::with('reviso')->find($id);
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
-        // dd($aprobacion);
 
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,
@@ -491,19 +522,23 @@ class PoliticaSgsiController extends Controller
             'estatus' => 'Rechazado',
         ]);
 
+        $politica->update(
+            [
+                'estatus' => 'Rechazado',
+            ]
+        );
+
         foreach ($aprobacion->participantes as $p) {
             $p->update([
                 'estatus' => 'Rechazado',
             ]);
         }
-        // $responsable = $minuta->responsable->name;
         $emailresponsable = $politica->reviso->email;
-        $politica = $politica->nombre_politica;
-        // dd($emailresponsable);
-        // Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionRechazoPoliticaLider($politica->id, $politica));
+
+        Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoPoliticaLider($politica->id, $politica->nombre_politica));
 
         foreach ($aprobacion->participantes as $participante) {
-            // Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionRechazoPolitica($politica));
+            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionRechazoPolitica($politica->nombre_politica));
         }
 
         return redirect(route('admin.politica-sgsis.index'));
@@ -512,17 +547,23 @@ class PoliticaSgsiController extends Controller
     public function confirmacionAprobacion($proceso, $politica)
     {
         $confirmacion = ControlListaDistribucion::with('proceso')->where('proceso_id', '=', $proceso->id)
-            ->get();
+            ->withwhereHas('participante', function ($query) {
+                return $query->where('nivel', '>', 0);
+            })->get();
 
         $isSameEstatus = $confirmacion->every(function ($record) {
             return $record->estatus == 'Aprobado'; // Assuming 'estatus' is the column name
         });
-        // dd($confirmacion, $isSameEstatus);
+
         if ($isSameEstatus) {
             $proceso->update([
                 'estatus' => 'Aprobado',
             ]);
-            // dd($proceso, $politica);
+
+            $politica->update([
+                'estatus' => 'Aprobado',
+            ]);
+
             $this->correosAprobacion($proceso->id, $politica);
         } else {
             $this->siguienteCorreo($proceso, $politica);
@@ -542,7 +583,7 @@ class PoliticaSgsiController extends Controller
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
-                            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                            Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
                             break;
                         }
                     }

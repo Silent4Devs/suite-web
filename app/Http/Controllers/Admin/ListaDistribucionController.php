@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
@@ -109,7 +109,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel' . $i][] =
+                    $participantes_seleccionados['nivel'.$i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -150,7 +150,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel' . $i][] =
+                    $participantes_seleccionados['nivel'.$i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -174,54 +174,66 @@ class ListaDistribucionController extends Controller
         // dd($request->niveles, $request->all());
         $lista = ListaDistribucion::select('id')->find($id);
         // dd($lista_id);
-        //Se borran los participantes anteiores
-        $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->delete();
-
         // dd($request->all());
+        $val_niv = $request->niveles;
+        $nom_niv = 'nivel'.$val_niv;
 
-        $lista->update([
-            'niveles' => $request->niveles,
-        ]);
+        if (isset($request->$nom_niv)) {
+            $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->delete();
+            $lista->update([
+                'niveles' => $request->niveles,
+            ]);
 
-        $data = [];
-        for ($i = 1; $i <= $request->niveles; $i++) {
-            $nivelArrayName = 'nivel' . $i;
-            if (isset($nivelArrayName)) {
-                $data[$i] = $request->$nivelArrayName;
-                // $data[$nivelArrayName] = $nivelArrayName;
+            $data = [];
+            for ($i = 1; $i <= $request->niveles; $i++) {
+                $nivelArrayName = 'nivel'.$i;
+                if (isset($nivelArrayName)) {
+                    $data[$i] = $request->$nivelArrayName;
+                    // $data[$nivelArrayName] = $nivelArrayName;
+                }
             }
-        }
 
-        if (isset($request->superaprobadores)) {
-            $superi = 1;
-            foreach ($request->superaprobadores as $superaprobador) {
-                // dd("superaprobador", $superaprobador);
-                $super = ParticipantesListaDistribucion::create(
-                    [
-                        'modulo_id' => $lista->id,
-                        'nivel' => 0,
-                        'numero_orden' => $superi,
-                        'empleado_id' => $superaprobador,
-                    ],
-                );
-                $i++;
+            if (isset($request->superaprobadores)) {
+                $superi = 1;
+                foreach ($request->superaprobadores as $superaprobador) {
+                    // dd("superaprobador", $superaprobador);
+                    $super = ParticipantesListaDistribucion::create(
+                        [
+                            'modulo_id' => $lista->id,
+                            'nivel' => 0,
+                            'numero_orden' => $superi,
+                            'empleado_id' => $superaprobador,
+                        ],
+                    );
+                    $i++;
+                }
             }
-        }
 
-        foreach ($data as $key => $nivel) {
-            $i = 1;
-            foreach ($nivel as $participante) {
+            foreach ($data as $key => $nivel) {
+                $i = 1;
+                foreach ($nivel as $participante) {
 
-                $participantes = ParticipantesListaDistribucion::create(
-                    [
-                        'modulo_id' => $lista->id,
-                        'nivel' => $key,
-                        'numero_orden' => $i,
-                        'empleado_id' => $participante,
-                    ],
-                );
-                $i++;
+                    $participantes = ParticipantesListaDistribucion::create(
+                        [
+                            'modulo_id' => $lista->id,
+                            'nivel' => $key,
+                            'numero_orden' => $i,
+                            'empleado_id' => $participante,
+                        ],
+                    );
+                    $i++;
+                }
             }
+        } else {
+            // dd('No existe', $nom_niv);
+            $errorMessage = 'No puede haber niveles sin colaboradores asignados';
+
+            // Manually add error message to $errors bag
+            $errors = new \Illuminate\Support\MessageBag();
+            $errors->add('nivel_null', $errorMessage);
+
+            // Redirect back with the input data and errors
+            return redirect()->back()->withErrors($errors)->withInput();
         }
 
         return redirect(route('admin.lista-distribucion.index'));

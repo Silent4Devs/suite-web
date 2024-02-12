@@ -7,10 +7,13 @@ use App\Models\ParametrosTemplateAnalisisdeBrechas;
 use App\Models\PreguntasTemplateAnalisisdeBrechas;
 use App\Models\SeccionesTemplateAnalisisdeBrechas;
 use App\Models\TemplateAnalisisdeBrechas;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class EditSeccionesTemplate extends Component
 {
+    use LivewireAlert;
+
     public $id_template;
 
     public $nombre_template = '';
@@ -50,6 +53,22 @@ class EditSeccionesTemplate extends Component
     public $color_estatus_3 = '';
 
     public $color_estatus_4 = '';
+
+    public $porcentaje_seccion_1;
+
+    public $porcentaje_seccion_2;
+
+    public $porcentaje_seccion_3;
+
+    public $porcentaje_seccion_4;
+
+    public $descripcion_s1;
+
+    public $descripcion_s2;
+
+    public $descripcion_s3;
+
+    public $descripcion_s4;
 
     public $normas;
 
@@ -204,13 +223,14 @@ class EditSeccionesTemplate extends Component
             $this->$color_estatus_name = $parametro->color;
         }
 
-        $secInput = $template->secciones->where('numero_seccion', '=', $this->posicion_seccion);
+        // $secInput = $template->secciones->where('numero_seccion', '=', $this->posicion_seccion);
+        $secInput = $template->secciones;
         // dd($secInput);
         foreach ($secInput as $key => $sec) {
-            $descripcion_seccion_name = 'descripcion_s'.$this->posicion_seccion;
-            $porcentaje_seccion_name = 'porcentaje_seccion_'.$this->posicion_seccion;
-            $primera_pregunta_seccion_name = 'pregunta'.$this->posicion_seccion;
-            $preguntas_seccion_name = 'preguntas_s'.$this->posicion_seccion;
+            $descripcion_seccion_name = 'descripcion_s'.$sec->numero_seccion;
+            $porcentaje_seccion_name = 'porcentaje_seccion_'.$sec->numero_seccion;
+            $primera_pregunta_seccion_name = 'pregunta'.$sec->numero_seccion;
+            $preguntas_seccion_name = 'preguntas_s'.$sec->numero_seccion;
 
             $this->$descripcion_seccion_name = $sec->descripcion;
             $this->$porcentaje_seccion_name = $sec->porcentaje_seccion;
@@ -224,8 +244,6 @@ class EditSeccionesTemplate extends Component
                 }
                 $primpreg++;
             }
-
-            // dd($this->preguntas_s2);
 
             // dd($seccion);
         }
@@ -324,7 +342,14 @@ class EditSeccionesTemplate extends Component
                     return null;
                 }
 
-                return redirect(route('admin.analisisdebrechas-2022.index'));
+                $this->alert('success', '¡El template ha sido editado con éxito!', [
+                    'position' => 'center',
+                    'timer' => 5000,
+                    'toast' => true,
+                    'text' => 'Se ha modificado tu plantillas y tu cuestionario, lo puedes consultar y editar cuando lo necesites.',
+                ]);
+
+                return redirect(route('admin.analisisdebrechas-2022.create'));
             } else {
                 if ($this->secciones == 1) {
                     $porcentaje = 100;
@@ -357,7 +382,7 @@ class EditSeccionesTemplate extends Component
                 }
             }
 
-            return redirect(route('admin.analisisdebrechas-2022.index'));
+            return redirect(route('admin.analisisdebrechas-2022.create'));
         } else {
             switch ($this->datos_seccion) {
                 case '1':

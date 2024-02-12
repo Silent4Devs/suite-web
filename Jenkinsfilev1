@@ -1,2 +1,21 @@
-// Este Jenkinsfilev1 no contiene un bloque pipeline adicional
-git branch: 'stagging', url: 'https://github.com/Silent4Devs/suite-web.git'
+pipeline {
+    agent any
+
+    environment {
+        SSH_USER = 'desarrollo'
+        SSH_PASSWORD = 'Tabantaj.int'
+        SERVER_IP = '192.168.9.111'
+    }
+
+    stages {
+        stage('Git Pull via SSH') {
+            steps {
+                script {
+                    sh '''
+                       echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedores/tabantaj && sudo -S git pull"
+                    '''
+                }
+            }
+        }
+    }
+}

@@ -326,7 +326,7 @@ class RequisicionesEditComponent extends Component
 
             $supervisor = User::find($this->editrequisicion->id_user)->empleado->supervisor->email;
 
-            Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->editrequisicion, $organizacion, $tipo_firma));
+            Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->editrequisicion, $organizacion, $tipo_firma));
 
             return redirect(route('contract_manager.requisiciones'));
         }

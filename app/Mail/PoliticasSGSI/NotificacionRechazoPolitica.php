@@ -13,11 +13,11 @@ class NotificacionRechazoPolitica extends Mailable
     /**
      * Create a new message instance.
      */
-    public $analisis;
+    public $nombre_politica;
 
-    public function __construct($analisis)
+    public function __construct($nombre_politica)
     {
-        $this->analisis = $analisis;
+        $this->nombre_politica = $nombre_politica;
     }
 
     /**
@@ -27,6 +27,6 @@ class NotificacionRechazoPolitica extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.politicas.notificacion-politica-rechazada')->subject('Política del SGSI Rechazada: '.$this->analisis)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.politicas.notificacion-politica-rechazada')->subject('Política del SGSI Rechazada: '.$this->nombre_politica);
     }
 }

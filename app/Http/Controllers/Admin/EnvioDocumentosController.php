@@ -105,7 +105,7 @@ class EnvioDocumentosController extends Controller
         $solicitud = EnvioDocumentos::create($request->all());
         $coordinador = $empleado->find($request->id_coordinador);
         $solicitante = $empleado->find($request->id_solicita);
-        Mail::to(removeUnicodeCharacters($coordinador->email))->send(new MailMensajeria($solicitante, $coordinador, $solicitud));
+        Mail::to(removeUnicodeCharacters($coordinador->email))->queue(new MailMensajeria($solicitante, $coordinador, $solicitud));
 
         Alert::success('éxito', 'Información añadida con éxito');
 

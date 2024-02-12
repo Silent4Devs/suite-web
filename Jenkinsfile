@@ -7,12 +7,11 @@ pipeline {
             }
         }
 
-       stage('Install') {
+        stage('Install') {
             steps {
                 git branch: 'develop', url: 'https://github.com/Silent4Devs/suite-web.git'
             }
         }
-
 
         stage('Build') {
             steps {
@@ -31,22 +30,12 @@ pipeline {
             }
         }
 
-
         stage('Deploy via SSH') {
             steps {
                 script {
                     sshagent(['/root/.ssh/id_rsa.pub']) {
                         sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
                     }
-                }
-            }
-        }
-
-
-        stage('Jenkis2 - Stage 1') {
-            steps {
-                script {
-                    load 'Jenkinsfilev1'
                 }
             }
         }

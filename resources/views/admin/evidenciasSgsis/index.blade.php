@@ -54,7 +54,7 @@
             filter: invert(100%);
         }
 
-        
+
         .btn-outline-success {
             background: #788bac !important;
             color: white;
@@ -96,6 +96,29 @@
     {{ Breadcrumbs::render('admin.evidencias-sgsis.index') }}
 
     <h5 class="col-12 titulo_general_funcion">Evidencia de Asignación de Recursos al SGSI</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Evidencia de Asignación de Recursos al SGSI?</h4>
+                <p>
+                    Registro de información y documentación que le permita a la organización mostrar que ha   destinado los recursos necesarios para implementar y mantener su Sistema de Gestión de la Seguridad de la Información (SGI).
+                </p>
+                <p>
+                    La evidencia de esta asignación es fundamental para demostrar el compromiso de la organización con la seguridad de la información.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.evidencias-sgsis.create') }}" type="button" class="btn btn-primary">Registrar
+                Evidencia</a>
+        </div>
+    </div>
+
 
     @can('evidencia_asignacion_recursos_sgsi_agregar')
         <div class="mt-5 card">
@@ -103,7 +126,7 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered datatable-EvidenciasSgsi" style="width: 100%">
+            <table class="datatable  datatable-EvidenciasSgsi">
                 <thead class="thead-dark">
                     <tr>
                         <th>
@@ -131,33 +154,6 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -290,21 +286,6 @@
                     }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
-            @can('evidencia_asignacion_recursos_sgsi_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar nueva Evidencia de Asignación de Recursos al SGSI',
-                    url: "{{ route('admin.evidencias-sgsis.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                dtButtons.push(btnAgregar);
             @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,

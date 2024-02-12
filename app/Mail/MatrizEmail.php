@@ -60,6 +60,6 @@ class MatrizEmail extends Mailable
             'img_linkedin' => $this->getBase64(asset('img/linkedin.png')),
             'img_facebook' => $this->getBase64(asset('img/facebook.png')),
             'img_requi' => $this->getBase64(asset('img/img_req.png')),
-        ]);
+        ])->subject('Creación de nuevo requisito legal y regulatorio.');
     }
 }

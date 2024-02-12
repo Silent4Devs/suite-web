@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
     <style>
@@ -168,19 +168,7 @@
         }
 
         .modal-content {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            color: var(--bs-modal-color);
-            pointer-events: auto;
-            background-color: var(--bs-modal-bg);
-            background-clip: padding-box;
-            border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
-            border-radius: 16px;
-            outline: 0;
-            margin-top: 0px;
-            margin-bottom: 100px;
+            width: 65rem;
         }
 
         .boton-sin-borde {
@@ -239,10 +227,33 @@
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
+
+    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es? Política del Sistema de Gestión</h4>
+                <p>
+                    Es una declaración oficial de la dirección de una organización que establece sus intenciones y
+                    compromisos con respecto al sistema de gestión implementado en la organización.
+                </p>
+                <p>
+                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
+                    organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
+                    otros ámbitos específicos.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
     @can('politica_sistema_gestion_agregar')
         <div class="text-right">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Politica</a>
+                <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Registrar
+                    Política</a>
             </div>
         </div>
     @endcan
@@ -251,13 +262,13 @@
         <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
-                style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
-                    style="color: #ffffff;"></i>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            style="margin:50px 0px 50px 1230px; background:none; border: none;">
+        <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+       </button>
             <div class="modal-dialog" style="margin-top: 0px;">
-                <div class="modal-content" style="width:1000px;">
-                    <div class="modal-body" style="border-radius: 0px;">
+                <div class="modal-content">
+                    <div class="modal-body">
                         <div class="print-none">
                         </div>
                         <div class="card col-sm-12 col-md-10"
@@ -276,10 +287,19 @@
                                     <div class="row col-12 ml-0"
                                         style="border-radius;
                                         padding-left: 0px;padding-right: 0px;">
+                                          @php
+                                          use App\Models\Organizacion;
+                                          $organizacion = Organizacion::first();
+                                          $logotipo = $organizacion->logotipo;
+                                          $empresa = $organizacion->empresa;
+                                          @endphp
+                                          
+                                    
                                         <div class="col-3" style="border-left: 25px solid #2395AA">
-                                            <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
-                                                style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                            <img src="{{ asset($logotipo) }}" style="width:100%; max-width:100px; position: relative; top: 1rem;">
+
                                         </div>
+                                    
                                         <div class="col-5 p-2 mt-3">
                                             <br>
                                             <span class=""
@@ -330,40 +350,29 @@
             <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
             </button>
-            {{-- <form method="POST" action="{{ route('admin.politica-sgsis.pdf') }}">
-                            @csrf
-                            <button class="boton-transparente">
-                                <img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon">
-                            </button>
-                        </form> --}}
         </div>
         <h3 class="title-table-rds"> Politicas</h3>
         <table class="datatable datatable-Comiteseguridad" id="datatable-PoliticaSgsi">
             <thead class="head-light">
                 <tr>
-                    <th style="min-width: 180px; max-width:180px;">
+                    <th style="min-width: 350px;">
                         Nombre
                     </th>
-                    <th style="min-width: 400px; max-width:400px;">
+                    <th style="min-width: 400px;">
                         Políticas
                     </th>
-                    <th style="min-width: 80px; max-width:80px;">
+                    <th style="min-width: 300px;">
                         Estatus
                     </th>
-                    <th style="min-width: 80px; max-width:80px;">
+                    <th style="min-width: 80px;">
                         Mostrar
-                    </th>
-                    <th style="min-width: 80px; max-width:80px;">
-                        Fecha publicación
-                    </th>
-                    <th style="min-width: 80px; max-width:80px;">
-                        Fecha Revisión
                     </th>
                     <th>Opciones</th>
                 </tr>
             </thead>
         </table>
     </div>
+
 
     @if ($listavacia == 'vacia')
         <script>
@@ -384,7 +393,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -398,7 +407,7 @@
                     imageWidth: 100, // Set the width of the image as needed
                     imageHeight: 100,
                     html: `<h4 style="color:red;">Colaborador dado de baja</h4>
-                <br><p>El colaborador responsable de este formulario ta no se encuentra dado de alta en el sistema.</p><br>
+                <br><p>El colaborador responsable de este formulario ya no se encuentra dado de alta en el sistema.</p><br>
                 <p>Es necesario acercarse con el administrador para solicitar que se agregue un nuevo responsable, de lo contrario no podra registrar información en este módulo.</p>`,
                     // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
                     showCancelButton: false,
@@ -408,7 +417,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -532,66 +541,60 @@
                             let color = '';
                             let boxShadow = '';
                             let backgroundColor = '';
+                            let statusText = data; // Por defecto, utiliza el valor existente.
 
-                            // Asigna colores y sombras según el valor de 'estatus'
-                            switch (data) {
-                                case 'aprobado':
-                                    color = '#008F27'; // Verde
-                                    backgroundColor = 'rgba(0, 128, 0, 0.1)';
-                                    break;
-                                case 'rechazado':
-                                    color = '#dd0483'; // Rojo
-                                    backgroundColor = 'rgba(128, 0, 0, 0.1)';
-                                    break;
-                                case 'pendiente':
-                                    color = '#DD8E04'; // Naranja
-                                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
-                                    break;
-                                default:
-                                    color = '#464646'; // Negro
-                                    backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                            if (!data || data.trim() === '') {
+                                // Si el estatus está vacío, muestra un estatus específico.
+                                statusText = 'Generar';
+                                color = '#0000FF'; // Color gris para un estatus vacío.
+                                backgroundColor = 'rgba(0, 0, 255, 0.1)';
+                            } else {
+                                // Aplica estilos según el valor del estatus.
+                                switch (data) {
+                                    case 'Aprobado':
+                                        color = '#008F27'; // Verde
+                                        backgroundColor = 'rgba(0, 128, 0, 0.1)';
+                                        break;
+                                    case 'Rechazado':
+                                        color = '#dd0483'; // Rojo
+                                        backgroundColor = 'rgba(255, 0, 0, 0.1)';
+                                        break;
+                                    case 'Pendiente':
+                                        color = '#DD8E04'; // Naranja
+                                        backgroundColor = 'rgba(255, 165, 0, 0.1)';
+                                        break;
+                                    default:
+                                        color = '#464646'; // Negro
+                                        backgroundColor = 'rgba(255, 165, 0, 0.1)';
+                                }
                             }
 
                             const style = `
-                            background: #E9FFE8 0% 0% no-repeat padding-box;
-                                border-radius: 7px;
-                                opacity: 1;
-                                color: ${color};
-                                box-shadow: ${boxShadow};
-                                background-color: ${backgroundColor};
-                            `;
+            background: #E9FFE8 0% 0% no-repeat padding-box;
+            border-radius: 7px;
+            opacity: 1;
+            color: ${color};
+            box-shadow: ${boxShadow};
+            background-color: ${backgroundColor};
+        `;
 
-                            return `<center><span style="${style}">${data}</span></center>`;
+                            return `<center><span style="${style}">${statusText}</span></center>`;
                         }
                     },
+
                     {
                         data: 'mostrar',
                         name: 'mostrar',
                         render: function(data, type, row) {
                             // Solo muestra el checkbox si el estatus es 'aprobado'
-                            if (row.estatus === 'aprobado') {
-                                return `<input type="checkbox" class="redireccionar-checkbox" value="${row.id}" />`;
+                            if (row.estatus === 'Aprobado') {
+                                // Check the checkbox if mostrar is true, otherwise, leave it unchecked
+                                var isChecked = row.mostrar ? 'checked' : '';
+
+                                return `<input type="checkbox" class="redireccionar-checkbox" value="${row.id}" ${isChecked} />`;
                             } else {
                                 return ''; // Si no es 'aprobado', no muestra nada
                             }
-                        }
-                    },
-                    {
-                        data: 'fecha_revision',
-                        name: 'fecha_revision',
-                        visible: false, // Inicialmente oculta
-                        render: function(data, type, row) {
-                            // Renderizar contenido para la nueva columna 1
-                            return data;
-                        }
-                    },
-                    {
-                        data: 'fecha_publicacion',
-                        name: 'fecha_publicacion',
-                        visible: false, // Inicialmente oculta
-                        render: function(data, type, row) {
-                            // Renderizar contenido para la nueva columna 2
-                            return data;
                         }
                     },
                     {
@@ -610,11 +613,31 @@
 
 
             $('#datatable-PoliticaSgsi').on('click', '.redireccionar-checkbox', function() {
-                // Obtiene el valor de la casilla de verificación
+                // Obtain the value of the checkbox
                 var valorCheckbox = $(this).val();
+                var id = valorCheckbox; // Replace with the actual value of your {id} parameter
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                // Use AJAX to send the value to a Laravel controller
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/politica-sgsis/cambioMostrar', // Include the actual id value
 
-                // Redirecciona a la otra vista usando Laravel
-                window.location.href = '/admin/politica-sgsis/visualizacion/';
+                    data: {
+                        valorCheckbox: valorCheckbox
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function(response) {
+                        // Handle the success response from the controller
+                        // console.log('Success:', response);
+                        // You can perform additional actions here if needed
+                    },
+                    error: function(error) {
+                        // Handle any errors that occur during the AJAX request
+                        // console.log('Error:', error);
+                    }
+                });
             });
 
             let table = $('#datatable-PoliticaSgsi').DataTable(dtOverrideGlobals);

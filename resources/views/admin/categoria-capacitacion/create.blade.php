@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}{{config('app.cssVersion')}}">
     <h5 class="col-12 titulo_general_funcion">Registrar: Categoría</h5>
     <div class="mt-4 card">
         <div class="card-body">
@@ -10,7 +10,7 @@
 
                 <div class="form-group col-sm-12 col-lg-12 col-md-12 anima-focus">
                     <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" placeholder="" type="text" name="nombre"
-                        id="nombre" value="{{ old('nombre', '') }}" required>
+                        id="nombre" value="{{ old('nombre', '') }}" required maxlength="250">
                         {!! Form::label('nombre', 'Nombre de la Categoría*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('nombre'))
                         <div class="invalid-feedback">

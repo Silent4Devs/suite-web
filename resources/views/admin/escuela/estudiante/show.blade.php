@@ -29,10 +29,9 @@
         <div class="col-12">
             <div class="card shadow-sm mb-3" style="max-width: auto;">
                 <div class="row no-gutters">
-                  <div class="col-8 contenedor">
-                    @isset($course->image->url)
-                            <img src="{{ asset($course->image->url) }} "
-                                id="picture" alt="">
+                    <div class="col-8 contenedor">
+                        @isset($course->image->url)
+                            <img src="{{ asset($course->image->url) }} " id="picture" alt="">
                         @else
                             <img src="{{ asset('img/home/imagen-estudiantes.jpg') }}" id="picture" alt=""
                                 style="width: 100%; heigth:100%">
@@ -84,7 +83,7 @@
                                             @else
                                             x-data="{open:false}" @endif>
                                     <!--Alphine: El valor de open va ser lo contrario del valor de open a traves del ! es decir si es false
-                                                        se cambia a true y viceversa -->
+                                                                                se cambia a true y viceversa -->
                                     <div class="card-header px-4 py-2" x-on:click="open=!open"
                                         style="border: 1px solid #D8D8D8;">
                                         <h3>{{ $section->name }}</h3>
@@ -117,9 +116,9 @@
                     <div class="col-12">
                         <section>
                             <h2>Descripción</h2>
-                            <h5>
+                            <p class="text-base text-gray-700">
                                 {!! $course->description !!}
-                            </h5>
+                            </p>
                         </section>
                     </div>
                 </div>
@@ -128,8 +127,11 @@
                 <div class="mb-4 card shadow-sm ">
                     <div class="card-body">
                         <div class="flex items-center">
+                            @php
+                            $instructor = App\Models\User::find($course->empleado_id);
+                            @endphp
                             <div class="ml-4">
-                                <h4 class="">Instructor: {{ $course->teacher->name }}</h4>
+                                <h4 class="">Instructor: {{ $instructor->name }}</h4>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
@@ -158,7 +160,7 @@
                             @endisset
                             <div class="ml-3">
                                 <h1>
-                                    <a class="mb-3" style="color:#1E94A8;"
+                                    <a class="mb-3 text-md" style="color:#1E94A8;"
                                         href="{{ route('admin.courses.show', $similar) }}">{{ Str::limit($similar->title, 40) }}</a>
                                 </h1>
                                 <div class="flex items-center mb-2">

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
 
     <style>
         @media print {
@@ -18,9 +18,9 @@
             <div class="card-body">
                 <div class="print-none" style="text-align:right;">
                     <button class="btn btn-outline-primary mt-4" style="font-size:14px;width:150px;"
-                    onclick="javascript:window.print()">
-                    Imprimir
-                    <i class="fas fa-print"style="color:#057BE2;"></i>
+                        onclick="javascript:window.print()">
+                        Imprimir
+                        <i class="fas fa-print"style="color:#057BE2;"></i>
                     </button>
                 </div>
                 @php
@@ -29,7 +29,8 @@
                     $logotipo = $organizacion->logotipo;
                     $empresa = $organizacion->empresa;
                 @endphp
-                <div class="row mt-5 col-12 ml-0" style="border-radius: 5px;height:147px;
+                <div class="row mt-5 col-12 ml-0"
+                    style="border-radius: 5px;height:147px;
                 padding-left: 0px;padding-right: 0px;">
                     <div class="col-3" style="border-left: 25px solid #2395AA">
                         <img src="{{ asset($logotipo) }}" class="mt-2 img-fluid" style="">
@@ -55,20 +56,21 @@
                     <div class="col-md-11" style="padding-right:0px; padding-left:14px;">
                         <div class="card mb-1" style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
                             <div class="mt-4" style="font-weight: bold;margin-left:55px;font-size:14px; color:#306BA9;">
-                                Nombre del alcance
+                                Nombre de la Política:
                             </div>
                             <div class="px-2 mt-2 ml-5 mr-5 mb-4" style="font-size:14px; color:#606060;">
                                 {!! $politicaSgsi->nombre_politica !!}
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-1 mb-1" style="width:10px;padding-left:0px;padding-right:0px;background-color:#295082;
+                    <div class="col-md-1 mb-1"
+                        style="width:10px;padding-left:0px;padding-right:0px;background-color:#295082;
                     width:10px;padding-left:0px;padding-right: 43px;">
                     </div>
                 </div>
                 <div class="mt-4 mb-3  dato_mairg" style="">
                     <span style="font-size:14px; color:#306BA9;margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
-                        Alcance
+                        Política:
                     </span>
                     <div class="px-2 mt-2 ml-5 mr-5" style="font-size:14px; color:#606060;">
                         {!! $politicaSgsi->politicasgsi !!}

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
 
     <style>
         @media print {
@@ -8,10 +8,17 @@
                 display: none !important;
             }
         }
+
+        .btn-verde {
+            background-color: #00B212 !important;
+            border-radius: 4px;
+            opacity: 1;
+            color: #fff;
+        }
     </style>
 
     <div class="print-none">
-        {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
+        {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
     </div>
     <div class="mt-4 row justify-content-center">
         <div class="card col-sm-12 col-md-10" style="border-radius: 16px; height:1556px;">
@@ -40,7 +47,6 @@
                         <span class="" style="color:#306BA9; font-size:20px;font-weight:bold;">
                             Política del Sistema de Gestión
                         </span>
-
                     </div>
                     <div class="col-4 pt-5 pl-5" style="background:#EEFCFF;">
                         <span class="" style="font-size:14px;color:#345183;background:#EEFCFF;">Fecha de revisión:
@@ -52,11 +58,13 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                <br>
                 <div class="row" style="border-right: 16px solid white">
                     <div class="col-md-11" style="padding-right:0px; padding-left:14px;">
                         <div class="card mb-1" style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
                             <div class="mt-4" style="font-weight: bold;margin-left:55px;font-size:14px; color:#306BA9;">
-                                Nombre del alcance
+                                Nombre de la Política:
                             </div>
                             <div class="px-2 mt-2 ml-5 mr-5 mb-4" style="font-size:14px; color:#606060;">
                                 {!! $politicaSgsi->nombre_politica !!}
@@ -70,14 +78,13 @@
                 </div>
                 <div class="mt-4 mb-3  dato_mairg" style="">
                     <span style="font-size:14px; color:#306BA9;margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
-                        Alcance
+                        Política:
                     </span>
                     <div class="px-2 mt-2 ml-5 mr-5" style="font-size:14px; color:#606060;">
                         {!! $politicaSgsi->politicasgsi !!}
                     </div>
                 </div>
 
-                <div class="border-bottom" style="margin-top:100px;"> </div>
 
             </div>
         </div>
@@ -144,7 +151,7 @@
 
             <div class="row">
                 <div class="text-center form-group col-12">
-                    <button class="btn aprobar" id="aprobado" type="submit">
+                    <button class="btn btn-verde" id="aprobado" type="submit">
                         Aprobar Solicitud
                     </button>
                 </div>
@@ -158,6 +165,118 @@
             </div>
         </div>
     </form>
+    @switch($acceso_restringido)
+        @case('correcto')
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        // title: 'No es posible acceder a esta vista.',
+                        imageUrl: `{{ asset('img/errors/palomita_correcta.svg') }}`, // Replace with the path to your image
+                        imageWidth: 100, // Set the width of the image as needed
+                        imageHeight: 100,
+                        html: `<h4 style="color:red;">Es tu turno para aceptar el flujo en la lista de aprobación</h4>`,
+                        // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK',
+                    });
+                });
+            </script>
+        @break;
+        @case('turno')
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">Aun no es tu turno de revisar la Política.</h4>
+            <br><p>No es tu turno de revisar el flujo de la Política en la lista de aprobación.</p><br>`,
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.politica-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
+                });
+            </script>
+        @break
+
+        @case('aprobado')
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                        Swal.fire({
+                            imageUrl: `{{ asset('img/errors/circulo_denegado.svg') }}`,
+                            imageWidth: 100,
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">Se ha aprobado/rechazado el registro al que se intenta acceder</h4>
+            <br><p>Ya no es necesario volverlo a revisar.</p><br>`,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+
+                        // Redirect after 5 seconds (adjust the time as needed)
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.politica-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
+                });
+            </script>
+        @break
+
+        @case('denegado')
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/ojo_denegado.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">No tienes permiso para acceder a esta vista</h4>`,
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.politica-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
+                });
+            </script>
+        @break
+
+        @default
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                        Swal.fire({
+                            // title: 'No es posible acceder a esta vista.',
+                            imageUrl: `{{ asset('img/errors/ojo_denegado.svg') }}`, // Replace with the path to your image
+                            imageWidth: 100, // Set the width of the image as needed
+                            imageHeight: 100,
+                            html: `<h4 style="color:red;">No tienes permiso para acceder a esta vista</h4>`,
+                            // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+                        setTimeout(function() {
+                            window.location.href = '{{ route('admin.politica-sgsis.index') }}';
+                        }, 5000);
+                    }, 0);
+                });
+            </script>
+    @endswitch
 @endsection
 
 @section('scripts')
@@ -189,7 +308,7 @@
                 if (comentario_if == '' || comentario_if == null) {
                     e.preventDefault();
                     Swal.fire(
-                        'Debe escribir comentarios de retroalimentacion al rechazar el Analisis',
+                        'Debe escribir comentarios de retroalimentacion al rechazar la Política del SGI',
                         '',
                         'info');
                 } else {

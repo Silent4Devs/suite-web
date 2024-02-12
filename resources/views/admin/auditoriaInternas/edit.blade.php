@@ -28,7 +28,24 @@
     </style>
 
     {{ Breadcrumbs::render('admin.auditoria-internas.create') }}
-    <h5 class="col-12 titulo_general_funcion">Editar: Informe de Auditoría</h5>
+    <h5 class="col-12 titulo_general_funcion">Informe de Auditoría  </h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Informe de auditoría?</h4>
+                <p>
+                    Es un documento que describe los resultados de una auditoría.
+                </p>
+                <p>
+                    Los informes de auditoría son una herramienta importante para mejorar la eficacia y eficiencia de los
+                    sistemas y procesos. Los informes de auditoría ayudan a las organizaciones a identificar y corregir las
+                    deficiencias, lo que puede conducir a una mejora del rendimiento y la reducción de los riesgos.
+                </p>
+            </div>
+        </div>
+    </div>
     <div class="card mt-4">
         <div class="card-body">
 

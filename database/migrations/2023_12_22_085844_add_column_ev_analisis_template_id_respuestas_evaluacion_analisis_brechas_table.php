@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('respuestas_evaluacion_analisis_brechas', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('ev_analisis_template_id');
+            $table->unsignedBigInteger('ev_analisis_template_id')->nullable();
 
             $table->foreign('ev_analisis_template_id')->references('id')->on('evaluacion_templates_analisis_brechas')->onDelete('cascade');
         });

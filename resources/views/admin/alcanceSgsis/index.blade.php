@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
     <style>
         @media print {
             .print-none {
@@ -168,19 +168,7 @@
         }
 
         .modal-content {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            color: var(--bs-modal-color);
-            pointer-events: auto;
-            background-color: var(--bs-modal-bg);
-            background-clip: padding-box;
-            border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
-            border-radius: 16px;
-            outline: 0;
-            margin-top: 0px;
-            margin-bottom: 100px;
+            width: 65rem;
         }
 
         .boton-sin-borde {
@@ -240,14 +228,38 @@
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('determinacion_alcance_agregar')
         <div class="row d-flex align-items-center">
-            <h5 class="col-12 titulo_general_funcion">Determinación de Alcance</h5>
+
+
+            <h5 class="col-12 titulo_general_funcion">Determinación de Alcance </h5>
+            <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+                <div class="d-flex" style="gap: 25px;">
+                    <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;"
+                        class="mt-2 mb-2 ml-2 img-fluid">
+                    <div>
+                        <br>
+                        <h4>¿Qué es? Determinación de Alcance</h4>
+                        <p>
+                            Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de
+                            los
+                            límites del proyecto.
+                        </p>
+                        <p>
+                            Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto,
+                            ya
+                            que ayuda a evitar
+                            la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
+                            comprensión clara de lo que se espera.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"
-                    style="margin:50px 0px 50px 1230px; background:none;"><i class="fa-solid fa-x fa-2xl"
-                        style="color: #ffffff;"></i>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            style="margin:50px 0px 50px 1230px; background:none; border: none;">
+        <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+       </button>
                 <div class="modal-dialog" style="margin-top: 0px;">
                     <div class="modal-content" style="width:1000px;">
                         <div class="modal-body" style="border-radius: 0px;">
@@ -270,8 +282,8 @@
                                             style="border-radius;
                                         padding-left: 0px;padding-right: 0px;">
                                             <div class="col-3" style="border-left: 25px solid #2395AA">
-                                                <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
-                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                                <img src="{{ asset($logo_actual) }}" class="mt-2 img-fluid"
+                                                    style=" width:60%; position: relative; left: 1rem; top: 1rem;">
                                             </div>
                                             <div class="col-5 p-2 mt-3">
                                                 <br>
@@ -301,7 +313,8 @@
                                         @foreach ($alcanceSgsi as $alcanceSgs)
                                             <div style="margin: 4%;">
                                                 <h5 style="color:#306BA9;">{{ $alcanceSgs->nombre }}</h5>
-                                                <p>Fecha de publicación: {{ $alcanceSgs->fecha_publicacion }} &nbsp;&nbsp;&nbsp;
+                                                <p>Fecha de publicación: {{ $alcanceSgs->fecha_publicacion }}
+                                                    &nbsp;&nbsp;&nbsp;
                                                     Fecha de revision: {{ $alcanceSgs->fecha_revision }}</p>
                                                 <p style="text-align: justify; position: relative; top: -23rem;">
                                                     {!! $alcanceSgs->alcancesgsi !!}</p>
@@ -336,16 +349,10 @@
         <table class="datatable datatable-AlcanceSgsi">
             <thead class="thead-dark">
                 <tr>
-                    <th style="max-width:800px">Nombre</th>
-                    <th style="min-width:400px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alcance</th>
-                    <th style="max-width:80px;">
+                    <th style="min-width:450px">Nombre</th>
+                    <th style="min-width:450px;">Alcance</th>
+                    <th style="min-width:300px;">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estatus</th>
-                    <th style="max-width:80px;">
-                        Fecha publicación
-                    </th>
-                    <th style="max-width:80px;">
-                        Fecha Revisión
-                    </th>
                     <th style="">Opciones</th>
                 </tr>
             </thead>
@@ -371,7 +378,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -395,7 +402,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -593,28 +600,28 @@
                             let backgroundColor = '';
 
                             if (data === null) {
-                                return '<center><span style="color: red;  opacity: 1;  border-radius: 7px;  background: #E9FFE8 0% 0% no-repeat padding-box;  color = #dd0483; backgroundColor = rgba(128, 0, 0, 0.1);">Generar</span></center>';
+                                return '<center><span style="color: #0000FF; opacity: 1; border-radius: 7px; background: #ADD8E6;">Generar</span></center>';
                             } else {
-                            // Asigna colores y sombras según el valor de 'estatus'
-                            switch (data) {
-                                case 'aprobado':
-                                    color = '#008F27'; // Verde
-                                    backgroundColor = 'rgba(0, 128, 0, 0.1)';
-                                    break;
-                                case 'rechazado':
-                                    color = '#dd0483'; // Rojo
-                                    backgroundColor = 'rgba(128, 0, 0, 0.1)';
-                                    break;
-                                case 'pendiente':
-                                    color = '#DD8E04'; // Naranja
-                                    backgroundColor = 'rgba(255, 165, 0, 0.1)';
-                                    break;
-                                default:
-                                    color = '#464646'; // Negro
-                                    backgroundColor = 'rgba(0, 0, 0, 0.1)';
-                            }
+                                // Asigna colores y sombras según el valor de 'estatus'
+                                switch (data) {
+                                    case 'Aprobado':
+                                        color = '#008F27'; // Verde
+                                        backgroundColor = 'rgba(0, 128, 0, 0.1)';
+                                        break;
+                                    case 'Rechazado':
+                                        color = '#dd0483'; // Rojo
+                                        backgroundColor = 'rgba(128, 0, 0, 0.1)';
+                                        break;
+                                    case 'Pendiente':
+                                        color = '#DD8E04'; // Naranja
+                                        backgroundColor = 'rgba(255, 165, 0, 0.1)';
+                                        break;
+                                    default:
+                                        color = '#464646'; // Negro
+                                        backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                                }
 
-                            const style = `
+                                const style = `
                                 background: #E9FFE8 0% 0% no-repeat padding-box;
                                 border-radius: 7px;
                                 opacity: 1;
@@ -622,26 +629,8 @@
                                 background-color: ${backgroundColor};
                             `;
 
-                            return `<center><span style="${style}">${data}</span></center>`;
-                        }
-                    }
-0.1)';
+                                return `<center><span style="${style}">${data}</span></center>`;
                             }
-
-                            const style = `
-                                background: #E9FFE8 0% 0% no-repeat padding-box;
-                                border-radius: 7px;
-                                opacity: 1;
-                                color: ${color};
-                                box-shadow: ${boxShadow};
-                                background-color: ${backgroundColor};
-                            `;
-
-                            return `<center><span style="${style}">${data}</span></center>`;
-                        }
-                    render: function(data, type, row) {
-                            // Renderizar contenido para la nueva columna 1
-                            return data;
                         }
                     },
                     {
@@ -659,14 +648,6 @@
             };
             let table = $('.datatable-AlcanceSgsi').DataTable(dtOverrideGlobals);
 
-            // $('.datatable-AlcanceSgsi').on('click', '.tu-clase-de-boton', function () {
-            //     // Muestra las nuevas columnas
-            //     table.column('fecha_entrada:name').visible(true);
-            //     table.column('fecha_publicacion:name').visible(true);
-
-            //     // Vuelve a dibujar la tabla para reflejar los cambios
-            //     table.draw();
-            // });
         });
     </script>
 @endsection

@@ -1,9 +1,9 @@
-<div>
+<div class="datatable-rds datatable-fix">
     {{-- <livewire:datatable model="App\Models\Evaluation" name="evaluations" include="id, name, description, linkedTo"  /> --}}
     {{-- <x-loading-indicator wire:loading/> --}}
     {{-- <x-table-responsive> --}}
-        <table class="table">
-            <thead class="">
+        <table id="datatable_evaluaciones-cursos" class="table">
+            <thead>
                 <tr>
                     <th scope="col"
                         class="px-6 py-3 text-xs font-medium tracking-wider text-left  uppercase">

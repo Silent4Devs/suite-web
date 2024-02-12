@@ -73,7 +73,7 @@ class MatrizRequisitoLegalesController extends Controller
     public function store(StoreMatrizRequisitoLegaleRequest $request)
     {
         abort_if(Gate::denies('matriz_requisitos_legales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //dd($request->all());
+
         $request->validate([
             'nombrerequisito' => ['required', 'string'],
             'formacumple' => ['nullable', 'string'],
@@ -193,7 +193,7 @@ class MatrizRequisitoLegalesController extends Controller
         foreach ($proceso->participantes as $part) {
             $emailAprobador = $part->participante->empleado->email;
 
-            Mail::to(removeUnicodeCharacters($emailAprobador))->send(new MatrizEmail($id_matriz));
+            Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new MatrizEmail($id_matriz));
         }
         // dd("Se enviaron todos");
     }

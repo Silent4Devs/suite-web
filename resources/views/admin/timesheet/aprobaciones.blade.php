@@ -1,34 +1,18 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
-    <style type="text/css">
-        .aprobada {
-            padding: 3px;
-            background-color: #61CB5C;
-            color: #fff;
-            border-radius: 4px;
-        }
-
-        .rechazada {
-            padding: 3px;
-            background-color: #EA7777;
-            color: #fff;
-            border-radius: 4px;
-        }
-
-        .pendiente {
-            padding: 3px;
-            background-color: #F48C16;
-            color: #fff;
-            border-radius: 4px;
-        }
-    </style>
-
-
     {{ Breadcrumbs::render('timesheet-aprobaciones') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobaciones</font>
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Aprobaciones</font>
     </h5>
+
     <x-loading-indicator />
+
+    @include('admin.timesheet.complementos.cards')
+    @include('admin.timesheet.complementos.admin-aprob')
+    @include('admin.timesheet.complementos.blue-card-header')
     <div class="card card-body">
         <div class="row">
             <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">
@@ -116,8 +100,8 @@
                                 </td>
                                 <td class="">
                                     @can('timesheet_administrador_aprobar_horas')
-                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobacion->id }}"
-                                            title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobacion->id }}" title="Visualizar"
+                                            class="btn"><i class="fa-solid fa-eye"></i></a>
                                         @if ($aprobacion->aprobador_id == auth()->user()->empleado->id)
                                             <div class="btn" data-toggle="modal"
                                                 data-target="#modal_aprobar_{{ $aprobacion->id }}">

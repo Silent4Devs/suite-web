@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     <h5 class="titulo_general_funcion">Registrar: Lineamiento Days Off´s</h5>
@@ -27,7 +27,7 @@
     <div class="mt-4 card card-body">
         <h5>Creación de lineamientos</h5>
 
-        @include('admin.dayOff.fields')
+        @include('admin.dayOff.fields-create')
 
     </div>
     <!-- Submit Field -->

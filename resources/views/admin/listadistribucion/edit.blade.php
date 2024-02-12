@@ -11,12 +11,12 @@
         opacity: 1;
     }
 
-    #btn_cancelar{
-    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    border: 1px solid var(--unnamed-color-057be2);
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border: 1px solid #057BE2;
-    opacity: 1;
+    #btn_cancelar {
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        border: 1px solid var(--unnamed-color-057be2);
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #057BE2;
+        opacity: 1;
     }
 
     .anima-focus label {
@@ -25,7 +25,7 @@
     }
 </style>
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}" @endsection
+<link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}{{config('app.cssVersion')}}" @endsection
     @section('content')
     @include('admin.listadistribucion.estilos')
 
@@ -33,7 +33,7 @@
         <div class="">
             <div class="row">
                 <div class="col-2">
-                    <img src="{{asset('politicas.png')}}" class="imgdoc"  alt="">
+                    <img src="{{ asset('politicas.png') }}" class="imgdoc"  alt="">
                 </div>
                 <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        <div class="card" style="height: 680px;">
             <div class="card-body">
                 <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
                 <hr>
@@ -116,6 +116,9 @@
                             </div>
                         </div>
                         <div>
+                            @error('nivel_null')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             @for ($i = 1; $i < 6; $i++)
                                 <div class="form-row nivel{{ $i }}Div" style="display: none;">
                                     <div class="mt-4 mb-1">
@@ -142,9 +145,11 @@
                 </div>
             </div>
         </div>
-        <div  style="position: relative; left: 65rem;">
-            <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
-            <button type="submit" class="btn btn-primary" style="width: 8rem;">Crear</button>
+        <div class="col-12">
+            <div  style="position: relative; text-align:end;">
+                <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+                <button type="submit" class="btn btn-primary" style="width: 8rem;">Editar</button>
+            </div>
         </div>
     </form>
 @endsection

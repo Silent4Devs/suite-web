@@ -17,6 +17,7 @@ use App\Models\ExternosMinutaDireccion;
 use App\Models\FilesRevisonDireccion;
 use App\Models\HistoralRevisionMinuta;
 use App\Models\Minutasaltadireccion;
+use App\Models\Organizacion;
 use App\Models\PlanImplementacion;
 use App\Models\RevisionMinuta;
 use App\Models\Team;
@@ -31,6 +32,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use PDF;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -75,6 +77,7 @@ class MinutasaltadireccionController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($request->all());
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -105,7 +108,7 @@ class MinutasaltadireccionController extends Controller
         //Creación Minuta
 
         if ($request->input('archivo', false)) {
-            $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+            $minutasaltadireccion->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -140,7 +143,7 @@ class MinutasaltadireccionController extends Controller
         //     return intval($valor);
         // }, $arrstrParticipantes);
 
-        $participantes = json_decode($request->input('participantes'));
+        /*$participantes = json_decode($request->input('participantes'));
         // dd($participantes);
         if (is_array($participantes)) {
             foreach ($participantes as $participante) {
@@ -151,6 +154,16 @@ class MinutasaltadireccionController extends Controller
                 $arrpart[] = [
                     'empleado_id' => $empleadoId,
                     'asistencia' => $asistencia,
+                ];
+            }
+        }*/
+        $participantes = json_decode($request->input('participantes'), true);
+
+        if (is_array($participantes)) {
+            foreach ($participantes as $participante) {
+                $arrpart[] = [
+                    'empleado_id' => $participante['empleado_id'] ?? null,
+                    'asistencia' => $participante['asistencia'] ?? null,
                 ];
             }
         }
@@ -164,7 +177,7 @@ class MinutasaltadireccionController extends Controller
         $arrParticipantes = json_decode($request->participantesExt);
         foreach ($arrParticipantes as $participante) {
             $exists = ExternosMinutaDireccion::where('minuta_id', $minutasaltadireccion->id)->where('nombreEXT', $participante->nombre)->where('emailEXT', $participante->email)->where('puestoEXT', $participante->puesto)->where('empresaEXT', $participante->empresa)->first();
-            if (!$exists) {
+            if (! $exists) {
                 ExternosMinutaDireccion::create([
                     'nombreEXT' => $participante->nombre,
                     'emailEXT' => removeUnicodeCharacters($participante->email),
@@ -177,23 +190,31 @@ class MinutasaltadireccionController extends Controller
         }
     }
 
-    public function enviarCorreosParticipantes($minutasaltadireccion)
+    public function enviarCorreosParticipantes($minutasaltadireccion, $numero_revision)
     {
         $id_minuta = $minutasaltadireccion->id;
         $tema_minuta = $minutasaltadireccion->tema_reunion;
         foreach ($minutasaltadireccion->participantesCorreo as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+            $revisor = RevisionMinuta::create([
+                'empleado_id' => $participante->id,
+                'nivel' => 1,
+                'no_revision' => strval($numero_revision),
+                'minuta_id' => $minutasaltadireccion->id,
+            ]);
+            Mail::to(removeUnicodeCharacters($participante->email))->queue(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
         }
 
-        foreach ($minutasaltadireccion->externos as $externo) {
-            Mail::to(removeUnicodeCharacters($externo->emailEXT))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+        if (isset($minutasaltadireccion->externos)) {
+            foreach ($minutasaltadireccion->externos as $externo) {
+                Mail::to(removeUnicodeCharacters($externo->emailEXT))->queue(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+            }
         }
     }
 
     public function initReviews($minutasaltadireccion)
     {
         // Almacenamiento de revisiones vinculado a participantes y minutas
-        // Mail::to(removeUnicodeCharacters($minutasaltadireccion->responsable->email))->send(new MinutaConfirmacionSolicitud($minutasaltadireccion));
+        Mail::to(removeUnicodeCharacters($minutasaltadireccion->responsable->email))->queue(new MinutaConfirmacionSolicitud($minutasaltadireccion));
         $numero_revision = RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision') ? intval(RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision')) + 1 : 1;
         //Historial#
         $historialRevisionMinuta = HistoralRevisionMinuta::create([
@@ -203,17 +224,17 @@ class MinutasaltadireccionController extends Controller
             'fecha' => Carbon::now(),
         ]);
         //Revisiones#
-        foreach ($minutasaltadireccion->participantes as $participante) {
-            $revisor = RevisionMinuta::create([
-                'empleado_id' => $participante->id,
-                'nivel' => 1,
-                'no_revision' => strval($numero_revision),
-                'minuta_id' => $minutasaltadireccion->id,
-            ]);
-            // Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudDeAprobacion($minutasaltadireccion, $revisor, $historialRevisionMinuta));
-        }
+        // foreach ($minutasaltadireccion->participantes as $participante) {
+        //     $revisor = RevisionMinuta::create([
+        //         'empleado_id' => $participante->id,
+        //         'nivel' => 1,
+        //         'no_revision' => strval($numero_revision),
+        //         'minuta_id' => $minutasaltadireccion->id,
+        //     ]);
+        // Mail::to(removeUnicodeCharacters($participante->email))->queue(new SolicitudDeAprobacion($minutasaltadireccion, $revisor, $historialRevisionMinuta));
+        // }
 
-        $this->enviarCorreosParticipantes($minutasaltadireccion);
+        $this->enviarCorreosParticipantes($minutasaltadireccion, $numero_revision);
     }
 
     public function vincularActividadesPlanDeAccion($request, $minuta, $planEdit = null, $edit = false)
@@ -221,9 +242,9 @@ class MinutasaltadireccionController extends Controller
         if (isset($request->actividades)) {
             $tasks = [
                 [
-                    'id' => 'tmp_' . (strtotime(now()) * 1000) . '_1',
+                    'id' => 'tmp_'.(strtotime(now()) * 1000).'_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Minuta - ' . $request->tema_reunion,
+                    'name' => 'Minuta - '.$request->tema_reunion,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -245,26 +266,26 @@ class MinutasaltadireccionController extends Controller
 
             foreach ($actividades as $actividad) {
                 $asignados = [];
-
+                // dd($actividad, $actividad[5]->participantes_id);
                 if ($edit) {
-                    if (gettype($actividad[7]) == 'string') {
-                        if (str_contains($actividad[7], ',')) {
-                            $asignados = explode(',', $actividad[7]);
+                    if (gettype($actividad[5]->participantes_id) == 'string') {
+                        if (str_contains($actividad[5]->participantes_id, ',')) {
+                            $asignados = explode(',', $actividad[5]->participantes_id);
                         } else {
-                            array_push($asignados, $actividad[7]);
+                            array_push($asignados, $actividad[5]->participantes_id);
                         }
                     } else {
-                        $asignados = $actividad[7];
+                        $asignados = $actividad[5]->participantes_id;
                     }
                 } else {
-                    $asignados = $actividad[7];
+                    $asignados = $actividad[5]->participantes_id;
                 }
                 $assigs = [];
                 foreach ($asignados as $asignado) {
                     $id = intval($asignado);
                     // $empleado = Empleado::find($id);
                     $assigs[] = [
-                        'id' => 'tmp_' . time() . '_' . $id,
+                        'id' => 'tmp_'.time().'_'.$id,
                         'effort' => '0',
                         'roleId' => '1',
                         'resourceId' => $id,
@@ -272,21 +293,21 @@ class MinutasaltadireccionController extends Controller
                 }
 
                 $tasks[] = [
-                    'id' => $actividad[0],
-                    'end' => strtotime($actividad[4]) * 1000,
-                    'name' => $actividad[2],
+                    'id' => $actividad[5]->id,
+                    'end' => strtotime($actividad[2]) * 1000,
+                    'name' => $actividad[0],
                     'level' => 1,
-                    'start' => strtotime($actividad[3]) * 1000,
+                    'start' => strtotime($actividad[1]) * 1000,
                     'canAdd' => true,
                     'status' => 'STATUS_ACTIVE',
                     'canWrite' => true,
-                    'duration' => $actividad[5],
+                    'duration' => $actividad[5]->duration,
                     'progress' => 0,
                     'canDelete' => true,
                     'collapsed' => false,
                     'relevance' => '0',
                     'canAddIssue' => true,
-                    'description' => $actividad[8],
+                    'description' => $actividad[4],
                     'endIsMilestone' => false,
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
@@ -330,31 +351,47 @@ class MinutasaltadireccionController extends Controller
         $pdf = \PDF::loadView('admin.minutasaltadireccions.pdf.minuta-pdf', compact('minutasaltadireccion', 'actividades', 'participantesWithAsistencia'));
         Storage::makeDirectory('public/minutas/en aprobacion');
         Storage::makeDirectory('public/minutas/aprobadas');
-        $nombre_pdf = Str::limit($minutasaltadireccion->tema_reunion, 20, '') . '_' . $minutasaltadireccion->fechareunion . '.pdf';
+        $nombre_pdf = Str::limit($minutasaltadireccion->tema_reunion, 20, '').'_'.$minutasaltadireccion->fechareunion.'.pdf';
         $nombre = preg_replace('([^A-Za-z0-9-À-ÿ_.])', '', $nombre_pdf);
-        $pdf->save(public_path('storage/minutas/en aprobacion') . '/' . $nombre);
+        $pdf->save(public_path('storage/minutas/en aprobacion').'/'.$nombre);
 
         $minutasaltadireccion->documento = $nombre;
         $minutasaltadireccion->save();
     }
 
-    public function edit(Minutasaltadireccion $minutasaltadireccion)
+    public function edit($id)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
-        $actividades = $minutasaltadireccion->planes->first()->tasks;
-        $actividades = array_filter($actividades, function ($actividad) {
+        $minutasaltadireccion = Minutasaltadireccion::with([
+            'participantes',
+            // 'planes',
+            'documentos',
+            'externos',
+        ])
+            ->find($id);
+
+        $planes_minuta = Minutasaltadireccion::with(
+            'planes'
+        )
+            ->find($id);
+        $actividades = array_filter($planes_minuta->planes->first()->tasks, function ($actividad) {
             return intval($actividad->level) > 0;
         });
+        // dd($planes_minuta, $actividades);
 
         $participantesWithAsistencia = $minutasaltadireccion->participantes()
+            // ->select('name', 'area_id', 'foto')
             ->withPivot('asistencia')
             ->get();
-        // dd($participantesWithAsistencia);
 
-        $responsablereunions = Empleado::getaltaAll();
+        $responsablereunions = Empleado::select('name', 'foto')->get();
 
-        return view('admin.minutasaltadireccions.edit', compact('responsablereunions', 'participantesWithAsistencia', 'minutasaltadireccion', 'actividades'));
+        return view('admin.minutasaltadireccions.edit', compact(
+            'minutasaltadireccion',
+            'actividades',
+            'participantesWithAsistencia',
+            'responsablereunions'
+        ));
     }
 
     public function processUpdate($request, Minutasaltadireccion $minutasaltadireccion, $edit = false)
@@ -403,12 +440,12 @@ class MinutasaltadireccionController extends Controller
         }
 
         if ($request->input('archivo', false)) {
-            if (!$minutasaltadireccion->archivo || $request->input('archivo') !== $minutasaltadireccion->archivo->file_name) {
+            if (! $minutasaltadireccion->archivo || $request->input('archivo') !== $minutasaltadireccion->archivo->file_name) {
                 if ($minutasaltadireccion->archivo) {
                     $minutasaltadireccion->archivo->delete();
                 }
 
-                $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+                $minutasaltadireccion->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
             }
         } elseif ($minutasaltadireccion->archivo) {
             $minutasaltadireccion->archivo->delete();
@@ -421,7 +458,7 @@ class MinutasaltadireccionController extends Controller
     {
         $minutasaltadireccion = Minutasaltadireccion::find(intval($minutasaltadireccion));
         $this->processUpdate($request, $minutasaltadireccion, true);
-        $ruta_publicacion = 'public/minutas/aprobadas/' . $minutasaltadireccion->documento;
+        $ruta_publicacion = 'public/minutas/aprobadas/'.$minutasaltadireccion->documento;
 
         if (Storage::exists($ruta_publicacion)) {
             Storage::delete($ruta_publicacion);
@@ -454,47 +491,42 @@ class MinutasaltadireccionController extends Controller
         $revisiones = RevisionMinuta::where('minuta_id', $minuta->id)->where('no_revision', $revision_actual)->get();
         foreach ($revisiones as $revision) {
             $mail = $revision->empleado->email;
-            Mail::to(removeUnicodeCharacters($mail))->send(new MinutaRechazoPorEdicion($minuta, $revision));
+            Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaRechazoPorEdicion($minuta, $revision));
         }
     }
 
-    // public function show(Minutasaltadireccion $minutasaltadireccion)
-    // {
-    //     abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-    //     $minutasaltadireccion->load('responsable', 'team');
-
-    //     return view('admin.minutasaltadireccions.show', compact('minutasaltadireccion'));
-    // }
-
     public function show($id)
     {
+
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $minutasaltadireccion = Minutasaltadireccion::find($id);
 
-        $accesoparticipante = false;
-        // dd($id, $acceso->participantes);
+        $minutas = Minutasaltadireccion::with('responsable')->find($id);
+        $responsable = Empleado::where('id', $minutas->responsable_id)->first();
+        $revision = RevisionMinuta::where('id', $minutas->id)->first();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $direccion = $organizacion_actual->direccion;
+        $empresa_actual = $organizacion_actual->empresa;
+        $rfc = $organizacion_actual->rfc;
 
-        //Revisar que sea uno de los participantes
-        if ($minutasaltadireccion->participantes->contains('id', User::getCurrentUser()->empleado->id)) {
-            $accesoparticipante = true;
-        } else {
-            $accesoparticipante = false;
-        }
+        return view('admin.minutasaltadireccions.show', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision'));
+    }
 
-        $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
-        $actividades = $minutasaltadireccion->planes->first()->tasks;
-        $actividades = array_filter($actividades, function ($actividad) {
-            return intval($actividad->level) > 0;
-        });
+    public function revision($id)
+    {
 
-        $participantesWithAsistencia = $minutasaltadireccion->participantes()
-            ->withPivot('asistencia')
-            ->get();
+        abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $comentarios = RevisionMinuta::select('comentarios')->where('minuta_id', '=', $minutasaltadireccion->id)->get();
+        $minutas = Minutasaltadireccion::with('responsable')->find($id);
+        $responsable = Empleado::where('id', $minutas->responsable_id)->first();
+        $revision = RevisionMinuta::where('id', $minutas->id)->first();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $direccion = $organizacion_actual->direccion;
+        $empresa_actual = $organizacion_actual->empresa;
+        $rfc = $organizacion_actual->rfc;
 
-        return view('admin.minutasaltadireccions.revision', compact('participantesWithAsistencia', 'minutasaltadireccion', 'actividades', 'accesoparticipante', 'comentarios'));
+        return view('admin.minutasaltadireccions.revision', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision'));
     }
 
     public function aprobado($id, Request $request)
@@ -535,11 +567,11 @@ class MinutasaltadireccionController extends Controller
         $emailresponsable = $minuta->responsable->email;
         $tema_minuta = $minuta->tema_reunion;
 
-        Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaRechazadaResponsable($minuta->id, $tema_minuta, User::getCurrentUser()->empleado->name));
+        Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionMinutaRechazadaResponsable($minuta->id, $tema_minuta, User::getCurrentUser()->empleado->name));
 
         foreach ($minuta->participantes as $participante) {
 
-            Mail::to(removeUnicodeCharacters($participante->email))->send(new NotificacionMinutaRechazada($tema_minuta));
+            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionMinutaRechazada($tema_minuta));
         }
 
         return redirect(route('admin.minutasaltadireccions.index'));
@@ -561,18 +593,18 @@ class MinutasaltadireccionController extends Controller
             $emailresponsable = $minuta->responsable->email;
             $tema_minuta = $minuta->tema_reunion;
             // All records in $confirmacion have 'estatus' equal to 2
-            Mail::to(removeUnicodeCharacters($emailresponsable))->send(new NotificacionMinutaAprobada($responsable, $tema_minuta));
+            Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionMinutaAprobada($responsable, $tema_minuta));
             $minuta->update([
                 'estatus' => Minutasaltadireccion::PUBLICADO,
             ]);
 
-            $fileToCopy = 'storage/minutas/en aprobacion' . '/' . $minuta->documento;
+            $fileToCopy = 'storage/minutas/en aprobacion'.'/'.$minuta->documento;
             $destinationFolder = 'storage/minutas/aprobadas'; // Replace this with the destination folder path
 
             // Check if the source file exists
             if (File::exists($fileToCopy)) {
                 $fileName = pathinfo($fileToCopy, PATHINFO_BASENAME); // Get the filename
-                $destinationPath = $destinationFolder . '/' . $fileName; // Create the destination path
+                $destinationPath = $destinationFolder.'/'.$fileName; // Create the destination path
 
                 File::copy($fileToCopy, $destinationPath);
             }
@@ -659,6 +691,24 @@ class MinutasaltadireccionController extends Controller
         $minuta = $id;
         $minuta->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
+    }
+
+    public function pdf($id)
+    {
+        $minutas = Minutasaltadireccion::where('id', $id)->first();
+        $organizacions = Organizacion::getFirst();
+        $responsable = Empleado::where('id', $minutas->responsable_id)->first();
+        $revision = RevisionMinuta::where('id', $minutas->id)->first();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $direccion = $organizacion_actual->direccion;
+        $empresa_actual = $organizacion_actual->empresa;
+        $rfc = $organizacion_actual->rfc;
+
+        $pdf = PDF::loadView('minuta', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('minuta.pdf');
     }
 }

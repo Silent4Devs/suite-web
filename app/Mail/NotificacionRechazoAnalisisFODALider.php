@@ -30,6 +30,6 @@ class NotificacionRechazoAnalisisFODALider extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.entendimiento-organizacion.notificacion-analisis-lider')->subject('Analisis FODA Rechazado: '.$this->analisis)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.entendimiento-organizacion.notificacion-analisis-lider')->subject('Analisis FODA Rechazado: '.$this->analisis);
     }
 }

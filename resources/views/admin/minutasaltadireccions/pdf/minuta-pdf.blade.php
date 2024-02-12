@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <style>
         body {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -321,7 +322,7 @@
         <tbody>
             <tr>
                 <td>
-                    {!! $minutasaltadireccion->tema_tratado !!}
+                    {!! htmlspecialchars_decode($minutasaltadireccion->tema_tratado) !!}
                 </td>
             </tr>
         </tbody>

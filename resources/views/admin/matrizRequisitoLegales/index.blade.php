@@ -1,8 +1,34 @@
 @extends('layouts.admin')
+<style>
+    .card{
+        width: 200%;
+    }
+</style>
 @section('content')
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
     <div class="row d-flex align-items-center">
+
+
         <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
+        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+            <div class="d-flex" style="gap: 25px;">
+                <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+                <div>
+                    <br>
+                    <h4>¿Qué es? Matriz de Requisitos Legales y Regulatorios</h4>
+                    <p>
+                        Es una herramienta utilizada en el ámbito empresarial y de gestión para
+                        rastrear y gestionar los requisitos legales y regulaciones aplicables a una organización.
+                    </p>
+                    <p>
+                        Esta matriz tiene como objetivo principal ayudar a las empresas a garantizar que están
+                        cumpliendo con todas las leyes, regulaciones y normativas relevantes que se aplican a sus
+                        operaciones.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <a class="btn btn-primary ml-auto" style="font-size: 16px; position: relative; right: 1rem;"
             href="{{ route('admin.matriz-requisito-legales.create') }}">
             Nueva Matriz de Requisitos
@@ -53,7 +79,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });
@@ -77,7 +103,7 @@
                     if (result.isConfirmed) {
                         // Redirect to another view after user clicks OK
                         window.location.href =
-                            '{{ route('admin.iso27001.index') }}';
+                            '{{ route('admin.iso27001.guia') }}';
                     }
                 });
             });

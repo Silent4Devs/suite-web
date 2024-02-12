@@ -81,7 +81,7 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
@@ -166,13 +166,14 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
 
     public function participantes()
     {
-        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->alta()->with('area');
+        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')
+            ->select('empleados.id', 'name', 'foto', 'area_id', 'puesto_id', 'email')->alta()->with('area', 'puestoRelacionado');
     }
 
     public function participantesCorreo()
     {
         return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->alta()->with('area')
-            ->select('name', 'email');
+            ->select('empleados.id', 'name', 'email');
     }
 
     public function documentos()

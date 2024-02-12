@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/inicio_usuario.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/inicio_usuario.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     @include('partials.menu-slider')
@@ -17,11 +17,13 @@
                     </div>
                     <div style="text-align: center;">
                         <span>Estatus</span> <br>
-                        <span class="estatus-user" style="background-color: #D2FDB8; color: #04B716;">Alta</span>
+                        <span class="estatus-user"
+                            style="background-color: #D2FDB8; color: #04B716;">{{ strtoupper($usuario->empleado->estatus) }}
+                        </span>
                     </div>
                 </div>
                 <div>
-                    Nº de empelado <span>{{ $usuario->empleado->n_registro }}</span>
+                    Nº de empleado: <span>{{ $usuario->empleado->n_empleado }}</span>
                 </div>
             </div>
             <div class="card overflow-hidden">
@@ -32,9 +34,11 @@
                                 alt="">
                         </div>
                         <div class="mt-4">
-                            <a href="">Ver perfil profesional</a> <br>
-                            <a href="">Ver perfil de puesto</a> <br>
-                            <a href="">Mi expediente</a>
+                            <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}">Ver perfil profesional</a>
+                            <br>
+                            <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}">Ver perfil de puesto</a> <br>
+                            <a href="{{ route('admin.inicio-Usuario.expediente', auth()->user()->empleado->id) }}">Mi
+                                expediente</a>
                         </div>
                         <div class="mt-4">
                             <strong>Email</strong><br>
@@ -46,12 +50,12 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3 class="title-user-card">Innovación y Desarrollo</h3>
-                        <span>Desarrollador Full Stack</span>
+                        <h3 class="title-user-card">{{ $usuario->empleado->area->area }}</h3>
+                        <span> {{ $usuario->empleado->puesto }}</span>
                         <hr class="my-4">
                         <div class=" caja-info-user-main">
                             <div>
-                                <span>Genero</span><br>
+                                <span>Género</span><br>
                                 {{ $usuario->empleado->genero }}
                             </div>
                             <div>
@@ -59,7 +63,7 @@
                                 {{ $usuario->empleado->puesto }}
                             </div>
                             <div>
-                                <span>fecha de ingreso</span><br>
+                                <span>Fecha de ingreso</span><br>
                                 {{ $usuario->empleado->fecha_ingreso }}
                             </div>
                             <div>
@@ -69,7 +73,6 @@
                             <div>
                                 <span>Cumpleaños</span><br>
                                 {{ $usuario->empleado->actual_birdthday }}
-
                             </div>
                         </div>
                     </div>
@@ -212,11 +215,50 @@
             </div>
         </div>
     </div>
+    <div class="card card-body" style="background-color: #D8E1EC !important">
+        <h4 class="title-ob-ev">Objetivos y Evaluaciones</h4>
+
+        <div class="d-flex flex-wrap mt-4" style="gap: 25px;">
+
+            <a href="{{ route('admin.ev360-objetivos-empleado.show', ['empleado' => auth()->user()->empleado->id]) }}">
+                <div class="item-ob-ev" style="background-color: #2478B8;">
+                    <div class="img-ob-ev">
+                        <img src="{{ asset('img/inicio_usuario/objetivos.png') }}" alt="">
+                    </div>
+                    <div class="info-ob-ev">
+                        <h5>Mis objetivos</h5>
+                        <p><small>Ver mis objetivos</small></p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="" class="d-none">
+                <div class="item-ob-ev" style="background-color: #249AB8;">
+                    <div class="img-ob-ev">
+                        <img src="{{ asset('img/inicio_usuario/ev_tri.png') }}" alt="">
+                    </div>
+                    <div class="info-ob-ev">
+                        <h5>Mi Evaluación Trimestral 2024</h5>
+                        <p><small>Ver mi evaluación trimestral</small></p>
+                    </div>
+                </div>
+            </a>
+
+            {{-- <a href="">
+                <div class="item-ob-ev" style="background-color: #19A877;">
+                    <div class="img-ob-ev">
+                        <img src="{{ asset('img/inicio_usuario/ev360.png') }}" alt="">
+                    </div>
+                    <div class="info-ob-ev">
+                        <h5>Evaluación 360</h5>
+                        <p><small>Ver mi evaluación 360</small></p>
+                    </div>
+                </div>
+            </a> --}}
+
+        </div>
     </div>
 
-    <div class="card card-body" style="background-color: #D8E1EC !important">
-        <img src="{{ asset('img/example-remove/iidds.png') }}" alt="" style="width: 60%;">
-    </div>
 @endsection
 
 @section('scripts')

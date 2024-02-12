@@ -2,7 +2,7 @@
 @section('content')
 @section('titulo', 'Reportes')
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/reportes.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('css/reportes.css') }}{{config('app.cssVersion')}}"/>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">

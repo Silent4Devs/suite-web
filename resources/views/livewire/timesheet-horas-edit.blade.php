@@ -457,7 +457,7 @@
                                 'success'
                             ).then(() => {
                                 window.location.href =
-                                    '{{ route('admin.timesheet-inicio') }}';
+                                    '{{ route('admin.timesheet-create') }}';
                             });
                         } else {
                             if (response.status == 520) {
@@ -467,10 +467,12 @@
                                     'success'
                                 ).then(() => {
                                     window.location.href =
-                                        '{{ route('admin.timesheet-inicio') }}';
+                                        '{{ route('admin.timesheet-create') }}';
                                 });
                             } else {
-                                toastr.error('Error al enviar');
+                                toastr.error(
+                                    '!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!'
+                                );
                             }
                         }
                     },

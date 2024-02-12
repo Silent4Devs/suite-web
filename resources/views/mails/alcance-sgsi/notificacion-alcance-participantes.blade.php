@@ -120,15 +120,15 @@
                                             <p
                                                 style="text-align: center; font-size:11pt;
                                                 color:#153643; margin-left:25px; margin-right:25px">
-                                                Se ha enviado una Politica para su aprobación
+                                                Se ha enviado una determinación de alcance para su aprobación.
                                             </p>
 
                                             <br>
                                             <div style="text-align:center;">
                                                 Da click en la siguiente liga para revisarla y aprobarla
-                                                <a href="{{ route('admin.politica-sgsis.revision', $id_alcance) }}"
+                                                <a href="{{ route('admin.alcance-sgsis.revision', $id_alcance) }}"
                                                     style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                    Revisar Política
+                                                    Revisar Determinación de Alcance
                                                 </a>
                                             </div>
                                         </div>

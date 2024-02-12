@@ -52,6 +52,7 @@ li.active-paso {
 
 .info-iso {
     transition: 0.15s;
+    padding-right: 8px;
 }
 
 .card-iso-guia:hover .info-iso {
@@ -88,7 +89,7 @@ li.active-paso {
 }
 
 .card-main-iso {
-    background-image: url('../img/iso/fondo-card.png');
+    background-image: url('../img/iso/fondo-card.webp');
     background-attachment: fixed;
     background-size: 50%;
     background-repeat: no-repeat;

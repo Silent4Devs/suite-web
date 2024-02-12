@@ -59,14 +59,25 @@
 </style>
 @section('content')
     {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
-<h5 class="col-12 titulo_general_funcion">Registrar: Política del Sistema de Gestión</h5>
-<div class="mt-4 card" id="card">
-    <img src="{{ url('comite.png') }}" class="imgdoc" alt="">
-    <div class="small">
-      <h2 class="h2doc">¿Qué es? Política del Sistema de Gestión</h2>
-      <p class="pdoc">Es una declaración oficial de la dirección de una organización que establece sus intenciones y compromisos con respecto al sistema de gestión implementado en la organización. <br> <br> La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u otros ámbitos específicos.</p>
+    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es? Política del Sistema de Gestión</h4>
+                <p>
+                    Es una declaración oficial de la dirección de una organización que establece sus intenciones y
+                        compromisos con respecto al sistema de gestión implementado en la organización.
+                </p>
+                <p>
+                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
+                    organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
+                    otros ámbitos específicos.
+                </p>
+            </div>
+        </div>
     </div>
-</div>
 <div class="mt-4 card">
     <div class="card-body">
         <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
@@ -100,7 +111,7 @@
             </div>
 
             <div class="text-right form-group col-12">
-                <a href="{{ route('admin.politica-sgsis.index') }}" id="btn_cancelar" class="btn" style="color: #5397D5">Cancelar</a>
+                <a href="{{ route('admin.politica-sgsis.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
                 <button class="btn btn-primary" type="submit">
                     Guardar y enviar aprobación
                 </button>

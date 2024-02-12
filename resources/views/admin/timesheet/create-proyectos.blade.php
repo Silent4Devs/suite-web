@@ -15,9 +15,9 @@
         <form method="POST" action="{{ route('admin.timesheet-proyectos-store') }}">
             @csrf
             <div class="row">
-                <div class="form-group col-md-2">
-                    <label><i class="fas fa-list iconos-crear"></i>ID<sup>*</sup></label>
-                    <input type="text" id="identificador_proyect" name="identificador" class="form-control" maxlength="150" required>
+                <div class="form-group col-md-2 anima-focus">
+                    <input type="text" id="identificador_proyect" placeholder="" name="identificador" class="form-control" maxlength="254" required>
+                    {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('identificador'))
                         <div class="invalid-feedback">
                             {{ $errors->first('identificador') }}
@@ -27,12 +27,12 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-6">
-                    <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto<sup>*</sup></label>
-                    <input type="text" id="name_proyect" name="proyecto_name" class="form-control" maxlength="150" required>
+                <div class="form-group col-md-6 anima-focus">
+                    <input type="text" id="name_proyect" placeholder="" name="proyecto_name" class="form-control" maxlength="254" required>
+                    {!! Form::label('name_proyect', 'Nombre del proyecto*', ['class' => 'asterisco']) !!}
+                    <span id="alertaGenerica" style="color: red; display: none;"></span>
                 </div>
-                <div class="form-group col-md-4">
-                    <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente<sup>*</sup></label>
+                <div class="form-group col-md-4 anima-focus">
                     <select name="cliente_id" id="cliente_id" class="form-control" required>
                         <option selected value="">Seleccione cliente</option>
                         @foreach ($clientes as $cliente)
@@ -40,11 +40,11 @@
                             </option>
                         @endforeach
                     </select>
+                    {!! Form::label('cliente_id', 'Cliente*', ['class' => 'asterisco']) !!}
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-4" wire:ignore id="caja_areas_seleccionadas_create">
-                    <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)<sup>*</sup></label>
+                <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;" id="caja_areas_seleccionadas_create">
                     <select class="select2-multiple form-control" multiple="multiple"
                     id="areas_seleccionadas" name="areas_seleccionadas[]" required>
                         @foreach ($areas as $area)
@@ -53,13 +53,14 @@
                             </option>
                         @endforeach
                     </select>
+                    {!! Form::label('areas_seleccionadas', ' Área(s) participante(s)*', ['class' => 'asterisco']) !!}
                     <div class="mt-1">
                         <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
                     </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio <small>(opcional)</small></label>
-                    <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
+                <div class="form-group col-md-4 anima-focus">
+                    <input type="date" name="fecha_inicio" placeholder="" id="fecha_inicio" class="form-control">
+                    {!! Form::label('fecha_inicio', 'Fecha de inicio', ['class' => 'asterisco']) !!}
                     @if ($errors->has('fecha_inicio'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_inicio') }}
@@ -69,9 +70,9 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de fin <small>(opcional)</small></label>
+                <div class="form-group col-md-4 anima-focus">
                     <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
+                    {!! Form::label('fecha_fin', 'Fecha de fin', ['class' => 'asterisco']) !!}
                     @if ($errors->has('fecha_fin'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_fin') }}
@@ -83,27 +84,26 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede<sup>*</sup></label>
+                <div class="form-group col-md-4 anima-focus">
                     <select class="form-control" name="sede_id" id="sede_id" required>
                         <option selected value="">Seleccione sede</option>
                         @foreach ($sedes as $sede)
                             <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
                         @endforeach
                     </select>
+                    {!! Form::label('sede_id', 'Sede', ['class' => 'asterisco']) !!}
                 </div>
-                <div class="form-group col-md-4">
-                    <label class="form-label"><i
-                            class="fa-solid fa-info-circle iconos-crear"></i>Tipo<sup>*</sup></label>
+                <div class="form-group col-md-4 anima-focus">
                     <select class="form-control" name="tipo" id="tipo" required>
                         @foreach ($tipos as $tipo_it)
                             <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it?'selected':'' }}>{{ $tipo_it }}</option>
                         @endforeach
                     </select>
+                    {!! Form::label('tipo', 'Tipo', ['class' => 'asterisco']) !!}
                 </div>
-                <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Horas Asignadas al proyecto <small>(opcional)</small></label>
-                    <input type="number" min="0" name="horas_proyecto" id="horas_asignadas" class="form-control">
+                <div class="form-group col-md-4 anima-focus">
+                    <input type="number" min="0" name="horas_proyecto"  maxlength="250"  placeholder="" id="horas_asignadas" class="form-control">
+                    {!! Form::label('horas_proyecto', 'Horas Asignadas al proyecto', ['class' => 'asterisco']) !!}
                     @if ($errors->has('horas_proyecto'))
                         <div class="invalid-feedback">
                             {{ $errors->first('horas_proyecto') }}

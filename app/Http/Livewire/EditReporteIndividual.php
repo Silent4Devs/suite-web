@@ -73,7 +73,7 @@ class EditReporteIndividual extends Component
             $this->reporte = $this->reporte->first();
         } else {
             foreach ($audit->equipo as $key => $equipo) {
-                # code...
+                // code...
                 if (User::getCurrentUser()->empleado->id == $equipo->id) {
                     $this->createReporte($audit);
                     break;
@@ -119,6 +119,7 @@ class EditReporteIndividual extends Component
             $cuentas = null;
             $this->comentarios = null;
         }
+
         // dd($cuentas);
         return view('livewire.edit-reporte-individual', compact('procesos', 'datas', 'cuentas'))
             ->with('clasificaciones', $this->clasificaciones)

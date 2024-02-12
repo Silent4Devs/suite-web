@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\EmpleadosGeneralExport;
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
 use App\Mail\EnviarCorreoBienvenidaTabantaj;
@@ -38,6 +39,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 
 class EmpleadoController extends Controller
@@ -174,10 +176,12 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
+
+                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($route);
+                    });
+
+                    $img_intervention->save($route);
                 }
             }
         } elseif ($request->snap_foto && ! $request->file('foto')) {
@@ -189,10 +193,12 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
+
+                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($route);
+                    });
+
+                    $img_intervention->save($route);
                 }
             }
         } else {
@@ -203,10 +209,12 @@ class EmpleadoController extends Controller
                 $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('foto'));
-                $img_intervention->resize(480, null, function ($constraint) {
+
+                $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($route);
+                });
+
+                $img_intervention->save($route);
             }
         }
 
@@ -355,7 +363,7 @@ class EmpleadoController extends Controller
             User::findOrFail($user->id)->roles()->sync(4);
         }
         //Send email with generated password
-        Mail::to(removeUnicodeCharacters($empleado->email))->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
+        Mail::to(removeUnicodeCharacters($empleado->email))->queue(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
 
         return $user;
     }
@@ -921,9 +929,9 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find($id);
-        $empleados = Empleado::get();
+        $empleados = Empleado::getaltaAll();
         $ceo_exists = Empleado::getCeoExists();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $area = null;
         if ($empleado && $empleado->area_id !== null) {
             $area = $areas->find($empleado->area_id);
@@ -931,7 +939,7 @@ class EmpleadoController extends Controller
         $sedes = Sede::getAll();
         if (isset($empleado->sede_id)) {
             $sede = Sede::getbyId($empleado->sede_id);
-        // dd($sede);
+            // dd($sede);
         } else {
             $sede = null;
             // dd($sede);
@@ -1099,10 +1107,11 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
+                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($route);
+                    });
+
+                    $img_intervention->save($route);
                 }
             }
         } elseif (
@@ -1116,10 +1125,11 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
+                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($route);
+                    });
+
+                    $img_intervention->save($route);
                 }
             }
         } else {
@@ -1130,10 +1140,11 @@ class EmpleadoController extends Controller
                 $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('foto'));
-                $img_intervention->resize(480, null, function ($constraint) {
+                $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($route);
+                });
+
+                $img_intervention->save($route);
             }
         }
 
@@ -1368,10 +1379,12 @@ class EmpleadoController extends Controller
             $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
 
             $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-            $img_intervention = Image::make($request->image);
-            $img_intervention->resize(1280, null, function ($constraint) {
+
+            $img_intervention = Image::make($request->image)->encode('png', 70)->resize(1280, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($route);
+            });
+
+            $img_intervention->save($route);
             $empleado->update([
                 'foto' => $new_name_image,
             ]);
@@ -1609,5 +1622,13 @@ class EmpleadoController extends Controller
     public function importar()
     {
         return view('admin.empleados.importar');
+    }
+
+    public function exportExcel()
+    {
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $export = new EmpleadosGeneralExport();
+
+        return Excel::download($export, 'Empleados.xlsx');
     }
 }

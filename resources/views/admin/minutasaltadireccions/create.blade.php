@@ -7,25 +7,28 @@
     </style>
     @include('admin.listadistribucion.estilos')
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Revisión por dirección</h5>
 
-    <div class="card card-body instrucciones">
-        <div class="row">
-            <div class="col-md-3 col-3 justify-content-center">
-                <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" alt="Onboarding" style="width: 180px; height:180px;">
-            </div>
-            <div class="col-md-9 col-9">
-                <h5>¿Qué es? Revisión por Dirección.</h5>
-                <p>Proceso fundamental en el contexto de los sistemas de gestión.</p>
-                <p>Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
-                    desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar que
+    <h5 class="col-12 titulo_general_funcion">Minutas de Sesiones de Alta Dirección</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Minutas de Sesiones de Alta Dirección?</h4>
+                <p>
+                    Proceso fundamental en el contexto de los sistemas de gestión.
+                </p>
+                <p>
+                    Este proceso implica que la alta dirección de una organización revise y evalúe de manera periódica el
+                    desempeño y la efectividad del sistema de gestión en su conjunto. Su propósito principal es asegurar
+                    que
                     el
                     sistema de gestión esté funcionando de manera eficaz y que se estén cumpliendo los objetivos y metas
-                    establecidos. Como evidencia de este punto se propone la generación de una minuta.</p>
+                    establecidos. Como evidencia de este punto se propone la generación de una minuta.
+                </p>
             </div>
         </div>
     </div>
-
 
     <form method="POST" action="{{ route('admin.minutasaltadireccions.store') }}" enctype="multipart/form-data">
         @csrf
@@ -124,21 +127,23 @@
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group anima-focus">
                             <input required data-vincular-nombre='true' class="form-control date" type="text"
-                                name="tema_reunion" id="tema_reunion" value="{{ old('tema_reunion') }}" placeholder="">
-                            <label for="tema_reunion">Tema de la
-                                reunión<span class="text-danger">*</span></label>
+                                name="tema_reunion" id="tema_reunion" value="{{ old('tema_reunion') }}" placeholder=""
+                                maxlength="255">
+                            <label for="tema_reunion">Tema de la reunión<span class="text-danger">*</span></label>
                             @if ($errors->has('tema_reunion'))
                                 <span class="text-danger">
                                     {{ $errors->first('tema_reunion') }}
                                 </span>
                             @endif
+                            <!--<span id="alertaGenerica" style="color: red; display: none;"></span>-->
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group anima-focus">
-                            <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion" placeholder="">{{ old('objetivoreunion') }}</textarea>
+                            <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion" placeholder=""
+                                style="height: 150px !important">{{ old('objetivoreunion') }}</textarea>
                             <label
                                 for="objetivoreunion">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}<span
                                     class="text-danger">*</span></label>
@@ -344,8 +349,9 @@
 
 
         <div class="text-right form-group col-12">
-            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
-            <button class="btn btn-danger" id="btnGuardar" type="submit">
+            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
+                style="text-decoration: none;">Cancelar</a>
+            <button id="btnGuardar" class="btn btn-primary" type="submit" style="width: 13%;">
                 {{ trans('global.save') }}
             </button>
         </div>
@@ -434,6 +440,9 @@
         });
     </script>
 
+    
+
+
     <script type="text/javascript">
         Livewire.on('planStore', () => {
             $('#planAccionModal').modal('hide');
@@ -481,26 +490,28 @@
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                        let lista = "<ul class='list-group id=empleados-lista' >";
-                        $.each(data.usuarios, function(ind, usuario) {
-                            var result = `{"id":"${usuario.id}",
+                        if ($("#participantes_search").val().trim() !== "") {
+                            let lista = "<ul class='list-group id=empleados-lista' >";
+                            $.each(data.usuarios, function(ind, usuario) {
+                                var result = `{"id":"${usuario.id}",
                                 "name":"${usuario.name}",
                                 "email":"${usuario.email}",
                                 "puesto":"${usuario.puesto}",
                                 "area":"${usuario.area.area}"
                                 }`;
-                            lista +=
-                                "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
-                                result + ")' >" +
-                                usuario.name + "</button>";
-                        });
-                        lista += "</ul>";
+                                lista +=
+                                    "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
+                                    result + ")' >" +
+                                    usuario.name + "</button>";
+                            });
+                            lista += "</ul>";
 
-                        $("#cargando_participantes").hide();
-                        $("#participantes_sugeridos").show();
-                        let sugeridos = document.querySelector("#participantes_sugeridos");
-                        sugeridos.innerHTML = lista;
-                        $("#participantes_search").css("background", "#FFF");
+                            $("#cargando_participantes").hide();
+                            $("#participantes_sugeridos").show();
+                            let sugeridos = document.querySelector("#participantes_sugeridos");
+                            sugeridos.innerHTML = lista;
+                            $("#participantes_search").css("background", "#FFF");
+                        }
                     }
                 });
 

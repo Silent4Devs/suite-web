@@ -81,7 +81,7 @@ class ComiteseguridadController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_comite' => 'required',
+            'nombre_comite' => 'required|max:255',
             'descripcion' => 'required',
         ]);
 
@@ -103,7 +103,7 @@ class ComiteseguridadController extends Controller
         abort_if(Gate::denies('comformacion_comite_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'nombre_comite' => 'required',
+            'nombre_comite' => 'required|max:255',
             'descripcion' => 'required',
         ]);
 
@@ -116,7 +116,7 @@ class ComiteseguridadController extends Controller
             $empleado = Empleado::where('id', $miembro->id_asignada)->first();
 
             if ($empleado) {
-                Mail::to($empleado->email)->send(new MemberEmail($empleado->name, $comiteseguridad->nombre_comite));
+                Mail::to($empleado->email)->queue(new MemberEmail($empleado->name, $comiteseguridad->nombre_comite));
             }
         }
 

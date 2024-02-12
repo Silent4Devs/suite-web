@@ -8,10 +8,10 @@
                 @method('PUT')
                 @csrf
                 <div class="row">
-                    <div class="form-group col-md-6 col-sm-6">
-                        <label class="required" for="clave">&nbsp;&nbsp;Clave del Registro</label>
-                        <input class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" type="number"
+                    <div class="form-group col-md-6 col-sm-6 anima-focus">
+                        <input class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" placeholder="" type="number"
                             name="clave" id="clave" value="{{ old('clave', $proveedores->id) }}" required>
+                            {!! Form::label('clave', 'Clave del Registro*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('clave'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('clave') }}
@@ -19,11 +19,11 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
-                    <div class="form-group col-md-6 col-sm-6">
-                        <label class="required" for="nombre">&nbsp;&nbsp;Nombre</label>
+                    <div class="form-group col-md-6 col-sm-6 anima-focus">
                         <input value="{{ old('nombre', $proveedores->nombre) }}"
                             class="form-control  {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre') }}" required>
+                            {!! Form::label('nombre', 'Nombre*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
@@ -31,11 +31,11 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
-                    <div class="form-group col-md-6 col-sm-6">
-                        <label class="required" for="razon_social">&nbsp;&nbsp;Razón Social</label>
+                    <div class="form-group col-md-6 col-sm-6 anima-focus">
                         <input value="{{ old('nombre', $proveedores->razon_social) }}"
                             class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text"
                             name="razon_social" id="razon_social" required>
+                            {!! Form::label('razon_social', 'Razón Social*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('razon_social'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('razon_social') }}
@@ -43,11 +43,11 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
-                    <div class="form-group col-md-6 col-sm-6">
-                        <label class="required" for="rfc">&nbsp;&nbsp;RFC</label>
+                    <div class="form-group col-md-6 col-sm-6 anima-focus">
                         <input value="{{ old('rfc', $proveedores->rfc) }}"
                             class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}" type="text"
                             name="rfc" id="rfc" required>
+                            {!! Form::label('rfc', 'RFC*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('rfc'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('rfc') }}
@@ -55,11 +55,11 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
-                    <div class="form-group col-md-6 col-sm-6">
-                        <label class="required" for="contacto">&nbsp;&nbsp;Contacto</label>
+                    <div class="form-group col-md-6 col-sm-6 anima-focus">
                         <input value="{{ old('contacto', $proveedores->contacto) }}"
                             class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" type="tel"
                             min="1" max="10" step="2" name="contacto" id="contacto" required>
+                            {!! Form::label('contacto', 'Contacto*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('contacto'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('contacto') }}
@@ -67,16 +67,16 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
-                    <div class="form-group col-md-6 col-sm-6">
-                        <label for="">Fecha Inicio<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-6 col-sm-6 anima-focus">
                         <input value="{{ old('fecha_inicio', $proveedores->fecha_inicio) }}" id="fechaInicio"
                             class="form-control" type="date" name="fecha_inicio" required>
+                            {!! Form::label('fechaInicio', 'Fecha Inicio*', ['class' => 'asterisco']) !!}
                         <small class="errores error_fecha_inicio text-danger"></small>
                     </div>
-                    <div class="form-group col-md-6 col-sm-6">
-                        <label for="">Fecha Fin<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-6 col-sm-6 anima-focus">
                         <input value="{{ old('fecha_fin', $proveedores->fecha_fin) }}" id="fechaFin" class="form-control"
                             type="date" name="fecha_fin" required>
+                            {!! Form::label('fechaFin', 'Fecha Fin*', ['class' => 'asterisco']) !!}
                         <small class="errores error_fecha_inicio text-danger"></small>
                     </div>
                 </div>
