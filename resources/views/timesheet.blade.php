@@ -61,7 +61,8 @@ analisis brecha
                         <p style="font-size: 15px;">
                             {{$organizacions->empresa}} <br>
                             RFC:{{$organizacions->rfc}} <br>
-                            {{$organizacions->direccion}} <br></p>
+                            Av. Insurgentes Sur 2453 piso 4, Colonia Tizapán San Ángel,
+                            <br> Álvaro Obregón, C.P. 01090, C <br></p>
                     </div>
                 </td>
                 <td class="td-blue-header">
@@ -77,7 +78,7 @@ analisis brecha
         <table>
             <thead>
                 <tr>
-                    <th style="width: 30px;">Proyecto</th>
+                    <th>Proyecto</th>
                     <th>Tarea</th>
                     <th>Facturable</th>
                     <th>Lunes</th>
@@ -95,18 +96,18 @@ analisis brecha
 
                 @foreach ($timesheet->horas as  $timesh)
                     <tr>
-                        <td>{{$timesh->proyecto->proyecto}}</td>
-                        <td>{{$timesh->tarea->tarea}}</td>
-                        <td>{{$timesh->facturable}}</td>
-                        <td>{{$timesh->horas_lunes}}</td>
-                        <td>{{$timesh->horas_martes}}</td>
-                        <td>{{$timesh->horas_miercoles}}</td>
-                        <td>{{$timesh->horas_jueves}}</td>
-                        <td>{{$timesh->horas_viernes}}</td>
-                        <td>{{$timesh->horas_sabado}}</td>
-                        <td>{{$timesh->horas_domingo}}</td>
-                        <td>{{$timesh->descripcion}}</td>
-                        <td>{{$timesh->horas_totales_tarea}}</td>
+                        <td style="width: 20%;">{{$timesh->proyecto->proyecto}}</td>
+                        <td style="width: 25%;">{{$timesh->tarea->tarea}}</td>
+                        <td style="width: 10%;">{{$timesh->facturable}}</td>
+                        <td style="width: 10%;">{{$timesh->horas_lunes}}</td>
+                        <td style="width: 10%;">{{$timesh->horas_martes}}</td>
+                        <td style="width: 10%;">{{$timesh->horas_miercoles}}</td>
+                        <td style="width: 10%;">{{$timesh->horas_jueves}}</td>
+                        <td style="width: 10%;">{{$timesh->horas_viernes}}</td>
+                        <td style="width: 10%;">{{$timesh->horas_sabado}}</td>
+                        <td style="width: 10%;">{{$timesh->horas_domingo}}</td>
+                        <td style="width: 28%;">{{$timesh->descripcion}}</td>
+                        <td style="width: 10%;">{{$timesh->horas_totales_tarea}}</td>
                     </tr>
                 @endforeach
             </tbody>

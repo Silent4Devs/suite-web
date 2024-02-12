@@ -56,7 +56,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
+        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
         $times = Timesheet::getPersonalTimesheet();
 
@@ -702,18 +702,18 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::getAll($id)->find($id);
 
-        if (!$proyecto) {
+        if (! $proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
         $areas = TimesheetProyectoArea::where('proyecto_id', $id)
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_' . $id)->where('timesheet_proyectos.id', $id)
+        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
             ->get('sedes.sede');
 
-        $clientes = TimesheetProyecto::getAll('clientes_' . $id)->where('timesheet_proyectos.id', $id)
+        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
             ->get('timesheet_clientes.nombre');
 
@@ -787,7 +787,7 @@ class TimesheetController extends Controller
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto = TimesheetProyecto::getAll('tareas_' . $proyecto_id)->find($proyecto_id);
+        $proyecto = TimesheetProyecto::getAll('tareas_'.$proyecto_id)->find($proyecto_id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -975,14 +975,14 @@ class TimesheetController extends Controller
 
             $cliente = TimesheetCliente::find($id);
 
-            if (!$cliente) {
+            if (! $cliente) {
                 return redirect()->route('admin.timesheet-clientes')->with('error', 'El registro fue eliminado ');
             }
 
             return view('admin.timesheet.clientes.edit', compact('cliente'));
         } catch (MiExcepcionTimeshetClientes $excepcionPersonalizada) {
 
-            Log::error('Ocurrió una excepción personalizada: ' . $excepcionPersonalizada->getMessage());
+            Log::error('Ocurrió una excepción personalizada: '.$excepcionPersonalizada->getMessage());
 
             return response()->json(['error' => $excepcionPersonalizada->getMessage()], 400);
         }
@@ -993,9 +993,32 @@ class TimesheetController extends Controller
         $request->validate(
             [
                 'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'razon_social' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
+                'rfc' => 'max:15',
+                'calle' => 'max:255',
+                'colonia' => 'max:255',
+                'ciudad' => 'max:255',
+                'codigo_postal' => 'max:255',
+                'telefono' => 'max:255',
+                'pagina_web' => 'max:255',
+                'nombre_contacto' => 'max:255',
+                'puesto_contacto' => 'max:255',
+                'correo_contacto' => 'max:255',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'razon_social.max' => 'La  razon social no debe exceder de 255 caracteres',
+                'nombre.max' => 'El nombre no debe exceder de 255 caracteres',
+                'rfc.max' => 'El rfc no debe exceder de 255 caracteres',
+                'calle.max' => 'El calle no debe exceder de 255 caracteres',
+                'colonia.max' => 'La colonia no debe exceder de 255 caracteres',
+                'codigo_postal.max' => 'El codigo_postal no debe exceder de 255 caracteres',
+                'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+                'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+                'nombre_contacto.max' => 'El nombre_contacto no debe exceder de 255 caracteres',
+                'puesto_contacto.max' => 'El puesto_contacto no debe exceder de 255 caracteres',
+                'correo_contacto.max' => 'El correo_contacto no debe exceder de 255 caracteres',
             ],
         );
 
@@ -1008,10 +1031,33 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => "required|unique:timesheet_clientes,identificador,{$id}",
+                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'razon_social' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
+                'rfc' => 'max:15',
+                'calle' => 'max:255',
+                'colonia' => 'max:255',
+                'ciudad' => 'max:255',
+                'codigo_postal' => 'max:255',
+                'telefono' => 'max:255',
+                'pagina_web' => 'max:255',
+                'nombre_contacto' => 'max:255',
+                'puesto_contacto' => 'max:255',
+                'correo_contacto' => 'max:255',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'razon_social.max' => 'La  razon social no debe exceder de 255 caracteres',
+                'nombre.max' => 'El nombre no debe exceder de 255 caracteres',
+                'rfc.max' => 'El rfc no debe exceder de 255 caracteres',
+                'calle.max' => 'El calle no debe exceder de 255 caracteres',
+                'colonia.max' => 'La colonia no debe exceder de 255 caracteres',
+                'codigo_postal.max' => 'El codigo_postal no debe exceder de 255 caracteres',
+                'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+                'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+                'nombre_contacto.max' => 'El nombre_contacto no debe exceder de 255 caracteres',
+                'puesto_contacto.max' => 'El puesto_contacto no debe exceder de 255 caracteres',
+                'correo_contacto.max' => 'El correo_contacto no debe exceder de 255 caracteres',
             ],
         );
 
@@ -1132,7 +1178,7 @@ class TimesheetController extends Controller
 
     public function proyectosEmpleados($id)
     {
-        $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1143,7 +1189,7 @@ class TimesheetController extends Controller
 
     public function proyectosExternos($id)
     {
-        $proyecto = TimesheetProyecto::getAll('externos_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1155,7 +1201,7 @@ class TimesheetController extends Controller
     public function editProyectos($id)
     {
         $proyecto = TimesheetProyecto::getAll()->find($id);
-        if (!$proyecto) {
+        if (! $proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
         $clientes = TimesheetCliente::getAll();
@@ -1177,12 +1223,16 @@ class TimesheetController extends Controller
         $organizacions = Organizacion::getFirst();
         $logo_actual = $organizacions->logo;
 
-        $pdf = PDF::loadView('timesheet', compact('timesheet', 'organizacions', 'logo_actual'));
+        // Cargar la vista 'timesheet' con los datos necesarios
+        $view = view('timesheet', compact('timesheet', 'organizacions', 'logo_actual'));
 
-        $pdf->setPaper('legal', 'landscape');
+        // Crear una instancia de la clase PDF
+        $pdf = \PDF::loadHTML($view);
 
-        $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);
+        // Configurar el tamaño del papel y la orientación
+        $pdf->setPaper('tabloid', 'landscape');
 
+        // Descargar el PDF
         return $pdf->download('timesheet.pdf');
     }
 
