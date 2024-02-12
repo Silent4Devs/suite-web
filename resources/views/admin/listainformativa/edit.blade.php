@@ -96,7 +96,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel1" style="color:#057BE2;">Colaboradores</label>
+                                        <label for="nivel1" style="color:#057BE2;">Usuarios</label>
                                     </div>
                                 </div>
                                 <div class="form-row nivel2Div"">

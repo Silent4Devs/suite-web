@@ -3,6 +3,9 @@
     <link rel="stylesheet" href="{{ asset('css/foda.css') }}">
 @endsection
 @section('content')
+    <script script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
     <style>
         .btn-options-foda-card {
             position: absolute;
@@ -46,7 +49,7 @@
     <div class="caja-cards mt-5">
         @foreach ($query as $foda)
             {{-- <a href="{{ asset('admin/entendimiento-organizacions') }}/{{ $foda->id }}"> --}}
-            <div class="card card-foda">
+            <div class="card card-foda" style="min-height: 260px !important;">
                 <div class="card-header">
                     <strong> {{ Carbon\Carbon::parse($foda->fecha)->format('d/m/Y') }}</strong>
                     <div class="dropdown btn-options-foda-card">
@@ -73,22 +76,166 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="margin-top: 5px;">
                     <h3>
                         {{ $foda->analisis }}
                     </h3>
                     <p>
                         <small>{{ $foda->id_elabora ? $foda->empleadoindiscriminado->name : 'No asignado' }}</small>
                     </p>
-                    {{-- <span>
-                        <small>{{ $foda->estatus ?? 'Pendiente' }}</small>
-                    </span> --}}
-                    {{-- Aqui ira un switch cuando se incluyan los estatus en los foda,
-                        facilitara la busqueda con los filtros, ya que la forma de arriba
-                        de reemplazar valor cuando no encuentra no esta funcionando --}}
-                    {{-- <span class="status">Pendiente</span> --}}
+                    @switch($foda->estatus)
+                        @case('Pendiente')
+                            <span class="badge"
+                                style="color: #FF9900; background-color: 'rgba(255, 200, 0, 0.2)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                <small>{{ $foda->estatus ?? 'Pendiente' }}</small>
+                            </span>
+                        @break
+
+                        @case('Aprobado')
+                            <span class="badge"
+                                style="color: #039C55; background-color: 'rgba(3, 156, 85, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                <small>{{ $foda->estatus ?? 'Aprobado' }}</small>
+                            </span>
+                        @break
+
+                        @case('Rechazado')
+                            <span class="badge"
+                                style="color: #FF0000; background-color: 'rgba(221, 4, 131, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                <small>{{ $foda->estatus ?? 'Rechazado' }}</small>
+                            </span>
+                        @break
+
+                        @case('Borrador')
+                            <span class="badge"
+                                style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                <small>{{ $foda->estatus ?? 'Borrador' }}</small>
+                            </span>
+                        @break
+
+                        @default
+                            <span class="badge"
+                                style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                <small>{{ $foda->estatus ?? 'Borrador' }}</small>
+                            </span>
+                    @endswitch
+
+                    @php
+                        $part = $modulo->participantes->count();
+                        $participantCount = $part;
+                    @endphp
+
+                    <div class="row">
+                        @foreach ($modulo->participantes->take(3) as $index => $participante)
+                            <div class="col-3">
+                                <img src="{{ asset('storage/empleados/imagenes/usuario_no_cargado.png') }}"
+                                    class="img_empleado" title="{{ $participante->empleado->name }}">
+                            </div>
+                        @endforeach
+                        @if ($participantCount > 3)
+                            <div class="col-2">
+                                <button type="button" class="btn btn-round ml-2 rounded-circle"
+                                    style="width: 35px; height: 35px; background-color: #fff8dc; padding: 0; position: relative; right: 1rem; border: 1px solid black; border-radius: 50%;"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal{{ $modulo->id }}">
+                                    <span
+                                        style="display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">+{{ $modulo->participantes->count() - 3 }}</span>
+                                </button>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="exampleModal{{ $modulo->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"
+                    style="margin:50px 0px 50px 1230px; position: relative; top: 3rem; right: 2rem;"><i
+                        class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+                </button>
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Modal content structure -->
+                        <div class="modal-body">
+                            <h5>Lista de Aprobadores</h5>
+
+                            <hr>
+                            <br>
+
+                            @php
+                                $levels = []; // Initialize an empty array to store levels temporarily
+                            @endphp
+
+                            @foreach ($modulo->participantes as $participante)
+                                @php
+                                    $nivel = $participante->nivel;
+                                    $levels[$nivel][] = $participante; // Group participantes by their nivel
+                                @endphp
+                            @endforeach
+
+                            <div class="row">
+                                <div class="col-5">
+                                    <h6 style="color:#057BE2; position: relative; left: 15rem;"> Nivel
+                                    </h6>
+                                </div>
+                                <div class="col-5">
+                                    <h6 style="color:#057BE2; position: relative; left: 15rem;"> Aprobadores
+                                    </h6>
+                                </div>
+                            </div>
+
+                            <br>
+                            <br>
+                            @foreach ($levels as $nivel => $participantesByLevel)
+                                @php
+                                    // Sort participantes by numero_orden within each nivel
+                                    usort($participantesByLevel, function ($a, $b) {
+                                        return $a->numero_orden <=> $b->numero_orden;
+                                    });
+
+                                @endphp
+
+                                @if ($nivel == 0)
+                                    {{-- <div class="row mb-3" style="position: relative; left: 6rem;">
+                                        <div class="col-6">
+                                            <br>
+                                            <h6>Super Aprobadores</h6>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="row" style="position: relative; right: 11rem;">
+                                                @foreach ($participantesByLevel as $participante)
+                                                    <div class="col-2">
+                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
+                                                            class="img_empleado"
+                                                            title="{{ $participante->empleado->name }}">
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div> --}}
+                                @else
+                                    <div class="row mb-3" style="position: relative; left: 10rem;">
+                                        <div class="col-6">
+                                            <br>
+                                            <h6> Nivel {{ $nivel }}</h6> &nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="row" style="position: relative;">
+                                                @foreach ($participantesByLevel as $participante)
+                                                    <div class="col-4">
+                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
+                                                            class="img_empleado"
+                                                            title="{{ $participante->empleado->name }}">
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {{-- </a> --}}
         @endforeach
     </div>
