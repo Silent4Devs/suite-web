@@ -7,7 +7,7 @@
     <title>Minuta</title>
     <style>
         body{
-            font-size: 8px;
+            font-size: 10px;
         }
     </style>
 </head>
@@ -97,30 +97,6 @@
                             <td style="border: 1px solid #dddddd; padding: 26px;" colspan="2">
                                 <textarea style="width: 100%; height: 26rem; border: none; outline: none; resize: none; background-color: transparent;"> {!! strip_tags($minutas->tema_tratado) !!}</textarea>
                             </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-                    <thead>
-                        <tr>
-                            <th style="background-color: #306BA9; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="5"><center>Acuerdos y Compromisos</center></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="border: 1px solid #dddddd;">Actividades</td>
-                            <td style="border: 1px solid #dddddd;">Responsable</td>
-                            <td style="border: 1px solid #dddddd;">Fecha compromiso</td>
-                            <td style="border: 1px solid #dddddd;">Estatus</td>
-                            <td style="border: 1px solid #dddddd;">Comentarios</td>
-                        </tr>
-                        <tr>
-                            <td style="border: 1px solid #dddddd;">.</td>
-                            <td style="border: 1px solid #dddddd;">{{$responsable->name}}</td>
-                            <td style="border: 1px solid #dddddd;">{{$minutas->fechareunion}}</td>
-                            <td style="border: 1px solid #dddddd;">{{$revision->estatus}}</td>
-                            <td style="border: 1px solid #dddddd;">{{$revision->cometarios}}</td>
                         </tr>
                     </tbody>
                 </table>
