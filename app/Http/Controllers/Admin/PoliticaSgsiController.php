@@ -564,7 +564,7 @@ class PoliticaSgsiController extends Controller
                 'estatus' => 'Aprobado',
             ]);
 
-            $this->correosAprobacion($proceso->id, $politica);
+            $this->correosAprobacion($proceso, $politica);
         } else {
             $this->siguienteCorreo($proceso, $politica);
         }

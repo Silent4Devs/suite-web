@@ -532,7 +532,7 @@ class AlcanceSgsiController extends Controller
                 'estatus' => 'Aprobado',
             ]);
             // dd($proceso, $alcance);
-            $this->correosAprobacion($proceso->id, $alcance);
+            $this->correosAprobacion($proceso, $alcance);
         } else {
             $this->siguienteCorreo($proceso, $alcance);
         }
