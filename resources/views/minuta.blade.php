@@ -23,7 +23,7 @@
                     $empresa = $organizacion->empresa;
                     @endphp
                     @if ($logotipo)
-                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{ asset($logotipo) }}">
+                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{ public_path('images/'.$logotipo) }}">
                     @else
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
