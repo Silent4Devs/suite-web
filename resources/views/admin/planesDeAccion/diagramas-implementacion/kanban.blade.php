@@ -32,14 +32,14 @@
     }
 
     #kanban ul {
-        padding: 20px 0;
         list-style: none;
-        width: 200px;
         margin-right: 10px;
-        border-radius: 8px;
-        box-shadow: 0 5px 8px -1px rgba(0, 0, 0, 0.3);
-        display: table;
-        position: relative;
+        background-color: #ebebeb;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 14px;
+        width: 250px;
+        height: 550px;
     }
 
     .dragg-icon {
@@ -67,8 +67,13 @@
         text-align: center;
     }
 
+    .header {
+        color: black;
+        text-align: center;
+    }
+
     .scroll-li {
-        padding: 0 20px;
+        padding: 5px 2px;
         max-height: 400px;
         overflow-y: auto;
         height: auto;
@@ -97,7 +102,7 @@
     }
 
     #kanban li {
-        padding: 5px;
+        /*padding: 5px;*/
         background-color: #fff;
         margin: auto;
         margin-top: 20px;
@@ -238,7 +243,136 @@
     .sortable-ghost {
         transform: rotate(5deg);
     }
+</style>
 
+<style>
+    .card {
+        background-color: #f5f5f5;
+        /* Color de fondo de la tarjeta */
+        border-radius: 10px;
+        /* Borde redondeado */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Sombra */
+        margin: 20px auto;
+        /* Margen exterior */
+        padding: 20px;
+        /* Espaciado interior */
+    }
+
+    .card h2 {
+        margin-bottom: 10px;
+    }
+
+    .content {
+        margin-bottom: 15px;
+        border-bottom: 2px solid #c9c3c3;
+        text-align: justify;
+    }
+
+    .assigned-to {
+        display: flexbox;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .person {
+        margin-right: 10px;
+    }
+
+    .person-img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        /* Hacemos la imagen circular */
+    }
+
+    .add-person-button {
+        font-size: 20px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 0;
+        width: fit-content;
+    }
+
+    .add-person-button i {
+        color: #007bff;
+        /* Color azul para el icono */
+    }
+
+    .status {
+        display: flex;
+        align-items: center;
+    }
+
+    .status-text {
+        margin-right: 10px;
+    }
+
+    .status button {
+        margin-right: 5px;
+    }
+
+    .STATUS_UNDEFINED-titulo {
+        border-bottom: 2px solid #00b1e1;
+        text-align: left;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .STATUS_ACTIVE-titulo {
+        border-bottom: 2px solid rgb(253, 171, 61);
+        text-align: left;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .STATUS_DONE-titulo {
+        border-bottom: 2px solid rgb(0, 200, 117);
+        text-align: left;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .STATUS_FAILED-titulo {
+        border-bottom: 2px solid rgb(226, 68, 92);
+        text-align: left;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .STATUS_SUSPENDED-titulo {
+        border-bottom: 2px solid #aaaaaa;
+        text-align: left;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .name {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .separator {
+        margin: 0 10px;
+        border-left: 1px solid #000;
+        height: 1em;
+    }
+
+    .subtitle {
+        font-size: 18px;
+        color: #555;
+    }
 </style>
 
 <div class="card" style="box-shadow: none; !important">
@@ -253,18 +387,26 @@
     @parent
     <script>
         $(document).ready(function() {
-            initKanban();
+            //initKanban();
         });
+
+        // Obtener el token CSRF una vez
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
         function initKanban() {
             $.ajax({
-                type: "POST",
+                type: "POST", // Cambiado a GET si es posible
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': csrfToken
                 },
                 url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
                 success: function(response) {
                     renderKanban(response);
+                },
+                error: function(xhr, status, error) {
+                    // Manejo de errores
+                    console.error("Error en la solicitud:", error);
+                    alert("Error en la solicitud. Por favor, inténtelo de nuevo.");
                 }
             });
         }
@@ -274,370 +416,287 @@
                 type: "GET",
                 url: "{{ asset('storage/gantt/status.json') }}",
                 success: function(estatuses) {
+                    let contenedor = $('#c_kanban');
                     let html = "";
-                    let contenedor = document.getElementById('c_kanban');
+                    let tasks = response.tasks.filter(task => task.level > 0 && !isParent(task, response
+                        .tasks));
+
                     estatuses.forEach(estatus => {
                         let key = Object.keys(estatus)[0];
                         let value = Object.values(estatus)[0];
-                        let actividades = response.tasks.filter(task => task.level > 0 && !isParent(
-                            task,
-                            response.tasks));
-                        let actividad_por_estatus = actividades.filter(actividad => actividad.status ==
-                            key);
-                        // data-simplebar
+                        let actividad_por_estatus = tasks.filter(actividad => actividad.status == key);
+
+                        let renderedActividades = actividad_por_estatus.map(actividad =>
+                            renderActividad(actividad, response));
                         html +=
-                            `<ul class=${key}><i class="fas fa-grip-vertical dragg-icon"></i><h4 class=${key}>${value} / ${actividad_por_estatus.length}</h4><div id="${key}" class="scroll-li">`;
-                        actividad_por_estatus.forEach(actividad => {
-                            let foto = 'man.png';
-                            let imagenes = "";
-                            let assigs = [];
-                            if (actividad.assigs) {
-                                assigs = actividad.assigs.map(asignado => {
-                                    return response.resources.find(r => Number(r.id) ===
-                                        Number(
-                                            asignado.resourceId));
-                                });
-                            }
-                            let filteredAssigs = assigs.filter(function(a) {
-                                return a != null;
-                            });
-                            let contador = 1;
-                            if (filteredAssigs.length > 0) {
-                                if (filteredAssigs.length <= 4) {
-                                    for (var i = 0; i < filteredAssigs.length; i++) {
-                                        if (assigs[i] != undefined) {
-                                            if (assigs[i].foto == null) {
-                                                if (assigs[i].genero == 'M') {
-                                                    foto = 'woman.png';
-                                                } else {
-                                                    foto = 'usuario_no_cargado.png';
-                                                }
-                                            } else {
-                                                foto = assigs[i].foto;
-                                            }
-                                            imagenes += `<div class="caja-imagen-asignado">
-                                                    <img class="rounded-circle" title="${assigs[i].name}"
-                                                        src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
-                                                </div>`;
-                                        }
-                                    }
-                                } else {
-                                    while (contador <= 4) {
-                                        if (assigs[contador] != undefined) {
-                                            if (assigs[contador].foto == null) {
-                                                if (assigs[contador].genero == 'M') {
-                                                    foto = 'woman.png';
-                                                } else {
-                                                    foto = 'usuario_no_cargado.png';
-                                                }
-                                            } else {
-                                                foto = assigs[contador].foto;
-                                            }
-
-                                            if (contador == 4) {
-                                                imagenes +=
-                                                    `<div class="caja-imagen-asignado">
-                                                    <img class="rounded-circle" title="${assigs[contador].name}"
-                                                        src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
-                                            </div>
-                                            <span class="btn_empleados" onmouseover="renderCard(this, '${encodeURIComponent(JSON.stringify(assigs))}')">+${assigs.length - 4}</span>
-                                            `;
-                                            } else {
-                                                imagenes +=
-                                                    `<div class="caja-imagen-asignado">
-                                                    <img class="rounded-circle" title="${assigs[contador].name}"
-                                                        src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
-                                                </div>`;
-                                            }
-                                        }
-                                        contador++;
-                                    }
-                                }
-                            }
-                            html += `
-                                    <li actividad-id="${actividad.id}">
-                                    <table>
-                                        <thead>
-                                            <th colspan="2">${actividad.name}</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="divi"><i class="far fa-user-circle"></i> Asignados</div>
-                                                </td>
-                                                <td class="td-imagenes-asignados">
-                                                    <i class="fas fa-plus-circle btn-mas"></i>
-                                                    ${imagenes}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="divi"><i class="fas fa-stream"></i>
-                                                        Estatus
-                                                    </div>
-                                                </td>
-                                                <td class="${key} td_estatus_select">
-                                                    <select class="estatus_select">
-                                                        <option class="STATUS_ACTIVE" value="STATUS_ACTIVE"
-                                                            ${key == 'STATUS_ACTIVE' ? 'selected':''}><span>En proceso</span></option>
-                                                        <option class="STATUS_DONE" value="STATUS_DONE"
-                                                            ${key == 'STATUS_DONE' ? 'selected':''}><span>Completado</span></option>
-                                                        <option class="STATUS_FAILED" value="STATUS_FAILED"
-                                                            ${key == 'STATUS_FAILED' ? 'selected':''}><span>Retraso</span></option>
-                                                        <option class="STATUS_SUSPENDED" value="STATUS_SUSPENDED"
-                                                            ${key == 'STATUS_SUSPENDED' ? 'selected':''}><span>Suspendida</span></option>
-                                                        <option class="STATUS_UNDEFINED" value="STATUS_UNDEFINED"
-                                                            ${key == 'STATUS_UNDEFINED' ? 'selected':''}><span>Sin iniciar</span></option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </li>
-                                `;
-                        });
-                        html += `</div></ul>`;
-                    });
-                    contenedor.innerHTML = html;
-
-                    //Eventos para hacer dinámico el Kanban
-
-                    // Se añade evento change a select para estatus
-                    let estatus_select = document.querySelectorAll('.estatus_select');
-                    estatus_select
-                        .forEach(s_status => {
-                            s_status.addEventListener('change', function() {
-                                // let id_row = Number(this.closest('li').getAttribute(
-                                //     'actividad-id'));
-                                let id_row = this.closest('li').getAttribute(
-                                    'actividad-id');
-                                let valor_nuevo = this.value;
-                                let actividad_correspondiente = response.tasks?.find(t => t.id ==
-                                    id_row);
-                                changeStatusInKanban(actividad_correspondiente, response,
-                                    valor_nuevo, s_status);
-                            });
-                        });
-
-                    //Evento click para td resources
-                    let td_resources = document.querySelectorAll('.td-imagenes-asignados');
-                    td_resources
-                        .forEach(element => {
-                            element.addEventListener('click', function() {
-                                // let id_row = Number(this.closest('li').getAttribute(
-                                //     'actividad-id'));
-                                let id_row = this.closest('li').getAttribute(
-                                    'actividad-id');
-                                let valor_nuevo = this.value;
-                                let contenedor = document.getElementById('modales');
-
-                                let actividad_correspondiente = response.tasks.find(t => t.id ==
-                                    id_row);
-
-                                contenedor.innerHTML = `
-						<div class="modal fade" id="${id_row}-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="${id_row}-modalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-								<div class="modal-header" style="background-color: #00A8AF !important; color:#fff">
-									<h5 class="modal-title" id="${id_row}-modalLabel">Recursos</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<div class="mb-3 input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-										</div>
-										<input type="text" class="form-control search_resources" placeholder="Nombre empleado" aria-label="Username" aria-describedby="basic-addon1">
-									</div>
-									<ul class="list-group">
-										<div class="contenedor_lista">
-											${renderResources(response,actividad_correspondiente)}
-										</div>
-									</ul>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-								</div>
-								</div>
-							</div>
-						</div>
-					`;
-                                document.querySelector('.search_resources').addEventListener(
-                                    'keyup',
-                                    function() {
-                                        let contenedor_lista = document.querySelector(
-                                            '.contenedor_lista');
-                                        contenedor_lista.innerHTML = "";
-                                        contenedor_lista.innerHTML = renderResources(
-                                            response,
-                                            actividad_correspondiente, this.value);
-                                        renderListEvent(response, actividad_correspondiente,
-                                            id_row, renderKanban);
-                                    });
-                                $(`#${id_row}-modal`).modal('show');
-                                renderListEvent(response, actividad_correspondiente, id_row,
-                                    renderKanban);
-                            });
-                        });
-
-                    Sortable.create(STATUS_DONE, {
-                        group: {
-                            name: 'STATUS_DONE',
-                            put: ['STATUS_ACTIVE',
-                                'STATUS_FAILED', 'STATUS_SUSPENDED',
-                                'STATUS_UNDEFINED'
-                            ]
-                        },
-                        animation: 100,
-                        ghostClass: "sortable-ghost", // Class name for the drop placeholder
-                        sort: false,
-                        onEnd: function( /**Event*/ evt) {
-                            let id_row = evt.clone.getAttribute('actividad-id');
-                            let valor_nuevo = evt.to.getAttribute('id');
-                            let actividad_correspondiente = response.tasks.find(t => t.id ==
-                                id_row);
-
-                            changeStatusInKanban(actividad_correspondiente, response,
-                                valor_nuevo);
-                        },
-                    });
-                    Sortable.create(STATUS_ACTIVE, {
-                        group: {
-                            name: 'STATUS_ACTIVE',
-                            put: ['STATUS_DONE',
-                                'STATUS_FAILED', 'STATUS_SUSPENDED',
-                                'STATUS_UNDEFINED'
-                            ]
-                        },
-                        animation: 100,
-                        ghostClass: "sortable-ghost", // Class name for the drop placeholder
-                        sort: false,
-                        onEnd: function( /**Event*/ evt) {
-                            let id_row = evt.clone.getAttribute('actividad-id');
-                            let valor_nuevo = evt.to.getAttribute('id');
-                            let actividad_correspondiente = response.tasks.find(t => t.id ==
-                                id_row);
-                            changeStatusInKanban(actividad_correspondiente, response,
-                                valor_nuevo);
-                        },
-                    });
-                    Sortable.create(STATUS_FAILED, {
-                        group: {
-                            name: 'STATUS_FAILED',
-                            put: ['STATUS_DONE', 'STATUS_ACTIVE',
-                                'STATUS_SUSPENDED',
-                                'STATUS_UNDEFINED'
-                            ]
-                        },
-                        animation: 100,
-                        ghostClass: "sortable-ghost", // Class name for the drop placeholder
-                        sort: false,
-                        onEnd: function( /**Event*/ evt) {
-                            let id_row = evt.clone.getAttribute('actividad-id');
-                            let valor_nuevo = evt.to.getAttribute('id');
-                            let actividad_correspondiente = response.tasks.find(t => t.id ==
-                                id_row);
-
-                            changeStatusInKanban(actividad_correspondiente, response,
-                                valor_nuevo);
-                        },
-                    });
-                    Sortable.create(STATUS_SUSPENDED, {
-                        group: {
-                            name: 'STATUS_SUSPENDED',
-                            put: ['STATUS_DONE', 'STATUS_ACTIVE',
-                                'STATUS_FAILED', 'STATUS_UNDEFINED'
-                            ]
-                        },
-                        animation: 100,
-                        ghostClass: "sortable-ghost", // Class name for the drop placeholder
-                        sort: false,
-                        onEnd: function( /**Event*/ evt) {
-                            let id_row = evt.clone.getAttribute('actividad-id');
-                            let valor_nuevo = evt.to.getAttribute('id');
-                            let actividad_correspondiente = response.tasks.find(t => t.id ==
-                                id_row);
-
-                            changeStatusInKanban(actividad_correspondiente, response,
-                                valor_nuevo);
-                        },
-                    });
-                    Sortable.create(STATUS_UNDEFINED, {
-                        group: {
-                            name: 'STATUS_UNDEFINED',
-                            put: ['STATUS_DONE', 'STATUS_ACTIVE',
-                                'STATUS_FAILED', 'STATUS_SUSPENDED',
-                            ]
-                        },
-                        animation: 100,
-                        ghostClass: "sortable-ghost", // Class name for the drop placeholder
-                        sort: false,
-                        onStart: function(evt) {
-                            let id_row = evt.clone.getAttribute('actividad-id');
-                            let valor_nuevo = evt.to.getAttribute('id');
-                            let actividad_correspondiente = response.tasks.find(t => t.id ==
-                                id_row);
-                            actividad_correspondiente.status = valor_nuevo;
-
-                            saveOnServer(response);
-                            renderKanban(response); // element index within parent
-                        },
-                        onEnd: function( /**Event*/ evt) {
-                            let id_row = evt.clone.getAttribute('actividad-id');
-                            let valor_nuevo = evt.to.getAttribute('id');
-                            let actividad_correspondiente = response.tasks.find(t => t.id ==
-                                id_row);
-                            changeStatusInKanban(actividad_correspondiente, response,
-                                valor_nuevo);
-                        },
+                            `<ul><i class="fas fa-grip-vertical dragg-icon"></i><div><div class="${key}-titulo"><span class="name">${value}</span><div class="separator"></div><span class="subtitle">${actividad_por_estatus.length}</span></div></div><div id="${key}" class="scroll-li">${renderedActividades.join('')}</div></ul>`;
                     });
 
-                    Sortable.create(c_kanban, {
-                        group: "sorting",
-                        sort: true,
-                        onSort: function( /**Event*/ evt) {
-                            let orden_ul = evt.target.getElementsByTagName('ul');
-                            let array_orden_ul = [...orden_ul];
-                            let estatuses = array_orden_ul.map(ul => {
-                                let key = `${ul.getAttribute('class')}`;
-                                return {
-                                    [key]: `${ul.getElementsByTagName('h4')[0].innerText.split('/')[0].trim()}`
-                                }
-                            });
-                            console.log(array_orden_ul);
-                            saveStatusOnServer(estatuses);
-                        },
-                    });
+                    contenedor.html(html);
+                    attachEventListeners(response);
+                    initializeSortable(response);
+                }
+            });
+        }
 
+        function renderActividad(actividad, response) {
+            let imagenes = "";
+            let assigs = [];
+
+            if (actividad.assigs) {
+                assigs = actividad.assigs.map(asignado => response.resources.find(r => Number(r.id) === Number(asignado
+                    .resourceId)));
+            }
+
+            let filteredAssigs = assigs.filter(a => a != null);
+
+            filteredAssigs.slice(0, 4).forEach(asignado => {
+                let foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' : 'usuario_no_cargado.png');
+                imagenes +=
+                    `<div class="person"><img class="person-img" title="${asignado.name}" src="{{ asset('storage/empleados/imagenes') }}/${foto}" /></div>`;
+            });
+
+            if (filteredAssigs.length > 4) {
+                imagenes +=
+                    `<span class="btn_empleados" onmouseover="renderCard(this, '${encodeURIComponent(JSON.stringify(assigs))}')">+${assigs.length - 4}</span>`;
+            }
+
+            return `
+            <li actividad-id="${actividad.id}" class="card">
+                <div class="content">
+                     ${actividad.name}
+                </div>
+                <div class="status-text">Asignados</div>
+                <div class="assigned-to">
+                    ${imagenes}
+                </div>
+                <button class="add-person-button"><i class="fas fa-plus"></i></button>
+                <div class="status">
+                    <div class="status-text">Status:</div>
+                    <div class="${actividad.status} td_estatus_select">
+                        <select class="estatus_select">
+                         ${renderEstatusOptions(actividad.status)}
+                        </select>
+                     </div>
+                </div>
+            </li>
+    `;
+        }
+
+        function renderEstatusOptions(selectedStatus) {
+            const statuses = ['STATUS_ACTIVE', 'STATUS_DONE', 'STATUS_FAILED', 'STATUS_SUSPENDED', 'STATUS_UNDEFINED'];
+            return statuses.map(status =>
+                `<option class="${status}" value="${status}" ${selectedStatus === status ? 'selected' : ''}>${getStatusText(status)}</option>`
+            ).join('');
+        }
+
+        function getStatusText(status) {
+            switch (status) {
+                case 'STATUS_ACTIVE':
+                    return 'En proceso';
+                case 'STATUS_DONE':
+                    return 'Completado';
+                case 'STATUS_FAILED':
+                    return 'Retraso';
+                case 'STATUS_SUSPENDED':
+                    return 'Suspendida';
+                case 'STATUS_UNDEFINED':
+                    return 'Sin iniciar';
+                default:
+                    return '';
+            }
+        }
+
+        function attachEventListeners(response) {
+            $('.estatus_select').change(function() {
+                let id_row = $(this).closest('li').attr('actividad-id');
+                let valor_nuevo = $(this).val();
+                let actividad_correspondiente = response.tasks.find(t => t.id === id_row);
+                changeStatusInKanban(actividad_correspondiente, response, valor_nuevo, $(this));
+            });
+
+            $('.add-person-button').click(function() {
+                let id_row = $(this).closest('li').attr('actividad-id');
+                let actividad_correspondiente = response.tasks.find(t => t.id === id_row);
+                renderModal(id_row, actividad_correspondiente, response);
+            });
+        }
+
+        function renderModal(id_row, actividad_correspondiente, response) {
+            let contenedor = $('#modales');
+
+            let modalHtml = `
+        <div class="modal fade" id="${id_row}-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="${id_row}-modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #00A8AF !important; color:#fff">
+                        <h5 class="modal-title" id="${id_row}-modalLabel">Recursos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3 input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control search_resources" placeholder="Nombre empleado" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <ul class="list-group">
+                            <div class="contenedor_lista">
+                                ${renderResources(response, actividad_correspondiente)}
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="pagination-container mt-3">
+                        <button class="btn btn-sm btn-outline-primary prev-page">&laquo; Anterior</button>
+                        <button class="btn btn-sm btn-outline-primary next-page">Siguiente &raquo;</button>
+                        <span class="page-indicator ml-2 mr-2"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+            contenedor.html(modalHtml);
+
+            // Función para mostrar los recursos correspondientes a la página actual
+            function showPage(pageNumber) {
+                var startIndex = (pageNumber - 1) * 5;
+                var endIndex = startIndex + 5;
+                $('.contenedor_lista .list-group-item').hide().slice(startIndex, endIndex).show();
+                $('.page-indicator').text("Página " + pageNumber + " de " + Math.ceil($(
+                    '.contenedor_lista .list-group-item').length / 5));
+            }
+
+            // Función para inicializar la paginación y mostrar la primera página
+            function initializePagination() {
+                // Ocultar todos los recursos y mostrar los primeros 5
+                $('.contenedor_lista .list-group-item').hide().slice(0, 5).show();
+                // Mostrar la primera página
+                showPage(1);
+            }
+
+            // Ejecutar la paginación al cargar el modal
+            initializePagination();
+
+            // Evento para avanzar a la página siguiente
+            $('.next-page').click(function() {
+                var currentPage = parseInt($('.page-indicator').text().split(' ')[1]);
+                var totalPages = Math.ceil($('.contenedor_lista .list-group-item').length / 5);
+                if (currentPage < totalPages) {
+                    showPage(currentPage + 1);
                 }
             });
 
+            // Evento para retroceder a la página anterior
+            $('.prev-page').click(function() {
+                var currentPage = parseInt($('.page-indicator').text().split(' ')[1]);
+                if (currentPage > 1) {
+                    showPage(currentPage - 1);
+                }
+            });
+
+            var listaOriginal;
+
+            $('.search_resources').keyup(function() {
+                var query = $(this).val().trim().toLowerCase();
+                let contenedor_lista = $('.contenedor_lista');
+
+                if (query !== '') {
+                    // Si hay un término de búsqueda, renderizar los recursos que coinciden
+                    contenedor_lista.html(renderResources(response, actividad_correspondiente, query));
+                    renderListEvent(response, actividad_correspondiente, id_row, renderKanban);
+                } else {
+                    // Si el campo de búsqueda está vacío, restablecer la lista original y volver a inicializar la paginación
+                    contenedor_lista.html(listaOriginal);
+                    initializePagination();
+                }
+            });
+
+
+            $(`#${id_row}-modal`).modal('show');
+
+
+            // contenedor.html(modalHtml);
+            // $('.search_resources').keyup(function() {
+            //     let contenedor_lista = $('.contenedor_lista');
+            //     contenedor_lista.html(renderResources(response, actividad_correspondiente, $(this).val()));
+            //     renderListEvent(response, actividad_correspondiente, id_row, renderKanban);
+            // });
+
+            // $(`#${id_row}-modal`).modal('show');
+            renderListEvent(response, actividad_correspondiente, id_row, renderKanban);
+        }
+
+        function initializeSortable(response) {
+            const statuses = ['STATUS_DONE', 'STATUS_ACTIVE', 'STATUS_FAILED', 'STATUS_SUSPENDED', 'STATUS_UNDEFINED'];
+
+            statuses.forEach(status => {
+                Sortable.create(document.getElementById(status), {
+                    group: {
+                        name: status,
+                        put: statuses.filter(s => s !== status)
+                    },
+                    animation: 100,
+                    ghostClass: "sortable-ghost",
+                    sort: false,
+                    onEnd: function(evt) {
+                        let id_row = evt.item.getAttribute('actividad-id');
+                        let valor_nuevo = evt.to.id;
+                        let actividad_correspondiente = response.tasks.find(t => t.id === id_row);
+                        changeStatusInKanban(actividad_correspondiente, response, valor_nuevo);
+                    },
+                });
+            });
+
+            Sortable.create(document.getElementById('c_kanban'), {
+                group: "sorting",
+                sort: true,
+                onSort: function(evt) {
+                    let orden_ul = Array.from(evt.target.getElementsByTagName('ul'));
+                    let estatuses = orden_ul.map(ul => ({
+                        [ul.classList]: ul.querySelector('h4').innerText.split('/')[0].trim()
+                    }));
+                    saveStatusOnServer(estatuses);
+                },
+            });
         }
 
         function changeStatusInKanban(tarea_correspondiente, response, valor_nuevo, element = null) {
-            if (!isParent(tarea_correspondiente, response.tasks)) {
-                if (valor_nuevo == 'STATUS_DONE') {
-                    if (tarea_correspondiente.isSuspended) {
-                        tarea_correspondiente.isSuspended = false;
-                    } else {
-                        tarea_correspondiente['isSuspended'] = false;
+            function updateTask(status, progress) {
+                tarea_correspondiente.isSuspended = false;
+                tarea_correspondiente.isFailed = false;
+                tarea_correspondiente.status = status;
+                tarea_correspondiente.progress = progress;
+                calculateAverageOnNodes(response.tasks);
+                calculateStatus(response.tasks);
+                saveOnServer(response);
+                renderKanban(response);
+            }
 
-                    }
-                    if (tarea_correspondiente.isFailed) {
-                        tarea_correspondiente.isFailed = false;
-                    } else {
-                        tarea_correspondiente['isFailed'] = false;
-                    }
+            if (isParent(tarea_correspondiente, response.tasks)) {
+                if (element) {
+                    element.value = tarea_correspondiente.status;
+                }
+                renderKanban(response);
+                toastr.info('No puedes editar una actividad padre');
+                return;
+            }
+
+            switch (valor_nuevo) {
+                case 'STATUS_DONE':
+                    tarea_correspondiente.isSuspended = false;
+                    tarea_correspondiente.isFailed = false;
                     tarea_correspondiente.status = valor_nuevo;
-                    tarea_correspondiente.progress = 100; // set progress in 100
-                    calculateAverageOnNodes(response.tasks);
-                    calculateStatus(response.tasks);
-                    saveOnServer(response);
-                    renderKanban(response);
+                    tarea_correspondiente.progress = 100;
+                    updateTask(valor_nuevo, 100);
+                    break;
 
-                } else if (valor_nuevo == 'STATUS_UNDEFINED') {
+                case 'STATUS_UNDEFINED':
                     Swal.fire({
                         title: '¿Estás seguro de reinicializar la actividad?',
                         text: "No podrás revertir esto!",
@@ -649,44 +708,20 @@
                         cancelButtonText: 'No'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            if (tarea_correspondiente.isSuspended) {
-                                tarea_correspondiente.isSuspended = false;
-                            } else {
-                                tarea_correspondiente['isSuspended'] = false;
-
-                            }
-                            if (tarea_correspondiente.isFailed) {
-                                tarea_correspondiente.isFailed = false;
-                            } else {
-                                tarea_correspondiente['isFailed'] = false;
-                            }
-                            tarea_correspondiente.status = valor_nuevo;
-                            tarea_correspondiente.progress = 0; // set progress in 0
-                            calculateAverageOnNodes(response.tasks);
-                            calculateStatus(response.tasks);
-                            saveOnServer(response);
-
+                            updateTask(valor_nuevo, 0);
+                        } else {
+                            renderKanban(response);
                         }
-                        renderKanban(response);
-                    })
+                    });
+                    break;
 
-                } else if (valor_nuevo == 'STATUS_SUSPENDED') {
-                    if (tarea_correspondiente.isSuspended) {
-                        tarea_correspondiente.isSuspended = true;
-                    } else {
-                        tarea_correspondiente['isSuspended'] = true;
+                case 'STATUS_SUSPENDED':
+                    tarea_correspondiente.isSuspended = true;
+                    tarea_correspondiente.isFailed = false;
+                    updateTask(valor_nuevo, null);
+                    break;
 
-                    }
-                    if (tarea_correspondiente.isFailed) {
-                        tarea_correspondiente.isFailed = false;
-                    } else {
-                        tarea_correspondiente['isFailed'] = false;
-                    }
-                    calculateAverageOnNodes(response.tasks);
-                    calculateStatus(response.tasks);
-                    saveOnServer(response);
-                    renderKanban(response);
-                } else if (valor_nuevo == 'STATUS_FAILED') {
+                case 'STATUS_FAILED':
                     if (tarea_correspondiente.end - Date.now() >= 0) {
                         toastr.info('Esta actividad no puede ser puesta en retraso');
                         renderKanban(response);
@@ -694,24 +729,13 @@
                             element.value = tarea_correspondiente.status;
                         }
                     } else {
-                        if (tarea_correspondiente.isSuspended) {
-                            tarea_correspondiente.isSuspended = false;
-                        } else {
-                            tarea_correspondiente['isSuspended'] = false;
-
-                        }
-                        if (tarea_correspondiente.isFailed) {
-                            tarea_correspondiente.isFailed = true;
-                        } else {
-                            tarea_correspondiente['isFailed'] = true;
-                        }
-                        tarea_correspondiente.status = valor_nuevo;
-                        calculateAverageOnNodes(response.tasks);
-                        calculateStatus(response.tasks);
-                        saveOnServer(response);
-                        renderKanban(response);
+                        tarea_correspondiente.isSuspended = false;
+                        tarea_correspondiente.isFailed = true;
+                        updateTask(valor_nuevo, null);
                     }
-                } else { // Si la tarea cambia a otro estatus se pregunta el progreso
+                    break;
+
+                default:
                     Swal.fire({
                         title: 'Ingresa el progreso, en un rango de 1-99',
                         input: 'number',
@@ -732,23 +756,7 @@
                         },
                         preConfirm: (progress) => {
                             if (Number(progress) >= 1 && Number(progress) <= 99) {
-                                if (tarea_correspondiente.isSuspended) {
-                                    tarea_correspondiente.isSuspended = false;
-                                } else {
-                                    tarea_correspondiente['isSuspended'] = false;
-
-                                }
-                                if (tarea_correspondiente.isFailed) {
-                                    tarea_correspondiente.isFailed = false;
-                                } else {
-                                    tarea_correspondiente['isFailed'] = false;
-                                }
-                                tarea_correspondiente.status = valor_nuevo;
-                                tarea_correspondiente.progress = Number(progress);
-                                calculateAverageOnNodes(response.tasks);
-                                calculateStatus(response.tasks);
-                                saveOnServer(response);
-                                renderKanban(response);
+                                updateTask(valor_nuevo, Number(progress));
                             } else {
                                 if (element) {
                                     element.value = tarea_correspondiente.status;
@@ -757,22 +765,14 @@
                         },
                         allowOutsideClick: () => !Swal.isLoading()
                     }).then((result) => {
-
                         if (result.isDismissed) {
                             if (element) {
                                 element.value = tarea_correspondiente.status;
                             }
                             renderKanban(response);
                         }
-
-                    })
-                }
-            } else {
-                if (element) {
-                    element.value = tarea_correspondiente.status;
-                }
-                renderKanban(response);
-                toastr.info('No puedes editar una actividad padre');
+                    });
+                    break;
             }
         }
 
