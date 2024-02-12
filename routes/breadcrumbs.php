@@ -1005,76 +1005,76 @@ Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
 });
 
 Breadcrumbs::for('timesheet-index', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Mis Registros');
 });
 Breadcrumbs::for('timesheet-create', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Registrar Jornada Laboral');
 });
 Breadcrumbs::for('timesheet-edit', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Registrar Jornada Laboral');
 });
 Breadcrumbs::for('timesheet-proyectos', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Proyectos');
 });
 
 Breadcrumbs::for('timesheet-tareas-proyecto', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Proyectos', route('admin.timesheet-proyectos'));
     $trail->push('Tareas');
 });
 
 Breadcrumbs::for('timesheet-empleados-proyecto', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Proyectos', route('admin.timesheet-proyectos'));
     $trail->push('Empleados Asignados');
 });
 
 Breadcrumbs::for('timesheet-externos-proyecto', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Proyectos', route('admin.timesheet-proyectos'));
     $trail->push('Externos Asignados');
 });
 
 Breadcrumbs::for('timesheet-tareas', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Tareas');
 });
 Breadcrumbs::for('timesheet-papelera', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Papelera');
 });
 Breadcrumbs::for('timesheet-aprobaciones', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Aprobaciones');
 });
 Breadcrumbs::for('timesheet-rechazos', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Aprobaciones');
 });
 Breadcrumbs::for('timesheet-clientes', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Clientes');
 });
 Breadcrumbs::for('timesheet-clientes-form', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Clientes', route('admin.timesheet-clientes'));
     $trail->push('Formulario');
 });
 
 Breadcrumbs::for('timesheet-dashboard', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Dashboard');
 });
 Breadcrumbs::for('timesheet-reportes', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Reportes');
 });
 Breadcrumbs::for('timesheet-reporte-aprobador', function ($trail) {
-    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Timesheet', route('admin.timesheet-create'));
     $trail->push('Reporte Aprobador');
 });
 

@@ -32,7 +32,7 @@ class Permission extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('Permissions:permissions_all', 3600 * 13, function () {
+        return Cache::remember('Permissions:permissions_all', 3600 * 6, function () {
             return self::orderBy('id')->get();
         });
     }

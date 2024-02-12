@@ -12,6 +12,7 @@ use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
 use App\Models\ContractManager\Fiscale;
 use App\Models\Empleado;
+use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Timesheet;
@@ -39,6 +40,8 @@ class TimesheetController extends Controller
 {
     use ObtenerOrganizacion;
 
+    public $modelo_proyectos = 'TimesheetProyecto';
+
     private $timesheetService;
 
     public function __construct(TimesheetService $timesheetService)
@@ -53,6 +56,21 @@ class TimesheetController extends Controller
      */
     public function index()
     {
+        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
+
+        $times = Timesheet::getPersonalTimesheet();
+
+        $todos_contador = $times->count();
+        $borrador_contador = $times->where('estatus', 'papelera')->count();
+        $pendientes_contador = $times->where('estatus', 'pendiente')->count();
+        $aprobados_contador = $times->where('estatus', 'aprobado')->count();
+        $rechazos_contador = $times->where('estatus', 'rechazado')->count();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual'));
     }
 
     public function misRegistros($estatus = 'todos')
@@ -111,7 +129,7 @@ class TimesheetController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.timesheet-create')->with('success', 'Guardado con éxito');
     }
 
     /**
@@ -327,7 +345,7 @@ class TimesheetController extends Controller
             return response()->json(['status' => 400]);
         }
 
-        // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
+        // return redirect()->route('admin.timesheet-mis-registros')->with('success', 'Registro Enviado');
     }
 
     /**
@@ -349,7 +367,7 @@ class TimesheetController extends Controller
 
             return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.timesheet')->with('error', 'No se localizo  ningun id  en la ruta');
+            return redirect()->route('admin.timesheet-mis-registros')->with('error', 'No se localizo  ningun id  en la ruta');
         }
     }
 
@@ -380,6 +398,7 @@ class TimesheetController extends Controller
                 }
             }
         }
+
         $proyectos = $proyectos_array->unique();
 
         $tareas = TimesheetTarea::getAll();
@@ -497,9 +516,9 @@ class TimesheetController extends Controller
         $timesheet_edit = Timesheet::find($id);
         $usuario = User::getCurrentUser();
         $timesheet_edit->update([
-            'empleado_id' => $usuario->empleado->id,
-            'aprobador_id' => $usuario->empleado->supervisor_id,
-            'estatus' => $request->estatus,
+            'empleado_id' => $usuario->empleado->id ?? null,
+            'aprobador_id' => $usuario->empleado->supervisor_id ?? null,
+            'estatus' => $request->estatus ?? null,
         ]);
 
         foreach ($request->timesheet as $index => $hora) {
@@ -647,16 +666,33 @@ class TimesheetController extends Controller
             ]);
         }
 
-        dispatch(
-            new NuevoProyectoJob(
-                'marco.luna@silent4business.com',
-                $nuevo_proyecto->proyecto,
-                $nuevo_proyecto->identificador,
-                $nuevo_proyecto->cliente->nombre,
-                User::getCurrentUser()->empleado->name,
-                $nuevo_proyecto->id
-            )
-        );
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo_proyectos)->first();
+
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
+            }
+
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
+            }
+
+            dispatch(
+                new NuevoProyectoJob(
+                    $correos,
+                    $nuevo_proyecto->proyecto,
+                    $nuevo_proyecto->identificador,
+                    $nuevo_proyecto->cliente->nombre,
+                    User::getCurrentUser()->empleado->name,
+                    $nuevo_proyecto->id
+                )
+            );
+        }
 
         // return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
         return redirect('admin/timesheet/proyectos');
@@ -957,9 +993,32 @@ class TimesheetController extends Controller
         $request->validate(
             [
                 'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'razon_social' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
+                'rfc' => 'max:15',
+                'calle' => 'max:255',
+                'colonia' => 'max:255',
+                'ciudad' => 'max:255',
+                'codigo_postal' => 'max:255',
+                'telefono' => 'max:255',
+                'pagina_web' => 'max:255',
+                'nombre_contacto' => 'max:255',
+                'puesto_contacto' => 'max:255',
+                'correo_contacto' => 'max:255',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'razon_social.max' => 'La  razon social no debe exceder de 255 caracteres',
+                'nombre.max' => 'El nombre no debe exceder de 255 caracteres',
+                'rfc.max' => 'El rfc no debe exceder de 255 caracteres',
+                'calle.max' => 'El calle no debe exceder de 255 caracteres',
+                'colonia.max' => 'La colonia no debe exceder de 255 caracteres',
+                'codigo_postal.max' => 'El codigo_postal no debe exceder de 255 caracteres',
+                'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+                'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+                'nombre_contacto.max' => 'El nombre_contacto no debe exceder de 255 caracteres',
+                'puesto_contacto.max' => 'El puesto_contacto no debe exceder de 255 caracteres',
+                'correo_contacto.max' => 'El correo_contacto no debe exceder de 255 caracteres',
             ],
         );
 
@@ -972,10 +1031,33 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => "required|unique:timesheet_clientes,identificador,{$id}",
+                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'razon_social' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
+                'rfc' => 'max:15',
+                'calle' => 'max:255',
+                'colonia' => 'max:255',
+                'ciudad' => 'max:255',
+                'codigo_postal' => 'max:255',
+                'telefono' => 'max:255',
+                'pagina_web' => 'max:255',
+                'nombre_contacto' => 'max:255',
+                'puesto_contacto' => 'max:255',
+                'correo_contacto' => 'max:255',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'razon_social.max' => 'La  razon social no debe exceder de 255 caracteres',
+                'nombre.max' => 'El nombre no debe exceder de 255 caracteres',
+                'rfc.max' => 'El rfc no debe exceder de 255 caracteres',
+                'calle.max' => 'El calle no debe exceder de 255 caracteres',
+                'colonia.max' => 'La colonia no debe exceder de 255 caracteres',
+                'codigo_postal.max' => 'El codigo_postal no debe exceder de 255 caracteres',
+                'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+                'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+                'nombre_contacto.max' => 'El nombre_contacto no debe exceder de 255 caracteres',
+                'puesto_contacto.max' => 'El puesto_contacto no debe exceder de 255 caracteres',
+                'correo_contacto.max' => 'El correo_contacto no debe exceder de 255 caracteres',
             ],
         );
 
@@ -1141,12 +1223,16 @@ class TimesheetController extends Controller
         $organizacions = Organizacion::getFirst();
         $logo_actual = $organizacions->logo;
 
-        $pdf = PDF::loadView('timesheet', compact('timesheet', 'organizacions', 'logo_actual'));
+        // Cargar la vista 'timesheet' con los datos necesarios
+        $view = view('timesheet', compact('timesheet', 'organizacions', 'logo_actual'));
 
-        $pdf->setPaper('legal', 'landscape');
+        // Crear una instancia de la clase PDF
+        $pdf = \PDF::loadHTML($view);
 
-        $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);
+        // Configurar el tamaño del papel y la orientación
+        $pdf->setPaper('tabloid', 'landscape');
 
+        // Descargar el PDF
         return $pdf->download('timesheet.pdf');
     }
 

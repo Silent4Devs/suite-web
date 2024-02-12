@@ -1,6 +1,6 @@
 <!--<span class="card-title">Editar nivel servicio</span>-->
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}{{config('app.cssVersion')}}">
 
 <div class="col s12">
     <div class="form-group diseño-titulo">

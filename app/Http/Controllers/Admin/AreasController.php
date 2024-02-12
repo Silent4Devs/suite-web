@@ -270,7 +270,6 @@ class AreasController extends Controller
         $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
 
         return json_encode($areasTree);
-        // dd($areasTree);
     }
 
     public function exportTo()

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     {{ Breadcrumbs::render('timesheet-create') }}
@@ -326,7 +326,7 @@
 
         function showInactiveMessage() {
             alert("Demasiado tiempo de inactividad al registrar horas");
-            window.location.href = "{{ route('admin.timesheet-inicio') }}";
+            window.location.href = "{{ route('admin.timesheet-create') }}";
         }
 
         function resetInactivityTimeout() {

@@ -4,7 +4,7 @@
     @include('layouts.datatables_css')
 @section('titulo', 'Dashboard')
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/dashboard.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/dashboard.css') }}{{config('app.cssVersion')}}">
 
 <style type="text/css">
     .dataTables_info,
