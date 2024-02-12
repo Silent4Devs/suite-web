@@ -127,6 +127,10 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
+        $foda->update([
+            'estatus' => 'Borrador',
+        ]);
+
         if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
@@ -321,9 +325,9 @@ class EntendimientoOrganizacionController extends Controller
     public function index()
     {
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
 
         $listavacia = 'cumple';
 
@@ -336,12 +340,12 @@ class EntendimientoOrganizacionController extends Controller
                 if ($participante->empleado->estatus != 'alta') {
                     $listavacia = 'baja';
 
-                    return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia'));
+                    return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia', 'modulo'));
                 }
             }
         }
 
-        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia'));
+        return view('admin.entendimientoOrganizacions.cardFodaGeneral', compact('query', 'listavacia', 'modulo'));
     }
 
     public function revision($entendimientoOrganizacion)
@@ -465,6 +469,9 @@ class EntendimientoOrganizacionController extends Controller
             }
             // }
         }
+        $foda->update([
+            'estatus' => 'Pendiente',
+        ]);
 
         // $control_participantes = ControlListaDistribucion::where('proceso_id', '=', $proceso->id)->get();
         // dd($proceso, $control_participantes);
