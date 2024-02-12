@@ -95,7 +95,7 @@ class PoliticaSgsiController extends Controller
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         $listavacia = 'cumple';
-        if (!isset($modulo)) {
+        if (! isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -284,7 +284,7 @@ class PoliticaSgsiController extends Controller
         try {
             $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
             foreach ($politicaSgsis as $polsgsis) {
-                if (!isset($polsgsis->reviso)) {
+                if (! isset($polsgsis->reviso)) {
                     $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                     $polsgsis->estemp = 'baja';
                 } else {
@@ -369,7 +369,7 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsi = PoliticaSgsi::find($id);
 
-        if (!$politicaSgsi) {
+        if (! $politicaSgsi) {
             return redirect()->route('admin.politica-sgsis.index')->with('error', 'Registro no encontrado');
         }
 

@@ -77,6 +77,7 @@ class ListaInformativaController extends Controller
             ->filter(function ($user) {
                 return $user->empleado == null;
             });
+
         // dd($usuarios);
         return view('admin.listainformativa.show', compact('lista', 'participantes_seleccionados', 'empleados', 'usuarios'));
     }
@@ -114,6 +115,7 @@ class ListaInformativaController extends Controller
             ->filter(function ($user) {
                 return $user->empleado == null;
             });
+
         // dd($usuarios);
         return view('admin.listainformativa.edit', compact('lista', 'participantes_seleccionados', 'empleados', 'usuarios'));
     }
