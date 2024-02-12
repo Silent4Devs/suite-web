@@ -7,7 +7,7 @@
     <title>Minuta</title>
     <style>
         body{
-            font-size: 10px;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -28,16 +28,14 @@
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </div>
-                <div class="col-4"  style="position: relative; top: -4rem; left: 9rem;">
+                <div class="col-4"  style="position: relative; top: -5rem; left: 9rem;">
                     <span class="" style="color:black;">
                         {{ $empresa_actual }} <br>
                         RFC: {{ $rfc }} <br>
                         Av. Insurgentes Sur 2453 piso 4, <br> Colonia Tizapán San Ángel, <br> Álvaro Obregón, C.P. 01090, CDMX. <br>
                     </span>
                 </div>
-                <div class="col-4" style="background:#EEFCFF; width: 100%; height: 8%; position: relative; left: 23rem; top: -8rem;">
-                    <br>
-                    <br>
+                <div class="col-4" style="background:#EEFCFF; width: 100%; height: 8%; position: relative; left: 23rem; top: -10rem;">
                     <br>
                     <br>
                     <span style="color:#057BE2;"> <strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Minuta Revisión por Dirección</strong></span>
@@ -94,8 +92,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="border: 1px solid #dddddd; padding: 26px;" colspan="2">
-                                <textarea style="width: 100%; height: 26rem; border: none; outline: none; resize: none; background-color: transparent;"> {!! strip_tags($minutas->tema_tratado) !!}</textarea>
+                            <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
+                                <div>
+                                    {!! strip_tags($minutas->tema_tratado) !!}
+                                </div>
                             </td>
                         </tr>
                     </tbody>
