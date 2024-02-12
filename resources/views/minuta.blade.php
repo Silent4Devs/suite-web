@@ -82,7 +82,6 @@
                         <tr>
                             <td style="border: 1px solid #dddddd;">{{$responsable->name}}</td>
                             <td style="border: 1px solid #dddddd;">{{$responsable->puesto}}</td>
-                            <td style="border: 1px solid #dddddd;">si</td>
                         </tr>
                     </tbody>
                 </table>
