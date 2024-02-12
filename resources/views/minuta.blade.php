@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Minuta</title>
+    <style>
+        body{
+            font-size: 8px;
+        }
+    </style>
 </head>
 <body>
     <div class="card col-sm-12 col-md-10" style="border-radius: 0px; box-shadow: none; border-color:white; width:750px;">
@@ -24,20 +29,22 @@
                     @endif
                 </div>
                 <div class="col-4"  style="position: relative; top: -4rem; left: 9rem;">
-                    <span class="" style="color:black; font-size: 11px;">
+                    <span class="" style="color:black;">
                         {{ $empresa_actual }} <br>
                         RFC: {{ $rfc }} <br>
                         Av. Insurgentes Sur 2453 piso 4, <br> Colonia Tizapán San Ángel, <br> Álvaro Obregón, C.P. 01090, CDMX. <br>
                     </span>
                 </div>
-                <div class="col-4" style="background:#EEFCFF; width: 100%; height: 8%; position: relative; left: 23rem; top: -9rem;">
+                <div class="col-4" style="background:#EEFCFF; width: 100%; height: 8%; position: relative; left: 23rem; top: -8rem;">
+                    <br>
+                    <br>
                     <br>
                     <br>
                     <span style="color:#057BE2;"> <strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Minuta Revisión por Dirección</strong></span>
                 </div>
             </div>
             <div style="margin: 4%" style="position: relative; top: -7rem; right: 1rem;">
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="6"><center>Minuta reunión</center></th>
@@ -61,7 +68,7 @@
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="4"><center>Participantes</center></th>
@@ -71,7 +78,6 @@
                         <tr>
                             <td style="border: 1px solid #dddddd;">Nombre/Apellidos</td>
                             <td style="border: 1px solid #dddddd;">Puesto/Area</td>
-                            <td style="border: 1px solid #dddddd;">Asistencia</td>
                         </tr>
                         <tr>
                             <td style="border: 1px solid #dddddd;">{{$responsable->name}}</td>
@@ -81,7 +87,7 @@
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="2"><center style="color: white;">Temas tratados</center></th>
@@ -96,7 +102,7 @@
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="5"><center>Acuerdos y Compromisos</center></th>
@@ -120,7 +126,7 @@
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 6px;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
                             <th style="background-color: white; padding: 8px; color: black;  border-top-right-radius: 10px;" colspan="6"><center>Anexo</center></th>
