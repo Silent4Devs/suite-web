@@ -131,11 +131,10 @@ class Area extends Model implements Auditable
             ->with([
                 'children',
                 'supervisor',
-                'lider'
+                'lider',
             ])
             ->with('grupo');
     }
-
 
     public function concientizacion_sgis()
     {
