@@ -62,7 +62,7 @@ analisis brecha
                         <p style="font-size: 15px;">
                             {{$organizacions->empresa}} <br>
                             RFC:{{$organizacions->rfc}} <br>
-                            Av. Insurgentes Sur 2453 piso 4,<br> Colonia Tizapán San Ángel, Álvaro Obregón, C.P. 01090, CDMX <br></p>
+                            Av. Insurgentes Sur 2453 piso 4,<br> Colonia Tizapán San Ángel, <br> Álvaro Obregón, C.P. 01090, CDMX <br></p>
                     </div>
                 </td>
                 <td class="td-blue-header">
@@ -79,19 +79,135 @@ analisis brecha
             <thead>
                 <tr>
                     <th>Identificador</th>
-                    <th>Razon Social</th>
+                    {{-- <th>Razon Social</th> --}}
                     <th>Nombre</th>
                     <th>RFC</th>
+                    <th>Calle</th>
+                    <th>Colonia</th>
+                    <th>Ciudad</th>
+                    <th>Codigo postal</th>
+                    <th>Telefono</th>
+                    <th>Pagina web</th>
+                    <th>Nombre Contacto</th>
+                    <th>Puesto Contacto</th>
+                    <th>Correo</th>
+                    <th>Celular</th>
                 </tr>
             </thead>
             <tbody>
 
                 @foreach ($timesheetCliente as  $timesheetCl)
                     <tr>
-                        <td>{{$timesheetCl->identificador}}</td>
-                        <td>{{$timesheetCl->razon_social}}</td>
-                        <td>{{$timesheetCl->nombre}}</td>
-                        <td>{{$timesheetCl->rfc}}</td>
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->identificador)
+                                {{$timesheetCl->identificador}}
+                            @else
+                                No hay registro
+                            @endif
+                        
+                        </td>
+                        {{-- <td style="width: 40%;">
+                            @if ($timesheetCl->razon_social)
+                            {{$timesheetCl->razon_social}}
+                            @else
+                                No hay registro
+                            @endif
+                        </td> --}}
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->nombre)
+                            {{ substr($timesheetCl->nombre, 0, 12) }}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->rfc)
+                            {{ substr($timesheetCl->rfc, 0, 15) }}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->calle)
+                            {{ substr($timesheetCl->calle, 0, 12) }}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->colonia)
+                            {{ substr($timesheetCl->colonia, 0, 12) }}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->ciudad)
+                            {{ substr($timesheetCl->ciudad, 0, 12) }}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->codigo_postal)
+                            {{$timesheetCl->codigo_postal}}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->telefono)
+                            {{$timesheetCl->telefono}}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+                        <td style="width: 60%;">
+                            @if ($timesheetCl->pagina_web)
+                            {{$timesheetCl->pagina_web}}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->nombre_contanto)
+                            {{$timesheetCl->nombre_contanto}}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->puesto_contanto)
+                            {{$timesheetCl->puesto_contanto}}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->correo_contanto)
+                            {{$timesheetCl->correo_contanto}}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->celular_contanto)
+                            {{$timesheetCl->celular_contanto}}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

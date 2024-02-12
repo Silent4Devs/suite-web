@@ -63,7 +63,7 @@
                 </div>
                 <div class="form-group w-100 mr-4">
                     <label> Tarea Nueva</label>
-                    <input class="form-control w-100 mr-4" maxlength="255" placeholder="Nombre de la tarea" id="tarea_name" required>
+                    <input class="form-control w-100 mr-4" maxlength="255" title="Por favor, no incluyas comas en el nombre de la tarea." placeholder="Nombre de la tarea" id="tarea_name" required pattern="[^,]*">
                 </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
                     <button class="btn btn-primary" style="position: absolute; bottom: 0;">
