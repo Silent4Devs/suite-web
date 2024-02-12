@@ -993,9 +993,32 @@ class TimesheetController extends Controller
         $request->validate(
             [
                 'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'razon_social' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
+                'rfc' => 'max:15',
+                'calle' => 'max:255',
+                'colonia' => 'max:255',
+                'ciudad' => 'max:255',
+                'codigo_postal' => 'max:255',
+                'telefono' => 'max:255',
+                'pagina_web' => 'max:255',
+                'nombre_contacto' => 'max:255',
+                'puesto_contacto' => 'max:255',
+                'correo_contacto' => 'max:255',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'razon_social.max' => 'La  razon social no debe exceder de 255 caracteres',
+                'nombre.max' => 'El nombre no debe exceder de 255 caracteres',
+                'rfc.max' => 'El rfc no debe exceder de 255 caracteres',
+                'calle.max' => 'El calle no debe exceder de 255 caracteres',
+                'colonia.max' => 'La colonia no debe exceder de 255 caracteres',
+                'codigo_postal.max' => 'El codigo_postal no debe exceder de 255 caracteres',
+                'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+                'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+                'nombre_contacto.max' => 'El nombre_contacto no debe exceder de 255 caracteres',
+                'puesto_contacto.max' => 'El puesto_contacto no debe exceder de 255 caracteres',
+                'correo_contacto.max' => 'El correo_contacto no debe exceder de 255 caracteres',
             ],
         );
 
@@ -1008,10 +1031,33 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => "required|unique:timesheet_clientes,identificador,{$id}",
+                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'razon_social' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
+                'rfc' => 'max:15',
+                'calle' => 'max:255',
+                'colonia' => 'max:255',
+                'ciudad' => 'max:255',
+                'codigo_postal' => 'max:255',
+                'telefono' => 'max:255',
+                'pagina_web' => 'max:255',
+                'nombre_contacto' => 'max:255',
+                'puesto_contacto' => 'max:255',
+                'correo_contacto' => 'max:255',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'razon_social.max' => 'La  razon social no debe exceder de 255 caracteres',
+                'nombre.max' => 'El nombre no debe exceder de 255 caracteres',
+                'rfc.max' => 'El rfc no debe exceder de 255 caracteres',
+                'calle.max' => 'El calle no debe exceder de 255 caracteres',
+                'colonia.max' => 'La colonia no debe exceder de 255 caracteres',
+                'codigo_postal.max' => 'El codigo_postal no debe exceder de 255 caracteres',
+                'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+                'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+                'nombre_contacto.max' => 'El nombre_contacto no debe exceder de 255 caracteres',
+                'puesto_contacto.max' => 'El puesto_contacto no debe exceder de 255 caracteres',
+                'correo_contacto.max' => 'El correo_contacto no debe exceder de 255 caracteres',
             ],
         );
 
@@ -1177,12 +1223,16 @@ class TimesheetController extends Controller
         $organizacions = Organizacion::getFirst();
         $logo_actual = $organizacions->logo;
 
-        $pdf = PDF::loadView('timesheet', compact('timesheet', 'organizacions', 'logo_actual'));
+        // Cargar la vista 'timesheet' con los datos necesarios
+        $view = view('timesheet', compact('timesheet', 'organizacions', 'logo_actual'));
 
-        $pdf->setPaper('legal', 'landscape');
+        // Crear una instancia de la clase PDF
+        $pdf = \PDF::loadHTML($view);
 
-        $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);
+        // Configurar el tamaño del papel y la orientación
+        $pdf->setPaper('tabloid', 'landscape');
 
+        // Descargar el PDF
         return $pdf->download('timesheet.pdf');
     }
 
