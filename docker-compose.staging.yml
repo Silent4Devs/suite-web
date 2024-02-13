@@ -30,7 +30,7 @@ services:
       - tabantajnetwork
 
   postgres-tabantaj:
-    image: postgres:15-alpine
+    image: postgres:14-alpine
     container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
