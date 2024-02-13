@@ -90,14 +90,14 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="codigo_postal" placeholder="" class="form-control"
+                    <input type="" name="codigo_postal" placeholder=""  maxlength="255" class="form-control"
                         value="{{ old('codigo_postal') }}">
                     {!! Form::label('codigo_postal', 'Código Postal*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
                     <input id="phone" type="text" pattern="[0-9]+" title="Por favor, introduce solo números"
-                        name="telefono" value="{{ old('telefono') }}" class="form-control" size="20" placeholder="">
+                        name="telefono" value="{{ old('telefono') }}"  maxlength="12" class="form-control" size="20" placeholder="">
                     {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
                     <div class="error-message"></div>
                 </div>
@@ -140,7 +140,7 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="tel" pattern="[0-9]+" title="Por favor, introduce solo números"
+                    <input type="tel" pattern="[0-9]+"  maxlength="10" title="Por favor, introduce solo números"
                         name="celular_contacto" placeholder="" class="form-control"
                         value="{{ old('celular_contacto') }}">
                     {!! Form::label('celular_contacto', 'Celular*', ['class' => 'asterisco']) !!}
