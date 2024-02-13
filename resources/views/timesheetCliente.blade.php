@@ -92,6 +92,8 @@ analisis brecha
                     <th>Puesto Contacto</th>
                     <th>Correo</th>
                     <th>Celular</th>
+                    <th>Objeto</th>
+                    <th>Cobertura</th>
                 </tr>
             </thead>
             <tbody>
@@ -204,6 +206,22 @@ analisis brecha
                         <td style="width: 30%;">
                             @if ($timesheetCl->celular_contanto)
                             {{ substr($timesheetCl->celular_contanto, 0, 10) }}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->objeto_descripcion)
+                            {{ substr($timesheetCl->objeto_descripcion, 0, 15) }}
+                            @else
+                                No hay registro
+                            @endif
+                        </td>
+
+                        <td style="width: 30%;">
+                            @if ($timesheetCl->cobertura)
+                            {{ substr($timesheetCl->cobertura, 0, 15) }}
                             @else
                                 No hay registro
                             @endif
