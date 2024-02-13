@@ -39,7 +39,7 @@
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id"
+                        <select id="proyectos_select" class="mr-4 form-control" wire:model.lazy="proyecto_id"
                             required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
@@ -77,7 +77,7 @@
         @if ($origen == 'tareas')
             <div class="col-6 form-group">
                 <label>Filtrar por proyecto</label>
-                <select wire:ignore id="proyecto_filtro" class="form-control">
+                <select  id="proyecto_filtro" class="form-control">
                     <option value=""></option>
                     @foreach ($proyectos as $proyecto)
                         <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
