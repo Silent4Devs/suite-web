@@ -3,7 +3,6 @@
         overflow-x: scroll;
         display: flex;
         height: auto;
-        display: contents;
     }
 
     /* width */
@@ -39,7 +38,7 @@
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         padding: 14px;
-        width: 350px;
+        width: 250px;
         height: 550px;
     }
 
@@ -272,6 +271,7 @@
 
     .assigned-to {
         display: flex;
+        flex-wrap: nowrap;
         align-items: center;
         margin-bottom: 15px;
     }
@@ -388,7 +388,7 @@
     @parent
     <script>
         $(document).ready(function() {
-            initKanban();
+            //initKanban();
         });
 
         // Obtener el token CSRF una vez
@@ -549,6 +549,11 @@
                             </div>
                         </ul>
                     </div>
+                    <div class="pagination-container mt-3">
+                        <button class="btn btn-sm btn-outline-primary prev-page">&laquo; Anterior</button>
+                        <button class="btn btn-sm btn-outline-primary next-page">Siguiente &raquo;</button>
+                        <span class="page-indicator ml-2 mr-2"></span>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
@@ -558,13 +563,73 @@
     `;
 
             contenedor.html(modalHtml);
-            $('.search_resources').keyup(function() {
-                let contenedor_lista = $('.contenedor_lista');
-                contenedor_lista.html(renderResources(response, actividad_correspondiente, $(this).val()));
-                renderListEvent(response, actividad_correspondiente, id_row, renderKanban);
+
+            // Función para mostrar los recursos correspondientes a la página actual
+            function showPage(pageNumber) {
+                var startIndex = (pageNumber - 1) * 5;
+                var endIndex = startIndex + 5;
+                $('.contenedor_lista .list-group-item').hide().slice(startIndex, endIndex).show();
+                $('.page-indicator').text("Página " + pageNumber + " de " + Math.ceil($(
+                    '.contenedor_lista .list-group-item').length / 5));
+            }
+
+            // Función para inicializar la paginación y mostrar la primera página
+            function initializePagination() {
+                // Ocultar todos los recursos y mostrar los primeros 5
+                $('.contenedor_lista .list-group-item').hide().slice(0, 5).show();
+                // Mostrar la primera página
+                showPage(1);
+            }
+
+            // Ejecutar la paginación al cargar el modal
+            initializePagination();
+
+            // Evento para avanzar a la página siguiente
+            $('.next-page').click(function() {
+                var currentPage = parseInt($('.page-indicator').text().split(' ')[1]);
+                var totalPages = Math.ceil($('.contenedor_lista .list-group-item').length / 5);
+                if (currentPage < totalPages) {
+                    showPage(currentPage + 1);
+                }
             });
 
+            // Evento para retroceder a la página anterior
+            $('.prev-page').click(function() {
+                var currentPage = parseInt($('.page-indicator').text().split(' ')[1]);
+                if (currentPage > 1) {
+                    showPage(currentPage - 1);
+                }
+            });
+
+            var listaOriginal;
+
+            $('.search_resources').keyup(function() {
+                var query = $(this).val().trim().toLowerCase();
+                let contenedor_lista = $('.contenedor_lista');
+
+                if (query !== '') {
+                    // Si hay un término de búsqueda, renderizar los recursos que coinciden
+                    contenedor_lista.html(renderResources(response, actividad_correspondiente, query));
+                    renderListEvent(response, actividad_correspondiente, id_row, renderKanban);
+                } else {
+                    // Si el campo de búsqueda está vacío, restablecer la lista original y volver a inicializar la paginación
+                    contenedor_lista.html(listaOriginal);
+                    initializePagination();
+                }
+            });
+
+
             $(`#${id_row}-modal`).modal('show');
+
+
+            // contenedor.html(modalHtml);
+            // $('.search_resources').keyup(function() {
+            //     let contenedor_lista = $('.contenedor_lista');
+            //     contenedor_lista.html(renderResources(response, actividad_correspondiente, $(this).val()));
+            //     renderListEvent(response, actividad_correspondiente, id_row, renderKanban);
+            // });
+
+            // $(`#${id_row}-modal`).modal('show');
             renderListEvent(response, actividad_correspondiente, id_row, renderKanban);
         }
 
@@ -711,7 +776,7 @@
                     break;
             }
         }
-        
+
         function saveStatusOnServer(response) {
             $.ajax({
                 type: "post",

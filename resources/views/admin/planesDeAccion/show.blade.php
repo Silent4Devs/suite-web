@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }*/
 
 
         #workSpace {
@@ -215,7 +215,6 @@
 
             display: inline-block !important;
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Plan de Acción - {{ $planImplementacion->parent }}</h5>
     <div class="mt-5 mb-5">
@@ -227,13 +226,13 @@
                     <h2 id="titlo-tab" class="text-capitalize">Diagrama Gantt</h2>
                 </div>
                 <div class="text-right col-8 caja_botones_menu">
-                    <a href="#" data-tabs="original_gantt" onclick="loadGanttFromServer();cambiarTitulo('Gantt');"
+                    <a href="#" data-tabs="original_gantt" onclick="cambiarTitulo('Gantt');"
                         class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
-                    <a href="#" data-tabs="tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');"
+                    <a href="#" data-tabs="tabla_gantt" onclick="cambiarTitulo('Tabla');"
                         class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
-                    <a href="#" data-tabs="calendario_gantt" onclick="initCalendar();cambiarTitulo('Calendario');"
+                    <a href="#" data-tabs="calendario_gantt" onclick="cambiarTitulo('Calendario');"
                         class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
-                    <a href="#" data-tabs="kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');"
+                    <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');"
                         class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
                 </div>
             </div>
@@ -278,6 +277,97 @@
             setTimeout(() => {
                 document.getElementById('titlo-tab').innerText = titulo;
             }, 500);
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            initail();
+        });
+        var ge;
+
+        function initail(taskId, callback) {
+
+            //this is a simulation: load data from the local storage if you have already played with the demo or a textarea with starting demo data
+            var ret = loadFromLocalStorage();
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
+                success: function(response) {
+                    // // Analizar la cadena JSON para convertirla en un objeto JavaScript
+                    // let tasks = JSON.parse(response.tasks);
+
+                    // // Modificar cada tarea utilizando map
+                    // tasks = tasks.map(task => {
+                    //     // Establecer el valor predeterminado de "status" como 'STATUS_UNDEFINED' si no está definido
+                    //     task.status = task.status ?? 'STATUS_UNDEFINED';
+
+                    //     // Convertir "end" a entero
+                    //     task.end = parseInt(task.end);
+
+                    //     // Convertir "start" a entero
+                    //     task.start = parseInt(task.start);
+
+                    //     // Convertir "canAdd" a un valor booleano
+                    //     task.canAdd = task.canAdd === 'true';
+
+                    //     // Convertir "canWrite" a un valor booleano
+                    //     task.canWrite = task.canWrite === 'true';
+
+                    //     // Convertir "duration" a entero
+                    //     task.duration = parseInt(task.duration);
+
+                    //     // Convertir "progress" a entero
+                    //     task.progress = parseInt(task.progress);
+
+                    //     // Convertir "canDelete" a un valor booleano
+                    //     task.canDelete = task.canDelete === 'true';
+
+                    //     // Convertir "level" a entero, o establecer en 0 si no está definido
+                    //     task.level = task.level ? parseInt(task.level) : 0;
+
+                    //     // Convertir "collapsed" a un valor booleano, o establecer en false si no está definido
+                    //     task.collapsed = task.collapsed ? task.collapsed === 'true' : false;
+
+                    //     // Convertir "canAddIssue" a un valor booleano, o establecer en false si no está definido
+                    //     task.canAddIssue = task.canAddIssue ? task.canAddIssue === 'true' : false;
+
+                    //     // Convertir "endIsMilestone" a un valor booleano, o establecer en false si no está definido
+                    //     task.endIsMilestone = task.endIsMilestone ? task.endIsMilestone === 'true' :
+                    //         false;
+
+                    //     // Convertir "startIsMilestone" a un valor booleano, o establecer en false si no está definido
+                    //     task.startIsMilestone = task.startIsMilestone ? task.startIsMilestone ===
+                    //         'true' : false;
+
+                    //     // Convertir "progressByWorklog" a un valor booleano, o establecer en false si no está definido
+                    //     task.progressByWorklog = task.progressByWorklog ? task.progressByWorklog ===
+                    //         'true' : false;
+
+                    //     return task;
+                    // });
+
+                    // // Asignar las tareas modificadas de nuevo a la propiedad "tasks" de la implementación
+                    // response.tasks = tasks;
+                    ge.loadProject(response);
+                    document.getElementById("ultima_modificacion").innerHTML = moment(response.updated_at)
+                        .format("DD-MM-YYYY hh:mm:ss A")
+                    ge.checkpoint(); //empty the undo stac
+                    renderKanban(response);
+                    renderTable(response);
+                    renderCalendar(response);
+                },
+                error: function(response) {
+                    toastr.error(response);
+                    // setTimeout(() => {
+                    //     toastr.info("Reiniciaremos el diagrama de gantt");
+                    //     window.location.reload();
+                    // }, 1000);
+                }
+            });
+            return ret;
         }
     </script>
 @endsection

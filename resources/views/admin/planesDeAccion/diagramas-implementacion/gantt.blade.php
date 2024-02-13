@@ -64,7 +64,7 @@
     </script>
 
     <script type="text/javascript">
-        var ge;
+
         $(function() {
             initProject();
         });
@@ -86,7 +86,7 @@
             //in order to force compute the best-fitting zoom level
             delete ge.gantt.zoom;
 
-            var project = loadGanttFromServer();
+            //var project = loadGanttFromServer();
 
             if (!project.canWrite)
                 $(".ganttButtonBar button.requireWrite").attr("disabled", "true");
@@ -900,13 +900,4 @@
             upload(uploadedFile);
         });
     </script>
-
-
-
-
-
-
-
-
-
 @endsection
