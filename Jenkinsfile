@@ -8,7 +8,6 @@ pipeline {
     }
 
 
-    stages {
         stage('Merge Branch') {
             steps {
                 // Clonar el repositorio utilizando credenciales globales de Jenkins
@@ -24,10 +23,8 @@ pipeline {
                 // sh 'git push origin stagging'
             }
         }
-    }
 
 
-     stages {
         stage('Git Pull via SSH') {
             steps {
                 script {
@@ -37,5 +34,4 @@ pipeline {
                 }
             }
         }
-    }
 }
