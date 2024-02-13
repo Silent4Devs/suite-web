@@ -4,23 +4,17 @@ pipeline {
     stages {
         stage('Merge Branch') {
             steps {
-                // Clonar el repositorio utilizando SSH
-                git url: 'git@github.com:Silent4Devs:Saul183/suite-web.git'
+                // Clonar el repositorio utilizando credenciales globales de Jenkins
+                git credentialsId: 'jenkis123', url: 'git@github.com:Silent4Devs:Saul183/suite-web.git'
 
                 // Checkout a la rama de staging
-                script {
-                    sh 'git checkout stagging'
-                }
+                sh 'git checkout staging'
 
                 // Merge de la rama develop a la rama de staging
-                script {
-                    sh 'git merge develop'
-                }
+                sh 'git merge develop'
 
                 // Push de los cambios a la rama de staging
-                script {
-                    sh 'git push origin stagging'
-                }
+                sh 'git push origin staging'
             }
         }
     }
