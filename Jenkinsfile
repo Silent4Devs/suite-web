@@ -13,7 +13,6 @@ pipeline {
                 git branch: 'stagging', url: 'https://Saul183:SaulGithub123@github.com/Silent4Devs/suite-web.git'
                 sh 'git checkout stagging'
                 sh 'git merge develop'
-                sh "git push https://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@github.com/Silent4Devs/suite-web.git stagging"
 
             }
         }
