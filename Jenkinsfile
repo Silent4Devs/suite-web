@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    environment {
+        SSH_USER = 'desarrollo'
+        SSH_PASSWORD = 'S3cur3.qa'
+        SERVER_IP = '192.168.9.78'
+    }
+
+
     stages {
         stage('Merge Branch') {
             steps {
@@ -14,7 +21,20 @@ pipeline {
                 sh 'git merge develop'
 
                 // Push de los cambios a la rama de staging
-                sh 'git push origin stagging'
+                // sh 'git push origin stagging'
+            }
+        }
+    }
+
+
+     stages {
+        stage('Git Pull via SSH') {
+            steps {
+                script {
+                    sh '''
+                       echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedores/tabantaj && sudo -S git pull"
+                    '''
+                }
             }
         }
     }
