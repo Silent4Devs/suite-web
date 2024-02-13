@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                       echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedores/suite-web && sudo -S git pull"
+                       echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && sudo -S git pull"
                     '''
                 }
             }
