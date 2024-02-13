@@ -5,16 +5,16 @@ pipeline {
         stage('Merge Branch') {
             steps {
                 // Clonar el repositorio utilizando credenciales globales de Jenkins
-                git credentialsId: 'jenkis123', url: 'git@github.com:Silent4Devs:Saul183/suite-web.git'
+                git branch: 'stagging', url: 'https://github.com/Silent4Devs/suite-web.git'
 
                 // Checkout a la rama de staging
-                sh 'git checkout staging'
+                sh 'git checkout stagging'
 
                 // Merge de la rama develop a la rama de staging
                 sh 'git merge develop'
 
                 // Push de los cambios a la rama de staging
-                sh 'git push origin staging'
+                sh 'git push origin stagging'
             }
         }
     }
