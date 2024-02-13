@@ -19,6 +19,7 @@ pipeline {
         stage('Git Pull via SSH') {
             steps {
                 script {
+                    sh 'git config --global --add safe.directory /var/contenedor/suite-web'
                     sh '''
                        echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && sudo -S git pull"
                     '''
