@@ -4,17 +4,21 @@ pipeline {
     stages {
         stage('Merge Branch') {
             steps {
+                // Clonar el repositorio utilizando SSH
+                git url: 'git@github.com:Silent4Devs:Saul183/suite-web.git'
+
+                // Checkout a la rama de staging
                 script {
-                    // Clonar el repositorio utilizando SSH
-                    git url: 'git@github.com:Silent4Devs:Saul183/suite-web.git'
+                    sh 'git checkout stagging'
+                }
 
-                    // Checkout a la rama de staging
-                    checkout([$class: 'GitSCM', branches: [[name: 'stagging']], userRemoteConfigs: [[url: 'git@github.com:Silent4Devs:Saul183/suite-web.git']]])
-
-                    // Merge de la rama develop a la rama de staging
+                // Merge de la rama develop a la rama de staging
+                script {
                     sh 'git merge develop'
+                }
 
-                    // Push de los cambios a la rama de staging
+                // Push de los cambios a la rama de staging
+                script {
                     sh 'git push origin stagging'
                 }
             }
