@@ -55,7 +55,7 @@ analisis brecha
                     <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset($logotipo) }}">
                     @else
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
-                    @endif 
+                    @endif
                 </td>
                 <td class="info-header">
                     <div style="position: relative; left: 3rem; text-align: justify;">
@@ -100,11 +100,11 @@ analisis brecha
                     <tr>
                         <td style="width: 30%;">
                             @if ($timesheetCl->identificador)
-                                {{$timesheetCl->identificador}}
+                            {{ substr($timesheetCl->identificador, 0, 12) }}
                             @else
                                 No hay registro
                             @endif
-                        
+
                         </td>
                         {{-- <td style="width: 40%;">
                             @if ($timesheetCl->razon_social)
@@ -156,7 +156,7 @@ analisis brecha
 
                         <td style="width: 30%;">
                             @if ($timesheetCl->codigo_postal)
-                            {{$timesheetCl->codigo_postal}}
+                            {{ substr($timesheetCl->codigo_postal, 0, 12) }}
                             @else
                                 No hay registro
                             @endif
@@ -164,7 +164,7 @@ analisis brecha
 
                         <td style="width: 30%;">
                             @if ($timesheetCl->telefono)
-                            {{$timesheetCl->telefono}}
+                            {{ substr($timesheetCl->telefono, 0, 12) }}
                             @else
                                 No hay registro
                             @endif
@@ -179,7 +179,7 @@ analisis brecha
 
                         <td style="width: 30%;">
                             @if ($timesheetCl->nombre_contanto)
-                            {{$timesheetCl->nombre_contanto}}
+                            {{ substr($timesheetCl->nombre_contanto, 0, 15) }}
                             @else
                                 No hay registro
                             @endif
@@ -187,7 +187,7 @@ analisis brecha
 
                         <td style="width: 30%;">
                             @if ($timesheetCl->puesto_contanto)
-                            {{$timesheetCl->puesto_contanto}}
+                            {{ substr($timesheetCl->puesto_contanto, 0, 15) }}
                             @else
                                 No hay registro
                             @endif
@@ -195,7 +195,7 @@ analisis brecha
 
                         <td style="width: 30%;">
                             @if ($timesheetCl->correo_contanto)
-                            {{$timesheetCl->correo_contanto}}
+                            {{ substr($timesheetCl->correo_contanto, 0, 25) }}
                             @else
                                 No hay registro
                             @endif
@@ -203,7 +203,7 @@ analisis brecha
 
                         <td style="width: 30%;">
                             @if ($timesheetCl->celular_contanto)
-                            {{$timesheetCl->celular_contanto}}
+                            {{ substr($timesheetCl->celular_contanto, 0, 10) }}
                             @else
                                 No hay registro
                             @endif
