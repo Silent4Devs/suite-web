@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/menu-secciones.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/menu-secciones.css') }}{{config('app.cssVersion')}}">
     <div class="mt-3">
         {{ Breadcrumbs::render('Evaluacion360') }}
     </div>

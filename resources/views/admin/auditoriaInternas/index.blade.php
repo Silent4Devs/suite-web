@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-<link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
 @section('content')
     <div class="mt-3">
         {{ Breadcrumbs::render('admin.auditoria-internas.index') }}

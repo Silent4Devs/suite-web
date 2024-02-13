@@ -319,7 +319,7 @@ table th i {
     background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-.th-año {
+/* .th-año {
     background-color: rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -341,7 +341,7 @@ table th i {
 
 .th-semana:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.35) !important;
-}
+} */
 
 .tabla-fixed th {
     background-color: #788BAC !important;
@@ -351,10 +351,10 @@ table th i {
 .tabla-fixed tr td {
     background-color: #fff !important;
 }
-
+/*
 .tabla-fixed tr:nth-child(even) td {
     background-color: #eee !important;
-}
+} */
 
 .cde-totalh {
     position: relative;
@@ -769,18 +769,19 @@ table.dataTable tbody tr.selected td {
     font-weight: normal;
 }
 
-div .form-control {
+/* forms time ------------------------- */
+div .form-control:not(#form_timesheet .form-control) {
     border-radius: 3px !important;
     background-color: #F8FAFC !important;
 }
 
-.tabla-llenar-horas .select2,
-.select2-container .select2-selection--single {
+.tabla-llenar-horas .select2:not(#form_timesheet .tabla-llenar-horas .select2),
+.select2-container .select2-selection--single:not(#form_timesheet .select2-selection--single) {
     border-radius: 4px !important;
     background-color: #F8FAFC !important;
 }
 
-.form-group label {
+.form-group label:not(#form_timesheet label) {
     color: #818181 !important;
 }
 

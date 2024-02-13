@@ -1,6 +1,6 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('css/letra.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/titulos.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/iconos.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/letra.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/titulos.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/iconos.css') }}{{config('app.cssVersion')}}">
 
 
 <style type="text/css">

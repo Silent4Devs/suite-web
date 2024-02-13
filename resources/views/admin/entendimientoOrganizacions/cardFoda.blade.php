@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/foda.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/foda.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Análisis FODA</h5>

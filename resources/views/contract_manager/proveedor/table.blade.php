@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('css/tablas/tablas.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/tablas/tablas.css') }}{{config('app.cssVersion')}}">
 
 <div class="col s12 datatable-fix caja_tabla_responsiva" style="margin-top:30px;">
     <table id="proveedores-table">

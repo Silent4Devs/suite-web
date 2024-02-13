@@ -1,5 +1,5 @@
 {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">  --}}
-<link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}{{config('app.cssVersion')}}">
 
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style=" border: none;">
     <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">
@@ -54,7 +54,7 @@
         @endcan
         @can('timesheet_acceder')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.timesheet-inicio') }}"
+                <a href="{{ route('admin.timesheet-create') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'active' : '' }}">
                     <i class="bi bi-calendar3-range letra_blanca iconos_menu"></i>
                     <font class="letra_blanca"> Timesheet </font>

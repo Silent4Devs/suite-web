@@ -2,7 +2,7 @@
 @section('content')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}{{config('app.cssVersion')}}">
     <style>
         ol.breadcrumb {
             margin-bottom: 0px;

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     <style type="text/css">
@@ -30,9 +30,9 @@
             Tareas</font>
     </h5>
 
-    @include('admin.timesheet.complementos.cards')
+    {{-- @include('admin.timesheet.complementos.cards') --}}
     @include('admin.timesheet.complementos.admin-aprob')
-    @include('admin.timesheet.complementos.blue-card-header')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     @livewire('timesheet.reportes-proyemp')
 @endsection

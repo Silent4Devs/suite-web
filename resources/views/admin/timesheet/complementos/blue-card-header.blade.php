@@ -11,7 +11,7 @@
             <i class="material-symbols-outlined">edit_calendar</i>
             Horas en borrador
         </a>
-        <a href="{{ route('admin.timesheet') }}" class="line">
+        <a href="{{ route('admin.timesheet-mis-registros') }}" class="line">
             <i class="material-symbols-outlined">calendar_clock</i>
             Mis registros
         </a>

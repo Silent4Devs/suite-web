@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
 
 <style type="text/css">
     .caja_botones_menu {
@@ -214,67 +214,79 @@
     <div class="mt-5">
         <div class="card-body">
             @include('partials.flashMessages')
-            @if (
-                Auth::user()->can('mis_cursos_acceder'))
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
-                    aria-labelledby="nav-contexto-tab">
-                    <ul class="mt-4">
+            @if (Auth::user()->can('mis_cursos_acceder'))
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
+                        aria-labelledby="nav-contexto-tab">
+                        <ul class="mt-4">
 
-                        @can('mi_perfil_modulo_solicitud_ausencia')
-                            <li>
-                                <a href="{{ asset('admin/solicitud-vacaciones') }}" class="btn_reporte">
-                                    <div>
-                                    <i class="bi bi-sun"></i><span>Vacaciones</span>
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mi_perfil_modulo_solicitud_ausencia')
-                            <li>
-                                <a href="{{ asset('admin/solicitud-dayoff') }}" class="btn_reporte">
-                                    <i class="bi bi-bicycle"></i> <br><br><span style="position: relative; right: 1.2rem;">Day Off´s</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mi_perfil_modulo_solicitud_ausencia')
-                            <li>
-                                <a href="{{ asset('admin/solicitud-permiso-goce-sueldo') }}" class="btn_reporte">
-                                    <i class="bi bi-coin"></i><span>Permisos</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mi_perfil_modulo_solicitud_ausencia')
-                            <li>
-                                <a href="{{ asset('admin/envio-documentos') }}" class="btn_reporte">
-                                    <i class="bi bi-send"></i><span>Mensajería</span>
-                                  </a>
-                            </li>
-                        @endcan
-                        {{-- @php
-                        if ($solicitudes_pendientes == 0) {
-                            $mostrar_solicitudes = false;
-                        } else {
-                            $mostrar_solicitudes = true;
-                        }
-                    @endphp
-                    @can('modulo_aprobacion_ausencia')
-                        <div x-data="{ open: @js($mostrar_solicitudes) }">
-                            <a href="{{ asset('admin/solicitud-vacaciones/menu') }}" class="btn_reporte"
-                                style="position: relative; overflow: inherit !important">
-                                <i class="bi bi-check-circle"></i><br>
-                                Aprobaciones
-                                <div id="circulo" style="display:inline-block;position:absolute; top:-60px; right:-13px;"
-                                    class="offset-1 mt-5" x-show="open">
-                                    <p> {{ $solicitudes_pendientes }}</p>
-                                </div>
-                            </a>
-                        @endcan --}}
+                            @can('mi_perfil_modulo_solicitud_ausencia')
+                                <li>
+                                    <a href="{{ asset('admin/solicitud-vacaciones') }}" class="btn_reporte">
+                                        <div>
+                                            <i class="bi bi-sun"></i><span>Vacaciones</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('mi_perfil_modulo_solicitud_ausencia')
+                                <li>
+                                    <a href="{{ asset('admin/solicitud-dayoff') }}" class="btn_reporte">
+                                        <i class="bi bi-bicycle"></i> <br><br><span
+                                            style="position: relative; right: 1.2rem;">Day Off´s</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('mi_perfil_modulo_solicitud_ausencia')
+                                <li>
+                                    <a href="{{ asset('admin/solicitud-permiso-goce-sueldo') }}" class="btn_reporte">
+                                        <i class="bi bi-coin"></i><span>Permisos</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            {{-- @can('mi_perfil_modulo_solicitud_ausencia')
+                                <li>
+                                    <a href="{{ asset('admin/envio-documentos') }}" class="btn_reporte">
+                                        <i class="bi bi-send"></i><span>Mensajería</span>
+                                    </a>
+                                </li>
+                            @endcan --}}
+                            @php
+                                if ($solicitudes_pendientes == 0) {
+                                    $mostrar_solicitudes = false;
+                                } else {
+                                    $mostrar_solicitudes = true;
+                                }
+                            @endphp
+                            @can('modulo_aprobacion_ausencia')
+                                {{-- <div x-data="{ open: @js($mostrar_solicitudes) }">
+                                    <a href="{{ asset('admin/solicitud-vacaciones/menu') }}" class="btn_reporte"
+                                        style="position: relative; overflow: inherit !important">
+                                        <i class="bi bi-check-circle"></i><br>
+                                        Aprobaciones
+                                        <div id="circulo"
+                                            style="display:inline-block;position:absolute; top:-60px; right:-13px;"
+                                            class="offset-1 mt-5" x-show="open">
+                                            <p> {{ $solicitudes_pendientes }}</p>
+                                        </div>
+                                    </a>
+                                </div> --}}
 
-                        
-                    </ul>
+                                <li>
+                                    <a href="{{ asset('admin/solicitud-vacaciones/menu') }}" class="btn_reporte"
+                                        x-data="{ open: @js($mostrar_solicitudes) }">
+                                        <i class="bi bi-send"></i><span>Aprobaciones</span>
+                                        <div id="circulo"
+                                            style="display:inline-block;position:absolute; top:-60px; right:-13px;"
+                                            class="offset-1 mt-5" x-show="open">
+                                            <p> {{ $solicitudes_pendientes }}</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </div>
                 </div>
-            </div>
             @endif
         </div>
     </div>

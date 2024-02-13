@@ -317,7 +317,7 @@ header {
 .btn-cancelar,
 .btn_cancelar {
     padding: 12px 25px !important;
-    border-radius: 12px !important;
+    border-radius: 8px !important;
     cursor: pointer;
 }
 

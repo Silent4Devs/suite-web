@@ -127,8 +127,13 @@ class Area extends Model implements Auditable
     public function children()
     {
         return $this->hasMany(self::class, 'id_reporta', 'id')
-            ->select('id', 'name', 'foto', 'puesto_id', 'genero')
-            ->with('children', 'supervisor', 'grupo', 'lider'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+            // ->select('id', 'name', 'foto', 'puesto_id', 'genero', 'supervisor_id')
+            ->with([
+                'children',
+                'supervisor',
+                'lider',
+            ])
+            ->with('grupo');
     }
 
     public function concientizacion_sgis()

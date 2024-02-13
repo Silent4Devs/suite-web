@@ -74,8 +74,8 @@
                                 <td>
                                     <font class="d-mobile mt-1" style="font-weight: bold;">Tarea: </font>
                                     <select id="select_tareas{{ $i }}" data-contador="{{ $i }}"
-                                        name="timesheet[{{ $i }}][tarea]" class="select_tareas"
-                                        class="select2" disabled>
+                                        name="timesheet[{{ $i }}][tarea]" class="select_tareas select2"
+                                        disabled>
                                         <option selected disabled>Seleccione tarea</option>
                                     </select>
                                     <small class="timesheet_{{ $i }}_tarea errores text-danger"></small>
@@ -149,8 +149,9 @@
                                         {{--  <div class="btn btn_clear_tr" data-tr="tr_time_{{ $i }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i> <small class="text-eliminar-actividad-mobile" style="margin-left: 10px;">Eliminar actividad</small></div> --}}
                                     @endif
                                     @if ($i > 1)
-                                        <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}" wire:click="removerFila"
-                                            style="color:#006DDB; font-size:20px;" title="Eliminar fila">
+                                        <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}"
+                                            wire:click="removerFila" style="color:#006DDB; font-size:20px;"
+                                            title="Eliminar fila">
                                             <i class="fa-regular fa-trash-can"></i> <small
                                                 class="text-eliminar-actividad-mobile"
                                                 style="margin-left: 10px;">Eliminar
@@ -358,7 +359,7 @@
                                 'Timesheet Registrado',
                                 'success'
                             ).then(() => {
-                                window.location.href = '{{ route('admin.timesheet-inicio') }}';
+                                window.location.href = '{{ route('admin.timesheet-create') }}';
                             });
                         } else {
                             if (response.status == 520) {
@@ -368,7 +369,7 @@
                                     'success'
                                 ).then(() => {
                                     window.location.href =
-                                        '{{ route('admin.timesheet-inicio') }}';
+                                        '{{ route('admin.timesheet-create') }}';
                                 });
                             } else {
                                 toastr.error(

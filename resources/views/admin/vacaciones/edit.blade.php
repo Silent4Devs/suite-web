@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Editar: Lineamiento</h5>

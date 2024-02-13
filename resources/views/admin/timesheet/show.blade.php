@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
     @php
         use App\Models\Organizacion;
     @endphp
@@ -10,7 +10,13 @@
 
     @include('admin.timesheet.complementos.cards')
     <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">
-            {!! $timesheet->semana !!} | <font style="font-weight:lighter;">{{ $timesheet->empleado->name }}</font>
+            @if (isset($timesheet->semana))
+                {!! $timesheet->semana !!} |
+            @endif | <font style="font-weight:lighter;">
+                @if (isset($timesheet->empleado->name))
+                    {{ $timesheet->empleado->name }}
+                @endif
+            </font>
     </h5>
 
     <div class="card card-body">
@@ -196,7 +202,7 @@
             @if (asset('admin/timesheet/aprobaciones') ==
                     redirect()->getUrlGenerator()->previous())
                 <div class="col-12 d-flex justify-content-between">
-                    <a href="{{ route('admin.timesheet-inicio') }}" class="btn_cancelar">Regresar</a>
+                    <a href="{{ route('admin.timesheet-create') }}" class="btn_cancelar">Regresar</a>
                     <div class="">
                         <button title="Rechazar" class="btn btn-info" style="background-color:#F05353; border: none;"
                             data-toggle="modal" data-target="#modal_rechazar_{{ $timesheet->id }}">

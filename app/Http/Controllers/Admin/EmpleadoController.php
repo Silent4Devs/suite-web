@@ -929,9 +929,9 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find($id);
-        $empleados = Empleado::get();
+        $empleados = Empleado::getaltaAll();
         $ceo_exists = Empleado::getCeoExists();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $area = null;
         if ($empleado && $empleado->area_id !== null) {
             $area = $areas->find($empleado->area_id);
