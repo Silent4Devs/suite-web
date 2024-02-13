@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     // Realizar git pull
-                    sh "echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh -tt $SSH_USER@$SERVER_IP \"sudo -S <<< '$SSH_PASSWORD' sh -c 'cd /var/contenedor/suite-web && sudo git pull'\""
+                    sh "echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh -tt $SSH_USER@$SERVER_IP \"sudo -S <<< '$SSH_PASSWORD' sh -c 'cd /var/contenedor/suite-web && sudo git pull && sudo git config --global --add safe.directory /var/contenedor/suite-web'\""
                 }
             }
         }
