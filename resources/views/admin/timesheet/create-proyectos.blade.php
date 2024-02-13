@@ -16,7 +16,7 @@
             @csrf
             <div class="row">
                 <div class="form-group col-md-2 anima-focus">
-                    <input type="text" id="identificador_proyect" placeholder="" name="identificador" class="form-control" maxlength="254" required>
+                    <input type="text" id="identificador_proyect" placeholder=""  title="Por favor, no incluyas comas en el nombre de la tarea." name="identificador" pattern="[^\.,]*" class="form-control" maxlength="254" required>
                     {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('identificador'))
                         <div class="invalid-feedback">

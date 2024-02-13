@@ -101,7 +101,14 @@
                     <tbody>
                         @foreach ($clientes as $cliente)
                             <tr>
-                                <td>{{ $cliente->identificador }}</td>
+                            <td>
+                                @if ($cliente->identificador)
+                                    {{$cliente->identificador}}
+                                @else
+                                    No hay registro
+                                @endif
+                            
+                            </td>
                                 <td>{{ $cliente->razon_social }}</td>
                                 <td>{{ $cliente->nombre }}</td>
                                 <td>{{ $cliente->rfc }}</td>
