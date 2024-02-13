@@ -23,7 +23,7 @@ pipeline {
                     sh "echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP 'git config --global --add safe.directory /var/contenedor/suite-web'"
 
                     // Realizar git pull
-                    sh "echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP 'cd /var/contenedor/suite-web && git pull'"
+                    sh "echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP 'cd /var/contenedor/suite-web && sudo git pull'"
                 }
             }
         }
