@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('parametro');
             $table->float('valor');
             $table->string('color');
+            $table->longText('descripcion');
 
             $table->foreign('catalogo_rangos_id')->references('id')->on('catalogo_rangos_objetivos')->onDelete('cascade');
             $table->timestamps();

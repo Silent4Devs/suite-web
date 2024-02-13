@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('catalogo_rangos_objetivos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_catalogo');
+            $table->longText('descripcion');
             $table->timestamps();
         });
     }

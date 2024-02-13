@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\RH;
 
+use App\Http\Controllers\Controller;
 use App\Models\CatalogoRangosObjetivos;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,7 @@ class CatalogoRangosObjetivosController extends Controller
     public function create()
     {
         //
+        return view('admin.recursos-humanos.evaluacion-360.objetivos.rangos.create');
     }
 
     /**
@@ -42,9 +44,10 @@ class CatalogoRangosObjetivosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CatalogoRangosObjetivos $catalogoRangosObjetivos)
+    public function edit($cat_id)
     {
         //
+        return view('admin.recursos-humanos.evaluacion-360.objetivos.rangos.edit', compact('cat_id'));
     }
 
     /**
