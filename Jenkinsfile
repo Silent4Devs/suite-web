@@ -1,41 +1,21 @@
 pipeline {
     agent any
+
     stages {
-        stage('Declarative: Checkout SCM') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Install') {
-            steps {
-                git branch: 'develop', url: 'https://github.com/Silent4Devs/suite-web.git'
-            }
-        }
-
-        stage('Build') {
+        stage('Merge Branch') {
             steps {
                 script {
-                    try {
-                        sh 'docker-compose exec php cp .env.example .env'
-                        sh 'docker-compose exec php composer install --ignore-platform-reqs'
-                        sh 'docker-compose exec php php artisan key:generate'
-                        sh 'docker-compose exec php php artisan migrate'
-                        sh 'docker-compose exec php chmod 777 -R storage'
-                        sh 'docker-compose exec php php artisan optimize:clear'
-                    } catch (Exception e) {
-                        echo 'Exception occurred: ' + e.toString()
-                    }
-                }
-            }
-        }
+                    // Clonar el repositorio utilizando SSH
+                    git url: 'git@github.com:Silent4Devs/suite-web.git'
 
-        stage('Deploy via SSH') {
-            steps {
-                script {
-                    sshagent(['/root/.ssh/id_rsa.pub']) {
-                        sh 'scp -r $WORKSPACE/* desarrollo@192.168.9.78:/var/contenedor/suite-web'
-                    }
+                    // Checkout a la rama de staging
+                    checkout([$class: 'GitSCM', branches: [[name: 'stagging']], userRemoteConfigs: [[url: 'git@github.com:Silent4Devs/suite-web.git']]])
+
+                    // Merge de la rama develop a la rama de staging
+                    sh 'git merge develop'
+
+                    // Push de los cambios a la rama de staging
+                    sh 'git push origin stagging'
                 }
             }
         }
