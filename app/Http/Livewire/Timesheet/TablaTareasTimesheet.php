@@ -92,6 +92,11 @@ class TablaTareasTimesheet extends Component
             $proyecto_procesado = $this->proyecto_seleccionado->id;
         }
 
+        if (empty($this->tarea_name)) {
+
+            return view('livewire.timesheet.tabla-tareas-timesheet')->with('error', 'Tarea nula. Intentelo de nuevo.');
+        }
+
         $nueva_tarea = TimesheetTarea::create([
             'tarea' => $this->tarea_name,
             'proyecto_id' => $proyecto_procesado,
