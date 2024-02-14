@@ -3,6 +3,7 @@
         overflow-x: scroll;
         display: flex;
         height: auto;
+        justify-content: center;
     }
 
     /* width */
@@ -33,7 +34,7 @@
 
     #kanban ul {
         list-style: none;
-        margin-right: 10px;
+        margin-right: 15px;
         background-color: #ebebeb;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -74,7 +75,7 @@
 
     .scroll-li {
         padding: 5px 2px;
-        max-height: 400px;
+        max-height: 450px;
         overflow-y: auto;
         height: auto;
         width: 100%;
@@ -133,23 +134,29 @@
     }
 
     #kanban .estatus_select {
-        /* position: absolute; */
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0) !important;
-        outline: none !important;
-        border: none !important;
+        padding: 10px;
+        outline: none;
+        border: none;
         color: #fff;
-        border-radius: 50px;
-        text-align-last: center;
-        -ms-text-align-last: center;
-        -moz-text-align-last: center;
+        text-align: center;
+    }
+
+    /* Estilo para el foco */
+    #kanban .estatus_select:focus {
+        box-shadow: 0 0 5px #fff;
+        /* Agrega un suave resplandor al enfocar */
+    }
+
+    /* Estilo para cuando se pasa el ratón */
+    #kanban .estatus_select:hover {
+        background-color: #555;
+        /* Oscurece un poco el color de fondo al pasar el ratón */
+        cursor: pointer;
+        /* Cambia el cursor al pasar el ratón */
     }
 
     #kanban .td_estatus_select {
-        border-radius: 50px;
+        border-radius: 10px;
         overflow: hidden;
     }
 
@@ -270,7 +277,8 @@
     }
 
     .assigned-to {
-        display: flexbox;
+        display: flex;
+        flex-wrap: nowrap;
         align-items: center;
         margin-bottom: 15px;
     }
@@ -373,6 +381,12 @@
         font-size: 18px;
         color: #555;
     }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 10px;
+    }
 </style>
 
 <div class="card" style="box-shadow: none; !important">
@@ -469,8 +483,8 @@
                 <div class="status-text">Asignados</div>
                 <div class="assigned-to">
                     ${imagenes}
+                    <button class="add-person-button"><i class="fas fa-plus"></i></button>
                 </div>
-                <button class="add-person-button"><i class="fas fa-plus"></i></button>
                 <div class="status">
                     <div class="status-text">Status:</div>
                     <div class="${actividad.status} td_estatus_select">
