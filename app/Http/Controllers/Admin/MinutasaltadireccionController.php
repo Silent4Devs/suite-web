@@ -264,69 +264,65 @@ class MinutasaltadireccionController extends Controller
                 ],
             ];
             $actividades = json_decode($request->actividades);
-            // dd($actividades);
+
             foreach ($actividades as $actividad) {
-                // if (isset($actividad[5])) {
-                //     dd($actividad);
-                // }
                 $asignados = [];
-                // dd($actividad, $actividades);
+                $tmp_id = null;
+                $dur = null;
+                $desc = null;
                 if ($edit) {
-                    if (isset($actividad[5])) {
-                        // dd('1');
+                    if (isset($actividad[5]->participantes_id)) {
                         if (gettype($actividad[5]->participantes_id) == 'string') {
-                            dd('3');
                             if (str_contains($actividad[5]->participantes_id, ',')) {
-                                dd('5');
+                                $tmp_id = $actividad[5]->id;
+                                $dur = $actividad[5]->duration;
+                                $desc = $actividad[4];
                                 $asignados = explode(',', $actividad[5]->participantes_id);
                             } else {
-                                dd('6');
+                                $tmp_id = $actividad[5]->id;
+                                $dur = $actividad[5]->duration;
+                                $desc = $actividad[4];
                                 array_push($asignados, $actividad[5]->participantes_id);
                             }
                         } else {
-                            // dd('4');
-                            // dump($asignados, $actividad[5]->id);
+                            $tmp_id = $actividad[5]->id;
+                            $dur = $actividad[5]->duration;
+                            $desc = $actividad[4];
                             $asignados = $actividad[5]->participantes_id;
                         }
-                        // dump($actividad[5]->id);
-                    }
-                    // else {
-                    //     if (!isset($actividad[5]->id)) {
-                    //         $planes_minuta = Minutasaltadireccion::with(
-                    //             'planes'
-                    //         )
-                    //             ->find($minuta->id);
-                    //         $actividades = array_filter($planes_minuta->planes->first()->tasks, function ($actividad) {
-                    //             return intval($actividad->level) > 0;
-                    //         });
-                    //         // dd($actividades);
-                    //         // dump($actividad[5]->id);
-                    //         foreach ($actividades as $act) {
-                    //             foreach ($act->assigs as $as) {
-                    //                 if ($act->name == $actividad[0]) {
-                    //                     $asignados[] = $as->resourceId;
-                    //                     $as = (object)['id' => $as->id];  // Replace with your actual value
-                    //                     $act = (object)['duration' => $act->duration];  // Replace with your actual value
+                    } else {
+                        // Si funciona si no se agregan mas actividades
+                        if (!isset($actividad[5]->id)) {
+                            $planes_minuta = Minutasaltadireccion::with(
+                                'planes'
+                            )
+                                ->find($minuta->id);
+                            $activ = array_filter($planes_minuta->planes->first()->tasks, function ($actividad) {
+                                return intval($actividad->level) > 0;
+                            });
+                            foreach ($activ as $act) {
+                                foreach ($act->assigs as $as) {
+                                    if ($act->name == $actividad[0]) {
+                                        $asignados[] = $as->resourceId;
 
-                    //                     $actividad[5] = (object)[
-                    //                         'id' => $as->id,
-                    //                         'duration' => $act->duration,
-                    //                     ];
-                    //                     // dd($actividad[5], $actividad[5]->id);
-                    //                 }
-                    //             }
-                    //         }
-                    //     }
-                    //     // dump($actividad[5]->id, 'pasa por aqui');
-                    // }
+                                        $tmp_id = $as->id;
+                                        $dur = $act->duration;
+                                        $desc = $actividad[4];
+                                    }
+                                }
+                            }
+                        }
+                    }
                 } else {
+                    $desc = $actividad[4];
+                    $tmp_id = $actividad[5]->id;
+                    $dur = $actividad[5]->duration;
                     $asignados = $actividad[5]->participantes_id;
                 }
-                // dump('antes assigs', $actividad[5]->id);
+
                 $assigs = [];
                 foreach ($asignados as $asignado) {
                     $id = intval($asignado);
-                    // $empleado = Empleado::find($id);
                     $assigs[] = [
                         'id' => 'tmp_' . time() . '_' . $id,
                         'effort' => '0',
@@ -334,35 +330,28 @@ class MinutasaltadireccionController extends Controller
                         'resourceId' => $id,
                     ];
                 }
-                // dump('antes try', $actividad[5]->id);
-                try {
-                    //code...
-                    dd($asignado, $actividad[5]);
-                    $tasks[] = [
-                        'id' => $actividad[5]->id,
-                        'end' => strtotime($actividad[2]) * 1000,
-                        'name' => $actividad[0],
-                        'level' => 1,
-                        'start' => strtotime($actividad[1]) * 1000,
-                        'canAdd' => true,
-                        'status' => 'STATUS_ACTIVE',
-                        'canWrite' => true,
-                        'duration' => $actividad[5]->duration,
-                        'progress' => 0,
-                        'canDelete' => true,
-                        'collapsed' => false,
-                        'relevance' => '0',
-                        'canAddIssue' => true,
-                        'description' => $actividad[4],
-                        'endIsMilestone' => false,
-                        'startIsMilestone' => false,
-                        'progressByWorklog' => false,
-                        'assigs' => $assigs,
-                    ];
-                } catch (\Throwable $th) {
-                    //throw $th;
-                    dd($th, $actividad, $request->actividades);
-                }
+
+                $tasks[] = [
+                    'id' => $tmp_id,
+                    'end' => strtotime($actividad[2]) * 1000,
+                    'name' => $actividad[0],
+                    'level' => 1,
+                    'start' => strtotime($actividad[1]) * 1000,
+                    'canAdd' => true,
+                    'status' => 'STATUS_ACTIVE',
+                    'canWrite' => true,
+                    'duration' => $dur,
+                    'progress' => 0,
+                    'canDelete' => true,
+                    'collapsed' => false,
+                    'relevance' => '0',
+                    'canAddIssue' => true,
+                    'description' => $desc,
+                    'endIsMilestone' => false,
+                    'startIsMilestone' => false,
+                    'progressByWorklog' => false,
+                    'assigs' => $assigs,
+                ];
             }
             if ($edit) {
                 $planEdit->update([
