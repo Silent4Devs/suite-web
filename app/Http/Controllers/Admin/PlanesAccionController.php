@@ -11,6 +11,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class PlanesAccionController extends Controller
 {
@@ -317,10 +318,16 @@ class PlanesAccionController extends Controller
 
     public function loadProject($plan)
     {
-      
-        $implementacion = PlanImplementacion::find($plan);
-        $tasks = $implementacion->tasks;
-        foreach ($implementacion->tasks as $task) {
+        //$implementacion = PlanImplementacion::find($plan);
+        //$users = DB::table('users')->select('name', 'email as user_email')->get();
+        $implementacion = DB::table('plan_implementacions')
+            ->select('*')
+            ->where('id', $plan)
+            ->first();
+
+
+        $tasks = json_decode($implementacion->tasks);
+        foreach (json_decode($implementacion->tasks) as $task) {
             $task->status = $task->status ?? 'STATUS_UNDEFINED';
             $task->end = intval($task->end);
             $task->start = intval($task->start);
@@ -336,9 +343,65 @@ class PlanesAccionController extends Controller
             $task->startIsMilestone = isset($task->startIsMilestone) ? $task->startIsMilestone === 'true' : false;
             $task->progressByWorklog = isset($task->progressByWorklog) ? $task->progressByWorklog === 'true' : false;
         }
+
+        $elaborador = DB::table('empleados')
+            ->select(
+                'id',
+                'name',
+                'n_registro',
+                'foto',
+                'puesto',
+                'estatus',
+                'telefono_movil',
+                'genero',
+                'n_empleado',
+                'supervisor_id',
+                'area_id',
+                'sede_id',
+                'puesto_id',
+                'perfil_empleado_id',
+                'tipo_contrato_empleados_id',
+                'proyecto_asignado',
+                'entidad_crediticias_id',
+                'semanas_min_timesheet',
+                'vacante_activa'
+            )->get();
+        $roles = DB::table('roles')
+            ->select(
+                'id',
+                'title as name'
+            )->get();
+
+        // $resources = $implementacion->resources;
+        // foreach ($resources->resources as $resource) {
+        //     $resource->name = $resource->name;
+        //     $resource->n_registro = $resource->n_registro;
+        //     $resource->foto = $resource->foto;
+        //     $resource->puesto = $resource->puesto;
+        //     $resource->estatus = $resource->estatus;
+        //     $resource->telefono_movil = $resource->telefono_movil;
+        //     $resource->genero = $resource->genero;
+        //     $resource->n_empleado = $resource->n_empleado;
+        //     $resource->supervisor_id = $resource->supervisor_id;
+        //     $resource->area_id = $resource->area_id;
+        //     $resource->sede_id = $resource->sede_id;
+        //     $resource->puesto_id = $resource->puesto_id;
+        //     $resource->perfil_empleado_id = $resource->perfil_empleado_id;
+        //     $resource->tipo_contrato_empleados_id = $resource->tipo_contrato_empleados_id;
+        //     $resource->proyecto_asignado = $resource->proyecto_asignado;
+        //     $resource->entidad_crediticias_id = $resource->entidad_crediticias_id;
+        //     $resource->semanas_min_timesheet = $resource->semanas_min_timesheet;
+        //     $resource->vacante_activa = $resource->vacante_activa;
+        // }
+
+        $implementacion->resources = $elaborador;
+        $implementacion->roles = $roles;
         $implementacion->tasks = $tasks;
+
+        //return $implementacion;
+
+        //$implementacion = PlanImplementacion::find($plan);
 
         return $implementacion;
     }
-
 }

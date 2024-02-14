@@ -270,7 +270,8 @@
     }
 
     .assigned-to {
-        display: flexbox;
+        display: flex;
+        flex-wrap: nowrap;
         align-items: center;
         margin-bottom: 15px;
     }
