@@ -9,7 +9,8 @@ import time
 tiempo_modulos = 4
 tiempo_carga = 10
 tiempo_espera = 2.5
-element_xpath0 = "//a[contains(.,'Catalogos SG')]"
+element_xpath0 = "//I[@class='bi bi-file-earmark-arrow-up']"
+element_clasificacion = "//A[@href='https://192.168.9.78/admin/auditorias/clasificacion-auditorias'][text()='Clasificación']"
 clasificacion_xpath="//a[contains(.,'Clasificación')]"
 crear_clasificacion_btn_xpath= "//a[contains(.,'Nueva Clasificación')]"
 id_xpath="///input[contains(@type,'number')]"
@@ -51,20 +52,28 @@ try:
 except TimeoutException:
     print("Inicio de sesión fallido")
 
-    #Catalogo SG
-print("Entrando a Catálogo SG...")
+#Entrando a menu hamburguesa
+menu_hambuerguesa=driver.find_element(By.XPATH,"//BUTTON[@class='btn-menu-header']")
+menu_hambuerguesa.click()
+time.sleep(tiempo_modulos)
+
+#Ajustes SG
+print("Entrando a AjustesSG...")
 element = driver.find_element(By.XPATH, element_xpath0)
 driver.execute_script("arguments[0].scrollIntoView(true);", element)
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_xpath0)))
-print("Dando clic en Catálogo SG...")
+print("Dando clic en AjustesSG...")
 element.click()
 
-#Clasificación
-print("Entrando a Clasificación...")
-clasificacion=driver.find_element(By.XPATH, clasificacion_xpath)
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, clasificacion_xpath)))
-print("Dando clic en Clasificación...")
-clasificacion.click()
+
+#Sub modulo Clasificacion
+print("Entrando a Sub modulo Clasificacion...")
+element = driver.find_element(By.XPATH, element_clasificacion)
+driver.execute_script("arguments[0].scrollIntoView(true);", element)
+WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_clasificacion)))
+print("Dando clic en Sub modulo Clasificacion...")
+element.click()
+
 
 #Nueva clasificación
 print("Dando clic al botón Nueva clasificación...")

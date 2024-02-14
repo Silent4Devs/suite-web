@@ -8,10 +8,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
 import time
-tiempo_espera2=15
+tiempo_nespera=10
 tiempo_modulos=5
 tiempo_carga=10
 tiempo_espera=2.5
+
 #driver Firefox
 driver=webdriver.Firefox()
 
@@ -34,27 +35,30 @@ time.sleep(tiempo_modulos)
 
 #Entrar a modulos
 
-modulo=driver.find_element(By.XPATH,"//INPUT[@type='search']").send_keys("minutasaltadireccions")
+menu_hambuerguesa=driver.find_element(By.XPATH,"//BUTTON[@class='btn-menu-header']")
+menu_hambuerguesa.click()
 time.sleep(tiempo_modulos)
-modulo_calendario=driver.find_element(By.XPATH,"//LI[@class='list-group-item text-black']").click()
+
+#Entrar a Submodulo Ajustes SG
+btnAjustesSG=driver.find_element(By.XPATH,"(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[1]").click()
+time.sleep(tiempo_modulos)
+
+#Entrar a Lista de Distribución
+btnlista_de_distribucion=driver.find_element(By.XPATH,"//a[@href='https://192.168.9.78/admin/lista-distribucion' and normalize-space()='Lista de distribución']").click()
+time.sleep(tiempo_modulos)
+
+#Usar boton 3 puntos
+btn3puntos=driver.find_element(By.XPATH,"(//I[@class='fa-solid fa-ellipsis-vertical'])[1]").click()
+time.sleep(tiempo_modulos)
+
+#Usar boton ver
+btnnombre=driver.find_element(By.XPATH,"(//I[@class='fa fa-eye'])[1]").click()
+time.sleep(tiempo_modulos)
+
+#Usar boton regresar
+btnRegresar=driver.find_element(By.XPATH,"//A[@id='btn_cancelar']").click()
+time.sleep(tiempo_modulos)
+  
 
 
-#Entrar a filro #10
-modulo_filtro=driver.find_element(By.XPATH,"//SELECT[@name='datatable-Minutasaltadireccion_length']").click()
-time.sleep(tiempo_carga)
-modulo_filtro=driver.find_element(By.XPATH,"//SELECT[@name='datatable-Minutasaltadireccion_length']").send_keys("10")
-modulo_filtro=driver.find_element(By.XPATH,"//SELECT[@name='datatable-Minutasaltadireccion_length']").click()
-time.sleep(tiempo_carga)
 
-
-#Entrar a repositorio
-btnentrar_repositorio=driver.find_element(By.XPATH,"(//I[@class='fa-solid fa-ellipsis-vertical'])[7]").click()
-time.sleep(tiempo_carga)
-
-btn_ver=driver.find_element(By.XPATH,"(//I[@class='fa fa-eye'])[7]").click()
-
-time.sleep(tiempo_carga)
-
-#Usar boton imprimir
-btnimprimir=driver.find_element(By.XPATH,"//BUTTON[@class='boton-transparentev2']").click()
-time.sleep(tiempo_carga)
