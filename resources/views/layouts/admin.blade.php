@@ -1383,8 +1383,8 @@
             let line = document.querySelector('.nav-tabs:hover .line-active-nav');
 
             line.style.top = offsetTop + 'px';
-            line.style.left = offsetLeft + 8 + 'px';
-            line.style.width = boundLink.width - 16 + 'px';
+            line.style.left = offsetLeft + 25 + 'px';
+            line.style.width = boundLink.width - 50 + 'px';
         });
     </script>
 

@@ -5,7 +5,7 @@
 @section('content')
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
     <div style="display:flex; justify-content:space-between;">
-        <h5 class="titulo_general_funcion">Categorías </h5>
+        <h5 class="titulo_general_funcion">Configuración de Evaluaciones </h5>
     </div>
 
     <div class="purple-info-first">
@@ -42,61 +42,87 @@
     <div class="card">
         <div class="card-body">
             <div class="tab-content" id="nav-tabContent">
+
                 <div class="tab-pane mb-4 fade show active" id="nav-config-obj-1" role="tabpanel"
                     aria-labelledby="nav-config-obj-1">
 
                     <div class="">
-                        <h4>Categorias</h4>
-                        <p>Da de alta los grupos en los que clasificaras los objetivos.</p>
+                        <div class="info-first-config">
+                            <h4 class="title-config">Categorias</h4>
+                            <p>Da de alta los grupos en los que clasificaras los objetivos.</p>
+                        </div>
 
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <input type="text" class="form-control anima-focus">
-                                <label for="">Categoría</label>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <input type="text" class="form-control anima-focus">
-                                <label for="">Categoría</label>
+                        <div class="grid-config-categorias mt-4">
+
+                            <div class="item-config-cat">
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <div class="form-group anima-focus w-100">
+                                        <input type="text" class="form-control anima-focus" placeholder="">
+                                        <label for="">Categoría</label>
+                                    </div>
+                                    <div class="btn-delete-cat">
+                                        <i class="material-symbols-outlined" title="Eliminar" onclick="deleteCategoria()">delete</i>
+                                    </div>
+                                </div>
+                                <div class="form-group anima-focus">
+                                    <textarea name="" id="" class="form-control" placeholder=""></textarea>
+                                    <label for="">Descripción</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <textarea name="" id="" class="form-control"></textarea>
-                                <label for="">Descripción</label>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center mt-4" style="color: #006DDB; gap: 10px; cursor: pointer;" onclick="addCategoria()">
+                                <span class="material-symbols-outlined">add_circle</span>
+                                Agregar Categoría
                             </div>
 
-                            <div class="col-md-6 form-group">
-                                <textarea name="" id="" class="form-control"></textarea>
-                                <label for="">Descripción</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <textarea name="" id="" class="form-control"></textarea>
-                                <label for="">Descripción</label>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <textarea name="" id="" class="form-control"></textarea>
-                                <label for="">Descripción</label>
-                            </div>
+                            <button class="btn btn-primary">
+                                GUARDAR
+                            </button>
                         </div>
                     </div>
 
                 </div>
                 <div class="tab-pane mb-4 fade" id="nav-config-obj-2" role="tabpanel" aria-labelledby="nav-config-obj-2">
-
+                    <div class="info-first-config">
+                        <h4 class="title-config">Escalas de medición</h4>
+                        <p>Define los Valores y Escalas con los que se medirán los objetivos.</p>
+                    </div>
                 </div>
+
                 <div class="tab-pane mb-4 fade" id="nav-config-obj-3" role="tabpanel" aria-labelledby="nav-config-obj-3">
-
+                    <div class="info-first-config">
+                        <h4 class="title-config">Categorias</h4>
+                        <p>Da de alta los grupos en los que clasificaras los objetivos.</p>
+                    </div>
                 </div>
+
                 <div class="tab-pane mb-4 fade" id="nav-config-obj-4" role="tabpanel" aria-labelledby="nav-config-obj-4">
-
+                    <div class="info-first-config">
+                        <h4 class="title-config">Categorias</h4>
+                        <p>Da de alta los grupos en los que clasificaras los objetivos.</p>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
+    <script>
+        function addCategoria() {
+            let item = document.querySelector('.item-config-cat');
+            let newItem = document.createElement('div');
+
+            newItem.classList.add('item-config-cat');
+            newItem.innerHTML += item.innerHTML;
+
+            document.querySelector('.grid-config-categorias').appendChild(newItem);
+        }
+        function deleteCategoria() {
+            document.querySelector('.item-config-cat:hover').remove();
+        }
+    </script>
 @endsection

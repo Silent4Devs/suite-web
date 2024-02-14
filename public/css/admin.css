@@ -991,7 +991,7 @@ table.dataTable tr th {
 
 .line-active-nav {
     width: 0px;
-    height: 2px;
+    height: 1px;
     background-color: #3086AF;
     position: absolute;
     transition: 0.4s;
@@ -1144,7 +1144,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     display: grid !important;
     grid-template-areas: "input";
     position: relative !important;
-    margin-top: 12px;
+    /* margin-top: 12px; */
 }
 
 .anima-focus label,

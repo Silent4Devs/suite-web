@@ -4,7 +4,7 @@
     margin: 0px;
 }
 
-.purple-info-first{
+.purple-info-first {
     background-color: #A271B4;
     color: #fff;
     display: flex;
@@ -14,6 +14,43 @@
     gap: 20px;
 }
 
-.info-purple h3{
+.info-purple h3 {
     font-size: 20px;
+}
+
+.info-first-config {
+    color: #306BA9;
+}
+
+.title-config {
+    font-size: 16px;
+}
+
+.info-first-config p {
+    font-size: 12px;
+}
+
+.grid-config-categorias {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.anima-focus label,
+.anima-focus .form-control {
+    color: #006DDB;
+}
+
+.anima-focus .form-control {
+    border: 1px solid #006DDB;
+}
+
+.item-config-cat i {
+    font-size: 45px;
+    cursor: pointer;
+}
+
+.item-config-cat:first-child .btn-delete-cat {
+    display: none;
 }
