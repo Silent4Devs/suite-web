@@ -122,7 +122,7 @@
                                             <tr>
                                                 <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
                                                     <div>
-                                                   {!! htmlspecialchars_decode($minutas->tema_tratado) !!}
+                                                        {!! strip_tags($minutas->tema_tratado) !!}
                                                     </div>
                                                 </td>
                                             </tr>

@@ -79,7 +79,7 @@ class TablaTareasTimesheet extends Component
 
     public function create()
     {
-        if ($this->area_select == 0) {
+        if ($this->area_select === 0) {
             $area_id = null;
             $todos = true;
         } else {
@@ -90,6 +90,11 @@ class TablaTareasTimesheet extends Component
             $proyecto_procesado = $this->proyecto_id;
         } else {
             $proyecto_procesado = $this->proyecto_seleccionado->id;
+        }
+
+        if (empty($this->tarea_name)) {
+
+            return view('livewire.timesheet.tabla-tareas-timesheet')->with('error', 'Tarea nula. Intentelo de nuevo.');
         }
 
         $nueva_tarea = TimesheetTarea::create([
