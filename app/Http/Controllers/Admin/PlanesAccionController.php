@@ -11,6 +11,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class PlanesAccionController extends Controller
 {
@@ -74,9 +75,9 @@ class PlanesAccionController extends Controller
         ]);
         $tasks = [
             [
-                'id' => 'tmp_'.(strtotime(now())).'_1',
+                'id' => 'tmp_' . (strtotime(now())) . '_1',
                 'end' => strtotime(now()) * 1000,
-                'name' => 'Plan de Accion - '.$request->norma,
+                'name' => 'Plan de Accion - ' . $request->norma,
                 'level' => 0,
                 'start' => strtotime(now()) * 1000,
                 'canAdd' => true,
@@ -95,7 +96,7 @@ class PlanesAccionController extends Controller
                 'assigs' => [],
             ],
             [
-                'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
+                'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
                 'end' => strtotime(now()) * 1000,
                 'name' => $request->norma,
                 'level' => 1,
@@ -136,17 +137,17 @@ class PlanesAccionController extends Controller
         $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de Trabajo Base' : 'Plan de Acción';
         $route = $request->es_plan_trabajo_base != null ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
 
-        return redirect()->route($route)->with('success', $mensaje.' '.$planImplementacion->parent.' creado');
+        return redirect()->route($route)->with('success', $mensaje . ' ' . $planImplementacion->parent . ' creado');
     }
 
     public function crearPlanDeAccion($modelo)
     {
-        if (! count($modelo->planes)) {
+        if (!count($modelo->planes)) {
             $tasks = [
                 [
-                    'id' => 'tmp_'.(strtotime(now())).'_1',
+                    'id' => 'tmp_' . (strtotime(now())) . '_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Plan de Accion - '.$modelo->norma,
+                    'name' => 'Plan de Accion - ' . $modelo->norma,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -165,7 +166,7 @@ class PlanesAccionController extends Controller
                     'assigs' => [],
                 ],
                 [
-                    'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
+                    'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
                     'end' => strtotime(now()) * 1000,
                     'name' => $modelo->norma,
                     'level' => 1,
@@ -197,7 +198,7 @@ class PlanesAccionController extends Controller
             $planImplementacion->changesReasonWhy = false;
             $planImplementacion->selectedRow = 0;
             $planImplementacion->zoom = '3d';
-            $planImplementacion->parent = 'Incidente - '.$modelo->folio;
+            $planImplementacion->parent = 'Incidente - ' . $modelo->folio;
             $planImplementacion->norma = 'ISO 27001';
             $planImplementacion->modulo_origen = 'Incidentes';
             $planImplementacion->objetivo = null;
@@ -285,66 +286,139 @@ class PlanesAccionController extends Controller
 
     public function saveProject(Request $request, $plan)
     {
-        $project = $request->prj;
-        $project = (array) json_decode($project);
-        if (PlanImplementacion::find($plan)) {
-            $tasks = isset($project['tasks']) ? $project['tasks'] : [];
-            $plan_implementacion = PlanImplementacion::find($plan)->update([
+        $project = (array) json_decode($request->prj);
+
+        // Extraer los valores del proyecto con operador de fusión de null
+        $tasks = $project['tasks'] ?? [];
+        $canAdd = $project['canAdd'] ?? true;
+        $canWrite = $project['canWrite'] ?? true;
+        $canWriteOnParent = $project['canWriteOnParent'] ?? null;
+        $changesReasonWhy = $project['changesReasonWhy'] ?? null;
+        $selectedRow = $project['selectedRow'] ?? 0;
+        $zoom = $project['zoom'] ?? '1M';
+
+        // Buscar el plan de implementación
+        $plan_implementacion = PlanImplementacion::find($plan);
+
+        if ($plan_implementacion) {
+            // Actualizar el plan de implementación existente
+            $plan_implementacion->update([
                 'tasks' => $tasks,
-                'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
-                'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
-                'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
-                'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
-                'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
-                'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
+                'canAdd' => $canAdd,
+                'canWrite' => $canWrite,
+                'canWriteOnParent' => $canWriteOnParent,
+                'changesReasonWhy' => $changesReasonWhy,
+                'selectedRow' => $selectedRow,
+                'zoom' => $zoom,
             ]);
-            $plan_implementacion = PlanImplementacion::find($plan);
         } else {
-            $tasks = isset($project['tasks']) ? $project['tasks'] : [];
+            // Crear un nuevo plan de implementación
             $plan_implementacion = PlanImplementacion::create([
                 'tasks' => $tasks,
-                'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
-                'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
-                'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
-                'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
-                'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
-                'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
+                'canAdd' => $canAdd,
+                'canWrite' => $canWrite,
+                'canWriteOnParent' => $canWriteOnParent,
+                'changesReasonWhy' => $changesReasonWhy,
+                'selectedRow' => $selectedRow,
+                'zoom' => $zoom,
             ]);
         }
 
-        return response()->json(['success' => true, 'ultima_modificacion' => Carbon::parse($plan_implementacion->updated_at)->format('d/m/Y g:i:s A')], 200);
+        // Verificar si se encontró un plan de implementación y obtener la fecha de actualización
+        $ultima_modificacion = $plan_implementacion ? Carbon::parse($plan_implementacion->updated_at)->format('d/m/Y g:i:s A') : null;
+
+        // Retornar la respuesta JSON
+        return response()->json(['success' => true, 'ultima_modificacion' => $ultima_modificacion], 200);
+
+        // $project = $request->prj;
+        // $project = (array) json_decode($project);
+        // if (PlanImplementacion::find($plan)) {
+        //     $tasks = isset($project['tasks']) ? $project['tasks'] : [];
+        //     $plan_implementacion = PlanImplementacion::find($plan)->update([
+        //         'tasks' => $tasks,
+        //         'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
+        //         'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
+        //         'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
+        //         'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
+        //         'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
+        //         'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
+        //     ]);
+        //     $plan_implementacion = PlanImplementacion::find($plan);
+        // } else {
+        //     $tasks = isset($project['tasks']) ? $project['tasks'] : [];
+        //     $plan_implementacion = PlanImplementacion::create([
+        //         'tasks' => $tasks,
+        //         'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
+        //         'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
+        //         'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
+        //         'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
+        //         'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
+        //         'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
+        //     ]);
+        // }
+
+        // return response()->json(['success' => true, 'ultima_modificacion' => Carbon::parse($plan_implementacion->updated_at)->format('d/m/Y g:i:s A')], 200);
     }
 
     public function loadProject($plan)
     {
-        $implementacion = PlanImplementacion::find($plan);
-        $tasks = $implementacion->tasks;
-        foreach ($tasks as $task) {
-            $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
+        //$implementacion = PlanImplementacion::find($plan);
+        //$users = DB::table('users')->select('name', 'email as user_email')->get();
+        $implementacion = DB::table('plan_implementacions')
+            ->select('*')
+            ->where('id', $plan)
+            ->first();
+
+
+        $tasks = json_decode($implementacion->tasks);
+        foreach (json_decode($implementacion->tasks) as $task) {
+            $task->status = $task->status ?? 'STATUS_UNDEFINED';
             $task->end = intval($task->end);
             $task->start = intval($task->start);
-            $task->canAdd = $task->canAdd == 'true' ? true : false;
-            $task->canWrite = $task->canWrite == 'true' ? true : false;
+            $task->canAdd = $task->canAdd === 'true';
+            $task->canWrite = $task->canWrite === 'true';
             $task->duration = intval($task->duration);
             $task->progress = intval($task->progress);
-            $task->canDelete = $task->canDelete == 'true' ? true : false;
-            isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
-            isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
-            if (isset($task->canAddIssue)) {
-                $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
-            }
-            if (isset($task->endIsMilestone)) {
-                $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
-            }
-            if (isset($task->startIsMilestone)) {
-                $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
-            }
-            if (isset($task->progressByWorklog)) {
-                $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
-            }
+            $task->canDelete = $task->canDelete === 'true';
+            $task->level = isset($task->level) ? intval($task->level) : 0;
+            $task->collapsed = isset($task->collapsed) ? $task->collapsed === 'true' : false;
+            $task->canAddIssue = isset($task->canAddIssue) ? $task->canAddIssue === 'true' : false;
+            $task->endIsMilestone = isset($task->endIsMilestone) ? $task->endIsMilestone === 'true' : false;
+            $task->startIsMilestone = isset($task->startIsMilestone) ? $task->startIsMilestone === 'true' : false;
+            $task->progressByWorklog = isset($task->progressByWorklog) ? $task->progressByWorklog === 'true' : false;
         }
-        $implementacion->tasks = $tasks;
 
+        $elaborador = DB::table('empleados')
+            ->select(
+                'id',
+                'name',
+                'n_registro',
+                'foto',
+                'puesto',
+                'estatus',
+                'telefono_movil',
+                'genero',
+                'n_empleado',
+                'supervisor_id',
+                'area_id',
+                'sede_id',
+                'puesto_id',
+                'perfil_empleado_id',
+                'tipo_contrato_empleados_id',
+                'proyecto_asignado',
+                'entidad_crediticias_id',
+                'semanas_min_timesheet',
+                'vacante_activa'
+            )->get();
+        $roles = DB::table('roles')
+            ->select(
+                'id',
+                'title as name'
+            )->get();
+
+        $implementacion->resources = $elaborador;
+        $implementacion->roles = $roles;
+        $implementacion->tasks = $tasks;
         return $implementacion;
     }
 }

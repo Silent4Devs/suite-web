@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     <style type="text/css">
@@ -101,7 +101,14 @@
                     <tbody>
                         @foreach ($clientes as $cliente)
                             <tr>
-                                <td>{{ $cliente->identificador }}</td>
+                            <td>
+                                @if ($cliente->identificador)
+                                    {{$cliente->identificador}}
+                                @else
+                                    No hay registro
+                                @endif
+                            
+                            </td>
                                 <td>{{ $cliente->razon_social }}</td>
                                 <td>{{ $cliente->nombre }}</td>
                                 <td>{{ $cliente->rfc }}</td>

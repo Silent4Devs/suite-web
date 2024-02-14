@@ -73,18 +73,18 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="codigo_postal" class="form-control" value="{{ $cliente->codigo_postal }}">
+                    <input type="" name="codigo_postal" class="form-control"  maxlength="255" value="{{ $cliente->codigo_postal }}">
                     {!! Form::label('codigo_postal', 'Código Postal*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input id="phone" name="telefono" pattern="[0-9]+" title="Por favor, introduce solo números"
+                    <input id="phone" name="telefono" pattern="[0-9]+"  maxlength="12" title="Por favor, introduce solo números"
                         value="{{ $cliente->telefono }}" class="form-control" size="20" placeholder="">
                     {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" placeholder="" name="pagina_web" class="form-control"
+                    <input type="" placeholder="" name="pagina_web"  maxlength="255" class="form-control"
                         value="{{ $cliente->pagina_web }}">
                     {!! Form::label('pagina_web', 'Página Web*', ['class' => 'asterisco']) !!}
                 </div>
@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" placeholder="" name="nombre_contacto" class="form-control"
+                    <input type="" placeholder="" name="nombre_contacto"  maxlength="255" class="form-control"
                         value="{{ $cliente->nombre_contacto }}">
                     {!! Form::label(
                         'nombre_contacto',
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" placeholder="" name="puesto_contacto" class="form-control"
+                    <input type="" placeholder="" name="puesto_contacto"  maxlength="255" class="form-control"
                         value="{{ $cliente->puesto_contacto }}">
                     {!! Form::label('puesto_contacto', 'Puesto*', ['class' => 'asterisco']) !!}
                 </div>
@@ -121,7 +121,7 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input pattern="[0-9]+" title="Por favor, introduce solo números" name="celular_contacto"
+                    <input pattern="[0-9]+" title="Por favor, introduce solo números"  maxlength="10" name="celular_contacto"
                         placeholder="" class="form-control" value="{{ $cliente->celular_contacto }}">
                     {!! Form::label('celular_contacto', 'Celular*', ['class' => 'asterisco']) !!}
                 </div>

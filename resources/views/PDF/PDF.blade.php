@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="pdf-template/style.css" media="all"/>
+    <link rel="stylesheet" href="pdf-template/style.css{{config('app.cssVersion')}}" media="all"/>
     <title>Partes interesadas</title>
 </head>
 <body>

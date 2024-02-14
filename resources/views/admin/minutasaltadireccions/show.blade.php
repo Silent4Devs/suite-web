@@ -28,7 +28,13 @@
                                     style="border-radius;
                                     padding-left: 0px;padding-right: 0px;">
                                     <div class="col-3" style="border-left: 25px solid #2395AA">
-                                        <img src="{{ asset('silent.png') }}" class="mt-2 img-fluid"
+                                        @php
+                                        use App\Models\Organizacion;
+                                        $organizacion = Organizacion::first();
+                                        $logotipo = $organizacion->logotipo;
+                                        $empresa = $organizacion->empresa;
+                                        @endphp
+                                        <img src="{{ asset($logotipo) }}" class="mt-2 img-fluid"
                                             style=" width:70%; position: relative; left: -.1rem; top: 1.4rem;">
                                     </div>
                                     <div class="col-5 p-2 mt-3">
@@ -116,38 +122,9 @@
                                             <tr>
                                                 <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
                                                     <div>
-                                                   {!! htmlspecialchars_decode($minutas->tema_tratado) !!}
+                                                        {!! strip_tags($minutas->tema_tratado) !!}
                                                     </div>
                                                 </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <br>
-                                    <br>
-                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-                                        <thead>
-                                            <tr>
-                                                <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
-                                                    colspan="5">
-                                                    <center>Acuerdos y Compromisos</center>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="border: 1px solid #dddddd;">Actividades</td>
-                                                <td style="border: 1px solid #dddddd;">Responsable</td>
-                                                <td style="border: 1px solid #dddddd;">Fecha compromiso</td>
-                                                <td style="border: 1px solid #dddddd;">Estatus</td>
-                                                <td style="border: 1px solid #dddddd;">Comentarios</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="border: 1px solid #dddddd;">.</td>
-                                                <td style="border: 1px solid #dddddd;">{{ $responsable->name }}</td>
-                                                <td style="border: 1px solid #dddddd;">{{ $minutas->fechareunion }}
-                                                </td>
-                                                <td style="border: 1px solid #dddddd;">{{ $revision->estatus }}</td>
-                                                <td style="border: 1px solid #dddddd;">{{ $revision->cometarios }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

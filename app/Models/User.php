@@ -74,7 +74,16 @@ class User extends Authenticatable implements Auditable
     public static function getAll()
     {
         return Cache::remember('Users:users_all', 3600 * 13, function () {
-            return self::select('name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')->get();
+            return self::select('id', 'name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')->get();
+        });
+    }
+
+    public static function getAllWithEmpleado()
+    {
+        return Cache::remember('Users:users_with_empleado', 3600 * 13, function () {
+            return self::select('id', 'name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')
+                ->with('empleado')
+                ->get();
         });
     }
 
