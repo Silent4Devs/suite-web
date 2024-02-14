@@ -39,7 +39,7 @@
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id"
+                        <select id="proyectos_select" class="mr-4 form-control" wire:model.lazy="proyecto_id"
                             required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
@@ -63,7 +63,7 @@
                 </div>
                 <div class="form-group w-100 mr-4">
                     <label> Tarea Nueva</label>
-                    <input class="form-control w-100 mr-4" maxlength="255" placeholder="Nombre de la tarea" id="tarea_name" required>
+                    <input class="form-control w-100 mr-4" maxlength="255" title="Por favor, no incluyas comas en el nombre de la tarea." placeholder="Nombre de la tarea" id="tarea_name" required pattern="[^\.,]*">
                 </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
                     <button class="btn btn-primary" style="position: absolute; bottom: 0;">
@@ -77,7 +77,7 @@
         @if ($origen == 'tareas')
             <div class="col-6 form-group">
                 <label>Filtrar por proyecto</label>
-                <select wire:ignore id="proyecto_filtro" class="form-control">
+                <select  id="proyecto_filtro" class="form-control">
                     <option value=""></option>
                     @foreach ($proyectos as $proyecto)
                         <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
