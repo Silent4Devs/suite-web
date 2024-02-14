@@ -6,6 +6,8 @@ use App\Mail\TestMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Benchmark;
 use Illuminate\Support\Facades\Mail;
+use App\Models\PlanImplementacion;
+use Illuminate\Support\Facades\DB;
 
 class QueueCorreo extends Controller
 {
@@ -14,11 +16,13 @@ class QueueCorreo extends Controller
      */
     public function index()
     {
+        //Benchmark::dd(fn () => DB::query("plan_implementacions")->select("id","tasks")->where("id",15)->toArray());//find(15));
+        Benchmark::dd(fn () => PlanImplementacion::find(15));
         // Send welcome email
-        for ($i = 0; $i < 1; $i++) {
-            //Benchmark::dd(fn () => Mail::to('luis.vargas@silent4business.com')->queue(new TestMail()));
-            Mail::to('luis.vargas@silent4business.com')->queue(new TestMail());
-        }
+        // for ($i = 0; $i < 1; $i++) {
+        //     //Benchmark::dd(fn () => Mail::to('luis.vargas@silent4business.com')->queue(new TestMail()));
+        //     Mail::to('luis.vargas@silent4business.com')->queue(new TestMail());
+        // }
         // Now, $data contains all the values from the Redis table
         dd('al ready sent');
     }

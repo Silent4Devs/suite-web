@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }*/
 
 
         #workSpace {
@@ -280,10 +280,11 @@
         }
     </script>
     <script>
-         $(document).ready(function() {
+        $(document).ready(function() {
             initail();
-         });
-         var ge;
+        });
+        var ge;
+
         function initail(taskId, callback) {
 
             //this is a simulation: load data from the local storage if you have already played with the demo or a textarea with starting demo data
@@ -295,6 +296,61 @@
                 },
                 url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
                 success: function(response) {
+                    // // Analizar la cadena JSON para convertirla en un objeto JavaScript
+                    // let tasks = JSON.parse(response.tasks);
+
+                    // // Modificar cada tarea utilizando map
+                    // tasks = tasks.map(task => {
+                    //     // Establecer el valor predeterminado de "status" como 'STATUS_UNDEFINED' si no está definido
+                    //     task.status = task.status ?? 'STATUS_UNDEFINED';
+
+                    //     // Convertir "end" a entero
+                    //     task.end = parseInt(task.end);
+
+                    //     // Convertir "start" a entero
+                    //     task.start = parseInt(task.start);
+
+                    //     // Convertir "canAdd" a un valor booleano
+                    //     task.canAdd = task.canAdd === 'true';
+
+                    //     // Convertir "canWrite" a un valor booleano
+                    //     task.canWrite = task.canWrite === 'true';
+
+                    //     // Convertir "duration" a entero
+                    //     task.duration = parseInt(task.duration);
+
+                    //     // Convertir "progress" a entero
+                    //     task.progress = parseInt(task.progress);
+
+                    //     // Convertir "canDelete" a un valor booleano
+                    //     task.canDelete = task.canDelete === 'true';
+
+                    //     // Convertir "level" a entero, o establecer en 0 si no está definido
+                    //     task.level = task.level ? parseInt(task.level) : 0;
+
+                    //     // Convertir "collapsed" a un valor booleano, o establecer en false si no está definido
+                    //     task.collapsed = task.collapsed ? task.collapsed === 'true' : false;
+
+                    //     // Convertir "canAddIssue" a un valor booleano, o establecer en false si no está definido
+                    //     task.canAddIssue = task.canAddIssue ? task.canAddIssue === 'true' : false;
+
+                    //     // Convertir "endIsMilestone" a un valor booleano, o establecer en false si no está definido
+                    //     task.endIsMilestone = task.endIsMilestone ? task.endIsMilestone === 'true' :
+                    //         false;
+
+                    //     // Convertir "startIsMilestone" a un valor booleano, o establecer en false si no está definido
+                    //     task.startIsMilestone = task.startIsMilestone ? task.startIsMilestone ===
+                    //         'true' : false;
+
+                    //     // Convertir "progressByWorklog" a un valor booleano, o establecer en false si no está definido
+                    //     task.progressByWorklog = task.progressByWorklog ? task.progressByWorklog ===
+                    //         'true' : false;
+
+                    //     return task;
+                    // });
+
+                    // // Asignar las tareas modificadas de nuevo a la propiedad "tasks" de la implementación
+                    // response.tasks = tasks;
                     ge.loadProject(response);
                     document.getElementById("ultima_modificacion").innerHTML = moment(response.updated_at)
                         .format("DD-MM-YYYY hh:mm:ss A")
