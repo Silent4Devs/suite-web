@@ -76,20 +76,19 @@
     </div>
     <nav>
         <div class="nav nav-tabs" id="tabsCapitalHumano" role="tablist" style="margin-bottom: 0px !important;">
-            <a class="nav-link active" id="nav-empleados-tab"
-                data-type="empleados" data-toggle="tab" href="#nav-empleados" role="tab"
-                aria-controls="nav-empleados" aria-selected="true">
+            <a class="nav-link active" id="nav-empleados-tab" data-type="empleados" data-toggle="tab" href="#nav-empleados"
+                role="tab" aria-controls="nav-empleados" aria-selected="true">
                 {{-- <i class="bi bi-people" style="font-size:20px;" style="text-decoration:none;"></i> --}}
                 Empleados
             </a>
-            <a class="nav-link" id="nav-calendario-comunicacion-tab" data-type="calendario-comunicacion"
-                data-toggle="tab" href="#nav-calendario-comunicacion" role="tab"
-                aria-controls="nav-calendario-comunicacion" aria-selected="false">
+            <a class="nav-link" id="nav-calendario-comunicacion-tab" data-type="calendario-comunicacion" data-toggle="tab"
+                href="#nav-calendario-comunicacion" role="tab" aria-controls="nav-calendario-comunicacion"
+                aria-selected="false">
                 {{-- <i class="bi bi-calendar3" style="font-size:20px;" style="text-decoration:none;"></i> --}}
                 Calendario y Comunicación
             </a>
-            <a class="nav-link" id="nav-ev360-tab" data-type="ev360" data-toggle="tab" href="#nav-ev360"
-                role="tab" aria-controls="nav-ev360" aria-selected="false">
+            <a class="nav-link" id="nav-ev360-tab" data-type="ev360" data-toggle="tab" href="#nav-ev360" role="tab"
+                aria-controls="nav-ev360" aria-selected="false">
                 {{-- <i class="bi bi-card-checklist" style="font-size:20px;" style="text-decoration:none;"></i> --}}
                 Evaluación 360
             </a>
@@ -156,30 +155,6 @@
             $(".ventana_menu").css("left", "-50%");
             $(".ventana_menu").css("transition", "1s");
             $(".breadcrumb-item.active").html("Capital Humano");
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            let lineActiveNav = document.createElement('div');
-            lineActiveNav.classList.add('line-active-nav');
-
-            document.querySelectorAll('.nav-tabs').forEach(element => {
-                element.appendChild(lineActiveNav);
-            });
-        });
-        $('.nav-link').click(function moveLineNav(e) {
-            let boundLink = e.target.getBoundingClientRect();
-            let boundNav = document.querySelector('.nav.nav-tabs:hover').getBoundingClientRect();
-
-            let offsetTop = boundLink.top - boundNav.top + boundLink.height - 10;
-            let offsetLeft = boundLink.left - boundNav.left;
-
-            let line = document.querySelector('.nav-tabs:hover .line-active-nav');
-
-            line.style.top = offsetTop + 'px';
-            line.style.left = offsetLeft + 8 + 'px';
-            line.style.width = boundLink.width - 16 + 'px';
         });
     </script>
 @endsection

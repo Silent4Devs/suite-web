@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/evaluaciones.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/evaluaciones.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     @php
@@ -80,26 +80,8 @@
     </style>
     {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
 
-    <h5 class="titulo_general_funcion">Asignar Objetivos Estratégicos: <span style="font-weight: lighter;">{{$empleado->name}}</span></h5>
-
-    <div class="card card-body">
-        <div class="d-flex align-items-center">
-            <div class="d-flex align-items-center justify-content-between" style="gap: 30px;">
-                <div class="img-person" style="width: 100px; height: 100px;">
-                    <img src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}" alt="">
-                </div>
-                <div>
-                    <span>Director Sr. Innovación y Nuevos Productos </span>
-                    <br>
-                    <br>
-                    <span>Dirección General</span>
-                </div>
-            </div>
-            <div class="">
-                <img src="{{$logotipo}}" alt="">
-            </div>
-        </div>
-    </div>
+    <h5 class="titulo_general_funcion">Asignar Objetivos Estratégicos: <span
+            style="font-weight: lighter;">{{ $empleado->name }}</span></h5>
 
     <div class="card">
         <div class="card-body">
