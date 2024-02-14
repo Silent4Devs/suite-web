@@ -44,17 +44,7 @@ analisis brecha
         <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
-                    @php
-                    use App\Models\Organizacion;
-                    $organizacion = Organizacion::getFirst();
-                    $logotipo = $organizacion->logotipo;
-                    $empresa = $organizacion->empresa;
-                    @endphp
-                    @if ($logotipo)
                     <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset('silent.png') }}">
-                    @else
-                        <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
-                    @endif
                 </td>
                 <td class="info-header">
                     <div style="position: relative; left: 3rem; text-align: justify;">
