@@ -286,34 +286,78 @@ class PlanesAccionController extends Controller
 
     public function saveProject(Request $request, $plan)
     {
-        $project = $request->prj;
-        $project = (array) json_decode($project);
-        if (PlanImplementacion::find($plan)) {
-            $tasks = isset($project['tasks']) ? $project['tasks'] : [];
-            $plan_implementacion = PlanImplementacion::find($plan)->update([
+        $project = (array) json_decode($request->prj);
+
+        // Extraer los valores del proyecto con operador de fusión de null
+        $tasks = $project['tasks'] ?? [];
+        $canAdd = $project['canAdd'] ?? true;
+        $canWrite = $project['canWrite'] ?? true;
+        $canWriteOnParent = $project['canWriteOnParent'] ?? null;
+        $changesReasonWhy = $project['changesReasonWhy'] ?? null;
+        $selectedRow = $project['selectedRow'] ?? 0;
+        $zoom = $project['zoom'] ?? '1M';
+
+        // Buscar el plan de implementación
+        $plan_implementacion = PlanImplementacion::find($plan);
+
+        if ($plan_implementacion) {
+            // Actualizar el plan de implementación existente
+            $plan_implementacion->update([
                 'tasks' => $tasks,
-                'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
-                'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
-                'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
-                'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
-                'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
-                'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
+                'canAdd' => $canAdd,
+                'canWrite' => $canWrite,
+                'canWriteOnParent' => $canWriteOnParent,
+                'changesReasonWhy' => $changesReasonWhy,
+                'selectedRow' => $selectedRow,
+                'zoom' => $zoom,
             ]);
-            $plan_implementacion = PlanImplementacion::find($plan);
         } else {
-            $tasks = isset($project['tasks']) ? $project['tasks'] : [];
+            // Crear un nuevo plan de implementación
             $plan_implementacion = PlanImplementacion::create([
                 'tasks' => $tasks,
-                'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
-                'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
-                'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
-                'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
-                'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
-                'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
+                'canAdd' => $canAdd,
+                'canWrite' => $canWrite,
+                'canWriteOnParent' => $canWriteOnParent,
+                'changesReasonWhy' => $changesReasonWhy,
+                'selectedRow' => $selectedRow,
+                'zoom' => $zoom,
             ]);
         }
 
-        return response()->json(['success' => true, 'ultima_modificacion' => Carbon::parse($plan_implementacion->updated_at)->format('d/m/Y g:i:s A')], 200);
+        // Verificar si se encontró un plan de implementación y obtener la fecha de actualización
+        $ultima_modificacion = $plan_implementacion ? Carbon::parse($plan_implementacion->updated_at)->format('d/m/Y g:i:s A') : null;
+
+        // Retornar la respuesta JSON
+        return response()->json(['success' => true, 'ultima_modificacion' => $ultima_modificacion], 200);
+
+        // $project = $request->prj;
+        // $project = (array) json_decode($project);
+        // if (PlanImplementacion::find($plan)) {
+        //     $tasks = isset($project['tasks']) ? $project['tasks'] : [];
+        //     $plan_implementacion = PlanImplementacion::find($plan)->update([
+        //         'tasks' => $tasks,
+        //         'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
+        //         'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
+        //         'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
+        //         'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
+        //         'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
+        //         'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
+        //     ]);
+        //     $plan_implementacion = PlanImplementacion::find($plan);
+        // } else {
+        //     $tasks = isset($project['tasks']) ? $project['tasks'] : [];
+        //     $plan_implementacion = PlanImplementacion::create([
+        //         'tasks' => $tasks,
+        //         'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
+        //         'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
+        //         'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
+        //         'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
+        //         'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
+        //         'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
+        //     ]);
+        // }
+
+        // return response()->json(['success' => true, 'ultima_modificacion' => Carbon::parse($plan_implementacion->updated_at)->format('d/m/Y g:i:s A')], 200);
     }
 
     public function loadProject($plan)
@@ -372,36 +416,9 @@ class PlanesAccionController extends Controller
                 'title as name'
             )->get();
 
-        // $resources = $implementacion->resources;
-        // foreach ($resources->resources as $resource) {
-        //     $resource->name = $resource->name;
-        //     $resource->n_registro = $resource->n_registro;
-        //     $resource->foto = $resource->foto;
-        //     $resource->puesto = $resource->puesto;
-        //     $resource->estatus = $resource->estatus;
-        //     $resource->telefono_movil = $resource->telefono_movil;
-        //     $resource->genero = $resource->genero;
-        //     $resource->n_empleado = $resource->n_empleado;
-        //     $resource->supervisor_id = $resource->supervisor_id;
-        //     $resource->area_id = $resource->area_id;
-        //     $resource->sede_id = $resource->sede_id;
-        //     $resource->puesto_id = $resource->puesto_id;
-        //     $resource->perfil_empleado_id = $resource->perfil_empleado_id;
-        //     $resource->tipo_contrato_empleados_id = $resource->tipo_contrato_empleados_id;
-        //     $resource->proyecto_asignado = $resource->proyecto_asignado;
-        //     $resource->entidad_crediticias_id = $resource->entidad_crediticias_id;
-        //     $resource->semanas_min_timesheet = $resource->semanas_min_timesheet;
-        //     $resource->vacante_activa = $resource->vacante_activa;
-        // }
-
         $implementacion->resources = $elaborador;
         $implementacion->roles = $roles;
         $implementacion->tasks = $tasks;
-
-        //return $implementacion;
-
-        //$implementacion = PlanImplementacion::find($plan);
-
         return $implementacion;
     }
 }
