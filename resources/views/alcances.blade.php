@@ -26,12 +26,18 @@
         <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset('silent.png')}}">
-                    {{-- @if ($logo_actual)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset('silent.png')}}">
+                    @php
+                    use App\Models\Organizacion;
+                    $organizacion = Organizacion::getFirst();
+                    $logotipo = $organizacion->logotipo;
+                    $empresa = $organizacion->empresa;
+                    @endphp
+
+                    @if ($logotipo)
+                    <img style="width:100%; max-width:100px; position: relative; left:1.5rem;" src="{{ url($logotipo) }}">
                     @else
-                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
-                    @endif --}}
+                        <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                    @endif
                 </td>
                 <td class="info-header">
                     <div style="position: relative; right: 5rem; text-align: justify;">

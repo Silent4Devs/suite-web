@@ -105,7 +105,6 @@ class AlcanceSgsiController extends Controller
         $empleados = Empleado::getAltaEmpleadosWithArea();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
-        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
@@ -113,7 +112,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (!isset($modulo)) {
+        if (! isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -533,7 +532,7 @@ class AlcanceSgsiController extends Controller
                 'estatus' => 'Aprobado',
             ]);
             // dd($proceso, $alcance);
-            $this->correosAprobacion($proceso->id, $alcance);
+            $this->correosAprobacion($proceso, $alcance);
         } else {
             $this->siguienteCorreo($proceso, $alcance);
         }

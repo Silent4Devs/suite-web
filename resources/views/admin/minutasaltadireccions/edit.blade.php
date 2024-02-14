@@ -458,30 +458,44 @@
                 buttons: []
             })
             $("#cargando_participantes").hide();
+            let currentSearchRequest = 0; // Add a variable to track the current search request
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             let url = "{{ route('admin.empleados.get') }}";
+
             $("#participantes_search").keyup(function() {
+                let searchValue = $(this).val().trim();
+                let currentRequestNumber = ++currentSearchRequest; // Increment the request number
+
+                if (searchValue === "") {
+                    // Clear or hide suggestions when the search input is empty
+                    $("#participantes_sugeridos").hide();
+                    return;
+                }
+
                 $.ajax({
                     type: "POST",
                     url: url,
-                    data: 'nombre=' + $(this).val(),
+                    data: 'nombre=' + searchValue,
                     beforeSend: function() {
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                        if ($("#participantes_search").val().trim() !== "") {
-                            let lista = "<ul class='list-group id=empleados-lista' >";
+                        // Check if the response corresponds to the latest search query
+                        if (currentRequestNumber === currentSearchRequest) {
+                            let lista = "<ul class='list-group id=empleados-lista'>";
                             $.each(data.usuarios, function(ind, usuario) {
                                 var result = `{"id":"${usuario.id}",
-                                "name":"${usuario.name}",
-                                "email":"${usuario.email}",
-                                "puesto":"${usuario.puesto}",
-                                "area":"${usuario.area.area}"
-                                }`;
+                        "name":"${usuario.name}",
+                        "email":"${usuario.email}",
+                        "puesto":"${usuario.puesto}",
+                        "area":"${usuario.area.area}"
+                    }`;
                                 lista +=
                                     "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
                                     result + ")' >" +
@@ -497,7 +511,6 @@
                         }
                     }
                 });
-
             });
 
             document.getElementById('btn-suscribir-participante').addEventListener('click', function(e) {

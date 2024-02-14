@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Registrar: Área</h5>
+    @if (session('mensajeError'))
+        <div class="alert alert-danger">
+            {{ session('mensajeError') }}
+        </div>
+    @endif
     <div class="mt-4 card">
         <div class="card-body">
             @if (!$direccion_exists)

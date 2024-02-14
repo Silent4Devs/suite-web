@@ -24,7 +24,7 @@ class EntendimientoOrganizacion extends Model implements Auditable
         'analisis',
         'fecha',
         'id_elabora',
-
+        'estatus',
     ];
 
     public function empleado()
