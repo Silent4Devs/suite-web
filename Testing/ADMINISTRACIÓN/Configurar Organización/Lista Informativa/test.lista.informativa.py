@@ -11,7 +11,7 @@ import time
 
 #Variables
 element_confirgurar_organizacion = "(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[2]"
-element_crear_areas = "//A[@href='https://192.168.9.78/admin/areas'][text()='Crear Áreas']"
+element_crear_lista_informativa = "//A[@href='https://192.168.9.78/admin/lista-informativa'][text()='Lista Informativa']"
 clasificacion_xpath="//a[contains(.,'Clasificación')]"
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
 id_xpath="///input[contains(@type,'number')]"
@@ -77,18 +77,18 @@ element.click()
 
 time.sleep(tiempo_modulos)
 
-#Sub Crear Areas
+#Sub Lista Informativa
 print("Entrando a Sub modulo Crear Areas...")
-element = driver.find_element(By.XPATH, element_crear_areas)
+element = driver.find_element(By.XPATH, element_crear_lista_informativa)
 driver.execute_script("arguments[0].scrollIntoView(true);", element)
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_crear_areas)))
+WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_crear_lista_informativa)))
 print("Dando clic en Sub modulo Crear Areas...")
 element.click()
 
 time.sleep(tiempo_modulos)
 
 
-#Agregar Grupo de Areas
+#Agregar Lista Informativa
 print("Dando clic al botón Agregar...")
 wait = WebDriverWait(driver, 10)
 # Esperar a que el elemento esté presente en el DOM
@@ -98,7 +98,7 @@ agregar_btn.click()
 
 time.sleep(tiempo_modulos)
 
-#Nombre del Area
+#Nombre del Lista Informativa
 def ingresar_area(driver):
     # Obtener la entrada del usuario desde la terminal
     n_area_ingresado = input("Ingrese Nombre del Area a Agregar: ")

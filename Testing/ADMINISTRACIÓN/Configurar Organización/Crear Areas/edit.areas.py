@@ -18,6 +18,8 @@ id_xpath="///input[contains(@type,'number')]"
 save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guardar')]"
 opciones_xpath="(//i[contains(@class,'fa-solid fa-ellipsis-vertical')])[1]"
 guardar_xpath="(//a[contains(.,'Editar')])[1]"
+btn_puntos = "(//I[@class='fa-solid fa-ellipsis-vertical'])[1]"
+btn_editar = "(//I[@class='fas fa-edit'])[1]"
 
 
 #Temporizadores
@@ -88,15 +90,29 @@ element.click()
 time.sleep(tiempo_modulos)
 
 
-#Agregar Grupo de Areas
-print("Dando clic al botón Agregar...")
+#Editar 3 puntos
+print("Dando clic al botón editar 3 puntos...")
 wait = WebDriverWait(driver, 10)
 # Esperar a que el elemento esté presente en el DOM
-agregar_btn = wait.until(EC.presence_of_element_located((By.XPATH, agregar_btn_xpath)))
+tres_puntos_btn = wait.until(EC.presence_of_element_located((By.XPATH, btn_puntos)))
 # Ahora intenta hacer clic en el elemento
-agregar_btn.click()
+tres_puntos_btn.click()
 
 time.sleep(tiempo_modulos)
+
+
+#Boton editar
+print("Dando clic al botón editar...")
+wait = WebDriverWait(driver, 10)
+# Esperar a que el elemento esté presente en el DOM
+btn_editar = wait.until(EC.presence_of_element_located((By.XPATH, btn_editar)))
+# Ahora intenta hacer clic en el elemento
+btn_editar.click()
+
+time.sleep(tiempo_modulos)
+
+
+#CAMPOS PARA EDITAR EL REPOSITORIO
 
 #Nombre del Area
 def ingresar_area(driver):
@@ -114,92 +130,6 @@ def ingresar_area(driver):
 
 #Llamando a la función Nombre del Area
 ingresar_area(driver)
-
-time.sleep(tiempo_modulos)
-
-#Responsable
-def ingresar_responsable(driver):
-    # Obtener la entrada del usuario desde la terminal
-    responsable_ingresado = input("Ingrese Responsable: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='nombre_contacto_puesto']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
-    campo_entrada.click()
-    time.sleep(tiempo_espera)
-    campo_entrada.send_keys(responsable_ingresado)
-    time.sleep(tiempo_espera)
-    campo_entrada.click()
-
-#Llamando a la función Descripcion
-ingresar_responsable(driver)
-
-time.sleep(tiempo_modulos)
-
-"""
-#Nombre del Puesto 
-def ingresar_puesto(driver):
-    # Obtener la entrada del usuario desde la terminal
-    puesto_ingresado = input("Ingrese Nombre del Puesto a Agregar: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//DIV[@id='contacto_puesto']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el número ingresado por el usuario
-    campo_entrada.clear()
-    campo_entrada.send_keys(puesto_ingresado)
-
-#Llamando a la función Nombre del Puesto
-ingresar_puesto(driver)
-
-"""
-
-#Area a la que Reporta
-def ingresar_area_a_la_que_reporta(driver):
-    # Obtener la entrada del usuario desde la terminal
-    area_reporta_ingresado = input("Ingrese Area a la que Reporta: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='inputGroupSelect01']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
-    campo_entrada.click()
-    time.sleep(tiempo_espera)
-    campo_entrada.send_keys(area_reporta_ingresado)
-    time.sleep(tiempo_espera)
-    campo_entrada.click()
-
-#Llamando a la función Area a la que Reporta
-ingresar_area_a_la_que_reporta(driver)
-
-time.sleep(tiempo_modulos)
-
-#Grupo 
-def ingresar_grupo(driver):
-    # Obtener la entrada del usuario desde la terminal
-    grupo_ingresado = input("Ingrese Grupo: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='id_grupo']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
-    campo_entrada.click()
-    time.sleep(tiempo_espera)
-    campo_entrada.send_keys(grupo_ingresado)
-    time.sleep(tiempo_espera)
-    campo_entrada.click()
-
-#Llamando a la función Grupo
-ingresar_grupo(driver)
 
 time.sleep(tiempo_modulos)
 

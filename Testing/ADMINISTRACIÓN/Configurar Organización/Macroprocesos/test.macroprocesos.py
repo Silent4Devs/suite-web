@@ -11,7 +11,7 @@ import time
 
 #Variables
 element_confirgurar_organizacion = "(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[2]"
-element_crear_areas = "//A[@href='https://192.168.9.78/admin/areas'][text()='Crear Áreas']"
+element_crear_macroprocesos = "//A[@href='https://192.168.9.78/admin/macroprocesos'][text()='Macroprocesos']"
 clasificacion_xpath="//a[contains(.,'Clasificación')]"
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
 id_xpath="///input[contains(@type,'number')]"
@@ -77,18 +77,17 @@ element.click()
 
 time.sleep(tiempo_modulos)
 
-#Sub Crear Areas
-print("Entrando a Sub modulo Crear Areas...")
-element = driver.find_element(By.XPATH, element_crear_areas)
+#Sub Macroprocesos
+print("Entrando a Sub modulo Macroprocesos...")
+element = driver.find_element(By.XPATH, element_crear_macroprocesos)
 driver.execute_script("arguments[0].scrollIntoView(true);", element)
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_crear_areas)))
-print("Dando clic en Sub modulo Crear Areas...")
+WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_crear_macroprocesos)))
+print("Dando clic en Sub modulo Macroprocesos...")
 element.click()
 
 time.sleep(tiempo_modulos)
 
-
-#Agregar Grupo de Areas
+#Boton Agregar 
 print("Dando clic al botón Agregar...")
 wait = WebDriverWait(driver, 10)
 # Esperar a que el elemento esté presente en el DOM
@@ -98,86 +97,43 @@ agregar_btn.click()
 
 time.sleep(tiempo_modulos)
 
-#Nombre del Area
-def ingresar_area(driver):
+#LLENAR EL REPOSITORIO
+
+#Codigo
+def ingresar_codigo(driver):
     # Obtener la entrada del usuario desde la terminal
-    n_area_ingresado = input("Ingrese Nombre del Area a Agregar: ")
+    codigo_ingresado = input("Ingrese Codigo: ")
 
     # Encontrar el campo de entrada
     campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='area']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el número ingresado por el usuario
-    campo_entrada.clear()
-    campo_entrada.send_keys(n_area_ingresado)
-
-#Llamando a la función Nombre del Area
-ingresar_area(driver)
-
-time.sleep(tiempo_modulos)
-
-#Responsable
-def ingresar_responsable(driver):
-    # Obtener la entrada del usuario desde la terminal
-    responsable_ingresado = input("Ingrese Responsable: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='nombre_contacto_puesto']"))
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='codigo']"))
     )
 
     # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
-    campo_entrada.click()
-    time.sleep(tiempo_espera)
-    campo_entrada.send_keys(responsable_ingresado)
-    time.sleep(tiempo_espera)
-    campo_entrada.click()
+    campo_entrada.clear()
+    campo_entrada.send_keys(codigo_ingresado)
 
-#Llamando a la función Descripcion
-ingresar_responsable(driver)
+#Llamando a la función Codigo
+ingresar_codigo(driver)
 
 time.sleep(tiempo_modulos)
 
-"""
-#Nombre del Puesto 
-def ingresar_puesto(driver):
+#Nombre 
+def ingresar_nombre(driver):
     # Obtener la entrada del usuario desde la terminal
-    puesto_ingresado = input("Ingrese Nombre del Puesto a Agregar: ")
+    nombre_ingresado = input("Ingrese Nombre: ")
 
     # Encontrar el campo de entrada
     campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//DIV[@id='contacto_puesto']"))
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre']"))
     )
 
-    # Limpiar el campo de entrada y escribir el número ingresado por el usuario
+    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
     campo_entrada.clear()
-    campo_entrada.send_keys(puesto_ingresado)
+    campo_entrada.send_keys(nombre_ingresado)
 
 #Llamando a la función Nombre del Puesto
-ingresar_puesto(driver)
-
-"""
-
-#Area a la que Reporta
-def ingresar_area_a_la_que_reporta(driver):
-    # Obtener la entrada del usuario desde la terminal
-    area_reporta_ingresado = input("Ingrese Area a la que Reporta: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='inputGroupSelect01']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
-    campo_entrada.click()
-    time.sleep(tiempo_espera)
-    campo_entrada.send_keys(area_reporta_ingresado)
-    time.sleep(tiempo_espera)
-    campo_entrada.click()
-
-#Llamando a la función Area a la que Reporta
-ingresar_area_a_la_que_reporta(driver)
+ingresar_nombre(driver)
 
 time.sleep(tiempo_modulos)
 
