@@ -151,13 +151,14 @@
             <div class="col-6">
             </div>
             <div class="col-3">
-                {{-- <a href="{{ route('admin.analisisdebrechas-2022.create') }}" --}}
-                class="btn btn-outline-primary btn-block">Cancelar</a>
+                <div class="col-3">
+                    <a href="{{ route('admin.rangos.index') }}"
+                        class="btn btn-outline-primary btn-block">Cancelar</a>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-primary btn-block" type="submit">Generar Catalogo</button>
+                </div>
             </div>
-            <div class="col-3">
-                <button class="btn btn-primary btn-block" type="submit">Generar Catalogo</button>
-            </div>
-        </div>
     </form>
 </div>
 

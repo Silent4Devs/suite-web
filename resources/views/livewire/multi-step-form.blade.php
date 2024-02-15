@@ -558,6 +558,21 @@
                                                         id="pesoGeneralOnjetivos" class="form-control" type="number"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
+                                                    <select name="catalogoObjetivos" id="catalogoObjetivos"
+                                                        wire:model.defer="catalogoObjetivos">
+                                                        <option value="" selected>Seleccione el Catalogo
+                                                            de
+                                                            Parametros que utilizara la Evaluacion</option>
+                                                        @foreach ($catalogo_rangos_objetivos as $c)
+                                                            <option value="{{ $c->id }}">
+                                                                {{ $c->nombre_catalogo }}</option>
+                                                        @endforeach
+                                                        @if ($errors->has('catalogoObjetivos'))
+                                                            <small class="text-danger">
+                                                                ({{ $errors->first('catalogoObjetivos') }})
+                                                            </small>
+                                                        @endif
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

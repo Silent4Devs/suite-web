@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
-use App\Models\CatalogoRangosObjetivos;
+use App\Models\rh\CatalogoRangosObjetivos;
 use Illuminate\Http\Request;
 
 class CatalogoRangosObjetivosController extends Controller
@@ -14,6 +14,9 @@ class CatalogoRangosObjetivosController extends Controller
     public function index()
     {
         //
+        $catalogos = CatalogoRangosObjetivos::with('rangos')->get();
+
+        return view('admin.recursos-humanos.evaluacion-360.objetivos.rangos.index', compact('catalogos'));
     }
 
     /**
@@ -39,6 +42,7 @@ class CatalogoRangosObjetivosController extends Controller
     public function show(CatalogoRangosObjetivos $catalogoRangosObjetivos)
     {
         //
+        dd('show', $catalogoRangosObjetivos);
     }
 
     /**
@@ -61,8 +65,19 @@ class CatalogoRangosObjetivosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CatalogoRangosObjetivos $catalogoRangosObjetivos)
+    public function destroy($id)
     {
-        //
+        $catalogoRangosObjetivos = CatalogoRangosObjetivos::find($id);
+
+        if (!$catalogoRangosObjetivos) {
+            return response()->json(['error' => 'Catalogo no encontrado.'], 404);
+        }
+
+        try {
+            $catalogoRangosObjetivos->delete();
+            return response()->json(['message' => 'Catalogo borrado exitosamente.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Ha habido un error al tratar de borrar el catalogo..'], 500);
+        }
     }
 }

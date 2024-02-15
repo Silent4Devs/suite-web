@@ -92,14 +92,14 @@ class RangosObjetivos extends Component
             }
         }
 
-        $this->alert('success', '¡El template ha sido creado con éxito!', [
+        $this->alert('success', '¡El Catalogo ha sido creado con éxito!', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => true,
-            'text' => 'Se ha generado tu plantillas y tu cuestionario, lo puedes consultar y editar cuando lo necesites.',
+            'text' => 'Se ha generado el catalogo, lo puedes consultar y editar cuando lo necesites.',
         ]);
 
-        return redirect(route('admin.analisisdebrechas-2022.create'));
+        return redirect(route('admin.rangos.index'));
     }
 
 

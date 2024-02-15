@@ -11,6 +11,8 @@ class EditRangosObjetivos extends Component
 {
     use LivewireAlert;
 
+    public $cat_id;
+
     public $nombre = null;
 
     public $descripcion = null;
@@ -48,6 +50,7 @@ class EditRangosObjetivos extends Component
     public function mount($cat_id)
     {
         $catalogo = CatalogoRangosObjetivos::with('rangos')->find($cat_id);
+        $this->cat_id = $cat_id;
         $this->asignarInputs($catalogo);
     }
 
@@ -59,10 +62,13 @@ class EditRangosObjetivos extends Component
     public function submitForm($data)
     {
         // dd($data);
-        $catalogo = CatalogoRangosObjetivos::create([
+        $catalogo = CatalogoRangosObjetivos::find($this->cat_id);
+        $catalogo->update([
             'nombre_catalogo' => $data['nombre'],
             'descripcion' => $data['descripcion'],
         ]);
+
+        $borrarColores = RHRangosObjetivos::where('catalogo_rangos_id', '=', $catalogo->id)->delete();
 
         RHRangosObjetivos::create([
             'catalogo_rangos_id' => $catalogo->id,
@@ -94,11 +100,11 @@ class EditRangosObjetivos extends Component
             }
         }
 
-        $this->alert('success', '¡El catalogo ha sido creado con éxito!', [
+        $this->alert('success', '¡El Catalogo ha sido editado con éxito!', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => true,
-            'text' => 'Se ha generado tu plantillas y tu cuestionario, lo puedes consultar y editar cuando lo necesites.',
+            'text' => 'Se ha editado el catalogo de rangos, lo puedes consultar y editar cuando lo necesites.',
         ]);
 
         return redirect(route('admin.analisisdebrechas-2022.create'));
