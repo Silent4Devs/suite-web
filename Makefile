@@ -1,5 +1,3 @@
-.PHONY: composer-install copy-env generate-key migrate chmod-storage optimize-clear storage-link migrate-fresh migrate-fresh-seed obtener-permisos generate-preload setup restart-containers
-
 composer-install:
     docker-compose exec php composer install --ignore-platform-reqs
 
@@ -32,9 +30,6 @@ optimize-clear:
 
 generate-preload:
     docker-compose exec php php artisan preload:placeholder
-
-setup:
-    composer-install copy-env generate-key generate-preload migrate chmod-storage optimize-clear
 
 restart-containers:
     docker-compose restart
