@@ -19,6 +19,8 @@ id_xpath="///input[contains(@type,'number')]"
 save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guardar')]"
 opciones_xpath="(//i[contains(@class,'fa-solid fa-ellipsis-vertical')])[1]"
 guardar_xpath="(//a[contains(.,'Editar')])[1]"
+campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
+btn_editar = "//I[@class='fas fa-edit']"
 
 
 #Temporizadores
@@ -35,7 +37,7 @@ driver = webdriver.Firefox()
 
 try:
     # Abrir la URL
-    driver.get('https://192.168.9.78')
+    driver.get('https://192.168.9.78/')
 
     # Maximizar la ventana del navegador
     driver.maximize_window()
@@ -83,7 +85,7 @@ print("Entrando a Sub modulo Procesos...")
 element = driver.find_element(By.XPATH, element_crear_procesos)
 driver.execute_script("arguments[0].scrollIntoView(true);", element)
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_crear_procesos)))
-print("Dando clic en Sub modulo Macroprocesos...")
+print("Dando clic en Sub modulo Procesos...")
 element.click()
 
 time.sleep(tiempo_modulos)
@@ -181,6 +183,89 @@ time.sleep(tiempo_espera)
 
 #Guardar
 print("Dando clic al botón Guardar...")
+def realizar_accion_guardar(driver):
+    # Opciones
+    guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
+    guardar = WebDriverWait(driver, 20).until(
+        EC.element_to_be_clickable((By.XPATH, guardar_xpath))
+    )
+    guardar.click()
+
+# Llamada a la función Guardar
+realizar_accion_guardar(driver)
+
+#ACTUALIZAR REPOSITORIO CREADO
+
+#Campo Buscar
+def ingresar_campo_a_buscar(driver):
+    # Obtener la entrada del usuario desde la terminal
+    nombre_ingresado = input("Ingrese Proceso a buscar: ")
+
+    # Encontrar el campo de entrada
+    campo_entrada = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
+    )
+
+    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
+    campo_entrada.clear()
+    campo_entrada.send_keys(nombre_ingresado)
+
+#Llamando a la función Campo a buscar
+ingresar_campo_a_buscar(driver)
+
+
+#Boton editar
+print("Dando clic al botón editar...")
+wait = WebDriverWait(driver, 10)
+# Esperar a que el elemento esté presente en el DOM
+btn_editar = wait.until(EC.presence_of_element_located((By.XPATH, btn_editar)))
+# Ahora intenta hacer clic en el elemento
+btn_editar.click()
+
+time.sleep(tiempo_modulos)
+
+#EDITAR EL REPOSITORIO
+
+#Nombre Actualizado
+def ingresar_nombre(driver):
+    # Obtener la entrada del usuario desde la terminal
+    nombre_ingresado = input("Ingrese Nombre Actualizado: ")
+
+    # Encontrar el campo de entrada
+    campo_entrada = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre']"))
+    )
+
+    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
+    campo_entrada.clear()
+    campo_entrada.send_keys(nombre_ingresado)
+
+#Llamando a la función Nombre del Puesto
+ingresar_nombre(driver)
+
+time.sleep(tiempo_modulos)
+
+#Descripcion Actualizado
+def ingresar_descripcion(driver):
+    # Obtener la entrada del usuario desde la terminal
+    descripcion_ingresado = input("Ingrese Descripcion Actualizado: ")
+
+    # Encontrar el campo de entrada
+    campo_entrada = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
+    )
+
+    # Limpiar el campo de entrada y escribir el número ingresado por el usuario
+    campo_entrada.clear()
+    campo_entrada.send_keys(descripcion_ingresado)
+
+#Llamando a la función Nombre del Puesto
+ingresar_descripcion(driver)
+
+time.sleep(tiempo_espera)
+
+#Guardar Actualizacion
+print("Dando clic al botón Guardar para guardar actualizacion...")
 def realizar_accion_guardar(driver):
     # Opciones
     guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
