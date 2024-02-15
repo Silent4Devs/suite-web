@@ -6,9 +6,10 @@
     @endphp
     {{ Breadcrumbs::render('timesheet-create') }}
 
-
-
-    @include('admin.timesheet.complementos.cards')
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
+    
     <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">
             @if (isset($timesheet->semana))
                 {!! $timesheet->semana !!} |
