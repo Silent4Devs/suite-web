@@ -61,7 +61,7 @@
                                         <label for="">Categoría</label>
                                     </div>
                                     <div class="btn-delete-cat">
-                                        <i class="material-symbols-outlined" title="Eliminar" onclick="deleteCategoria()">delete</i>
+                                        <i class="material-symbols-outlined" title="Eliminar" onclick="deleteItem('item-config-cat')">delete</i>
                                     </div>
                                 </div>
                                 <div class="form-group anima-focus">
@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center mt-4" style="color: #006DDB; gap: 10px; cursor: pointer;" onclick="addCategoria()">
+                            <div class="d-flex align-items-center mt-4" style="color: #006DDB; gap: 10px; cursor: pointer;" onclick="addItem('item-config-cat', 'grid-config-categorias')">
                                 <span class="material-symbols-outlined">add_circle</span>
                                 Agregar Categoría
                             </div>
@@ -84,10 +84,57 @@
                     </div>
 
                 </div>
+
                 <div class="tab-pane mb-4 fade" id="nav-config-obj-2" role="tabpanel" aria-labelledby="nav-config-obj-2">
                     <div class="info-first-config">
                         <h4 class="title-config">Escalas de medición</h4>
                         <p>Define los Valores y Escalas con los que se medirán los objetivos.</p>
+                    </div>
+
+                    <div class="">
+                        <p>
+                            Rango <br>
+                            Especifica el valor mínimo y máximo que tendrá la escala de medición
+                        </p>
+                        <div class="d-flex" style="gap: 10px;">
+                            <div class="form-group anima-focus" style="width: 100px;">
+                                <input type="text" class="form-control" placeholder="">
+                                <label for="">Mínimo*</label>
+                            </div>
+                            <div class="form-group anima-focus" style="width: 100px;">
+                                <input type="text" class="form-control" placeholder="">
+                                <label for="">Máximo*</label>
+                            </div>
+                        </div>
+
+                        <p class="mt-4">
+                            Escalas <br>
+                            Define las escalas de medición y asigna su Valor y Nombre
+                        </p>
+                        <div class="d-flex" style="gap: 10px;">
+                            <div class="form-group anima-focus" style="width: 100px;">
+                                <input type="text" class="form-control" placeholder="">
+                                <label for="">Valor*</label>
+                            </div>
+                            <div class="form-group anima-focus" style="width: 300px;">
+                                <input type="text" class="form-control" placeholder="">
+                                <label for="">Nombre de la escala*</label>
+                            </div>
+                            <div class="form-group anima-focus" style="width: 100px;">
+                                <input type="text" class="form-control" placeholder="">
+                                <label for="">Color</label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center mt-4" style="color: #006DDB; gap: 10px; cursor: pointer;" onclick="addCategoria()">
+                                <span class="material-symbols-outlined">add_circle</span>
+                                Agregar Categoría
+                            </div>
+
+                            <button class="btn btn-primary">
+                                GUARDAR
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -112,17 +159,17 @@
 
 @section('scripts')
     <script>
-        function addCategoria() {
-            let item = document.querySelector('.item-config-cat');
+        function addItem(classItem, classContent) {
+            let item = document.querySelector('.' + classItem);
             let newItem = document.createElement('div');
 
-            newItem.classList.add('item-config-cat');
+            newItem.classList.add(classItem);
             newItem.innerHTML += item.innerHTML;
 
-            document.querySelector('.grid-config-categorias').appendChild(newItem);
+            document.querySelector('.' + classContent).appendChild(newItem);
         }
-        function deleteCategoria() {
-            document.querySelector('.item-config-cat:hover').remove();
+        function deleteItem(classItem) {
+            document.querySelector('.' + classItem + ':hover').remove();
         }
     </script>
 @endsection
