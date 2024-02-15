@@ -25,13 +25,13 @@
             $usuario->can('timesheet_administrador_dashboard_access'))
         <div class="option-fixed-admin">
 
-            {{-- @if ($usuario->empleado->es_supervisor) --}}
+            @if ($usuario->empleado->es_supervisor)
                 <button class="btn"
                     onclick="document.querySelector('.modal-aprobador').classList.remove('invisible');">
                     <img src="{{ asset('img/calendar-icon-time-person.svg') }}" alt="">
                     Aprobador
                 </button>
-            {{-- @endif --}}
+            @endif
             @if (
                 $usuario->can('timesheet_administrador_proyectos_access') ||
                     $usuario->can('timesheet_administrador_tareas_proyectos_access') ||
@@ -48,8 +48,8 @@
     @endif
 @endif
 
-{{-- @if ($usuario->empleado) --}}
-    {{-- @if ($usuario->empleado->es_supervisor) --}}
+@if ($usuario->empleado)
+    @if ($usuario->empleado->es_supervisor)
         <div class="modal-admin-time modal-aprobador invisible">
             <button class="btn  btn-close-time-config-aprob" style="position: absolute; right: 10px; top: 10px;"
                 onclick="document.querySelector('.modal-aprobador').classList.add('invisible');">
@@ -160,8 +160,8 @@
                 </div>
             @endcan
         </div>
-    {{-- @endif --}}
-{{-- @endif --}}
+    @endif
+@endif
 
 @if (
     $usuario->can('timesheet_administrador_proyectos_access') ||
