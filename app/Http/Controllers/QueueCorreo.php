@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Mail\TestMail;
+use App\Models\PlanImplementacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Benchmark;
-use Illuminate\Support\Facades\Mail;
-use App\Models\PlanImplementacion;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class QueueCorreo extends Controller
 {
