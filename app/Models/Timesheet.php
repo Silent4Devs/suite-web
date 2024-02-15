@@ -31,26 +31,29 @@ class Timesheet extends Model implements Auditable
         'dia_semana',
         'inicio_semana',
         'fin_semana',
+        'created_at',
     ];
 
     public static function getPersonalTimesheet()
     {
         return Cache::remember('Timesheet:timesheet-'.auth()->user()->empleado->id, now()->addHours(3), function () {
-            return self::where('empleado_id', auth()->user()->empleado->id)->get();
+            return self::where('empleado_id', auth()->user()->empleado->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
         });
     }
 
     public static function getAll()
     {
         return Cache::remember('Timesheet:timesheet_all', now()->addHours(4), function () {
-            return self::get();
+            return self::orderBy('created_at', 'desc')->get();
         });
     }
 
     public static function getreportes()
     {
         return Cache::remember('timesheet_reportes', now()->addHours(2), function () {
-            return self::select('id', 'estatus', 'empleado_id', 'fecha_dia')->get();
+            return self::select('id', 'estatus', 'empleado_id', 'fecha_dia')->orderBy('created_at', 'desc')->get();
         });
     }
 

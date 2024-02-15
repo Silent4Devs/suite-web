@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}?v=1.2">
+    <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     @include('partials.menu-slider')
@@ -127,7 +127,7 @@
                                 <h4 class="title-card-portal-c">Aplicaciones más usadas</h4>
                                 <div class="d-flex justify-content-between" style="gap: 22px; flex-wrap:wrap;">
 
-                                    <a href="{{ route('admin.timesheet-inicio') }}" class="item-app-mu">
+                                    <a href="{{ route('admin.timesheet-create') }}" class="item-app-mu">
                                         Timesheet
                                     </a>
 
@@ -281,7 +281,7 @@
                                                 </a>
                                             @endcan
                                             @can('timesheet_acceder')
-                                                <a href="{{ route('admin.timesheet-inicio') }}">
+                                                <a href="{{ route('admin.timesheet-create') }}">
                                                     <div class="item-menu-portal">
                                                         <i class="material-symbols-outlined">date_range</i>
                                                         <span>Timesheet</span>

@@ -201,7 +201,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('lista-informativa', 'ListaInformativaController@index')->name('lista-informativa.index');
         Route::get('lista-informativa/{id}/edit', 'ListaInformativaController@edit')->name('lista-informativa.edit');
         Route::post('lista-informativa/{lista}/update', 'ListaInformativaController@update')->name('lista-informativa.update');
-        Route::get('lista-informativa/{id}/show', 'ListaInformativaController@show')->name('lista-informativa.edit');
+        Route::get('lista-informativa/{id}/show', 'ListaInformativaController@show')->name('lista-informativa.show');
 
         //Control de Ausencias- Day-Off
         Route::get('vista-global-dayoff', 'DayOffController@vistaGlobal')->name('vista-global-dayoff');
@@ -461,11 +461,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             } else {
                 // Si es la primera vez que se accede, establece la sesión 'visited_first_link'
                 session(['visited_first_link' => true]);
+
                 // Retorna la vista del primer enlace
                 return view('admin.iso27001.inicio-guia');
             }
         })->name('iso27001.inicio-guia');
-
 
         Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
         Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');

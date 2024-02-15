@@ -5,7 +5,7 @@
 
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}{{config('app.cssVersion')}}">
     <style type="text/css">
         sup {
             color: red;

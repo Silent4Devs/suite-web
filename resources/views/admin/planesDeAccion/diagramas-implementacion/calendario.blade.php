@@ -1,8 +1,8 @@
  <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
  <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
 
- <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/tui-calendar.css') }}">
- <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/default.css') }}">
+ <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/tui-calendar.css') }}{{config('app.cssVersion')}}">
+ <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/default.css') }}{{config('app.cssVersion')}}">
 
  <style type="text/css">
      .caja {
@@ -114,35 +114,38 @@
 
 
 
-    .tui-full-calendar-weekday-schedule-title{
-        position: relative;
-   }
-    .tui-full-calendar-weekday-schedule-title strong{
-        font-size: 9pt !important;
-        position: absolute;
-        right: 10px;
-   }
-    .tui-full-calendar-weekday-schedule-title strong:before{
-        content: "Inicio:  ";
-   }
-   .dropdown-menu.show{
-        width: 250px !important;
-   }
+     .tui-full-calendar-weekday-schedule-title {
+         position: relative;
+     }
+
+     .tui-full-calendar-weekday-schedule-title strong {
+         font-size: 9pt !important;
+         position: absolute;
+         right: 10px;
+     }
+
+     .tui-full-calendar-weekday-schedule-title strong:before {
+         content: "Inicio:  ";
+     }
+
+     .dropdown-menu.show {
+         width: 250px !important;
+     }
 
 
 
 
 
 
-   .i_calendar{
-        font-size: 11pt;
-        width: 20px;
-        text-align: center;
-   }
-   .i_calendar_cuadro{
-        margin: 0px 8px;
-   }
+     .i_calendar {
+         font-size: 11pt;
+         width: 20px;
+         text-align: center;
+     }
 
+     .i_calendar_cuadro {
+         margin: 0px 8px;
+     }
  </style>
 
  <div class="card" style="box-shadow: none;">
@@ -154,7 +157,8 @@
                      <div>
                          <div class="lnb-calendars-item">
                              <label>
-                                 <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
+                                 <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all"
+                                     checked>
                                  <span style="">
                                      <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver
                                          Todos</span>
@@ -250,7 +254,6 @@
  </div>
 
  @section('scripts')
-
      @parent
 
      <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
@@ -259,15 +262,15 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-business-days/1.2.0/index.min.js"
-          integrity="sha512-O4XvevLAh+LDhB7I+GjsQeHft1q7oJWMyNbvYYMeNUYoW5VWmj3nmiMrPFGnde6qZ8UlPpz8ySWQMTUNDM0HUA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+         integrity="sha512-O4XvevLAh+LDhB7I+GjsQeHft1q7oJWMyNbvYYMeNUYoW5VWmj3nmiMrPFGnde6qZ8UlPpz8ySWQMTUNDM0HUA=="
+         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
      <script src="{{ asset('../js/calendar_tui/tui-calendar.js') }}"></script>
      <script src="{{ asset('../js/calendar_tui/calendar_gantt.js') }}"></script>
      <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
 
      <script>
          $(document).ready(function() {
-             initCalendar();
+             //initCalendar();
          });
 
          function initCalendar() {
@@ -284,78 +287,57 @@
          }
 
          function renderCalendar(response) {
-             let tasks = response.tasks.filter(t => t.level > 0);
-             let data = tasks.map(task => {
+             const mapStatusToColor = {
+                 "STATUS_ACTIVE": "#ecde00",
+                 "STATUS_DONE": "#17d300",
+                 "STATUS_FAILED": "#e10000",
+                 "STATUS_SUSPENDED": "#e7e7e7",
+                 "STATUS_UNDEFINED": "#00b1e1"
+             };
 
+             const mapStatusToEstatus = {
+                 "STATUS_ACTIVE": "En progreso",
+                 "STATUS_DONE": "Completado",
+                 "STATUS_FAILED": "Con retraso",
+                 "STATUS_SUSPENDED": "Suspendida",
+                 "STATUS_UNDEFINED": "Sin iniciar"
+             };
+
+             const tasks = response.tasks.filter(t => t.level > 0);
+
+             const data = tasks.map(task => {
                  let foto = 'man.png';
                  let images = "";
-                 let assigs = [];
-                 if (task.assigs) {
-                     assigs = task.assigs.map(asignado => {
-                         return response.resources.find(r => Number(r.id) === Number(asignado.resourceId));
-                     });
-                 }
-                 let filteredAssigs = assigs.filter(function(a) {
-                     return a != null;
-                 });
-                 let bgColor = "#00b1e1";
-                 let estatus = "Sin iniciar";
-                 if (filteredAssigs.length > 0) {
-                     filteredAssigs.forEach(assig => {
-                         if (assig.foto == null) {
-                             if (assig.genero == 'M') {
-                                 foto = 'woman.png';
-                             } else {
-                                 foto = 'usuario_no_cargado.png';
-                             }
-                         } else {
-                             foto = assig.foto;
-                         }
+                 let estatus = mapStatusToEstatus[task.status] || "Sin iniciar";
 
+                 if (task.assigs) {
+                     const assigs = task.assigs.map(asignado =>
+                         response.resources.find(r => Number(r.id) === Number(asignado.resourceId))
+                     ).filter(a => a);
+
+                     assigs.forEach(assig => {
+                         foto = assig.foto || (assig.genero === 'M' ? 'woman.png' :
+                         'usuario_no_cargado.png');
                          images +=
                              `<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}" title="${assig.name}"/>`;
                      });
                  }
-                 switch (task.status) {
-                     case "STATUS_ACTIVE":
-                         bgColor = "#ecde00";
-                         estatus = "En progreso"
-                         break;
-                     case "STATUS_DONE":
-                         bgColor = "#17d300";
-                         estatus = "Completado"
-                         break;
-                     case "STATUS_FAILED":
-                         bgColor = "#e10000";
-                         estatus = "Con retraso"
-                         break;
-                     case "STATUS_SUSPENDED":
-                         bgColor = "#e7e7e7";
-                         estatus = "Suspendida"
-                         break;
-                     case "STATUS_UNDEFINED":
-                         bgColor = "#00b1e1";
-                         estatus = "Sin iniciar"
-                         break;
-                     default:
-                         bgColor = "#00b1e1";
-                         estatus = "Sin iniciar"
-                         break;
-                 }
+
+                 const bgColor = mapStatusToColor[task.status] || "#00b1e1";
+
                  return {
                      id: `r_${task.id}`,
                      calendarId: `${task.level == 1 ? '1': '2'}`,
-                     //  bgColor: bgColor,
                      title: `<i class="fas fa-thumbtack i_calendar_cuadro" style="color:#345183;"></i> ${task.level == 1 ? 'Fase: ': 'Actividad: '}${task.name}`,
                      category: 'allday',
-                     body: `${filteredAssigs.length > 0 ? "<h5>Responsables</h5>":""} ${images} <p>Estatus: <span class="badge ${task.status}">${estatus}</span></p>`,
+                     body: `${images ? "<h5>Responsables</h5>" + images : ""}<p>Estatus: <span class="badge ${task.status}">${estatus}</span></p>`,
                      dueDateClass: '',
                      start: `${moment.unix((task.start)/1000).format("YYYY-MM-DD")} 04:59:59`,
                      end: `${moment.unix((task.end)/1000).format("YYYY-MM-DD")} 05:00:00`,
                      isReadOnly: true,
                      disableClick: true,
                      useCreationPopup: true
-                 }
+                 };
              });
 
              ScheduleList = data;

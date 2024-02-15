@@ -30,7 +30,7 @@
             @csrf
             <div class="row mt-4">
                 <div class="form-group col-md-2 anima-focus">
-                    <input id="identificador_proyect" placeholder="" name="identificador" class="form-control" required
+                    <input id="identificador_proyect" placeholder="" name="identificador" title="Por favor, no incluyas comas en el nombre de la tarea." pattern="[^\.,]*" class="form-control" required
                     value="{{ old("identificador", $proyecto->identificador, '') }}">
                     {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('identificador'))

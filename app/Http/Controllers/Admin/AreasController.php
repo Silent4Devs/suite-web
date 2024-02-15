@@ -15,6 +15,7 @@ use Gate;
 use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
@@ -131,6 +132,10 @@ class AreasController extends Controller
             });
 
             $image->save($route);
+        } else {
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
         $area->update([

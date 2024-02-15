@@ -3,7 +3,7 @@
 @section('titulo', 'Ver Orden de Compra')
 
 @include('layouts.datatables_css')
-<link rel="stylesheet" href="{{asset('css/requisiciones.css')}}">
+<link rel="stylesheet" href="{{asset('css/requisiciones.css')}}{{config('app.cssVersion')}}">
 <style>
     .col{
         overflow-wrap: break-word;

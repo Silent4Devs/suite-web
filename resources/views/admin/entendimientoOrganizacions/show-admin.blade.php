@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/foda.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/foda.css') }}{{config('app.cssVersion')}}">
     <style>
         .aprobar {
             background-color: #00B212;
@@ -41,7 +41,7 @@
             <div>
                 <h5>SILENT 4 BUSINESS</h5>
                 <p>
-                    SILENT 4 BUSINEntendimiento de Organización: FODA Corporativo 2023 V3ESS
+                    SILENT 4 BUSINEntendimiento de Organización: {{ $obtener_FODA->analisis }}
                 </p>
             </div>
             <img src="{{ $logo_actual }}" alt="Logo de la empresa" height="150px">

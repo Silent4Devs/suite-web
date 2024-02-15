@@ -105,7 +105,6 @@ class AlcanceSgsiController extends Controller
         $empleados = Empleado::getAltaEmpleadosWithArea();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
-        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
@@ -146,8 +145,8 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'nombre' => 'required|string',
-            'alcancesgsi' => 'required|string',
+            'nombre' => 'required|string|max:255',
+            'alcancesgsi' => 'required|string|max:255',
             'fecha_publicacion' => 'required|date',
             'fecha_revision' => 'required|date',
         ]);
@@ -196,8 +195,8 @@ class AlcanceSgsiController extends Controller
     {
         abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
-            'alcancesgsi' => 'required|string',
+            'nombre' => 'required|string|max:255',
+            'alcancesgsi' => 'required|string|max:255',
             'fecha_publicacion' => 'required|date',
             'fecha_revision' => 'required|date',
         ]);
@@ -533,7 +532,7 @@ class AlcanceSgsiController extends Controller
                 'estatus' => 'Aprobado',
             ]);
             // dd($proceso, $alcance);
-            $this->correosAprobacion($proceso->id, $alcance);
+            $this->correosAprobacion($proceso, $alcance);
         } else {
             $this->siguienteCorreo($proceso, $alcance);
         }

@@ -11,6 +11,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class PlanesAccionController extends Controller
 {
@@ -317,32 +318,61 @@ class PlanesAccionController extends Controller
 
     public function loadProject($plan)
     {
-        $implementacion = PlanImplementacion::find($plan);
-        $tasks = $implementacion->tasks;
-        foreach ($tasks as $task) {
-            $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
+        //$implementacion = PlanImplementacion::find($plan);
+        //$users = DB::table('users')->select('name', 'email as user_email')->get();
+        $implementacion = DB::table('plan_implementacions')
+            ->select('*')
+            ->where('id', $plan)
+            ->first();
+
+        $tasks = json_decode($implementacion->tasks);
+        foreach (json_decode($implementacion->tasks) as $task) {
+            $task->status = $task->status ?? 'STATUS_UNDEFINED';
             $task->end = intval($task->end);
             $task->start = intval($task->start);
-            $task->canAdd = $task->canAdd == 'true' ? true : false;
-            $task->canWrite = $task->canWrite == 'true' ? true : false;
+            $task->canAdd = $task->canAdd === 'true';
+            $task->canWrite = $task->canWrite === 'true';
             $task->duration = intval($task->duration);
             $task->progress = intval($task->progress);
-            $task->canDelete = $task->canDelete == 'true' ? true : false;
-            isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
-            isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
-            if (isset($task->canAddIssue)) {
-                $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
-            }
-            if (isset($task->endIsMilestone)) {
-                $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
-            }
-            if (isset($task->startIsMilestone)) {
-                $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
-            }
-            if (isset($task->progressByWorklog)) {
-                $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
-            }
+            $task->canDelete = $task->canDelete === 'true';
+            $task->level = isset($task->level) ? intval($task->level) : 0;
+            $task->collapsed = isset($task->collapsed) ? $task->collapsed === 'true' : false;
+            $task->canAddIssue = isset($task->canAddIssue) ? $task->canAddIssue === 'true' : false;
+            $task->endIsMilestone = isset($task->endIsMilestone) ? $task->endIsMilestone === 'true' : false;
+            $task->startIsMilestone = isset($task->startIsMilestone) ? $task->startIsMilestone === 'true' : false;
+            $task->progressByWorklog = isset($task->progressByWorklog) ? $task->progressByWorklog === 'true' : false;
         }
+
+        $elaborador = DB::table('empleados')
+            ->select(
+                'id',
+                'name',
+                'n_registro',
+                'foto',
+                'puesto',
+                'estatus',
+                'telefono_movil',
+                'genero',
+                'n_empleado',
+                'supervisor_id',
+                'area_id',
+                'sede_id',
+                'puesto_id',
+                'perfil_empleado_id',
+                'tipo_contrato_empleados_id',
+                'proyecto_asignado',
+                'entidad_crediticias_id',
+                'semanas_min_timesheet',
+                'vacante_activa'
+            )->get();
+        $roles = DB::table('roles')
+            ->select(
+                'id',
+                'title as name'
+            )->get();
+
+        $implementacion->resources = $elaborador;
+        $implementacion->roles = $roles;
         $implementacion->tasks = $tasks;
 
         return $implementacion;

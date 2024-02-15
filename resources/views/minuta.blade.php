@@ -5,34 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Minuta</title>
+    <style>
+        body{
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
     <div class="card col-sm-12 col-md-10" style="border-radius: 0px; box-shadow: none; border-color:white; width:750px;">
         <div class="card-body">
             <div class="card mt-6" style="width:750px; display: flex; align-items: center;">
                 <div class="col-3" style="border-left: 25px solid #2395AA;">
-                    <img style="width:100%; max-width:100px; position: relative; left:1rem;" src="{{ asset('silent.png')}}">
-                    {{-- @if ($logo_actual)
-                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{public_path($logo_actual)}}">
+                    @php
+                    use App\Models\Organizacion;
+                    $organizacion = Organizacion::getFirst();
+                    $logotipo = $organizacion->logotipo;
+                    $empresa = $organizacion->empresa;
+                    @endphp
+                    @if ($logotipo)
+                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{ url($logotipo) }}">
                     @else
-                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
-                    @endif --}}
+                        <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                    @endif
                 </div>
-                <div class="col-4"  style="position: relative; top: -4rem; left: 9rem;">
-                    <span class="" style="color:black; font-size: 11px;">
+                <div class="col-4"  style="position: relative; top: -5rem; left: 9rem;">
+                    <span class="" style="color:black;">
                         {{ $empresa_actual }} <br>
                         RFC: {{ $rfc }} <br>
                         Av. Insurgentes Sur 2453 piso 4, <br> Colonia Tizapán San Ángel, <br> Álvaro Obregón, C.P. 01090, CDMX. <br>
                     </span>
                 </div>
-                <div class="col-4" style="background:#EEFCFF; width: 100%; height: 8%; position: relative; left: 23rem; top: -9rem;">
+                <div class="col-4" style="background:#EEFCFF; width: 100%; height: 8%; position: relative; left: 23rem; top: -10rem;">
                     <br>
                     <br>
                     <span style="color:#057BE2;"> <strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Minuta Revisión por Dirección</strong></span>
                 </div>
             </div>
             <div style="margin: 4%" style="position: relative; top: -7rem; right: 1rem;">
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="6"><center>Minuta reunión</center></th>
@@ -56,7 +66,7 @@
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="4"><center>Participantes</center></th>
@@ -66,17 +76,15 @@
                         <tr>
                             <td style="border: 1px solid #dddddd;">Nombre/Apellidos</td>
                             <td style="border: 1px solid #dddddd;">Puesto/Area</td>
-                            <td style="border: 1px solid #dddddd;">Asistencia</td>
                         </tr>
                         <tr>
                             <td style="border: 1px solid #dddddd;">{{$responsable->name}}</td>
                             <td style="border: 1px solid #dddddd;">{{$responsable->puesto}}</td>
-                            <td style="border: 1px solid #dddddd;">si</td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
                             <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="2"><center style="color: white;">Temas tratados</center></th>
@@ -84,38 +92,16 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="border: 1px solid #dddddd; padding: 26px;" colspan="2">
-                                <textarea style="width: 100%; height: 26rem; border: none; outline: none; resize: none; background-color: transparent;"> {!! strip_tags($minutas->tema_tratado) !!}</textarea>
+                            <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
+                                <div>
+                                    {!! strip_tags($minutas->tema_tratado) !!}
+                                </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 10px;">
-                    <thead>
-                        <tr>
-                            <th style="background-color: #306BA9; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;" colspan="5"><center>Acuerdos y Compromisos</center></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="border: 1px solid #dddddd;">Actividades</td>
-                            <td style="border: 1px solid #dddddd;">Responsable</td>
-                            <td style="border: 1px solid #dddddd;">Fecha compromiso</td>
-                            <td style="border: 1px solid #dddddd;">Estatus</td>
-                            <td style="border: 1px solid #dddddd;">Comentarios</td>
-                        </tr>
-                        <tr>
-                            <td style="border: 1px solid #dddddd;">.</td>
-                            <td style="border: 1px solid #dddddd;">{{$responsable->name}}</td>
-                            <td style="border: 1px solid #dddddd;">{{$minutas->fechareunion}}</td>
-                            <td style="border: 1px solid #dddddd;">{{$revision->estatus}}</td>
-                            <td style="border: 1px solid #dddddd;">{{$revision->cometarios}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd; font-size: 6px;">
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
                             <th style="background-color: white; padding: 8px; color: black;  border-top-right-radius: 10px;" colspan="6"><center>Anexo</center></th>
