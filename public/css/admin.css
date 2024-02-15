@@ -954,13 +954,50 @@ table.dataTable tr th {
 }
 
 .nav.nav-tabs {
-    margin-bottom: 30px !important;
+    position: relative;
+}
+
+.nav.nav-tabs .nav-link {
+    background-color: #F0F1FF !important;
+    color: #3086AF !important;
+    position: relative;
+    padding: 20px;
 }
 
 .nav.nav-tabs .nav-link.active {
-    background-color: #345183 !important;
-    color: #fff !important;
+    background-color: #F0F1FF !important;
+    color: #3086AF !important;
 }
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    border: 1px solid #00000000 !important;
+}
+
+.nav-tabs .nav-link:not(.nav-link:first-child)::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 20%;
+    width: 1px;
+    height: 60%;
+    background-color: #74b8d7;
+}
+
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+    border-color: #00000000 !important;
+}
+
+.line-active-nav {
+    width: 0px;
+    height: 1px;
+    background-color: #3086AF;
+    position: absolute;
+    transition: 0.4s;
+}
+
+/* ------------------------ */
 
 .ventana_menu ul {
     margin-top: 100px !important;
@@ -1107,7 +1144,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     display: grid !important;
     grid-template-areas: "input";
     position: relative !important;
-    margin-top: 12px;
+    /* margin-top: 12px; */
 }
 
 .anima-focus label,

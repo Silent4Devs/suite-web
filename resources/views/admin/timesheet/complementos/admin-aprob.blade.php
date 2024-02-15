@@ -51,14 +51,22 @@
 @if ($usuario->empleado)
     @if ($usuario->empleado->es_supervisor)
         <div class="modal-admin-time modal-aprobador invisible">
-            <button class="btn" style="position: absolute; right: 10px; top: 10px;"
+            <button class="btn  btn-close-time-config-aprob" style="position: absolute; right: 10px; top: 10px;"
                 onclick="document.querySelector('.modal-aprobador').classList.add('invisible');">
                 <i class="bi bi-x-lg text-white" style="font-size: 40px;"></i>
             </button>
 
-            <h3 class="text-white text-center" style="font-size:30px; margin-top: 100px;">Aprobador</h3>
+            <button class="btn btn-retreat-time-config-aprob d-none" style="position: absolute; right: 10px; top: 10px;"
+            onclick="reportesCardsAprob()">
+                <i class="bi bi-chevron-left text-white" style="font-size: 40px;"></i>
+            </button>
 
-            <div class="caja-cards-time-admin" style="gap: 60px; margin-top: 100px;">
+            <h3 class="text-white text-center title-aprob-time-config-aprob" style="font-size:30px; margin-top: 100px;">Aprobador</h3>
+
+            <h3 class="text-white text-center title-report-time-config-aprob d-none" style="font-size:30px; margin-top: 100px;">
+                Reportes</h3>
+
+            <div class="caja-cards-time-admin cards-config-config-aprob active" style="gap: 60px; margin-top: 100px;">
                 @can('timesheet_administrador_aprobar_rechazar_horas_access')
                     <a href="{{ route('admin.timesheet-aprobaciones') }}">
                         <div class="card-time-admin">
@@ -94,7 +102,7 @@
                     </a>
                 @endcan
                 @can('timesheet_administrador_reportes_aprobador_access')
-                    <a href="{{ route('admin.timesheet-reporte-aprobador', $usuario->empleado->id) }}">
+                    <a href="#" onclick="reportesCardsAprob()">
                         <div class="card-time-admin">
                             <div class="img-card-time-admin">
                                 <img src="{{ asset('img/iso/iso25.webp') }}" alt="">
@@ -106,6 +114,51 @@
                     </a>
                 @endcan
             </div>
+            @can('timesheet_administrador_reportes_aprobador_access')
+                <div class="d-flex justify-content-center w-100 px-5 flex-wrap cards-reportes-config-aprob"
+                    style="gap: 60px; margin-top: 100px;">
+                    <a href="{{ route('admin.timesheet-reportes-registros') }}">
+                        <div class="card-time-admin">
+                            <div class="img-card-time-admin">
+                                <img src="{{ asset('img/iso/iso3.webp') }}" alt="">
+                            </div>
+                            <div class="info-card-time-admin">
+                                <h5>Registros Timesheet</h5>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.timesheet-reportes-empleados') }}">
+                        <div class="card-time-admin">
+                            <div class="img-card-time-admin">
+                                <img src="{{ asset('img/iso/iso7.webp') }}" alt="">
+                            </div>
+                            <div class="info-card-time-admin">
+                                <h5>Registros por área</h5>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.timesheet-reportes-proyectos') }}">
+                        <div class="card-time-admin">
+                            <div class="img-card-time-admin">
+                                <img src="{{ asset('img/iso/iso12.webp') }}" alt="">
+                            </div>
+                            <div class="info-card-time-admin">
+                                <h5>Proyectos</h5>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.timesheet-reportes-proyemp') }}">
+                        <div class="card-time-admin">
+                            <div class="img-card-time-admin">
+                                <img src="{{ asset('img/iso/iso22.webp') }}" alt="">
+                            </div>
+                            <div class="info-card-time-admin">
+                                <h5>Registros Colaboradores Tareas</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endcan
         </div>
     @endif
 @endif
@@ -265,5 +318,14 @@
 
         document.querySelector('.btn-close-time-config').classList.toggle('d-none');
         document.querySelector('.btn-retreat-time-config').classList.toggle('d-none');
+    }
+    function reportesCardsAprob() {
+        document.querySelector('.cards-reportes-config-aprob').classList.toggle('active');
+        document.querySelector('.cards-config-config-aprob').classList.toggle('active');
+        document.querySelector('.title-aprob-time-config-aprob').classList.toggle('d-none');
+        document.querySelector('.title-report-time-config-aprob').classList.toggle('d-none');
+
+        document.querySelector('.btn-close-time-config-aprob').classList.toggle('d-none');
+        document.querySelector('.btn-retreat-time-config-aprob').classList.toggle('d-none');
     }
 </script>
