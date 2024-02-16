@@ -3,10 +3,10 @@
         <div>
             @section('first-blue-card-header')
                 <div class="d-flex align-items-center" style="gap: 30px;">
-                    <div class="form-group anima-focus" wire:ignore>
+                    <div class="form-group anima-focus" wire:ignore style="margin-bottom: 0px !important;">
 
                         <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" placeholder="">
-                        <label>
+                        <label style="border-radius: 100px !important;">
                             <i class="fa-regular fa-calendar"></i>
                             Semana laboral
                         </label>
