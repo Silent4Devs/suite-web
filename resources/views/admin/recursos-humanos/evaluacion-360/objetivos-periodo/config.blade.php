@@ -50,6 +50,7 @@
                         <div class="info-first-config">
                             <h4 class="title-config">Categorias</h4>
                             <p>Da de alta los grupos en los que clasificaras los objetivos.</p>
+                            <hr class="my-4">
                         </div>
 
                         <div class="grid-config-categorias mt-4">
@@ -89,6 +90,7 @@
                     <div class="info-first-config">
                         <h4 class="title-config">Escalas de medición</h4>
                         <p>Define los Valores y Escalas con los que se medirán los objetivos.</p>
+                        <hr class="my-4">
                     </div>
 
                     <div class="">
@@ -96,6 +98,7 @@
                             Rango <br>
                             Especifica el valor mínimo y máximo que tendrá la escala de medición
                         </p>
+
                         <div class="d-flex" style="gap: 10px;">
                             <div class="form-group anima-focus" style="width: 100px;">
                                 <input type="text" class="form-control" placeholder="">
@@ -111,22 +114,29 @@
                             Escalas <br>
                             Define las escalas de medición y asigna su Valor y Nombre
                         </p>
-                        <div class="d-flex" style="gap: 10px;">
-                            <div class="form-group anima-focus" style="width: 100px;">
-                                <input type="text" class="form-control" placeholder="">
-                                <label for="">Valor*</label>
-                            </div>
-                            <div class="form-group anima-focus" style="width: 300px;">
-                                <input type="text" class="form-control" placeholder="">
-                                <label for="">Nombre de la escala*</label>
-                            </div>
-                            <div class="form-group anima-focus" style="width: 100px;">
-                                <input type="text" class="form-control" placeholder="">
-                                <label for="">Color</label>
+                        <div class="caja-items-config-escalas">
+                            <div class="item-config-escala">
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <div class="form-group anima-focus" style="width: 100px;">
+                                        <input type="text" class="form-control" placeholder="">
+                                        <label for="">Valor*</label>
+                                    </div>
+                                    <div class="form-group anima-focus" style="width: 300px;">
+                                        <input type="text" class="form-control" placeholder="">
+                                        <label for="">Nombre de la escala*</label>
+                                    </div>
+                                    <div class="form-group anima-focus" style="width: 100px;">
+                                        <input type="color" class="form-control" placeholder="">
+                                        <label for="">Color</label>
+                                    </div>
+                                    <div class="btn-delete-escala">
+                                        <i class="material-symbols-outlined" title="Eliminar" onclick="deleteItem('item-config-escala')">delete</i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center mt-4" style="color: #006DDB; gap: 10px; cursor: pointer;" onclick="addCategoria()">
+                            <div class="d-flex align-items-center mt-4" style="color: #006DDB; gap: 10px; cursor: pointer;" onclick="addItem('item-config-escala', 'caja-items-config-escalas')">
                                 <span class="material-symbols-outlined">add_circle</span>
                                 Agregar Categoría
                             </div>
@@ -140,15 +150,57 @@
 
                 <div class="tab-pane mb-4 fade" id="nav-config-obj-3" role="tabpanel" aria-labelledby="nav-config-obj-3">
                     <div class="info-first-config">
-                        <h4 class="title-config">Categorias</h4>
-                        <p>Da de alta los grupos en los que clasificaras los objetivos.</p>
+                        <h4 class="title-config">Permisos</h4>
+                        <p>Define que perfiles podrán cargar objetivos en la plantilla</p>
+                        <hr class="my-4">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <strong>Administradores</strong>
+                            <div>
+                                <input type="checkbox">
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            Los administradores definidos en la lista de distribución podrán realizar la carga de objetivos.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <strong>Jefes inmediatos</strong>
+                            <div>
+                                <input type="checkbox">
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            Al habilitar esta opción, los jefes de cada área podrán realizar la carga de los objetivos de sus subordinados.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <strong>Colaboradores</strong>
+                            <div>
+                                <input type="checkbox">
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            Al habilitar esta opción, todos los colaboradores de la organización podrán cargar sus objetivos. (Estos se enviaran a su aprobación al jefe inmediato)
+                            <div class="d-flex">
+                                <label for="">Objetivos</label>
+                                <input type="checkbox">
+
+                                <label for="" class="ml-5">Escalas</label>
+                                <input type="checkbox">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="tab-pane mb-4 fade" id="nav-config-obj-4" role="tabpanel" aria-labelledby="nav-config-obj-4">
                     <div class="info-first-config">
-                        <h4 class="title-config">Categorias</h4>
-                        <p>Da de alta los grupos en los que clasificaras los objetivos.</p>
+                        <h4 class="title-config">Habilitar periodo de carga de objetivos</h4>
+                        <hr class="my-4">
                     </div>
                 </div>
 
