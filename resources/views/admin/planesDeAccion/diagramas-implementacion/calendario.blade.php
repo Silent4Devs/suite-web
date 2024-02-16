@@ -11,6 +11,25 @@
         max-width: 1100px;
         margin: -2px auto;
     }
+
+    .popover-title {
+        font-weight: bold;
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .popover-content {
+        color: #333;
+    }
+
+    .popover {
+        max-width: 250px;
+        width: auto;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
 </style>
 
 <div class="card" style="box-shadow: none; !important">
@@ -79,21 +98,14 @@
                     title: name,
                     color: mapStatusToColor[status] || "#00b1e1",
                     start: start,
-                    end: end
+                    end: end,
+                    extendedProps: {
+                        status: mapStatusToEstatus[status]
+                    }
                 };
 
                 eventsCalendar.push(jsonEvents);
             });
-            // Obtener la fecha actual
-            const fechaActual = new Date();
-            // Obtener los componentes de la fecha (año, mes, día)
-            const year = fechaActual.getFullYear();
-            const month = String(fechaActual.getMonth() + 1).padStart(2,
-                '0'); // Se suma 1 al mes ya que los meses se cuentan desde 0 (enero es 0)
-            const day = String(fechaActual.getDate()).padStart(2, '0');
-            // Formatear la fecha en el formato 'YYYY-MM-DD'
-            const fechaFormateada = `${year}-${month}-${day}`;
-
 
             var calendarEl = document.getElementById('calendar');
             calendar = new FullCalendar.Calendar(calendarEl, {
@@ -108,13 +120,29 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
                 initialView: 'dayGridMonth',
-                initialDate: fechaFormateada,
+                initialDate: obtenerFechaActual(),
                 navLinks: false, // can click day/week names to navigate views
                 editable: false,
                 selectable: false,
                 nowIndicator: true,
                 dayMaxEvents: true, // allow "more" link when too many events
-                events: this.eventsCalendar,
+                eventDidMount: function(info) {
+                    $(info.el).popover({
+                        title: info.event.title,
+                        placement: 'top',
+                        trigger: 'hover',
+                        content: '<div style="font-family: Arial, sans-serif; font-size: 14px; padding: 5px;">' +
+                            '<p><strong>Estado:</strong> ' + info.event.extendedProps.status + '</p>' +
+                            '<p><strong>Fecha inicial:</strong> ' + convertirFecha(info.event.start) +
+                            '</p>' +
+                            '<p><strong>Fecha final:</strong> ' + convertirFecha(info.event.end) +
+                            '</p>' +
+                            '</div>',
+                        container: 'body',
+                        html: true
+                    });
+                },
+                events: eventsCalendar,
                 eventClick: function(info) {
                     alert('Event: ' + info.event.title);
                     alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
@@ -139,6 +167,40 @@
                 calendar.setOption('locale', 'es');
                 console.log('ejecutado');
             }, tiempoEspera);
+        }
+
+        function convertirFecha(cadenaFecha) {
+            // Crear un objeto de fecha a partir de la cadena
+            var fecha = new Date(cadenaFecha);
+
+            // Obtener los componentes de la fecha
+            var dia = fecha.getDate();
+            var mes = fecha.getMonth() + 1; // Los meses van de 0 a 11, por lo que sumamos 1
+            var año = fecha.getFullYear();
+
+            // Asegurarnos de que los valores tengan dos dígitos (por ejemplo, '05' en lugar de '5')
+            dia = (dia < 10) ? '0' + dia : dia;
+            mes = (mes < 10) ? '0' + mes : mes;
+
+            // Formatear la fecha como 'dd/mm/aaaa'
+            var fechaFormateada = dia + '/' + mes + '/' + año;
+
+            // Retornar la fecha formateada
+            return fechaFormateada;
+        }
+
+        function obtenerFechaActual() {
+            // Obtener la fecha actual
+            const fechaActual = new Date();
+
+            // Formatear la fecha en el formato deseado (por ejemplo, YYYY-MM-DD)
+            const dia = String(fechaActual.getDate()).padStart(2, '0');
+            const mes = String(fechaActual.getMonth() + 1).padStart(2,
+                '0'); // El mes es devuelto de 0 a 11, por eso se suma 1
+            const anio = fechaActual.getFullYear();
+
+            // Retornar la fecha formateada
+            return `${anio}-${mes}-${dia}`;
         }
     </script>
 @endsection
