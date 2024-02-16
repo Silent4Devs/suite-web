@@ -30,7 +30,7 @@
                         <tr>
                             <th>Fin de semana </th>
                             <th>Estatus</th>
-                            <th>opciones</th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
 
