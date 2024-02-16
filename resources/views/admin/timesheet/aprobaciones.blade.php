@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     {{ Breadcrumbs::render('timesheet-aprobaciones') }}
@@ -10,9 +10,9 @@
 
     <x-loading-indicator />
 
-    @include('admin.timesheet.complementos.cards')
+    {{-- @include('admin.timesheet.complementos.cards') --}}
     @include('admin.timesheet.complementos.admin-aprob')
-    @include('admin.timesheet.complementos.blue-card-header')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
     <div class="card card-body">
         <div class="row">
             <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">

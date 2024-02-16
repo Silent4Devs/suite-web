@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     {{ Breadcrumbs::render('timesheet-rechazos') }}
@@ -8,9 +8,9 @@
     <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Aprobados</font>
     </h5>
 
-    @include('admin.timesheet.complementos.cards')
+    {{-- @include('admin.timesheet.complementos.cards') --}}
     @include('admin.timesheet.complementos.admin-aprob')
-    @include('admin.timesheet.complementos.blue-card-header')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     <div class="card card-body">
         <div class="row">
