@@ -23,13 +23,13 @@
                     $empresa = $organizacion->empresa;
                     @endphp
                     @if ($logotipo)
-                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{ public_path('images/'.$logotipo) }}">
+                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{ url($logotipo) }}">
                     @else
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </div>
                 <div class="col-4"  style="position: relative; top: -5rem; left: 9rem;">
-                    <span class="" style="color:black;">
+                    <span>
                         {{ $empresa_actual }} <br>
                         RFC: {{ $rfc }} <br>
                         Av. Insurgentes Sur 2453 piso 4, <br> Colonia Tizapán San Ángel, <br> Álvaro Obregón, C.P. 01090, CDMX. <br>
@@ -104,7 +104,7 @@
                 <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                     <thead>
                         <tr>
-                            <th style="background-color: white; padding: 8px; color: black;  border-top-right-radius: 10px;" colspan="6"><center>Anexo</center></th>
+                            <th style="background-color: white; padding: 8px;  border-top-right-radius: 10px;" colspan="6"><center>Anexo</center></th>
                         </tr>
                     </thead>
                     <tbody>

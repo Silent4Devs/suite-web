@@ -11,14 +11,14 @@
     </script>
 
     <h5 class="col-12 titulo_general_funcion">
-        TimeSheet: <font style="font-weight:lighter;">Dashboard</font>
+        Timesheet: <font style="font-weight:lighter;">Dashboard</font>
     </h5>
 
-    @include('admin.timesheet.complementos.cards')
+    {{-- @include('admin.timesheet.complementos.cards') --}}
     @include('admin.timesheet.complementos.admin-aprob')
-    @include('admin.timesheet.complementos.blue-card-header')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
     <div class="mt-5">
-        <nav class="mt-4 d-flex justify-content-between">
+        <nav class="mt-4 d-flex justify-content-center">
             <div class="nav nav-tabs" id="tabsIso27001" role="tablist">
                 @can('visualizar_registros_dashboard_timesheet')
                     <a class="nav-link active" id="nav-registros-tab" data-type="registros" data-toggle="tab"
@@ -43,18 +43,18 @@
 
         <div class="tab-content" id="nav-tabContent">
             @can('visualizar_registros_dashboard_timesheet')
-                <div class="tab-pane mb-4 fade p-4 show active" id="nav-registros" role="tabpanel"
+                <div class="tab-pane mb-4 fade show active" id="nav-registros" role="tabpanel"
                     aria-labelledby="nav-registros-tab">
                     @include('admin.timesheet.dashboard.general')
                 </div>
             @endcan
             @can('visualizar_registros_dashboard_empleados_timesheet')
-                <div class="tab-pane mb-4 fade p-4" id="nav-empleados" role="tabpanel" aria-labelledby="nav-empleados-tab">
+                <div class="tab-pane mb-4 fade" id="nav-empleados" role="tabpanel" aria-labelledby="nav-empleados-tab">
                     @include('admin.timesheet.dashboard.empleados')
                 </div>
             @endcan
             @can('visualizar_registros_dashboard_proyectos_timesheet')
-                <div class="tab-pane mb-4 fade p-4" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
+                <div class="tab-pane mb-4 fade" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
                     @include('admin.timesheet.dashboard.proyectos')
                 </div>
             @endcan

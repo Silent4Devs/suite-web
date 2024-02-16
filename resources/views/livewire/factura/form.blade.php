@@ -8,6 +8,11 @@
             margin-right: 18px;
         }
     </style>
+     @if (session('mensajeError'))
+     <div class="alert alert-danger">
+         {{ session('mensajeError') }}
+     </div>
+     @endif
     <section id="form_factura">
         <div>
             <!-- No Contrato Field -->
@@ -16,7 +21,7 @@
                 <div class="distancia form-group col-md-6">
                     <label for="no_contrato" class="txt-tamaño">No.
                         factura<font class="asterisco">*</font></label>
-                    <input type="text" maxlength="50" wire:model.defer="no_factura" class="form-control" required>
+                    <input type="text" maxlength="250" wire:model.defer="no_factura" class="form-control" required>
                     @error('no_factura')
                         <span class="red-text">{{ $message }}</span>
                     @enderror
@@ -26,7 +31,7 @@
                     {{-- Monto Factura --}}
                     <label for="no_contrato" class="txt-tamaño">Monto
                         factura<font class="asterisco">*</font></label>
-                    <input type="number" min="0" wire:model.defer="monto_factura" id="monto_factura"
+                    <input type="number" maxlength="250" min="0" wire:model.defer="monto_factura" id="monto_factura"
                         class="form-control" required>
                     @error('monto_factura')
                         <span class="red-text">{{ $message }}</span>
@@ -41,7 +46,7 @@
                         <label for="no_contrato" class="txt-tamaño">Fecha
                             recepción<font class="asterisco">*
                             </font></label>
-                        <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_recepcion"
+                        <input id="" type="date"  min="1945-01-01" wire:model.defer="fecha_recepcion"
                             class="form-control" style="margin-bottom: 0" required>
                     </div>
                     @error('fecha_recepcion')
@@ -68,7 +73,7 @@
                     <label for="no_contrato" class="txt-tamaño">Concepto
                         <font class="asterisco">*</font>
                     </label><br>
-                    <textarea class="form-control" wire:model.defer="concepto" required></textarea>
+                    <textarea class="form-control" maxlength="550" wire:model.defer="concepto" required></textarea>
                     @error('concepto')
                         <span class="red-text">{{ $message }}</span>
                     @enderror

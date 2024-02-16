@@ -10,11 +10,14 @@ analisis brecha
 
     <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
     <style>
+
+        body{
+            font-size: 7px;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            font-size: 7px;
         }
 
         th, td {
@@ -52,14 +55,14 @@ analisis brecha
                     @endphp
 
                     @if ($logotipo)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset($logotipo) }}">
+                    <img style="width:100%; max-width:100px; position: relative; left:2rem;"  src="{{ url($logotipo) }}">
                     @else
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </td>
                 <td class="info-header">
                     <div style="position: relative; left: 3rem; text-align: justify;">
-                        <p style="font-size: 15px;">
+                        <p style="font-size: 8px;">
                             {{$organizacions->empresa}} <br>
                             RFC:{{$organizacions->rfc}} <br>
                             Av. Insurgentes Sur 2453 piso 4,<br> Colonia Tizapán San Ángel, <br> Álvaro Obregón, C.P. 01090, CDMX <br></p>
@@ -78,33 +81,33 @@ analisis brecha
         <table>
             <thead>
                 <tr>
-                    <th>Identificador</th>
+                    <th style="width: 50%;">Identificador</th>
                     {{-- <th>Razon Social</th> --}}
-                    <th>Nombre</th>
-                    <th>RFC</th>
-                    <th>Calle</th>
-                    <th>Colonia</th>
-                    <th>Ciudad</th>
-                    <th>Codigo postal</th>
-                    <th>Telefono</th>
-                    <th>Pagina web</th>
-                    <th>Nombre Contacto</th>
-                    <th>Puesto Contacto</th>
-                    <th>Correo</th>
-                    <th>Celular</th>
-                    <th>Objeto</th>
-                    <th>Cobertura</th>
+                    <th style="width: 50%;">Nombre</th>
+                    <th style="width: 50%;">RFC</th>
+                    <th style="width: 50%;">Calle</th>
+                    <th style="width: 50%;">Colonia</th>
+                    <th style="width: 50%;">Ciudad</th>
+                    <th style="width: 50%;">Codigo postal</th>
+                    <th style="width: 50%;">Telefono</th>
+                    <th style="width: 50%;">Pagina web</th>
+                    <th style="width: 50%;">Nombre Contacto</th>
+                    <th style="width: 50%;">Puesto Contacto</th>
+                    <th style="width: 50%;">Correo</th>
+                    <th style="width: 50%;">Celular</th>
+                    <th style="width: 50%;">Objeto</th>
+                    <th style="width: 50%;">Cobertura</th>
                 </tr>
             </thead>
             <tbody>
 
                 @foreach ($timesheetCliente as  $timesheetCl)
                     <tr>
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->identificador)
-                            {{ substr($timesheetCl->identificador, 0, 12) }}
+                            <center>   {{ substr($timesheetCl->identificador, 0, 12) }} </center>
                             @else
-                                No hay registro
+                            <center>   No hay registro </center>
                             @endif
 
                         </td>
@@ -115,115 +118,115 @@ analisis brecha
                                 No hay registro
                             @endif
                         </td> --}}
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->nombre)
-                            {{ substr($timesheetCl->nombre, 0, 12) }}
+                            <center>   {{ substr($timesheetCl->nombre, 0, 12) }} </center>
                             @else
-                                No hay registro
+                            <center>    No hay registro </center>
                             @endif
                         </td>
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->rfc)
-                            {{ substr($timesheetCl->rfc, 0, 15) }}
+                            <center>  {{ substr($timesheetCl->rfc, 0, 15) }} </center>
                             @else
-                                No hay registro
+                            <center>      No hay registro </center>
                             @endif
                         </td>
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->calle)
-                            {{ substr($timesheetCl->calle, 0, 12) }}
+                            <center>  {{ substr($timesheetCl->calle, 0, 12) }} </center>
                             @else
-                                No hay registro
+                            <center>    No hay registro </center>
                             @endif
                         </td>
 
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->colonia)
-                            {{ substr($timesheetCl->colonia, 0, 12) }}
+                            <center>   {{ substr($timesheetCl->colonia, 0, 12) }} </center>
                             @else
-                                No hay registro
+                            <center>    No hay registro </center>
                             @endif
                         </td>
 
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->ciudad)
-                            {{ substr($timesheetCl->ciudad, 0, 12) }}
+                            <center>   {{ substr($timesheetCl->ciudad, 0, 12) }} </center>
                             @else
-                                No hay registro
+                            <center>      No hay registro </center>
                             @endif
                         </td>
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->codigo_postal)
-                            {{ substr($timesheetCl->codigo_postal, 0, 12) }}
+                            <center>   {{ substr($timesheetCl->codigo_postal, 0, 12) }} </center>
                             @else
-                                No hay registro
+                            <center>    No hay registro </center>
                             @endif
                         </td>
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->telefono)
-                            {{ substr($timesheetCl->telefono, 0, 12) }}
+                            <center>   {{ substr($timesheetCl->telefono, 0, 12) }} </center>
                             @else
-                                No hay registro
+                            <center>     No hay registro </center>
                             @endif
                         </td>
-                        <td style="width: 60%;">
+                        <td>
                             @if ($timesheetCl->pagina_web)
-                            {{$timesheetCl->pagina_web}}
+                            <center>    {{$timesheetCl->pagina_web}} </center>
                             @else
-                                No hay registro
+                            <center>    No hay registro </center>
                             @endif
                         </td>
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->nombre_contanto)
-                            {{ substr($timesheetCl->nombre_contanto, 0, 15) }}
+                            <center>  {{ substr($timesheetCl->nombre_contanto, 0, 15) }} </center>
                             @else
-                                No hay registro
+                            <center>     No hay registro </center>
                             @endif
                         </td>
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->puesto_contanto)
-                            {{ substr($timesheetCl->puesto_contanto, 0, 15) }}
+                            <center>   {{ substr($timesheetCl->puesto_contanto, 0, 15) }} </center>
                             @else
-                                No hay registro
+                            <center>   No hay registro </center>
                             @endif
                         </td>
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->correo_contanto)
-                            {{ substr($timesheetCl->correo_contanto, 0, 25) }}
+                            <center>  {{ substr($timesheetCl->correo_contanto, 0, 25) }} </center>
                             @else
-                                No hay registro
+                            <center>   No hay registro </center>
                             @endif
                         </td>
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->celular_contanto)
-                            {{ substr($timesheetCl->celular_contanto, 0, 10) }}
+                            <center>  {{ substr($timesheetCl->celular_contanto, 0, 10) }} </center>
                             @else
-                                No hay registro
+                            <center>    No hay registro </center>
                             @endif
                         </td>
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->objeto_descripcion)
-                            {{ substr($timesheetCl->objeto_descripcion, 0, 15) }}
+                            <center>  {{ substr($timesheetCl->objeto_descripcion, 0, 15) }} </center>
                             @else
-                                No hay registro
+                            <center>   No hay registro </center>
                             @endif
                         </td>
 
-                        <td style="width: 30%;">
+                        <td>
                             @if ($timesheetCl->cobertura)
-                            {{ substr($timesheetCl->cobertura, 0, 15) }}
+                            <center>   {{ substr($timesheetCl->cobertura, 0, 15) }} </center>
                             @else
-                                No hay registro
+                            <center>   No hay registro </center>
                             @endif
                         </td>
                     </tr>

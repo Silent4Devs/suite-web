@@ -351,6 +351,7 @@ table th i {
 .tabla-fixed tr td {
     background-color: #fff !important;
 }
+
 /*
 .tabla-fixed tr:nth-child(even) td {
     background-color: #eee !important;
@@ -558,8 +559,9 @@ table.dataTable tbody tr.selected td {
     left: 0;
     margin-top: -80px;
     z-index: 10;
-    background-color: #fff;
+    background-color: #7195C9;
     border: 1px solid #bdbdbd;
+    color: #fff;
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
     display: flex;
@@ -573,6 +575,8 @@ table.dataTable tbody tr.selected td {
 .option-fixed-admin:hover {
     transform: translateX(0px);
     border: 1px solid #25ACC1;
+    background-color: #fff;
+    color: #656565;
 }
 
 .option-fixed-admin img {
@@ -699,33 +703,39 @@ table.dataTable tbody tr.selected td {
     text-wrap: balance;
 }
 
-.cards-config-config {
+.cards-config-config,
+.cards-config-config-aprob {
     visibility: hidden;
     position: absolute;
     transform: translateY(200px);
-    transition: 0.3s;
+    transition: 0s;
     opacity: 0;
 }
 
-.cards-config-config.active {
+.cards-config-config.active,
+.cards-config-config-aprob.active {
     visibility: visible;
     position: relative;
     transform: translateY(0px);
+    transition: 0.3s;
     opacity: 1;
 }
 
-.cards-reportes-config {
+.cards-reportes-config,
+.cards-reportes-config-aprob {
     visibility: hidden;
     position: absolute;
     transform: translateY(-200px);
-    transition: 0.3s;
+    transition: 0s;
     opacity: 0;
 }
 
-.cards-reportes-config.active {
+.cards-reportes-config.active,
+.cards-reportes-config-aprob.active {
     visibility: visible;
     position: relative;
     transform: translateY(0px);
+    transition: 0.3s;
     opacity: 1;
 }
 

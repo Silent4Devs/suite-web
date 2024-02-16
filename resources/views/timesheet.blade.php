@@ -51,14 +51,14 @@ analisis brecha
                     $empresa = $organizacion->empresa;
                     @endphp
                     @if ($logotipo)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ asset($logotipo) }}">
+                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ url($logotipo) }}">
                     @else
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </td>
                 <td class="info-header">
                     <div style="position: relative; left: 3rem; text-align: justify;">
-                        <p style="font-size: 15px;">
+                        <p style="font-size: 12px;">
                             {{$organizacions->empresa}} <br>
                             RFC:{{$organizacions->rfc}} <br>
                             Av. Insurgentes Sur 2453 piso 4, Colonia Tizapán San Ángel,
@@ -75,7 +75,7 @@ analisis brecha
         <br>
         <h2>TimeSheet</h2>
 
-        <table>
+        <table style="font-size: 12px;">
             <thead>
                 <tr>
                     <th>Proyecto</th>
@@ -96,8 +96,8 @@ analisis brecha
 
                 @foreach ($timesheet->horas as  $timesh)
                     <tr>
-                        <td style="width: 20%;">{{$timesh->proyecto->proyecto}}</td>
-                        <td style="width: 25%;">{{$timesh->tarea->tarea}}</td>
+                        <td style="width: 20%;">{{ substr($timesh->proyecto->proyecto, 0, 15) }}</td>
+                        <td style="width: 25%;">{{ substr($timesh->tarea->tarea, 0, 15) }}</td>
                         <td style="width: 10%;">{{$timesh->facturable}}</td>
                         <td style="width: 10%;">{{$timesh->horas_lunes}}</td>
                         <td style="width: 10%;">{{$timesh->horas_martes}}</td>
@@ -106,7 +106,7 @@ analisis brecha
                         <td style="width: 10%;">{{$timesh->horas_viernes}}</td>
                         <td style="width: 10%;">{{$timesh->horas_sabado}}</td>
                         <td style="width: 10%;">{{$timesh->horas_domingo}}</td>
-                        <td style="width: 28%;">{{$timesh->descripcion}}</td>
+                        <td style="width: 28%;">{{ substr($timesh->descripcion, 0, 40) }}</td>
                         <td style="width: 10%;">{{$timesh->horas_totales_tarea}}</td>
                     </tr>
                 @endforeach

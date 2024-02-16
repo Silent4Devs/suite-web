@@ -176,12 +176,10 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-
-                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
+                    $img_intervention = Image::make($request->snap_foto);
+                    $img_intervention->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    });
-
-                    $img_intervention->save($route);
+                    })->encode('png', 70)->save($route);
                 }
             }
         } elseif ($request->snap_foto && ! $request->file('foto')) {
@@ -193,12 +191,10 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-
-                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
+                    $img_intervention = Image::make($request->snap_foto);
+                    $img_intervention->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    });
-
-                    $img_intervention->save($route);
+                    })->encode('png', 70)->save($route);
                 }
             }
         } else {
@@ -209,12 +205,10 @@ class EmpleadoController extends Controller
                 $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
-
-                $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
+                $img_intervention = Image::make($request->file('foto'));
+                $img_intervention->resize(480, null, function ($constraint) {
                     $constraint->aspectRatio();
-                });
-
-                $img_intervention->save($route);
+                })->encode('png', 70)->save($route);
             }
         }
 
@@ -1107,16 +1101,13 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
+                    $img_intervention = Image::make($request->snap_foto);
+                    $img_intervention->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    });
-
-                    $img_intervention->save($route);
+                    })->encode('png', 70)->save($route);
                 }
             }
-        } elseif (
-            $request->snap_foto && ! $request->file('foto')
-        ) {
+        } elseif ($request->snap_foto && ! $request->file('foto')) {
             if ($request->snap_foto) {
                 if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
@@ -1125,26 +1116,24 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
+                    $img_intervention = Image::make($request->snap_foto);
+                    $img_intervention->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
-                    });
-
-                    $img_intervention->save($route);
+                    })->encode('png', 70)->save($route);
                 }
             }
         } else {
-            if ($request->file('foto')) {
+            if ($request->file('foto') != null or ! empty($request->file('foto'))) {
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
                 $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
-                $new_name_image = 'UID_'.$empleado->id.'_'.$request->name.'.'.$extension;
+                $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.'.$extension;
                 $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->snap_foto)->encode('png', 70)->resize(480, null, function ($constraint) {
+                $img_intervention = Image::make($request->file('foto'));
+                $img_intervention->resize(480, null, function ($constraint) {
                     $constraint->aspectRatio();
-                });
-
-                $img_intervention->save($route);
+                })->encode('png', 70)->save($route);
             }
         }
 
@@ -1384,7 +1373,7 @@ class EmpleadoController extends Controller
                 $constraint->aspectRatio();
             });
 
-            $img_intervention->save($route);
+            $img_intervention->encode('png', 70)->save($route);
             $empleado->update([
                 'foto' => $new_name_image,
             ]);
