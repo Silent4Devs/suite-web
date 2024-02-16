@@ -230,7 +230,7 @@
                         class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
                     <a href="#" data-tabs="tabla_gantt" onclick="cambiarTitulo('Tabla');"
                         class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
-                    <a href="#" data-tabs="calendario_gantt" onclick="cambiarTitulo('Calendario');"
+                    <a href="#" data-tabs="calendario_gantt" onclick="renderCaleendar();cambiarTitulo('Calendario');"
                         class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
                     <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');"
                         class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
