@@ -1,35 +1,37 @@
 <div>
     <x-loading-indicator />
-    <div class="row">
-        <div class="col-md-6 form-group" style="padding-left:0px !important;">
-            <label class="form-label">Estatus</label>
-            <select class="form-control" wire:model="estatus">
-                <option selected value="todos">Todos</option>
-                <option value="proceso">En Proceso</option>
-                <option value="terminado">Terminados</option>
-                <option value="cancelado">Cancelados</option>
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-md-6 form-group" style="padding-left:0px !important;">
+                <label class="form-label">Estatus</label>
+                <select class="form-control" wire:model="estatus">
+                    <option selected value="todos">Todos</option>
+                    <option value="proceso">En Proceso</option>
+                    <option value="terminado">Terminados</option>
+                    <option value="cancelado">Cancelados</option>
+                </select>
+            </div>
+            <div class="col-md-6 form-group" style="padding-left:0px !important;">
+            <label class="form-label">Proyecto</label>
+            <select class="form-control" wire:model="proy_id">
+                <option value="0" selected>Seleccione un proyecto</option>
+                @foreach ($lista_proyectos as $pro)
+                    <option value="{{ $pro->id }}">{{$pro->identificador}} - {{ $pro->proyecto }}</option>
+                @endforeach
             </select>
+            </div>
         </div>
-        <div class="col-md-6 form-group" style="padding-left:0px !important;">
-        <label class="form-label">Proyecto</label>
-        <select class="form-control" wire:model="proy_id">
-            <option value="0" selected>Seleccione un proyecto</option>
-            @foreach ($lista_proyectos as $pro)
-                <option value="{{ $pro->id }}">{{$pro->identificador}} - {{ $pro->proyecto }}</option>
-            @endforeach
-        </select>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-4 form-group" style="padding-left:0px !important;">
-        <label class="form-label">Areas</label>
-        <select class="form-control" wire:model="area_id">
-            <option value="todas">Todas</option>
-            @foreach ($lista_areas as $area)
-                <option value="{{ $area->area->id }}">{{ $area->area->area }}</option>
-            @endforeach
-        </select>
+        <div class="row">
+            <div class="col-md-4 form-group" style="padding-left:0px !important;">
+            <label class="form-label">Areas</label>
+            <select class="form-control" wire:model="area_id">
+                <option value="todas">Todas</option>
+                @foreach ($lista_areas as $area)
+                    <option value="{{ $area->area->id }}">{{ $area->area->area }}</option>
+                @endforeach
+            </select>
+            </div>
         </div>
     </div>
     <div class="card card-body" style="min-height:330px !important; min-width:1200px;" id="contenedor-principal">
