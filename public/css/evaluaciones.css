@@ -46,11 +46,13 @@
     border: 1px solid #006DDB;
 }
 
-.item-config-cat i {
+.item-config-cat i,
+.btn-delete-escala i {
     font-size: 45px;
     cursor: pointer;
 }
 
-.item-config-cat:first-child .btn-delete-cat {
+.item-config-cat:first-child .btn-delete-cat,
+.item-config-escala:first-child .btn-delete-escala {
     display: none;
 }
