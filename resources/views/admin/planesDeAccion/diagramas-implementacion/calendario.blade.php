@@ -22,6 +22,7 @@
 @section('scripts')
     @parent
     <script src="{{ asset('../js/calendario-fullcalendar/index.global.js') }}"></script>
+    <script src="{{ asset('../js/calendario-fullcalendar/locales/locales-all.global.js') }}"></script>
 
     <script>
         var calendar;
@@ -128,13 +129,14 @@
                 }
             });
 
-
         }
 
         function renderCaleendar() {
             const tiempoEspera = 300;
             setTimeout(() => {
+
                 calendar.render();
+                calendar.setOption('locale', 'es');
                 console.log('ejecutado');
             }, tiempoEspera);
         }
