@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
 
 
         #workSpace {
@@ -228,8 +228,6 @@
                 <div class="text-right col-8 caja_botones_menu">
                     <a href="#" data-tabs="original_gantt" onclick="cambiarTitulo('Gantt');"
                         class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
-                    <a href="#" data-tabs="tabla_gantt" onclick="cambiarTitulo('Tabla');"
-                        class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
                     <a href="#" data-tabs="calendario_gantt" onclick="renderCaleendar();cambiarTitulo('Calendario');"
                         class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
                     <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');"
@@ -247,9 +245,9 @@
                         @include('admin.planesDeAccion.diagramas-implementacion.gantt')
                     </section>
 
-                    <section id="tabla_gantt">
+                    {{-- <section id="tabla_gantt">
                         @include('admin.planesDeAccion.diagramas-implementacion.tabla')
-                    </section>
+                    </section> --}}
 
                     <section id="calendario_gantt">
                         @include('admin.planesDeAccion.diagramas-implementacion.calendario')
@@ -301,7 +299,7 @@
                         .format("DD-MM-YYYY hh:mm:ss A")
                     ge.checkpoint(); //empty the undo stac
                     renderKanban(response);
-                    renderTable(response);
+                    //renderTable(response);
                     renderCalendar(response);
                     $(".ganttButtonBar button.requireWrite").attr("disabled", "true");
                 },
@@ -314,6 +312,32 @@
                 }
             });
             return ret;
+        }
+
+        function getRow(task, tasks) {
+            return tasks.indexOf(task);
+        }
+
+        function getParents(task, tasks) {
+            const pos = getRow(task, tasks);
+            const topLevel = task.level;
+            return tasks.slice(0, pos).filter(parent => parent.level < topLevel);
+        }
+
+        function getParent(task, tasks) {
+            const pos = getRow(task, tasks);
+            return tasks.slice(0, pos).reverse().find(parent => parent.level < task.level);
+        }
+
+        function isParent(task, tasks) {
+            const pos = getRow(task, tasks);
+            return pos < tasks.length - 1 && tasks[pos + 1].level > task.level;
+        }
+
+        function getChildren(task, tasks) {
+            const pos = getRow(task, tasks);
+            const children = tasks.slice(pos + 1);
+            return children.filter(child => child.level === task.level + 1);
         }
     </script>
 @endsection
