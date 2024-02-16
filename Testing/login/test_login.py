@@ -1,42 +1,49 @@
 import pytest
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-import time
 
-def login(username, password):
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
-    try:
-        driver.get('https://192.168.9.78/')
+    yield driver
+    driver.quit()
 
-        driver.maximize_window()
-        time.sleep(5)
+def login(driver, username, password):
+    driver.get('https://192.168.9.78/')
+    driver.maximize_window()
+    print("Login del aplicativo Tabantaj - INICIANDO")
+    time.sleep(5)
+    username_input = WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='email']"))
+    )
+    username_input.clear()
+    username_input.send_keys(username)
+    print("Usario ingresado")
 
-        usr = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys(username)
-        pw = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys(password)
+    password_input = WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='password']"))
+    )
+    password_input.clear()
+    password_input.send_keys(password)
+    print("Contraseña ingresada")
 
-        btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
-        btn.click()
+    submit_button = WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(text(),'Enviar')]"))
+    )
+    submit_button.click()
+    print("Enviando credenciales de acceso")
 
-        element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//img[contains(@alt,'Logo Tabantaj')]"))
-        )
-        return True
-    except TimeoutException:
-        return False
-    finally:
-        driver.quit()
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    )
+    print("Login correcto")
 
-def test_login():
+def test_login(browser):
     username = "admin@admin.com"
     password = "#S3cur3P4$$w0Rd!"
 
-    result = login(username, password)
-    assert result, f"Login {'successful' if result else 'failed'}"
-
-if __name__ == "__main__":
-    pytest.main(["-v", "-s"])
-
+    login(browser, username, password)
 
