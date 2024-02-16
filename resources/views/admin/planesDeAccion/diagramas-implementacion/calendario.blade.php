@@ -114,7 +114,7 @@
                 selectable: false,
                 nowIndicator: true,
                 dayMaxEvents: true, // allow "more" link when too many events
-                events: eventsCalendar,
+                events: this.eventsCalendar,
                 eventClick: function(info) {
                     alert('Event: ' + info.event.title);
                     alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
