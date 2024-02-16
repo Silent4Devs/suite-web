@@ -288,7 +288,7 @@
                                             <div class="col-5 p-2 mt-3">
                                                 <br>
                                                 <span class=""
-                                                    style="color:black; position: relative; top: -1.5rem; right: 3rem;">
+                                                    style="position: relative; top: -1.5rem; right: 3rem;">
                                                     {{ $empresa_actual }} <br>
                                                     RFC: {{ $rfc }} <br>
                                                     {{ $direccion }} <br>
