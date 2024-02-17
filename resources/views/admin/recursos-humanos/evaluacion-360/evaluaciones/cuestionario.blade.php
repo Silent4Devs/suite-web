@@ -42,6 +42,53 @@
     </div>
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
+
+    @if ($evaluador->id == $evaluado->id)
+        <div class="mt-4 card">
+            <div class="pt-0 card-body">
+                <table class="datatable-rds">
+                    <thead>
+                        <th>
+                            Nombre de la evaluación
+                        </th>
+                        <th>
+                            Fecha de creación
+                        </th>
+                        <th>
+                            Autoevaluación
+                        </th>
+                        <th>
+                            Evaluaciones a realizar
+                        </th>
+                    </thead>
+                    <tbody>
+                        <td>
+                            {{ $evaluacion->nombre }}
+                        </td>
+                        <td>
+                            {{ $evaluacion->fecha_inicio }}
+                        </td>
+                        <td>
+                            {{ $evaluacion->fecha_fin }}
+                        </td>
+                        <td>
+                            @foreach ($evaluaciones_a_realizar as $evaluar)
+                                <img style=""
+                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $evaluar->empleado_evaluado->avatar }}"
+                                    class="rounded-circle" alt="{{ $evaluar->empleado_evaluado->name }}"
+                                    title="{{ $evaluar->empleado_evaluado->name }}" width="40" height="37">
+                                @if ($evaluar->evaluado)
+                                    <i class="fas fa-check-circle"
+                                        style="position: relative; top: 0; left: -20px; z-index: 1; color: #002102; text-shadow: 1px 1px 0px gainsboro;"></i>
+                                @endif
+                            @endforeach
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+
     <div class="mt-4 card">
         <div class="pt-0 card-body">
 
@@ -53,7 +100,8 @@
                     <div class="col-{{ $evaluado->id == $evaluador->id ? '12' : '6' }}">
                         <div class="card-custom">
                             <p><strong>{{ $evaluado->id == $evaluador->id ? 'Autoevaluación' : 'Evaluado' }}</strong></p>
-                            <img class="rounded-circle" src="{{ asset('storage/empleados/imagenes/' . $evaluado->avatar) }}">
+                            <img class="rounded-circle"
+                                src="{{ asset('storage/empleados/imagenes/' . $evaluado->avatar) }}">
                             <h5 class="mt-2">{{ $evaluado->name }}</h5>
                             <p class="title-custom">{{ $evaluado->puesto }}</p>
                         </div>
@@ -407,7 +455,8 @@
                                                                             Selecciona una
                                                                             calificación --</option>
                                                                         @foreach ($evaluacion->rangos as $rango)
-                                                                            <option value="{{ $rango->valor }}">
+                                                                            <option value="{{ $rango->valor }}"
+                                                                                @if ($rango->valor == $objetivo->calificacion_persepcion) selected @endif>
                                                                                 {{ $rango->parametro }}</option>
                                                                         @endforeach
                                                                         {{-- <option

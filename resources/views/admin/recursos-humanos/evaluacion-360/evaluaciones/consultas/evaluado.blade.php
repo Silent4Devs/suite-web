@@ -202,8 +202,8 @@
                     </div>
                 </div> --}}
                 <div class="mt-2">
-                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] }}</span>
-                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
+                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] ?? '' }}</span>
+                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] ?? '' }}%</span>
                     <button id="btnExportarAutoevaluacion" class="btn-sm rounded pr-2"
                         style="background-color:#fff; border: #fff">
                         <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
