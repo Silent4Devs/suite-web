@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Registrar:</h5>
+
+    @if (session('mensajeError'))
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
+    @endif
     <div class="mt-4 card">
 
 
@@ -27,7 +33,7 @@
                                 <input type="file"name="foto_sedes"
                                     class="form-control {{ $errors->has('foto_sedes') ? 'is-invalid' : '' }}"
                                      accept="image/*" value="{{ old('foto_sedes', '') }}">
-                                     
+
                         @if ($errors->has('foto_sedes'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('foto_sedes') }}
