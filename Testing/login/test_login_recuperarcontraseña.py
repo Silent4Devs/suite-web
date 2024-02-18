@@ -14,7 +14,7 @@ def browser():
 def login(driver, username, password, email):
     driver.get('https://192.168.9.78/')
     driver.maximize_window()
-    print("------ Login recuperar contraseña aplicativo Tabantaj - INICIADO -----")
+    print("------ LOGIN RECUPERAR CONTRASEÑA - TABANTAJ -----")
     time.sleep(5)
     #USUARIO
     print("URL actual:", driver.current_url)

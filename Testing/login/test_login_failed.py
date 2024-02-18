@@ -14,7 +14,7 @@ def browser():
 def login(driver, username, password):
     driver.get('https://192.168.9.78/')
     driver.maximize_window()
-    print("Login erroneo del aplicativo Tabantaj - INICIADO")
+    print("------ LOGIN ERRONEO - TABANTAJ -----")
     time.sleep(5)
     username_input = WebDriverWait(driver, 3).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='email']"))
