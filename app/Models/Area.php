@@ -131,8 +131,8 @@ class Area extends Model implements Auditable
                 'children:id,name,foto,puesto_id,genero',
                 'supervisor:id,name,foto,puesto_id,genero',
                 'lider:id,name,foto,puesto_id,genero',
-            ])
-            ->with('grupo');
+                'grupo'
+            ]);
     }
 
     public function concientizacion_sgis()
