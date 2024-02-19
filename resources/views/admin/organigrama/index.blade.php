@@ -262,7 +262,7 @@
         .slider-zoom {
             position: absolute;
             top: 0;
-            right: 70px;
+            right: 30px;
         }
     </style>
     <style>
