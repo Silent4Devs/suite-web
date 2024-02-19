@@ -131,7 +131,7 @@
                             en el arreglo y la elimina  --}}
                             <div style="text-align: end;">
                                 <button class="btn trash-button"
-                                    wire:click.prevent="removePreguntaSeccion1(_arreglo_{{ $key }})">
+                                    wire:click.prevent="removeParametro1({{ $key }})">
                                     <i class="fa-regular fa-trash-can" style="color: rgb(0, 0, 0); font-size: 15pt;"
                                         title="Eliminar"></i>
                                 </button>
@@ -151,13 +151,10 @@
             <div class="col-6">
             </div>
             <div class="col-3">
-                <div class="col-3">
-                    <a href="{{ route('admin.rangos.index') }}"
-                        class="btn btn-outline-primary btn-block">Cancelar</a>
-                </div>
-                <div class="col-3">
-                    <button class="btn btn-primary btn-block" type="submit">Generar Catalogo</button>
-                </div>
+                <a href="{{ route('admin.rangos.index') }}" class="btn btn-outline-primary btn-block">Cancelar</a>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-primary btn-block" type="submit">Generar Catalogo</button>
             </div>
     </form>
 </div>

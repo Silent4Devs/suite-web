@@ -131,7 +131,7 @@
                             en el arreglo y la elimina  --}}
                             <div style="text-align: end;">
                                 <button class="btn trash-button"
-                                    wire:click.prevent="removePreguntaSeccion1(_arreglo_{{ $key }})">
+                                    wire:click.prevent="removeParametro1({{ $key }})">
                                     <i class="fa-regular fa-trash-can" style="color: rgb(0, 0, 0); font-size: 15pt;"
                                         title="Eliminar"></i>
                                 </button>

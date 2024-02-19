@@ -459,22 +459,6 @@
                                                                                 @if ($rango->valor == $objetivo->calificacion_persepcion) selected @endif>
                                                                                 {{ $rango->parametro }}</option>
                                                                         @endforeach
-                                                                        {{-- <option
-                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::INACEPTABLE }}">
-                                                                            Inaceptable
-                                                                        </option>
-                                                                        <option
-                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::MINIMO_ACEPTABLE }}">
-                                                                            Mínimo Aceptable
-                                                                        </option>
-                                                                        <option
-                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::ACEPTABLE }}">
-                                                                            Aceptable
-                                                                        </option>
-                                                                        <option
-                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::SOBRESALIENTE }}">
-                                                                            Sobresaliente
-                                                                        </option> --}}
                                                                     </select>
                                                                 </div>
                                                             </div>

@@ -4,8 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\RH\CatalogoRangosObjetivos;
 use App\Models\RH\RangosObjetivos as RHRangosObjetivos;
+use Hamcrest\Core\IsNot;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+
+use function PHPUnit\Framework\isNull;
 
 class EditRangosObjetivos extends Component
 {
@@ -37,7 +40,13 @@ class EditRangosObjetivos extends Component
 
     public function addParametro1()
     {
-        $this->parametros[] = '';
+        $this->parametros[] =
+            [
+                'color' => '#ffffff',
+                'parametro' => '',
+                'valor' => null,
+                'descripcion' => '',
+            ];;
     }
 
     public function removeParametro1($keyndex)
@@ -136,12 +145,6 @@ class EditRangosObjetivos extends Component
                 $this->$color_estatus_name = $parametro->color;
             } else {
 
-                // dd('algo');
-                // $color = 'color_estatus_arreglo_' . $posicion_array;
-                // $estatus = 'estatus_arreglo_' . $posicion_array;
-                // $valor = 'valor_estatus_arreglo_' . $posicion_array;
-                // $descripcion = 'descripcion_parametros_arreglo_' . $posicion_array;
-                // dd($descripcion_name);
                 $this->parametros[$posicion_array] =
                     [
                         'color' => $parametro->color,
@@ -149,8 +152,6 @@ class EditRangosObjetivos extends Component
                         'valor' => $parametro->valor,
                         'descripcion' => $parametro->descripcion,
                     ];
-
-                // dd($this->parametros);
 
                 $posicion_array++;
             }
