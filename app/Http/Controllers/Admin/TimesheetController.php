@@ -56,7 +56,7 @@ class TimesheetController extends Controller
      */
     public function index($estatus = 'todos')
     {
-        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
+        $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
 
         $times = Timesheet::getPersonalTimesheet();
 
@@ -82,6 +82,8 @@ class TimesheetController extends Controller
         $pendientes_contador = $times->where('estatus', 'pendiente')->count();
         $aprobados_contador = $times->where('estatus', 'aprobado')->count();
         $rechazos_contador = $times->where('estatus', 'rechazado')->count();
+
+        $times = $times->sortByDesc('created_at');
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -367,7 +369,7 @@ class TimesheetController extends Controller
 
             return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.timesheet-mis-registros')->with('error', 'No se localizo  ningun id  en la ruta');
+            return redirect('admin/timesheet/proyectos')->with('error', 'No se localizo  ningun id  en la ruta');
         }
     }
 
@@ -702,18 +704,18 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::getAll($id)->find($id);
 
-        if (! $proyecto) {
+        if (!$proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
         $areas = TimesheetProyectoArea::where('proyecto_id', $id)
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
+        $sedes = TimesheetProyecto::getAll('sedes_' . $id)->where('timesheet_proyectos.id', $id)
             ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
             ->get('sedes.sede');
 
-        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
+        $clientes = TimesheetProyecto::getAll('clientes_' . $id)->where('timesheet_proyectos.id', $id)
             ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
             ->get('timesheet_clientes.nombre');
 
@@ -787,7 +789,7 @@ class TimesheetController extends Controller
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto = TimesheetProyecto::getAll('tareas_'.$proyecto_id)->find($proyecto_id);
+        $proyecto = TimesheetProyecto::getAll('tareas_' . $proyecto_id)->find($proyecto_id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -975,14 +977,14 @@ class TimesheetController extends Controller
 
             $cliente = TimesheetCliente::find($id);
 
-            if (! $cliente) {
+            if (!$cliente) {
                 return redirect()->route('admin.timesheet-clientes')->with('error', 'El registro fue eliminado ');
             }
 
             return view('admin.timesheet.clientes.edit', compact('cliente'));
         } catch (MiExcepcionTimeshetClientes $excepcionPersonalizada) {
 
-            Log::error('Ocurrió una excepción personalizada: '.$excepcionPersonalizada->getMessage());
+            Log::error('Ocurrió una excepción personalizada: ' . $excepcionPersonalizada->getMessage());
 
             return response()->json(['error' => $excepcionPersonalizada->getMessage()], 400);
         }
@@ -1178,7 +1180,7 @@ class TimesheetController extends Controller
 
     public function proyectosEmpleados($id)
     {
-        $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1189,7 +1191,7 @@ class TimesheetController extends Controller
 
     public function proyectosExternos($id)
     {
-        $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('externos_' . $id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1201,7 +1203,7 @@ class TimesheetController extends Controller
     public function editProyectos($id)
     {
         $proyecto = TimesheetProyecto::getAll()->find($id);
-        if (! $proyecto) {
+        if (!$proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
         $clientes = TimesheetCliente::getAll();

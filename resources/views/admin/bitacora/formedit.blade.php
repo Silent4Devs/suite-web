@@ -216,7 +216,7 @@
             <label for="nombre_servicio" class="txt-tamaño">
                 Nombre del servicio<font class="asterisco">*</font></label><br>
             <div class="form-floating">
-                <textarea id="textarea1" class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
+                <textarea id="textarea1"  maxlength="550"  class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
                     {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif required>{{ $contrato->nombre_servicio }}</textarea>
             </div>
             @if ($errors->has('nombre_servicio'))

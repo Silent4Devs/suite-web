@@ -592,8 +592,8 @@
 
             window.seleccionarUsuario = function(id, name, email) {
                 $('.areas').val(null).trigger('change');
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
+                document.querySelector("#zoomer").value = 30;
+                document.querySelector("#output").innerHTML = 30;
                 orientacion = localStorage.getItem('orientationOrgChart');
                 document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 renderOrganigrama(OrgChart, orientacion, id);
@@ -698,7 +698,7 @@
                         let img = document.createElement('img');
                         img.classList.add('imagen-search');
                         img.src = "{{ asset('img/empleados_no_encontrados.svg') }}";
-                        img.width = 350;
+                        img.width = 300;
                         img.style.margin = 'auto';
                         let texto = document.createElement('h3');
                         texto.classList.add('texto-search');
