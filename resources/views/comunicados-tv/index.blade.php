@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="3600">
 	<title>TABANTAJ</title>
 	<style type="text/css">
 		body{
@@ -58,7 +59,7 @@
                         $imagen = 'storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen;
                     }
                 } else {
-                    $imagen = 'img/tabantaj_fondo_blanco.png';
+                    $imagen = 'img/tabantaj_fondo_blanco.webp';
                 }
 
                 $tipo_archivo = $carrusel->imagenes_comunicacion->first() ?  $carrusel->imagenes_comunicacion->first()->tipo : '';
@@ -73,7 +74,7 @@
 				@endif
 			</li>
 		 @empty
-		 	<li class=""><img src="{{ asset('img/tabantaj_fondo_blanco.png') }}"></li>
+		 	<li class=""><img src="{{ asset('img/tabantaj_fondo_blanco.webp') }}"></li>
 		@endforelse
 	</ul>
 
@@ -136,5 +137,11 @@
 			}
 		});
 	</script>
+    <script>
+        // JavaScript para recargar la página automáticamente cada hora
+        setTimeout(function() {
+            location.reload(true);
+        }, 3600000); // 3600000 milisegundos = 1 hora
+    </script>
 </body>
 </html>
