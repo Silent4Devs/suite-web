@@ -300,6 +300,13 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getAllDataColumns()
+    {
+        return Cache::remember('Empleados:empleados_all_data_columns_all', 3600 * 6, function () {
+            return self::select('id', 'name', 'email', 'foto')->get();
+        });
+    }
+
     public static function getDataColumns()
     {
         return Cache::remember('Empleados:empleados_data_columns_all', 3600 * 6, function () {
