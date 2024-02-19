@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="3600">
+    {{-- <meta http-equiv="refresh" content="3600"> --}}
 	<title>TABANTAJ</title>
 	<style type="text/css">
 		body{
@@ -143,9 +143,9 @@
             }
         });
 
-        setTimeout(function() {
-            location.reload(true);
-        }, 3600000); // 3600000 milisegundos = 1 hora
+        // setTimeout(function() {
+        //     location.reload(true);
+        // }, 3600000); // 3600000 milisegundos = 1 hora
     </script>
 </body>
 </html>
