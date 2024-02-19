@@ -131,7 +131,7 @@
 
                 if (current.getAttribute('data-tipo') === 'video') {
                     document.querySelector('#slider li.actual video').play();
-                    video_duration = Number(document.querySelector('#slider li.actual video').duration) * 1000;
+                    video_duration = Number(document.querySelector('#slider li.actual video').duration) * 1200;
                     setTimeout(slider, video_duration);
                 } else {
                     setTimeout(slider, duracion);
