@@ -113,7 +113,7 @@ class ComunicacionSgiController extends Controller
             $image = $new_name_image;
 
             // Manejo de imágenes
-            if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])) {
+            if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
                 // Almacenar imágenes jpg, jpeg, png, y gif directamente
                 $imagen->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
                 $tipo_archivo = 'imagen';
@@ -222,7 +222,7 @@ class ComunicacionSgiController extends Controller
             $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
             $image = $new_name_image;
 
-            if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])) {
+            if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
                 $imagen->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
                 $tipo_archivo = 'imagen';
             } else {
