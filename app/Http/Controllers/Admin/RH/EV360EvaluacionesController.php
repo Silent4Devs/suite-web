@@ -1424,6 +1424,9 @@ class EV360EvaluacionesController extends Controller
             $aceptable = 0;
             $sobresaliente = 0;
             $rangosResultados = optional($evaluacion->rangos)->pluck('valor', 'parametro')->all();
+            $rangosColores = optional($evaluacion->rangos)->pluck('color', 'parametro')->all();
+            // dd($rangosResultados, $rangosColores);
+            $maxValue = max(array_map('intval', $rangosResultados));
 
             $ev360ResumenTabla = new Ev360ResumenTabla();
             foreach ($evaluados as $evaluado) {
@@ -1438,16 +1441,20 @@ class EV360EvaluacionesController extends Controller
 
             foreach ($lista_evaluados as $evaluado) {
                 $calificacionFinal = $evaluado['informacion_evaluacion']['calificacion_final'];
-
                 foreach ($rangosResultados as $parametro => $valor) {
+                    // dd($calificacionFinal, $valor);
                     if ($calificacionFinal <= $valor) {
+                        $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
+                    } elseif ($valor == $maxValue && $calificacionFinal > $valor) {
+                        // dd('entra elseif');
                         $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
                     }
                 }
             }
-
             $calificaciones->push($counts);
             $calificaciones = $calificaciones->first();
+            // dd($calificaciones);
+            return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen-parametros', compact('evaluacion', 'calificaciones', 'rangosResultados', 'rangosColores'));
         } else {
             $evaluados = $evaluacion->evaluados;
             $lista_evaluados = collect();
@@ -1496,9 +1503,8 @@ class EV360EvaluacionesController extends Controller
                 'Sobresaliente' => $sobresaliente,
             ]);
             $calificaciones = $calificaciones->first();
+            return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones', 'rangosResultados'));
         }
-
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones', 'rangosResultados'));
     }
 
     public function resumenJefe($evaluacion)
