@@ -342,7 +342,7 @@
             <div class="form-group col-md-12">
                 <label for="objetivo" class="txt-tamaño">
                     Objetivo del servicio<font class="asterisco">*</font></label>
-                <textarea id="textarea1" class="texto-linea form-control" name="objetivo" required>{{ old('objetivo') }}</textarea>
+                <textarea id="textarea1" class="texto-linea form-control" maxlength="500" name="objetivo" required>{{ old('objetivo') }}</textarea>
                 @if ($errors->has('objetivo'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('nombre_servicio') }}

@@ -91,11 +91,11 @@ class ContratosController extends AppBaseController
     {
         $validatedData = $request->validate([
             'no_contrato' => 'required_unless:identificador_privado,1|max:255',
-            'nombre_servicio' => 'required|max:255',
+            'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
             'area_id' => 'required',
-            'objetivo' => 'required|max:255',
+            'objetivo' => 'required|max:500',
             'estatus' => 'required|max:255',
             'cargo_administrador' => 'max:250',
             'area_administrador' => 'max:250',
@@ -453,10 +453,10 @@ class ContratosController extends AppBaseController
         // dd($request->signed);
         $validatedData = $request->validate([
             'no_contrato' => ['required|max:255', new NumeroContrato($id)],
-            'nombre_servicio' => 'required|max:255',
+            'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
-            'objetivo' => 'required|max:255',
+            'objetivo' => 'required|max:500',
             'estatus' => 'required|max:255',
             //  'file_contrato' => 'required',
             'cargo_administrador' => 'max:250',
