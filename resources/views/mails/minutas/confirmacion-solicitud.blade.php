@@ -23,13 +23,11 @@
         p {
             font-family: Arial, sans-serif;
         }
-
     </style>
 </head>
 
 <body style="margin:0;padding:0;">
-    <table role="presentation"
-        style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
         <tr>
             <td align="center" style="padding:0;">
                 <table role="presentation"
@@ -95,7 +93,7 @@
                                                 </svg> <span
                                                     style="text-transform: capitalize">{{ $minuta->documento }}</span>
                                             </p>
-                                            <a href="{{ route('admin.minutasaltadireccions.show', $minuta) }}"
+                                            <a href="{{ route('admin.minutasaltadireccions.index') }}"
                                                 style="outline: none; text-decoration: none; font-size: small; font-family: Arial, Helvetica, sans-serif; background-color: #0b89bb; padding: 10px; border-radius: 10px; color: white;">
                                                 <span>Ver Minuta</span>
                                             </a>
