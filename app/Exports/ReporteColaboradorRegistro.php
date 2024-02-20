@@ -53,6 +53,10 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
             )
             ->where('timesheet.estatus', '!=', 'papelera')
             ->where('timesheet.estatus', '!=', 'rechazado')
+            ->where('timesheet.estatus', '!=', 'Rechazada')
+            ->where('timesheet_proyectos.estatus', '!=', 'papelera')
+            ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
+            ->where('timesheet_proyectos.estatus', '!=', 'Rechazada')
             ->where(function ($query) {
 
                 if ($this->fecha_inicio || $this->fecha_fin) {
@@ -67,8 +71,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 if ($this->area_id != 0) {
                     $query->where('empleados.area_id', $this->area_id);
                 }
-            })->where('timesheet_proyectos.estatus', '!=', 'papelera')
-            ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
+            })
             ->groupBy(
                 'timesheet.id',
                 'fecha_dia',
