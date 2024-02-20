@@ -108,7 +108,7 @@ class MinutasaltadireccionController extends Controller
         //Creación Minuta
 
         if ($request->input('archivo', false)) {
-            $minutasaltadireccion->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
+            $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -177,7 +177,7 @@ class MinutasaltadireccionController extends Controller
         $arrParticipantes = json_decode($request->participantesExt);
         foreach ($arrParticipantes as $participante) {
             $exists = ExternosMinutaDireccion::where('minuta_id', $minutasaltadireccion->id)->where('nombreEXT', $participante->nombre)->where('emailEXT', $participante->email)->where('puestoEXT', $participante->puesto)->where('empresaEXT', $participante->empresa)->first();
-            if (! $exists) {
+            if (!$exists) {
                 ExternosMinutaDireccion::create([
                     'nombreEXT' => $participante->nombre,
                     'emailEXT' => removeUnicodeCharacters($participante->email),
@@ -243,9 +243,9 @@ class MinutasaltadireccionController extends Controller
         if (isset($request->actividades)) {
             $tasks = [
                 [
-                    'id' => 'tmp_'.(strtotime(now()) * 1000).'_1',
+                    'id' => 'tmp_' . (strtotime(now()) * 1000) . '_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Minuta - '.$request->tema_reunion,
+                    'name' => 'Minuta - ' . $request->tema_reunion,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -292,7 +292,7 @@ class MinutasaltadireccionController extends Controller
                         }
                     } else {
                         // Si funciona si no se agregan mas actividades
-                        if (! isset($actividad[5]->id)) {
+                        if (!isset($actividad[5]->id)) {
                             $planes_minuta = Minutasaltadireccion::with(
                                 'planes'
                             )
@@ -324,7 +324,7 @@ class MinutasaltadireccionController extends Controller
                 foreach ($asignados as $asignado) {
                     $id = intval($asignado);
                     $assigs[] = [
-                        'id' => 'tmp_'.time().'_'.$id,
+                        'id' => 'tmp_' . time() . '_' . $id,
                         'effort' => '0',
                         'roleId' => '1',
                         'resourceId' => $id,
@@ -390,9 +390,9 @@ class MinutasaltadireccionController extends Controller
         $pdf = \PDF::loadView('admin.minutasaltadireccions.pdf.minuta-pdf', compact('minutasaltadireccion', 'actividades', 'participantesWithAsistencia'));
         Storage::makeDirectory('public/minutas/en aprobacion');
         Storage::makeDirectory('public/minutas/aprobadas');
-        $nombre_pdf = Str::limit($minutasaltadireccion->tema_reunion, 20, '').'_'.$minutasaltadireccion->fechareunion.'.pdf';
+        $nombre_pdf = Str::limit($minutasaltadireccion->tema_reunion, 20, '') . '_' . $minutasaltadireccion->fechareunion . '.pdf';
         $nombre = preg_replace('([^A-Za-z0-9-À-ÿ_.])', '', $nombre_pdf);
-        $pdf->save(public_path('storage/minutas/en aprobacion').'/'.$nombre);
+        $pdf->save(public_path('storage/minutas/en aprobacion') . '/' . $nombre);
 
         $minutasaltadireccion->documento = $nombre;
         $minutasaltadireccion->save();
@@ -478,12 +478,12 @@ class MinutasaltadireccionController extends Controller
         }
 
         if ($request->input('archivo', false)) {
-            if (! $minutasaltadireccion->archivo || $request->input('archivo') !== $minutasaltadireccion->archivo->file_name) {
+            if (!$minutasaltadireccion->archivo || $request->input('archivo') !== $minutasaltadireccion->archivo->file_name) {
                 if ($minutasaltadireccion->archivo) {
                     $minutasaltadireccion->archivo->delete();
                 }
 
-                $minutasaltadireccion->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
+                $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
             }
         } elseif ($minutasaltadireccion->archivo) {
             $minutasaltadireccion->archivo->delete();
@@ -496,7 +496,7 @@ class MinutasaltadireccionController extends Controller
     {
         $minutasaltadireccion = Minutasaltadireccion::find(intval($minutasaltadireccion));
         $this->processUpdate($request, $minutasaltadireccion, true);
-        $ruta_publicacion = 'public/minutas/aprobadas/'.$minutasaltadireccion->documento;
+        $ruta_publicacion = 'public/minutas/aprobadas/' . $minutasaltadireccion->documento;
 
         if (Storage::exists($ruta_publicacion)) {
             Storage::delete($ruta_publicacion);
@@ -552,7 +552,6 @@ class MinutasaltadireccionController extends Controller
 
     public function revision($id)
     {
-
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutas = Minutasaltadireccion::with('responsable')->find($id);
@@ -648,13 +647,13 @@ class MinutasaltadireccionController extends Controller
                 'estatus' => Minutasaltadireccion::PUBLICADO,
             ]);
 
-            $fileToCopy = 'storage/minutas/en aprobacion'.'/'.$minuta->documento;
+            $fileToCopy = 'storage/minutas/en aprobacion' . '/' . $minuta->documento;
             $destinationFolder = 'storage/minutas/aprobadas'; // Replace this with the destination folder path
 
             // Check if the source file exists
             if (File::exists($fileToCopy)) {
                 $fileName = pathinfo($fileToCopy, PATHINFO_BASENAME); // Get the filename
-                $destinationPath = $destinationFolder.'/'.$fileName; // Create the destination path
+                $destinationPath = $destinationFolder . '/' . $fileName; // Create the destination path
 
                 File::copy($fileToCopy, $destinationPath);
             }
@@ -741,7 +740,7 @@ class MinutasaltadireccionController extends Controller
         $minuta = $id;
         $minuta->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
+        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
     }
 
     public function pdf($id)
