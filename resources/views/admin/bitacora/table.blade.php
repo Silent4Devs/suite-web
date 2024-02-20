@@ -209,7 +209,7 @@
                 <label for="nombre_servicio" class="txt-tamaño">
                     Nombre del servicio<font class="asterisco">*</font></label>
                 <div class="form-floating">
-                    <textarea id="textarea1" class="form-control" name="nombre_servicio" required>{{ old('nombre_servicio') }}</textarea>
+                    <textarea id="textarea1" class="form-control" maxlength="550" name="nombre_servicio" required>{{ old('nombre_servicio') }}</textarea>
                 </div>
                 @if ($errors->has('nombre_servicio'))
                     <div class="invalid-feedback red-text">
@@ -342,7 +342,7 @@
             <div class="form-group col-md-12">
                 <label for="objetivo" class="txt-tamaño">
                     Objetivo del servicio<font class="asterisco">*</font></label>
-                <textarea id="textarea1" class="texto-linea form-control" name="objetivo" required>{{ old('objetivo') }}</textarea>
+                <textarea id="textarea1" class="texto-linea form-control" maxlength="500" name="objetivo" required>{{ old('objetivo') }}</textarea>
                 @if ($errors->has('objetivo'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('nombre_servicio') }}
@@ -453,7 +453,7 @@
                 <label for="no_contrato" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
                 <input type="number" name="no_pagos" id="no_pagos" class="form-control required" min="1"
-                    max="500000">
+                    max="10000">
                 {{-- {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!} --}}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">

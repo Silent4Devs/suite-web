@@ -588,8 +588,8 @@
                         </span>
                         <div class="d-flex justify-content-center align-items-center"
                             style="height: 75%; width:100% !important;">
-                            <input id="zoomer" class="range-slider__range" type="range" value="70" min="10" max="200">
-                            <span id="output" class="range-slider__value">70</span>
+                            <input id="zoomer" class="range-slider__range" type="range" value="30" min="10" max="200">
+                            <span id="output" class="range-slider__value">30</span>
                         </div>
                     </div>
                 </div>

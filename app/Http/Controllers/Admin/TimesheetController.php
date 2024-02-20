@@ -83,6 +83,8 @@ class TimesheetController extends Controller
         $aprobados_contador = $times->where('estatus', 'aprobado')->count();
         $rechazos_contador = $times->where('estatus', 'rechazado')->count();
 
+        $times = $times->sortByDesc('created_at');
+
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -367,7 +369,7 @@ class TimesheetController extends Controller
 
             return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.timesheet-mis-registros')->with('error', 'No se localizo  ningun id  en la ruta');
+            return redirect('admin/timesheet/proyectos')->with('error', 'No se localizo  ningun id  en la ruta');
         }
     }
 

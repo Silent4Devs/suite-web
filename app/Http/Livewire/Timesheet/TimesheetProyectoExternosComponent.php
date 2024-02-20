@@ -45,9 +45,10 @@ class TimesheetProyectoExternosComponent extends Component
 
     public function render()
     {
-        $this->proyecto = TimesheetProyecto::getIdNameAll()->find($this->proyecto_id);
-        $this->empleados = Empleado::getAll();
-        $this->proyecto_proveedores = TimesheetProyectoProveedor::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
+        $proyecto_id = $this->proyecto_id;
+        $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
+        $this->proyecto_proveedores = TimesheetProyectoProveedor::where('proyecto_id', $proyecto_id)->orderBy('id')->get();
+        // dd($this->proyecto, $this->proyecto_proveedores);
         $this->emit('scriptTabla');
 
         return view('livewire.timesheet.timesheet-proyecto-externos-component');

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     @include('partials.menu-slider')
@@ -344,7 +344,9 @@
                             <div class="comunicado-item-portal">
                                 <div width="100%">
                                     <h4 class="title-comunicado-portal">{{ $comunicacionSgi->titulo }}</h4>
-                                    <span>{{ $comunicacionSgi->fecha_publicacion }}</span>
+
+                                    <span>Publicado:
+                                        {{ \Carbon\Carbon::parse($comunicacionSgi->created_at)->format('d-m-Y') }}</span>
                                     <div class="descript-com">
                                         {!! $comunicacionSgi->descripcion !!}
                                     </div>

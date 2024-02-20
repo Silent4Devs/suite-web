@@ -64,5 +64,6 @@ class TimeSheetProyectoObserver
         Cache::forget('TimesheetProyecto:timesheetproyecto_all_order_by_identificador');
         Cache::forget('TimesheetProyecto:timesheetproyecto_all_order_by_proceso');
         Cache::forget('TimesheetProyecto:timesheetproyecto_all_with_cliente');
+        Cache::forget('TimesheetProyecto:proyectos_with_tasks');
     }
 }

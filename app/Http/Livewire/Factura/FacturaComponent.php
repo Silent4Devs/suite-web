@@ -15,12 +15,12 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Redirect;
 
 class FacturaComponent extends Component
 {
@@ -129,7 +129,7 @@ class FacturaComponent extends Component
         $organizacion = Organizacion::getFirst();
         $facturas = Factura::select('facturacion.id', 'no_factura', 'fecha_recepcion', 'fecha_liberacion', 'no_revisiones', 'cumple', 'monto_factura', 'estatus', 'n_cxl', 'firma', 'conformidad', 'facturas_files.pdf', 'facturas_files.xml')
             ->join('facturas_files', 'facturacion.id', '=', 'facturas_files.factura_id')
-            ->where('no_factura', 'like', '%' . $this->search . '%')
+            ->where('no_factura', 'like', '%'.$this->search.'%')
             ->where('contrato_id', '=', $this->contrato_id)
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->pagination);
@@ -229,9 +229,9 @@ class FacturaComponent extends Component
                 $fecha_liberacion_formateada = $this->fecha_liberacion;
             }
 
-
-            if (strlen($this->concepto) >= 255 ||  strlen($this->hallazgos_comentarios) >= 255  ||  strlen($this->conformidad) >= 255) {
+            if (strlen($this->concepto) >= 255 || strlen($this->hallazgos_comentarios) >= 255 || strlen($this->conformidad) >= 255) {
                 $mensajeError = 'Intentelo de nuevo, no exceda los 255 caracteres';
+
                 return Redirect::back()->with('mensajeError', $mensajeError);
             }
 
@@ -263,25 +263,25 @@ class FacturaComponent extends Component
             //### Facturas reestructuracion ####
 
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-            if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-                Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+            if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+                Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
             }
 
             if (isset($this->xml)) {
                 $this->xmlname = $this->xml->getClientOriginalName();
-                $this->xml->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml', $date . $factura->id . $this->xmlname);
+                $this->xml->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml', $date.$factura->id.$this->xmlname);
 
                 $facturaFile->update([
-                    'xml' => $date . $factura->id . $this->xmlname,
+                    'xml' => $date.$factura->id.$this->xmlname,
                 ]);
             }
 
             if (isset($this->pdf)) {
                 $this->pdfname = $this->pdf->getClientOriginalName();
-                $this->pdf->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf', $date . $factura->id . $this->pdfname);
+                $this->pdf->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf', $date.$factura->id.$this->pdfname);
 
                 $facturaFile->update([
-                    'pdf' => $date . $factura->id . $this->pdfname,
+                    'pdf' => $date.$factura->id.$this->pdfname,
                 ]);
             }
 
@@ -329,7 +329,7 @@ class FacturaComponent extends Component
         $this->fecha_inicio_contrato = $contrato_model->fecha_inicio;
         $this->fecha_fin_contrato = $contrato_model->fecha_fin;
 
-        $this->monto_factura = str_contains($this->monto_factura, '$') ? $this->monto_factura : '$' . $this->monto_factura;
+        $this->monto_factura = str_contains($this->monto_factura, '$') ? $this->monto_factura : '$'.$this->monto_factura;
 
         $this->validate([
             'no_factura' => ['required', 'regex:/^[\s\w-]*$/'],
@@ -421,25 +421,25 @@ class FacturaComponent extends Component
 
             //### Facturas GESTION ARCHIVOS ####
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-            if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-                Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+            if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+                Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
             }
 
             if (isset($this->xml)) {
                 $this->xmlname = $this->xml->getClientOriginalName();
-                $this->xml->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml', $date . $factura->id . $this->xmlname);
+                $this->xml->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml', $date.$factura->id.$this->xmlname);
 
                 $facturaFile->update([
-                    'xml' => $date . $factura->id . $this->xmlname,
+                    'xml' => $date.$factura->id.$this->xmlname,
                 ]);
             }
 
             if (isset($this->pdf)) {
                 $this->pdfname = $this->pdf->getClientOriginalName();
-                $this->pdf->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf', $date . $factura->id . $this->pdfname);
+                $this->pdf->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf', $date.$factura->id.$this->pdfname);
 
                 $facturaFile->update([
-                    'pdf' => $date . $factura->id . $this->pdfname,
+                    'pdf' => $date.$factura->id.$this->pdfname,
                 ]);
             }
 
@@ -476,8 +476,8 @@ class FacturaComponent extends Component
             $this->alert('info', 'No se encontro ningun PDF cargado!');
         } else {
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-            if (is_file(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf/' . $pdf->pdf))) {
-                return response()->download(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf/' . $pdf->pdf));
+            if (is_file(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf/'.$pdf->pdf))) {
+                return response()->download(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf/'.$pdf->pdf));
             } else {
                 $this->alert('info', 'No se encontro el archivo!');
             }
@@ -498,7 +498,7 @@ class FacturaComponent extends Component
         $consultaRevisiones = RevisionesFactura::where('id_facturacion', $this->facturaRevision_id)->get();
 
         // $consultaRevisiones = RevisionesFactura::get();
-        $this->show_revisiones = !$this->show_revisiones;
+        $this->show_revisiones = ! $this->show_revisiones;
         $this->consultaRevisiones = $consultaRevisiones;
     }
 
@@ -538,8 +538,8 @@ class FacturaComponent extends Component
         } else {
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
 
-            if (is_file(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml/' . $xml->xml))) {
-                return response()->download(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml/' . $xml->xml));
+            if (is_file(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml/'.$xml->xml))) {
+                return response()->download(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml/'.$xml->xml));
             } else {
                 $this->alert('info', 'No se encontro el archivo!');
             }

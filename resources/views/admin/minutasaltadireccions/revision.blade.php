@@ -49,12 +49,12 @@
                             </div>
                             <div class="col-5 p-2 mt-3">
                                 <br>
-                                <span class=""
+                                <p
                                     style="position: relative; top: -1.5rem; right: 3rem;">
                                     {{ $empresa_actual }} <br>
                                     RFC: {{ $rfc }} <br>
                                     {{ $direccion }} <br>
-                                </span>
+                                </p>
 
                             </div>
                             <div class="col-4 pt-6 pl-6" style="background:#EEFCFF;">
