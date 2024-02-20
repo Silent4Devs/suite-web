@@ -3,9 +3,10 @@
 namespace App\Models\RH;
 
 use App\Traits\ClearsResponseCache;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class GruposEvaluado extends Model implements Auditable
 {
@@ -15,6 +16,20 @@ class GruposEvaluado extends Model implements Auditable
     protected $table = 'ev360_grupos_evaluados';
 
     protected $fillable = ['nombre'];
+
+    public static function getAll()
+    {
+        return Cache::remember('GruposEvaluado:gruposevaluado_all', 3600 * 7, function () {
+            return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getAllWithEmpleado()
+    {
+        return Cache::remember('GruposEvaluado:gruposevaluado_with_empleado', 3600 * 7, function () {
+            return self::with('empleados')->get();
+        });
+    }
 
     public function empleados()
     {

@@ -6,6 +6,7 @@ use App\Models\Empleado;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
+use DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -37,10 +38,41 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function render()
     {
         $proyecto_id = $this->proyecto_id;
+
         $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
-        $this->areasempleado = TimesheetProyectoArea::getAreasTimesheetProyectoEmpleados()->where('proyecto_id', $proyecto_id);
-        $this->empleados = Empleado::getAltaEmpleados();
-        $this->proyecto_empleados = TimesheetProyectoEmpleado::getProyectosEmpleadosTimesheetProyectosEmpleados()->where('proyecto_id', $this->proyecto->id);
+
+        $this->areasempleado =  DB::table('timesheet_proyectos_areas')
+            ->select('id', 'area_id', 'proyecto_id')
+            ->where('proyecto_id', $proyecto_id)
+            ->get();
+
+        $this->empleados = DB::table('empleados')
+            ->select('id', 'area_id', 'name', 'puesto')
+            ->where('estatus', 'alta')
+            ->get();
+
+        $this->proyecto_empleados = DB::table('timesheet_proyectos_empleados')
+            ->select(
+                'timesheet_proyectos_empleados.id',
+                'timesheet_proyectos_empleados.area_id',
+                'timesheet_proyectos_empleados.proyecto_id',
+                'timesheet_proyectos_empleados.costo_hora',
+                'timesheet_proyectos_empleados.horas_asignadas',
+                'timesheet_proyectos_empleados.empleado_id',
+                'timesheet_proyectos_empleados.usuario_bloqueado',
+                'empleados.name',
+                'empleados.id as id_empleado',
+                'areas.area as area',
+                'puestos.puesto as puesto',
+                'timesheet_proyectos.proyecto as proyecto'
+            )
+            ->join('empleados', 'timesheet_proyectos_empleados.empleado_id', '=', 'empleados.id')
+            ->join('areas', 'timesheet_proyectos_empleados.area_id', '=', 'areas.id')
+            ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+            ->join('timesheet_proyectos', 'timesheet_proyectos_empleados.proyecto_id', '=', 'timesheet_proyectos.id')
+            ->where('timesheet_proyectos_empleados.proyecto_id', $this->proyecto->id)
+            ->get();
+
 
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }

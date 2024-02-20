@@ -23,7 +23,7 @@ class CategoriaCapacitacionController extends Controller
     {
         abort_if(Gate::denies('capacitaciones_categorias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = CategoriaCapacitacion::orderByDesc('id')->get();
+            $query = CategoriaCapacitacion::getAll();
             $table = DataTables::of($query);
 
             $table->addColumn('actions', '&nbsp;');

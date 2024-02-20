@@ -128,12 +128,12 @@ class MultiStepForm extends Component
     public function render()
     {
         $evaluacion = new Evaluacion;
-        $areas = Area::all();
-        $empleados = Empleado::orderBy('name')->alta()->get();
-        $grupos_evaluados = GruposEvaluado::all();
+        $areas = Area::getAll();
+        $empleados = Empleado::getaltaAll();
+        $grupos_evaluados = GruposEvaluado::getAll();
 
         $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
-        $tipos = TipoCompetencia::select('id', 'nombre')->get();
+        $tipos = TipoCompetencia::getAll();
 
         return view('livewire.multi-step-form', ['evaluacion' => $evaluacion, 'areas' => $areas, 'empleados' => $empleados, 'grupos_evaluados' => $grupos_evaluados, 'competencias' => $competencias, 'tipos' => $tipos]);
     }

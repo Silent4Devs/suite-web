@@ -42,8 +42,15 @@ class Evaluacion extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('Evaluacion_all', 3600 * 24, function () {
-            return self::get();
+        return Cache::remember('Evaluacion:Evaluacion_all', 3600 * 3, function () {
+            return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getAllLatestFirst()
+    {
+        return Cache::remember('Evaluacion:Evaluacion_latest_first', 3600 * 3, function () {
+            return self::select('id', 'nombre', 'fecha_inicio', 'fecha_fin')->latest()->first();
         });
     }
 
