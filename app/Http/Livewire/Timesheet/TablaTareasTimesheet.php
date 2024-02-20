@@ -56,21 +56,48 @@ class TablaTareasTimesheet extends Component
 
     public function render()
     {
+        // if ($this->origen == 'tareas') {
+        //     $this->proyectos = DB::table('timesheet_proyectos')
+        //         ->select('id', 'proyecto', 'identificador')
+        //         ->get();
+
+        //     if ($this->proyecto_filtro) {
+        //         $this->tareas = TimesheetTarea::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')->where('proyecto_id', $this->proyecto_filtro)->get();
+        //     } else {
+        //         $this->tareas = TimesheetTarea::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')->get();
+        //     }
+        // }
+
+        // if ($this->origen == 'tareas-proyectos') {
+        //     $this->proyecto_seleccionado = TimesheetProyecto::find($this->proyecto_id);
+        //     $this->tareas = TimesheetTarea::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')->where('proyecto_id', $this->proyecto_id)->get();
+        //     $this->area_seleccionar = $this->proyecto_seleccionado->areas;
+        // }
+
+        // return view('livewire.timesheet.tabla-tareas-timesheet');
+
         if ($this->origen == 'tareas') {
-            $this->proyectos = DB::table('timesheet_proyectos')
-                ->select('id', 'proyecto', 'identificador')
-                ->get();
+            // Eager load projects with their tasks
+            $this->proyectos = TimesheetProyecto::with('tareas:id,tarea,proyecto_id,area_id,todos')
+                                ->select('id', 'proyecto', 'identificador')
+                                ->get();
 
             if ($this->proyecto_filtro) {
-                $this->tareas = TimesheetTarea::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')->where('proyecto_id', $this->proyecto_filtro)->get();
+                // Filter tasks by project if a project filter is applied
+                $this->tareas = $this->proyectos->firstWhere('id', $this->proyecto_filtro)->tareas;
             } else {
+                // Otherwise, fetch all tasks
                 $this->tareas = TimesheetTarea::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')->get();
             }
         }
 
         if ($this->origen == 'tareas-proyectos') {
-            $this->proyecto_seleccionado = TimesheetProyecto::find($this->proyecto_id);
-            $this->tareas = TimesheetTarea::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')->where('proyecto_id', $this->proyecto_id)->get();
+            // Fetch the selected project along with its tasks
+            $this->proyecto_seleccionado = TimesheetProyecto::with('tareas:id,tarea,proyecto_id,area_id,todos')
+                                            ->find($this->proyecto_id);
+            // Assign tasks directly
+            $this->tareas = $this->proyecto_seleccionado->tareas;
+            // Assign selected area
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
 
