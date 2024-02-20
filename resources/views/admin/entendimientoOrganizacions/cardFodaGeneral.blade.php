@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/foda.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/foda.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     <script script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -127,7 +127,7 @@
                     <div class="row">
                         @foreach ($modulo->participantes->take(3) as $index => $participante)
                             <div class="col-3">
-                                <img src="{{ asset('storage/empleados/imagenes/usuario_no_cargado.png') }}"
+                                <img src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
                                     class="img_empleado" title="{{ $participante->empleado->name }}">
                             </div>
                         @endforeach
