@@ -68,7 +68,10 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
                 }
                 // Otras condiciones que ya tenías
             })->where('timesheet_proyectos.estatus', '!=', 'papelera')
+            ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
+            ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
             ->where('timesheet.estatus', '!=', 'rechazado')
+            ->where('timesheet.estatus', '!=', 'papelera')
             ->groupBy(
                 'timesheet.fecha_dia',
                 'empleado_name',
