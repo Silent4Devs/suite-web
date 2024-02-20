@@ -6,18 +6,22 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import time
 
+
 #GRUPO DE AREAS
 
 
 #Variables
 element_confirgurar_organizacion = "(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[2]"
-element_crear_lista_informativa = "//A[@href='https://192.168.9.78/admin/lista-informativa'][text()='Lista Informativa']"
+element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/subtipoactivos'][text()='Subcategorias de Activos']"
 clasificacion_xpath="//a[contains(.,'Clasificación')]"
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
 id_xpath="///input[contains(@type,'number')]"
 save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guardar')]"
 opciones_xpath="(//i[contains(@class,'fa-solid fa-ellipsis-vertical')])[1]"
 guardar_xpath="(//a[contains(.,'Editar')])[1]"
+campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
+btn2_editar = "(//A[@class='mr-2 rounded btn btn-sm'])[2]"
+trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
 
 
 #Temporizadores
@@ -51,16 +55,17 @@ try:
     btn.click()
 
     # Esperar hasta 10 segundos para encontrar un elemento que indique un inicio de sesión exitoso
-    element = WebDriverWait(driver, 10).until(
+    element = WebDriverWait(driver, 5).until(
         EC.presence_of_element_located((By.XPATH, "//font[@class='letra_blanca'][contains(.,'Mi perfil')]"))
     )
+    
     print("Inicio de sesión exitoso")
 except TimeoutException:
     print("Inicio de sesión fallido")
 
 time.sleep(tiempo_modulos)
 
-#Entrando a menu hamburguesa
+#Entrando a Menu Hamburguesa
 menu_hambuerguesa=driver.find_element(By.XPATH,"//BUTTON[@class='btn-menu-header']")
 menu_hambuerguesa.click()
 time.sleep(tiempo_modulos)
@@ -77,18 +82,17 @@ element.click()
 
 time.sleep(tiempo_modulos)
 
-#Sub Lista Informativa
-print("Entrando a Sub modulo Crear Areas...")
-element = driver.find_element(By.XPATH, element_crear_lista_informativa)
+#Sub Modulo Subcategorias de Activos
+print("Entrando a Sub Modulo Categoria de activos...")
+element = driver.find_element(By.XPATH,element_entrar_submodulo)
 driver.execute_script("arguments[0].scrollIntoView(true);", element)
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_crear_lista_informativa)))
-print("Dando clic en Sub modulo Crear Areas...")
+WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
+print("Dando clic en Sub Modulo Categoria de activos...")
 element.click()
 
 time.sleep(tiempo_modulos)
 
-
-#Agregar Lista Informativa
+#Boton Agregar Activo
 print("Dando clic al botón Agregar...")
 wait = WebDriverWait(driver, 10)
 # Esperar a que el elemento esté presente en el DOM
@@ -98,132 +102,127 @@ agregar_btn.click()
 
 time.sleep(tiempo_modulos)
 
-#Nombre del Lista Informativa
-def ingresar_area(driver):
+##################################################LLENAR EL REPOSITORIO
+
+#Categoría
+def ingresar_categoria(driver):
     # Obtener la entrada del usuario desde la terminal
-    n_area_ingresado = input("Ingrese Nombre del Area a Agregar: ")
+    categoria_ingresada = input("Ingrese Categoría: ")
 
     # Encontrar el campo de entrada
     campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='area']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el número ingresado por el usuario
-    campo_entrada.clear()
-    campo_entrada.send_keys(n_area_ingresado)
-
-#Llamando a la función Nombre del Area
-ingresar_area(driver)
-
-time.sleep(tiempo_modulos)
-
-#Responsable
-def ingresar_responsable(driver):
-    # Obtener la entrada del usuario desde la terminal
-    responsable_ingresado = input("Ingrese Responsable: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='nombre_contacto_puesto']"))
+        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='categoria_id']"))
     )
 
     # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
     campo_entrada.click()
     time.sleep(tiempo_espera)
-    campo_entrada.send_keys(responsable_ingresado)
+    campo_entrada.send_keys(categoria_ingresada)
     time.sleep(tiempo_espera)
     campo_entrada.click()
 
-#Llamando a la función Descripcion
-ingresar_responsable(driver)
+#Llamando a la función Categoría
+ingresar_categoria(driver)
 
 time.sleep(tiempo_modulos)
 
-"""
-#Nombre del Puesto 
-def ingresar_puesto(driver):
+#Subcategoria
+def ingresar_subcategoria(driver):
     # Obtener la entrada del usuario desde la terminal
-    puesto_ingresado = input("Ingrese Nombre del Puesto a Agregar: ")
+    subcategoria_ingresada = input("Ingrese Subcategoria: ")
 
     # Encontrar el campo de entrada
     campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//DIV[@id='contacto_puesto']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el número ingresado por el usuario
-    campo_entrada.clear()
-    campo_entrada.send_keys(puesto_ingresado)
-
-#Llamando a la función Nombre del Puesto
-ingresar_puesto(driver)
-
-"""
-
-#Area a la que Reporta
-def ingresar_area_a_la_que_reporta(driver):
-    # Obtener la entrada del usuario desde la terminal
-    area_reporta_ingresado = input("Ingrese Area a la que Reporta: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='inputGroupSelect01']"))
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='subcategoria']"))
     )
 
     # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
-    campo_entrada.click()
-    time.sleep(tiempo_espera)
-    campo_entrada.send_keys(area_reporta_ingresado)
-    time.sleep(tiempo_espera)
-    campo_entrada.click()
-
-#Llamando a la función Area a la que Reporta
-ingresar_area_a_la_que_reporta(driver)
-
-time.sleep(tiempo_modulos)
-
-#Grupo 
-def ingresar_grupo(driver):
-    # Obtener la entrada del usuario desde la terminal
-    grupo_ingresado = input("Ingrese Grupo: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='id_grupo']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
-    campo_entrada.click()
-    time.sleep(tiempo_espera)
-    campo_entrada.send_keys(grupo_ingresado)
-    time.sleep(tiempo_espera)
-    campo_entrada.click()
-
-#Llamando a la función Grupo
-ingresar_grupo(driver)
-
-time.sleep(tiempo_modulos)
-
-#Descripcion
-def ingresar_descripcion(driver):
-    # Obtener la entrada del usuario desde la terminal
-    descripcion_ingresado = input("Ingrese Descripcion: ")
-
-    # Encontrar el campo de entrada
-    campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
-    )
-
-    # Limpiar el campo de entrada y escribir el número ingresado por el usuario
     campo_entrada.clear()
-    campo_entrada.send_keys(descripcion_ingresado)
+    campo_entrada.send_keys(subcategoria_ingresada)
 
-#Llamando a la función Nombre del Puesto
-ingresar_descripcion(driver)
+#Llamando a la función Codigo
+ingresar_subcategoria(driver)
 
-time.sleep(tiempo_espera)
+time.sleep(tiempo_modulos)
 
 #Guardar
 print("Dando clic al botón Guardar...")
+def realizar_accion_guardar(driver):
+    # Opciones
+    guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
+    guardar = WebDriverWait(driver, 20).until(
+        EC.element_to_be_clickable((By.XPATH, guardar_xpath))
+    )
+    guardar.click()
+
+# Llamada a la función Guardar
+realizar_accion_guardar(driver)
+
+#################################ACTUALIZAR REPOSITORIO CREADO###################################
+
+
+#Campo Buscar
+def ingresar_campo_a_buscar(driver):
+    # Obtener la entrada del usuario desde la terminal
+    nombre_ingresado = input("Ingrese Proceso a buscar: ")
+
+    # Encontrar el campo de entrada
+    campo_entrada = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
+    )
+
+    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
+    campo_entrada.clear()
+    campo_entrada.send_keys(nombre_ingresado)
+
+#Llamando a la función Campo a buscar
+ingresar_campo_a_buscar(driver)
+
+time.sleep(tiempo_carga)
+
+#Boton 3 puntos
+print("Dando clic al botón 3 puntos...")
+wait = WebDriverWait(driver, 10)
+# Esperar a que el elemento esté presente en el DOM
+puntos_btn = wait.until(EC.presence_of_element_located((By.XPATH, trespuntos_btn_xpath)))
+# Ahora intenta hacer clic en el elemento
+puntos_btn.click()
+
+time.sleep(tiempo_modulos)
+
+#Boton editar
+print("Dando clic al botón editar...")
+wait = WebDriverWait(driver, 10)
+# Esperar a que el elemento esté presente en el DOM
+btn_editar = wait.until(EC.presence_of_element_located((By.XPATH, btn2_editar)))
+# Ahora intenta hacer clic en el elemento
+btn_editar.click()
+
+time.sleep(tiempo_modulos)
+
+################################################EDITAR EL REPOSITORIO
+
+#Subcategoria
+def ingresar_subcategoria(driver):
+    # Obtener la entrada del usuario desde la terminal
+    subcategoria_ingresada = input("Ingrese Subcategoria: ")
+
+    # Encontrar el campo de entrada
+    campo_entrada = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='subcategoria']"))
+    )
+
+    # Limpiar el campo de entrada y escribir el dato ingresado por el usuario
+    campo_entrada.clear()
+    campo_entrada.send_keys(subcategoria_ingresada)
+
+#Llamando a la función Subcategoria
+ingresar_subcategoria(driver)
+
+time.sleep(tiempo_espera)
+
+#Guardar Actualizacion
+print("Dando clic al botón Guardar para guardar actualizacion...")
 def realizar_accion_guardar(driver):
     # Opciones
     guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
