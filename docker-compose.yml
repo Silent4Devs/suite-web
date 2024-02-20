@@ -49,6 +49,7 @@ services:
     volumes:
       # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
       - tabantaj-db:/var/lib/postgresql/data
+      - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     environment:
       - POSTGRES_USER=homestead
       - POSTGRES_PASSWORD=secret

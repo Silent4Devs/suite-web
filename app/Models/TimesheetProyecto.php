@@ -50,6 +50,15 @@ class TimesheetProyecto extends Model implements Auditable
         }
     }
 
+    public static function getAllWithData()
+    {
+        return Cache::remember('TimesheetProyecto:proyectos_with_tasks', 3600 * 4, function () {
+            return self::with('tareas:id,tarea,proyecto_id,area_id,todos')
+            ->select('id', 'proyecto', 'identificador')
+            ->get();
+        });
+    }
+
     public static function getIdNameAll($proyecto_id = null)
     {
         if (is_null($proyecto_id)) {
