@@ -21,14 +21,14 @@
             <!-- Modal -->
 
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            style="margin:50px 0px 50px 1230px; background:none; border: none;">
-        <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
-       </button>
+                style="margin:50px 0px 50px 1230px; background:none; border: none;">
+                <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+            </button>
             <div class="print-none">
             </div>
             <div class="card col-sm-12 col-md-10"
                 style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
-                <div class="card-body" style=" position: relative; left:4.5rem; width:800px;">
+                <div class="card-body" style=" position: relative; left:4.5rem; width:1200px;">
                     <div class="print-none" style="text-align:right;">
                         <form method="POST"
                             action="{{ route('admin.minutasaltadireccions.pdf', ['id' => $minutas->id]) }}">
@@ -39,7 +39,7 @@
                         </form>
                     </div>
                     <br>
-                    <div class="card mt-6" style="width:750px; position: relative; right: -.8rem;">
+                    <div class="card mt-6" style="width:1000px; position: relative; right: -.8rem;">
                         <div class="row col-12 ml-0"
                             style="border-radius;
                                     padding-left: 0px;padding-right: 0px;">
@@ -49,8 +49,7 @@
                             </div>
                             <div class="col-5 p-2 mt-3">
                                 <br>
-                                <p
-                                    style="position: relative; top: -1.5rem; right: 3rem;">
+                                <p style="position: relative; top: -1.5rem; right: 3rem;">
                                     {{ $empresa_actual }} <br>
                                     RFC: {{ $rfc }} <br>
                                     {{ $direccion }} <br>
@@ -157,7 +156,26 @@
                                 <tbody>
                                     <tr>
                                         <td style="border: 1px solid #dddddd; padding: 10px;" colspan="2">
-                                            <p style="width: 100%; border: none; outline: none;">Se adjunta la respuesta que Habiza dio en la reunión que tuvo con los representantes y que motivó se convocara a la reunión de hoy 10/03/2021, ya que mencionaron que para el mes de abril de este año ya no serán ellos los que administren el clúster. 1.- BARDA COLINDANTE: La barda colindante que comprende el tren número 2 que corresponde de la casa 9 a la 24, no se va a hacer porque los cimientos que se hicieron para la misma no soportan más peso inclusive ni siquiera 20 centímetros de malla ya que los vientos la derribarían 2.- PLANOS DE CONSTRUCIÓN Los planos nos los entregarían la próxima semana, pero solo van a ser los planos de cada prototipo pues las casas están hechas en serie y todos tienen las mismas características en cuanto al tema eléctrico e hidráulico, se va a entregar por correo y físico solo uno. 3.- GASTOS DE ADMINISTRACIÓN El informe nos lo entregan a más tardar el día 29 de marzo de 2021, y ellos se comprometen a compartir proveedores de insumos, vigilancia y jardineros. Por este punto se sugiere ir planeando u organizando la administración, no hay prorroga. 4.- CISTERNA DE RIEGO Nos comentan que la cisterna ya está para su funcionamiento y que a nosotros nos corresponde hacer el contrato de toma de agua para áreas verdes y alberca, inclusive nos entregaron la solicitud y esta tendrá un costo de $7,041.11. 5.-CANAL PLUVIAL</p>
+                                            <p style="width: 100%; border: none; outline: none;">Se adjunta la respuesta que
+                                                Habiza dio en la reunión que tuvo con los representantes y que motivó se
+                                                convocara a la reunión de hoy 10/03/2021, ya que mencionaron que para el mes
+                                                de abril de este año ya no serán ellos los que administren el clúster. 1.-
+                                                BARDA COLINDANTE: La barda colindante que comprende el tren número 2 que
+                                                corresponde de la casa 9 a la 24, no se va a hacer porque los cimientos que
+                                                se hicieron para la misma no soportan más peso inclusive ni siquiera 20
+                                                centímetros de malla ya que los vientos la derribarían 2.- PLANOS DE
+                                                CONSTRUCIÓN Los planos nos los entregarían la próxima semana, pero solo van
+                                                a ser los planos de cada prototipo pues las casas están hechas en serie y
+                                                todos tienen las mismas características en cuanto al tema eléctrico e
+                                                hidráulico, se va a entregar por correo y físico solo uno. 3.- GASTOS DE
+                                                ADMINISTRACIÓN El informe nos lo entregan a más tardar el día 29 de marzo de
+                                                2021, y ellos se comprometen a compartir proveedores de insumos, vigilancia
+                                                y jardineros. Por este punto se sugiere ir planeando u organizando la
+                                                administración, no hay prorroga. 4.- CISTERNA DE RIEGO Nos comentan que la
+                                                cisterna ya está para su funcionamiento y que a nosotros nos corresponde
+                                                hacer el contrato de toma de agua para áreas verdes y alberca, inclusive nos
+                                                entregaron la solicitud y esta tendrá un costo de $7,041.11. 5.-CANAL
+                                                PLUVIAL</p>
                                         </td>
                                     </tr>
                                 </tbody>
