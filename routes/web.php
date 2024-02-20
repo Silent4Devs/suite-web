@@ -441,7 +441,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'index' => 'ev360-objetivos.index',
             'destroy' => 'ev360-objetivos.destroy',
         ])->except(['show']);
-        Route::resource('recursos-humanos/evaluacion-360/objetivos/rangos', 'RH\CatalogoRangosObjetivosController');
 
         Route::get('Perspectiva/edit/{perspectivas}', 'RH\ObejetivoPerspectivaController@edit')->name('perspectivas.edit');
         Route::resource('Perspectiva', 'RH\ObejetivoPerspectivaController', ['except' => ['edit']]);
