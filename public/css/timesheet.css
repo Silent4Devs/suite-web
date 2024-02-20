@@ -55,6 +55,9 @@ table {
     color: #fff;
 }
 
+.anima-focus label{
+    background-color: #F8FAFC !important;
+}
 .caja-calendar-semana .anima-focus label {
     background-color: #6F8FB8;
     color: #fff;
@@ -805,4 +808,11 @@ div .form-control:not(#form_timesheet .form-control) {
 
 .btn-secondary:hover {
     background-color: #E8E8E8;
+}
+
+.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
 }

@@ -1154,7 +1154,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 
 .anima-focus .form-control {
     background-color: #00000000;
-    z-index: 2;
+    /* z-index: 2; */
 }
 
 .anima-focus .form-control:not(textarea) {

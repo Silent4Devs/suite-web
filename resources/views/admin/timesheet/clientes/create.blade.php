@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
+@endsection
 @section('content')
     <style type="text/css">
         .btn-transparent {
@@ -10,15 +13,23 @@
 
     {{ Breadcrumbs::render('timesheet-clientes-form') }}
 
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
+
     <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Cliente</font>
     </h5>
 
     <div class="card card-body">
+        <div class="row">
+            <h4 class="title-card-time">Nueva Tarea</h4>
+            <hr class="my-4">
+        </div>
         <form action="{{ asset('admin/timesheet/clientes/store') }}" method="POST" class="row">
             @csrf
             <div class="form-group col-md-2 anima-focus">
-                <input name="identificador" placeholder="" type="text" maxlength="255" class="form-control" required
-                    value="{{ old('identificador') }}">
+                <input id="identificador" name="identificador" placeholder="" type="text" maxlength="255"
+                    class="form-control" required value="{{ old('identificador') }}">
                 {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
             </div>
 
@@ -84,20 +95,21 @@
                     {!! Form::label(
                         'ciudad',
                         ' Ciudad o Municipio/
-                                        País*',
+                                                                                                                                                                                                                            País*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="codigo_postal" placeholder=""  maxlength="255" class="form-control"
+                    <input type="" name="codigo_postal" placeholder="" maxlength="255" class="form-control"
                         value="{{ old('codigo_postal') }}">
                     {!! Form::label('codigo_postal', 'Código Postal*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
                     <input id="phone" type="text" pattern="[0-9]+" title="Por favor, introduce solo números"
-                        name="telefono" value="{{ old('telefono') }}"  maxlength="12" class="form-control" size="20" placeholder="">
+                        name="telefono" value="{{ old('telefono') }}" maxlength="12" class="form-control" size="20"
+                        placeholder="">
                     {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
                     <div class="error-message"></div>
                 </div>
@@ -119,7 +131,7 @@
                     {!! Form::label(
                         'nombre_contacto',
                         'Nombre Completo del
-                                            contacto*',
+                                                                                                                                                                                                                                contacto*',
                         ['class' => 'asterisco'],
                     ) !!}
 
@@ -140,7 +152,7 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="tel" pattern="[0-9]+"  maxlength="10" title="Por favor, introduce solo números"
+                    <input type="tel" pattern="[0-9]+" maxlength="10" title="Por favor, introduce solo números"
                         name="celular_contacto" placeholder="" class="form-control"
                         value="{{ old('celular_contacto') }}">
                     {!! Form::label('celular_contacto', 'Celular*', ['class' => 'asterisco']) !!}
@@ -160,7 +172,7 @@
                     {!! Form::label(
                         'objeto_descripcion',
                         'Objeto social / Descripción
-                                            del servicio o producto*',
+                                                                                                                                                                                                                                del servicio o producto*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -170,7 +182,7 @@
                     {!! Form::label(
                         'cobertura',
                         'Cobertura, Rango geográfico
-                                        en el cual presta los servicios*',
+                                                                                                                                                                                                                            en el cual presta los servicios*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
