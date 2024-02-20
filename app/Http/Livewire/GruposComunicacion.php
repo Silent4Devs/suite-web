@@ -23,8 +23,8 @@ class GruposComunicacion extends Component
 
     public function render()
     {
-        $grupos_evaluados = GruposEvaluado::all();
-        $areas = Area::all();
+        $grupos_evaluados = GruposEvaluado::getAll();
+        $areas = Area::getAll();
         $empleados = Empleado::getaltaAll();
 
         return view('livewire.grupos-comunicacion', ['grupos_evaluados' => $grupos_evaluados, 'areas' => $areas, 'empleados' => $empleados]);
