@@ -536,7 +536,7 @@
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
                                             </div>
-                                            <div class="mt-3 row align-items-center">
+                                            <div class="mt-3 row">
                                                 <div class="col-5">
                                                     <div style="margin-top: 8px;">
                                                         <label class="container-check">Objetivos
@@ -552,12 +552,29 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-7 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+                                                <div class="col-3 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
                                                         wire:model.defer="pesoGeneralObjetivos"
                                                         id="pesoGeneralOnjetivos" class="form-control" type="number"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
+                                                </div>
+                                                <div class="col-4 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+                                                    <select class="form-control" name="catalogoObjetivos"
+                                                        id="catalogoObjetivos" wire:model.defer="catalogoObjetivos">
+                                                        <option value="" selected>Seleccione el Catalogo
+                                                            de
+                                                            Parametros que utilizara la Evaluacion</option>
+                                                        @foreach ($catalogo_rangos_objetivos as $c)
+                                                            <option value="{{ $c->id }}">
+                                                                {{ $c->nombre_catalogo }}</option>
+                                                        @endforeach
+                                                        @if ($errors->has('catalogoObjetivos'))
+                                                            <small class="text-danger">
+                                                                ({{ $errors->first('catalogoObjetivos') }})
+                                                            </small>
+                                                        @endif
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
