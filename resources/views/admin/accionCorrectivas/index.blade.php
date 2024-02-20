@@ -2,7 +2,7 @@
 @section('content')
     {{ Breadcrumbs::render('admin.accion-correctivas.index') }}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centro_atencion_cards.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centro_atencion_cards.css') }}{{config('app.cssVersion')}}">
 
 
     <style>

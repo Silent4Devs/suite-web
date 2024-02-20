@@ -127,13 +127,14 @@
             </span>
             <hr>
         </div>
-        <div class="datatable-fix" style="margin: auto;">
+        @include('partials.flashMessages')
+        <div class="datatable-fix datatable-rds" style="width: 100%;">
             <table id="tbl-participantes">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Puesto</th>
+                        <th style="width: 35%;">ID</th>
+                        <th  style="width: 35%;">Nombre</th>
+                        <th  style="width: 35%;">Puesto</th>
                         {{-- <th scope="col">Área</th> --}}
                         <th>Correo</th>
                     </tr>

@@ -1,62 +1,76 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
+    {{ Breadcrumbs::render('timesheet-papelera') }}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <h5 class="titulo_general_funcion">
+        TimeSheet: <font style="font-weight:lighter;">Borrador</font>
+    </h5>
 
+    @include('admin.timesheet.complementos.cards')
+    @include('admin.timesheet.complementos.admin-aprob')
+    @include('admin.timesheet.complementos.blue-card-header')
 
-     {{ Breadcrumbs::render('timesheet-papelera') }}
-	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Borrador</font> </h5>
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="title-card-time">
+                    REGISTROS EN BORRADOR
+                </h3>
+                <hr class="my-4">
+            </div>
+        </div>
+        <div class="row">
 
-	<div class="card card-body">
-		<div class="row">
-			
-	        <div class="datatable-fix w-100">
-	            <table id="datatable_timesheet" class="table w-100">
-	                <thead class="w-100">
-	                    <tr>
-	                        <th>Fin de semana </th>
+            <div class="datatable-fix w-100">
+                <table id="datatable_timesheet" class="table w-100">
+                    <thead class="w-100">
+                        <tr>
+                            <th>Fin de semana </th>
                             <th>Estatus</th>
-	                        <th>opciones</th>
-	                    </tr>
-	                </thead>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
 
-	                <tbody>
-                        @foreach($papelera as $time)
-    	                	<tr>
-    	                        <td>
-    	                            {!! $time->semana !!}
-    	                        </td>
-    	                        <td>
-                                     @if($time->estatus == 'aprobado')
+                    <tbody>
+                        @foreach ($papelera as $time)
+                            <tr>
+                                <td>
+                                    {!! $time->semana !!}
+                                </td>
+                                <td>
+                                    @if ($time->estatus == 'aprobado')
                                         <span class="aprobado">Aprobada</span>
                                     @endif
 
-                                    @if($time->estatus == 'rechazado')
+                                    @if ($time->estatus == 'rechazado')
                                         <span class="aprobado">Rechazada</span>
                                     @endif
 
-                                    @if($time->estatus == 'pendiente')
+                                    @if ($time->estatus == 'pendiente')
                                         <span class="pendiente">Pendiente</span>
                                     @endif
 
-                                    @if($time->estatus == 'papelera')
+                                    @if ($time->estatus == 'papelera')
                                         <span class="papelera">Borrador</span>
                                     @endif
-    	                        </td>
-    	                        <td>
-    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
-    							</td>	                    
-    						</tr>
+                                </td>
+                                <td>
+                                    <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar"
+                                        class="btn"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Visualizar"
+                                        class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
+                                </td>
+                            </tr>
                         @endforeach
-	                </tbody>
-	            </table>
-	        </div>
+                    </tbody>
+                </table>
+            </div>
 
-		</div>
-	</div>
-	
+        </div>
+    </div>
 @endsection
 
 
@@ -151,22 +165,22 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
+                url: "{{ asset('admin/inicioUsuario/reportes/quejas') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
 
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ]
+                order: [
+                    [0, 'desc']
+                ]
             };
             let table = $('#datatable_timesheet').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {

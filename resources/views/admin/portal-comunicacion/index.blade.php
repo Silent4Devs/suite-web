@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}?v=1.2">
+    <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     @include('partials.menu-slider')
-    <div style="max-width: 1900px;">
+    <div>
 
         @if ($user->empleado)
             <div class="d-flex justify-content-center align-items-center" style="gap: 25px;">
@@ -127,7 +127,7 @@
                                 <h4 class="title-card-portal-c">Aplicaciones más usadas</h4>
                                 <div class="d-flex justify-content-between" style="gap: 22px; flex-wrap:wrap;">
 
-                                    <a href="{{ route('admin.timesheet-inicio') }}" class="item-app-mu">
+                                    <a href="{{ route('admin.timesheet-create') }}" class="item-app-mu">
                                         Timesheet
                                     </a>
 
@@ -281,7 +281,7 @@
                                                 </a>
                                             @endcan
                                             @can('timesheet_acceder')
-                                                <a href="{{ route('admin.timesheet-inicio') }}">
+                                                <a href="{{ route('admin.timesheet-create') }}">
                                                     <div class="item-menu-portal">
                                                         <i class="material-symbols-outlined">date_range</i>
                                                         <span>Timesheet</span>
@@ -376,36 +376,37 @@
                 <div class="card card-body" style="background-color: #E6E0E9;">
                     <h4 class="title-card-portal-c"> Últimos Documentos</h4>
                     <div class="caja-documentos">
-
                         @forelse($documentos_publicados as $documento)
-                            <div class="doc-item-portal">
-                                <img src="{{ asset('img/desk_portal_docs.png') }}" alt="">
-                                <div class="doc-info">
-                                    <span
-                                        class="title-doc-portal">{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}</span>
-                                    <span style="font-size: 12px;">
-                                        Publicado: {{ Carbon\Carbon::parse($documento->fecha)->format('d/m/Y') }}
-                                    </span>
-                                    <div class="caja-doc-etiquetas mt-2">
+                            <a href="{{ asset('admin/documentos/' . $documento->id . '/view-document') }}">
+                                <div class="doc-item-portal">
+                                    <img src="{{ asset('img/desk_portal_docs.png') }}" alt="">
+                                    <div class="doc-info">
+                                        <span
+                                            class="title-doc-portal">{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}</span>
+                                        <span style="font-size: 12px;">
+                                            Publicado: {{ Carbon\Carbon::parse($documento->fecha)->format('d/m/Y') }}
+                                        </span>
+                                        <div class="caja-doc-etiquetas mt-2">
 
-                                        <span>{{ $documento->tipo }}</span>
-                                        @if ($documento->macroproceso_id)
-                                            <span>{{ $documento->macroproceso->nombre }}</span>
-                                        @endif
-                                        @if ($documento->proceso_id)
-                                            <span>{{ $documento->proceso->nombre }}</span>
-                                        @endif
+                                            <span>{{ $documento->tipo }}</span>
+                                            @if ($documento->macroproceso_id)
+                                                <span>{{ $documento->macroproceso->nombre }}</span>
+                                            @endif
+                                            @if ($documento->proceso_id)
+                                                <span>{{ $documento->proceso->nombre }}</span>
+                                            @endif
 
+                                        </div>
+                                    </div>
+                                    <div class="doc-responsable">
+                                        <span style="font-size: 10px;">Responsable</span>
+                                        <div class="img-person" style="width:50px; height:50px;">
+                                            <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $documento->responsable ? $documento->responsable->avatar : 'user.png' }}"
+                                                alt="">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="doc-responsable">
-                                    <span style="font-size: 10px;">Responsable</span>
-                                    <div class="img-person" style="width:50px; height:50px;">
-                                        <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $documento->responsable ? $documento->responsable->avatar : 'user.png' }}"
-                                            alt="">
-                                    </div>
-                                </div>
-                            </div>
+                            </a>
                         @empty
                         @endforelse
 
@@ -520,8 +521,6 @@
 
         document.getElementById('hora-portal').innerHTML = hora;
         document.getElementById('med-portal>').innerHTML = med;
-        console.log(hora);
-        console.log(med);
 
         const fechaActual = new Date();
 
@@ -536,11 +535,9 @@
         const fechaHumana = fechaActual.toLocaleDateString('es-ES', opcionesFecha).replace(' de ', ' ');
 
         // Mostrar la fecha en la consola
-        console.log(fechaHumana); // Ejemplo: "martes, 21 de diciembre de 2023"
         document.getElementById('fecha-completa').innerHTML = fechaHumana;
 
         function boletin(id) {
-            console.log(id);
             $('.caja-img-carrusel-vertical .item-main-carrusel').addClass('d-none');
             $('#' + id).removeClass('d-none');
         }
@@ -554,5 +551,33 @@
                 document.querySelector('.carrusel-portal:hover .caja-items-carrusel-portal').scrollLeft -= 400;
             }
         }
+
+        $(document).ready(function() {
+            // Reemplaza '82a605d0' y '010461c49fd2f4a8f1968e0236b802fa' con tus credenciales de WeatherUnlocked
+            const appId = '82a605d0';
+            const apiKey = '010461c49fd2f4a8f1968e0236b802fa';
+
+            // Coordenadas para una ubicación específica (51.50, -0.12 es Londres, puedes cambiarlo)
+            const latitude = 51.50;
+            const longitude = -0.12;
+
+            // URL de la API de WeatherUnlocked para obtener datos del tiempo en una ubicación específica
+            const apiUrl =
+                `http://api.weatherunlocked.com/api/current/${latitude},${longitude}?app_id=${appId}&app_key=${apiKey}`;
+
+            // Realiza la solicitud a la API utilizando jQuery AJAX
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Muestra la información del tiempo en el elemento con id 'weather-info'
+                    console.log(data);
+                },
+                error: function(error) {
+                    console.error('Error al obtener datos del tiempo:', error);
+                }
+            });
+        });
     </script>
 @endsection

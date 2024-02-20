@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/foda.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/foda.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     <script script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

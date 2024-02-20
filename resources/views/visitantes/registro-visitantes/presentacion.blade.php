@@ -56,7 +56,7 @@
                 <div class="col-12 col-md-12 col-lg-12 justify-content-around d-flex justify-content-center mt-5">
                     <div class="d-flex text-white" style="justify-content: space-evenly;width: 40%;flex-wrap: wrap;">
                         <a class="mb-3 col-md-8 col-8 col-lg-3 border border-4 rounded"
-                            href="{{ route('visitantes.index') }}"
+                            href="{{ route('admin.visitantes.index') }}"
                             style="outline: none; color: white; cursor: pointer;text-decoration: none">
 
                             <i style="font-size: 50px" class="bi bi-box-arrow-right"></i>

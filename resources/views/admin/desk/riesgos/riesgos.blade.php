@@ -44,7 +44,6 @@
 </div>
 @endcan
 
-<div class="card card-body">
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
         <table class="datatable tabla_riesgos">
@@ -73,7 +72,6 @@
             <tbody>
             </tbody>
     </table>
-    </div>
 </div>
 
 

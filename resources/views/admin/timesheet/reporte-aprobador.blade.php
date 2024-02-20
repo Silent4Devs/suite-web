@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
     </script>
     {{ Breadcrumbs::render('timesheet-reporte-aprobador') }}
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reporte Aprobador</font>
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Reporte Aprobador</font>
     </h5>
     <div class="card card-body">
         @livewire('timesheet.reporte-aprobador')

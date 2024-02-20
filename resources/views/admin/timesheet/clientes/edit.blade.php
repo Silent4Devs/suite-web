@@ -10,26 +10,27 @@
 
     {{ Breadcrumbs::render('timesheet-clientes-form') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Cliente</font>
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Cliente</font>
     </h5>
 
     <div class="card card-body">
         <form action="{{ asset('admin/timesheet/clientes/update') }}/{{ $cliente->id }}" method="POST" class="row">
             @csrf
             <div class="form-group col-md-2 anima-focus">
-                <input  required name="identificador" placeholder="" maxlength="255" type="text" class="form-control" required
-                    value="{{ $cliente->identificador }}">
-                    {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
+                <input required name="identificador" placeholder="" maxlength="255" type="text" class="form-control"
+                    required value="{{ $cliente->identificador }}">
+                {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
             </div>
 
             <div class="form-group col-md-5 anima-focus">
-                <input type="" placeholder="" required name="razon_social" maxlength="255" class="form-control" value="{{ $cliente->razon_social }}"
-                    required>
-                    {!! Form::label('razon_social', 'Razon Social*', ['class' => 'asterisco']) !!}
+                <input type="" placeholder="" required name="razon_social" maxlength="255" class="form-control"
+                    value="{{ $cliente->razon_social }}" required>
+                {!! Form::label('razon_social', 'Razon Social*', ['class' => 'asterisco']) !!}
             </div>
 
             <div class="form-group col-md-5 anima-focus">
-                <input type="" required name="nombre" placeholder="" maxlength="255" class="form-control" required value="{{ $cliente->nombre }}">
+                <input type="" required name="nombre" placeholder="" maxlength="255" class="form-control" required
+                    value="{{ $cliente->nombre }}">
                 {!! Form::label('nombre', 'Nombre Comercial del Cliente*', ['class' => 'asterisco']) !!}
             </div>
 
@@ -50,33 +51,41 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" placeholder="" name="calle" maxlength="255" class="form-control" value="{{ $cliente->calle }}">
+                    <input type="" placeholder="" name="calle" maxlength="255" class="form-control"
+                        value="{{ $cliente->calle }}">
                     {!! Form::label('calle', 'Calle y Número*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="colonia" placeholder="" maxlength="255" class="form-control" value="{{ $cliente->colonia }}">
+                    <input type="" name="colonia" placeholder="" maxlength="255" class="form-control"
+                        value="{{ $cliente->colonia }}">
                     {!! Form::label('colonia', 'Colonia*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
                     <input type="" placeholder="" name="ciudad" class="form-control" value="{{ $cliente->ciudad }}">
-                    {!! Form::label('ciudad', ' Ciudad o Municipio/
-                    País*', ['class' => 'asterisco']) !!}
+                    {!! Form::label(
+                        'ciudad',
+                        ' Ciudad o Municipio/
+                                        País*',
+                        ['class' => 'asterisco'],
+                    ) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="codigo_postal" class="form-control" value="{{ $cliente->codigo_postal }}">
+                    <input type="" name="codigo_postal" class="form-control"  maxlength="255" value="{{ $cliente->codigo_postal }}">
                     {!! Form::label('codigo_postal', 'Código Postal*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input id="phone" name="telefono" pattern="[0-9]+" title="Por favor, introduce solo números" value="{{ $cliente->telefono }}" class="form-control" size="20" placeholder="">
-                        {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
+                    <input id="phone" name="telefono" pattern="[0-9]+"  maxlength="12" title="Por favor, introduce solo números"
+                        value="{{ $cliente->telefono }}" class="form-control" size="20" placeholder="">
+                    {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" placeholder="" name="pagina_web" class="form-control" value="{{ $cliente->pagina_web }}">
+                    <input type="" placeholder="" name="pagina_web"  maxlength="255" class="form-control"
+                        value="{{ $cliente->pagina_web }}">
                     {!! Form::label('pagina_web', 'Página Web*', ['class' => 'asterisco']) !!}
                 </div>
 
@@ -87,30 +96,34 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" placeholder="" name="nombre_contacto" class="form-control"
+                    <input type="" placeholder="" name="nombre_contacto"  maxlength="255" class="form-control"
                         value="{{ $cliente->nombre_contacto }}">
-                        {!! Form::label('nombre_contacto', 'Nombre Completo del
-                        contacto*', ['class' => 'asterisco']) !!}
+                    {!! Form::label(
+                        'nombre_contacto',
+                        'Nombre Completo del
+                                            contacto*',
+                        ['class' => 'asterisco'],
+                    ) !!}
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" placeholder="" name="puesto_contacto" class="form-control"
+                    <input type="" placeholder="" name="puesto_contacto"  maxlength="255" class="form-control"
                         value="{{ $cliente->puesto_contacto }}">
-                        {!! Form::label('puesto_contacto', 'Puesto*', ['class' => 'asterisco']) !!}
+                    {!! Form::label('puesto_contacto', 'Puesto*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="email" id="foo" placeholder="" maxlength="255" class="form-control" value="{{ $cliente->correo_contacto }}"
-                        placeholder="" name="correo_contacto">
-                        {!! Form::label('correo_contacto', 'Correo Electronico*', ['class' => 'asterisco']) !!}
+                    <input type="email" id="foo" placeholder="" maxlength="255" class="form-control"
+                        value="{{ $cliente->correo_contacto }}" placeholder="" name="correo_contacto">
+                    {!! Form::label('correo_contacto', 'Correo Electronico*', ['class' => 'asterisco']) !!}
 
                     <h6 id="emailV"></h6>
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input pattern="[0-9]+" title="Por favor, introduce solo números" name="celular_contacto" placeholder="" class="form-control"
-                        value="{{ $cliente->celular_contacto }}">
-                        {!! Form::label('celular_contacto', 'Celular*', ['class' => 'asterisco']) !!}
+                    <input pattern="[0-9]+" title="Por favor, introduce solo números"  maxlength="10" name="celular_contacto"
+                        placeholder="" class="form-control" value="{{ $cliente->celular_contacto }}">
+                    {!! Form::label('celular_contacto', 'Celular*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
@@ -121,14 +134,22 @@
 
                 <div class="form-group col-md-12 anima-focus">
                     <textarea class="form-control" name="objeto_descripcion" maxlength="550" id="objeto_descripcion">{{ old('objeto_descripcion', $cliente->objeto_descripcion) }}</textarea>
-                    {!! Form::label('objeto_descripcion', 'Objeto social / Descripción
-                        del servicio o producto*', ['class' => 'asterisco']) !!}
+                    {!! Form::label(
+                        'objeto_descripcion',
+                        'Objeto social / Descripción
+                                            del servicio o producto*',
+                        ['class' => 'asterisco'],
+                    ) !!}
                 </div>
 
                 <div class="form-group col-md-12 anima-focus">
                     <textarea class="form-control" name="cobertura" maxlength="550" id="cobertura">{{ old('objeto_descripcion', $cliente->cobertura) }}</textarea>
-                    {!! Form::label('cobertura', 'Cobertura, Rango geográfico
-                    en el cual presta los servicios*', ['class' => 'asterisco']) !!}
+                    {!! Form::label(
+                        'cobertura',
+                        'Cobertura, Rango geográfico
+                                        en el cual presta los servicios*',
+                        ['class' => 'asterisco'],
+                    ) !!}
                 </div>
             </div>
 

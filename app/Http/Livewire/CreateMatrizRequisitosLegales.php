@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -61,12 +62,19 @@ class CreateMatrizRequisitosLegales extends Component
 
     public function save()
     {
-        // dd($this->alcance, $this->alcance_s1);
         DB::beginTransaction();
 
         $array_requisito = [];
 
         try {
+
+            if (strlen($this->alcance['nombrerequisito']) >= 255 || strlen($this->alcance['requisitoacumplir']) >= 555 || strlen($this->alcance['formacumple']) >= 255) {
+
+                $mensajeError = 'Intentelo de nuevo, no exceda los 255 caracteres';
+
+                return Redirect::back()->with('mensajeError', $mensajeError);
+            }
+
             $requisito = MatrizRequisitoLegale::create([
                 'nombrerequisito' => $this->alcance['nombrerequisito'],
                 'formacumple' => $this->alcance['formacumple'],

@@ -166,7 +166,7 @@
                                         @php
                                             $empleado = App\Models\Empleado::getAll()->find(intval($assig->resourceId));
                                         @endphp
-                                        <img src="{{ $empleado->avatar_ruta }}" id="res_{{ $empleado->id }}"
+                                        <img src="{{ $empleado->avatar }}" id="res_{{ $empleado->id }}"
                                             alt="{{ $empleado->name }}" title="{{ $empleado->name }}"
                                             style="clip-path: circle(15px at 50% 50%);width: 45px;" />
                                     @endforeach
@@ -356,27 +356,35 @@
             // let progress = progreso;
 
             if (!arrActividades.includes(actividad)) {
-                tblActividades.row.add([
-                    // id,
-                    // 'STATUS_ACTIVE',
+                // ...
+
+                let currentIndex;
+                if (tblActividades.data().length > 0) {
+                    currentIndex = tblActividades.data().length;
+                } else {
+                    currentIndex = 0;
+                }
+
+                let rowData = [
                     name,
                     start,
                     end,
-                    // duration,
                     images,
-                    // participantes_id,
                     comentarios,
                     // `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
-                ]).draw();
+                ];
 
-                let additionalData = {
+                tblActividades.row.add(rowData).draw();
+
+                // Get the current index and push additional data to that row
+                let currentRowData = tblActividades.row(currentIndex).data();
+                currentRowData[currentRowData.length] = { // Update the last element of the row
                     id: id,
                     status: 'STATUS_ACTIVE',
                     duration: duration,
                     participantes_id: participantes_id,
                     // button: `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
                 };
-                tblActividades.rows().data()[tblActividades.rows().length - 1].push(additionalData);
             } else {
                 Swal.fire('Esta actividad ya ha sido agregada', '', 'info');
                 limpiarCampos();

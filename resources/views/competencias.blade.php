@@ -6,10 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Competencias</title>
 
-    <link rel="stylesheet" href="css/requisiciones_pdf.css">
+    <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .quitar{
             font-weight: normal;
+            text-align: justify;
+        }
+
+        body{
             text-align: justify;
         }
     </style>
@@ -21,13 +26,13 @@
             <tr>
                 <td class="td-img-doc">
                     @if ($logo_actual)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ public_path( $logo_actual )}}">
+                    <img style="width:100%; max-width:100px; position: relative; left:2rem;" src="{{ url('image/' . $logotipo) }}">
                     @else
-                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                        <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </td>
                 <td class="info-header">
-                    <div style="position: relative; right: 5rem; text-align: justify;">
+                    <div style="position: relative; right: 5rem;">
                         {{$organizacions->empresa}} <br>
                        RFC:{{$organizacions->rfc}} <br>
                         {{$organizacions->direccion}} <br>

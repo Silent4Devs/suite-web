@@ -79,7 +79,7 @@ class TablaTareasTimesheet extends Component
 
     public function create()
     {
-        if ($this->area_select == 0) {
+        if ($this->area_select === 0) {
             $area_id = null;
             $todos = true;
         } else {

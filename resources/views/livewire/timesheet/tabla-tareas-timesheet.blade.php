@@ -39,7 +39,7 @@
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select  id="proyectos_select" class="mr-4 form-control" wire:model.lazy="proyecto_id"
+                        <select id="proyectos_select" class="mr-4 form-control" wire:model.lazy="proyecto_id"
                             required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)

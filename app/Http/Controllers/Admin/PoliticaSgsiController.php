@@ -303,10 +303,7 @@ class PoliticaSgsiController extends Controller
     {
 
         $politicas = PoliticaSgsi::get();
-        $organizacions = Organizacion::getFirst();
-        $logo_actual = $organizacions->logo;
-
-        $pdf = PDF::loadView('pdf', compact('politicas', 'organizacions', 'logo_actual'));
+        $pdf = PDF::loadView('pdf', compact('politicas'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('politicas.pdf');
@@ -367,10 +364,15 @@ class PoliticaSgsiController extends Controller
 
     public function revision($id)
     {
+
         abort_if(Gate::denies('politica_sistema_gestion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $politicaSgsi = PoliticaSgsi::find($id);
-        // dd($politicaSgsi);
+
+        if (! $politicaSgsi) {
+            return redirect()->route('admin.politica-sgsis.index')->with('error', 'Registro no encontrado');
+        }
+
         $politicaSgsi->load('team');
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
@@ -496,7 +498,8 @@ class PoliticaSgsiController extends Controller
 
     public function correosAprobacion($proceso, $politica)
     {
-        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso);
+        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
+
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
 
@@ -561,7 +564,7 @@ class PoliticaSgsiController extends Controller
                 'estatus' => 'Aprobado',
             ]);
 
-            $this->correosAprobacion($proceso->id, $politica);
+            $this->correosAprobacion($proceso, $politica);
         } else {
             $this->siguienteCorreo($proceso, $politica);
         }

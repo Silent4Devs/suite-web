@@ -1,29 +1,28 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-    
     <style type="text/css">
-        .btn_op{
+        .btn_op {
             opacity: 1 !important;
         }
-        .btn-primary{
+
+        .btn-primary {
             opacity: 0.6;
         }
 
-        .btn_estatus_caja button{
+        .btn_estatus_caja button {
             margin-left: 7px;
         }
     </style>
 
+    {{ Breadcrumbs::render('timesheet-index') }}
 
-     {{ Breadcrumbs::render('timesheet-index') }}
-	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Mis Registros</font> </h5>
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Mis Registros</font>
+    </h5>
 
-	<div class="card card-body">
-		@livewire('timesheet.tabla-mis-registros')
-	</div>
+    @livewire('timesheet.tabla-mis-registros', ['estatus' => $estatus])
 @endsection
 
 
@@ -31,11 +30,11 @@
     @parent
     <script>
         let cont = 0;
-        function tablaLivewire(id_tabla)
-        {
+
+        function tablaLivewire(id_tabla) {
             console.log('funcion');
             $('#' + id_tabla).attr('id', id_tabla + cont);
-            
+
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
@@ -123,30 +122,30 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
+                url: "{{ asset('admin/inicioUsuario/reportes/quejas') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ],
+                order: [
+                    [0, 'desc']
+                ],
                 destroy: true,
                 render: true,
             };
 
             let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
         }
-        document.addEventListener('DOMContentLoaded', ()=>{
+        document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                    console.log('liwe');
-                    tablaLivewire('datatable_timesheet');
+                console.log('liwe');
+                tablaLivewire('datatable_timesheet');
             }, 100);
         });
     </script>

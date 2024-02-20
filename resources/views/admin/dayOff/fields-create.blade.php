@@ -64,7 +64,6 @@
         </div>
     </div>
 
-    <div class="row">
         <div class="form-group col-sm-3 mt-4" x-show="otro">
             <div class="form-floating">
                 <input type="number" class="form-control" id="meses" name="meses"
@@ -73,7 +72,6 @@
                 <label for="meses">Inicio del beneficio en meses:</label>
             </div>
         </div>
-    </div>
 </div><br>
 
 <div class="row">
@@ -121,7 +119,11 @@
             {{-- <i class="fa-solid fa-people-line iconos-crear"></i> --}}
             Colaboradores a los que aplica :
         </label>
-
+        @if ($errors->has('custom_areas'))
+            <div class="alert alert-danger">
+                {{ $errors->first('custom_areas') }}
+            </div>
+        @endif
     </div>
     @php
         $visible = $vacacion->afectados == 2 ? true : false;
@@ -160,11 +162,6 @@
                     </option>
                 @endforeach
             </select>
-            @if ($errors->has('areas'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('areas') }}
-                </div>
-            @endif
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
 
     {{ Breadcrumbs::render('timesheet-externos-proyecto') }}
 
@@ -134,11 +134,11 @@
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
             });
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                tablaLivewire('tabla_time_proyect_externos');
-            }, 100);
-        });
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     setTimeout(() => {
+        //         tablaLivewire('tabla_time_proyect_externos');
+        //     }, 50);
+        // });
     </script>
 
     <script type="text/javascript">

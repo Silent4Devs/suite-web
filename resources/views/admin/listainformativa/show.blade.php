@@ -25,7 +25,7 @@
     }
 </style>
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}" @endsection
+<link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}{{config('app.cssVersion')}}" @endsection
     @section('content')
     @include('admin.listainformativa.estilos')
 

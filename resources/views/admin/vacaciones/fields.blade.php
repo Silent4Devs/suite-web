@@ -125,6 +125,12 @@
 
 <span style="color: #306BA9; font-size:18px;">Colaboradores a los que aplica : </span>
 
+@if ($errors->has('custom_areas'))
+    <div class="alert alert-danger">
+        {{ $errors->first('custom_areas') }}
+    </div>
+@endif
+
 @php
     $visible = $vacacion->afectados == 2 ? true : false;
 @endphp
