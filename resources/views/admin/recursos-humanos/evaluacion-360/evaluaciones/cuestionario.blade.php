@@ -36,59 +36,13 @@
             color: grey;
             font-size: 14px;
         }
+
     </style>
     <div class="mt-3">
-        {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}
+        {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion,'evaluado' => $evaluado,'evaluador' => $evaluador]) }}
     </div>
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
-
-    @if ($evaluador->id == $evaluado->id)
-        <div class="mt-4 card">
-            <div class="pt-0 card-body">
-                <table class="datatable-rds">
-                    <thead>
-                        <th>
-                            Nombre de la evaluación
-                        </th>
-                        <th>
-                            Fecha de creación
-                        </th>
-                        <th>
-                            Autoevaluación
-                        </th>
-                        <th>
-                            Evaluaciones a realizar
-                        </th>
-                    </thead>
-                    <tbody>
-                        <td>
-                            {{ $evaluacion->nombre }}
-                        </td>
-                        <td>
-                            {{ $evaluacion->fecha_inicio }}
-                        </td>
-                        <td>
-                            {{ $evaluacion->fecha_fin }}
-                        </td>
-                        <td>
-                            @foreach ($evaluaciones_a_realizar as $evaluar)
-                                <img style=""
-                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $evaluar->empleado_evaluado->avatar }}"
-                                    class="rounded-circle" alt="{{ $evaluar->empleado_evaluado->name }}"
-                                    title="{{ $evaluar->empleado_evaluado->name }}" width="40" height="37">
-                                @if ($evaluar->evaluado)
-                                    <i class="fas fa-check-circle"
-                                        style="position: relative; top: 0; left: -20px; z-index: 1; color: #002102; text-shadow: 1px 1px 0px gainsboro;"></i>
-                                @endif
-                            @endforeach
-                        </td>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    @endif
-
     <div class="mt-4 card">
         <div class="pt-0 card-body">
 
@@ -139,7 +93,8 @@
                                         </div>
                                     </div>
                                     <div class="col-11">
-                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                        <p class="m-0"
+                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                             Muchas gracias</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Su respuesta
                                             ha
@@ -172,7 +127,8 @@
                                             </div>
                                         </div>
                                         <div class="col-11">
-                                            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            <p class="m-0"
+                                                style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                                 Evaluación Cerrada</p>
                                             <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
                                                 Esta evaluación ha sido cerrada.
@@ -193,7 +149,7 @@
                                         style="background-color:#345183; border-radius: 100px; color: white;">
                                         SECCIÓN DE COMPETENCIAS
                                     </div>
-                                    <section id="sectionCompetencias" class="mt-2" x-data="{ show: true }">
+                                    <section id="sectionCompetencias" class="mt-2" x-data="{show:true}">
                                         <h5 class="head">
                                             <i class="mr-1 fas fa-chart-line"></i> Competencias
                                             <span style="float: right; cursor:pointer; margin-top: 0px;"
@@ -277,7 +233,8 @@
                                                                         </div>
                                                                     @endif
                                                                 @endif
-                                                                <div class="col-2" id="esperado{{ $idx }}">
+                                                                <div class="col-2"
+                                                                    id="esperado{{ $idx }}">
                                                                     <div style="background: aliceblue;"
                                                                         class="form-control">
                                                                         {{ $competencia->competencia->competencia_puesto->first()->nivel_esperado }}
@@ -325,7 +282,7 @@
                                         style="background-color:#345183; border-radius: 100px; color: white;">
                                         SECCIÓN DE OBJETIVOS
                                     </div>
-                                    <section class="mt-1" x-data="{ show: true }">
+                                    <section class="mt-1" x-data="{show:true}">
                                         <h5 class="head">
                                             <i class="mr-1 fas fa-bullseye"></i> Objetivos
                                             <span style="float: right; cursor:pointer; margin-top: 0px;"
@@ -451,14 +408,24 @@
                                                                     <select name="" id="calificacionPersepcion"
                                                                         class="form-control"
                                                                         onchange="event.preventDefault();saveCalificacionPersepcion(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('admin.ev360-evaluaciones.objetivos.saveCalificacionPersepcion') }}','{{ $objetivo->id }}')">
-                                                                        <option value="" selected disabled>--
-                                                                            Selecciona una
+                                                                        <option value="" selected disabled>-- Selecciona una
                                                                             calificación --</option>
-                                                                        @foreach ($evaluacion->rangos as $rango)
-                                                                            <option value="{{ $rango->valor }}"
-                                                                                @if ($rango->valor == $objetivo->calificacion_persepcion) selected @endif>
-                                                                                {{ $rango->parametro }}</option>
-                                                                        @endforeach
+                                                                        <option
+                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::INACEPTABLE }}">
+                                                                            Inaceptable
+                                                                        </option>
+                                                                        <option
+                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::MINIMO_ACEPTABLE }}">
+                                                                            Mínimo Aceptable
+                                                                        </option>
+                                                                        <option
+                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::ACEPTABLE }}">
+                                                                            Aceptable
+                                                                        </option>
+                                                                        <option
+                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::SOBRESALIENTE }}">
+                                                                            Sobresaliente
+                                                                        </option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -470,7 +437,8 @@
                                                                             class="mr-2 far fa-dot-circle"></i>Comentarios
                                                                         Autoevaluación</label>
                                                                     <textarea class="m-0 form-control" readonly rows="0"
-                                                                        id="autoevaluacionComentariosObjetivos{{ $objetivo->objetivo_id }}" type="text">Cargando autoevaluacion...</textarea>
+                                                                        id="autoevaluacionComentariosObjetivos{{ $objetivo->objetivo_id }}"
+                                                                        type="text">Cargando autoevaluacion...</textarea>
                                                                 @endif
                                                             @endif
                                                             <label class="m-0">
@@ -483,7 +451,9 @@
                                                             </label>
                                                             <textarea
                                                                 onchange="event.preventDefault();saveMetaAlcanzadaDescripcion(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('admin.ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion') }}')"
-                                                                placeholder="Comentarios adicionales" class="m-0 form-control" type="text"> {{ $objetivo->meta_alcanzada }}</textarea>
+                                                                placeholder="Comentarios adicionales"
+                                                                class="m-0 form-control"
+                                                                type="text"> {{ $objetivo->meta_alcanzada }}</textarea>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -544,7 +514,8 @@
                                     <br />
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <textarea id="sig-evaluador-dataUrl" readonly class="d-none form-control" rows="5">Data URL de tu firma será almacenada aquí</textarea>
+                                            <textarea id="sig-evaluador-dataUrl" readonly class="d-none form-control"
+                                                rows="5">Data URL de tu firma será almacenada aquí</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -573,7 +544,8 @@
                                         <br />
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <textarea id="sig-evaluado-dataUrl" readonly class="form-control d-none" rows="5">Data URL de tu firma será almacenada aquí</textarea>
+                                                <textarea id="sig-evaluado-dataUrl" readonly class="form-control d-none"
+                                                    rows="5">Data URL de tu firma será almacenada aquí</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -595,7 +567,7 @@
                         <div class="mt-3 d-flex justify-content-end">
                             <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn_cancelar">Salir</a>
                             <button
-                                onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}')"
+                                onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion,'evaluado' => $evaluado,'evaluador' => $evaluador]) }}')"
                                 class="btn btn-danger">Finalizar</button>
                         </div>
                     @endif
@@ -739,10 +711,10 @@
                                 <div class="text-center col-sm-1 col-lg-1 d-flex justify-content-center align-items-center" style="font-weight:bold;
                                 font-size:12px;">
                                     <p>${opcion.ponderacion}</p>
-                                </div>
+                                </div>    
                                 <div class="px-0 py-2 col-sm-11 col-lg-11" style="font-size: 11px;">
                                     ${opcion.definicion}
-                                </div>
+                                </div>    
                             </div>
                             `;
                         });

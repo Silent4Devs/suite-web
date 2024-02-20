@@ -41,7 +41,7 @@
                         @php
                             use App\Models\Organizacion;
                             $organizacion = Organizacion::getFirst();
-
+                            
                         @endphp
                         <img src="{{ $organizacion->logotipo }}" class="img-fluid" alt="" width="70">
                     </div>
@@ -162,8 +162,7 @@
                                     </div>
                                     <div class="border col-6">
                                         <p class="m-0">
-                                            {{ round(($promedio_competencias * $peso_general_competencias) / $peso_general_competencias, 2) }}%
-                                        </p>
+                                            {{ round(($promedio_competencias * 100) / $peso_general_competencias) }}%</p>
                                     </div>
                                 </div>
                             </div>
@@ -173,8 +172,7 @@
                                         <p class="m-0 text-white">Objetivos</p>
                                     </div>
                                     <div class="border col-6">
-                                        <p class="m-0">
-                                            {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
+                                        <p class="m-0">{{ round($promedio_objetivos) }}%
                                         </p>
                                     </div>
                                 </div>
@@ -202,8 +200,8 @@
                     </div>
                 </div> --}}
                 <div class="mt-2">
-                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] ?? '' }}</span>
-                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] ?? '' }}%</span>
+                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] }}</span>
+                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
                     <button id="btnExportarAutoevaluacion" class="btn-sm rounded pr-2"
                         style="background-color:#fff; border: #fff">
                         <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
@@ -302,13 +300,7 @@
                             <div class="row">
                                 <div class="border col-6">% Participación</div>
                                 <div class="border col-6">
-                                    {{ round(($promedio_competencias * 100) / $peso_general_competencias, 2) }}%</div>
-                            </div>
-                            <div class="row">
-                                <div class="border col-6">Promedio total en la evaluación</div>
-                                <div class="border col-6">
-                                    {{ round(($promedio_competencias / $peso_general_competencias) * $peso_general_competencias, 2) }}%
-                                </div>
+                                    {{ round(($promedio_competencias * 100) / $peso_general_competencias) }}%</div>
                             </div>
                         </div>
                     </div>
@@ -535,13 +527,7 @@
                             </div>
                             <div class="row">
                                 <div class="border col-6">% Participación</div>
-                                <div class="border col-6">{{ round($promedio_objetivos, 2) }}%</div>
-                            </div>
-                            <div class="row">
-                                <div class="border col-6">Promedio total en la evaluación</div>
-                                <div class="border col-6">
-                                    {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
-                                </div>
+                                <div class="border col-6">{{ number_format($promedio_objetivos, 2) }}%</div>
                             </div>
                         </div>
                     </div>
@@ -646,7 +632,7 @@
             let tableExport = new TableExport($tablaauto, {
                 exportButtons: false, // No queremos botones
                 filename: "Evaluacion Competencias de " + nombeva +
-                    "-Autoevaluacion", //Nombre del archivo de Excel
+                "-Autoevaluacion", //Nombre del archivo de Excel
                 sheetname: "Evaluacion Competencias", //Título de la hoja
             });
             let datos = tableExport.getExportData();
@@ -695,7 +681,7 @@
             let tableExport = new TableExport($tablasub, {
                 exportButtons: false, // No queremos botones
                 filename: "Evaluacion Competencias de " + nombeva +
-                    "-Subordinado", //Nombre del archivo de Excel
+                "-Subordinado", //Nombre del archivo de Excel
                 sheetname: "Evaluacion Competencias", //Título de la hoja
             });
             let datos = tableExport.getExportData();
