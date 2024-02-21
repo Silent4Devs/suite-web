@@ -94,6 +94,7 @@ class Empleado extends Model implements Auditable
 
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
+        'id',
         'name',
         'n_registro',
         'foto',
