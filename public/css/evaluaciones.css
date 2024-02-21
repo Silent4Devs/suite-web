@@ -56,3 +56,19 @@
 .item-config-escala:first-child .btn-delete-escala {
     display: none;
 }
+
+.item-cfg-num-emp {
+    width: 100%;
+    min-width: 50px;
+    background-color: rgb(150, 150, 150);
+    color: #fff;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-weight: bold;
+    border-radius: 12px;
+}
