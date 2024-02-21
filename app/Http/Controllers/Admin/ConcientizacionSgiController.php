@@ -92,7 +92,7 @@ class ConcientizacionSgiController extends Controller
     {
         abort_if(Gate::denies('concientizacion_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $arearesponsables = Area::getAllPluck();
         $documentos = DocumentoConcientizacionSgis::get();
 
         return view('admin.concientizacionSgis.create', compact('arearesponsables', 'documentos'));
@@ -127,7 +127,7 @@ class ConcientizacionSgiController extends Controller
     {
         abort_if(Gate::denies('concientizacion_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $arearesponsables = Area::getAllPluck();
         $documentos = DocumentoConcientizacionSgis::get();
         $concientizacionSgi->load('arearesponsable', 'team');
 

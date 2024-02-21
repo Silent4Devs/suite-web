@@ -262,7 +262,7 @@ class Empleado extends Model implements Auditable
     public static function getaltaAll()
     {
         return Cache::remember('Empleados:empleados_alta_all', 3600 * 6, function () {
-            return self::alta()->get();
+            return self::orderBy('name')->alta()->get();
         });
     }
 

@@ -273,7 +273,7 @@ class HomeController
         $capacitaciones = Recurso::getAll();
         $categorias_arr = [];
         $recursos_categoria_arr = [];
-        $categorias = CategoriaCapacitacion::with('recursos')->get();
+        $categorias = CategoriaCapacitacion::getAllWithRecursos();
         foreach ($categorias as $categoria) {
             array_push($categorias_arr, $categoria->nombre);
             array_push($recursos_categoria_arr, count($categoria->recursos));
