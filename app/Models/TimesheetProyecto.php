@@ -44,7 +44,7 @@ class TimesheetProyecto extends Model implements Auditable
                 return self::orderBy('proyecto')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
                 return self::orderBy('proyecto')->get();
             });
         }
@@ -59,6 +59,14 @@ class TimesheetProyecto extends Model implements Auditable
         });
     }
 
+    public static function getAllDashboard()
+    {
+        return Cache::remember('TimesheetProyecto:proyectos_dashboard', 3600 * 4, function () {
+            return self::select('id', 'proyecto', 'estatus')
+                ->get();
+        });
+    }
+
     public static function getIdNameAll($proyecto_id = null)
     {
         if (is_null($proyecto_id)) {
@@ -66,7 +74,7 @@ class TimesheetProyecto extends Model implements Auditable
                 return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('proyecto')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
                 return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('proyecto')->get();
             });
         }
@@ -75,21 +83,21 @@ class TimesheetProyecto extends Model implements Auditable
     public static function getAllOrderByIdentificador()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_identificador', 3600, function () {
-            return self::orderBy('created_at', 'desc')->get();
+            return self::orderBy('id', 'desc')->get();
         });
     }
 
     public static function getAllWithCliente()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_with_cliente', 3600 * 3, function () {
-            return self::with('cliente')->orderBy('created_at', 'desc')->get();
+            return self::with('cliente')->orderBy('id', 'desc')->get();
         });
     }
 
     public static function getAllByProceso()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_proceso', 3600 * 4, function () {
-            return self::where('estatus', 'proceso')->orderBy('created_at', 'desc')->get();
+            return self::where('estatus', 'proceso')->orderBy('id', 'desc')->get();
         });
     }
 
